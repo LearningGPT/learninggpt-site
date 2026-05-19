@@ -166,7 +166,7 @@ nav.top {
 }
 
 .results-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;
 }
 .result-col {
   background: rgba(0,0,0,0.2); border: 1px solid var(--line);
@@ -253,7 +253,7 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
   <div class="container">
     <span class="eyebrow">Free Preview · The Playground</span>
     <h1>Compare AI models <span class="grad serif">side by side</span></h1>
-    <p class="lead">Run any prompt through ChatGPT, Claude, and Gemini at the same time. See which one wins — and why.</p>
+    <p class="lead">Run any prompt through ChatGPT, Claude, Gemini, and Grok at the same time. See which one wins — and why.</p>
   </div>
 </section>
 
@@ -282,7 +282,7 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
       <!-- Results -->
       <div class="results" id="results">
         <div class="result-empty">
-          ✨ Enter a prompt above and click <strong>Run all</strong> to compare ChatGPT, Claude, and Gemini side by side.
+          ✨ Enter a prompt above and click <strong>Run all</strong> to compare ChatGPT, Claude, Gemini, and Grok side by side.
         </div>
       </div>
 
@@ -310,8 +310,9 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
 <script>
   const MODELS = [
     { id: 'openai/gpt-4o',                    name: 'ChatGPT', color: '#10a37f', short: 'G' },
-    { id: 'anthropic/claude-3.5-sonnet',      name: 'Claude',  color: '#d97757', short: 'C' },
-    { id: 'google/gemini-pro-1.5',            name: 'Gemini',  color: '#4285f4', short: '⬢' }
+    { id: 'anthropic/claude-sonnet-4.6',      name: 'Claude',  color: '#d97757', short: 'C' },
+    { id: 'google/gemini-pro-latest',         name: 'Gemini',  color: '#4285f4', short: '⬢' },
+    { id: 'x-ai/grok-4.3',                    name: 'Grok',    color: '#1a1a1a', short: '𝕏' }
   ];
 
   const promptInput     = document.getElementById('prompt');

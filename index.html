@@ -63,14 +63,57 @@ h1 { font-size: clamp(40px, 6vw, 76px); font-weight: 800; }
 h2 { font-size: clamp(32px, 4vw, 52px); font-weight: 700; }
 h3 { font-size: 22px; font-weight: 600; }
 p { color: var(--text-dim); margin: 0; }
-.serif { font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic; }
+.serif { font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic; padding-right: 0.15em; }
+.hero h1 .serif { display: inline-block; padding-right: 0.3em; line-height: 1.1; }
+
+/* ---------- TOP BANNER ---------- */
+.sticky-header {
+  position: sticky; top: 0; z-index: 100;
+}
+.topbar {
+  background: linear-gradient(90deg, rgba(124,92,255,0.22) 0%, rgba(91,141,239,0.15) 50%, rgba(68,224,164,0.15) 100%);
+  border-bottom: 1px solid rgba(124,92,255,0.3);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+.topbar-inner {
+  max-width: var(--container); margin: 0 auto;
+  padding: 10px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px; flex-wrap: wrap;
+}
+.topbar-text {
+  font-size: 13px; color: var(--text);
+  display: flex; align-items: center; gap: 8px;
+}
+.topbar-text strong { font-weight: 700; }
+.topbar-form { display: flex; gap: 6px; align-items: center; }
+.topbar-form input {
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
+  color: var(--text); padding: 7px 12px; border-radius: 6px;
+  font-size: 13px; font-family: inherit; width: 220px;
+}
+.topbar-form input::placeholder { color: rgba(255,255,255,0.45); }
+.topbar-form input:focus { outline: none; border-color: var(--brand); }
+.topbar-form button {
+  background: linear-gradient(135deg, #7c5cff, #5b8def); color: white;
+  border: none; padding: 7px 14px; border-radius: 6px;
+  font-size: 13px; font-weight: 600; white-space: nowrap; cursor: pointer;
+  transition: transform .15s ease;
+}
+.topbar-form button:hover:not(:disabled) { transform: translateY(-1px); }
+.topbar-form button:disabled { opacity: 0.7; cursor: default; }
+@media (max-width: 768px) {
+  .topbar-inner { flex-direction: column; gap: 8px; padding: 10px 16px; }
+  .topbar-text { text-align: center; font-size: 12px; }
+  .topbar-form input { width: 180px; }
+}
 
 /* ---------- NAV ---------- */
 nav.top {
-  position: sticky; top: 0; z-index: 100;
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  background: rgba(10,10,26,0.7);
+  background: rgba(10,10,26,0.85);
   border-bottom: 1px solid var(--line);
 }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; max-width: var(--container); margin: 0 auto; }
@@ -508,27 +551,46 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
 <div class="bg-orb two"></div>
 <div class="bg-orb three"></div>
 
-<!-- ============ NAV ============ -->
-<nav class="top">
-  <div class="nav-inner">
-    <a href="#" class="logo">
-      <div class="logo-mark">L</div>
-      LearningGPT
-    </a>
-    <div class="nav-links">
-      <a href="#tools">Tools</a>
-      <a href="#roles">By role</a>
-      <a href="#playground">Playground</a>
-      <a href="#certs">Certifications</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#enterprise">For teams</a>
-    </div>
-    <div class="nav-cta">
-      <a href="#waitlist" class="btn btn-ghost">Sign in</a>
-      <a href="#waitlist" class="btn btn-primary">Join waitlist</a>
+<!-- ============ STICKY HEADER (BANNER + NAV) ============ -->
+<div class="sticky-header">
+
+  <!-- Top promo banner -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-text">
+        <span class="live-dot"></span>
+        <span><strong>Coming soon.</strong> First 500 founding members get <strong>50% off forever</strong></span>
+      </div>
+      <form class="topbar-form" data-source="topbar" onsubmit="return handleWaitlistSubmit(event, this);">
+        <input type="email" name="email" placeholder="you@work.com" required />
+        <button type="submit">Join waitlist →</button>
+      </form>
     </div>
   </div>
-</nav>
+
+  <!-- ============ NAV ============ -->
+  <nav class="top">
+    <div class="nav-inner">
+      <a href="#" class="logo">
+        <div class="logo-mark">L</div>
+        LearningGPT
+      </a>
+      <div class="nav-links">
+        <a href="#tools">Tools</a>
+        <a href="#roles">By role</a>
+        <a href="#playground">Playground</a>
+        <a href="#certs">Certifications</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#enterprise">For teams</a>
+      </div>
+      <div class="nav-cta">
+        <a href="#waitlist" class="btn btn-ghost">Sign in</a>
+        <a href="#waitlist" class="btn btn-primary">Join waitlist</a>
+      </div>
+    </div>
+  </nav>
+
+</div>
 
 <!-- ============ HERO ============ -->
 <section class="hero">
@@ -969,8 +1031,8 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
       <span class="eyebrow">Join the founding cohort</span>
       <h2 style="margin-top:18px;">Half off, forever. <span class="serif">For the first 500.</span></h2>
       <p style="margin: 20px 0 32px; font-size:17px;">Drop your email and we'll send your founding-member invite the day access opens. No spam, easy unsub.</p>
-      <form class="waitlist" onsubmit="event.preventDefault(); this.querySelector('button').textContent='✓ You're in'; this.querySelector('button').disabled=true;">
-        <input type="email" placeholder="you@work.com" required />
+      <form class="waitlist" data-source="bottom" onsubmit="return handleWaitlistSubmit(event, this);">
+        <input type="email" name="email" placeholder="you@work.com" required />
         <button type="submit" class="btn btn-primary btn-lg" style="padding: 14px 24px;">Claim my spot →</button>
       </form>
       <p style="font-size:13px; color:var(--text-mute); margin-top:18px;">Pricing locks in at $9/mo (Pro) or $19/mo (Career) — for as long as you stay subscribed.</p>
@@ -1038,6 +1100,7 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
 </footer>
 
 <script>
+  // FAQ accordion
   document.querySelectorAll('.faq-item').forEach(item => {
     item.querySelector('.faq-q').addEventListener('click', () => {
       const isOpen = item.classList.contains('open');
@@ -1045,6 +1108,8 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
       if (!isOpen) item.classList.add('open');
     });
   });
+
+  // Smooth scroll for in-page anchors
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', (e) => {
       const id = a.getAttribute('href');
@@ -1054,6 +1119,52 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
       }
     });
   });
+
+  // Waitlist form handler — submits to formsubmit.co, forwards to dan@learninggpt.ai
+  function handleWaitlistSubmit(event, form) {
+    event.preventDefault();
+    const emailInput = form.querySelector('input[type="email"]');
+    const button = form.querySelector('button[type="submit"]');
+    const email = emailInput.value.trim();
+    const originalText = button.textContent;
+    const source = form.dataset.source || 'unknown';
+
+    if (!email) return false;
+
+    button.textContent = 'Joining…';
+    button.disabled = true;
+
+    fetch('https://formsubmit.co/ajax/dan@learninggpt.ai', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        email: email,
+        source: source,
+        _subject: 'New LearningGPT waitlist signup',
+        _template: 'table'
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success === 'true' || data.success === true) {
+        button.textContent = '✓ You\'re in';
+        emailInput.value = '';
+      } else {
+        button.textContent = 'Try again';
+        button.disabled = false;
+      }
+    })
+    .catch(err => {
+      console.error('Waitlist submission error:', err);
+      button.textContent = 'Try again';
+      button.disabled = false;
+    });
+
+    return false;
+  }
 </script>
 
 </body>

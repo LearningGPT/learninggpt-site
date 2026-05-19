@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Which AI writes the best sales follow-up email? — LearningGPT</title>
+<meta name="description" content="A hands-on lesson: compare ChatGPT, Claude, Gemini, and Grok on the same sales follow-up. Learn the 'specific friction' pattern and the constraint stack — the two highest-leverage upgrades to any AI prompt." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/sales-follow-up-emails" />
+<meta property="og:title" content="Which AI writes the best sales follow-up email?" />
+<meta property="og:description" content="A hands-on LearningGPT lesson. Compare 4 AI models on the same prompt, then learn the two patterns that change everything: specific friction + the constraint stack." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="theme-color" content="#7c5cff" />
+
+<style>
+:root {
+  --bg: #0a0a1a;
+  --bg-2: #0f0f23;
+  --bg-soft: #14142b;
+  --surface: #1a1a3a;
+  --line: rgba(255,255,255,0.08);
+  --line-strong: rgba(255,255,255,0.14);
+  --text: #f5f5fa;
+  --text-dim: #a8a8c0;
+  --text-mute: #6b6b85;
+  --brand: #7c5cff;
+  --brand-2: #5b8def;
+  --accent: #44e0a4;
+  --warn: #ffb547;
+  --danger: #ff6b8a;
+  --radius: 14px;
+  --radius-lg: 20px;
+  --shadow: 0 20px 60px -20px rgba(124,92,255,0.35);
+  --container: 800px;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif;
+  background: var(--bg); color: var(--text);
+  line-height: 1.7; -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { color: var(--brand-2); text-decoration: none; }
+a:hover { color: var(--text); }
+button { font-family: inherit; cursor: pointer; }
+
+/* Background orbs */
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.4; }
+.bg-orb.one { width: 500px; height: 500px; top: -120px; left: -120px; background: #7c5cff; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #5b8def; opacity: 0.3; }
+
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+/* Nav */
+nav.top {
+  position: sticky; top: 0; z-index: 100;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(10,10,26,0.85);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 24px; max-width: 1180px; margin: 0 auto;
+}
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark {
+  width: 30px; height: 30px; border-radius: 7px;
+  background: linear-gradient(135deg, #7c5cff 0%, #5b8def 50%, #44e0a4 100%);
+  display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white;
+  box-shadow: 0 4px 16px rgba(124,92,255,0.5);
+}
+.nav-back { font-size: 13px; color: var(--text-dim); }
+.nav-back:hover { color: var(--text); }
+
+/* Lesson typography */
+.lesson { padding: 60px 0 100px; }
+
+.lesson-meta {
+  display: flex; gap: 16px; flex-wrap: wrap; align-items: center;
+  font-size: 13px; color: var(--text-mute); margin-bottom: 20px;
+}
+.lesson-meta .chip {
+  padding: 4px 10px; border: 1px solid var(--line-strong); border-radius: 999px;
+  font-size: 12px; color: var(--brand-2); background: rgba(91,141,239,0.08);
+  font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px;
+}
+.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
+
+.lesson h1 {
+  font-size: clamp(34px, 5vw, 50px); font-weight: 800; line-height: 1.1;
+  letter-spacing: -0.02em; margin: 0 0 22px;
+}
+.lesson h1 .grad {
+  background: linear-gradient(135deg, #7c5cff 0%, #5b8def 50%, #44e0a4 100%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.lesson h1 .serif {
+  font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400;
+  padding-right: 0.15em;
+}
+
+.lesson .deck {
+  font-size: 19px; color: var(--text-dim); line-height: 1.55;
+  margin: 0 0 40px; padding-bottom: 28px; border-bottom: 1px solid var(--line);
+}
+
+.lesson h2 {
+  font-size: 28px; font-weight: 700; letter-spacing: -0.01em;
+  margin: 56px 0 16px;
+}
+.lesson h2 .num {
+  display: inline-block; color: var(--brand); font-weight: 600; margin-right: 12px;
+  font-size: 16px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle;
+}
+
+.lesson h3 {
+  font-size: 19px; font-weight: 600; margin: 32px 0 12px;
+}
+
+.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
+.lesson p.dim { color: var(--text-dim); }
+
+.lesson strong { font-weight: 700; color: var(--text); }
+.lesson em { font-style: italic; color: var(--text); }
+
+.lesson blockquote {
+  margin: 24px 0; padding: 18px 24px; border-left: 3px solid var(--brand);
+  background: rgba(124,92,255,0.08); border-radius: 0 var(--radius) var(--radius) 0;
+  font-style: italic; color: var(--text);
+}
+.lesson blockquote.bad {
+  border-left-color: var(--danger); background: rgba(255,107,138,0.08);
+}
+.lesson blockquote.bad::before {
+  content: '✕ Generic: '; color: var(--danger); font-weight: 700; font-style: normal;
+}
+.lesson blockquote.good {
+  border-left-color: var(--accent); background: rgba(68,224,164,0.08);
+}
+.lesson blockquote.good::before {
+  content: '✓ Specific: '; color: var(--accent); font-weight: 700; font-style: normal;
+}
+
+.lesson ul, .lesson ol { padding-left: 24px; margin: 0 0 18px; }
+.lesson li { margin-bottom: 8px; color: var(--text); }
+
+/* Try-it CTA blocks */
+.tryit {
+  margin: 32px 0;
+  background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%);
+  border: 1px solid rgba(124,92,255,0.25);
+  border-radius: var(--radius-lg); padding: 28px;
+  position: relative; overflow: hidden;
+}
+.tryit::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, #7c5cff, #5b8def, #44e0a4);
+}
+.tryit .label {
+  display: inline-block; font-size: 11px; font-weight: 700;
+  letter-spacing: 1.2px; text-transform: uppercase; color: var(--brand);
+  margin-bottom: 10px;
+}
+.tryit h4 {
+  font-size: 18px; font-weight: 600; margin: 0 0 12px; line-height: 1.4;
+}
+.tryit .prompt-preview {
+  background: rgba(0,0,0,0.3); border: 1px solid var(--line);
+  border-radius: 10px; padding: 14px 16px; margin: 0 0 18px;
+  font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px;
+  color: var(--text); line-height: 1.55; white-space: pre-wrap;
+}
+.tryit .tryit-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: linear-gradient(135deg, #7c5cff, #5b8def); color: white;
+  border: none; padding: 12px 22px; border-radius: 10px;
+  font-size: 14px; font-weight: 600;
+  box-shadow: 0 6px 24px rgba(124,92,255,0.4);
+  transition: transform .15s, box-shadow .15s;
+}
+.tryit .tryit-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 30px rgba(124,92,255,0.55);
+}
+
+.observe {
+  margin: 24px 0; padding: 20px 24px; border-radius: var(--radius);
+  background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2);
+}
+.observe .label {
+  display: inline-block; font-size: 11px; font-weight: 700;
+  letter-spacing: 1.2px; text-transform: uppercase; color: var(--warn);
+  margin-bottom: 8px;
+}
+.observe p { margin: 0; font-size: 15px; color: var(--text); }
+.observe p + p { margin-top: 10px; }
+
+.takeaway {
+  margin: 24px 0; padding: 20px 24px; border-radius: var(--radius);
+  background: rgba(68,224,164,0.08); border: 1px solid rgba(68,224,164,0.25);
+}
+.takeaway .label {
+  display: inline-block; font-size: 11px; font-weight: 700;
+  letter-spacing: 1.2px; text-transform: uppercase; color: var(--accent);
+  margin-bottom: 8px;
+}
+.takeaway p { margin: 0; font-size: 15.5px; color: var(--text); font-weight: 500; }
+
+/* Final challenge */
+.challenge {
+  margin: 56px 0 40px;
+  background: linear-gradient(135deg, rgba(124,92,255,0.18), rgba(68,224,164,0.1));
+  border: 1px solid rgba(124,92,255,0.3);
+  border-radius: var(--radius-lg); padding: 36px;
+}
+.challenge h2 { margin-top: 0; }
+.challenge p { font-size: 16px; color: var(--text); }
+.challenge ol { padding-left: 22px; }
+.challenge ol li { margin-bottom: 10px; font-size: 15px; }
+.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.challenge a.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: linear-gradient(135deg, #7c5cff, #5b8def); color: white;
+  padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px;
+  box-shadow: 0 6px 24px rgba(124,92,255,0.4); transition: transform .15s;
+}
+.challenge a.btn:hover { transform: translateY(-1px); color: white; }
+.challenge a.btn.ghost {
+  background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none;
+}
+
+/* Checklist */
+.checklist {
+  margin: 40px 0; padding: 28px; border: 1px solid var(--line);
+  border-radius: var(--radius-lg); background: var(--surface);
+}
+.checklist h3 { margin-top: 0; font-size: 18px; }
+.checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li {
+  padding: 10px 0 10px 32px; position: relative; font-size: 15px;
+  color: var(--text); border-top: 1px solid var(--line);
+}
+.checklist li:first-child { border-top: none; padding-top: 0; }
+.checklist li::before {
+  content: ''; position: absolute; left: 0; top: 50%;
+  transform: translateY(-50%); width: 20px; height: 20px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E");
+  background-size: contain; background-repeat: no-repeat;
+}
+.checklist li:first-child::before { top: 14px; transform: none; }
+
+/* Next lesson teaser */
+.next-up {
+  margin: 60px 0 0; padding: 32px;
+  border: 1px solid var(--line); border-radius: var(--radius-lg);
+  background: var(--bg-soft);
+}
+.next-up .lbl {
+  font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase;
+  color: var(--text-mute); font-weight: 600; margin-bottom: 10px;
+}
+.next-up h3 { margin: 0 0 6px; font-size: 22px; }
+.next-up p { margin: 0; color: var(--text-dim); font-size: 14.5px; }
+.next-up .coming-soon {
+  display: inline-block; margin-top: 14px; font-size: 12px;
+  color: var(--warn); padding: 4px 10px; border-radius: 999px;
+  background: rgba(255,181,71,0.1); border: 1px solid rgba(255,181,71,0.25);
+}
+
+/* Footer */
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner {
+  max-width: var(--container); margin: 0 auto; padding: 0 24px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 13px; color: var(--text-mute);
+}
+@media (max-width: 600px) {
+  .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo">
+      <div class="logo-mark">L</div>
+      LearningGPT
+    </a>
+    <a href="/" class="nav-back">← All lessons</a>
+  </div>
+</nav>
+
+<article class="lesson">
+  <div class="container">
+
+    <div class="lesson-meta">
+      <span class="chip">Lesson 1 · Free preview</span>
+      <span>~10 min read</span>
+      <span class="dot"></span>
+      <span>4 playground exercises</span>
+      <span class="dot"></span>
+      <span>AI for Sales · Foundations</span>
+    </div>
+
+    <h1>Which AI writes the best sales follow-up email? <span class="grad serif">And what does it teach us?</span></h1>
+
+    <p class="deck">Generic follow-ups are the reason most prospects ghost. In this lesson you'll watch four AI models attempt the same task, see exactly why their first drafts all sound the same, then learn the two prompt patterns that change everything: <strong>specific friction</strong> and <strong>the constraint stack</strong>.</p>
+
+    <p>By the end you'll have a repeatable template you can drop into any AI to write follow-ups that don't sound like every other follow-up in your prospect's inbox. The mechanics here generalize — they're the same patterns that change a generic blog post into a piece worth reading, a generic resume into one that gets callbacks, a generic email into one that gets a reply.</p>
+
+    <p>This is also the deepest lesson in your "specificity is leverage" toolkit. Master it once; apply it forever.</p>
+
+    <!-- ============ SECTION 1 ============ -->
+    <h2><span class="num">01</span> Start with the generic prompt</h2>
+
+    <p>Almost everyone's first instinct when asking AI to write a follow-up email goes something like this:</p>
+
+    <blockquote class="bad">"Write a follow-up email to a prospect who didn't respond after our demo."</blockquote>
+
+    <p>It feels reasonable. It's clear. It's the prompt 90% of people would write. And it's the reason their AI-generated emails sound identical to everyone else's.</p>
+
+    <div class="tryit">
+      <span class="label">Try it yourself</span>
+      <h4>Run the generic prompt across all four AIs and watch what happens.</h4>
+      <div class="prompt-preview">Write a follow-up email to a prospect who didn't respond after our demo.</div>
+      <a class="tryit-cta" href="/playground?prompt=Write%20a%20follow-up%20email%20to%20a%20prospect%20who%20didn%27t%20respond%20after%20our%20demo." target="_blank" rel="noopener">Open in Playground →</a>
+    </div>
+
+    <div class="observe">
+      <span class="label">Observe</span>
+      <p>You'll see ChatGPT write a polite "circling back" email. Claude writes a polite "checking in" email. Gemini writes a polite "wanted to follow up" email. Grok writes a polite "hope you're doing well" email.</p>
+      <p><strong>They're functionally the same email.</strong> Different writing voices, but the same generic content — full of placeholders like "[Prospect's Name]" and "[Your Name]." None of them can be sent without major editing.</p>
+    </div>
+
+    <div class="takeaway">
+      <span class="label">Takeaway</span>
+      <p>Generic input always produces generic output. The model can only be as specific as the prompt allows.</p>
+    </div>
+
+    <!-- ============ SECTION 2 ============ -->
+    <h2><span class="num">02</span> Why this happens</h2>
+
+    <p>Language models predict the next likely token based on patterns in their training data. When you give them a generic prompt, they default to the <em>most statistically common</em> version of that thing — which by definition is the most generic, because the average of all follow-up emails is the most generic possible follow-up email.</p>
+
+    <p>It's like asking a friend "tell me about food." They'd say "uh, food is good." Ask them "what should I eat in Lisbon if I love seafood and don't want a tourist trap" and you get specific recommendations they actually believe in.</p>
+
+    <p>Specificity in the input forces specificity in the output. This isn't a quirk — it's literally how the models work.</p>
+
+    <div class="takeaway">
+      <span class="label">Takeaway</span>
+      <p>If your AI output feels generic, it's because your prompt was generic. The fix is upstream, not downstream.</p>
+    </div>
+
+    <!-- ============ SECTION 3 ============ -->
+    <h2><span class="num">03</span> The "specific friction" pattern</h2>
+
+    <p>The single highest-leverage change you can make to any follow-up prompt: <strong>reference one specific friction or moment from the prior conversation.</strong></p>
+
+    <p>It doesn't have to be elaborate. It can be a single sentence. The point is to give the model an anchor — something concrete it can build the response around instead of generating from the average.</p>
+
+    <blockquote class="good">"Write a follow-up email to Sarah at Acme Marketing. We did a demo last Thursday. She mentioned spending 4 hours every Friday on manual reporting."</blockquote>
+
+    <div class="tryit">
+      <span class="label">Try the upgrade</span>
+      <h4>Same task, with one specific friction added. Watch the change.</h4>
+      <div class="prompt-preview">Write a follow-up email to Sarah at Acme Marketing. We did a demo last Thursday. She mentioned spending 4 hours every Friday on manual reporting.</div>
+      <a class="tryit-cta" href="/playground?prompt=Write%20a%20follow-up%20email%20to%20Sarah%20at%20Acme%20Marketing.%20We%20did%20a%20demo%20last%20Thursday.%20She%20mentioned%20spending%204%20hours%20every%20Friday%20on%20manual%20reporting." target="_blank" rel="noopener">Open in Playground →</a>
+    </div>
+
+    <div class="observe">
+      <span class="label">Observe</span>
+      <p>All four models now reference the 4-hour Friday problem. The emails feel written by a human paying attention. They're <em>sendable</em> with minor edits, not rewrites.</p>
+      <p>Pay attention to which model does it best for your taste. Claude tends to be the most human and conversational. ChatGPT tends to structure the email more formally. Gemini's tend toward more "next steps" framing. Grok stays the most casual. None of them is wrong — they're optimized for different defaults.</p>
+    </div>
+
+    <div class="takeaway">
+      <span class="label">Takeaway</span>
+      <p>Always include one specific detail from the prior interaction. If you don't remember one, your CRM notes do. If your CRM is empty, that's a separate problem worth solving.</p>
+    </div>
+
+    <!-- ============ SECTION 4 ============ -->
+    <h2><span class="num">04</span> The constraint stack</h2>
+
+    <p>Once specificity is in place, layer on constraints. AI output gets sharper the tighter the box you draw.</p>
+
+    <p>The structure I use for any follow-up:</p>
+
+    <ol>
+      <li><strong>Context</strong> — what happened, who's involved, when</li>
+      <li><strong>Specific friction</strong> — the hook from your last interaction</li>
+      <li><strong>Goal</strong> — what response you actually want from them</li>
+      <li><strong>Constraints</strong> — the box: word count, tone, anti-patterns to avoid</li>
+    </ol>
+
+    <div class="tryit">
+      <span class="label">Run the full stack</span>
+      <h4>Same scenario, fully constrained. This is the version you actually send.</h4>
+      <div class="prompt-preview">Write a follow-up email.
+
+Context: Demo with Sarah at Acme Marketing last Thursday. She's VP Marketing, evaluating reporting tools.
+
+Specific friction: She mentioned spending 4 hours every Friday on manual reporting and getting frustrated with it.
+
+Goal: Get her to agree to a 15-minute call this week to walk through the reporting feature specifically.
+
+Constraints: Friendly but not desperate. Under 80 words. Do not use "just circling back" or "hope this finds you well." Reference the 4-hour Friday problem directly.</div>
+      <a class="tryit-cta" href="/playground?prompt=Write%20a%20follow-up%20email.%0A%0AContext%3A%20Demo%20with%20Sarah%20at%20Acme%20Marketing%20last%20Thursday.%20She%27s%20VP%20Marketing%2C%20evaluating%20reporting%20tools.%0A%0ASpecific%20friction%3A%20She%20mentioned%20spending%204%20hours%20every%20Friday%20on%20manual%20reporting%20and%20getting%20frustrated%20with%20it.%0A%0AGoal%3A%20Get%20her%20to%20agree%20to%20a%2015-minute%20call%20this%20week%20to%20walk%20through%20the%20reporting%20feature%20specifically.%0A%0AConstraints%3A%20Friendly%20but%20not%20desperate.%20Under%2080%20words.%20Do%20not%20use%20%22just%20circling%20back%22%20or%20%22hope%20this%20finds%20you%20well.%22%20Reference%20the%204-hour%20Friday%20problem%20directly." target="_blank" rel="noopener">Open in Playground →</a>
+    </div>
+
+    <div class="observe">
+      <span class="label">Observe</span>
+      <p>Now compare side by side with the original generic output. Every model produces something dramatically better — short, specific, with a clear ask, no fluff. The outputs are now <em>differentiated</em> enough that you'd genuinely pick one over the others based on the voice you want.</p>
+      <p>This is the version you copy and send. Maybe with one human tweak. Total time from prompt to inbox: about 90 seconds.</p>
+    </div>
+
+    <div class="takeaway">
+      <span class="label">Takeaway</span>
+      <p>Specificity gets you 70% of the gain. Constraints get you the last 30%. Combined, you've turned a generic AI into your personal copywriter.</p>
+    </div>
+
+    <!-- ============ FINAL CHALLENGE ============ -->
+    <div class="challenge">
+      <h2 style="margin-top: 0;">Final challenge</h2>
+      <p>Pick a real prospect you've ghosted on. Use the constraint stack to write a follow-up that actually feels worth sending.</p>
+      <ol>
+        <li><strong>Context</strong> — when did you talk, what do they do, what stage are they in</li>
+        <li><strong>Specific friction</strong> — one detail from your conversation or your research on their company</li>
+        <li><strong>Goal</strong> — what response do you want (a call? a doc? a referral?)</li>
+        <li><strong>Constraints</strong> — word count, tone, things to avoid</li>
+      </ol>
+      <p>Run it through all four models. Pick the version you like most. Edit one or two phrases to sound like you. Send.</p>
+      <div class="btn-row">
+        <a href="/playground" class="btn">Open Playground →</a>
+        <a href="/#pricing" class="btn ghost">See full curriculum →</a>
+      </div>
+    </div>
+
+    <!-- ============ CHECKLIST ============ -->
+    <div class="checklist">
+      <h3>What you can do now</h3>
+      <ul>
+        <li>Spot generic prompts before they produce generic outputs</li>
+        <li>Apply the "specific friction" pattern to any follow-up email</li>
+        <li>Stack four constraints to dramatically sharpen AI output</li>
+        <li>Compare ChatGPT, Claude, Gemini, and Grok on the same task and pick the right voice for your style</li>
+      </ul>
+    </div>
+
+    <!-- ============ NEXT UP ============ -->
+    <div class="next-up">
+      <div class="lbl">Coming up next</div>
+      <h3>Lesson 2 · AI for code review: which AI catches the most bugs?</h3>
+      <p>Three AIs, the same buggy function, three different findings. We'll learn which AI is strongest at spotting which kinds of issues — and the prompt structure that gets the best review out of any of them.</p>
+      <div class="coming-soon">Releasing to founding members soon</div>
+    </div>
+
+  </div>
+</article>
+
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with OpenAI, Anthropic, Microsoft, Google, or xAI.</div>
+    <a href="/" style="color: var(--text-dim);">← Back to home</a>
+  </div>
+</footer>
+
+</body>
+</html>

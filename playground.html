@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Playground — LearningGPT</title>
+<meta name="description" content="Compare ChatGPT, Claude, and Gemini side by side on real prompts. The LearningGPT AI Playground." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a1a;
+  --bg-2: #0f0f23;
+  --bg-soft: #14142b;
+  --surface: #1a1a3a;
+  --line: rgba(255,255,255,0.08);
+  --line-strong: rgba(255,255,255,0.14);
+  --text: #f5f5fa;
+  --text-dim: #a8a8c0;
+  --text-mute: #6b6b85;
+  --brand: #7c5cff;
+  --brand-2: #5b8def;
+  --accent: #44e0a4;
+  --warn: #ffb547;
+  --danger: #ff6b8a;
+  --radius: 14px;
+  --radius-lg: 20px;
+  --shadow: 0 20px 60px -20px rgba(124,92,255,0.35);
+  --container: 1280px;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif;
+  background: var(--bg); color: var(--text);
+  line-height: 1.55; -webkit-font-smoothing: antialiased;
+  overflow-x: hidden; min-height: 100vh;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.5; }
+.bg-orb.one { width: 500px; height: 500px; top: -120px; left: -120px; background: #7c5cff; }
+.bg-orb.two { width: 600px; height: 600px; top: 30%; right: -200px; background: #5b8def; opacity: 0.35; }
+.bg-orb.three { width: 400px; height: 400px; bottom: -150px; left: 30%; background: #44e0a4; opacity: 0.18; }
+
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+section { padding: 60px 0; position: relative; z-index: 1; }
+
+.serif { font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic; padding-right: 0.15em; }
+.grad {
+  background: linear-gradient(135deg, #7c5cff 0%, #5b8def 50%, #44e0a4 100%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 1.5px; color: var(--brand-2);
+  padding: 6px 12px; border: 1px solid rgba(91,141,239,0.3);
+  border-radius: 999px; background: rgba(91,141,239,0.08);
+}
+
+/* ---------- NAV ---------- */
+nav.top {
+  position: sticky; top: 0; z-index: 100;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(10,10,26,0.85);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 24px; max-width: var(--container); margin: 0 auto;
+}
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; }
+.logo-mark {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: linear-gradient(135deg, #7c5cff 0%, #5b8def 50%, #44e0a4 100%);
+  display: grid; place-items: center; font-weight: 800; font-size: 16px; color: white;
+  box-shadow: 0 4px 16px rgba(124,92,255,0.5);
+}
+.nav-links { display: flex; gap: 28px; align-items: center; }
+.nav-links a { font-size: 14px; color: var(--text-dim); transition: color .2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--text); }
+.nav-links a.active { font-weight: 600; }
+.nav-cta { display: flex; gap: 12px; align-items: center; }
+@media (max-width: 768px) { .nav-links { display: none; } }
+
+/* ---------- BUTTONS ---------- */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; justify-content: center;
+  padding: 12px 22px; border-radius: 10px;
+  font-size: 14px; font-weight: 600; border: 1px solid transparent;
+  transition: transform .15s ease, box-shadow .15s ease, background .2s ease; white-space: nowrap;
+}
+.btn-primary {
+  background: linear-gradient(135deg, #7c5cff 0%, #5b8def 100%); color: white;
+  box-shadow: 0 6px 24px rgba(124,92,255,0.4);
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 30px rgba(124,92,255,0.55); }
+.btn-ghost { background: rgba(255,255,255,0.05); border-color: var(--line-strong); color: var(--text); }
+.btn-ghost:hover { background: rgba(255,255,255,0.09); }
+.btn-lg { padding: 16px 28px; font-size: 15px; }
+
+/* ---------- HERO ---------- */
+.hero { padding: 60px 0 40px; text-align: center; }
+.hero h1 { font-size: clamp(34px, 5vw, 56px); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; max-width: 820px; margin: 18px auto 14px; }
+.hero p.lead { font-size: 17px; max-width: 580px; margin: 0 auto; color: var(--text-dim); }
+
+/* ---------- PLAYGROUND ---------- */
+.playground-box {
+  background: linear-gradient(180deg, #15152e 0%, #0e0e22 100%);
+  border: 1px solid var(--line-strong); border-radius: var(--radius-lg);
+  overflow: hidden; box-shadow: var(--shadow); max-width: 1200px; margin: 0 auto;
+}
+.prompt-area { padding: 24px; border-bottom: 1px solid var(--line); background: rgba(0,0,0,0.15); }
+.prompt-area label {
+  display: block; font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px;
+  color: var(--text-mute); font-weight: 600; margin-bottom: 10px;
+}
+.prompt-area textarea {
+  width: 100%; min-height: 100px;
+  background: rgba(0,0,0,0.3); border: 1px solid var(--line);
+  color: var(--text); padding: 14px 16px; border-radius: 10px;
+  font-size: 15px; font-family: inherit; line-height: 1.5;
+  resize: vertical;
+}
+.prompt-area textarea:focus { outline: none; border-color: var(--brand); }
+.prompt-area textarea::placeholder { color: var(--text-mute); }
+
+.prompt-actions {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 14px; gap: 14px; flex-wrap: wrap;
+}
+.example-prompts { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.example-prompts .label { font-size: 12px; color: var(--text-mute); margin-right: 4px; }
+.example-prompts button {
+  background: rgba(255,255,255,0.05); border: 1px solid var(--line);
+  color: var(--text-dim); font-size: 12px; padding: 6px 12px; border-radius: 999px;
+  transition: all .15s;
+}
+.example-prompts button:hover {
+  background: rgba(124,92,255,0.12); color: var(--text); border-color: rgba(124,92,255,0.3);
+}
+.run-btn {
+  background: linear-gradient(135deg, #7c5cff, #5b8def); color: white;
+  border: none; padding: 12px 24px; border-radius: 10px;
+  font-size: 14px; font-weight: 600; white-space: nowrap;
+  transition: transform .15s, box-shadow .15s, opacity .15s;
+  box-shadow: 0 4px 16px rgba(124,92,255,0.3);
+}
+.run-btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(124,92,255,0.5); }
+.run-btn:disabled { opacity: 0.6; cursor: default; }
+
+/* ---------- RESULTS ---------- */
+.results { padding: 24px; min-height: 200px; }
+.result-empty {
+  text-align: center; padding: 60px 24px;
+  color: var(--text-mute); font-size: 14px;
+}
+.result-error {
+  background: rgba(255,107,138,0.08); border: 1px solid rgba(255,107,138,0.25);
+  border-radius: var(--radius); padding: 20px;
+  font-size: 14px; color: var(--text); line-height: 1.6;
+}
+
+.results-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+}
+.result-col {
+  background: rgba(0,0,0,0.2); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 16px;
+  display: flex; flex-direction: column; min-height: 240px;
+}
+.result-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 12px; border-bottom: 1px solid var(--line); margin-bottom: 12px;
+}
+.model-name { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; }
+.model-icon {
+  width: 26px; height: 26px; border-radius: 6px;
+  display: grid; place-items: center; font-weight: 700; font-size: 12px; color: white;
+}
+.badge {
+  font-size: 10px; padding: 3px 8px; border-radius: 4px;
+  background: rgba(255,255,255,0.06); color: var(--text-mute); font-weight: 500;
+}
+.result-body {
+  flex: 1; font-size: 13.5px; line-height: 1.6; color: var(--text-dim);
+  white-space: pre-wrap; word-wrap: break-word;
+}
+.result-body .response { color: var(--text); }
+.result-body .error {
+  background: rgba(255,107,138,0.08); border: 1px solid rgba(255,107,138,0.25);
+  border-radius: 8px; padding: 12px; color: var(--danger); font-size: 13px;
+}
+.loading-spinner {
+  width: 24px; height: 24px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.1); border-top-color: var(--brand);
+  animation: spin .8s linear infinite; margin: 20px auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading { font-size: 11px; color: var(--text-mute); }
+
+@media (max-width: 880px) {
+  .results-grid { grid-template-columns: 1fr; }
+}
+
+/* ---------- CTA SECTION ---------- */
+.cta-section { padding: 80px 0; text-align: center; }
+.cta-section h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 700; margin-bottom: 14px; letter-spacing: -0.02em; }
+.cta-section p { font-size: 16px; color: var(--text-dim); max-width: 540px; margin: 0 auto 28px; }
+
+/* ---------- FOOTER ---------- */
+footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: relative; z-index: 1; }
+.footer-inner {
+  max-width: var(--container); margin: 0 auto; padding: 0 24px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 13px; color: var(--text-mute);
+}
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+</style>
+</head>
+<body>
+
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<div class="bg-orb three"></div>
+
+<!-- ============ NAV ============ -->
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo">
+      <div class="logo-mark">L</div>
+      LearningGPT
+    </a>
+    <div class="nav-links">
+      <a href="/#tools">Tools</a>
+      <a href="/#roles">By role</a>
+      <a href="/playground" class="active">Playground</a>
+      <a href="/#certs">Certifications</a>
+      <a href="/#pricing">Pricing</a>
+    </div>
+    <div class="nav-cta">
+      <a href="/#waitlist" class="btn btn-primary">Join waitlist</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="container">
+    <span class="eyebrow">Free Preview · The Playground</span>
+    <h1>Compare AI models <span class="grad serif">side by side</span></h1>
+    <p class="lead">Run any prompt through ChatGPT, Claude, and Gemini at the same time. See which one wins — and why.</p>
+  </div>
+</section>
+
+<!-- ============ PLAYGROUND ============ -->
+<section style="padding-top: 20px;">
+  <div class="container">
+    <div class="playground-box">
+
+      <!-- Prompt area -->
+      <div class="prompt-area">
+        <label for="prompt">Your prompt</label>
+        <textarea id="prompt" placeholder="e.g., Write a follow-up email to a prospect who ghosted me after our demo last week. Friendly but not desperate. 80 words max."></textarea>
+
+        <div class="prompt-actions">
+          <div class="example-prompts">
+            <span class="label">Try:</span>
+            <button class="example" data-prompt="Write a follow-up email to a prospect who ghosted me after our demo last week. Friendly but not desperate. 80 words max.">Sales follow-up</button>
+            <button class="example" data-prompt="Explain quantum computing in plain English using only words a 10-year-old would understand. Under 100 words.">Explain quantum</button>
+            <button class="example" data-prompt="I have a Python function that's running slowly. It loops through 100,000 items and looks up each one in a list. What's the most likely cause and the simplest fix?">Code question</button>
+            <button class="example" data-prompt="Plan a 3-day weekend trip to Lisbon for a couple in their 30s who love food and architecture. Include morning, afternoon, and evening activities.">Travel plan</button>
+          </div>
+          <button class="run-btn" id="runBtn">Run all ▶</button>
+        </div>
+      </div>
+
+      <!-- Results -->
+      <div class="results" id="results">
+        <div class="result-empty">
+          ✨ Enter a prompt above and click <strong>Run all</strong> to compare ChatGPT, Claude, and Gemini side by side.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta-section">
+  <div class="container">
+    <h2>Want to learn AI tools <span class="grad serif">in depth?</span></h2>
+    <p>The playground is just a taste. Founding members get 50% off forever — limited to the first 500.</p>
+    <a href="/#waitlist" class="btn btn-primary btn-lg">Join the waitlist →</a>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with OpenAI, Anthropic, Microsoft, Google, or xAI.</div>
+    <a href="/" style="color: var(--text-dim);">← Back to home</a>
+  </div>
+</footer>
+
+<script>
+  const MODELS = [
+    { id: 'openai/gpt-4o',                    name: 'ChatGPT', color: '#10a37f', short: 'G' },
+    { id: 'anthropic/claude-3.5-sonnet',      name: 'Claude',  color: '#d97757', short: 'C' },
+    { id: 'google/gemini-pro-1.5',            name: 'Gemini',  color: '#4285f4', short: '⬢' }
+  ];
+
+  const promptInput     = document.getElementById('prompt');
+  const runBtn          = document.getElementById('runBtn');
+  const resultsContainer = document.getElementById('results');
+
+  // Example prompts
+  document.querySelectorAll('.example').forEach(btn => {
+    btn.addEventListener('click', () => {
+      promptInput.value = btn.dataset.prompt;
+      promptInput.focus();
+    });
+  });
+
+  // Cmd/Ctrl+Enter to submit
+  promptInput.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+      runBtn.click();
+    }
+  });
+
+  runBtn.addEventListener('click', async () => {
+    const prompt = promptInput.value.trim();
+    if (!prompt) {
+      promptInput.focus();
+      return;
+    }
+
+    runBtn.disabled = true;
+    runBtn.textContent = 'Running…';
+
+    // Loading state
+    resultsContainer.innerHTML = '<div class="results-grid">' + MODELS.map(m => `
+      <div class="result-col">
+        <div class="result-head">
+          <div class="model-name">
+            <div class="model-icon" style="background:${m.color}">${m.short}</div>
+            ${m.name}
+          </div>
+          <span class="loading">Thinking…</span>
+        </div>
+        <div class="result-body" style="display:flex;align-items:center;justify-content:center;">
+          <div class="loading-spinner"></div>
+        </div>
+      </div>
+    `).join('') + '</div>';
+
+    try {
+      const response = await fetch('/api/playground', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prompt: prompt,
+          models: MODELS.map(m => ({ id: m.id, name: m.name }))
+        })
+      });
+
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({ error: 'Server error: ' + response.status }));
+        throw new Error(errData.error || ('Server returned ' + response.status));
+      }
+
+      const data = await response.json();
+
+      resultsContainer.innerHTML = '<div class="results-grid">' + data.results.map(r => {
+        const modelInfo = MODELS.find(m => m.id === r.modelId) || { color:'#666', short:'?' };
+        const isError = !!r.error;
+        return `
+          <div class="result-col">
+            <div class="result-head">
+              <div class="model-name">
+                <div class="model-icon" style="background:${modelInfo.color}">${modelInfo.short}</div>
+                ${r.modelName}
+              </div>
+              ${!isError ? `<span class="badge">${r.tokens} tok · ${(r.timeMs/1000).toFixed(1)}s</span>` : ''}
+            </div>
+            <div class="result-body">
+              ${isError
+                ? `<div class="error">⚠️ ${escapeHtml(r.error)}</div>`
+                : `<div class="response">${escapeHtml(r.response)}</div>`
+              }
+            </div>
+          </div>
+        `;
+      }).join('') + '</div>';
+
+    } catch (error) {
+      console.error('Playground error:', error);
+      resultsContainer.innerHTML = `
+        <div class="result-error">
+          <strong>Something went wrong.</strong><br><br>
+          ${escapeHtml(error.message)}<br><br>
+          <span style="color: var(--text-mute); font-size: 13px;">
+            Common causes: (1) <code>OPENROUTER_API_KEY</code> env variable not set in Vercel, (2) daily credit cap hit on OpenRouter, (3) model IDs need updating. Check the Vercel function logs for details.
+          </span>
+        </div>
+      `;
+    } finally {
+      runBtn.disabled = false;
+      runBtn.textContent = 'Run all ▶';
+    }
+  });
+
+  function escapeHtml(text) {
+    if (text === null || text === undefined) return '';
+    const div = document.createElement('div');
+    div.textContent = String(text);
+    return div.innerHTML;
+  }
+</script>
+
+</body>
+</html>

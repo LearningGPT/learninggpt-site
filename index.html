@@ -561,12 +561,7 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
         <span class="live-dot"></span>
         <span><strong>Coming soon.</strong> First 500 founding members get <strong>50% off forever</strong></span>
       </div>
-      <form class="topbar-form" action="https://formsubmit.co/dan@learninggpt.ai" method="POST">
-        <input type="hidden" name="_subject" value="New LearningGPT waitlist signup (banner)" />
-        <input type="hidden" name="_next" value="https://learninggpt.ai/?signed_up=true" />
-        <input type="hidden" name="_captcha" value="false" />
-        <input type="hidden" name="_template" value="table" />
-        <input type="hidden" name="source" value="topbar" />
+      <form class="topbar-form" data-source="topbar" onsubmit="return handleWaitlist(event, this);">
         <input type="email" name="email" placeholder="you@work.com" required />
         <button type="submit">Join waitlist →</button>
       </form>
@@ -1041,12 +1036,7 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
       <span class="eyebrow">Join the founding cohort</span>
       <h2 style="margin-top:18px;">Half off, forever. <span class="serif">For the first 500.</span></h2>
       <p style="margin: 20px 0 32px; font-size:17px;">Drop your email and we'll send your founding-member invite the day access opens. No spam, easy unsub.</p>
-      <form class="waitlist" action="https://formsubmit.co/dan@learninggpt.ai" method="POST">
-        <input type="hidden" name="_subject" value="New LearningGPT waitlist signup (bottom CTA)" />
-        <input type="hidden" name="_next" value="https://learninggpt.ai/?signed_up=true" />
-        <input type="hidden" name="_captcha" value="false" />
-        <input type="hidden" name="_template" value="table" />
-        <input type="hidden" name="source" value="bottom" />
+      <form class="waitlist" data-source="bottom" onsubmit="return handleWaitlist(event, this);">
         <input type="email" name="email" placeholder="you@work.com" required />
         <button type="submit" class="btn btn-primary btn-lg" style="padding: 14px 24px;">Claim my spot →</button>
       </form>
@@ -1135,18 +1125,61 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
     });
   });
 
-  // Show confirmation toast if user just signed up (redirected back with ?signed_up=true)
-  if (window.location.search.includes('signed_up=true')) {
-    const toast = document.createElement('div');
-    toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#44e0a4,#5b8def);color:white;padding:14px 24px;border-radius:10px;font-weight:600;font-size:14px;box-shadow:0 10px 40px rgba(0,0,0,0.4);z-index:9999;animation:slideUp .3s ease;';
-    toast.innerHTML = '✓ You\'re on the founding member list. Check your inbox for confirmation.';
-    document.body.appendChild(toast);
-    setTimeout(() => { toast.style.opacity = '0'; toast.style.transition = 'opacity .5s'; }, 5000);
-    setTimeout(() => toast.remove(), 5800);
-    // Clean URL so the toast doesn't show on refresh
-    if (window.history.replaceState) {
-      window.history.replaceState(null, '', window.location.pathname);
+  // Waitlist form handler — POSTs to /api/waitlist which sends email via Resend
+  async function handleWaitlist(event, form) {
+    event.preventDefault();
+    const emailInput = form.querySelector('input[type="email"]');
+    const button    = form.querySelector('button[type="submit"]');
+    const email     = emailInput.value.trim();
+    const source    = form.dataset.source || 'unknown';
+    const originalText = button.textContent;
+
+    if (!email) {
+      emailInput.focus();
+      return false;
     }
+
+    button.textContent = 'Joining…';
+    button.disabled = true;
+
+    try {
+      const response = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, source })
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (response.ok && data.success) {
+        button.textContent = '✓ You\'re in';
+        emailInput.value = '';
+        showWaitlistToast();
+      } else {
+        button.textContent = 'Try again';
+        button.disabled = false;
+        console.error('Waitlist error:', response.status, data);
+      }
+    } catch (err) {
+      button.textContent = 'Try again';
+      button.disabled = false;
+      console.error('Waitlist fetch error:', err);
+    }
+
+    return false;
+  }
+
+  function showWaitlistToast() {
+    const existing = document.querySelector('.waitlist-toast');
+    if (existing) existing.remove();
+
+    const toast = document.createElement('div');
+    toast.className = 'waitlist-toast';
+    toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#44e0a4,#5b8def);color:white;padding:14px 24px;border-radius:10px;font-weight:600;font-size:14px;box-shadow:0 10px 40px rgba(0,0,0,0.4);z-index:9999;max-width:90vw;text-align:center;transition:opacity .5s;';
+    toast.innerHTML = '✓ You\'re on the founding member list. We\'ll be in touch.';
+    document.body.appendChild(toast);
+    setTimeout(() => { toast.style.opacity = '0'; }, 4500);
+    setTimeout(() => toast.remove(), 5100);
   }
 </script>
 

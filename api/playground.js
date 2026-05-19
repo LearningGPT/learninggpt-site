@@ -59,7 +59,7 @@ export default async function handler(req, res) {
           body: JSON.stringify({
             model: model.id,
             messages: [{ role: 'user', content: prompt }],
-            max_tokens: 500,
+            max_tokens: 1500,
             temperature: 0.7
           })
         });

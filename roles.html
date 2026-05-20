@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Role tracks — AI prompts for your job — LearningGPT</title>
+<meta name="description" content="LearningGPT role tracks. The exact prompts and AI workflows for marketing, sales, engineering, legal, finance, design, founders, and teachers." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#7c5cff" />
+
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://learninggpt.ai/roles" />
+<meta property="og:title" content="AI workflows for your job — LearningGPT" />
+<meta property="og:description" content="The exact prompts and AI workflows that work for marketing, sales, engineers, lawyers, founders, finance, teachers, and designers." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap&family=JetBrains+Mono:wght@400;500" rel="stylesheet">
+
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --radius: 14px; --radius-lg: 20px; --container: 980px; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; }
+a:hover { color: var(--text); }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #7c5cff; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #5b8def; opacity: 0.22; }
+
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+
+.hero { padding: 64px 0 24px; text-align: center; }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--brand-2); padding: 6px 12px; border: 1px solid rgba(91,141,239,0.3); border-radius: 999px; background: rgba(91,141,239,0.08); margin-bottom: 24px; }
+.hero h1 { font-size: clamp(36px, 5vw, 54px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 16px; }
+.hero h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; color: var(--accent); padding-right: 0.15em; }
+.hero p.lead { font-size: 17px; color: var(--text-dim); max-width: 640px; margin: 0 auto; }
+
+.role-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; padding: 30px 0 10px; }
+.role-nav a {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 14px; border-radius: 999px; font-size: 13px; font-weight: 500;
+  background: rgba(255,255,255,0.04); border: 1px solid var(--line); color: var(--text);
+}
+.role-nav a:hover { background: rgba(124,92,255,0.12); border-color: rgba(124,92,255,0.3); color: var(--text); }
+
+.role-block { padding: 50px 0; border-bottom: 1px solid var(--line); }
+.role-block:last-of-type { border-bottom: none; }
+.role-block .role-head { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+.role-block .role-emoji { font-size: 36px; }
+.role-block h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; margin: 0; }
+.role-block h2 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; color: var(--accent); padding-right: 0.15em; }
+.role-block p.role-intro { font-size: 15.5px; color: var(--text-dim); margin: 0 0 22px; max-width: 720px; }
+
+.tools-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; font-size: 12.5px; color: var(--text-dim); }
+.tools-row .label { color: var(--text-mute); text-transform: uppercase; letter-spacing: 1px; font-size: 11px; font-weight: 600; margin-right: 6px; align-self: center; }
+.tools-row .tool {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,0.04);
+  border: 1px solid var(--line); font-weight: 500;
+}
+.tools-row .tool .dot { width: 7px; height: 7px; border-radius: 50%; }
+
+.prompts { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 720px) { .prompts { grid-template-columns: 1fr; } }
+.prompt {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 18px 20px; display: flex; flex-direction: column;
+}
+.prompt h4 { font-size: 14.5px; font-weight: 700; margin: 0 0 10px; color: var(--text); }
+.prompt .body {
+  background: rgba(0,0,0,0.25); border: 1px solid var(--line);
+  border-radius: 8px; padding: 12px 14px;
+  font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+  font-size: 12.5px; color: var(--text); line-height: 1.55; white-space: pre-wrap;
+}
+.prompt .try {
+  margin-top: 12px; align-self: flex-start;
+  font-size: 12px; font-weight: 600; color: var(--brand-2);
+  padding: 6px 12px; border-radius: 6px;
+  background: rgba(124,92,255,0.08); border: 1px solid rgba(124,92,255,0.25);
+}
+.prompt .try:hover { background: rgba(124,92,255,0.15); color: var(--text); }
+
+.coming-strip {
+  background: linear-gradient(135deg, rgba(255,181,71,0.08), rgba(124,92,255,0.05));
+  border: 1px solid rgba(255,181,71,0.25); border-radius: var(--radius);
+  padding: 14px 18px; margin-top: 22px;
+  font-size: 13.5px; color: var(--text-dim);
+}
+.coming-strip strong { color: var(--warn); }
+
+.cta { padding: 60px 0 100px; text-align: center; }
+.cta h2 { font-size: clamp(26px, 4vw, 36px); margin: 0 0 14px; letter-spacing: -0.02em; }
+.cta h2 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; color: var(--accent); padding-right: 0.15em; }
+.cta p { font-size: 16px; color: var(--text-dim); max-width: 560px; margin: 0 auto 26px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; justify-content: center; padding: 14px 26px; border-radius: 10px; font-size: 15px; font-weight: 600; border: 1px solid transparent; transition: transform .15s ease, box-shadow .15s ease; cursor: pointer; }
+.btn-primary { background: linear-gradient(135deg, #7c5cff 0%, #5b8def 100%); color: white; box-shadow: 0 6px 24px rgba(124,92,255,0.4); }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 30px rgba(124,92,255,0.55); color: white; }
+
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+</style>
+</head>
+<body>
+
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/" class="nav-back">← Home</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <span class="eyebrow">Role Tracks · Preview</span>
+    <h1>Real AI prompts <span class="serif">for your job.</span></h1>
+    <p class="lead">Full role-based courses launch through Q3 2026. Below are sample prompts from each track — copy them, run them in the playground, see what works. The full curriculum builds on these patterns.</p>
+  </div>
+</section>
+
+<div class="container">
+  <div class="role-nav">
+    <a href="#marketing">📈 Marketing</a>
+    <a href="#sales">💼 Sales</a>
+    <a href="#engineers">⚙️ Engineers</a>
+    <a href="#lawyers">⚖️ Lawyers</a>
+    <a href="#founders">🚀 Founders</a>
+    <a href="#teachers">👩‍🏫 Teachers</a>
+    <a href="#finance">📊 Finance</a>
+    <a href="#designers">🎨 Designers</a>
+  </div>
+</div>
+
+<main>
+<div class="container">
+
+  <!-- MARKETING -->
+  <section class="role-block" id="marketing">
+    <div class="role-head">
+      <span class="role-emoji">📈</span>
+      <h2>AI for <span class="serif">Marketing</span></h2>
+    </div>
+    <p class="role-intro">Marketers ship more, faster — but generic AI output is everywhere. The win is making your AI sound like your brand, not the model. These prompts teach the specificity and constraint patterns that produce on-brand work.</p>
+
+    <div class="tools-row">
+      <span class="label">Best tools</span>
+      <span class="tool"><span class="dot" style="background:#10a37f"></span> ChatGPT</span>
+      <span class="tool"><span class="dot" style="background:#d97757"></span> Claude</span>
+      <span class="tool"><span class="dot" style="background:#20808d"></span> Perplexity</span>
+    </div>
+
+    <div class="prompts">
+      <div class="prompt">
+        <h4>Punchy ad headline (with constraints)</h4>
+        <div class="body">Write 10 ad headlines for a B2B SaaS that helps marketing teams cut campaign reporting from 6 hours to 20 minutes.
+
+Constraints: under 9 words, no emojis, no questions, no "transform" / "unlock" / "revolutionize". Each headline should name a specific pain or benefit.
+
+Audience: VP of Marketing at a 50-200 person B2B company. Tired of vendor jargon.</div>
+        <a href="/playground?prompt=Write%2010%20ad%20headlines%20for%20a%20B2B%20SaaS%20that%20helps%20marketing%20teams%20cut%20campaign%20reporting%20from%206%20hours%20to%2020%20minutes.%0A%0AConstraints%3A%20under%209%20words%2C%20no%20emojis%2C%20no%20questions%2C%20no%20%22transform%22%20%2F%20%22unlock%22%20%2F%20%22revolutionize%22.%20Each%20headline%20should%20name%20a%20specific%20pain%20or%20benefit.%0A%0AAudience%3A%20VP%20of%20Marketing%20at%20a%2050-200%20person%20B2B%20company.%20Tired%20of%20vendor%20jargon." class="try">Try in playground →</a>
+      </div>
+      <div class="prompt">
+        <h4>SEO brief from a SERP</h4>
+        <div class="body">I'm writing a blog post targeting the keyword "best AI for sales emails". Here are the titles of the top 10 results: [paste].
+
+Tell me:
+1. What angle do most articles miss?
+2. What's the strongest unique angle for our post?
+3. Which 3 questions would the reader want answered that the current top results don't address well?
+4. Suggest an outline (H2s only).</div>
+        <a href="/playground?prompt=I%27m%20writing%20a%20blog%20post%20targeting%20the%20keyword%20%22best%20AI%20for%20sales%20emails%22.%20Here%20are%20the%20titles%20of%20the%20top%2010%20results%3A%20%5Bpaste%5D.%0A%0ATell%20me%3A%0A1.%20What%20angle%20do%20most%20articles%20miss%3F%0A2.%20What%27s%20the%20strongest%20unique%20angle%20for%20our%20post%3F%0A3.%20Which%203%20questions%20would%20the%20reader%20want%20answered%20that%20the%20current%20top%20results%20don%27t%20address%20well%3F%0A4.%20Suggest%20an%20outline%20%28H2s%20only%29." class="try">Try in playground →</a>
+      </div>
+      <div class="prompt">
+        <h4>Campaign retro analyst</h4>
+        <div class="body">Here's our campaign data: [paste CSV: channel, spend, impressions, clicks, conversions, revenue].
+
+Act as a marketing analyst. Tell me:
+- Which channel had the best ROAS, and by how much
+- Which channel underperformed and the most likely reason
+- One specific test I should run next month to validate your hypothesis
+- The number I should track to know if it worked
+
+Be direct. Skip the executive summary.</div>
+        <a href="/playground?prompt=Here%27s%20our%20campaign%20data%3A%20%5Bpaste%20CSV%3A%20channel%2C%20spend%2C%20impressions%2C%20clicks%2C%20conversions%2C%20revenue%5D.%0A%0AAct%20as%20a%20marketing%20analyst.%20Tell%20me%3A%0A-%20Which%20channel%20had%20the%20best%20ROAS%2C%20and%20by%20how%20much%0A-%20Which%20channel%20underperformed%20and%20the%20most%20likely%20reason%0A-%20One%20specific%20test%20I%20should%20run%20next%20month%20to%20validate%20your%20hypothesis%0A-%20The%20number%20I%20should%20track%20to%20know%20if%20it%20worked%0A%0ABe%20direct.%20Skip%20the%20executive%20summary." class="try">Try in playground →</a>
+      </div>
+      <div class="prompt">
+        <h4>LinkedIn post in your voice</h4>
+        <div class="body">Here are 5 LinkedIn posts I've written that performed well: [paste].
+
+Write a new LinkedIn post about [topic] that sounds like the same person wrote it. Match my sentence rhythm, the way I open posts, and the way I use line breaks. Don't add emojis I wouldn't use. Don't end with a question unless I usually do.</div>
+        <a href="/playground?prompt=Here%20are%205%20LinkedIn%20posts%20I%27ve%20written%20that%20performed%20well%3A%20%5Bpaste%5D.%0A%0AWrite%20a%20new%20LinkedIn%20post%20about%20%5Btopic%5D%20that%20sounds%20like%20the%20same%20person%20wrote%20it.%20Match%20my%20sentence%20rhythm%2C%20the%20way%20I%20open%20posts%2C%20and%20the%20way%20I%20use%20line%20breaks.%20Don%27t%20add%20emojis%20I%20wouldn%27t%20use.%20Don%27t%20end%20with%20a%20question%20unless%20I%20usually%20do." class="try">Try in playground →</a>
+      </div>
+    </div>
+
+    <div class="coming-strip">
+      <strong>Full track coming Q3 2026:</strong> Brand-voice training across all your AIs, the campaign retro playbook, SEO content systems that don't get penalized, and a full LinkedIn writing curriculum.
+    </div>
+  </section>
+
+  <!-- SALES -->
+  <section class="role-block" id="sales">
+    <div class="role-head">
+      <span class="role-emoji">💼</span>
+      <h2>AI for <span class="serif">Sales</span></h2>
+    </div>
+    <p class="role-intro">Sales is where bad AI shows up loudest — generic outreach, "circling back" emails, soulless follow-ups. The wins here come from specificity: referencing actual demo content, mirroring the prospect's language, and pruning every word that doesn't move the deal.</p>
+
+    <div class="tools-row">
+      <span class="label">Best tools</span>
+      <span class="tool"><span class="dot" style="background:#d97757"></span> Claude</span>
+      <span class="tool"><span class="dot" style="background:#10a37f"></span> ChatGPT</span>
+      <span class="tool"><span class="dot" style="background:#20808d"></span> Perplexity</span>
+    </div>
+
+    <div class="prompts">
+      <div class="prompt">
+        <h4>Follow-up after a demo (specific friction)</h4>
+        <div class="body">Write a follow-up email to [name] at [company]. We demo'd 9 days ago — went well, no objections, then total silence.
+
+At the end of the demo they said: "[paste exact quote about a pain point]"
+
+The email should reference that exact pain point, propose one specific 15-minute next step, and give them an easy out. Under 80 words. No "circling back". No "just checking in".</div>
+        <a href="/playground?prompt=Write%20a%20follow-up%20email%20to%20%5Bname%5D%20at%20%5Bcompany%5D.%20We%20demo%27d%209%20days%20ago%20%E2%80%94%20went%20well%2C%20no%20objections%2C%20then%20total%20silence.%0A%0AAt%20the%20end%20of%20the%20demo%20they%20said%3A%20%22%5Bpaste%20exact%20quote%20about%20a%20pain%20point%5D%22%0A%0AThe%20email%20should%20reference%20that%20exact%20pain%20point%2C%20propose%20one%20specific%2015-minute%20next%20step%2C%20and%20give%20them%20an%20easy%20out.%20Under%2080%20words.%20No%20%22circling%20back%22.%20No%20%22just%20checking%20in%22." class="try">Try in playground →</a>
+      </div>
+      <div class="prompt">
+        <h4>Pre-call account research</h4>
+        <div class="body">Research [company name]. I'm meeting with their [title] tomorrow. Give me:
+
+1. What does this company do, in one sentence?
+2. Recent news (last 6 months) — funding, leadership changes, product launches, layoffs
+3. Their stated strategy from their most recent earnings call or investor letter (if public) or About page (if not)
+4. Three smart questions I could ask that would show I did my homework
+5. Two specific topics to avoid based on what I found
+
+Cite sources.</div>
+        <a href="/playground?prompt=Research%20%5Bcompany%20name%5D.%20I%27m%20meeting%20with%20their%20%5Btitle%5D%20tomorrow.%20Give%20me%3A%0A%0A1.%20What%20does%20this%20company%20do%2C%20in%20one%20sentence%3F%0A2.%20Recent%20news%20%28last%206%20months%29%20%E2%80%94%20funding%2C%20leadership%20changes%2C%20product%20launches%2C%20layoffs%0A3.%20Their%20stated%20strategy%20from%20their%20most%20recent%20earnings%20call%20or%20investor%20letter%20%28if%20public%29%20or%20About%20page%20%28if%20not%29%0A4.%20Three%20smart%20questions%20I%20could%20ask%20that%20would%20show%20I%20did%20my%20homework%0A5.%20Two%20specific%20topics%20to%20avoid%20based%20on%20what%20I%20found%0A%0ACite%20sources." class="try">Try in playground →</a>
+      </div>
+      <div class="prompt">
+        <h4>Cold email — one specific frame</h4>
+        <div class="body">I'm selling [product] to [persona] at [company size]. Write a cold email built around ONE specific frame: I noticed that [observable thing about their company / industry / role] — here's a way [product] addresses it.
+
+Rules: 60 words max. No "Hope you're well". No "I'd love to". One question at the end. Subject line under 6 words.</div>
+        <a href="/playground?prompt=I%27m%20selling%20%5Bproduct%5D%20to%20%5Bpersona%5D%20at%20%5Bcompany%20size%5D.%20Write%20a%20cold%20email%20built%20around%20ONE%20specific%20frame%3A%20I%20noticed%20that%20%5Bobservable%20thing%20about%20their%20company%20%2F%20industry%20%2F%20role%5D%20%E2%80%94%20here%27s%20a%20way%20%5Bproduct%5D%20addresses%20it.%0A%0ARules%3A%2060%20words%20max.%20No%20%22Hope%20you%27re%20well%22.%20No%20%22I%27d%20love%20to%22.%20One%20question%20at%20the%20end.%20Subject%20line%20under%206%20words." class="try">Try in playground →</a>
+      </div>
+      <div class="prompt">
+        <h4>Call notes → CRM update</h4>
+        <div class="body">Here are my raw notes from a sales call: [paste].
+
+Turn this into:
+1. A 4-sentence summary for my CRM
+2. Next steps (with owner and date)
+3. Three quotes from the prospect I should remember verbatim
+4. One risk to the deal I should flag to my manager</div>
+        <a href="/playground?prompt=Here%20are%20my%20raw%20notes%20from%20a%20sales%20call%3A%20%5Bpaste%5D.%0A%0ATurn%20this%20into%3A%0A1.%20A%204-sentence%20summary%20for%20my%20CRM%0A2.%20Next%20steps%20%28with%20owner%20and%20date%29%0A3.%20Three%20quotes%20from%20the%20prospect%20I%20should%20remember%20verbatim%0A4.%20One%20risk%20to%20the%20deal%20I%20should%20flag%20to%20my%20manager" class="try">Try in playground →</a>
+      </div>
+    </div>
+
+    <div class="coming-strip">
+      <strong>Full track coming Q3 2026:</strong> The complete sales follow-up curriculum, prospect-research playbooks, objection-handling scripts, and call-notes-to-CRM automation patterns.
+    </div>
+  </section>
+
+  <!-- ENGINEERS -->
+  <section class="role-block" id="engineers">
+    <div class="role-head">
+      <span class="role-emoji">⚙️</span>
+      <h2>AI for <span class="serif">Engineers</span></h2>
+    </div>
+    <p class="role-intro">Engineers don't need AI to write boilerplate — they need AI to be a sparring partner. Architecture decisions, code review, debugging dead ends, and explaining unfamiliar codebases. These prompts treat the AI like a senior staff engineer, not an intern.</p>
+
+    <div class="tools-row">
+      <span class="label">Best tools</span>
+      <span class="tool"><span class="dot" style="background:#d97757"></span> Claude</span>
+      <span class="tool"><span class="dot" style="background:#10a37f"></span> ChatGPT</span>
+    </div>
+
+    <div class="prompts">
+      <div class="prompt">
+        <h4>Architecture sparring partner</h4>
+        <div class="body">I'm designing [system]. My current plan is [paste design or diagram description].
+
+Act as a senior staff engineer doing a design review. Don't agree with me. Push on:
+- What breaks at 10x scale?
+- What's the simplest version that ships next month?
+- What load-bearing assumption am I making that might be wrong?
+- What's the one thing a future engineer will hate about this?
+
+Be specific. No platitudes.</div>
+        <a href="/playground?prompt=I%27m%20designing%20%5Bsystem%5D.%20My%20current%20plan%20is%20%5Bpaste%20design%20or%20diagram%20description%5D.%0A%0AAct%20as%20a%20senior%20staff%20engineer%20doing%20a%20design%20review.%20Don%27t%20agree%20with%20me.%20Push%20on%3A%0A-%20What%20breaks%20at%2010x%20scale%3F%0A-%20What%27s%20the%20simplest%20version%20that%20ships%20next%20month%3F%0A-%20What%20load-bearing%20assumption%20am%20I%20making%20that%20might%20be%20wrong%3F%0A-%20What%27s%20the%20one%20thing%20a%20future%20engineer%20will%20hate%20about%20this%3F%0A%0ABe%20specific.%20No%20platitudes." class="try">Try in playground →</a>
+      </div>
+      <div class="prompt">
+        <h4>Debug a perplexing bug</h4>
+        <div class="body">I have a bug. Here's what I'm seeing: [paste behavior].
+Here's the relevant code: [paste].
+Here are the things I've already ruled out: [list].
+
+Don't just suggest random fixes. Walk through the 3 most likely root causes in order of probability, what would prove or disprove each, and which one I should investigate first based on what's fastest to verify.</div>
+        <a href="/playground?prompt=I%20have%20a%20bug.%20Here%27s%20what%20I%27m%20seeing%3A%20%5Bpaste%20behavior%5D.%0AHere%27s%20the%20relevant%20code%3A%20%5Bpaste%5D.%0AHere%20are%20the%20things%20I%27ve%20already%20ruled%20out%3A%20%5Blist%5D.%0A%0ADon%27t%20just%20suggest%20random%20fixes.%20Walk%20through%20the%203%20most%20likely%20root%20causes%20in%20order%20of%20probability%2C%20what%20would%20prove%20or%20disprove%20each%2C%20and%20which%20one%20I%20should%20investigate%20first%20based%20on%20what%27s%20fastest%20to%20verify." class="try">Try in playground →</a>
+      </div>
+      <div class="prompt">
+        <h4>Explain unfamiliar code</h4>
+        <div class="body">Here's a function I need to understand: [paste].
+
+Explain it in three passes:
+1. What does it do, in one sentence, like I'm a product manager.
+2. How it works, walking through the control flow line-by-line.
+3. What's subtle or non-obvious about it — bugs that could happen, edge cases, performance characteristics.</div>
+        <a href="/playground?prompt=Here%27s%20a%20function%20I%20need%20to%20understand%3A%20%5Bpaste%5D.%0A%0AExplain%20it%20in%20three%20passes%3A%0A1.%20What%20does%20it%20do%2C%20in%20one%20sentence%2C%20like%20I%27m%20a%20product%20manager.%0A2.%20How%20it%20works%2C%20walking%20through%20the%20control%20flow%20line-by-line.%0A3.%20What%27s%20subtle%20or%20non-obvious%20about%20it%20%E2%80%94%20bugs%20that%20could%20happen%2C%20edge%20cases%2C%20performance%20characteristics." class="try">Try in playground →</a>
+      </div>
+      <div class="prompt">
+        <h4>Code review on yourself</h4>
+        <div class="body">Here's a PR I'm about to send for review: [paste diff].
+
+Review it like a strict senior engineer who's seen this codebase for years. Flag:
+- Things that will get nitpicked in code review
+- Potential bugs or race conditions I missed
+- Tests I should add before submitting
+- One simplification that would make the PR shorter without losing functionality</div>
+        <a href="/playground?prompt=Here%27s%20a%20PR%20I%27m%20about%20to%20send%20for%20review%3A%20%5Bpaste%20diff%5D.%0A%0AReview%20it%20like%20a%20strict%20senior%20engineer%20who%27s%20seen%20this%20codebase%20for%20years.%20Flag%3A%0A-%20Things%20that%20will%20get%20nitpicked%20in%20code%20review%0A-%20Potential%20bugs%20or%20race%20conditions%20I%20missed%0A-%20Tests%20I%20should%20add%20before%20submitting%0A-%20One%20simplification%20that%20would%20make%20the%20PR%20shorter%20without%20losing%20functionality" class="try">Try in playground →</a>
+      </div>
+    </div>
+
+    <div class="coming-strip">
+      <strong>Full track coming Q3 2026:</strong> Claude Code deep-dive, Cursor patterns, AI-assisted debugging workflows, code-review prompts, and how to use AI without producing tech debt.
+    </div>
+  </section>
+
+  <!-- LAWYERS -->
+  <section class="role-block" id="lawyers">
+    <div class="role-head">
+      <span class="role-emoji">⚖️</span>
+      <h2>AI for <span class="serif">Lawyers</span></h2>
+    </div>
+    <p class="role-intro">Legal work is high-stakes and citation-sensitive. The win for lawyers is using AI for the volume work — first-pass review, redlining, drafting — while keeping every claim verifiable. These prompts emphasize specificity, citation, and hallucination resistance.</p>
+
+    <div class="tools-row">
+      <span class="label">Best tools</span>
+      <span class="tool"><span class="dot" style="background:#d97757"></span> Claude</span>
+      <span class="tool"><span class="dot" style="background:#20808d"></span> Perplexity</span>
+    </div>
+
+    <div class="prompts">
+      <div class="prompt">
+        <h4>Contract review — first pass</h4>
+        <div class="body">Review this contract from the perspective of [party]. [Paste contract].
+
+Identify:
+1. Top 5 clauses that disproportionately favor the other side
+2. Standard market terms that are missing
+3. Any ambiguous or unenforceable language
+4. Three specific redlines you'd propose, with replacement language
+
+Do not include legal disclaimers. Assume the reader is an experienced attorney.</div>
+        <a href="/playground?prompt=Review%20this%20contract%20from%20the%20perspective%20of%20%5Bparty%5D.%20%5BPaste%20contract%5D.%0A%0AIdentify%3A%0A1.%20Top%205%20clauses%20that%20disproportionately%20favor%20the%20other%20side%0A2.%20Standard%20market%20terms%20that%20are%20missing%0A3.%20Any%20ambiguous%20or%20unenforceable%20language%0A4.%20Three%20specific%20redlines%20you%27d%20propose%2C%20with%20replacement%20language%0A%0ADo%20not%20include%20legal%20disclaimers.%20Assume%20the%20reader%20is%20an%20experienced%20attorney." class="try">Try in playground →</a>
+      </div>
+      <div class="prompt">
+        <h4>Case research with citations</h4>
+        <div class="body">Find case law from [jurisdiction] in the last [N years] that addresses [issue]. For each case, give me:
+- Case name and citation
+- One-sentence holding
+- Key facts
+- Whether it's currently good law
+- A direct quote from the opinion if available
+
+If you can't verify a case exists, say so explicitly — do not invent citations.</div>
+        <a href="/playground?prompt=Find%20case%20law%20from%20%5Bjurisdiction%5D%20in%20the%20last%20%5BN%20years%5D%20that%20addresses%20%5Bissue%5D.%20For%20each%20case%2C%20give%20me%3A%0A-%20Case%20name%20and%20citation%0A-%20One-sentence%20holding%0A-%20Key%20facts%0A-%20Whether%20it%27s%20currently%20good%20law%0A-%20A%20direct%20quote%20from%20the%20opinion%20if%20available%0A%0AIf%20you%20can%27t%20verify%20a%20case%20exists%2C%20say%20so%20explicitly%20%E2%80%94%20do%20not%20invent%20citations." class="try">Try in playground →</a>
+      </div>
+    </div>
+
+    <div class="coming-strip">
+      <strong>Full track coming Q3 2026:</strong> The complete lawyer's AI playbook — verified citation workflows, contract redline systems, deposition prep, and the safe-use patterns that protect privilege and avoid hallucinated cases.
+    </div>
+  </section>
+
+  <!-- FOUNDERS -->
+  <section class="role-block" id="founders">
+    <div class="role-head">
+      <span class="role-emoji">🚀</span>
+      <h2>AI for <span class="serif">Founders</span></h2>
+    </div>
+    <p class="role-intro">Founders wear every hat at once. AI is the cheapest possible head-count — the trick is using it without producing slop. These prompts cover the work founders actually do: pitching, customer interviews, hiring, and thinking through hard decisions.</p>
+
+    <div class="tools-row">
+      <span class="label">Best tools</span>
+      <span class="tool"><span class="dot" style="background:#d97757"></span> Claude</span>
+      <span class="tool"><span class="dot" style="background:#10a37f"></span> ChatGPT</span>
+      <span class="tool"><span class="dot" style="background:#20808d"></span> Perplexity</span>
+    </div>
+
+    <div class="prompts">
+      <div class="prompt">
+        <h4>Pitch deck stress test</h4>
+        <div class="body">Here's my Series A pitch deck (or any pitch). [Paste slides or describe].
+
+Act as a skeptical lead partner at a top-tier VC. After reviewing it, tell me:
+1. The single weakest slide and why
+2. Three questions you'd ask in the partner meeting that I should have a great answer for
+3. The narrative gap — what doesn't add up about my story?
+4. One thing I should cut entirely
+
+Don't be polite.</div>
+        <a href="/playground?prompt=Here%27s%20my%20Series%20A%20pitch%20deck%20%28or%20any%20pitch%29.%20%5BPaste%20slides%20or%20describe%5D.%0A%0AAct%20as%20a%20skeptical%20lead%20partner%20at%20a%20top-tier%20VC.%20After%20reviewing%20it%2C%20tell%20me%3A%0A1.%20The%20single%20weakest%20slide%20and%20why%0A2.%20Three%20questions%20you%27d%20ask%20in%20the%20partner%20meeting%20that%20I%20should%20have%20a%20great%20answer%20for%0A3.%20The%20narrative%20gap%20%E2%80%94%20what%20doesn%27t%20add%20up%20about%20my%20story%3F%0A4.%20One%20thing%20I%20should%20cut%20entirely%0A%0ADon%27t%20be%20polite." class="try">Try in playground →</a>
+      </div>
+      <div class="prompt">
+        <h4>Customer interview synthesis</h4>
+        <div class="body">Here are transcripts from 8 customer interviews: [paste].
+
+Synthesize:
+1. The 3 most common pain points (with frequency)
+2. The exact phrases customers used (not paraphrased)
+3. The pain point most people described but didn't ask us to solve
+4. Three potential product directions, ranked by what's said most vs what people actually pay for
+5. One thing I should ask in the next 5 interviews to verify</div>
+        <a href="/playground?prompt=Here%20are%20transcripts%20from%208%20customer%20interviews%3A%20%5Bpaste%5D.%0A%0ASynthesize%3A%0A1.%20The%203%20most%20common%20pain%20points%20%28with%20frequency%29%0A2.%20The%20exact%20phrases%20customers%20used%20%28not%20paraphrased%29%0A3.%20The%20pain%20point%20most%20people%20described%20but%20didn%27t%20ask%20us%20to%20solve%0A4.%20Three%20potential%20product%20directions%2C%20ranked%20by%20what%27s%20said%20most%20vs%20what%20people%20actually%20pay%20for%0A5.%20One%20thing%20I%20should%20ask%20in%20the%20next%205%20interviews%20to%20verify" class="try">Try in playground →</a>
+      </div>
+    </div>
+
+    <div class="coming-strip">
+      <strong>Full track coming Q3 2026:</strong> Pitch refinement, fundraising email templates, customer-interview synthesis workflows, hiring rubrics, and a complete bootstrapping operations playbook.
+    </div>
+  </section>
+
+  <!-- TEACHERS -->
+  <section class="role-block" id="teachers">
+    <div class="role-head">
+      <span class="role-emoji">👩‍🏫</span>
+      <h2>AI for <span class="serif">Teachers</span></h2>
+    </div>
+    <p class="role-intro">Teachers carry an unsustainable workload — lesson planning, differentiation, grading, parent comms. AI well-applied can give you Sundays back. These prompts focus on outputs that actually fit how a classroom runs.</p>
+
+    <div class="tools-row">
+      <span class="label">Best tools</span>
+      <span class="tool"><span class="dot" style="background:#d97757"></span> Claude</span>
+      <span class="tool"><span class="dot" style="background:#10a37f"></span> ChatGPT</span>
+    </div>
+
+    <div class="prompts">
+      <div class="prompt">
+        <h4>Differentiated lesson plan</h4>
+        <div class="body">I'm teaching [topic] to [grade level]. Create a 45-minute lesson plan with:
+- Hook (5 min)
+- Direct instruction (10 min)
+- Guided practice (15 min)
+- Independent practice (10 min)
+- Exit ticket (5 min)
+
+Then differentiate for: (a) a student reading 2 grades below level, (b) a student who finishes early and needs extension, (c) an English-language learner. Keep the differentiated versions on the same topic.</div>
+        <a href="/playground?prompt=I%27m%20teaching%20%5Btopic%5D%20to%20%5Bgrade%20level%5D.%20Create%20a%2045-minute%20lesson%20plan%20with%3A%0A-%20Hook%20%285%20min%29%0A-%20Direct%20instruction%20%2810%20min%29%0A-%20Guided%20practice%20%2815%20min%29%0A-%20Independent%20practice%20%2810%20min%29%0A-%20Exit%20ticket%20%285%20min%29%0A%0AThen%20differentiate%20for%3A%20%28a%29%20a%20student%20reading%202%20grades%20below%20level%2C%20%28b%29%20a%20student%20who%20finishes%20early%20and%20needs%20extension%2C%20%28c%29%20an%20English-language%20learner.%20Keep%20the%20differentiated%20versions%20on%20the%20same%20topic." class="try">Try in playground →</a>
+      </div>
+      <div class="prompt">
+        <h4>Parent email — difficult conversation</h4>
+        <div class="body">I need to email a parent about [situation]. The student is [brief context].
+
+Write a professional, warm email that:
+- Doesn't bury the lead
+- States the specific concern factually
+- Names one positive observation about the student
+- Proposes a specific next step (call, meeting, plan)
+- Ends with collaboration, not blame
+
+Under 200 words. Tone: a caring teacher, not an HR memo.</div>
+        <a href="/playground?prompt=I%20need%20to%20email%20a%20parent%20about%20%5Bsituation%5D.%20The%20student%20is%20%5Bbrief%20context%5D.%0A%0AWrite%20a%20professional%2C%20warm%20email%20that%3A%0A-%20Doesn%27t%20bury%20the%20lead%0A-%20States%20the%20specific%20concern%20factually%0A-%20Names%20one%20positive%20observation%20about%20the%20student%0A-%20Proposes%20a%20specific%20next%20step%20%28call%2C%20meeting%2C%20plan%29%0A-%20Ends%20with%20collaboration%2C%20not%20blame%0A%0AUnder%20200%20words.%20Tone%3A%20a%20caring%20teacher%2C%20not%20an%20HR%20memo." class="try">Try in playground →</a>
+      </div>
+    </div>
+
+    <div class="coming-strip">
+      <strong>Full track coming Q3 2026:</strong> A full teacher's AI curriculum — lesson planning workflows, IEP support patterns, rubric design, grading assistance, and the parent-communication library.
+    </div>
+  </section>
+
+  <!-- FINANCE -->
+  <section class="role-block" id="finance">
+    <div class="role-head">
+      <span class="role-emoji">📊</span>
+      <h2>AI for <span class="serif">Finance</span></h2>
+    </div>
+    <p class="role-intro">Finance is precision work — but a huge amount of it is repetitive variance analysis, narrative memos, and Excel formula construction. The pattern here is using AI for the prose, the explanation, and the formula scaffolding, while you still own the numbers.</p>
+
+    <div class="tools-row">
+      <span class="label">Best tools</span>
+      <span class="tool"><span class="dot" style="background:#2c7be5"></span> Copilot</span>
+      <span class="tool"><span class="dot" style="background:#d97757"></span> Claude</span>
+      <span class="tool"><span class="dot" style="background:#4285f4"></span> Gemini</span>
+    </div>
+
+    <div class="prompts">
+      <div class="prompt">
+        <h4>Variance memo from the numbers</h4>
+        <div class="body">Here's our Q[N] vs plan variance: [paste table — line items, plan, actual, variance, % variance].
+
+Write a 1-page CFO variance memo:
+- 3-sentence summary of the quarter
+- Top 3 over-plan drivers with hypothesized cause
+- Top 3 under-plan drivers with hypothesized cause and recommended action
+- One callout for the board that's easy to miss
+
+Tone: confident, concise, data-driven. No corporate hedging.</div>
+        <a href="/playground?prompt=Here%27s%20our%20Q%5BN%5D%20vs%20plan%20variance%3A%20%5Bpaste%20table%20%E2%80%94%20line%20items%2C%20plan%2C%20actual%2C%20variance%2C%20%25%20variance%5D.%0A%0AWrite%20a%201-page%20CFO%20variance%20memo%3A%0A-%203-sentence%20summary%20of%20the%20quarter%0A-%20Top%203%20over-plan%20drivers%20with%20hypothesized%20cause%0A-%20Top%203%20under-plan%20drivers%20with%20hypothesized%20cause%20and%20recommended%20action%0A-%20One%20callout%20for%20the%20board%20that%27s%20easy%20to%20miss%0A%0ATone%3A%20confident%2C%20concise%2C%20data-driven.%20No%20corporate%20hedging." class="try">Try in playground →</a>
+      </div>
+      <div class="prompt">
+        <h4>Excel formula architect</h4>
+        <div class="body">I have a spreadsheet with [describe columns and rows]. I want to [describe outcome].
+
+Tell me:
+1. The exact Excel formula(s) I need, with cell references that match my structure
+2. Why this formula is the right choice vs alternatives (XLOOKUP vs INDEX/MATCH, SUMIFS vs SUMPRODUCT, etc.)
+3. The one edge case where this formula will silently break, and how to handle it
+
+Don't suggest VBA unless it's truly necessary.</div>
+        <a href="/playground?prompt=I%20have%20a%20spreadsheet%20with%20%5Bdescribe%20columns%20and%20rows%5D.%20I%20want%20to%20%5Bdescribe%20outcome%5D.%0A%0ATell%20me%3A%0A1.%20The%20exact%20Excel%20formula%28s%29%20I%20need%2C%20with%20cell%20references%20that%20match%20my%20structure%0A2.%20Why%20this%20formula%20is%20the%20right%20choice%20vs%20alternatives%20%28XLOOKUP%20vs%20INDEX%2FMATCH%2C%20SUMIFS%20vs%20SUMPRODUCT%2C%20etc.%29%0A3.%20The%20one%20edge%20case%20where%20this%20formula%20will%20silently%20break%2C%20and%20how%20to%20handle%20it%0A%0ADon%27t%20suggest%20VBA%20unless%20it%27s%20truly%20necessary." class="try">Try in playground →</a>
+      </div>
+    </div>
+
+    <div class="coming-strip">
+      <strong>Full track coming Q3 2026:</strong> The complete finance curriculum — Excel + Copilot deep-dive, financial-modeling prompts, audit-ready documentation patterns, and FP&A narrative templates.
+    </div>
+  </section>
+
+  <!-- DESIGNERS -->
+  <section class="role-block" id="designers">
+    <div class="role-head">
+      <span class="role-emoji">🎨</span>
+      <h2>AI for <span class="serif">Designers</span></h2>
+    </div>
+    <p class="role-intro">Designers use AI two ways: for the writing around the work (briefs, presentations, copy), and for the visual exploration itself (image generation, ideation, reference). These prompts cover both — and they keep the human as the taste-maker.</p>
+
+    <div class="tools-row">
+      <span class="label">Best tools</span>
+      <span class="tool"><span class="dot" style="background:#d97757"></span> Claude</span>
+      <span class="tool"><span class="dot" style="background:#10a37f"></span> ChatGPT</span>
+    </div>
+
+    <div class="prompts">
+      <div class="prompt">
+        <h4>Creative brief from a vague request</h4>
+        <div class="body">A stakeholder said: "We need a refresh of [thing]. Make it feel more modern."
+
+Turn that into an actual creative brief:
+- 3 clarifying questions I should ask them before starting
+- The likely actual problem they're trying to solve (not what they said)
+- Audience, mood, references, must-avoids
+- Definition of done — how will we know it's "more modern"?
+- One question they probably haven't thought about</div>
+        <a href="/playground?prompt=A%20stakeholder%20said%3A%20%22We%20need%20a%20refresh%20of%20%5Bthing%5D.%20Make%20it%20feel%20more%20modern.%22%0A%0ATurn%20that%20into%20an%20actual%20creative%20brief%3A%0A-%203%20clarifying%20questions%20I%20should%20ask%20them%20before%20starting%0A-%20The%20likely%20actual%20problem%20they%27re%20trying%20to%20solve%20%28not%20what%20they%20said%29%0A-%20Audience%2C%20mood%2C%20references%2C%20must-avoids%0A-%20Definition%20of%20done%20%E2%80%94%20how%20will%20we%20know%20it%27s%20%22more%20modern%22%3F%0A-%20One%20question%20they%20probably%20haven%27t%20thought%20about" class="try">Try in playground →</a>
+      </div>
+      <div class="prompt">
+        <h4>Image-gen prompt engineering</h4>
+        <div class="body">I want to generate a [type of image] for [use case]. The mood is [adjectives].
+
+Write me 5 image-gen prompts, each progressively more specific:
+1. Loose / exploratory
+2. Composition-focused
+3. Mood + lighting heavy
+4. Strong specific reference style
+5. Production-ready (lighting, lens, materials, color palette)
+
+For each, tell me what kind of result I'll get and which AI image tool is best for that style.</div>
+        <a href="/playground?prompt=I%20want%20to%20generate%20a%20%5Btype%20of%20image%5D%20for%20%5Buse%20case%5D.%20The%20mood%20is%20%5Badjectives%5D.%0A%0AWrite%20me%205%20image-gen%20prompts%2C%20each%20progressively%20more%20specific%3A%0A1.%20Loose%20%2F%20exploratory%0A2.%20Composition-focused%0A3.%20Mood%20%2B%20lighting%20heavy%0A4.%20Strong%20specific%20reference%20style%0A5.%20Production-ready%20%28lighting%2C%20lens%2C%20materials%2C%20color%20palette%29%0A%0AFor%20each%2C%20tell%20me%20what%20kind%20of%20result%20I%27ll%20get%20and%20which%20AI%20image%20tool%20is%20best%20for%20that%20style." class="try">Try in playground →</a>
+      </div>
+    </div>
+
+    <div class="coming-strip">
+      <strong>Full track coming Q3 2026:</strong> Image-generation deep dive (Midjourney, DALL-E, Stable Diffusion), brief-to-presentation pipelines, UX-writing patterns, and the design-research synthesis workflow.
+    </div>
+  </section>
+
+</div>
+</main>
+
+<section class="cta">
+  <div class="container">
+    <h2>Want the full <span class="serif">role tracks</span> when they ship?</h2>
+    <p>Founding members get all 8 role tracks included as they launch through Q3 2026 — half-off forever, no extra cost.</p>
+    <a href="/#waitlist" class="btn btn-primary">Join the founding waitlist →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT</div>
+    <div><a href="/privacy" style="color: var(--text-dim);">Privacy</a> · <a href="/terms" style="color: var(--text-dim);">Terms</a> · <a href="/" style="color: var(--text-dim);">Home</a></div>
+  </div>
+</footer>
+
+</body>
+</html>

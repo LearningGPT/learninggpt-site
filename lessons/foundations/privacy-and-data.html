@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Privacy, data, and what NOT to paste into an AI — LearningGPT</title>
+<meta name="description" content="Customer data, internal docs, NDAs, code — what's safe, what's risky, and the simple workflow that lets you use AI on sensitive work without giving away the farm." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#44e0a4" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/foundations/privacy-and-data" />
+<meta property="og:title" content="Privacy, data, and what NOT to paste into an AI" />
+<meta property="og:description" content="The simple workflow that lets you use AI on sensitive work without giving away the farm." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #44e0a4; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #44e0a4; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+.lesson { padding: 50px 0 100px; }
+.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(68,224,164,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(68,224,164,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip-free { border-color: rgba(68,224,164,0.4); color: var(--accent); background: rgba(68,224,164,0.1); }
+.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
+.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
+.lesson h1 .grad { background: linear-gradient(135deg, #44e0a4 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
+.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
+.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
+.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
+.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(68,224,164,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(68,224,164,0.25); border-radius: var(--radius-lg); position: relative; }
+.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #44e0a4, #7c5cff); border-radius: 2px 0 0 2px; }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.callout p:last-child { margin-bottom: 0; }
+.safe-list, .risky-list { margin: 20px 0; padding: 24px; border-radius: var(--radius-lg); }
+.safe-list { background: rgba(68,224,164,0.06); border: 1px solid rgba(68,224,164,0.25); }
+.risky-list { background: rgba(255,107,138,0.06); border: 1px solid rgba(255,107,138,0.25); }
+.safe-list h3, .risky-list h3 { margin-top: 0; font-size: 18px; }
+.safe-list h3::before { content: '✓ '; color: var(--accent); font-weight: 700; }
+.risky-list h3::before { content: '✕ '; color: var(--danger); font-weight: 700; }
+.safe-list ul li, .risky-list ul li { font-size: 15px; margin-bottom: 8px; }
+.safe-list ul li strong, .risky-list ul li strong { color: var(--text); }
+.workflow-box { margin: 28px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
+.workflow-box h3 { margin-top: 0; }
+.workflow-box ol li { margin-bottom: 12px; font-size: 15.5px; }
+.workflow-box code { background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 4px; font-size: 13px; color: var(--accent); font-family: 'SFMono-Regular', Consolas, monospace; }
+.tier-table { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 24px 0; }
+.tier { padding: 20px; border-radius: var(--radius); border: 1px solid var(--line); background: var(--surface); }
+.tier h4 { margin: 0 0 8px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 700; }
+.tier.safe h4 { color: var(--accent); } .tier.medium h4 { color: var(--warn); } .tier.risky h4 { color: var(--danger); }
+.tier p { font-size: 13px; margin: 0; color: var(--text-dim); line-height: 1.5; }
+@media (max-width: 700px) { .tier-table { grid-template-columns: 1fr; } }
+.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(68,224,164,0.18), rgba(124,92,255,0.1)); border: 1px solid rgba(68,224,164,0.3); border-radius: var(--radius-lg); padding: 36px; }
+.challenge h2 { margin-top: 0; }
+.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #44e0a4, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(68,224,164,0.35); transition: transform .15s; }
+.challenge a.btn:hover { transform: translateY(-1px); color: white; }
+.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; padding-top: 0; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.checklist li:first-child::before { top: 4px; }
+.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
+.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.next-up .free-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(68,224,164,0.18); color: var(--accent); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(68,224,164,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+</style>
+</head>
+<body>
+
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/foundations/" class="nav-back">← AI Foundations</a>
+  </div>
+</nav>
+
+<article class="lesson">
+  <div class="container">
+
+    <div class="lesson-meta">
+      <span class="chip">Lesson 5 · AI Foundations</span>
+      <span class="chip chip-free">Free</span>
+      <span>~7 min read</span>
+      <span class="dot"></span>
+      <span>Practical workflow</span>
+    </div>
+
+    <h1>Privacy, data, and <span class="grad serif">what NOT to paste.</span></h1>
+
+    <p class="deck">Every prompt you send is data leaving your computer. Most of the time that's fine. Some of the time it gets people fired. This lesson covers what's actually safe to share with AI, what's actually risky (and why), and a simple workflow that lets you use AI on sensitive work without putting your company or your customers in the headlines.</p>
+
+    <h2><span class="num">The mental model</span></h2>
+    <h3>Treat AI prompts like emails you might one day have to read out in court.</h3>
+
+    <p>Not because that's literally going to happen for most prompts. But because that mindset filters out the worst mistakes. Would you put this in an email to a stranger? Would you put it in a forum post you can't delete? If the answer is no, don't paste it into an AI either.</p>
+
+    <div class="callout">
+      <span class="lbl">The Reframe</span>
+      <p><strong>Your AI prompts can become training data, logs, or leak vectors</strong> — depending on the tool, the plan, and the configuration. Some AIs explicitly never use your data for training. Others do unless you opt out. Knowing the difference is part of using AI professionally.</p>
+    </div>
+
+    <h2><span class="num">What's safe vs. risky</span></h2>
+
+    <div class="safe-list">
+      <h3>Safe to share with most AIs</h3>
+      <ul>
+        <li><strong>Public information</strong> — anything you could publish on a blog or post on LinkedIn</li>
+        <li><strong>Anonymized work tasks</strong> — "draft a follow-up email" without names or company details</li>
+        <li><strong>Generic professional content</strong> — outlines, brainstorms, formatting, polish</li>
+        <li><strong>Your own writing</strong> for editing or feedback (as long as it doesn't contain anything from the lists below)</li>
+        <li><strong>Code with no proprietary logic or credentials</strong> — open patterns, common algorithms, common bugs</li>
+      </ul>
+    </div>
+
+    <div class="risky-list">
+      <h3>NEVER paste into a consumer AI</h3>
+      <ul>
+        <li><strong>Customer data</strong> — names, emails, account numbers, anything linking a real person to their relationship with you</li>
+        <li><strong>Health information (PHI)</strong> — diagnoses, treatments, anything HIPAA-touched</li>
+        <li><strong>Financial account details</strong> — credit card numbers, bank accounts, SSNs, routing numbers</li>
+        <li><strong>NDA-covered content</strong> — internal strategy decks, unannounced product details, M&A discussions</li>
+        <li><strong>Source code with proprietary IP</strong> — your company's secret-sauce algorithms, security implementations</li>
+        <li><strong>Credentials</strong> — passwords, API keys, tokens, certificates, internal URLs</li>
+        <li><strong>Legal documents under privilege</strong> — anything where attorney-client privilege would be broken by disclosure</li>
+        <li><strong>Other people's personal communications</strong> — emails you received from coworkers, customer DMs, etc.</li>
+      </ul>
+    </div>
+
+    <h2><span class="num">The three tiers of AI privacy</span></h2>
+
+    <div class="tier-table">
+      <div class="tier safe">
+        <h4>Enterprise tier</h4>
+        <p>ChatGPT Enterprise, Claude for Enterprise, Microsoft 365 Copilot, Gemini Workspace. Data stays in your tenant, never trains the model. Safest for sensitive work — if your company has it deployed.</p>
+      </div>
+      <div class="tier medium">
+        <h4>Pro / Team tier</h4>
+        <p>ChatGPT Plus, Claude Pro, Perplexity Pro. Generally not used for training (per current policies), but you're still trusting the vendor's storage and access controls. Fine for most professional work; avoid for the never-paste list.</p>
+      </div>
+      <div class="tier risky">
+        <h4>Free tier</h4>
+        <p>Free versions of ChatGPT, Gemini, Claude. Often used for training by default (you may need to opt out). Plus: lower account security, no admin controls. Avoid for any work-sensitive content.</p>
+      </div>
+    </div>
+
+    <h2><span class="num">The redaction workflow</span></h2>
+
+    <div class="workflow-box">
+      <h3>The simple workflow for using AI on sensitive work</h3>
+      <p>Most "sensitive" work isn't actually about the AI doing the task — it's about the data IN the task. Redact the data; keep the task. Three steps:</p>
+      <ol>
+        <li><strong>Replace names with placeholders.</strong> Instead of "Sarah Chen at Acme Corp," write "[customer contact at customer company]." Same email, no sensitive data.</li>
+        <li><strong>Replace numbers and identifiers.</strong> Account numbers, dollar amounts you don't want logged, SSNs — replace with <code>[number]</code> or <code>$[amount]</code>.</li>
+        <li><strong>Substitute back after.</strong> AI generates the output with placeholders. You copy it into your real document and find/replace the placeholders with the actual data. Total added time: 30 seconds.</li>
+      </ol>
+      <p>This is the workflow lawyers, doctors, and accountants use to leverage AI without violating their obligations. It's not paranoid — it's professional.</p>
+    </div>
+
+    <h2><span class="num">Three rules you can apply tomorrow</span></h2>
+
+    <p><strong>Rule 1: When in doubt, don't.</strong> If you're not sure whether something is OK to paste into an AI, that uncertainty itself is your answer. Find another path.</p>
+
+    <p><strong>Rule 2: Check your company's AI policy.</strong> Most companies now have one. Many have approved AI tools (where data is contracted not to be used for training) vs. unapproved ones. Use the approved ones for work content.</p>
+
+    <p><strong>Rule 3: Treat your prompt history like email history.</strong> Both can be subpoenaed. Both can be screenshot. Both create records. Behave accordingly.</p>
+
+    <div class="challenge">
+      <h2 style="margin-top: 0;">Final challenge: audit your last 10 prompts</h2>
+      <p>Open your AI of choice. Look at your last 10 conversations. For each one, ask:</p>
+      <ol>
+        <li>Did this prompt include any real names, accounts, or identifiers I shouldn't have included?</li>
+        <li>Was this prompt sent to an AI tier appropriate for the sensitivity of the content?</li>
+        <li>Would I be comfortable if a screenshot of this prompt ended up in a public document?</li>
+      </ol>
+      <p>For any "no" answer — that's a habit to fix. Most people find at least one. The fix is easy once you notice the pattern.</p>
+      <div class="btn-row">
+        <a href="/lessons/foundations/" class="btn">Back to Foundations →</a>
+        <a href="/lessons/" class="btn ghost">All lessons →</a>
+      </div>
+    </div>
+
+    <div class="checklist">
+      <h3>What you can do now</h3>
+      <ul>
+        <li>Know exactly what's safe vs. risky to paste into a consumer AI</li>
+        <li>Recognize the three tiers of AI privacy (Enterprise, Pro, Free) and pick the right one</li>
+        <li>Apply the redaction workflow for sensitive work in 30 seconds</li>
+        <li>Check (and follow) your company's AI policy</li>
+        <li>Treat your AI prompt history with the same seriousness as your email history</li>
+      </ul>
+    </div>
+
+    <div class="next-up">
+      <span class="free-tag">Free</span>
+      <div class="lbl" style="margin-top: 14px;">You finished the Foundations track</div>
+      <h3>What's next: pick a tool to master</h3>
+      <p>Foundations gave you the patterns that work everywhere. Now pick the AI you use most and go deep — each Tool Track has its first lesson free. Copilot, Claude, ChatGPT, Gemini, or Perplexity — start anywhere. <a href="/lessons/">See all tracks →</a></p>
+    </div>
+
+  </div>
+</article>
+
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc.</div>
+    <a href="/lessons/foundations/" style="color: var(--text-dim);">← All Foundations lessons</a>
+  </div>
+</footer>
+
+</body>
+</html>

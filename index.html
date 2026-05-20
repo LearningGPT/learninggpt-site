@@ -149,10 +149,63 @@ nav.top {
   font-weight: 800; font-size: 16px; color: white;
   box-shadow: 0 4px 16px rgba(124,92,255,0.5);
 }
-.nav-links { display: flex; gap: 32px; align-items: center; }
+.nav-links { display: flex; gap: 28px; align-items: center; }
 .nav-links a { font-size: 14px; color: var(--text-dim); transition: color .2s; }
 .nav-links a:hover { color: var(--text); }
 .nav-cta { display: flex; gap: 12px; align-items: center; }
+
+/* Lessons dropdown */
+.nav-dropdown { position: relative; }
+.nav-dropdown-toggle {
+  background: none; border: none; color: var(--text-dim);
+  font-size: 14px; font-family: inherit; padding: 0;
+  display: inline-flex; align-items: center; gap: 4px;
+  transition: color .2s;
+}
+.nav-dropdown-toggle:hover { color: var(--text); }
+.nav-dropdown-toggle .chev { font-size: 10px; opacity: 0.7; }
+.nav-dropdown-menu {
+  position: absolute; top: calc(100% + 10px); left: -16px;
+  background: rgba(15,15,35,0.98);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--line-strong);
+  border-radius: 10px; padding: 8px;
+  min-width: 240px;
+  box-shadow: 0 20px 50px -10px rgba(0,0,0,0.6);
+  opacity: 0; visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity .15s, visibility .15s, transform .15s;
+  z-index: 200;
+}
+.nav-dropdown:hover .nav-dropdown-menu,
+.nav-dropdown:focus-within .nav-dropdown-menu {
+  opacity: 1; visibility: visible; transform: translateY(0);
+}
+.nav-dropdown-menu a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px; border-radius: 6px;
+  font-size: 13.5px; color: var(--text);
+  transition: background .15s;
+}
+.nav-dropdown-menu a:hover {
+  background: rgba(124,92,255,0.12); color: var(--text);
+}
+.nav-dropdown-menu a .dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+.nav-dropdown-menu a .sub {
+  margin-left: auto; font-size: 10px; color: var(--text-mute);
+  letter-spacing: 0.5px; text-transform: uppercase;
+}
+.nav-dropdown-menu .menu-divider {
+  height: 1px; background: var(--line); margin: 6px 0;
+}
+.nav-dropdown-menu .menu-section-label {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
+  color: var(--text-mute); padding: 8px 12px 4px; font-weight: 600;
+}
+
 @media (max-width: 768px) { .nav-links { display: none; } }
 
 /* ---------- BUTTONS ---------- */
@@ -600,10 +653,23 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
         LearningGPT
       </a>
       <div class="nav-links">
-        <a href="#tools">Tools</a>
-        <a href="#roles">By role</a>
-        <a href="#playground">Playground</a>
-        <a href="#certs">Certifications</a>
+        <div class="nav-dropdown" tabindex="0">
+          <button class="nav-dropdown-toggle" type="button">Lessons <span class="chev">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <div class="menu-section-label">Tool tracks</div>
+            <a href="/lessons/copilot/"><span class="dot" style="background:#2c7be5"></span> Copilot <span class="sub">In progress</span></a>
+            <a href="/lessons/claude/"><span class="dot" style="background:#d97757"></span> Claude <span class="sub">Soon</span></a>
+            <a href="/lessons/chatgpt/"><span class="dot" style="background:#10a37f"></span> ChatGPT <span class="sub">Soon</span></a>
+            <a href="/lessons/gemini/"><span class="dot" style="background:#4285f4"></span> Gemini <span class="sub">Soon</span></a>
+            <a href="/lessons/perplexity/"><span class="dot" style="background:#20808d"></span> Perplexity <span class="sub">Soon</span></a>
+            <div class="menu-divider"></div>
+            <div class="menu-section-label">Free for everyone</div>
+            <a href="/lessons/foundations/"><span class="dot" style="background:linear-gradient(135deg,#7c5cff,#44e0a4)"></span> AI Foundations <span class="sub">Live</span></a>
+            <div class="menu-divider"></div>
+            <a href="/lessons/" style="font-weight: 600; color: var(--brand-2);">→ All lessons</a>
+          </div>
+        </div>
+        <a href="/playground">Playground</a>
         <a href="#pricing">Pricing</a>
         <a href="#enterprise">For teams</a>
       </div>
@@ -945,26 +1011,29 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
       <div class="price-card">
         <div class="price-name">Explorer</div>
         <div class="price-amount">$0<span> / forever</span></div>
-        <div class="price-desc">Try it. See if structured AI training fits how you learn.</div>
+        <div class="price-desc">Master the fundamentals. See if you want to go deeper.</div>
         <ul class="price-features">
-          <li>AI Foundations track</li>
-          <li>10 playground runs / week</li>
-          <li>Read-only access to one tool track</li>
-          <li>Skill update newsletter</li>
+          <li>Full AI Foundations track</li>
+          <li>First lesson of every tool track (Copilot, Claude, ChatGPT, Gemini, Perplexity)</li>
+          <li>10 playground runs / day</li>
+          <li>AI News digest + skill update newsletter</li>
+          <li>Lesson progress tracking</li>
         </ul>
-        <a href="#waitlist" class="btn btn-ghost">Join waitlist</a>
+        <a href="#waitlist" class="btn btn-ghost">Start free</a>
       </div>
       <div class="price-card popular">
         <div class="popular-badge">FOUNDING MEMBER</div>
         <div class="founder-discount">50% OFF FOREVER</div>
         <div class="price-name">Pro</div>
         <div class="price-amount">$9<span> / mo · $19 after launch</span></div>
-        <div class="price-desc">Everything you need to master multiple AI tools.</div>
+        <div class="price-desc">Everything you need to master every major AI tool.</div>
         <ul class="price-features">
-          <li>All tool tracks (ChatGPT, Claude, Copilot launch — more added monthly)</li>
+          <li>Everything in Free</li>
+          <li>All tool tracks (every lesson, not just samples)</li>
           <li>All role tracks</li>
-          <li>Unlimited playground (cross-model compare)</li>
-          <li>Skill update alerts</li>
+          <li>Hands-on exercises with AI grading</li>
+          <li>Unlimited playground</li>
+          <li>Real-time skill update alerts</li>
           <li>Founding member status + early access to new tracks</li>
         </ul>
         <a href="#waitlist" class="btn btn-primary">Claim founding spot</a>

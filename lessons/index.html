@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>All lessons — LearningGPT</title>
+<meta name="description" content="The full LearningGPT catalog. Tool mastery for Copilot, Claude, ChatGPT, Gemini, and Perplexity. Plus the free AI Foundations track." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#7c5cff" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/" />
+<meta property="og:title" content="All lessons — LearningGPT" />
+<meta property="og:description" content="Tool mastery for every major AI. Pick your track and start." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<style>
+:root {
+  --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a;
+  --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14);
+  --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85;
+  --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4;
+  --warn: #ffb547; --danger: #ff6b8a;
+  --radius: 14px; --radius-lg: 20px;
+  --container: 1100px;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif;
+  background: var(--bg); color: var(--text);
+  line-height: 1.6; -webkit-font-smoothing: antialiased;
+  overflow-x: hidden; min-height: 100vh;
+}
+a { color: inherit; text-decoration: none; }
+
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.4; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -150px; background: #7c5cff; }
+.bg-orb.two { width: 600px; height: 600px; top: 40%; right: -200px; background: #5b8def; opacity: 0.3; }
+.bg-orb.three { width: 400px; height: 400px; bottom: -100px; left: 30%; background: #44e0a4; opacity: 0.15; }
+
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+/* Nav */
+nav.top {
+  position: sticky; top: 0; z-index: 100;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(10,10,26,0.85);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 24px; max-width: 1180px; margin: 0 auto;
+}
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark {
+  width: 30px; height: 30px; border-radius: 7px;
+  background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4);
+  display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white;
+  box-shadow: 0 4px 16px rgba(124,92,255,0.5);
+}
+.nav-back { font-size: 13px; color: var(--text-dim); }
+.nav-back:hover { color: var(--text); }
+
+/* Hero */
+.hero { padding: 70px 0 40px; text-align: center; }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 1.5px; color: var(--brand-2);
+  padding: 6px 12px; border: 1px solid rgba(91,141,239,0.3);
+  border-radius: 999px; background: rgba(91,141,239,0.08);
+  margin-bottom: 24px;
+}
+.hero h1 {
+  font-size: clamp(36px, 5vw, 56px); font-weight: 800;
+  letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 18px;
+}
+.hero h1 .grad {
+  background: linear-gradient(135deg, #7c5cff 0%, #5b8def 50%, #44e0a4 100%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero h1 .serif {
+  font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400;
+  padding-right: 0.15em;
+}
+.hero p { font-size: 17px; color: var(--text-dim); max-width: 620px; margin: 0 auto; }
+
+/* Free callout banner */
+.free-banner {
+  margin: 48px auto 0; max-width: 760px;
+  background: linear-gradient(135deg, rgba(68,224,164,0.12), rgba(124,92,255,0.08));
+  border: 1px solid rgba(68,224,164,0.3);
+  border-radius: var(--radius-lg); padding: 22px 28px;
+  display: flex; gap: 18px; align-items: center; justify-content: space-between;
+  flex-wrap: wrap;
+}
+.free-banner .label {
+  display: inline-block; padding: 4px 10px; border-radius: 999px;
+  background: rgba(68,224,164,0.18); color: var(--accent);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;
+}
+.free-banner p { margin: 6px 0 0; color: var(--text); font-size: 14.5px; }
+.free-banner a.btn {
+  background: linear-gradient(135deg, #7c5cff, #5b8def);
+  color: white; padding: 10px 18px; border-radius: 8px;
+  font-size: 13.5px; font-weight: 600; white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(124,92,255,0.3);
+  transition: transform .15s;
+}
+.free-banner a.btn:hover { transform: translateY(-1px); }
+
+/* Tracks grid */
+.tracks-section { padding: 80px 0 60px; }
+.section-label {
+  font-size: 12px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 1.5px; color: var(--text-mute); margin-bottom: 14px;
+}
+.section-title {
+  font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 10px;
+}
+.section-sub { font-size: 15px; color: var(--text-dim); margin: 0 0 32px; max-width: 640px; }
+
+.tracks-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px;
+}
+@media (max-width: 760px) { .tracks-grid { grid-template-columns: 1fr; } }
+
+.track-card {
+  background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%);
+  border: 1px solid var(--line); border-radius: var(--radius-lg);
+  padding: 28px; transition: transform .15s, border-color .15s;
+  text-decoration: none; color: inherit; display: block;
+  position: relative; overflow: hidden;
+}
+.track-card:hover { transform: translateY(-4px); border-color: rgba(124,92,255,0.35); }
+.track-card-head { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+.track-icon {
+  width: 48px; height: 48px; border-radius: 12px;
+  display: grid; place-items: center; font-weight: 700; color: white; font-size: 20px;
+  flex-shrink: 0;
+}
+.track-icon.foundations { background: linear-gradient(135deg, #7c5cff, #44e0a4); }
+.track-icon.copilot   { background: #2c7be5; }
+.track-icon.claude    { background: #d97757; }
+.track-icon.chatgpt   { background: #10a37f; }
+.track-icon.gemini    { background: linear-gradient(135deg, #4285f4, #9b72cb, #d96570); }
+.track-icon.perplex   { background: #20808d; }
+.track-icon.grok      { background: #1a1a1a; border: 1px solid #444; }
+.track-card h3 { font-size: 19px; margin: 0 0 2px; font-weight: 600; }
+.track-card .maker { font-size: 12px; color: var(--text-mute); }
+.track-card p { font-size: 14px; color: var(--text-dim); margin: 0 0 18px; line-height: 1.55; }
+.track-card-foot {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 14px; border-top: 1px solid var(--line);
+  font-size: 12.5px; color: var(--text-mute);
+}
+.track-card-foot b { color: var(--text); font-weight: 600; }
+.track-status {
+  display: inline-block; padding: 3px 9px; border-radius: 999px;
+  font-size: 10.5px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+}
+.track-status.live { background: rgba(68,224,164,0.15); color: var(--accent); border: 1px solid rgba(68,224,164,0.3); }
+.track-status.progress { background: rgba(255,181,71,0.15); color: var(--warn); border: 1px solid rgba(255,181,71,0.3); }
+.track-status.soon { background: rgba(255,255,255,0.06); color: var(--text-mute); border: 1px solid var(--line-strong); }
+
+/* CTA */
+.cta-band {
+  margin: 60px 0 80px;
+  background: linear-gradient(135deg, rgba(124,92,255,0.15), rgba(68,224,164,0.08));
+  border: 1px solid rgba(124,92,255,0.25);
+  border-radius: var(--radius-lg);
+  padding: 50px 40px; text-align: center;
+}
+.cta-band h2 { font-size: 28px; font-weight: 700; margin: 0 0 14px; letter-spacing: -0.01em; }
+.cta-band h2 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
+.cta-band p { font-size: 15.5px; color: var(--text-dim); max-width: 540px; margin: 0 auto 24px; }
+.cta-band a.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: linear-gradient(135deg, #7c5cff, #5b8def); color: white;
+  padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px;
+  box-shadow: 0 6px 24px rgba(124,92,255,0.4);
+  transition: transform .15s;
+}
+.cta-band a.btn:hover { transform: translateY(-1px); }
+
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner {
+  max-width: var(--container); margin: 0 auto; padding: 0 24px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 13px; color: var(--text-mute);
+}
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+</style>
+</head>
+<body>
+
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<div class="bg-orb three"></div>
+
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo">
+      <div class="logo-mark">L</div>
+      LearningGPT
+    </a>
+    <a href="/" class="nav-back">← Home</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <span class="eyebrow">The Catalog</span>
+    <h1>Every AI tool. <span class="grad serif">Mastered.</span></h1>
+    <p>Pick the AI you use most and go deep, or start with our free Foundations track. New lessons added every week.</p>
+
+    <div class="free-banner">
+      <div>
+        <span class="label">Free Forever</span>
+        <p><strong>AI Foundations track</strong> — five core lessons that make every other AI tool you use better. Plus first lesson of every track below, on us.</p>
+      </div>
+      <a href="/lessons/foundations/" class="btn">Start free →</a>
+    </div>
+  </div>
+</section>
+
+<section class="tracks-section">
+  <div class="container">
+
+    <div class="section-label">Tool Tracks</div>
+    <h2 class="section-title">Deep mastery, one AI at a time.</h2>
+    <p class="section-sub">Each track is a structured curriculum that takes you from "I have access" to "I actually save hours a week with this." Hands-on workflows, real exercises, built by people who use these tools daily.</p>
+
+    <div class="tracks-grid">
+
+      <!-- Copilot -->
+      <a href="/lessons/copilot/" class="track-card">
+        <div class="track-card-head">
+          <div class="track-icon copilot">M</div>
+          <div>
+            <h3>Copilot Mastery</h3>
+            <div class="maker">by Microsoft · M365 + GitHub</div>
+          </div>
+        </div>
+        <p>Outlook drafts, Excel formulas, Word documents, Teams summaries, GitHub code review — the daily workflows most Copilot users don't know exist.</p>
+        <div class="track-card-foot">
+          <span><b>~14</b> lessons planned</span>
+          <span class="track-status progress">In progress</span>
+        </div>
+      </a>
+
+      <!-- Claude -->
+      <a href="/lessons/claude/" class="track-card">
+        <div class="track-card-head">
+          <div class="track-icon claude">C</div>
+          <div>
+            <h3>Claude Mastery</h3>
+            <div class="maker">by Anthropic</div>
+          </div>
+        </div>
+        <p>Projects, Artifacts, computer use, Claude Code, connecting Claude to your tools (email, docs, calendar) — get the most out of the AI that thinks before it speaks.</p>
+        <div class="track-card-foot">
+          <span><b>~12</b> lessons planned</span>
+          <span class="track-status soon">Coming soon</span>
+        </div>
+      </a>
+
+      <!-- ChatGPT -->
+      <a href="/lessons/chatgpt/" class="track-card">
+        <div class="track-card-head">
+          <div class="track-icon chatgpt">G</div>
+          <div>
+            <h3>ChatGPT Mastery</h3>
+            <div class="maker">by OpenAI</div>
+          </div>
+        </div>
+        <p>Custom GPTs, Canvas, voice mode, agents, memory, the power-user prompt patterns. The most-used AI in the world — learn it like a 1%-er.</p>
+        <div class="track-card-foot">
+          <span><b>~12</b> lessons planned</span>
+          <span class="track-status soon">Coming soon</span>
+        </div>
+      </a>
+
+      <!-- Gemini -->
+      <a href="/lessons/gemini/" class="track-card">
+        <div class="track-card-head">
+          <div class="track-icon gemini">⬢</div>
+          <div>
+            <h3>Gemini Mastery</h3>
+            <div class="maker">by Google · Workspace</div>
+          </div>
+        </div>
+        <p>Gemini in Docs, Sheets, Slides, Gmail, plus NotebookLM workflows and the long-context tricks that make Gemini shine on research-heavy work.</p>
+        <div class="track-card-foot">
+          <span><b>~10</b> lessons planned</span>
+          <span class="track-status soon">Coming soon</span>
+        </div>
+      </a>
+
+      <!-- Perplexity -->
+      <a href="/lessons/perplexity/" class="track-card">
+        <div class="track-card-head">
+          <div class="track-icon perplex">P</div>
+          <div>
+            <h3>Perplexity Mastery</h3>
+            <div class="maker">by Perplexity</div>
+          </div>
+        </div>
+        <p>The research engine that's eating Google's lunch. Spaces, deep research, citation workflows, Comet browser, and when Perplexity beats every chat AI.</p>
+        <div class="track-card-foot">
+          <span><b>~8</b> lessons planned</span>
+          <span class="track-status soon">Coming soon</span>
+        </div>
+      </a>
+
+      <!-- Foundations -->
+      <a href="/lessons/foundations/" class="track-card" style="border-color: rgba(68,224,164,0.3);">
+        <div class="track-card-head">
+          <div class="track-icon foundations">✨</div>
+          <div>
+            <h3>AI Foundations</h3>
+            <div class="maker">tool-agnostic · free forever</div>
+          </div>
+        </div>
+        <p>The patterns that work on every AI: specific friction, the constraint stack, hallucination spotting, model selection, privacy basics. Make every other tool track easier.</p>
+        <div class="track-card-foot">
+          <span><b>1</b> lesson live · 4 more coming</span>
+          <span class="track-status live">Live · Free</span>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="cta-band">
+      <h2>Don't see your tool? <span class="serif">Tell us.</span></h2>
+      <p>NotebookLM, Cursor, Claude Code, Replit Agent, Midjourney, Suno, ElevenLabs — new tracks join the catalog every month. Founding members get them all included as they ship.</p>
+      <a href="/#waitlist" class="btn">Join the founding cohort →</a>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with OpenAI, Anthropic, Microsoft, Google, or xAI.</div>
+    <a href="/" style="color: var(--text-dim);">← Back to home</a>
+  </div>
+</footer>
+
+</body>
+</html>

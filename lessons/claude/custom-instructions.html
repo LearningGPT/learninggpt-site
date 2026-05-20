@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Custom instructions: teach Claude your style once — LearningGPT</title>
+<meta name="description" content="Most Claude users either skip custom instructions entirely (and get generic output forever) or write them so badly they make Claude worse. There are f" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#d97757" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/claude/custom-instructions" />
+<meta property="og:title" content="Custom instructions: teach Claude your style once" />
+<meta property="og:description" content="Most Claude users either skip custom instructions entirely (and get generic output forever) or write them so badly they make Claude worse. There are f" />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #d97757; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #d97757; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+.lesson { padding: 50px 0 100px; }
+.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(217,119,87,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(217,119,87,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
+.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
+.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
+.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
+.lesson h1 .grad { background: linear-gradient(135deg, #d97757 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
+.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
+.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
+.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
+.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(217,119,87,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(217,119,87,0.25); border-radius: var(--radius-lg); position: relative; }
+.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #d97757, #7c5cff); border-radius: 2px 0 0 2px; }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.callout p:last-child { margin-bottom: 0; }
+.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
+.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(217,119,87,0.1); border: 1px solid rgba(217,119,87,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
+.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
+.workflow p { font-size: 15px; margin: 0 0 14px; }
+.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
+.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; }
+.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
+.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
+.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
+.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(217,119,87,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(217,119,87,0.25); border-radius: var(--radius-lg); padding: 36px; }
+.challenge h2 { margin-top: 0; }
+.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #d97757, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
+.challenge a.btn:hover { transform: translateY(-1px); color: white; }
+.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; padding-top: 0; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.checklist li:first-child::before { top: 4px; }
+.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
+.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/claude/" class="nav-back">← Claude Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Lesson 07 · Claude Mastery</span>
+      <span class="chip chip-pro">Pro</span>
+      <span>~9 min read</span>
+      <span class="dot"></span>
+      <span>4 sections + anti-patterns</span>
+    </div>
+    <h1>Custom instructions: <span class="grad serif">teach Claude once.</span></h1>
+    <p class="deck">Most Claude users either skip custom instructions entirely (and get generic output forever) or write them so badly they make Claude worse. There are four sections every good instruction set needs, plus three anti-patterns that make Claude noticeably worse. This lesson covers both.</p>
+    <h2><span class="num">The mental model</span></h2><h3>Custom instructions are a contract Claude signs at the start of every conversation.</h3><p>They tell Claude who you are, how you work, and what you want. Done well, they replace pages of re-explanation. Done badly, they confuse Claude into worse output. The skill is writing them tight.</p><h2><span class="num">Workflow 01</span> The 4 sections every instruction set needs</h2><div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">1</div><h3>Structure your custom instructions</h3></div>
+      <p>Custom instructions in Claude should cover these four areas, each in 2-3 sentences.</p>
+      <h4>The prompt that works</h4>
+      <div class="prompt-example"><span class="label">Template</span>ABOUT ME: I'm [role] at [company/industry]. I primarily use Claude for [main use cases].
+
+MY VOICE: [Conversational/formal/direct.] Avoid [jargon, AI clichés, specific phrases you hate]. Use contractions / Don't use contractions.
+
+MY PROCESS: [How I prefer to work with you. Ask questions before assuming. Show your reasoning. Don't over-explain.]
+
+DEFAULT BEHAVIORS: [Be concise unless I ask for depth. Flag confidence when uncertain. Never invent statistics.]</div>
+      <h4>Best use cases</h4>
+      <ul><li>Anyone using Claude weekly+</li><li>Founders, writers, professionals with distinct voice</li><li>Engineers with strong opinions about code style</li><li>Anyone tired of explaining the same context</li></ul>
+      <div class="gotcha">Don't put confidential info in custom instructions — they're stored. Keep it about style and process, not specific facts or sensitive details.</div>
+      <div class="savings"><strong>Time savings:</strong> Re-explaining yourself: never again.</div>
+    </div><h2><span class="num">Workflow 02</span> The three anti-patterns that make Claude worse</h2><div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">2</div><h3>Avoid these common mistakes</h3></div>
+      <p>Some instructions actively degrade output quality. Watch for these.</p>
+      <h4>The prompt that works</h4>
+      <div class="prompt-example"><span class="label">Anti-patterns</span>1. Conflicting rules: "Be detailed but concise" — pick one.
+2. Over-constraint: 20+ rules → Claude becomes paralyzed. Aim for 6-10 strong rules max.
+3. Style without substance: "Be helpful and clear" — too vague to change anything. Be specific: "When I ask for code, show the full file, not snippets."</div>
+      <h4>Best use cases</h4>
+      <ul><li>First-time Claude users writing too many rules</li><li>Anyone whose Claude output got worse after they added instructions</li><li>Teams sharing a Claude account with conflicting style preferences</li></ul>
+      <div class="gotcha">Test your instructions: ask Claude something, then check if the output reflects your rules. If not, the instructions aren't doing what you think.</div>
+      <div class="savings"><strong>Time savings:</strong> Output quality immediately improves when instructions are tight.</div>
+    </div><h2><span class="num">Workflow 03</span> Iterate on your instructions like code</h2><div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">3</div><h3>Update them every 4-6 weeks</h3></div>
+      <p>Custom instructions should evolve as your needs change. Treat them like a config file you maintain.</p>
+      <h4>The prompt that works</h4>
+      <div class="prompt-example"><span class="label">Iteration pattern</span>Every month or so, ask: 'What kinds of output am I still editing heavily?' Update instructions to bake that editing in. Add rules for the friction; remove rules that stopped mattering.</div>
+      <h4>Best use cases</h4>
+      <ul><li>Anyone serious about Claude as a daily tool</li><li>Long-term users whose use cases have evolved</li><li>Teams converging on shared best practices</li></ul>
+      <div class="gotcha">Don't bloat. If you can't fit your instructions in 10 sentences, you're trying to do too much.</div>
+      <div class="savings"><strong>Time savings:</strong> Tool fit gets sharper every iteration.</div>
+    </div>
+    <div class="challenge">
+      <h2 style="margin-top: 0;">Final challenge: rewrite your instructions tonight</h2>
+      <p>Open Claude settings. Either: (a) write your first real custom instructions using the 4-section template, or (b) if you already have them, audit them against the anti-patterns. Trim to 10 sentences max. Test with 5 typical prompts. Notice the difference.</p>
+      <div class="btn-row">
+        <a href="/lessons/claude/" class="btn">Back to Claude Mastery →</a>
+        <a href="/#pricing" class="btn ghost">See pricing →</a>
+      </div>
+    </div>
+    <div class="checklist">
+      <h3>What you can do now</h3>
+      <ul><li>Write custom instructions using the 4-section structure (About, Voice, Process, Defaults)</li><li>Avoid the three anti-patterns (conflicts, over-constraint, vague style)</li><li>Test your instructions by running typical prompts and checking the output reflects them</li><li>Treat custom instructions as code: maintain, iterate, prune</li></ul>
+    </div>
+    <div class="next-up">
+      <span class="pro-tag">Pro+</span>
+      <div class="lbl" style="margin-top: 14px;">Up next in Claude Mastery</div>
+      <h3>Lesson 8+ · Plus: agents, MCP, advanced patterns, and more</h3>
+      <p>Multi-turn agent workflows, connecting Claude to external tools via MCP, prompt chaining, evaluation patterns. The advanced curriculum for power users. <a href="/#pricing">See pricing →</a></p>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Anthropic.</div>
+    <a href="/lessons/claude/" style="color: var(--text-dim);">← All Claude lessons</a>
+  </div>
+</footer>
+</body>
+</html>

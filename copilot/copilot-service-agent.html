@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Customer Service Agent — case management at scale — LearningGPT</title>
+<meta name="description" content="Dynamics 365 Customer Service Agent triages cases, drafts responses, manages SLAs. The agent that 5x's support team capacity without 5x'ing headcount." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#2c7be5" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/copilot/copilot-service-agent" />
+<meta property="og:title" content="Customer Service Agent — case management at scale" />
+<meta property="og:description" content="Dynamics 365 Customer Service Agent triages cases, drafts responses, manages SLAs. The agent that 5x's support team capacity without 5x'ing headcount." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #2c7be5; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #2c7be5; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+.lesson { padding: 50px 0 100px; }
+.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(44,123,229,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(44,123,229,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
+.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
+.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
+.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
+.lesson h1 .grad { background: linear-gradient(135deg, #2c7be5 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
+.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
+.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
+.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
+.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); position: relative; }
+.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #2c7be5, #7c5cff); border-radius: 2px 0 0 2px; }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.callout p:last-child { margin-bottom: 0; }
+.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
+.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(44,123,229,0.1); border: 1px solid rgba(44,123,229,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
+.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
+.workflow p { font-size: 15px; margin: 0 0 14px; }
+.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
+.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
+.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
+.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
+.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
+.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); padding: 36px; }
+.challenge h2 { margin-top: 0; }
+.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #2c7be5, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
+.challenge a.btn:hover { transform: translateY(-1px); color: white; }
+.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; padding-top: 0; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.checklist li:first-child::before { top: 4px; }
+.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
+.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
+.next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/copilot/" class="nav-back">← Copilot Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Agents · Lesson 06</span>
+      <span class="chip chip-pro">Pro</span>
+      <span>~10 min read</span>
+      <span class="dot"></span>
+      <span>Triage + responses</span>
+    </div>
+    <h1>Service Agent: <span class="grad serif">5x capacity without 5x headcount.</span></h1>
+    <p class="deck">The Dynamics 365 Customer Service Agent (and its Copilot Chat counterpart) handles the operational layer of support: case categorization, response drafting from your knowledge base, SLA tracking, and escalation. It's the agent that lets a small support team handle volume that would normally require a much larger one.</p>
+    <h2><span class="num">Workflow 01</span> Case triage and categorization</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>New tickets sorted in real time</h3></div><p>The first job: when a case comes in, classify it, route it, and predict whether it'll escalate. The agent does this in seconds; humans took minutes.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Case triage</span>Configure Service Agent to triage every new case as it arrives:
+
+1. Read the case description and any included attachments
+2. Categorize by:
+   - **Issue type**: [your taxonomy — billing, account, technical, etc.]
+   - **Severity**: P0 (down/blocked), P1 (degraded), P2 (annoying), P3 (cosmetic/question)
+   - **Customer tier**: [your customer segments]
+3. Predict:
+   - Probability of resolving via knowledge base (no human needed)
+   - Probability of escalating beyond first-touch
+   - Estimated time to resolve
+4. Route:
+   - High-confidence KB match → suggest a response from KB, send to L1
+   - Likely escalation needed → route directly to L2
+   - Genuinely novel → flag for human triage</div><h4>Best use cases</h4><ul><li>Inbound support ticket processing</li><li>Email-based support routing</li><li>Multi-channel support consolidation (chat + email + form)</li><li>Off-hours coverage triage</li></ul><div class="gotcha">Routing based on AI confidence works well most of the time. Audit cases that got 'easy' classifications — a small misclassification rate that's tolerable in low-stakes issues becomes painful in P0s.</div><div class="savings"><strong>Time savings:</strong> Triage: 5-10 min/ticket → near-zero, all 24 hours.</div></div><h2><span class="num">Workflow 02</span> Response drafting from your KB</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>First-response drafts that match your voice</h3></div><p>Service Agent doesn't reply for you — but it produces drafts your agents can review and send. Pulled from your knowledge base, in your support voice.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Response drafting</span>For each case Service Agent classifies as &#x27;KB match likely&#x27;:
+
+1. Search your knowledge base for relevant articles
+2. Draft a response that:
+   - Addresses the customer&#x27;s specific question (don&#x27;t link the whole KB article)
+   - Pulls only the relevant portion of the KB
+   - Adds context for THIS customer&#x27;s situation (account type, prior history)
+   - Matches your team&#x27;s voice — use [reference support response template]
+3. Include in the draft: KB articles referenced, customer history acknowledged, any caveats
+
+The human L1 reviews, edits if needed, and sends. Don&#x27;t auto-send anything.</div><h4>Best use cases</h4><ul><li>First-touch response drafts</li><li>Follow-up question handling</li><li>Closing-out responses for resolved cases</li><li>Escalation messages to L2/L3</li></ul><div class="gotcha">Voice matching is critical. A draft that sounds robotic damages trust even if technically correct. Maintain a reference library of your best human responses to anchor the voice.</div><div class="savings"><strong>Time savings:</strong> First-response drafts: 5-8 min → 30 sec to review.</div></div><h2><span class="num">Workflow 03</span> SLA tracking and escalation</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>Never miss an SLA again</h3></div><p>Service Agent watches the clock so your team doesn't have to. Cases approaching SLA thresholds get escalated automatically.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">SLA management</span>Configure SLA watching:
+
+For each case, given the customer&#x27;s contract SLA:
+- At 50% of SLA window: ensure assigned agent has seen it; ping if not
+- At 75% of SLA window: ping agent&#x27;s manager
+- At 90% of SLA window: auto-escalate to L2 with a context summary
+- At 100% of SLA window: incident response — auto-create a Teams channel with all stakeholders
+
+Weekly: produce an SLA performance report
+- Met / missed counts by tier
+- Average resolution time vs. target
+- Cases that escalated and root cause
+- Recommendations for staffing or process</div><h4>Best use cases</h4><ul><li>Enterprise customer SLA enforcement</li><li>Premium-tier response time guarantees</li><li>Internal incident response coordination</li><li>Weekly support performance review</li></ul><div class="gotcha">Auto-escalation can create alert fatigue if thresholds are too aggressive. Calibrate based on your actual SLA terms and team capacity.</div><div class="savings"><strong>Time savings:</strong> Missed SLAs avoided: priceless. Manual SLA tracking eliminated.</div></div>
+    <div class="challenge">
+      <h2 style="margin-top: 0;">Pilot Service Agent on one issue type</h2>
+      <p>Don't try to roll out everywhere at once. Pick one issue category (e.g., 'billing questions') and configure Service Agent for just that. Measure response time and CSAT for one month. Expand based on what you learn.</p>
+      <div class="btn-row">
+        <a href="/lessons/copilot/" class="btn">Back to Copilot Mastery →</a>
+        <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+      </div>
+    </div>
+    <div class="checklist">
+      <h3>What you can do now</h3>
+      <ul>
+        <li>Audit cases that get 'easy' classifications to catch silent errors</li>
+        <li>Always have human L1 review drafts before they go out</li>
+        <li>Maintain a reference library of your best support responses for voice</li>
+        <li>Calibrate SLA-escalation thresholds based on real terms and team size</li>
+        <li>Roll out incrementally — pilot one issue type before expanding</li>
+      </ul>
+    </div>
+    <div class="next-up">
+      <span class="pro-plus-tag">Pro+</span>
+      <div class="lbl" style="margin-top: 14px;">Up next in Copilot Mastery</div>
+      <h3>Lesson 07 · Copilot Studio — build your own agents</h3>
+      <p>Microsoft's agent platform isn't just the named agents — Copilot Studio lets you build custom agents for your specific workflows. The Pro+ tier of Copilot mastery. <a href="/lessons/copilot/">See the track →</a></p>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT · Independent. Not affiliated with Microsoft.</div>
+    <a href="/lessons/copilot/" style="color: var(--text-dim);">← All Copilot Mastery lessons</a>
+  </div>
+</footer>
+</body>
+</html>

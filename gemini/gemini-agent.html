@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gemini Agent — Google's unified agentic mode — LearningGPT</title>
+<meta name="description" content="Gemini Agent is Google's umbrella agentic mode (absorbed Project Mariner). Multi-step tasks across Deep Research, Canvas, Workspace, and live web." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#4285f4" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/gemini/gemini-agent" />
+<meta property="og:title" content="Gemini Agent — Google's unified agentic mode" />
+<meta property="og:description" content="Gemini Agent is Google's umbrella agentic mode (absorbed Project Mariner). Multi-step tasks across Deep Research, Canvas, Workspace, and live web." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #4285f4; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #4285f4; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+.lesson { padding: 50px 0 100px; }
+.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(66,133,244,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(66,133,244,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
+.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
+.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
+.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
+.lesson h1 .grad { background: linear-gradient(135deg, #4285f4 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
+.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
+.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
+.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
+.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(66,133,244,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(66,133,244,0.25); border-radius: var(--radius-lg); position: relative; }
+.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #4285f4, #7c5cff); border-radius: 2px 0 0 2px; }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.callout p:last-child { margin-bottom: 0; }
+.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
+.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(66,133,244,0.1); border: 1px solid rgba(66,133,244,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
+.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
+.workflow p { font-size: 15px; margin: 0 0 14px; }
+.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
+.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
+.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
+.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
+.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
+.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(66,133,244,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(66,133,244,0.25); border-radius: var(--radius-lg); padding: 36px; }
+.challenge h2 { margin-top: 0; }
+.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #4285f4, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
+.challenge a.btn:hover { transform: translateY(-1px); color: white; }
+.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; padding-top: 0; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.checklist li:first-child::before { top: 4px; }
+.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
+.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
+.next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/gemini/" class="nav-back">← Gemini Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Agents · Lesson 01</span>
+      <span class="chip chip-pro">Pro</span>
+      <span>~11 min read</span>
+      <span class="dot"></span>
+      <span>Multi-step + Workspace</span>
+    </div>
+    <h1>Gemini Agent: <span class="grad serif">Google's answer to autonomy.</span></h1>
+    <p class="deck">In May 2026 Google consolidated its agent story. Project Mariner was retired as a standalone product; its technology now powers Gemini Agent — the unified agentic mode inside the Gemini app. It handles multi-step tasks across Deep Research, Canvas, Workspace integration, and live web browsing. One mode, one interface, end-to-end.</p>
+    <h2><span class="num">Workflow 01</span> Multi-step web tasks</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>Tasks that span planning, research, and action</h3></div><p>The Project Mariner heritage shows up in Gemini Agent's web automation. Tell it an outcome; it plans the steps, executes across multiple sites, and produces the result.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Multi-site task</span>Find me three new restaurants near our office that:
+
+• Serve a private dining room for 12-15 people
+• Are open for dinner Tuesday-Thursday
+• Have at least a 4.3 rating on Google Maps with 100+ reviews
+• Aren&#x27;t already on our &#x27;recently used&#x27; list (which I&#x27;ll paste below)
+
+For each candidate, verify availability for next Tuesday at 7pm by checking their reservation system (OpenTable, Resy, or direct). Don&#x27;t make a booking — just confirm availability and pricing for the private room.
+
+Produce a comparison table I can share with the team.</div><h4>Best use cases</h4><ul><li>Travel and event planning</li><li>Vendor research with availability checks</li><li>Comparison shopping across platforms</li><li>Cross-site data verification</li></ul><div class="gotcha">Gemini Agent asks for confirmation before any irreversible action. If it didn't ask, double-check what just happened.</div><div class="savings"><strong>Time savings:</strong> Multi-site research + verification: hours → 10-20 min.</div></div><h2><span class="num">Workflow 02</span> Workspace deep integration</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>Tasks across Docs, Sheets, and Gmail in one go</h3></div><p>Where Gemini Agent really shines is the Workspace integration. Tasks that touch Docs, Sheets, and Gmail in one workflow happen as one prompt.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Workspace kickoff</span>Create a project kickoff document for [Project Name]:
+
+1. Search my Drive for any prior docs about this project — incorporate what&#x27;s already decided
+2. Search my Gmail for the original kickoff thread — pull goals and stakeholders
+3. Create a new Doc with: project summary, goals, stakeholders, key dates, open questions, RACI chart
+4. Build a tracking spreadsheet with: task name, owner, due date, status, dependencies
+5. Set up a calendar event for the kickoff meeting (next Tuesday 10am if attendees are free)
+6. Draft (don&#x27;t send) a kickoff email to the stakeholders
+
+Share the Doc with the stakeholders in view-only mode.</div><h4>Best use cases</h4><ul><li>Project kickoff packages</li><li>Customer onboarding doc generation</li><li>Event planning across multiple Workspace files</li><li>Hiring loop coordination</li></ul><div class="gotcha">Sharing permissions are a place to be cautious. Gemini Agent will share things if asked — verify the permission level (view, comment, edit) matches your intent.</div><div class="savings"><strong>Time savings:</strong> Project kickoff setup: 2-3 hours → 15 min including review.</div></div><h2><span class="num">Workflow 03</span> Long-running background tasks</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>Tasks that take time — let Agent work in the background</h3></div><p>Gemini Agent handles long-running tasks (research, comparison, multi-step automation) as background jobs. You're notified when done; the result is in your account.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Background research</span>Run a deep competitive analysis on [Competitor]:
+
+• Pull their public messaging, pricing, recent product launches
+• Read every analyst report you can find from the last 12 months
+• Search Reddit, Hacker News, and product-review sites for user sentiment
+• Compare their messaging to ours (use our website + recent press releases as input)
+• Identify 5 strategic vulnerabilities we could exploit
+
+This is going to take 30-60 minutes. Run it in the background. When complete, save the report to Drive and ping me.</div><h4>Best use cases</h4><ul><li>Strategic competitive analysis</li><li>Market research over long time horizons</li><li>Document synthesis from large corpora</li><li>Multi-source consolidation projects</li></ul><div class="gotcha">Background tasks are stateful — they run for a while. Don't kick off 20 of them at once; pick the most valuable tasks and let them complete.</div><div class="savings"><strong>Time savings:</strong> Background processing: hours of compute, zero hours of your attention.</div></div><div class="callout"><span class="lbl">Mariner heritage</span><p>Project Mariner was Google's standalone browser-agent research prototype, shut down on May 4, 2026. Its technology is now embedded in Gemini Agent — same core capabilities, integrated experience. If you used Mariner before, expect a similar but more polished experience.</p></div>
+    <div class="challenge">
+      <h2 style="margin-top: 0;">Hand Agent a real Workspace project</h2>
+      <p>Pick a project that requires creating multiple Workspace files. Use Gemini Agent to set up the whole package in one prompt. Notice where it's faster than doing each file individually, and where you'd still rather build by hand.</p>
+      <div class="btn-row">
+        <a href="/lessons/gemini/" class="btn">Back to Gemini Mastery →</a>
+        <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+      </div>
+    </div>
+    <div class="checklist">
+      <h3>What you can do now</h3>
+      <ul>
+        <li>Use Gemini Agent for multi-step tasks, not single questions</li>
+        <li>Verify share permissions match your intent</li>
+        <li>Run long tasks in the background; don't watch them work</li>
+        <li>For irreversible actions, expect confirmation prompts</li>
+        <li>Combine Workspace integration with research for richer outputs</li>
+      </ul>
+    </div>
+    <div class="next-up">
+      <span class="pro-tag">Pro</span>
+      <div class="lbl" style="margin-top: 14px;">Up next in Gemini Mastery</div>
+      <h3>Lesson 02 · Gems — your custom Gemini agents</h3>
+      <p>Gems are Gemini's custom-agent feature. Like Custom GPTs but with Google's integration into Workspace, Drive, and Gmail. The build pattern that works. <a href="/lessons/gemini/">See the track →</a></p>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT · Independent. Not affiliated with Google.</div>
+    <a href="/lessons/gemini/" style="color: var(--text-dim);">← All Gemini Mastery lessons</a>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Copilot in Excel: build a real dashboard in 15 minutes — LearningGPT</title>
+<meta name="description" content="Excel is where Copilot's value really shows. People who get good at Copilot-in-Excel save hours every week on formulas, pivot tables, and analyses tha" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#2c7be5" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/copilot/excel-mastery" />
+<meta property="og:title" content="Copilot in Excel: build a real dashboard in 15 minutes" />
+<meta property="og:description" content="Excel is where Copilot's value really shows. People who get good at Copilot-in-Excel save hours every week on formulas, pivot tables, and analyses tha" />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #2c7be5; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #2c7be5; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+.lesson { padding: 50px 0 100px; }
+.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(44,123,229,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(44,123,229,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
+.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
+.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
+.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
+.lesson h1 .grad { background: linear-gradient(135deg, #2c7be5 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
+.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
+.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
+.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
+.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); position: relative; }
+.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #2c7be5, #7c5cff); border-radius: 2px 0 0 2px; }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.callout p:last-child { margin-bottom: 0; }
+.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
+.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(44,123,229,0.1); border: 1px solid rgba(44,123,229,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
+.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
+.workflow p { font-size: 15px; margin: 0 0 14px; }
+.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
+.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; }
+.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
+.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
+.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
+.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); padding: 36px; }
+.challenge h2 { margin-top: 0; }
+.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #2c7be5, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
+.challenge a.btn:hover { transform: translateY(-1px); color: white; }
+.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; padding-top: 0; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.checklist li:first-child::before { top: 4px; }
+.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
+.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/copilot/" class="nav-back">← Copilot Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Lesson 02 · Copilot Mastery</span>
+      <span class="chip chip-pro">Pro</span>
+      <span>~14 min read</span>
+      <span class="dot"></span>
+      <span>4 workflows · Hands-on</span>
+    </div>
+    <h1>Copilot in Excel: <span class="grad serif">build a real dashboard in 15 minutes.</span></h1>
+    <p class="deck">Excel is where Copilot's value really shows. People who get good at Copilot-in-Excel save hours every week on formulas, pivot tables, and analyses that used to require knowing Excel cold. This lesson walks the four workflows that turn a CFO-grade dashboard from a 2-hour project into a 15-minute one — formula generation, chart-from-natural-language, data cleaning, and pivot-tables-on-demand.</p>
+    <h2><span class="num">The mental model</span></h2>
+    <h3>Copilot in Excel isn't a chatbot — it's a colleague who actually knows Excel.</h3>
+    <p>The mistake most people make: typing prompts like "how do I do a VLOOKUP?" Copilot in Excel isn't there to teach you Excel; it's there to <em>do</em> Excel for you. Tell it what you want to accomplish in plain English, point at the data, and let it generate the formula, build the chart, or restructure the table.</p><div class="callout"><span class="lbl">The Reframe</span><p><strong>Treat Copilot in Excel like a fast-typing analyst sitting next to you.</strong> They know every function, every shortcut, every pivot trick. You bring the question and the context; they bring the execution.</p></div><h2><span class="num">Workflow 01</span> Formula generation from natural language</h2><div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">1</div><h3>Stop Googling SUMIFS syntax</h3></div>
+      <p>Highlight your data range. Open Copilot panel. Describe what you want in plain words. Copilot writes the formula and explains what it does.</p>
+      <h4>The prompt that works</h4>
+      <div class="prompt-example"><span class="label">Example prompt</span>I have a sales table where column A is the date, B is the salesperson, and C is the amount. Add a column that shows the running 30-day total for each salesperson.</div>
+      <h4>Best use cases</h4>
+      <ul><li>Conditional aggregations (SUMIFS, COUNTIFS variants)</li><li>Date arithmetic and running totals</li><li>Lookups across sheets</li><li>Complex IF statements you'd normally nest 4 deep</li></ul>
+      <div class="gotcha">Copilot occasionally generates correct-looking but subtly wrong formulas — especially on date logic. Always spot-check the first 3 rows before trusting the column.</div>
+      <div class="savings"><strong>Time savings:</strong> 30 min of formula research → 60 sec. The skill that used to separate Excel power users from everyone else is now democratized.</div>
+    </div><h2><span class="num">Workflow 02</span> Chart from natural language</h2><div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">2</div><h3>Build a dashboard chart in one sentence</h3></div>
+      <p>Instead of fighting Excel's chart wizard, just describe the chart you want. Copilot picks the right type, applies decent formatting, and inserts it.</p>
+      <h4>The prompt that works</h4>
+      <div class="prompt-example"><span class="label">Example prompt</span>Show a stacked bar chart comparing each product line's revenue by quarter for 2025. Use the brand colors. Sort by total descending.</div>
+      <h4>Best use cases</h4>
+      <ul><li>Sales/revenue summaries for executives</li><li>Quick visualizations of trends</li><li>Comparison charts (this year vs. last, segment vs. segment)</li><li>Dashboard tiles you'd otherwise spend 30 min styling</li></ul>
+      <div class="gotcha">Copilot's chart formatting is decent but not magazine-quality. For anything customer-facing, expect to clean up labels, legend position, and colors after.</div>
+      <div class="savings"><strong>Time savings:</strong> 10-15 min of chart-wrangling → 30 sec. Compounding when you build many.</div>
+    </div><h2><span class="num">Workflow 03</span> Data cleaning at speed</h2><div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">3</div><h3>Fix messy data without writing macros</h3></div>
+      <p>Paste in messy data (mixed case, inconsistent dates, dirty addresses). Tell Copilot what "clean" means for your case. It writes the formulas or applies the transformations.</p>
+      <h4>The prompt that works</h4>
+      <div class="prompt-example"><span class="label">Example prompt</span>Column D has dates in five different formats: "3/14/26", "Mar 14 2026", "2026-03-14", "14-Mar-26", and "03/14/2026". Normalize them all to YYYY-MM-DD.</div>
+      <h4>Best use cases</h4>
+      <ul><li>Standardizing dates, currencies, phone numbers</li><li>Splitting full names into first/last</li><li>Cleaning up addresses or email lists</li><li>Removing duplicates with custom matching rules ("same email or same phone")</li></ul>
+      <div class="gotcha">Always work on a copy of your data. Copilot's transformations can be irreversible if you don't have an undo path. Highlight, copy to a new sheet, transform there.</div>
+      <div class="savings"><strong>Time savings:</strong> Hours of manual cleanup → minutes. The boring task that secretly eats analyst time.</div>
+    </div><h2><span class="num">Workflow 04</span> Pivot tables on demand</h2><div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">4</div><h3>Ask the question, get the pivot</h3></div>
+      <p>Pivot tables are powerful but confusing. With Copilot, you describe the breakdown you want — and the pivot appears, configured.</p>
+      <h4>The prompt that works</h4>
+      <div class="prompt-example"><span class="label">Example prompt</span>Pivot this data to show total revenue by region (rows) and product line (columns), with quarter as a filter. Add a percentage of total column.</div>
+      <h4>Best use cases</h4>
+      <ul><li>Multi-dimensional sales summaries</li><li>Cohort analyses</li><li>Inventory by category × location</li><li>Anything you'd normally build manually with PivotTable + Field List</li></ul>
+      <div class="gotcha">Pivots break when source data changes shape (new columns, renamed headers). Build your raw data as a structured Table (Ctrl+T) first — pivots stay alive.</div>
+      <div class="savings"><strong>Time savings:</strong> 20 min of pivot-fiddling → 1 min.</div>
+    </div>
+    <div class="challenge">
+      <h2 style="margin-top: 0;">Final challenge: rebuild a real spreadsheet in 15 minutes</h2>
+      <p>Pick a spreadsheet you previously spent 60+ minutes building — a monthly report, a sales tracker, a forecast model. Open a blank sheet next to it. Using only the four workflows above, rebuild it from scratch with Copilot doing the heavy lifting.</p><p>Time yourself. If it took 60 minutes the first time, most people complete the rebuild in 12-18 minutes. The skill compounds across every Excel task for the rest of your career.</p>
+      <div class="btn-row">
+        <a href="/lessons/copilot/" class="btn">Back to Copilot Mastery →</a>
+        <a href="/#pricing" class="btn ghost">See pricing →</a>
+      </div>
+    </div>
+    <div class="checklist">
+      <h3>What you can do now</h3>
+      <ul><li>Generate any Excel formula by describing what you want in plain English</li><li>Build charts and pivot tables faster than writing the prompt to describe them</li><li>Clean messy data without writing custom macros or VBA</li><li>Spot-check Copilot's output for date-logic and edge-case errors</li><li>Recognize the cases where Copilot saves real time vs. where manual is faster</li></ul>
+    </div>
+    <div class="next-up">
+      <span class="pro-tag">Pro</span>
+      <div class="lbl" style="margin-top: 14px;">Up next in Copilot Mastery</div>
+      <h3>Lesson 3 · Copilot in Word: from blank page to draft in 5 prompts</h3>
+      <p>Proposals, reports, memos, RFPs. The prompt structures that get usable first drafts in minutes — and the editing patterns that turn drafts into final docs. <a href="/#pricing">See pricing →</a></p>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Microsoft.</div>
+    <a href="/lessons/copilot/" style="color: var(--text-dim);">← All Copilot lessons</a>
+  </div>
+</footer>
+</body>
+</html>

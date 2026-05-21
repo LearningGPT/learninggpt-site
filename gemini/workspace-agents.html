@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Workspace agents — Gemini in Docs, Sheets, Gmail — LearningGPT</title>
+<meta name="description" content="Gemini's Workspace integration: Docs, Sheets, Slides, Gmail, Drive. The actually-useful patterns and the features that are just decoration." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#4285f4" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/gemini/workspace-agents" />
+<meta property="og:title" content="Workspace agents — Gemini in Docs, Sheets, Gmail" />
+<meta property="og:description" content="Gemini's Workspace integration: Docs, Sheets, Slides, Gmail, Drive. The actually-useful patterns and the features that are just decoration." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #4285f4; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #4285f4; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+.lesson { padding: 50px 0 100px; }
+.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(66,133,244,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(66,133,244,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
+.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
+.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
+.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
+.lesson h1 .grad { background: linear-gradient(135deg, #4285f4 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
+.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
+.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
+.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
+.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(66,133,244,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(66,133,244,0.25); border-radius: var(--radius-lg); position: relative; }
+.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #4285f4, #7c5cff); border-radius: 2px 0 0 2px; }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.callout p:last-child { margin-bottom: 0; }
+.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
+.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(66,133,244,0.1); border: 1px solid rgba(66,133,244,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
+.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
+.workflow p { font-size: 15px; margin: 0 0 14px; }
+.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
+.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
+.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
+.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
+.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
+.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(66,133,244,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(66,133,244,0.25); border-radius: var(--radius-lg); padding: 36px; }
+.challenge h2 { margin-top: 0; }
+.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #4285f4, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
+.challenge a.btn:hover { transform: translateY(-1px); color: white; }
+.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; padding-top: 0; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.checklist li:first-child::before { top: 4px; }
+.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
+.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
+.next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/gemini/" class="nav-back">← Gemini Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Agents · Lesson 05</span>
+      <span class="chip chip-pro">Pro</span>
+      <span>~12 min read</span>
+      <span class="dot"></span>
+      <span>In-app agents</span>
+    </div>
+    <h1>Workspace agents: <span class="grad serif">what's useful, what's noise.</span></h1>
+    <p class="deck">Gemini's integration across Google Workspace is broad but uneven. Some apps got real agentic capability; others got 'help me write' buttons that don't change what's possible. This lesson is the honest map: where Gemini in Workspace actually saves time and where it's decoration.</p>
+    <h2><span class="num">Workflow 01</span> Gemini in Docs — the useful patterns</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>Beyond 'help me write'</h3></div><p>Docs has the most mature Gemini integration. The useful patterns are about structure and transformation, not just text generation.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Docs patterns</span>Useful Gemini-in-Docs patterns:
+
+• **&#x27;Summarize this doc&#x27;** — works well on docs &gt;2,000 words, produces an executive summary
+• **&#x27;Find inconsistencies in this doc&#x27;** — catches contradictions or shifting tone across long documents
+• **&#x27;Generate a table of contents from headings&#x27;** — fast, clean, easier than building manually
+• **&#x27;Convert this doc to a 5-slide outline&#x27;** — produces a deck skeleton from a written argument
+• **&#x27;Translate this section, keeping the formatting&#x27;** — better than copy-paste-Google-Translate for formatted text
+
+Less useful:
+• &#x27;Help me write&#x27; from blank — vague, generic output
+• &#x27;Improve this paragraph&#x27; — usually adds words, rarely improves
+• &#x27;Make this more professional&#x27; — adds AI-clichés (&quot;furthermore&quot;, &quot;in conclusion&quot;)</div><h4>Best use cases</h4><ul><li>Summarizing long documents for a meeting</li><li>Catching inconsistencies in collaborative docs</li><li>Building TOCs and outlines from existing content</li><li>Translating formatted business docs</li></ul><div class="gotcha">Generating writing from scratch in Docs is rarely better than your own draft. Use Gemini to transform what you've written, not write your first draft.</div><div class="savings"><strong>Time savings:</strong> Summarization and structure tasks: 80% time reduction.</div></div><h2><span class="num">Workflow 02</span> Gemini in Sheets — what it can really do</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>Beyond formula suggestions</h3></div><p>Sheets has more Gemini capability than most people realize. It can write actual formulas, build pivot tables, and clean messy data.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Sheets patterns</span>Useful Gemini-in-Sheets patterns:
+
+• **&#x27;Help me build a formula&#x27;** — describe what you want, get the formula, including complex INDEX/MATCH and XLOOKUP
+• **&#x27;Clean this data&#x27;** — fix dates, normalize categories, deduplicate, fill gaps
+• **&#x27;Build a pivot table that shows X by Y by Z&#x27;** — natural-language pivot creation
+• **&#x27;Suggest a chart for this data&#x27;** — picks the right chart type based on what you&#x27;re showing
+• **&#x27;Find patterns in this data&#x27;** — surfaces correlations and outliers (treat as starting point, not conclusion)
+
+What works less well:
+• Complex multi-step analysis (use Analyst in Copilot or Code Interpreter instead)
+• Anything requiring true statistical inference</div><h4>Best use cases</h4><ul><li>Building complex formulas without remembering syntax</li><li>Cleaning messy CSV imports</li><li>Quick pivot table creation</li><li>Initial data exploration before deeper analysis</li></ul><div class="gotcha">Gemini-suggested formulas can use incorrect cell references if your data structure isn't what it inferred. Always verify the formula on a small range before applying broadly.</div><div class="savings"><strong>Time savings:</strong> Formula building: 5 min of trial-and-error → 30 sec.</div></div><h2><span class="num">Workflow 03</span> Gemini in Gmail — what's actually useful</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>Drafting, summarizing, and triage</h3></div><p>Gmail has the most mature in-app Gemini. The pattern: don't let it auto-write your emails, but do use it for inbox triage and summarization.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Gmail patterns</span>Useful Gemini-in-Gmail patterns:
+
+• **&#x27;Summarize this thread&#x27;** — for long email chains, gives you the gist without reading 40 messages
+• **&#x27;What&#x27;s this email asking me to do?&#x27;** — for vague or buried-action emails
+• **&#x27;Help me find emails about [topic]&#x27;** — semantic search beats keyword search
+• **&#x27;Schedule a meeting with [people] based on this thread&#x27;** — uses the calendar integration
+• **&#x27;Draft a reply in [tone]&#x27;** — useful when you specify a real tone, less so for default &#x27;professional&#x27;
+
+What doesn&#x27;t work:
+• Letting Gemini draft from scratch with vague &#x27;reply to this&#x27; — produces generic, polite, AI-clichéd text
+• Auto-categorizing or auto-archiving — too many false positives at first</div><h4>Best use cases</h4><ul><li>Long-thread summaries before responding</li><li>Identifying action items in dense email</li><li>Semantic email search for specific topics</li><li>Calendar scheduling from email context</li></ul><div class="gotcha">Auto-drafted replies in Gmail tend to over-apologize and over-pad. Use them as starting points, never as final.</div><div class="savings"><strong>Time savings:</strong> Email triage and summarization: 20-30 min/day saved.</div></div>
+    <div class="challenge">
+      <h2 style="margin-top: 0;">Audit your Workspace Gemini usage</h2>
+      <p>Spend a week tracking which Gemini-in-Workspace features you actually use vs. ignore. After the week, you'll know which 3-4 are real time savers for you. The rest is noise to dismiss.</p>
+      <div class="btn-row">
+        <a href="/lessons/gemini/" class="btn">Back to Gemini Mastery →</a>
+        <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+      </div>
+    </div>
+    <div class="checklist">
+      <h3>What you can do now</h3>
+      <ul>
+        <li>Use Gemini to transform your own writing, not generate from blank</li>
+        <li>Verify Sheets formulas on a small range before applying broadly</li>
+        <li>Don't let Gemini auto-draft Gmail responses; use as starting point only</li>
+        <li>Trust summarization and structure tasks; verify writing and stats</li>
+        <li>Disable noisy Gemini features you don't use to reduce decision fatigue</li>
+      </ul>
+    </div>
+    <div class="next-up">
+      <span class="pro-plus-tag">Pro+</span>
+      <div class="lbl" style="margin-top: 14px;">Up next in Gemini Mastery</div>
+      <h3>The full Gemini agent ecosystem</h3>
+      <p>You've now mapped all 5 major Gemini agent capabilities. The next horizon is connecting them — Gems that call NotebookLM, Workspace tasks that trigger Deep Research, full automation chains. <a href="/lessons/gemini/">See the track →</a></p>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT · Independent. Not affiliated with Google.</div>
+    <a href="/lessons/gemini/" style="color: var(--text-dim);">← All Gemini Mastery lessons</a>
+  </div>
+</footer>
+</body>
+</html>

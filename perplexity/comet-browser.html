@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Comet — the AI browser that does, not just searches — LearningGPT</title>
+<meta name="description" content="Perplexity Comet is a full agentic browser. Page summarization, in-page research, autonomous multi-step tasks. Now powered by Claude Opus 4.6." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#20808d" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/perplexity/comet-browser" />
+<meta property="og:title" content="Comet — the AI browser that does, not just searches" />
+<meta property="og:description" content="Perplexity Comet is a full agentic browser. Page summarization, in-page research, autonomous multi-step tasks. Now powered by Claude Opus 4.6." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #20808d; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #20808d; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+.lesson { padding: 50px 0 100px; }
+.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(32,128,141,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(32,128,141,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
+.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
+.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
+.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
+.lesson h1 .grad { background: linear-gradient(135deg, #20808d 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
+.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
+.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
+.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
+.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(32,128,141,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(32,128,141,0.25); border-radius: var(--radius-lg); position: relative; }
+.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #20808d, #7c5cff); border-radius: 2px 0 0 2px; }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.callout p:last-child { margin-bottom: 0; }
+.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
+.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(32,128,141,0.1); border: 1px solid rgba(32,128,141,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
+.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
+.workflow p { font-size: 15px; margin: 0 0 14px; }
+.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
+.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
+.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
+.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
+.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
+.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(32,128,141,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(32,128,141,0.25); border-radius: var(--radius-lg); padding: 36px; }
+.challenge h2 { margin-top: 0; }
+.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #20808d, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
+.challenge a.btn:hover { transform: translateY(-1px); color: white; }
+.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; padding-top: 0; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.checklist li:first-child::before { top: 4px; }
+.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
+.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
+.next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/perplexity/" class="nav-back">← Perplexity Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Agents · Lesson 01</span>
+      <span class="chip chip-pro">Pro</span>
+      <span>~11 min read</span>
+      <span class="dot"></span>
+      <span>AI-native browsing</span>
+    </div>
+    <h1>Comet: <span class="grad serif">a browser with intent.</span></h1>
+    <p class="deck">Comet is Perplexity's biggest 2026 play — a full agentic browser available on iOS, Android, Mac, and Windows. Now powered by Claude Opus 4.6 underneath. It's not just 'Chrome with AI bolted on' — it's a browser designed around the premise that you usually want to do something with a page, not just read it.</p>
+    <h2><span class="num">Workflow 01</span> In-page research while reading</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>Ask questions of the page you're on</h3></div><p>The simplest Comet pattern: while reading any web page, ask Comet about it. No tab-switching, no copy-paste.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">In-page queries</span>While on a long article, blog post, or research paper:
+
+• &#x27;Summarize this in 3 sentences&#x27;
+• &#x27;What&#x27;s the strongest argument here?&#x27;
+• &#x27;What&#x27;s the author leaving out?&#x27;
+• &#x27;Find 3 sources that disagree with this&#x27;
+• &#x27;What&#x27;s the key statistic and is it from a credible source?&#x27;
+• &#x27;What are the prerequisites I should understand before reading further?&#x27;
+• &#x27;TL;DR for my [boss/team/customer]&#x27; (with audience-specific tone)
+
+While on a product page:
+• &#x27;Compare this to [competitor]&#x27;
+• &#x27;What&#x27;s the actual price including [shipping/tax/etc.]?&#x27;
+• &#x27;Find reviews that mention [specific concern I have]&#x27;
+
+While on a long form/wizard:
+• &#x27;What&#x27;s this asking for and why?&#x27;
+• &#x27;Fill in fields based on this info: [paste]&#x27;</div><h4>Best use cases</h4><ul><li>Reading dense articles efficiently</li><li>Online shopping with informed comparison</li><li>Research-heavy browsing sessions</li><li>Form-filling and registration workflows</li></ul><div class="gotcha">Comet's summaries are good but can miss nuance. For high-stakes content (legal docs, medical info, contracts) — read the original, don't rely on the summary alone.</div><div class="savings"><strong>Time savings:</strong> Article reading: 15-20 min → 2 min summary if depth not required.</div></div><h2><span class="num">Workflow 02</span> Autonomous multi-step tasks</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>Tell Comet what you want to accomplish</h3></div><p>Comet's most powerful capability: give it an outcome, it executes across multiple sites. Think 'do my errand' rather than 'help me search.'</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Autonomous task</span>Examples of autonomous tasks:
+
+• &#x27;Find the cheapest flight from MSP to SFO on Friday morning, returning Sunday evening. I&#x27;ll check it before booking.&#x27;
+• &#x27;Fill out the LinkedIn job application I&#x27;m looking at using my resume info&#x27;
+• &#x27;Email these 5 prospects from my list with the personalized template I started drafting&#x27;
+• &#x27;Compare insurance quotes from Geico, Progressive, and State Farm for my profile&#x27;
+• &#x27;Reschedule my Tuesday Zoom meeting to Thursday at 2pm, then email the attendees&#x27;
+
+The pattern: state the outcome, specify any constraints, let Comet plan and execute. It&#x27;ll pause for confirmation before any irreversible action.</div><h4>Best use cases</h4><ul><li>Travel booking research</li><li>Comparison shopping across many sites</li><li>Form-filling across services (job applications, registrations)</li><li>Calendar coordination tasks</li></ul><div class="gotcha">Always require confirmation before purchases or submissions. Comet defaults to asking, but be explicit if the task involves money or commitments.</div><div class="savings"><strong>Time savings:</strong> Multi-site errands: 1-2 hours → 10-15 min supervision.</div></div><h2><span class="num">Workflow 03</span> Integrate Comet with your real work</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>Email, calendar, and inbox actions</h3></div><p>Comet can connect to your email and calendar (with permission) for tasks that bridge browser and inbox.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Cross-system tasks</span>Integration patterns:
+
+• Read an email, ask Comet: &#x27;Schedule this meeting based on what they asked, send the confirmation&#x27;
+• See a calendar event, ask Comet: &#x27;Find the most recent context about this — emails, prior meeting notes, anything in our CRM&#x27;
+• Reading a customer&#x27;s website, ask: &#x27;Save the key facts as a note in my CRM record for this account&#x27;
+
+These cross-system actions are the Comet superpower. The line between &#x27;browse&#x27; and &#x27;work&#x27; dissolves.</div><h4>Best use cases</h4><ul><li>Pre-meeting research with calendar context</li><li>Customer research that flows into CRM</li><li>Email-driven scheduling and follow-up</li><li>Inbound message triage with action</li></ul><div class="gotcha">Cross-system actions need permission tokens. Verify the scopes you grant — read-only is usually enough, write access only for things you specifically want to automate.</div><div class="savings"><strong>Time savings:</strong> Cross-system context: 5-10 min saved per use.</div></div><div class="callout"><span class="lbl">About Comet</span><p>Comet launched globally to iOS users in 2026, joining Android, Mac, and Windows. Now uses Claude Opus 4.6 underneath. Comet has agentic browsing integrated into Samsung Internet, and Perplexity is available as an optional default search engine on Samsung devices.</p></div>
+    <div class="challenge">
+      <h2 style="margin-top: 0;">Switch to Comet for one week</h2>
+      <p>Install Comet on your main device. Use it as your default browser for one week. By Day 4 or so, the in-page research and autonomous task patterns become habit. Notice which workflows became dramatically easier and which still need Chrome/Safari.</p>
+      <div class="btn-row">
+        <a href="/lessons/perplexity/" class="btn">Back to Perplexity Mastery →</a>
+        <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+      </div>
+    </div>
+    <div class="checklist">
+      <h3>What you can do now</h3>
+      <ul>
+        <li>Install Comet as your default browser on at least one device</li>
+        <li>Use in-page queries instead of tab-switching for research</li>
+        <li>Use autonomous tasks for multi-site work, with confirmation required</li>
+        <li>Connect email and calendar for cross-system patterns</li>
+        <li>Audit permissions Comet has — keep them minimal</li>
+      </ul>
+    </div>
+    <div class="next-up">
+      <span class="pro-tag">Pro</span>
+      <div class="lbl" style="margin-top: 14px;">Up next in Perplexity Mastery</div>
+      <h3>Lesson 02 · Spaces — collaborative research workspaces</h3>
+      <p>Spaces are Perplexity's persistent, shareable research workspaces. Different from one-off searches — Spaces accumulate context and let teams research together. <a href="/lessons/perplexity/">See the track →</a></p>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT · Independent. Not affiliated with Perplexity.</div>
+    <a href="/lessons/perplexity/" style="color: var(--text-dim);">← All Perplexity Mastery lessons</a>
+  </div>
+</footer>
+</body>
+</html>

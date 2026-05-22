@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>NotebookLM: the research tool that's eating academia — LearningGPT</title>
-<meta name="description" content="NotebookLM is Google's secret weapon — a free research tool that lets you load up to 50 documents and ask questions across all of them, with citations" />
+<title>NotebookLM — your research workspace — LearningGPT</title>
+<meta name="description" content="NotebookLM is Google's grounded research tool. Upload sources, ask questions, generate notes, audio summaries, study guides. Different from Gemini chat." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#4285f4" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,8 +12,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/gemini/notebooklm" />
-<meta property="og:title" content="NotebookLM: the research tool that's eating academia" />
-<meta property="og:description" content="NotebookLM is Google's secret weapon — a free research tool that lets you load up to 50 documents and ask questions across all of them, with citations" />
+<meta property="og:title" content="NotebookLM — your research workspace" />
+<meta property="og:description" content="NotebookLM is Google's grounded research tool. Upload sources, ask questions, generate notes, audio summaries, study guides. Different from Gemini chat." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -56,7 +56,7 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
 .workflow p { font-size: 15px; margin: 0 0 14px; }
 .workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; }
+.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
 .prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
 .gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
 .gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
@@ -78,6 +78,7 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
 .next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
 .next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
+.next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
 footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
@@ -95,49 +96,71 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 <article class="lesson">
   <div class="container">
     <div class="lesson-meta">
-      <span class="chip">Lesson 04 · Gemini Mastery</span>
+      <span class="chip">Agents · Lesson 04</span>
       <span class="chip chip-pro">Pro</span>
-      <span>~13 min read</span>
+      <span>~11 min read</span>
       <span class="dot"></span>
-      <span>4 workflows</span>
+      <span>Sources + briefings</span>
     </div>
-    <h1>NotebookLM: <span class="grad serif">the research tool eating academia.</span></h1>
-    <p class="deck">NotebookLM is Google's secret weapon — a free research tool that lets you load up to 50 documents and ask questions across all of them, with citations. It's quietly becoming the standard tool for serious research. This lesson walks the four workflows that justify making it your default research environment.</p>
-    <h2><span class="num">The mental model</span></h2><h3>NotebookLM is not a chat AI with file upload. It's a research workspace grounded in YOUR sources.</h3><p>Every answer cites the specific source document and passage. Gemini-the-chat-AI generates from its training; NotebookLM generates from what you uploaded. The difference is the trust level: when NotebookLM cites a passage in your uploaded PDF, you can click it and verify in one step.</p><h2><span class="num">Workflow 01</span> Build a research notebook</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>Load 10-20 sources on a topic</h3></div><p>Create a notebook. Upload PDFs, paste URLs, drop Google Docs. NotebookLM ingests them all.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Setup</span>Create notebook "AI Training Market 2026" → upload: 5 competitor whitepapers, 3 analyst reports, 2 our internal docs, 5 relevant URLs. Now you have a research workspace grounded in 15 sources.</div><h4>Best use cases</h4><ul><li>Industry research projects</li><li>Academic literature reviews</li><li>Competitive intelligence</li><li>Any topic where you've collected many sources</li></ul><div class="gotcha">NotebookLM has limits (50 sources, file size limits per source). For huge corpora, organize into multiple focused notebooks instead of one giant one.</div><div class="savings"><strong>Time savings:</strong> Cross-source research: dramatically faster.</div></div><h2><span class="num">Workflow 02</span> Ask questions across all sources</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>Get answers with citations</h3></div><p>Once loaded, ask any question. NotebookLM searches across all uploaded sources and answers with specific citations.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Research prompts</span>What do these reports say about pricing models for AI training products? Cite the specific sources.
+    <h1>NotebookLM: <span class="grad serif">where sources stay grounded.</span></h1>
+    <p class="deck">NotebookLM is a separate product from Gemini chat — it's a research workspace where you upload your source documents (PDFs, web articles, videos, audio) and ask questions strictly grounded in those sources. Unlike chat, NotebookLM won't bring in outside info; it only synthesizes from what you've given it. For research tasks where source provenance matters, it's the right tool.</p>
+    <h2><span class="num">Workflow 01</span> Build a notebook from sources</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>Upload, organize, and start querying</h3></div><p>The first step in NotebookLM is building a sourced notebook. Quality of sources determines quality of output.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Setup notebook</span>Create a NotebookLM notebook for [research topic]. Upload:
 
-Where do these sources agree? Where do they disagree?
+• 5-10 primary sources (peer-reviewed papers, primary documents, full books)
+• 3-5 secondary sources (analyst reports, expert blog posts, key articles)
+• Any internal documents relevant to your specific angle
 
-What methodologies were used in the analyst reports?</div><h4>Best use cases</h4><ul><li>Synthesis questions across many sources</li><li>Finding agreement/disagreement between sources</li><li>Methodology comparisons</li><li>Quick fact-finding within your loaded research</li></ul><div class="gotcha">Always click citations to verify. NotebookLM grounds well but can occasionally misattribute or paraphrase loosely.</div><div class="savings"><strong>Time savings:</strong> Hours of cross-document reading: minutes of targeted Q&A.</div></div><h2><span class="num">Workflow 03</span> Generate study guides and FAQs</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>Turn raw research into structured artifacts</h3></div><p>NotebookLM can generate FAQs, study guides, briefing documents, and timelines from your sources.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Generation prompts</span>Generate a study guide covering the main concepts across these sources.
+For each source, NotebookLM creates an index. Then you can ask questions like:
+• &#x27;What do these sources agree on about X?&#x27;
+• &#x27;Where do they disagree?&#x27;
+• &#x27;Find every passage that talks about Y&#x27; — with citations
 
-Generate an FAQ that anticipates 20 questions a stakeholder might ask after reading these.
+The key: NotebookLM only references your sources. It won&#x27;t make up information from outside.</div><h4>Best use cases</h4><ul><li>Literature reviews for a specific topic</li><li>Multi-book synthesis (uploading full books)</li><li>Deposition or legal-document analysis</li><li>Investment memo prep with source corpus</li></ul><div class="gotcha">NotebookLM won't fabricate citations — but it can misattribute. Always verify the source said what NotebookLM claims, especially for quotes.</div><div class="savings"><strong>Time savings:</strong> Source-grounded answers: replaces hours of Ctrl+F across documents.</div></div><h2><span class="num">Workflow 02</span> Audio overview — let NotebookLM brief you</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>Listen to your sources as a podcast</h3></div><p>NotebookLM's killer feature: it generates a podcast-style audio overview of your sources. Two AI hosts discuss the material, surface key points, debate edge cases. Useful for learning while doing other things.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Audio briefing</span>From the current notebook, generate an audio overview.
 
-Build a timeline of events mentioned across all the sources.</div><h4>Best use cases</h4><ul><li>Onboarding documents for new team members on a topic</li><li>Stakeholder briefing materials</li><li>Personal study guides for complex topics</li><li>Knowledge-management for ongoing projects</li></ul><div class="gotcha">Generated artifacts are first drafts, not final outputs. Always review and edit before sharing externally.</div><div class="savings"><strong>Time savings:</strong> Synthesis artifacts that used to take days: minutes.</div></div><h2><span class="num">Workflow 04</span> Audio Overview: the surprise feature</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">4</div><h3>Generate a podcast about your sources</h3></div><p>NotebookLM's Audio Overview turns your sources into a conversational podcast between two AI hosts. Surprisingly useful for absorbing dense material on the go.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Use cases</span>Long commute? Load research, generate a 12-min audio overview, listen on the way to work.
+Focus the discussion on:
+- The main argument across the sources
+- The 3 most important findings
+- Where the sources contradict each other
+- What&#x27;s still uncertain or unresolved
 
-Onboarding a new team member? Send them the audio overview of foundational docs.</div><h4>Best use cases</h4><ul><li>Absorbing dense research while doing other things</li><li>Onboarding people to a topic</li><li>Reviewing material before a meeting</li><li>Auditory learners working through written content</li></ul><div class="gotcha">Audio overviews are good but not authoritative. They're synthesis tools, not the source of truth.</div><div class="savings"><strong>Time savings:</strong> Convert reading-time into listening-time anywhere.</div></div>
+Target length: 15-20 minutes. Save it so I can listen during my commute.</div><h4>Best use cases</h4><ul><li>Learning a new domain quickly</li><li>Pre-meeting prep on the way to the meeting</li><li>Quarterly research briefings for executives</li><li>Continuing education in your field</li></ul><div class="gotcha">Audio overviews are great for absorption but bad for fact-checking. Use them to get the gist; refer to the written notebook for citations.</div><div class="savings"><strong>Time savings:</strong> Source absorption while commuting/walking: pure additional value.</div></div><h2><span class="num">Workflow 03</span> Generate study materials</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>Notes, FAQs, study guides from your sources</h3></div><p>NotebookLM can generate structured study materials grounded in your sources — useful for teaching, training, or your own learning.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Study materials</span>From the current notebook, generate:
+
+1. **Study guide** — 5-page overview of the key concepts
+2. **FAQ document** — 20 most likely questions with sourced answers
+3. **Briefing doc** — 2-page exec summary for a leadership audience
+4. **Quiz** — 15 multiple-choice questions to test understanding
+
+Everything must cite sources from the notebook. Mark anything where sources disagree.</div><h4>Best use cases</h4><ul><li>Onboarding documents for a new domain</li><li>Training material from existing reference docs</li><li>Quick-reference docs for a team</li><li>Personal learning aids</li></ul><div class="gotcha">Generated materials are only as good as your sources. Outdated or incorrect sources produce confidently wrong study materials.</div><div class="savings"><strong>Time savings:</strong> Course-quality material from sources: days → hours.</div></div><div class="callout"><span class="lbl">NotebookLM vs. Gemini chat</span><p>Use Gemini chat when you want general-purpose AI with web access. Use NotebookLM when you have a specific source corpus and need answers strictly grounded in it. NotebookLM trades flexibility for trustworthy source-attribution.</p></div>
     <div class="challenge">
-      <h2 style="margin-top: 0;">Final challenge: build a real research notebook</h2>
-      <p>Pick a topic you'd want deep knowledge on. Spend 20 minutes uploading 10-15 sources. Then spend 10 minutes asking NotebookLM questions across them. Generate an audio overview. Listen on your next walk.</p>
+      <h2 style="margin-top: 0;">Build a notebook on a topic you're learning</h2>
+      <p>Pick a topic you've been meaning to go deep on — a domain at work, an industry, an academic subject. Upload 8-12 quality sources. Generate the audio overview, listen during your commute, then use the notebook for follow-up questions.</p>
       <div class="btn-row">
         <a href="/lessons/gemini/" class="btn">Back to Gemini Mastery →</a>
-        <a href="/#pricing" class="btn ghost">See pricing →</a>
+        <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
       </div>
     </div>
     <div class="checklist">
       <h3>What you can do now</h3>
-      <ul><li>Build research notebooks with 10-20 grounded sources</li><li>Ask cross-source questions with citation verification</li><li>Generate study guides, FAQs, and timelines from your sources</li><li>Use Audio Overview for absorbing material in non-reading contexts</li><li>Decide what belongs in a notebook vs. a chat AI conversation</li></ul>
+      <ul>
+        <li>Upload primary and secondary sources, not just opinion pieces</li>
+        <li>Verify quote attributions when NotebookLM cites them</li>
+        <li>Generate audio overviews for absorption while doing other things</li>
+        <li>Use study materials as the starting point — fact-check before sharing</li>
+        <li>Refresh notebooks as your source set updates</li>
+      </ul>
     </div>
     <div class="next-up">
       <span class="pro-tag">Pro</span>
       <div class="lbl" style="margin-top: 14px;">Up next in Gemini Mastery</div>
-      <h3>Lesson 5 · Gemini's long-context advantage: feed it a book</h3>
-      <p>Loading entire codebases, long documents, video transcripts. The use cases where Gemini's 1M+ context window genuinely changes what's possible. <a href="/#pricing">See pricing →</a></p>
+      <h3>Lesson 05 · Workspace agents — Gemini in Docs, Sheets, Gmail</h3>
+      <p>The final Gemini lesson: the agent integrations across Workspace. Gemini in each app — what's actually useful, and what's just a 'help' button in disguise. <a href="/lessons/gemini/">See the track →</a></p>
     </div>
   </div>
 </article>
 <footer>
   <div class="footer-inner">
-    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Google.</div>
-    <a href="/lessons/gemini/" style="color: var(--text-dim);">← All Gemini lessons</a>
+    <div>© 2026 LearningGPT · Independent. Not affiliated with Google.</div>
+    <a href="/lessons/gemini/" style="color: var(--text-dim);">← All Gemini Mastery lessons</a>
   </div>
 </footer>
 </body>

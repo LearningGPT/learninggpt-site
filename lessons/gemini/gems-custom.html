@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Gemini Deep Research — multi-step analyst work — LearningGPT</title>
-<meta name="description" content="Gemini Deep Research generates multi-step plans and refines analysis through iterative searches. Citation-heavy reports from natural-language prompts." />
+<title>Gems — build custom Gemini agents — LearningGPT</title>
+<meta name="description" content="Gems are Gemini's custom-agent feature. Build agents that know your Workspace data and your voice. The patterns that work, the traps that don't." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#4285f4" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://learninggpt.ai/lessons/gemini/deep-research" />
-<meta property="og:title" content="Gemini Deep Research — multi-step analyst work" />
-<meta property="og:description" content="Gemini Deep Research generates multi-step plans and refines analysis through iterative searches. Citation-heavy reports from natural-language prompts." />
+<meta property="og:url" content="https://learninggpt.ai/lessons/gemini/gems-custom" />
+<meta property="og:title" content="Gems — build custom Gemini agents" />
+<meta property="og:description" content="Gems are Gemini's custom-agent feature. Build agents that know your Workspace data and your voice. The patterns that work, the traps that don't." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -96,48 +96,57 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 <article class="lesson">
   <div class="container">
     <div class="lesson-meta">
-      <span class="chip">Agents · Lesson 03</span>
-      <span class="chip chip-pro">Pro</span>
-      <span>~11 min read</span>
+      <span class="chip">Agents · Lesson 02</span>
+      <span class="chip chip-pro-plus">Pro+</span>
+      <span>~12 min read</span>
       <span class="dot"></span>
-      <span>Iterative research</span>
+      <span>Build + share</span>
     </div>
-    <h1>Deep Research: <span class="grad serif">analyst work, delegated.</span></h1>
-    <p class="deck">Gemini Deep Research is Google's answer to ChatGPT's Deep Research — and it's where Gemini's long-context strength shines. Give it a research question; it generates a multi-step plan, runs iterative searches, refines its analysis, and produces a cited report. Different from Gemini Agent's action-oriented mode — this is pure analysis.</p>
-    <h2><span class="num">Workflow 01</span> Research with explicit plan review</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>Approve the plan before the work runs</h3></div><p>Deep Research's key feature: it generates a plan first, shows it to you, then executes. This is the right time to redirect — saves 30 minutes of wrong-direction work.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Plan-first research</span>Research question: &#x27;What are the leading approaches to AI agent observability in 2026? Compare LangSmith, Arize, Helicone, and 3-5 newer entrants.&#x27;
+    <h1>Gems: <span class="grad serif">agents with Workspace in their bones.</span></h1>
+    <p class="deck">Gems are Google's answer to Custom GPTs. They're custom Gemini agents with system prompts, instructions, and access to your Workspace data. Where Custom GPTs are tools you bolt onto ChatGPT, Gems are tools that live inside the Google ecosystem — and that integration is the main reason to build them.</p>
+    <h2><span class="num">Workflow 01</span> Build your first Gem</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>The four-section instruction pattern that works</h3></div><p>Like Custom GPTs, the difference between a useful Gem and a useless one is the quality of the system instructions. The pattern below is dependable.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Gem instructions</span>Gem instructions for an &#x27;Email triage Gem&#x27;:
 
-Before running: show me the research plan.
+## Identity
+You are an email triage assistant. Your job is to help me decide what to do with each email without me having to read it in full.
 
-I&#x27;ll review and either approve, refine, or add specific sub-questions before you start the actual research. For each entrant, I want to know: what they do, who funds them, pricing model, key customers, and recent product moves.
+## What you do
+When I paste an email or summarize one:
+1. Categorize: [Action], [Reply], [Read], [Skip]
+2. If [Action] or [Reply], suggest the next step (specific, not &#x27;follow up&#x27;)
+3. If [Reply], draft a 3-5 sentence response in my voice (see references)
+4. Flag any deadlines or commitments mentioned
 
-Once I approve, run for 20-30 min, produce a report. Cite sources for every claim.</div><h4>Best use cases</h4><ul><li>Market landscape reports</li><li>Vendor evaluation research</li><li>Industry analysis briefs</li><li>Pre-board / pre-investor research</li></ul><div class="gotcha">If you skip the plan review, you'll often get research that's 80% right but misses the angle you actually care about. The plan review costs 30 seconds and saves 30 minutes.</div><div class="savings"><strong>Time savings:</strong> A real research report: days of analyst time → 30 min + plan review.</div></div><h2><span class="num">Workflow 02</span> Long-context advantage</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>Where Gemini Deep Research beats competitors</h3></div><p>Gemini's long context window (millions of tokens) makes Deep Research strong for tasks that need to hold a lot of source material in mind simultaneously.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Long-source synthesis</span>Research task: synthesize the following sources into a single analysis. Sources are below — there are ~30 documents totaling roughly 200,000 words.
+## Voice for drafts
+[Paste 2-3 examples of your real email replies]
 
-[Paste/upload large source corpus]
+Match this voice — direct, short sentences, no AI tells.
 
-Question to answer from these sources: &#x27;What&#x27;s the consistent thesis across these analyst reports about the next 18 months in enterprise AI adoption?&#x27;
+## What you don&#x27;t do
+- Don&#x27;t pad with &#x27;I&#x27;d be happy to help&#x27; or &#x27;Hope this finds you well&#x27;
+- Don&#x27;t suggest meetings unless the email explicitly requests one
+- Don&#x27;t reply on my behalf — drafts only</div><h4>Best use cases</h4><ul><li>Email triage (your inbox, your voice)</li><li>Document review in a specific style</li><li>Research synthesis for your domain</li><li>Customer-facing draft generation</li></ul><div class="gotcha">Gems with vague instructions produce vague output. Be specific about what to do AND what not to do.</div><div class="savings"><strong>Time savings:</strong> A well-built Gem: 5 min/use × 20 uses/week = 100 min/week saved.</div></div><h2><span class="num">Workflow 02</span> Workspace-connected Gems</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>Connect Gems to your Drive, Gmail, and Calendar</h3></div><p>The Gems advantage over Custom GPTs: native Workspace access. A Gem can search your Drive, read your Gmail, check your calendar — without separate connector setup.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Workspace-aware Gem</span>Configure a Gem with Workspace access:
 
-Produce:
-- The consensus view (with evidence count: X of 30 sources agree)
-- Notable dissenting views (and which sources hold them)
-- The single most surprising finding
-- Three predictions that have the most cross-source support</div><h4>Best use cases</h4><ul><li>Multi-report consolidation (analyst, research, internal)</li><li>Long-document synthesis (full books, transcripts, archives)</li><li>Cross-source pattern detection</li><li>Compliance review across regulation documents</li></ul><div class="gotcha">Long context isn't infinite context. Even with Gemini's window, very dense corpus can lose detail. Sample-check that key facts from random sources made it into the output.</div><div class="savings"><strong>Time savings:</strong> 30-report synthesis: weeks of work → an hour.</div></div><h2><span class="num">Workflow 03</span> Connected to Workspace</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>Research that includes your internal documents</h3></div><p>Like Gemini Agent, Deep Research can pull from your Drive and Gmail when you allow it. This makes hybrid research (internal + external) possible.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Internal + external research</span>Research question: &#x27;How should we position our product against [Competitor] in the upcoming launch?&#x27;
+1. In Gem settings, enable: Drive search, Gmail read, Calendar read
+2. Specify which folders or accounts (don&#x27;t give it access to everything — scope it)
+3. In the instructions, tell the Gem WHEN to use Workspace context:
+   - &#x27;When I mention a person, look up our most recent emails to understand context&#x27;
+   - &#x27;When I ask about a project, search Drive for related docs before answering&#x27;
+   - &#x27;When I ask about my schedule, check the calendar before responding&#x27;
 
-Use both:
+This turns a generic Gem into something that knows your life — without you having to paste context every time.</div><h4>Best use cases</h4><ul><li>Personal meeting-prep Gem (always pulls recent emails and calendar)</li><li>Project status Gem (knows where your project docs live)</li><li>Customer-context Gem (pulls account history per question)</li><li>Daily standup Gem (summarizes calendar + open tasks)</li></ul><div class="gotcha">Workspace permissions are powerful — be careful about Gems you share with others. Their Workspace access travels with the Gem instructions but applies to whoever runs it.</div><div class="savings"><strong>Time savings:</strong> Auto-context: 2-3 min per query of pasting in.</div></div><h2><span class="num">Workflow 03</span> Sharing Gems with your team</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>Internal Gems for shared workflows</h3></div><p>Gems can be shared inside a Workspace org. Useful for team-wide patterns: shared support drafters, shared sales templates, shared report builders.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Team Gems</span>Sharing patterns that work:
 
-External sources:
-- [Competitor]&#x27;s public website and blog (last 12 months)
-- Analyst reports about our category
-- G2 / Capterra reviews of both us and them
+• **Team email drafter** — shared Gem matched to the team&#x27;s customer-facing voice. Everyone produces consistent drafts.
+• **Onboarding helper** — shared Gem new hires can ask about company info, processes, where to find things
+• **Sales context Gem** — shared Gem that knows your competitive landscape, common objections, ICP
+• **Code review Gem** — for engineering teams, encoded with your style guide and patterns
 
-Internal sources (via Workspace):
-- Our positioning Doc in Drive (most recent version)
-- Lost-deal notes from sales (Gmail, last 6 months, mentioning competitor)
-- Customer survey responses (Drive)
-
-Produce a positioning analysis with: their narrative, our differentiation, recommended messaging adjustments, three concrete claims we can make that they can&#x27;t.</div><h4>Best use cases</h4><ul><li>Competitive positioning informed by your data</li><li>Pricing decisions with internal context</li><li>Product strategy with customer-evidence support</li><li>Market entry analysis combining your data + the market</li></ul><div class="gotcha">Mixing internal + external context can leak internal language into outputs. Review for any internal-only terms or names that shouldn't appear in shared docs.</div><div class="savings"><strong>Time savings:</strong> Hybrid research: replaces a small consulting engagement.</div></div>
+When sharing:
+- Use clear naming (&#x27;Acme Sales Gem v2&#x27; not &#x27;mySalesGem&#x27;)
+- Document who owns it and when it was last updated
+- Set a quarterly review reminder — outdated team Gems mislead people</div><h4>Best use cases</h4><ul><li>Department-wide drafting consistency</li><li>Onboarding new team members</li><li>Cross-team alignment on standards</li><li>Company-wide AI literacy tooling</li></ul><div class="gotcha">Team Gems without an owner go stale fast. Always assign an owner who's responsible for quarterly review.</div><div class="savings"><strong>Time savings:</strong> Team consistency: hours of inconsistency cleanup avoided.</div></div>
     <div class="challenge">
-      <h2 style="margin-top: 0;">Run one Deep Research task this week</h2>
-      <p>Identify a question you've been putting off because it'd require real research. Frame it for Deep Research. Review the plan, approve, walk away. Compare what you get back to what your manual research would have produced.</p>
+      <h2 style="margin-top: 0;">Build one Gem you'll use this week</h2>
+      <p>Pick a repetitive task you do at least 3x/week. Build a Gem using the four-section pattern. Connect Workspace if relevant. Use it 5 times this week and refine the instructions based on what's not working.</p>
       <div class="btn-row">
         <a href="/lessons/gemini/" class="btn">Back to Gemini Mastery →</a>
         <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
@@ -146,18 +155,18 @@ Produce a positioning analysis with: their narrative, our differentiation, recom
     <div class="checklist">
       <h3>What you can do now</h3>
       <ul>
-        <li>Use plan-first review to redirect before the work runs</li>
-        <li>Lean on Gemini's long context for multi-source synthesis</li>
-        <li>Combine internal Workspace data with external research when relevant</li>
-        <li>Spot-check facts in long-source synthesis</li>
-        <li>Treat output as a draft that needs your judgment, not a final document</li>
+        <li>Use the four-section instruction pattern (Identity, What you do, Voice, What you don't do)</li>
+        <li>Scope Workspace access narrowly — folders and accounts, not 'all of Drive'</li>
+        <li>For team Gems, assign an owner with quarterly review responsibility</li>
+        <li>Iterate on Gem instructions based on real use, not theory</li>
+        <li>Replace shared Custom GPTs with Workspace-native Gems when possible</li>
       </ul>
     </div>
     <div class="next-up">
       <span class="pro-tag">Pro</span>
       <div class="lbl" style="margin-top: 14px;">Up next in Gemini Mastery</div>
-      <h3>Lesson 04 · NotebookLM — research workspace at scale</h3>
-      <p>NotebookLM is Google's research-workspace product — give it documents, ask questions, generate notes and even audio briefings. The right tool for working with large source sets repeatedly. <a href="/lessons/gemini/">See the track →</a></p>
+      <h3>Lesson 03 · Deep Research — Gemini's analyst mode</h3>
+      <p>Deep Research is Gemini's long-running research agent. Multi-step plans, iterative refinement, citation-rich output. The pattern for substantive research work. <a href="/lessons/gemini/">See the track →</a></p>
     </div>
   </div>
 </article>

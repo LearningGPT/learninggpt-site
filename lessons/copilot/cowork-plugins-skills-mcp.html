@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cowork plugins, Skills, and MCP — extend the platform — LearningGPT</title>
+<meta name="description" content="Plugins, Skills, MCP servers — three ways to extend Cowork. What each one does, the marketplaces, and when to build your own." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#2c7be5" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/copilot/cowork-plugins-skills-mcp" />
+<meta property="og:title" content="Cowork plugins, Skills, and MCP — extend the platform" />
+<meta property="og:description" content="Plugins, Skills, MCP servers — three ways to extend Cowork. What each one does, the marketplaces, and when to build your own." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #2c7be5; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #2c7be5; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+.lesson { padding: 50px 0 100px; }
+.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(44,123,229,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(44,123,229,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
+.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
+.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
+.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
+.lesson h1 .grad { background: linear-gradient(135deg, #2c7be5 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
+.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
+.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
+.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
+.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); position: relative; }
+.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #2c7be5, #7c5cff); border-radius: 2px 0 0 2px; }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.callout p:last-child { margin-bottom: 0; }
+.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
+.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(44,123,229,0.1); border: 1px solid rgba(44,123,229,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
+.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
+.workflow p { font-size: 15px; margin: 0 0 14px; }
+.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
+.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
+.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
+.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
+.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
+.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); padding: 36px; }
+.challenge h2 { margin-top: 0; }
+.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #2c7be5, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
+.challenge a.btn:hover { transform: translateY(-1px); color: white; }
+.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; padding-top: 0; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.checklist li:first-child::before { top: 4px; }
+.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
+.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
+.next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/copilot/" class="nav-back">← Copilot Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Cowork · Lesson 05</span>
+      <span class="chip chip-pro-plus">Pro+</span>
+      <span>~14 min read</span>
+      <span class="dot"></span>
+      <span>Marketplace + custom</span>
+    </div>
+    <h1>Extending Cowork: <span class="grad serif">plugins, skills, MCP.</span></h1>
+    <p class="deck">Out-of-the-box Cowork is powerful. But its real superpower is extensibility — three different mechanisms for adding capabilities. Plugins package multiple features together. Skills teach Cowork specific file-format expertise. MCP connectors link to external services. This lesson covers all three, when to use which, and when it's worth building your own.</p>
+    <h2><span class="num">The mental model</span></h2><h3>Three extension types, three different purposes.</h3><p>Cowork's extensibility model is at first confusing because there are three concepts that sound similar: Plugins, Skills, and MCP. They serve different purposes and you'll use all three.</p><p>Plugins are bundles. They're collections of skills, MCP connectors, and prompts grouped for a use case — e.g., a 'Sales' plugin might bundle Outlook MCP + a follow-up-email Skill + sales-prompt presets. Install one plugin, get everything for that workflow.</p><p>Skills are file-format experts. The docx Skill knows how to build Word documents properly. The xlsx Skill knows Excel. The pptx Skill knows PowerPoint. Skills are how Cowork produces real-format files, not just chat text.</p><p>MCP connectors link to services. Outlook MCP connects to Microsoft 365 email. Slack MCP connects to Slack. Salesforce MCP connects to your CRM. These are how Cowork accesses systems outside your local files.</p><h2><span class="num">Workflow 01</span> Browse and install from the marketplace</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>Find existing plugins that solve your problem</h3></div><p>Before building anything custom, check the plugin marketplace. Most common workflows already have a plugin. The marketplace is searchable by use case.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Marketplace search</span>In Cowork&#x27;s plugin marketplace, search for plugins matching your role:
+
+• &#x27;Sales&#x27; — Outlook, Salesforce, prospecting prompts
+• &#x27;Engineering&#x27; — GitHub, JIRA, deployment helpers
+• &#x27;Marketing&#x27; — analytics MCP, content drafting Skills
+• &#x27;Finance&#x27; — QuickBooks, Excel-heavy workflows
+• &#x27;Legal&#x27; — contract review, citation lookup
+
+For each plugin you install, check:
+1. What MCP connectors it requires (some need OAuth)
+2. What Skills it adds (you can verify they aren&#x27;t malicious)
+3. The reviews — community ratings flag flaky ones</div><h4>Best use cases</h4><ul><li>First-time setup for your role</li><li>Adding capabilities as your needs grow</li><li>Replacing custom workflows with maintained plugins</li><li>Evaluating what others in your role find useful</li></ul><div class="gotcha">Plugins from unknown publishers can request a lot of permissions. Treat plugin installs like browser extensions — only install ones from publishers you trust or that have high ratings.</div><div class="savings"><strong>Time savings:</strong> Finding the right plugin: 10 min vs. building custom: hours or days.</div></div><h2><span class="num">Workflow 02</span> Understand which Skill produces which output</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>The Skill catalog and what each one knows</h3></div><p>Skills are the engines that produce real files. Knowing which Skill handles which format lets you be more specific in your prompts.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Skill invocation</span>Core Skills you&#x27;ll use:
+
+• docx — Word documents with proper styles, headings, page numbers, tables of contents
+• xlsx — Excel with formulas, multiple sheets, conditional formatting, charts
+• pptx — PowerPoint with layouts, speaker notes, themes
+• pdf — PDF creation, OCR, merge/split, form fill
+• schedule — set up scheduled recurring tasks
+• skill-creator — build your own custom Skill
+
+When you ask Cowork for an output, it picks the right Skill. But you can also invoke them explicitly: &#x27;use the xlsx skill to build...&#x27; for cases where the format isn&#x27;t obvious.</div><h4>Best use cases</h4><ul><li>Explicitly requesting a specific output format</li><li>Debugging when Cowork picks the wrong format</li><li>Building workflows that chain multiple Skills</li><li>Understanding what's possible vs. what's not</li></ul><div class="gotcha">If a Skill isn't installed, Cowork can't produce that format. If your prompt for a .pptx isn't working, verify the pptx Skill is installed in your Cowork config.</div><div class="savings"><strong>Time savings:</strong> Knowing the right Skill: avoid hours of 'why isn't this working' debugging.</div></div><h2><span class="num">Workflow 03</span> Connect new MCP servers</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>Wire up an external service Cowork doesn't know yet</h3></div><p>MCP is an open standard. There are hundreds of MCP servers for different services. If you use a service Cowork doesn't have built-in, search for an MCP server for it — there probably is one.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Add an MCP server</span>To add a new MCP connector:
+
+1. Search MCP server registry for your service (e.g., &#x27;Notion MCP server&#x27;)
+2. Check the publisher and last-updated date — pick maintained ones
+3. Copy the install command (usually one line in your Cowork config)
+4. Restart Cowork
+5. Run OAuth flow if the service needs authentication
+6. Test with: &#x27;list my [service] resources&#x27;
+
+Common MCP servers worth knowing:
+• Slack — read channels, post messages
+• Notion — search and update docs
+• Linear / Jira / Asana — ticket-aware work
+• GitHub — PR review and code-aware
+• HubSpot / Salesforce — CRM operations
+• Stripe — payment data
+• Postgres / Snowflake — query your database</div><h4>Best use cases</h4><ul><li>Connecting to a CRM Cowork doesn't know yet</li><li>Linking to your team's internal tools</li><li>Adding read-only access to a database</li><li>Connecting to a service you discovered after setup</li></ul><div class="gotcha">Use read-only credentials for any production database. Even with permission gates, you don't want Cowork running DELETE queries on production by accident.</div><div class="savings"><strong>Time savings:</strong> Setup: 15-30 min per service. ROI: every future task that uses that service is faster.</div></div><h2><span class="num">Workflow 04</span> Build a custom Skill (Pro+ pattern)</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">4</div><h3>When the marketplace doesn't have what you need</h3></div><p>If your workflow is unique, you can build a custom Skill that bundles your prompt patterns, file templates, and behavior. The skill-creator Skill walks you through it.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Custom Skill creation</span>Use the skill-creator Skill to build your own:
+
+&quot;Use the skill-creator to build a new Skill called &#x27;company-quarterly-report&#x27;. It should:
+
+1. Take input from our quarterly-data.xlsx template
+2. Apply our company&#x27;s writing style (use company-voice.md as the reference)
+3. Output a 12-slide PowerPoint matching our brand template (logo, color palette, fonts)
+4. Include executive summary, channel breakdown, wins/losses, next-quarter plan
+5. Save to a standard filename: q[N]-[YEAR]-review.pptx
+
+Generate the Skill, test it on q1-2026 data, and let me iterate.&quot;</div><h4>Best use cases</h4><ul><li>Company-specific reporting templates</li><li>Workflows you run every week that have specific quirks</li><li>Compliance-driven document generation (consistent formatting required)</li><li>Onboarding flows for new team members</li></ul><div class="gotcha">Custom Skills take 1-3 hours of upfront work to build well. Only do this for workflows you'll run at least 5 times — otherwise just use the base Skills with detailed prompts.</div><div class="savings"><strong>Time savings:</strong> Custom Skill: 2 hours to build, saves 30 min per execution thereafter.</div></div>
+    <div class="challenge">
+      <h2 style="margin-top: 0;">Audit your extensions</h2>
+      <p>Open your Cowork settings. List every Plugin, Skill, and MCP connector you have installed. Mark which ones you've actually used this month. Uninstall the ones you don't use. Install one new thing you've been meaning to try. Lean, current toolkit beats bloated, half-explored toolkit.</p>
+      <div class="btn-row">
+        <a href="/lessons/copilot/" class="btn">Back to Copilot Mastery →</a>
+        <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+      </div>
+    </div>
+    <div class="checklist">
+      <h3>What you can do now</h3>
+      <ul>
+        <li>Understand the difference between Plugin, Skill, and MCP</li>
+        <li>Search the marketplace before building anything custom</li>
+        <li>Audit installed extensions quarterly — uninstall the unused</li>
+        <li>Use read-only credentials for any production systems</li>
+        <li>Build custom Skills only for workflows you'll run 5+ times</li>
+      </ul>
+    </div>
+    <div class="next-up">
+      <span class="pro-plus-tag">Pro+</span>
+      <div class="lbl" style="margin-top: 14px;">Up next in Copilot Mastery</div>
+      <h3>Lesson 06 · Automation: scheduled tasks and live artifacts</h3>
+      <p>The final piece: automate recurring work with scheduled tasks (daily briefings, weekly reports), and build live artifacts that pull fresh data every time you open them. This is what turns Cowork from tool to coworker. <a href="/lessons/copilot/">See the track →</a></p>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT · Independent. Not affiliated with Microsoft.</div>
+    <a href="/lessons/copilot/" style="color: var(--text-dim);">← All Copilot Mastery lessons</a>
+  </div>
+</footer>
+</body>
+</html>

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Deep Research: when you need a 20-source briefing — LearningGPT</title>
-<meta name="description" content="Perplexity's Deep Research mode does 10-15 minutes of multi-source investigation before answering. It's the closest thing to having a research analyst" />
+<title>Perplexity Deep Research — multi-source analyst work — LearningGPT</title>
+<meta name="description" content="Perplexity Deep Research runs on Claude Opus 4.5 for Max/Pro users. Generates reports, presentations, spreadsheets, and dashboards from research questions." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#20808d" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,8 +12,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/perplexity/deep-research" />
-<meta property="og:title" content="Deep Research: when you need a 20-source briefing" />
-<meta property="og:description" content="Perplexity's Deep Research mode does 10-15 minutes of multi-source investigation before answering. It's the closest thing to having a research analyst" />
+<meta property="og:title" content="Perplexity Deep Research — multi-source analyst work" />
+<meta property="og:description" content="Perplexity Deep Research runs on Claude Opus 4.5 for Max/Pro users. Generates reports, presentations, spreadsheets, and dashboards from research questions." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -56,7 +56,7 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
 .workflow p { font-size: 15px; margin: 0 0 14px; }
 .workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; }
+.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
 .prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
 .gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
 .gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
@@ -78,6 +78,7 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
 .next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
 .next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
+.next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
 footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
@@ -95,41 +96,85 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 <article class="lesson">
   <div class="container">
     <div class="lesson-meta">
-      <span class="chip">Lesson 03 · Perplexity Mastery</span>
+      <span class="chip">Agents · Lesson 03</span>
       <span class="chip chip-pro">Pro</span>
       <span>~11 min read</span>
       <span class="dot"></span>
-      <span>3 workflows + evaluation</span>
+      <span>Reports + presentations</span>
     </div>
-    <h1>Deep Research: <span class="grad serif">20-source briefings.</span></h1>
-    <p class="deck">Perplexity's Deep Research mode does 10-15 minutes of multi-source investigation before answering. It's the closest thing to having a research analyst on staff. This lesson covers when Deep Research wins over regular search, how to prompt it for real depth, and how to evaluate the output.</p>
-    <h2><span class="num">The mental model</span></h2><h3>Deep Research is for the questions you'd otherwise hire an analyst for.</h3><p>Not for facts (regular search is faster). Not for creativity (use chat AIs). For: market analyses, competitive landscapes, due-diligence-type questions where 10-30 sources need to be synthesized with citations.</p><h2><span class="num">Workflow 01</span> Prompt Deep Research for real reports</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>Specific structure, broad coverage</h3></div><p>Vague prompts produce vague reports. Give Deep Research a clear structure.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Good Deep Research prompts</span>Research the enterprise AI training market in 2026. Cover: market size estimates with sources, top 5 players and their positioning, pricing models, recent funding events, predicted growth and key drivers, regulatory considerations.</div><h4>Best use cases</h4><ul><li>Market analyses and competitive landscapes</li><li>Due diligence on companies or topics</li><li>Regulatory or policy research</li><li>Pre-decision deep dives</li></ul><div class="gotcha">Deep Research takes 10-15 minutes. Don't expect instant results.</div><div class="savings"><strong>Time savings:</strong> Hours of analyst time: 15 min of Perplexity time.</div></div><h2><span class="num">Workflow 02</span> Use follow-up to drill in</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>First report is the starting point, not the destination</h3></div><p>Once Deep Research finishes, ask follow-up questions to dig into specific sections.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Follow-up pattern</span>(After report) Tell me more about [specific player]. What's their pricing? Who funds them? Recent customer wins?
+    <h1>Deep Research: <span class="grad serif">analyst output, on demand.</span></h1>
+    <p class="deck">Perplexity Deep Research is the long-running research mode — now upgraded to state-of-the-art performance running on Claude Opus 4.5 for Max and Pro users. Unlike a chat answer, Deep Research can produce presentations, spreadsheets, dashboards, and websites directly as deliverables.</p>
+    <h2><span class="num">Workflow 01</span> Research → presentation deliverable</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>A finished deck, not a research report</h3></div><p>The breakthrough Perplexity Deep Research feature: it produces presentation-ready output, not just text. Ask for slides; get slides.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Slide-deck output</span>Research: &#x27;The state of vertical AI in legal tech, mid-2026.&#x27;
 
-(Drilling further) Find an interview where their CEO discussed strategy in the last 6 months.</div><h4>Best use cases</h4><ul><li>Iterative deep dives</li><li>Targeted follow-ups on specific findings</li><li>Building a research narrative incrementally</li></ul><div class="gotcha">Each follow-up may trigger another Deep Research run. Budget accordingly if you're on metered plans.</div><div class="savings"><strong>Time savings:</strong> Layered research: hours → tens of minutes.</div></div><h2><span class="num">Workflow 03</span> Evaluate before trusting</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>The three-source check</h3></div><p>Don't trust Deep Research output without verification on the points that matter.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Three-source check</span>(1) Pick 3 important claims. Click their citations. Read the actual source. (2) Check recency — is anything time-sensitive based on stale data? (3) Check absences — did it miss something obvious you know about?</div><h4>Best use cases</h4><ul><li>Anything you'll publish or present externally</li><li>Decisions that depend on the research being right</li><li>Building trust calibration over time</li></ul><div class="gotcha">Deep Research sometimes cites SEO-spam alongside high-quality sources. The check protects you from leaning on bad inputs.</div><div class="savings"><strong>Time savings:</strong> Catastrophic errors from bad sources: prevented.</div></div>
+Produce as: a 12-slide presentation deck (PowerPoint or web) covering:
+
+• Slide 1: Title + your name + date
+• Slide 2: Executive summary (3 key takeaways)
+• Slide 3-4: Market sizing and growth trajectory
+• Slide 5-7: Top 5 players — what they do, traction, funding
+• Slide 8-9: Use cases that are working in production
+• Slide 10: Unsolved problems / gaps in the market
+• Slide 11: 18-month outlook
+• Slide 12: Sources
+
+Use a clean dark-mode design. No stock photos. Cite sources on each data slide.</div><h4>Best use cases</h4><ul><li>Investor pitch supporting research</li><li>Internal market briefings</li><li>Conference talk preparation</li><li>Board-level industry updates</li></ul><div class="gotcha">Generated decks need a polish pass — your specific company language, brand colors, and voice. Treat as 80% there, not 100%.</div><div class="savings"><strong>Time savings:</strong> 12-slide research deck: 1-2 days work → 30 min + polish.</div></div><h2><span class="num">Workflow 02</span> Research → spreadsheet deliverable</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>Structured data, not just narrative</h3></div><p>For research that produces data (comparison tables, market data, taxonomies), ask Deep Research for a spreadsheet output.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Spreadsheet output</span>Research task: comparison of 20 AI agent platforms for enterprises.
+
+Produce as: an Excel spreadsheet with these columns:
+• Platform name
+• Vendor
+• Year founded
+• Total funding raised
+• Primary use case category
+• Supported LLM providers (OpenAI, Anthropic, Google, etc.)
+• Self-hosted option? (Y/N)
+• Pricing model (per-seat, usage-based, enterprise-only)
+• Notable customers (3-5 examples each)
+• Key differentiator (one sentence)
+• Source URL for the data
+
+One row per platform. Multiple sheets if needed for related data (e.g., a separate sheet for pricing details).</div><h4>Best use cases</h4><ul><li>Vendor evaluation matrices</li><li>Market mapping (competitive landscapes)</li><li>Multi-attribute comparison tables</li><li>Time-series data extracted from sources</li></ul><div class="gotcha">Spot-check cells against original sources, especially funding numbers, customer claims, and pricing. AI tools sometimes confidently report outdated or wrong numbers.</div><div class="savings"><strong>Time savings:</strong> Vendor comparison spreadsheet: days → 30 min.</div></div><h2><span class="num">Workflow 03</span> Research → interactive dashboard</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>Live data exploration, not static report</h3></div><p>Perplexity's newer capability: produce interactive dashboards from research. Useful when stakeholders want to explore data themselves.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Dashboard output</span>Research task: 5-year trend analysis of AI adoption by industry, US market.
+
+Produce as: an interactive dashboard with:
+• Industry filter (dropdown)
+• Year-over-year line charts (adoption %, spending)
+• Industry breakdown bar chart
+• &#x27;Drill down&#x27; on any industry to see top use cases
+• Source citation panel that updates with each view
+
+Design:
+• Clean, business-appropriate (not flashy)
+• Mobile-responsive
+• Save as a shareable URL I can send to stakeholders</div><h4>Best use cases</h4><ul><li>Executive briefings stakeholders can self-serve</li><li>Customer-facing data presentations</li><li>Investor data rooms</li><li>Ongoing tracking dashboards (refreshable)</li></ul><div class="gotcha">Interactive dashboards are great for exploration but harder to fact-check. Make sure the underlying data is solid before publishing.</div><div class="savings"><strong>Time savings:</strong> Interactive dashboard from data: weeks of dev → an afternoon.</div></div><div class="callout"><span class="lbl">Deep Research vs. Spaces</span><p>Deep Research is the long-running mode for one-shot deep dives. Spaces are persistent workspaces for ongoing research. Use Deep Research for 'I need a finished report now.' Use a Space for 'I'll be researching this topic over weeks.'</p></div>
     <div class="challenge">
-      <h2 style="margin-top: 0;">Final challenge: one real Deep Research project</h2>
-      <p>Pick a real question you've been meaning to research. Run Deep Research. Do at least 2 follow-ups. Verify 3 claims against sources. Compare to what you'd have produced manually in 2-3 hours.</p>
+      <h2 style="margin-top: 0;">Order a deliverable instead of a search</h2>
+      <p>Pick a topic where you'd normally produce a slide deck or spreadsheet. Have Deep Research produce the deliverable. Polish the output. Compare to your manual workflow — including time, source quality, and design effort.</p>
       <div class="btn-row">
         <a href="/lessons/perplexity/" class="btn">Back to Perplexity Mastery →</a>
-        <a href="/#pricing" class="btn ghost">See pricing →</a>
+        <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
       </div>
     </div>
     <div class="checklist">
       <h3>What you can do now</h3>
-      <ul><li>Recognize when to use Deep Research vs. regular Perplexity</li><li>Prompt with structured, specific research questions</li><li>Use follow-ups to drill into the most important findings</li><li>Run the three-source check on every report before trusting it</li><li>Build trust calibration over time</li></ul>
+      <ul>
+        <li>Ask for specific output formats (deck, sheet, dashboard) — not just text</li>
+        <li>Verify data and numbers against original sources</li>
+        <li>Always polish output for voice, brand, and accuracy</li>
+        <li>Use Deep Research for one-shot deliverables, Spaces for ongoing work</li>
+        <li>Cite sources prominently in finished deliverables</li>
+      </ul>
     </div>
     <div class="next-up">
-      <span class="pro-tag">Pro</span>
+      <span class="pro-plus-tag">Pro+</span>
       <div class="lbl" style="margin-top: 14px;">Up next in Perplexity Mastery</div>
-      <h3>Lesson 4 · Perplexity for sales: prospect research in 5 minutes flat</h3>
-      <p>Pre-call research workflows: company overview, decision-maker background, recent news, competitive context. The Perplexity prompts every salesperson should have saved. <a href="/#pricing">See pricing →</a></p>
+      <h3>Lesson 04 · Model Council — compare answers from frontier models</h3>
+      <p>Model Council is Perplexity's newest agent: ask the same question to multiple frontier models simultaneously and see how they differ. The pattern that catches blind spots. <a href="/lessons/perplexity/">See the track →</a></p>
     </div>
   </div>
 </article>
 <footer>
   <div class="footer-inner">
-    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Perplexity.</div>
-    <a href="/lessons/perplexity/" style="color: var(--text-dim);">← All Perplexity lessons</a>
+    <div>© 2026 LearningGPT · Independent. Not affiliated with Perplexity.</div>
+    <a href="/lessons/perplexity/" style="color: var(--text-dim);">← All Perplexity Mastery lessons</a>
   </div>
 </footer>
 </body>

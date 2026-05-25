@@ -210,6 +210,11 @@ nav.top {
   font-size: 10px; padding: 3px 8px; border-radius: 4px;
   background: rgba(255,255,255,0.06); color: var(--text-mute); font-weight: 500;
 }
+.badge-winner {
+  font-size: 10px; padding: 3px 8px; border-radius: 4px;
+  background: rgba(68,224,164,0.15); color: #44e0a4;
+  font-weight: 600; border: 1px solid rgba(68,224,164,0.3);
+}
 .result-body {
   flex: 1; font-size: 13.5px; line-height: 1.6; color: var(--text-dim);
   white-space: pre-wrap; word-wrap: break-word;
@@ -226,6 +231,43 @@ nav.top {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 .loading { font-size: 11px; color: var(--text-mute); }
+
+/* ---------- AI COACH ---------- */
+.coach-panel {
+  margin: 20px 0 4px;
+  background: linear-gradient(135deg, rgba(68,224,164,0.06) 0%, rgba(124,92,255,0.06) 100%);
+  border: 1px solid rgba(68,224,164,0.2);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  display: none;
+}
+.coach-panel.visible { display: block; }
+.coach-header {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 12px;
+}
+.coach-icon {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: linear-gradient(135deg, #44e0a4, #7c5cff);
+  display: grid; place-items: center;
+  font-size: 14px;
+}
+.coach-label {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.2px; color: #44e0a4;
+}
+.coach-text {
+  font-size: 14px; line-height: 1.7; color: var(--text);
+}
+.coach-loading {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13px; color: var(--text-mute);
+}
+.coach-spinner {
+  width: 16px; height: 16px; border-radius: 50%;
+  border: 2px solid rgba(68,224,164,0.2); border-top-color: #44e0a4;
+  animation: spin .8s linear infinite; flex-shrink: 0;
+}
 
 @media (max-width: 880px) {
   .results-grid { grid-template-columns: 1fr; }
@@ -277,7 +319,7 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
   <div class="container">
     <span class="eyebrow">Free Preview · The Playground</span>
     <h1>Compare AI models <span class="grad serif">side by side</span></h1>
-    <p class="lead">Run any prompt through ChatGPT, Claude, Gemini, Perplexity, and Grok at the same time. See exactly how they differ on your real work.</p>
+    <p class="lead">Run any prompt through ChatGPT, Claude, Gemini, Perplexity, and Grok at the same time. An AI coach explains who won and why.</p>
   </div>
 </section>
 
@@ -307,6 +349,22 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
       <div class="results" id="results">
         <div class="result-empty">
           ✨ Enter a prompt above and click <strong>Run all</strong> to compare ChatGPT, Claude, Gemini, Perplexity, and Grok side by side.
+        </div>
+      </div>
+
+      <!-- AI Coach panel — shown after results load -->
+      <div class="results" style="padding-top: 0;">
+        <div class="coach-panel" id="coachPanel">
+          <div class="coach-header">
+            <div class="coach-icon">🎓</div>
+            <span class="coach-label">AI Coach</span>
+          </div>
+          <div class="coach-text" id="coachText">
+            <div class="coach-loading">
+              <div class="coach-spinner"></div>
+              Analyzing responses…
+            </div>
+          </div>
         </div>
       </div>
 
@@ -340,20 +398,19 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
     { id: 'x-ai/grok-4.3',                    name: 'Grok',       color: '#1a1a1a', short: '𝕏' }
   ];
 
-  const promptInput     = document.getElementById('prompt');
-  const runBtn          = document.getElementById('runBtn');
+  const promptInput      = document.getElementById('prompt');
+  const runBtn           = document.getElementById('runBtn');
   const resultsContainer = document.getElementById('results');
+  const coachPanel       = document.getElementById('coachPanel');
+  const coachText        = document.getElementById('coachText');
 
-  // Pre-fill prompt from URL parameter (used by lessons that hand learners a specific prompt)
-  // e.g. /playground?prompt=Write%20an%20email...
+  // Pre-fill prompt from URL parameter
   (function prefillFromUrl() {
     const params = new URLSearchParams(window.location.search);
     const fromUrl = params.get('prompt');
     if (fromUrl) {
       promptInput.value = fromUrl;
-      // Scroll prompt into view on mobile
       promptInput.focus();
-      // Auto-run if &run=1 is also present
       if (params.get('run') === '1') {
         setTimeout(() => runBtn.click(), 200);
       }
@@ -385,7 +442,11 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
     runBtn.disabled = true;
     runBtn.textContent = 'Running…';
 
-    // Loading state
+    // Hide coach panel while running
+    coachPanel.classList.remove('visible');
+    coachText.innerHTML = '<div class="coach-loading"><div class="coach-spinner"></div>Analyzing responses…</div>';
+
+    // Loading state for results
     resultsContainer.innerHTML = '<div class="results-grid">' + MODELS.map(m => `
       <div class="result-col">
         <div class="result-head">
@@ -418,17 +479,27 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
 
       const data = await response.json();
 
+      // Determine winner name from coach text (for badge highlight)
+      // We'll highlight the card whose model name appears first in the coach text
+      const coachRaw = data.coach || '';
+      const winnerModel = MODELS.find(m => coachRaw.toLowerCase().includes(m.name.toLowerCase()));
+
+      // Render results
       resultsContainer.innerHTML = '<div class="results-grid">' + data.results.map(r => {
         const modelInfo = MODELS.find(m => m.id === r.modelId) || { color:'#666', short:'?' };
         const isError = !!r.error;
+        const isWinner = winnerModel && winnerModel.id === r.modelId && !isError;
         return `
-          <div class="result-col">
+          <div class="result-col" style="${isWinner ? 'border-color: rgba(68,224,164,0.35);' : ''}">
             <div class="result-head">
               <div class="model-name">
                 <div class="model-icon" style="background:${modelInfo.color}">${modelInfo.short}</div>
                 ${r.modelName}
               </div>
-              ${!isError ? `<span class="badge">${r.tokens} tok · ${(r.timeMs/1000).toFixed(1)}s</span>` : ''}
+              ${isWinner
+                ? '<span class="badge-winner">★ Winner</span>'
+                : (!isError ? `<span class="badge">${r.tokens} tok · ${(r.timeMs/1000).toFixed(1)}s</span>` : '')
+              }
             </div>
             <div class="result-body">
               ${isError
@@ -439,6 +510,12 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
           </div>
         `;
       }).join('') + '</div>';
+
+      // Show coach panel
+      if (data.coach) {
+        coachText.textContent = data.coach;
+        coachPanel.classList.add('visible');
+      }
 
     } catch (error) {
       console.error('Playground error:', error);

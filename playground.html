@@ -513,7 +513,8 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
 
       // Show coach panel
       if (data.coach) {
-        coachText.textContent = data.coach;
+        coachText.innerHTML = data.coach   .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')   .replace(/^##\s+/gm, '')   .replace(/
+/g, '<br>');
         coachPanel.classList.add('visible');
       }
 

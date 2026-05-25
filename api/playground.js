@@ -1,11 +1,11 @@
 // Vercel serverless function for the LearningGPT playground
-// Receives a prompt + list of models, fans out to OpenRouter, returns all responses + AI coach analysis.
+// Two modes:
+//   POST { prompt, models }         → runs all models, returns results
+//   POST { prompt, results, coach:true } → runs AI coach analysis only
 //
-// Required Vercel environment variable: OPENROUTER_API_KEY
-// (Get yours at https://openrouter.ai/keys)
+// Required Vercel env variable: OPENROUTER_API_KEY
 
 export default async function handler(req, res) {
-  // CORS preflight
   if (req.method === 'OPTIONS') {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -17,13 +17,76 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed. Use POST.' });
   }
 
-  // Parse request body — Vercel sometimes leaves it as a string
   let body = req.body;
   if (typeof body === 'string') {
     try { body = JSON.parse(body); } catch { body = {}; }
   }
 
-  const { prompt, models } = body || {};
+  const apiKey = process.env.OPENROUTER_API_KEY;
+  if (!apiKey) {
+    return res.status(500).json({
+      error: 'OPENROUTER_API_KEY environment variable not configured in Vercel.'
+    });
+  }
+
+  // ── COACH MODE ──────────────────────────────────────────────────────────────
+  if (body.coach === true) {
+    const { prompt, results } = body;
+    if (!prompt || !Array.isArray(results)) {
+      return res.status(400).json({ error: 'Missing prompt or results for coach mode' });
+    }
+
+    const successfulResults = results.filter(r => !r.error && r.response);
+    if (successfulResults.length < 2) {
+      return res.status(200).json({ coach: null });
+    }
+
+    const coachContext = successfulResults.map(r =>
+      `### ${r.modelName}\n${r.response}`
+    ).join('\n\n');
+
+    const coachPrompt = `You are an AI learning coach for LearningGPT.ai. A student just ran this prompt across multiple AI models.
+
+STUDENT'S PROMPT:
+"${prompt}"
+
+MODEL RESPONSES:
+${coachContext}
+
+Your job:
+1. Pick the strongest response and name the model clearly (e.g. "Claude wins this round")
+2. In 2-3 sentences explain specifically WHY it won — what technique or approach made it better
+3. In 1-2 sentences give a concrete actionable takeaway for next time
+
+Keep it under 120 words. Be direct and specific. Reference actual words or phrases from the winning response.`;
+
+    try {
+      const coachResponse = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + apiKey,
+          'Content-Type': 'application/json',
+          'HTTP-Referer': 'https://learninggpt.ai',
+          'X-Title': 'LearningGPT Coach'
+        },
+        body: JSON.stringify({
+          model: 'anthropic/claude-sonnet-4-6',
+          messages: [{ role: 'user', content: coachPrompt }],
+          max_tokens: 300,
+          temperature: 0.5
+        })
+      });
+
+      const coachData = await coachResponse.json();
+      const coach = coachData.choices?.[0]?.message?.content || null;
+      return res.status(200).json({ coach });
+    } catch (err) {
+      return res.status(200).json({ coach: null });
+    }
+  }
+
+  // ── MODELS MODE ─────────────────────────────────────────────────────────────
+  const { prompt, models } = body;
 
   if (!prompt || typeof prompt !== 'string') {
     return res.status(400).json({ error: 'Missing or invalid "prompt" field' });
@@ -35,18 +98,9 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Invalid "models" array (must be 1-5 models)' });
   }
 
-  const apiKey = process.env.OPENROUTER_API_KEY;
-  if (!apiKey) {
-    return res.status(500).json({
-      error: 'OPENROUTER_API_KEY environment variable not configured in Vercel. Add it under Project Settings → Environment Variables.'
-    });
-  }
-
   try {
-    // Call all models in parallel
     const promises = models.map(async (model) => {
       const startTime = Date.now();
-
       try {
         const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
           method: 'POST',
@@ -99,61 +153,7 @@ export default async function handler(req, res) {
     });
 
     const results = await Promise.all(promises);
-
-    // Build AI Coach analysis using Claude via OpenRouter
-    // Only run if we have at least 2 successful responses
-    const successfulResults = results.filter(r => !r.error && r.response);
-    let coach = null;
-
-    if (successfulResults.length >= 2) {
-      try {
-        const coachContext = successfulResults.map(r =>
-          `### ${r.modelName}\n${r.response}`
-        ).join('\n\n');
-
-        const coachPrompt = `You are an AI learning coach for LearningGPT.ai. A student just ran this prompt across multiple AI models and you need to help them learn from the comparison.
-
-STUDENT'S PROMPT:
-"${prompt}"
-
-MODEL RESPONSES:
-${coachContext}
-
-Your job:
-1. Pick the strongest response and name the model clearly (e.g. "Claude wins this round")
-2. In 2-3 sentences explain specifically WHY it won — what technique, pattern, or approach made it better
-3. In 1-2 sentences explain what the student should remember or try next time — a concrete, actionable takeaway
-
-Keep it tight — under 120 words total. Be direct and specific. Don't be vague. Reference actual words or phrases from the winning response if it helps make the point. If responses are genuinely similar in quality, say so and explain what distinguishes them slightly.`;
-
-        const coachResponse = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Authorization': 'Bearer ' + apiKey,
-            'Content-Type': 'application/json',
-            'HTTP-Referer': 'https://learninggpt.ai',
-            'X-Title': 'LearningGPT Coach'
-          },
-          body: JSON.stringify({
-            model: 'anthropic/claude-sonnet-4.6',
-            messages: [{ role: 'user', content: coachPrompt }],
-            max_tokens: 300,
-            temperature: 0.5
-          })
-        });
-
-        const coachData = await coachResponse.json();
-
-        if (coachResponse.ok && !coachData.error) {
-          coach = coachData.choices?.[0]?.message?.content || null;
-        }
-      } catch (coachErr) {
-        // Coach failure is non-fatal — results still return without it
-        console.error('Coach error:', coachErr.message);
-      }
-    }
-
-    return res.status(200).json({ results, coach });
+    return res.status(200).json({ results });
 
   } catch (error) {
     console.error('Playground handler error:', error);

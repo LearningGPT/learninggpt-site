@@ -5,153 +5,536 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Claude agents — what you can have Claude do, not just say — LearningGPT</title>
 <meta name="description" content="A free overview of every Claude agent: Cowork, Claude Code, Computer Use, MCP. Real examples of what becomes possible when Claude does the work instead of just answering." />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<meta name="theme-color" content="#d97757" />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/claude/agents-overview" />
 <meta property="og:title" content="Claude agents — what you can have Claude do, not just say" />
 <meta property="og:description" content="A free overview of every Claude agent: Cowork, Claude Code, Computer Use, MCP. Real examples of what becomes possible when Claude does the work instead of just answering." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="theme-color" content="#d97757" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
 <style>
-:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #d97757; }
-* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
-body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
-.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
-.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #d97757; }
-.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
-.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
-nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
-.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
-.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
-.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
-.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
-.lesson { padding: 50px 0 100px; }
-.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
-.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(217,119,87,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(217,119,87,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
-.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
-.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
-.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #d97757 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
-.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
-.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(217,119,87,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(217,119,87,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #d97757, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(217,119,87,0.1); border: 1px solid rgba(217,119,87,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(217,119,87,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(217,119,87,0.25); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #d97757, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
-.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
-.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
-.checklist li:first-child { border-top: none; padding-top: 0; }
-.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
-.checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
-.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
-.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
-.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
-.next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
-footer { border-top: 1px solid var(--line); padding: 30px 0; }
-.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
-@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+:root {
+  --bg: #0a0a1a; --bg-2: #0f0f23; --surface: #1a1a3a;
+  --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14);
+  --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85;
+  --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4;
+  --claude: #d97757;
+  --radius: 14px; --radius-lg: 20px;
+  --container: 760px;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg); color: var(--text);
+  line-height: 1.7; -webkit-font-smoothing: antialiased;
+  overflow-x: hidden; min-height: 100vh;
+}
+a { color: var(--brand-2); text-decoration: none; }
+a:hover { text-decoration: underline; }
+button { font-family: inherit; cursor: pointer; }
+
+/* NAV */
+nav.top {
+  position: sticky; top: 0; z-index: 100;
+  backdrop-filter: blur(20px); background: rgba(10,10,26,0.9);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 24px; max-width: 1100px; margin: 0 auto;
+}
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); text-decoration: none; }
+.logo-mark { width: 30px; height: 30px; border-radius: 8px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; }
+.nav-back { font-size: 13px; color: var(--text-dim); }
+.nav-back:hover { color: var(--text); text-decoration: none; }
+.btn-upgrade { background: linear-gradient(135deg, #7c5cff, #5b8def); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; }
+.btn-upgrade:hover { opacity: 0.9; }
+
+/* LESSON LAYOUT */
+.lesson-wrap { max-width: var(--container); margin: 0 auto; padding: 48px 24px 120px; }
+
+/* META BAR */
+.lesson-meta {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  margin-bottom: 32px; font-size: 12px;
+}
+.chip {
+  padding: 4px 10px; border-radius: 999px; font-weight: 600;
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px;
+}
+.chip-free { background: rgba(68,224,164,0.15); color: #44e0a4; border: 1px solid rgba(68,224,164,0.3); }
+.chip-track { background: rgba(217,119,87,0.15); color: var(--claude); border: 1px solid rgba(217,119,87,0.3); }
+.chip-time { background: rgba(255,255,255,0.06); color: var(--text-mute); border: 1px solid var(--line); }
+
+/* HEADINGS */
+.lesson-wrap h1 { font-size: clamp(26px, 4vw, 38px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 16px; }
+.lesson-wrap .lead { font-size: 17px; color: var(--text-dim); margin: 0 0 40px; line-height: 1.6; }
+.lesson-wrap h2 { font-size: 22px; font-weight: 700; margin: 48px 0 16px; letter-spacing: -0.01em; }
+.lesson-wrap h3 { font-size: 17px; font-weight: 600; margin: 28px 0 10px; }
+.lesson-wrap p { margin: 0 0 18px; }
+.lesson-wrap ul { margin: 0 0 18px; padding-left: 22px; }
+.lesson-wrap li { margin-bottom: 6px; color: var(--text-dim); }
+
+/* WORKFLOW CARDS */
+.workflow-card {
+  background: rgba(255,255,255,0.03); border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg); padding: 28px; margin: 24px 0;
+}
+.workflow-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--claude), #e8956a);
+  font-weight: 700; font-size: 13px; color: white; margin-bottom: 14px;
+}
+.workflow-card h3 { margin: 0 0 12px; font-size: 18px; }
+.prompt-box {
+  background: rgba(0,0,0,0.3); border: 1px solid var(--line);
+  border-radius: 10px; padding: 16px; margin: 16px 0;
+  font-size: 13.5px; line-height: 1.6; color: var(--text-dim);
+  font-style: italic;
+}
+.prompt-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-mute); margin-bottom: 8px; }
+.time-savings {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(68,224,164,0.08); border: 1px solid rgba(68,224,164,0.2);
+  border-radius: 8px; padding: 8px 12px; font-size: 12px;
+  color: var(--accent); margin-top: 12px;
+}
+
+/* UPGRADE BANNER */
+.upgrade-banner {
+  background: linear-gradient(135deg, rgba(124,92,255,0.12), rgba(91,141,239,0.12));
+  border: 1px solid rgba(124,92,255,0.25); border-radius: var(--radius-lg);
+  padding: 28px; margin: 48px 0; text-align: center;
+}
+.upgrade-banner h3 { font-size: 20px; margin: 0 0 10px; }
+.upgrade-banner p { color: var(--text-dim); margin: 0 0 20px; font-size: 15px; }
+.btn-primary { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #7c5cff, #5b8def); color: white; border: none; padding: 13px 24px; border-radius: 10px; font-size: 14px; font-weight: 600; }
+.btn-primary:hover { opacity: 0.9; text-decoration: none; }
+.btn-ghost { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); color: var(--text); border: 1px solid var(--line-strong); padding: 13px 24px; border-radius: 10px; font-size: 14px; font-weight: 600; margin-left: 10px; }
+.btn-ghost:hover { background: rgba(255,255,255,0.09); text-decoration: none; }
+
+/* NEXT LESSON */
+.next-lesson {
+  border: 1px solid var(--line-strong); border-radius: var(--radius);
+  padding: 20px 24px; margin-top: 48px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.next-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-mute); margin-bottom: 4px; }
+.next-title { font-weight: 600; font-size: 15px; }
+.next-chip { background: rgba(124,92,255,0.15); color: var(--brand); border: 1px solid rgba(124,92,255,0.3); padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; white-space: nowrap; }
+
+/* FOOTER */
+footer { border-top: 1px solid var(--line); padding: 32px 24px; text-align: center; font-size: 13px; color: var(--text-mute); }
+
+/* ── AI COACH WIDGET ── */
+.coach-fab {
+  position: fixed; bottom: 28px; right: 28px; z-index: 999;
+  width: 52px; height: 52px; border-radius: 50%;
+  background: linear-gradient(135deg, #44e0a4, #7c5cff);
+  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; cursor: pointer;
+  transition: transform .2s, box-shadow .2s;
+}
+.coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
+.coach-fab .coach-fab-badge {
+  position: absolute; top: -4px; right: -4px;
+  background: var(--brand); color: white;
+  font-size: 9px; font-weight: 700; padding: 2px 5px;
+  border-radius: 999px; border: 2px solid var(--bg);
+  line-height: 1.2;
+}
+
+.coach-drawer {
+  position: fixed; bottom: 90px; right: 28px; z-index: 998;
+  width: 360px; max-height: 520px;
+  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
+  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+  display: flex; flex-direction: column;
+  transform: scale(0.92) translateY(16px); opacity: 0;
+  pointer-events: none;
+  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
+}
+.coach-drawer.open {
+  transform: scale(1) translateY(0); opacity: 1; pointer-events: all;
+}
+.coach-drawer-head {
+  padding: 16px 18px 14px;
+  border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; gap: 10px;
+}
+.coach-avatar {
+  width: 32px; height: 32px; border-radius: 10px;
+  background: linear-gradient(135deg, #44e0a4, #7c5cff);
+  display: grid; place-items: center; font-size: 16px; flex-shrink: 0;
+}
+.coach-head-info { flex: 1; }
+.coach-head-name { font-weight: 700; font-size: 14px; }
+.coach-head-sub { font-size: 11px; color: var(--accent); }
+.coach-close { background: none; border: none; color: var(--text-mute); font-size: 18px; padding: 4px; line-height: 1; }
+.coach-close:hover { color: var(--text); }
+
+.coach-messages {
+  flex: 1; overflow-y: auto; padding: 16px 18px;
+  display: flex; flex-direction: column; gap: 12px;
+  scroll-behavior: smooth;
+}
+.coach-messages::-webkit-scrollbar { width: 4px; }
+.coach-messages::-webkit-scrollbar-track { background: transparent; }
+.coach-messages::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 4px; }
+
+.msg { max-width: 88%; font-size: 13.5px; line-height: 1.6; }
+.msg-coach {
+  align-self: flex-start;
+  background: rgba(255,255,255,0.05); border: 1px solid var(--line);
+  border-radius: 14px 14px 14px 4px; padding: 10px 14px; color: var(--text);
+}
+.msg-user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, rgba(124,92,255,0.25), rgba(91,141,239,0.25));
+  border: 1px solid rgba(124,92,255,0.3);
+  border-radius: 14px 14px 4px 14px; padding: 10px 14px; color: var(--text);
+}
+.msg-thinking {
+  align-self: flex-start;
+  background: rgba(255,255,255,0.04); border: 1px solid var(--line);
+  border-radius: 14px 14px 14px 4px; padding: 10px 14px;
+  display: flex; align-items: center; gap: 6px;
+  color: var(--text-mute); font-size: 13px;
+}
+.thinking-dot {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+.thinking-dot:nth-child(2) { animation-delay: .2s; }
+.thinking-dot:nth-child(3) { animation-delay: .4s; }
+@keyframes pulse { 0%,100%{opacity:.3;transform:scale(.8)} 50%{opacity:1;transform:scale(1)} }
+
+.coach-limit {
+  padding: 10px 18px; font-size: 11px; color: var(--text-mute);
+  text-align: center; border-top: 1px solid var(--line);
+}
+.coach-limit a { color: var(--brand-2); }
+.coach-limit.hidden { display: none; }
+
+.coach-input-row {
+  padding: 12px 18px 16px;
+  border-top: 1px solid var(--line);
+  display: flex; gap: 8px; align-items: flex-end;
+}
+.coach-input {
+  flex: 1; background: rgba(0,0,0,0.3); border: 1px solid var(--line);
+  color: var(--text); border-radius: 10px; padding: 9px 12px;
+  font-size: 13px; font-family: inherit; resize: none;
+  max-height: 100px; line-height: 1.5;
+}
+.coach-input:focus { outline: none; border-color: var(--accent); }
+.coach-input::placeholder { color: var(--text-mute); }
+.coach-send {
+  width: 34px; height: 34px; border-radius: 9px; border: none; flex-shrink: 0;
+  background: linear-gradient(135deg, #44e0a4, #7c5cff);
+  color: white; font-size: 15px; display: grid; place-items: center;
+  transition: opacity .15s;
+}
+.coach-send:hover { opacity: 0.85; }
+.coach-send:disabled { opacity: 0.4; cursor: default; }
+
+@media (max-width: 480px) {
+  .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; }
+  .coach-fab { right: 16px; bottom: 16px; }
+}
 </style>
 </head>
 <body>
-<div class="bg-orb one"></div>
-<div class="bg-orb two"></div>
+
 <nav class="top">
   <div class="nav-inner">
-    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
-    <a href="/lessons/claude/" class="nav-back">← Claude Mastery</a>
+    <a href="/" class="logo"><div class="logo-mark">L</div>LearningGPT</a>
+    <a href="/lessons/claude" class="nav-back">← Claude Mastery</a>
+    <a href="/#waitlist" class="btn-upgrade">Join waitlist</a>
   </div>
 </nav>
-<article class="lesson">
-  <div class="container">
-    <div class="lesson-meta">
-      <span class="chip">Start here · Agents</span>
-      <span class="chip chip-pro">Pro</span>
-      <span>~9 min read</span>
-      <span class="dot"></span>
-      <span>Free survey</span>
+
+<div class="lesson-wrap">
+
+  <div class="lesson-meta">
+    <span class="chip chip-free">Free</span>
+    <span class="chip chip-track">Claude Mastery</span>
+    <span class="chip chip-time">~9 min read</span>
+  </div>
+
+  <h1>Claude agents: from answering to doing.</h1>
+  <p class="lead">Most people use Claude like a chatbot — ask question, get answer. That's about 10% of what Claude can actually do. The other 90% is the agent layer: Cowork, Claude Code, Computer Use, MCP. This free lesson is the map.</p>
+
+  <h2>The mental model</h2>
+  <h3>Chat is the front door. Agents are where work happens.</h3>
+  <p>Imagine the difference between calling a consultant on the phone and hiring them as a coworker with a desk in your office. Same intelligence, dramatically different leverage.</p>
+  <p>Claude's chat is the phone call. Claude's agents are the desk. Cowork lets Claude work in your files and apps. Claude Code lets it work in your codebase. Computer Use lets it click around your screen. MCP lets it talk to your other tools.</p>
+  <p>Each agent is a different way to let Claude <em>do</em> work instead of just <em>describe</em> it.</p>
+
+  <div class="workflow-card">
+    <div class="workflow-num">1</div>
+    <h3>Cowork — your knowledge-work coworker</h3>
+    <p>Cowork is the agent that turns Claude into a desktop coworker. Read your files. Build documents. Search your email. Run code on your data. The morning that used to take 90 minutes of clicking around becomes 15 minutes of asking and reviewing.</p>
+    <div class="prompt-label">A real Cowork session</div>
+    <div class="prompt-box">"Look through my Downloads folder. Find all meeting notes from the last 30 days. For each one, summarize what was discussed and pull out any action items that haven't been done yet. Put the action items into a Word doc grouped by owner."</div>
+    <p>Claude reads the files, finds the relevant ones, extracts the content, builds the document, and saves it. You came back to a finished deliverable.</p>
+    <ul>
+      <li>Cleaning up folders that got messy over years</li>
+      <li>Building Word docs, Excel sheets, PowerPoint from scattered data</li>
+      <li>Morning email triage in 15 minutes instead of 90</li>
+      <li>Automating recurring work with scheduled tasks</li>
+    </ul>
+    <div class="time-savings">⚡ A focused Cowork user reports 5–10 hours/week saved on file, email, and document churn.</div>
+  </div>
+
+  <div class="workflow-card">
+    <div class="workflow-num">2</div>
+    <h3>Claude Code — your engineering coworker</h3>
+    <p>Claude Code is the agent for software development. CLI-based, lives in your terminal, can read your codebase, write code, run tests, and make commits. Different category from chat-based coding assistants.</p>
+    <div class="prompt-label">A Claude Code session</div>
+    <div class="prompt-box">"Add JSDoc comments to every public function in src/utils/. Run the existing tests after. Show me the diff before committing."</div>
+    <p>Claude Code reads the files, writes the documentation, runs the tests, and presents a diff. You review and approve.</p>
+    <ul>
+      <li>Documentation generation across a codebase</li>
+      <li>Test coverage additions</li>
+      <li>Refactoring with low blast radius</li>
+      <li>Real feature development with you supervising key decisions</li>
+    </ul>
+    <div class="time-savings">⚡ Engineering teams report 30–50% feature development time reduction with proper supervision.</div>
+  </div>
+
+  <div class="workflow-card">
+    <div class="workflow-num">3</div>
+    <h3>Computer Use — Claude clicks, types, and navigates</h3>
+    <p>Computer Use is the most ambitious Claude agent: Claude controls your desktop. It can open apps, fill forms, click buttons, navigate websites. Useful for tasks that would otherwise require you to click around tools that don't have APIs.</p>
+    <div class="prompt-label">A Computer Use example</div>
+    <div class="prompt-box">"Open the legacy timesheet application. Enter my hours for last week (here are the rows). Submit. Take a screenshot of the confirmation page so I have it for my records."</div>
+    <ul>
+      <li>Legacy systems without APIs</li>
+      <li>Multi-step form filling across applications</li>
+      <li>Web research with site interactions</li>
+      <li>Repetitive desktop chores</li>
+    </ul>
+    <div class="time-savings">⚡ Tasks that were 'manual or impossible' become delegated. Hour-long workflows compressed to minutes.</div>
+  </div>
+
+  <div class="workflow-card">
+    <div class="workflow-num">4</div>
+    <h3>MCP — Claude talks to your other tools</h3>
+    <p>MCP (Model Context Protocol) is the standard that lets Claude connect to services. Outlook, Slack, Linear, GitHub, your database, your CRM. Once connected, Claude can read from and act on those tools without you copy-pasting context.</p>
+    <div class="prompt-label">An MCP-enabled workflow</div>
+    <div class="prompt-box">"Look at my Linear ticket queue. For each P0 ticket open more than 3 days, draft a status update in our team Slack channel. Don't post them yet — let me review the drafts first."</div>
+    <ul>
+      <li>Cross-tool work without copy-paste</li>
+      <li>Email + CRM workflows in one conversation</li>
+      <li>Engineering + ticketing + Slack in one prompt</li>
+      <li>Database-aware questions and actions</li>
+    </ul>
+    <div class="time-savings">⚡ Context-switching cost: 23 minutes per switch in studies. MCP collapses many of these into zero.</div>
+  </div>
+
+  <h2>Why this matters</h2>
+  <p>Most AI tools are chat windows. Claude agents are the layer beyond chat — the layer where Claude actually <em>does</em> work in your real environment. The shift from "AI gives me text I have to paste" to "AI delivers a finished result" is the practical revolution most people haven't yet noticed.</p>
+
+  <div class="upgrade-banner">
+    <h3>Want to learn these in depth?</h3>
+    <p>Pro members get 14 hands-on lessons covering each agent — Cowork basics, file workflows, document creation, Outlook integration, Claude Code, Computer Use, MCP setup, and more. Founding members lock in $9/mo forever.</p>
+    <a href="/#waitlist" class="btn-primary">Join the waitlist →</a>
+    <a href="/playground" class="btn-ghost">Try the playground</a>
+  </div>
+
+  <div class="next-lesson">
+    <div>
+      <div class="next-label">Up next in Claude Mastery</div>
+      <div class="next-title">Lesson 02 · Connect Claude to your Outlook inbox</div>
     </div>
-    <h1>Claude agents: <span class="grad serif">from answering to doing.</span></h1>
-    <p class="deck">Most people use Claude like a chatbot — ask question, get answer. That's about 10% of what Claude can actually do. The other 90% is the agent layer: Cowork, Claude Code, Computer Use, MCP. This free lesson is the map. By the end you'll know which agent does what, what becomes possible with each one, and where to go to learn them in depth.</p>
-    <h2><span class="num">The mental model</span></h2><h3>Chat is the front door. Agents are where work happens.</h3><p>Imagine the difference between calling a consultant on the phone and hiring them as a coworker with a desk in your office. Same intelligence, dramatically different leverage.</p><p>Claude's chat is the phone call. Claude's agents are the desk. Cowork lets Claude work in your files and apps. Claude Code lets it work in your codebase. Computer Use lets it click around your screen. MCP lets it talk to your other tools.</p><p>Each agent is a different way to let Claude do work instead of just describe it. The lessons in this track cover how to use each one. This overview is the map of what's possible.</p><h2><span class="num">Workflow 01</span> Cowork</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>Cowork — your knowledge-work coworker</h3></div><p>Cowork is the agent that turns Claude into a desktop coworker. Read your files. Build documents. Search your email. Run code on your data. The morning that used to take 90 minutes of clicking around becomes 15 minutes of asking and reviewing.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">What Cowork does</span>A real Cowork session might look like this:
+    <span class="next-chip">Pro</span>
+  </div>
 
-&quot;Look through my Downloads folder. Find all meeting notes from the last 30 days. For each one, summarize what was discussed and pull out any action items that haven&#x27;t been done yet. Put the action items into a Word doc grouped by owner.&quot;
+</div>
 
-Claude reads the files, finds the relevant ones, extracts the content, builds the document, and saves it. You came back to a finished deliverable.</div><h4>Best use cases</h4><ul><li>Cleaning up folders that got messy over years</li><li>Building Word docs, Excel sheets, PowerPoint from scattered data</li><li>Morning email triage in 15 minutes instead of 90</li><li>Automating recurring work with scheduled tasks</li></ul><div class="savings"><strong>Time savings:</strong> A focused Cowork user reports 5-10 hours/week saved on what used to be file/email/document churn.</div></div><h2><span class="num">Workflow 02</span> Claude Code</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>Claude Code — your engineering coworker</h3></div><p>Claude Code is the agent for software development. CLI-based, lives in your terminal, can read your codebase, write code, run tests, and make commits. Different category from chat-based coding assistants.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">What Claude Code does</span>A Claude Code session might look like this:
+<footer>© 2026 LearningGPT · Independent. Not affiliated with Anthropic. · <a href="/lessons/claude">← All Claude Mastery lessons</a></footer>
 
-&quot;Add JSDoc comments to every public function in src/utils/. Run the existing tests after. Show me the diff before committing.&quot;
+<!-- ── AI COACH FAB ── -->
+<button class="coach-fab" id="coachFab" title="Ask the AI Coach">
+  🎓
+  <span class="coach-fab-badge">AI</span>
+</button>
 
-Claude Code reads the files, writes the documentation, runs the tests, and presents a diff. You review and approve. This pattern handles real engineering work that was previously slow.</div><h4>Best use cases</h4><ul><li>Documentation generation across a codebase</li><li>Test coverage additions</li><li>Refactoring with low blast radius</li><li>Real feature development with you supervising key decisions</li></ul><div class="savings"><strong>Time savings:</strong> Engineering teams report 30-50% feature development time reduction with proper supervision.</div></div><h2><span class="num">Workflow 03</span> Computer Use</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>Computer Use — Claude clicks, types, and navigates</h3></div><p>Computer Use is the most ambitious Claude agent: Claude controls your desktop. It can open apps, fill forms, click buttons, navigate websites. Useful for tasks that would otherwise require you to click around tools that don't have APIs.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">What Computer Use does</span>A Computer Use example:
-
-&quot;Open the legacy timesheet application. Enter my hours for last week (here are the rows). Submit. Take a screenshot of the confirmation page so I have it for my records.&quot;
-
-Claude opens the app, enters the data, submits the form, and saves the proof. The kind of work nobody enjoys, now delegable.</div><h4>Best use cases</h4><ul><li>Legacy systems without APIs (the things that haunt enterprise)</li><li>Multi-step form filling across applications</li><li>Web research with site interactions</li><li>Repetitive desktop chores</li></ul><div class="savings"><strong>Time savings:</strong> Tasks that were 'manual or impossible' become 'delegated.' Hour-long workflows compressed to minutes.</div></div><h2><span class="num">Workflow 04</span> MCP connectors</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">4</div><h3>MCP — Claude talks to your other tools</h3></div><p>MCP (Model Context Protocol) is the standard that lets Claude connect to services. Outlook, Slack, Linear, GitHub, your database, your CRM. Once connected, Claude can read from and act on those tools without you copy-pasting context.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">What MCP does</span>An MCP-enabled workflow:
-
-&quot;Look at my Linear ticket queue. For each P0 ticket open more than 3 days, draft a status update in our team Slack channel. Don&#x27;t post them yet — let me review the drafts first.&quot;
-
-Claude pulls real ticket data, applies context, generates relevant drafts, and waits for you. Cross-tool work that used to require switching between 4 apps now happens in one conversation.</div><h4>Best use cases</h4><ul><li>Cross-tool work without copy-paste</li><li>Email + CRM workflows in one conversation</li><li>Engineering + ticketing + Slack in one prompt</li><li>Database-aware questions and actions</li></ul><div class="savings"><strong>Time savings:</strong> Context-switching cost: 23 minutes per switch in studies. MCP collapses many of these into zero.</div></div><div class="callout"><span class="lbl">Why this matters</span><p>Most AI tools are chat windows. Claude agents are the layer beyond chat — the layer where Claude actually does work in your real environment. The shift from 'AI gives me text I have to paste' to 'AI delivers a finished result' is the practical revolution most people haven't yet noticed.</p></div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Want to learn these in depth?</h2>
-      <p>Pro members get 14 hands-on lessons covering each agent — Cowork basics, file workflows, document creation, Outlook integration, Claude Code, Computer Use, MCP setup, agent SDK. Real prompts, real workflows, real time savings. Founding members lock in $9/mo forever (vs. $19 standard) and get every new lesson as it ships.</p>
-      <div class="btn-row">
-        <a href="/lessons/claude/" class="btn">Back to Claude Mastery →</a>
-        <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
-      </div>
+<!-- ── AI COACH DRAWER ── -->
+<div class="coach-drawer" id="coachDrawer">
+  <div class="coach-drawer-head">
+    <div class="coach-avatar">🎓</div>
+    <div class="coach-head-info">
+      <div class="coach-head-name">AI Coach</div>
+      <div class="coach-head-sub">Ask anything about this lesson</div>
     </div>
-    <div class="checklist">
-      <h3>What you can do now</h3>
-      <ul>
-        <li>You now know the four Claude agent surfaces: Cowork, Claude Code, Computer Use, MCP</li>
-        <li>You understand the shift from 'AI gives me text' to 'AI does work'</li>
-        <li>You've seen concrete examples of what each agent makes possible</li>
-        <li>You're ready to pick which agent to learn first based on your work</li>
-        <li>Next step: Pro tier hands-on lessons walk you through each one</li>
-      </ul>
-    </div>
-    <div class="next-up">
-      <span class="pro-tag">Pro</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in Claude Mastery</div>
-      <h3>Lesson 02 · Connect Claude to your Outlook inbox</h3>
-      <p>The first hands-on Pro lesson: set up Claude's Outlook MCP connector and start using it for email triage, drafts, and meeting prep. <a href="/lessons/claude/">See the track →</a></p>
+    <button class="coach-close" id="coachClose">✕</button>
+  </div>
+
+  <div class="coach-messages" id="coachMessages">
+    <div class="msg msg-coach">
+      Hey! I'm your AI Coach for this lesson. Ask me anything about Claude agents — Cowork, Claude Code, Computer Use, or MCP. What's on your mind?
     </div>
   </div>
-</article>
-<footer>
-  <div class="footer-inner">
-    <div>© 2026 LearningGPT · Independent. Not affiliated with Anthropic.</div>
-    <a href="/lessons/claude/" style="color: var(--text-dim);">← All Claude Mastery lessons</a>
+
+  <div class="coach-limit hidden" id="coachLimit">
+    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
-</footer>
+
+  <div class="coach-input-row">
+    <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
+    <button class="coach-send" id="coachSend">➤</button>
+  </div>
+</div>
+
+<script>
+  // ── LESSON CONTEXT (injected per-lesson) ──
+  const LESSON_CONTEXT = `You are an AI learning coach embedded in a lesson on LearningGPT.ai.
+
+The student is currently reading this lesson:
+TITLE: Claude agents — what you can have Claude do, not just say
+TRACK: Claude Mastery
+TIER: Free overview
+
+LESSON SUMMARY:
+This lesson introduces the four Claude agent surfaces:
+1. Cowork — a desktop AI coworker that reads files, builds documents, handles email triage, and runs scheduled tasks. Saves 5-10 hours/week.
+2. Claude Code — CLI-based engineering agent that reads codebases, writes code, runs tests, and makes commits. Saves 30-50% development time.
+3. Computer Use — Claude controls your desktop, clicks buttons, fills forms, navigates websites. Good for legacy systems and repetitive desktop tasks.
+4. MCP (Model Context Protocol) — connects Claude to external services like Outlook, Slack, Linear, GitHub, CRMs. Eliminates copy-paste context switching.
+
+The core mental model: chat is the phone call, agents are the desk. The shift from "AI gives me text" to "AI does the work" is the key insight.
+
+Pro members get 14 hands-on lessons covering each agent in depth.
+
+YOUR ROLE:
+- Answer questions specifically about this lesson content
+- Be concise — 2-4 sentences per answer unless the question needs more
+- Be practical — give examples grounded in real work situations
+- If asked about something not covered in this lesson, briefly answer and point them to the relevant Pro lesson
+- Never make up features that don't exist
+- Encourage curiosity — end answers with a follow-up question or insight when natural
+- Do NOT use markdown formatting like ** or ## — plain conversational text only`;
+
+  const MAX_FREE_QUESTIONS = 3;
+  let questionCount = 0;
+  let isOpen = false;
+  let isThinking = false;
+  const conversationHistory = [];
+
+  const fab = document.getElementById('coachFab');
+  const drawer = document.getElementById('coachDrawer');
+  const closeBtn = document.getElementById('coachClose');
+  const messages = document.getElementById('coachMessages');
+  const input = document.getElementById('coachInput');
+  const sendBtn = document.getElementById('coachSend');
+  const limitBar = document.getElementById('coachLimit');
+
+  fab.addEventListener('click', () => toggleDrawer(true));
+  closeBtn.addEventListener('click', () => toggleDrawer(false));
+
+  function toggleDrawer(open) {
+    isOpen = open;
+    drawer.classList.toggle('open', open);
+    if (open) { setTimeout(() => input.focus(), 300); }
+  }
+
+  // Auto-resize textarea
+  input.addEventListener('input', () => {
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 100) + 'px';
+  });
+
+  // Enter to send (Shift+Enter for newline)
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+
+  sendBtn.addEventListener('click', sendMessage);
+
+  function addMessage(text, type) {
+    const div = document.createElement('div');
+    div.className = 'msg msg-' + type;
+    div.textContent = text;
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+    return div;
+  }
+
+  function addThinking() {
+    const div = document.createElement('div');
+    div.className = 'msg-thinking';
+    div.innerHTML = '<div class="thinking-dot"></div><div class="thinking-dot"></div><div class="thinking-dot"></div>';
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+    return div;
+  }
+
+  async function sendMessage() {
+    const text = input.value.trim();
+    if (!text || isThinking) return;
+
+    // Check free question limit
+    if (questionCount >= MAX_FREE_QUESTIONS) {
+      limitBar.classList.remove('hidden');
+      input.disabled = true;
+      sendBtn.disabled = true;
+      input.placeholder = 'Upgrade to Pro for unlimited coaching';
+      return;
+    }
+
+    questionCount++;
+    if (questionCount >= MAX_FREE_QUESTIONS) {
+      limitBar.classList.remove('hidden');
+    }
+
+    addMessage(text, 'user');
+    conversationHistory.push({ role: 'user', content: text });
+    input.value = '';
+    input.style.height = 'auto';
+    isThinking = true;
+    sendBtn.disabled = true;
+
+    const thinking = addThinking();
+
+    try {
+      const response = await fetch('/api/playground', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ coach: true, lessonCoach: true, lessonContext: LESSON_CONTEXT, history: conversationHistory })
+      });
+
+      thinking.remove();
+
+      if (!response.ok) throw new Error('Server error');
+
+      const data = await response.json();
+      const reply = data.coach || "Sorry, I couldn't get a response. Try again in a moment.";
+
+      addMessage(reply, 'coach');
+      conversationHistory.push({ role: 'assistant', content: reply });
+
+    } catch (err) {
+      thinking.remove();
+      addMessage("Something went wrong — try again in a moment.", 'coach');
+    } finally {
+      isThinking = false;
+      sendBtn.disabled = questionCount >= MAX_FREE_QUESTIONS;
+    }
+  }
+</script>
+
 </body>
 </html>

@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Connect Claude to your Outlook inbox — LearningGPT</title>
+<meta name="description" content="Step-by-step lesson: give Claude direct access to your Outlook inbox via Microsoft 365 integration. Five workflows once it's connected: triage, drafting, finding context, summarizing, weekly reviews." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#d97757" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/claude/connect-to-outlook" />
+<meta property="og:title" content="Connect Claude to your Outlook inbox" />
+<meta property="og:description" content="The setup walkthrough that turns Claude into an inbox-aware assistant. Plus the 5 workflows that justify doing it." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<style>
+:root {
+  --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a;
+  --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14);
+  --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85;
+  --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4;
+  --warn: #ffb547; --danger: #ff6b8a;
+  --radius: 14px; --radius-lg: 20px;
+  --container: 820px;
+  --track: #d97757;
+  --track-2: #c46343;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif;
+  background: var(--bg); color: var(--text);
+  line-height: 1.7; -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { color: var(--brand-2); text-decoration: none; }
+a:hover { color: var(--text); }
+
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #d97757; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+nav.top {
+  position: sticky; top: 0; z-index: 100;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(10,10,26,0.85);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); }
+.nav-back:hover { color: var(--text); }
+
+.lesson { padding: 50px 0 100px; }
+.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(217,119,87,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(217,119,87,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip-free { border-color: rgba(68,224,164,0.4); color: var(--accent); background: rgba(68,224,164,0.1); }
+.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
+
+.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
+.lesson h1 .grad { background: linear-gradient(135deg, #d97757 0%, #c46343 50%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
+
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
+.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
+.lesson strong { font-weight: 700; color: var(--text); }
+.lesson em { font-style: italic; color: var(--text); }
+.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; }
+.lesson li { margin-bottom: 8px; color: var(--text); }
+
+.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(217,119,87,0.10), rgba(124,92,255,0.06)); border: 1px solid rgba(217,119,87,0.25); border-radius: var(--radius-lg); position: relative; }
+.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #d97757, #7c5cff); border-radius: 2px 0 0 2px; }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.callout p:last-child { margin-bottom: 0; }
+
+.step-box { margin: 26px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
+.step-box h3 { margin-top: 0; }
+.step-box ol { padding-left: 22px; }
+.step-box ol li { margin-bottom: 12px; font-size: 15.5px; }
+.step-box code { background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 4px; font-size: 13px; color: var(--accent); font-family: 'SFMono-Regular', Consolas, monospace; }
+
+.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
+.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(217,119,87,0.15); border: 1px solid rgba(217,119,87,0.35); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
+.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
+.workflow p { font-size: 15px; margin: 0 0 14px; }
+.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
+
+.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; }
+.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
+
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
+
+.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
+.savings::before { content: '⏱'; font-size: 14px; }
+.savings strong { color: var(--accent); font-weight: 700; }
+
+.limitations { margin: 36px 0; background: rgba(255,107,138,0.04); border: 1px solid rgba(255,107,138,0.2); border-radius: var(--radius-lg); padding: 26px 28px; }
+.limitations h3 { margin-top: 0; color: var(--text); }
+.limitations ul li { font-size: 14.5px; }
+
+.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(217,119,87,0.18), rgba(124,92,255,0.1)); border: 1px solid rgba(217,119,87,0.3); border-radius: var(--radius-lg); padding: 36px; }
+.challenge h2 { margin-top: 0; }
+.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #d97757, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(217,119,87,0.35); transition: transform .15s; }
+.challenge a.btn:hover { transform: translateY(-1px); color: white; }
+.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+
+.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist h3 { margin-top: 0; font-size: 18px; }
+.checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; padding-top: 0; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.checklist li:first-child::before { top: 4px; }
+
+.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
+.next-up h3 { margin: 0 0 8px; font-size: 20px; }
+.next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
+
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+
+/* ── AI COACH WIDGET ── */
+.coach-fab {
+  position: fixed; bottom: 28px; right: 28px; z-index: 999;
+  width: 52px; height: 52px; border-radius: 50%;
+  background: linear-gradient(135deg, #44e0a4, #7c5cff);
+  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; cursor: pointer;
+  transition: transform .2s, box-shadow .2s;
+}
+.coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
+.coach-fab .coach-fab-badge {
+  position: absolute; top: -4px; right: -4px;
+  background: #7c5cff; color: white;
+  font-size: 9px; font-weight: 700; padding: 2px 5px;
+  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
+}
+.coach-drawer {
+  position: fixed; bottom: 90px; right: 28px; z-index: 998;
+  width: 360px; max-height: 520px;
+  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
+  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+  display: flex; flex-direction: column;
+  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
+  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
+}
+.coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
+.coach-drawer-head {
+  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex; align-items: center; gap: 10px;
+}
+.coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
+.coach-head-info { flex: 1; }
+.coach-head-name { font-weight: 700; font-size: 14px; }
+.coach-head-sub { font-size: 11px; color: #44e0a4; }
+.coach-close { background: none; border: none; color: #6b6b85; font-size: 18px; padding: 4px; line-height: 1; cursor: pointer; }
+.coach-close:hover { color: #f5f5fa; }
+.coach-messages { flex: 1; overflow-y: auto; padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth; }
+.coach-messages::-webkit-scrollbar { width: 4px; }
+.coach-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.14); border-radius: 4px; }
+.msg { max-width: 88%; font-size: 13.5px; line-height: 1.6; }
+.msg-coach { align-self: flex-start; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px 14px 14px 4px; padding: 10px 14px; color: #f5f5fa; }
+.msg-user { align-self: flex-end; background: linear-gradient(135deg, rgba(124,92,255,0.25), rgba(91,141,239,0.25)); border: 1px solid rgba(124,92,255,0.3); border-radius: 14px 14px 4px 14px; padding: 10px 14px; color: #f5f5fa; }
+.msg-thinking { align-self: flex-start; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px 14px 14px 4px; padding: 10px 14px; display: flex; align-items: center; gap: 6px; color: #6b6b85; font-size: 13px; }
+.thinking-dot { width: 6px; height: 6px; border-radius: 50%; background: #44e0a4; animation: coachPulse 1.2s ease-in-out infinite; }
+.thinking-dot:nth-child(2) { animation-delay: .2s; }
+.thinking-dot:nth-child(3) { animation-delay: .4s; }
+@keyframes coachPulse { 0%,100%{opacity:.3;transform:scale(.8)} 50%{opacity:1;transform:scale(1)} }
+.coach-limit { padding: 10px 18px; font-size: 11px; color: #6b6b85; text-align: center; border-top: 1px solid rgba(255,255,255,0.08); display: none; }
+.coach-limit.visible { display: block; }
+.coach-limit a { color: #5b8def; }
+.coach-input-row { padding: 12px 18px 16px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; gap: 8px; align-items: flex-end; }
+.coach-input { flex: 1; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); color: #f5f5fa; border-radius: 10px; padding: 9px 12px; font-size: 13px; font-family: inherit; resize: none; max-height: 100px; line-height: 1.5; }
+.coach-input:focus { outline: none; border-color: #44e0a4; }
+.coach-input::placeholder { color: #6b6b85; }
+.coach-send { width: 34px; height: 34px; border-radius: 9px; border: none; flex-shrink: 0; background: linear-gradient(135deg, #44e0a4, #7c5cff); color: white; font-size: 15px; display: grid; place-items: center; cursor: pointer; transition: opacity .15s; }
+.coach-send:hover { opacity: 0.85; }
+.coach-send:disabled { opacity: 0.4; cursor: default; }
+@media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
+
+</style>
+</head>
+<body>
+
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo">
+      <div class="logo-mark">L</div>
+      LearningGPT
+    </a>
+    <a href="/lessons/claude/" class="nav-back">← Claude Mastery</a>
+  </div>
+</nav>
+
+<article class="lesson">
+  <div class="container">
+
+    <div class="lesson-meta">
+      <span class="chip">Lesson 1 · Claude Mastery</span>
+      <span class="chip chip-free">Free</span>
+      <span>~12 min read</span>
+      <span class="dot"></span>
+      <span>Setup + 5 workflows</span>
+      <span class="dot"></span>
+      <span>Microsoft 365 account required</span>
+    </div>
+
+    <h1>Connect Claude to your Outlook inbox <span class="grad serif">and what to do once you have.</span></h1>
+
+    <p class="deck">Most AI is useful only when it can see your data. Claude can't read your inbox by default — but with one 10-minute setup, you give it secure access to your Microsoft 365 email, calendar, and contacts. After that, it can triage, draft, summarize, and surface the exact email you couldn't find. This lesson walks the full setup, then five workflows worth doing once you're connected.</p>
+
+    <p>Two notes before we start. First: this works with the consumer Claude (claude.ai) when configured with the Microsoft 365 connector. Second: connecting an AI to your inbox feels invasive the first time. Worth understanding what's actually happening — see the privacy section at the end.</p>
+
+    <!-- ============ MENTAL MODEL ============ -->
+    <h2><span class="num">The mental model</span></h2>
+    <h3>Claude without inbox access is a smart friend who doesn't read your email. With access, it's a chief of staff.</h3>
+
+    <p>That's the upgrade. By default Claude is a very capable conversation partner — but it can't see what's happening in your life. Connect it to Outlook and suddenly it can answer questions like "what's still open with my Acme account?" or "summarize what I missed last week" with real, current context from your actual inbox.</p>
+
+    <div class="callout">
+      <span class="lbl">The Reframe</span>
+      <p><strong>The setup is the lesson.</strong> Most of the value from this article comes from the 10-minute setup, not the workflows themselves. Once Claude can see your inbox, you'll discover use cases organically. The workflows below are starting points, not the ceiling.</p>
+    </div>
+
+    <!-- ============ SETUP ============ -->
+    <h2><span class="num">The setup</span></h2>
+    <h3>Connect Claude to Microsoft 365 (10 minutes)</h3>
+
+    <div class="step-box">
+      <ol>
+        <li><strong>Open Claude.ai</strong> in your browser and sign in. Make sure you're on the version that supports connectors (the modern interface — if you have a "Connectors" or "Integrations" section in settings, you're good).</li>
+        <li><strong>Go to Settings → Connectors</strong> (or click your profile and find the integrations panel).</li>
+        <li><strong>Find Microsoft 365</strong> in the list. Click <strong>Connect</strong>.</li>
+        <li><strong>A Microsoft sign-in window opens.</strong> Sign in with your work email (e.g., <code>dan@learninggpt.ai</code>).</li>
+        <li><strong>If MFA is required</strong>, approve the request on your phone via Microsoft Authenticator. If you haven't set up MFA on this account, do that first at <code>aka.ms/mfasetup</code> — Microsoft now requires it for API access.</li>
+        <li><strong>Review the permissions</strong> Microsoft asks Claude for: email, calendar, OneDrive, SharePoint, Teams. Accept.</li>
+        <li><strong>The window closes</strong> and Claude shows the Microsoft 365 connector as Connected.</li>
+        <li><strong>Test it.</strong> Ask Claude: "Search my inbox for emails from the last 24 hours and summarize them." If you see a real summary of your actual recent emails, you're done.</li>
+      </ol>
+    </div>
+
+    <div class="gotcha">If Claude says "I don't have access to your inbox" right after connecting, your token may not have the MFA claim yet. Disconnect and reconnect the integration — the second time, Microsoft will trigger an MFA prompt, and your new token will have full access. This was a frustrating discovery; the fix is straightforward.</div>
+
+    <p>That's the entire setup. Roughly 5-10 minutes once you've done it once. Now for what to do with it.</p>
+
+    <!-- ============ WORKFLOW 1 ============ -->
+    <h2><span class="num">Workflow 01</span> Daily inbox triage</h2>
+
+    <div class="workflow">
+      <div class="workflow-head">
+        <div class="workflow-num">1</div>
+        <h3>Triage your inbox in 90 seconds</h3>
+      </div>
+
+      <p>The single workflow worth connecting Claude to Outlook for. Run this once a day — ideally as your first inbox interaction in the morning.</p>
+
+      <div class="prompt-example">
+        <span class="label">Triage prompt</span>
+        Search my Outlook inbox for emails from the last 24 hours. Group them by: (1) needs my reply this week, (2) FYI only, (3) probably safe to archive. For group 1, briefly note what each one is asking for and from whom.
+      </div>
+
+      <p>Claude searches your inbox, reads the threads, and produces the briefing. You read it in 90 seconds. You know what to skip, what to handle now, what to handle later. Done.</p>
+
+      <div class="savings"><strong>Time savings:</strong> Replaces 15-25 min of manual inbox scanning with a 90-second read.</div>
+    </div>
+
+    <!-- ============ WORKFLOW 2 ============ -->
+    <h2><span class="num">Workflow 02</span> Draft a reply with Claude's voice</h2>
+
+    <div class="workflow">
+      <div class="workflow-head">
+        <div class="workflow-num">2</div>
+        <h3>Draft replies that don't sound like a chatbot</h3>
+      </div>
+
+      <p>Claude's writing voice is widely considered the most natural of any major AI. With inbox access, you can have it draft replies that match the tone of the original message.</p>
+
+      <div class="prompt-example">
+        <span class="label">Reply-drafting prompt</span>
+        Open the most recent email from [name/company]. Draft a reply that agrees to their proposal in principle, pushes the deadline to next Friday, and asks for a 15-min sync before we commit. Match the tone of their email — it should feel conversational, not formal. Under 80 words.
+      </div>
+
+      <p>Claude will pull up the email, read the thread, mirror the tone, and produce a sendable draft. Copy it into Outlook. Edit one or two phrases to sound exactly like you. Send.</p>
+
+      <div class="gotcha">Claude can't send the email for you — that's a hard safety boundary. It drafts; you copy/send. This is actually good. You're the human in the loop, not a passive observer of an autonomous agent.</div>
+
+      <div class="savings"><strong>Time savings:</strong> 4-5 min per drafted reply → ~1 min including paste-and-edit.</div>
+    </div>
+
+    <!-- ============ WORKFLOW 3 ============ -->
+    <h2><span class="num">Workflow 03</span> Find that one email</h2>
+
+    <div class="workflow">
+      <div class="workflow-head">
+        <div class="workflow-num">3</div>
+        <h3>"I know I sent it, but I can't find it"</h3>
+      </div>
+
+      <p>Outlook's native search is decent for exact keywords; terrible for "the email where I mentioned the discount" or "that thread where we talked about the Q3 budget timing." Claude is dramatically better at semantic search.</p>
+
+      <div class="prompt-example">
+        <span class="label">Find-by-meaning prompts</span>
+        Find the email where I quoted pricing to a client from [company] last quarter. What discount did I offer?
+        ---
+        Find the thread where we decided to push the launch to Q3. Who proposed pushing it?
+        ---
+        Find any emails from the last 3 months where someone mentioned legal review being required.
+      </div>
+
+      <p>Claude searches your inbox semantically — based on meaning, not just keywords. For knowledge workers, this alone justifies the connection.</p>
+
+      <div class="savings"><strong>Time savings:</strong> 10+ minutes of frustrated searching → 30 seconds.</div>
+    </div>
+
+    <!-- ============ WORKFLOW 4 ============ -->
+    <h2><span class="num">Workflow 04</span> The weekly review</h2>
+
+    <div class="workflow">
+      <div class="workflow-head">
+        <div class="workflow-num">4</div>
+        <h3>End your week with a 5-minute review</h3>
+      </div>
+
+      <p>Every Friday at 4pm, run this prompt:</p>
+
+      <div class="prompt-example">
+        <span class="label">Weekly review prompt</span>
+        Summarize my Outlook activity this week. Tell me: (1) the most important threads and where they stand, (2) commitments I made that I should follow up on, (3) anyone I owe a reply to but haven't gotten back to, (4) any patterns worth noticing (e.g., a customer who emailed multiple times, a topic that keeps coming up).
+      </div>
+
+      <p>You get back a structured weekly review. Use it for: planning next Monday, prepping for your manager 1:1, deciding what to delegate, spotting accounts that are heating up or cooling down.</p>
+
+      <div class="savings"><strong>Time savings:</strong> The kind of review you'd never actually do manually now takes 5 minutes.</div>
+    </div>
+
+    <!-- ============ WORKFLOW 5 ============ -->
+    <h2><span class="num">Workflow 05</span> Pre-meeting prep</h2>
+
+    <div class="workflow">
+      <div class="workflow-head">
+        <div class="workflow-num">5</div>
+        <h3>Walk into any meeting fully prepped</h3>
+      </div>
+
+      <p>Five minutes before a meeting, instead of skimming the calendar invite, ask:</p>
+
+      <div class="prompt-example">
+        <span class="label">Pre-meeting prep prompt</span>
+        I have a meeting with [name] in 15 minutes. Search my inbox for anything they've sent in the past month, anything relevant to what's likely to come up, and any open questions or commitments between us. Brief me.
+      </div>
+
+      <p>Claude pulls the context from your inbox and gives you a one-paragraph prep brief. Walk into the meeting having actually remembered everything you should remember.</p>
+
+      <div class="savings"><strong>Time savings:</strong> Skip the awkward "remind me what we discussed last time" moment forever.</div>
+    </div>
+
+    <!-- ============ PRIVACY ============ -->
+    <h2><span class="num">A note on privacy</span></h2>
+    <h3>What's actually happening when Claude reads your email</h3>
+
+    <p>Worth being clear-eyed about. When you grant Claude access to Outlook:</p>
+
+    <ul>
+      <li><strong>Anthropic doesn't train on your data.</strong> Claude.ai chats are not used for model training by default (their published policy).</li>
+      <li><strong>Microsoft processes the API requests.</strong> When Claude queries your inbox, Microsoft sees the request (your IT admin's logs will reflect it).</li>
+      <li><strong>You control the connection.</strong> You can revoke Claude's access in your Microsoft account settings at any time — same place you'd remove any other connected app.</li>
+      <li><strong>Sensitive data still requires judgment.</strong> Don't paste highly regulated content (PHI, PII, financial data) into prompts unless your organization has cleared it.</li>
+    </ul>
+
+    <!-- ============ LIMITATIONS ============ -->
+    <div class="limitations">
+      <h3>What this setup still can't do</h3>
+      <ul>
+        <li><strong>Can't send emails for you.</strong> By design. Claude drafts; you send.</li>
+        <li><strong>Can't access archived folders consistently.</strong> Recent inbox works best.</li>
+        <li><strong>Slower than native Outlook search for simple queries.</strong> For "find the email from X with subject Y," just use Outlook.</li>
+        <li><strong>Doesn't work on shared mailboxes</strong> without specific admin configuration.</li>
+        <li><strong>Some MFA setups break the integration periodically.</strong> Reconnect when this happens — it's a 30-second fix.</li>
+      </ul>
+    </div>
+
+    <!-- ============ FINAL CHALLENGE ============ -->
+    <div class="challenge">
+      <h2 style="margin-top: 0;">Final challenge: one workday with Claude in your inbox</h2>
+      <p>Pick a day this week. Do the setup before you start work. Then use Claude for every meaningful inbox task that day:</p>
+      <ol>
+        <li>Morning triage with Workflow 01</li>
+        <li>Draft 2-3 replies with Workflow 02</li>
+        <li>At least one "find that email" with Workflow 03</li>
+        <li>Pre-meeting prep with Workflow 05 before your first meeting</li>
+        <li>Friday review with Workflow 04 at end of week</li>
+      </ol>
+      <p>Track total time spent on email vs. a normal day. Most people see a 40-60% reduction in inbox time the first day.</p>
+      <div class="btn-row">
+        <a href="/lessons/claude/" class="btn">Back to Claude Mastery →</a>
+        <a href="/#pricing" class="btn ghost">See Pro membership →</a>
+      </div>
+    </div>
+
+    <!-- ============ CHECKLIST ============ -->
+    <div class="checklist">
+      <h3>What you can do now</h3>
+      <ul>
+        <li>Connect Claude to your Microsoft 365 account in under 10 minutes</li>
+        <li>Run a 90-second daily inbox triage instead of a 25-minute manual scan</li>
+        <li>Draft replies in Claude's voice with full inbox context</li>
+        <li>Search your inbox semantically by meaning, not just keywords</li>
+        <li>Generate a real Friday weekly review you'd never otherwise do</li>
+        <li>Walk into any meeting with a 60-second inbox-context briefing</li>
+      </ul>
+    </div>
+
+    <div class="next-up">
+      <span class="pro-tag">Pro</span>
+      <div class="lbl" style="margin-top: 14px;">Up next in Claude Mastery</div>
+      <h3>Lesson 2 · Claude Projects: set up your personal research assistant</h3>
+      <p>Project setup, system instructions, custom knowledge base, conversation memory. Build a research assistant that knows your industry, your style, and your priorities. <a href="/#pricing">Become a Pro member →</a></p>
+    </div>
+
+  </div>
+</article>
+
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Anthropic.</div>
+    <a href="/lessons/claude/" style="color: var(--text-dim);">← All Claude lessons</a>
+  </div>
+</footer>
+
+
+<!-- ── AI COACH FAB ── -->
+<button class="coach-fab" id="coachFab" title="Ask the AI Coach">
+  🎓
+  <span class="coach-fab-badge">AI</span>
+</button>
+
+<!-- ── AI COACH DRAWER ── -->
+<div class="coach-drawer" id="coachDrawer">
+  <div class="coach-drawer-head">
+    <div class="coach-avatar">🎓</div>
+    <div class="coach-head-info">
+      <div class="coach-head-name">AI Coach</div>
+      <div class="coach-head-sub">Ask anything about this lesson</div>
+    </div>
+    <button class="coach-close" id="coachClose">✕</button>
+  </div>
+  <div class="coach-messages" id="coachMessages">
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
+  </div>
+  <div class="coach-limit" id="coachLimit">
+    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+  </div>
+  <div class="coach-input-row">
+    <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
+    <button class="coach-send" id="coachSend">➤</button>
+  </div>
+</div>
+
+
+<script id="coachScript">
+(function() {
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Connect Claude to your Outlook inbox\nTRACK: Claude Mastery\n\nLESSON CONTENT SUMMARY:\nConnect Claude to your Outlook inbox \u2014 LearningGPT L LearningGPT \u2190 Claude Mastery Lesson 1 \u00b7 Claude Mastery Free ~12 min read Setup + 5 workflows Microsoft 365 account required Connect Claude to your Outlook inbox and what to do once you have. Most AI is useful only when it can see your data. Claude can't read your inbox by default \u2014 but with one 10-minute setup, you give it secure access to your Microsoft 365 email, calendar, and contacts. After that, it can triage, draft, summarize, and surface the exact email you couldn't find. This lesson walks the full setup, then five workflows worth doing once you're connected. Two notes before we start. First: this works with the consumer Claude (claude.ai) when configured with the Microsoft 365 connector. Second: connecting an AI to your inbox feels invasive the first time. Worth understanding what's actually happening \u2014 see the privacy section at the end. The mental model Claude without inbox access is a smart friend who doesn't read your email. With access, it's a chief of staff. That's the upgrade. By default Claude is a very capable conversation partner \u2014 but it can't see what's happening in your life. Connect it to Outlook and suddenly it can answer questions like \"what's still open with my Acme account?\" or \"summarize what I missed last week\" with real, current context from your actual inbox. The Reframe The setup is the lesson. Most of the value from this article comes from the 10-minute setup, not the workflows themselves. Once Claude can see your inbox, you'll discover use cases organically. The workflows below are starting points, not the ceiling. The setup Connect Claude to Microsoft 365 (10 minutes) Open Claude.ai in your browser and sign in. Make sure you're on the version that supports connectors (the modern interface \u2014 if you have a \"Connectors\" or \"Integrations\" section in settings, you're good). Go to Settings \u2192 Connectors (or click your profile and find the integrations panel). Find Microsoft 365 in the list. Click Connect . A Microsoft sign-in window opens. Sign in with your work email (e.g., dan@learninggpt.ai ). If MFA is required , approve the request on your phone via Microsoft Authenticator. If you haven't set up MFA on this account, do that first at aka.ms/mfasetup \u2014 Microsoft now requires it for API access. Review the permissions Microsoft asks Claude for: email, calendar, OneDrive, SharePoint, Teams. Accept. The window closes and Claude shows the Microsoft 365 connector as Connected. Test it. Ask Claude: \"Search my inbox for emails from the last 24 hours and summarize them.\" If you see a real summary of your actual recent emails, you're done. If Claude says \"I don't have access to your inbox\" right after connecting, your token may not have the MFA claim yet. Disconnect and reconnect the integration \u2014 the second time, Microsoft will trigger an MFA prompt, and your new token will have full access. This was a frustrating discovery; the fix is straightforward. That's the entire set\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var MAX_FREE = 3;
+  var count = 0;
+  var isThinking = false;
+  var history = [];
+
+  var fab = document.getElementById('coachFab');
+  var drawer = document.getElementById('coachDrawer');
+  var closeBtn = document.getElementById('coachClose');
+  var msgs = document.getElementById('coachMessages');
+  var input = document.getElementById('coachInput');
+  var sendBtn = document.getElementById('coachSend');
+  var limitBar = document.getElementById('coachLimit');
+
+  if (!fab) return; // safety check
+
+  fab.addEventListener('click', function() { toggle(true); });
+  closeBtn.addEventListener('click', function() { toggle(false); });
+
+  function toggle(open) {
+    drawer.classList.toggle('open', open);
+    if (open) setTimeout(function() { input.focus(); }, 300);
+  }
+
+  input.addEventListener('input', function() {
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 100) + 'px';
+  });
+
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+  });
+  sendBtn.addEventListener('click', send);
+
+  function addMsg(text, type) {
+    var d = document.createElement('div');
+    d.className = 'msg msg-' + type;
+    d.textContent = text;
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+    return d;
+  }
+
+  function addThinking() {
+    var d = document.createElement('div');
+    d.className = 'msg-thinking';
+    d.innerHTML = '<div class="thinking-dot"></div><div class="thinking-dot"></div><div class="thinking-dot"></div>';
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+    return d;
+  }
+
+  async function send() {
+    var text = input.value.trim();
+    if (!text || isThinking) return;
+    if (count >= MAX_FREE) {
+      limitBar.classList.add('visible');
+      input.disabled = true;
+      sendBtn.disabled = true;
+      return;
+    }
+    count++;
+    if (count >= MAX_FREE) limitBar.classList.add('visible');
+    addMsg(text, 'user');
+    history.push({ role: 'user', content: text });
+    input.value = '';
+    input.style.height = 'auto';
+    isThinking = true;
+    sendBtn.disabled = true;
+    var thinking = addThinking();
+    try {
+      var res = await fetch('/api/playground', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ coach: true, lessonCoach: true, lessonContext: LESSON_CONTEXT, history: history })
+      });
+      thinking.remove();
+      var data = await res.json();
+      var reply = (data && data.coach) ? data.coach : "Sorry, something went wrong. Try again in a moment.";
+      addMsg(reply, 'coach');
+      history.push({ role: 'assistant', content: reply });
+    } catch(err) {
+      thinking.remove();
+      addMsg("Something went wrong — try again in a moment.", 'coach');
+    } finally {
+      isThinking = false;
+      sendBtn.disabled = count >= MAX_FREE;
+    }
+  }
+})();
+</script>
+
+</body>
+</html>

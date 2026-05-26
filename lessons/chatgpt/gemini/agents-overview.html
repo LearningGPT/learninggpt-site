@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gemini agents — Google's agent story finally cohered — LearningGPT</title>
+<meta name="description" content="A free overview of Gemini agents: Gemini Agent, Gems, Deep Research, NotebookLM, and Workspace integrations. The map of what's possible." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#4285f4" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/gemini/agents-overview" />
+<meta property="og:title" content="Gemini agents — Google's agent story finally cohered" />
+<meta property="og:description" content="A free overview of Gemini agents: Gemini Agent, Gems, Deep Research, NotebookLM, and Workspace integrations. The map of what's possible." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #4285f4; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #4285f4; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+.lesson { padding: 50px 0 100px; }
+.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(66,133,244,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(66,133,244,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
+.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
+.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
+.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
+.lesson h1 .grad { background: linear-gradient(135deg, #4285f4 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
+.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
+.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
+.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
+.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(66,133,244,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(66,133,244,0.25); border-radius: var(--radius-lg); position: relative; }
+.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #4285f4, #7c5cff); border-radius: 2px 0 0 2px; }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.callout p:last-child { margin-bottom: 0; }
+.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
+.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(66,133,244,0.1); border: 1px solid rgba(66,133,244,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
+.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
+.workflow p { font-size: 15px; margin: 0 0 14px; }
+.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
+.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
+.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
+.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
+.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
+.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(66,133,244,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(66,133,244,0.25); border-radius: var(--radius-lg); padding: 36px; }
+.challenge h2 { margin-top: 0; }
+.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #4285f4, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
+.challenge a.btn:hover { transform: translateY(-1px); color: white; }
+.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; padding-top: 0; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.checklist li:first-child::before { top: 4px; }
+.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
+.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
+.next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+
+/* ── AI COACH WIDGET ── */
+.coach-fab {
+  position: fixed; bottom: 28px; right: 28px; z-index: 999;
+  width: 52px; height: 52px; border-radius: 50%;
+  background: linear-gradient(135deg, #44e0a4, #7c5cff);
+  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; cursor: pointer;
+  transition: transform .2s, box-shadow .2s;
+}
+.coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
+.coach-fab .coach-fab-badge {
+  position: absolute; top: -4px; right: -4px;
+  background: #7c5cff; color: white;
+  font-size: 9px; font-weight: 700; padding: 2px 5px;
+  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
+}
+.coach-drawer {
+  position: fixed; bottom: 90px; right: 28px; z-index: 998;
+  width: 360px; max-height: 520px;
+  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
+  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+  display: flex; flex-direction: column;
+  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
+  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
+}
+.coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
+.coach-drawer-head {
+  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex; align-items: center; gap: 10px;
+}
+.coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
+.coach-head-info { flex: 1; }
+.coach-head-name { font-weight: 700; font-size: 14px; }
+.coach-head-sub { font-size: 11px; color: #44e0a4; }
+.coach-close { background: none; border: none; color: #6b6b85; font-size: 18px; padding: 4px; line-height: 1; cursor: pointer; }
+.coach-close:hover { color: #f5f5fa; }
+.coach-messages { flex: 1; overflow-y: auto; padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth; }
+.coach-messages::-webkit-scrollbar { width: 4px; }
+.coach-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.14); border-radius: 4px; }
+.msg { max-width: 88%; font-size: 13.5px; line-height: 1.6; }
+.msg-coach { align-self: flex-start; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px 14px 14px 4px; padding: 10px 14px; color: #f5f5fa; }
+.msg-user { align-self: flex-end; background: linear-gradient(135deg, rgba(124,92,255,0.25), rgba(91,141,239,0.25)); border: 1px solid rgba(124,92,255,0.3); border-radius: 14px 14px 4px 14px; padding: 10px 14px; color: #f5f5fa; }
+.msg-thinking { align-self: flex-start; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px 14px 14px 4px; padding: 10px 14px; display: flex; align-items: center; gap: 6px; color: #6b6b85; font-size: 13px; }
+.thinking-dot { width: 6px; height: 6px; border-radius: 50%; background: #44e0a4; animation: coachPulse 1.2s ease-in-out infinite; }
+.thinking-dot:nth-child(2) { animation-delay: .2s; }
+.thinking-dot:nth-child(3) { animation-delay: .4s; }
+@keyframes coachPulse { 0%,100%{opacity:.3;transform:scale(.8)} 50%{opacity:1;transform:scale(1)} }
+.coach-limit { padding: 10px 18px; font-size: 11px; color: #6b6b85; text-align: center; border-top: 1px solid rgba(255,255,255,0.08); display: none; }
+.coach-limit.visible { display: block; }
+.coach-limit a { color: #5b8def; }
+.coach-input-row { padding: 12px 18px 16px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; gap: 8px; align-items: flex-end; }
+.coach-input { flex: 1; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); color: #f5f5fa; border-radius: 10px; padding: 9px 12px; font-size: 13px; font-family: inherit; resize: none; max-height: 100px; line-height: 1.5; }
+.coach-input:focus { outline: none; border-color: #44e0a4; }
+.coach-input::placeholder { color: #6b6b85; }
+.coach-send { width: 34px; height: 34px; border-radius: 9px; border: none; flex-shrink: 0; background: linear-gradient(135deg, #44e0a4, #7c5cff); color: white; font-size: 15px; display: grid; place-items: center; cursor: pointer; transition: opacity .15s; }
+.coach-send:hover { opacity: 0.85; }
+.coach-send:disabled { opacity: 0.4; cursor: default; }
+@media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
+
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/gemini/" class="nav-back">← Gemini Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Start here · Agents</span>
+      <span class="chip chip-pro">Pro</span>
+      <span>~9 min read</span>
+      <span class="dot"></span>
+      <span>Free survey</span>
+    </div>
+    <h1>Gemini agents: <span class="grad serif">Google, at full strength.</span></h1>
+    <p class="deck">Google's AI agent story used to be scattered — Project Mariner here, Gems there, Deep Research separately, Workspace integrations in a different category. In May 2026 Google consolidated. Project Mariner was retired and absorbed into Gemini Agent. Now there's one umbrella agent + Gems for custom + Deep Research for analyst work + NotebookLM for source-grounded research + the Workspace integrations across Docs/Sheets/Gmail. This free lesson is the map.</p>
+    <h2><span class="num">The mental model</span></h2><h3>Google's bet: AI inside your Workspace, not separately.</h3><p>Google's competitive position is the Workspace — billions of Docs, Sheets, Gmail accounts. Their agent strategy reflects that: instead of just chat, AI lives where you already work.</p><p>Gemini Agent is the umbrella autonomous mode. Gems are your custom agents. Deep Research handles long-running analyst work. NotebookLM is the grounded-research workspace. And the Workspace integrations in Docs, Sheets, and Gmail give in-app AI everywhere.</p><p>The advantage: zero context-switching. AI lives where your work lives. The cost: figuring out which surface to use when. This lesson sorts that out.</p><h2><span class="num">Workflow 01</span> Gemini Agent</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>Gemini Agent — the unified autonomous mode</h3></div><p>Gemini Agent absorbed Project Mariner in May 2026. It handles multi-step tasks across the web and Workspace, deep research, and Canvas in one unified interface.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">What Gemini Agent does</span>A real Gemini Agent task:
+
+&quot;Find 3 new restaurants near our office that serve a private dining room for 12-15 people, are open for dinner Tuesday-Thursday, have a 4.3+ Google rating with 100+ reviews, and aren&#x27;t on our recently-used list. Verify availability for next Tuesday at 7pm at each. Don&#x27;t book — just produce a comparison table.&quot;
+
+The agent works across Google Maps, OpenTable, restaurant websites, and your Drive (for the recently-used list). Returns a finished comparison.</div><h4>Best use cases</h4><ul><li>Multi-site research with verification</li><li>Travel and event planning</li><li>Workspace-spanning project setup</li><li>Long-running background tasks</li></ul><div class="savings"><strong>Time savings:</strong> Multi-site research + action: hours → 10-20 min.</div></div><h2><span class="num">Workflow 02</span> Gems</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>Gems — your custom Gemini agents</h3></div><p>Gems are Google's answer to Custom GPTs — but with native Workspace access baked in. Build agents that know your Drive, your Gmail, your calendar.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">What Gems enable</span>A Gem example: an &quot;Email triage Gem&quot; with your voice. Configured to check your calendar before suggesting meeting times. Connected to your Drive so it can pull project context automatically. You don&#x27;t paste context anymore; the Gem already knows.</div><h4>Best use cases</h4><ul><li>Personal assistants with Workspace context</li><li>Team-shared agents for consistent voice</li><li>Onboarding helpers for new hires</li><li>Custom-built agents that replace single-purpose tools</li></ul><div class="savings"><strong>Time savings:</strong> A well-built Gem: 5 min/use × 20 uses/week = 100 min/week saved.</div></div><h2><span class="num">Workflow 03</span> Deep Research + NotebookLM</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>Deep Research and NotebookLM — analyst work, different modes</h3></div><p>Deep Research is the long-running analyst agent. NotebookLM is the grounded research workspace where AI only references the sources you upload — useful for high-stakes research where source provenance matters.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Analyst-grade research</span>Deep Research example: &quot;Compare the top AI agent observability tools (LangSmith, Arize, Helicone) and 3-5 newer entrants. For each: what they do, funding, pricing, customers, recent product moves. 2,000-word report with citations. Show me the research plan before running.&quot;
+
+NotebookLM example: upload 12 academic papers on a topic. Then ask &quot;what do these sources agree on&quot; and &quot;where do they disagree&quot; — getting answers strictly grounded in the uploaded material, with quote-level citations.</div><h4>Best use cases</h4><ul><li>Market research and competitive analysis (Deep Research)</li><li>Literature reviews from a curated source set (NotebookLM)</li><li>Multi-document synthesis with source-grounding</li><li>Audio briefings from research notebooks (NotebookLM's killer feature)</li></ul><div class="savings"><strong>Time savings:</strong> Analyst-quality research: days → 30 min.</div></div><h2><span class="num">Workflow 04</span> Workspace agents</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">4</div><h3>Gemini in Docs, Sheets, and Gmail — AI where you already work</h3></div><p>The in-app Workspace integrations are the most-used Gemini surface — and the most uneven. Some are real time-savers; others are 'help me write' buttons that don't change what's possible. The Pro lessons separate signal from noise.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">In-app patterns</span>Useful Workspace patterns:
+• Docs: &quot;Summarize this 20-page doc in 5 sentences&quot; — works well
+• Docs: &quot;Find inconsistencies in this doc&quot; — catches contradictions you missed
+• Sheets: &quot;Help me build a formula that does X&quot; — including complex XLOOKUP
+• Gmail: &quot;Summarize this email thread&quot; — long-thread compression
+• Gmail: &quot;Find emails about X&quot; — semantic search that beats keyword search
+
+Less useful:
+• &quot;Help me write&quot; from blank — vague output
+• Auto-categorizing email — too many false positives</div><h4>Best use cases</h4><ul><li>Summarizing long Docs for meetings</li><li>Excel formula construction from natural language</li><li>Gmail thread summarization</li><li>Semantic email search</li></ul><div class="savings"><strong>Time savings:</strong> Email triage and document summarization: 20-30 min/day saved.</div></div><div class="callout"><span class="lbl">Mariner is dead, long live Gemini Agent</span><p>If you were using Project Mariner — Google's browser-agent prototype — it was officially retired on May 4, 2026. Its technology is now part of Gemini Agent. Same capabilities, more polished experience, integrated into the broader Gemini app.</p></div>
+    <div class="challenge">
+      <h2 style="margin-top: 0;">Want to learn each Gemini agent in depth?</h2>
+      <p>Pro members get 13 hands-on Gemini lessons: Gemini Agent multi-step tasks, Gems custom builds, Deep Research with Workspace, NotebookLM workspace patterns, Workspace agent shortcuts that actually work, and the deep workflows across Docs, Sheets, and Gmail. Founding members lock in $9/mo forever (vs. $19 standard).</p>
+      <div class="btn-row">
+        <a href="/lessons/gemini/" class="btn">Back to Gemini Mastery →</a>
+        <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+      </div>
+    </div>
+    <div class="checklist">
+      <h3>What you can do now</h3>
+      <ul>
+        <li>You know the five Gemini agent surfaces (Agent, Gems, Deep Research, NotebookLM, Workspace)</li>
+        <li>You understand Google's strategy: AI inside your Workspace, not separate</li>
+        <li>You've seen concrete examples of each agent's value</li>
+        <li>You can pick which surface to learn first based on how you work</li>
+        <li>Next step: Pro lessons walk you through each one with real workflows</li>
+      </ul>
+    </div>
+    <div class="next-up">
+      <span class="pro-tag">Pro</span>
+      <div class="lbl" style="margin-top: 14px;">Up next in Gemini Mastery</div>
+      <h3>Lesson 02 · Gmail mastery — Gemini in your inbox</h3>
+      <p>First hands-on Pro lesson: Gemini in Gmail — the patterns that turn email triage into a 15-minute morning ritual instead of a 90-minute reactive session. <a href="/lessons/gemini/">See the track →</a></p>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT · Independent. Not affiliated with Google.</div>
+    <a href="/lessons/gemini/" style="color: var(--text-dim);">← All Gemini Mastery lessons</a>
+  </div>
+</footer>
+
+<!-- ── AI COACH FAB ── -->
+<button class="coach-fab" id="coachFab" title="Ask the AI Coach">
+  🎓
+  <span class="coach-fab-badge">AI</span>
+</button>
+
+<!-- ── AI COACH DRAWER ── -->
+<div class="coach-drawer" id="coachDrawer">
+  <div class="coach-drawer-head">
+    <div class="coach-avatar">🎓</div>
+    <div class="coach-head-info">
+      <div class="coach-head-name">AI Coach</div>
+      <div class="coach-head-sub">Ask anything about this lesson</div>
+    </div>
+    <button class="coach-close" id="coachClose">✕</button>
+  </div>
+  <div class="coach-messages" id="coachMessages">
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
+  </div>
+  <div class="coach-limit" id="coachLimit">
+    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+  </div>
+  <div class="coach-input-row">
+    <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
+    <button class="coach-send" id="coachSend">➤</button>
+  </div>
+</div>
+
+
+<script id="coachScript">
+(function() {
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Gemini agents \u2014 Google's agent story finally cohered\nTRACK: Gemini Mastery\n\nLESSON CONTENT SUMMARY:\nGemini agents \u2014 Google's agent story finally cohered \u2014 LearningGPT L LearningGPT \u2190 Gemini Mastery Start here \u00b7 Agents Pro ~9 min read Free survey Gemini agents: Google, at full strength. Google's AI agent story used to be scattered \u2014 Project Mariner here, Gems there, Deep Research separately, Workspace integrations in a different category. In May 2026 Google consolidated. Project Mariner was retired and absorbed into Gemini Agent. Now there's one umbrella agent + Gems for custom + Deep Research for analyst work + NotebookLM for source-grounded research + the Workspace integrations across Docs/Sheets/Gmail. This free lesson is the map. The mental model Google's bet: AI inside your Workspace, not separately. Google's competitive position is the Workspace \u2014 billions of Docs, Sheets, Gmail accounts. Their agent strategy reflects that: instead of just chat, AI lives where you already work. Gemini Agent is the umbrella autonomous mode. Gems are your custom agents. Deep Research handles long-running analyst work. NotebookLM is the grounded-research workspace. And the Workspace integrations in Docs, Sheets, and Gmail give in-app AI everywhere. The advantage: zero context-switching. AI lives where your work lives. The cost: figuring out which surface to use when. This lesson sorts that out. Workflow 01 Gemini Agent 1 Gemini Agent \u2014 the unified autonomous mode Gemini Agent absorbed Project Mariner in May 2026. It handles multi-step tasks across the web and Workspace, deep research, and Canvas in one unified interface. The prompt that works What Gemini Agent does A real Gemini Agent task: &quot;Find 3 new restaurants near our office that serve a private dining room for 12-15 people, are open for dinner Tuesday-Thursday, have a 4.3+ Google rating with 100+ reviews, and aren&#x27;t on our recently-used list. Verify availability for next Tuesday at 7pm at each. Don&#x27;t book \u2014 just produce a comparison table.&quot; The agent works across Google Maps, OpenTable, restaurant websites, and your Drive (for the recently-used list). Returns a finished comparison. Best use cases Multi-site research with verification Travel and event planning Workspace-spanning project setup Long-running background tasks Time savings: Multi-site research + action: hours \u2192 10-20 min. Workflow 02 Gems 2 Gems \u2014 your custom Gemini agents Gems are Google's answer to Custom GPTs \u2014 but with native Workspace access baked in. Build agents that know your Drive, your Gmail, your calendar. The prompt that works What Gems enable A Gem example: an &quot;Email triage Gem&quot; with your voice. Configured to check your calendar before suggesting meeting times. Connected to your Drive so it can pull project context automatically. You don&#x27;t paste context anymore; the Gem already knows. Best use cases Personal assistants with Workspace context Team-shared agents for consistent voice Onboarding helpers for new hires Custom-built agents that replace single-purpose tools Time savings: A well-built Ge\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var MAX_FREE = 3;
+  var count = 0;
+  var isThinking = false;
+  var history = [];
+
+  var fab = document.getElementById('coachFab');
+  var drawer = document.getElementById('coachDrawer');
+  var closeBtn = document.getElementById('coachClose');
+  var msgs = document.getElementById('coachMessages');
+  var input = document.getElementById('coachInput');
+  var sendBtn = document.getElementById('coachSend');
+  var limitBar = document.getElementById('coachLimit');
+
+  if (!fab) return; // safety check
+
+  fab.addEventListener('click', function() { toggle(true); });
+  closeBtn.addEventListener('click', function() { toggle(false); });
+
+  function toggle(open) {
+    drawer.classList.toggle('open', open);
+    if (open) setTimeout(function() { input.focus(); }, 300);
+  }
+
+  input.addEventListener('input', function() {
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 100) + 'px';
+  });
+
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+  });
+  sendBtn.addEventListener('click', send);
+
+  function addMsg(text, type) {
+    var d = document.createElement('div');
+    d.className = 'msg msg-' + type;
+    d.textContent = text;
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+    return d;
+  }
+
+  function addThinking() {
+    var d = document.createElement('div');
+    d.className = 'msg-thinking';
+    d.innerHTML = '<div class="thinking-dot"></div><div class="thinking-dot"></div><div class="thinking-dot"></div>';
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+    return d;
+  }
+
+  async function send() {
+    var text = input.value.trim();
+    if (!text || isThinking) return;
+    if (count >= MAX_FREE) {
+      limitBar.classList.add('visible');
+      input.disabled = true;
+      sendBtn.disabled = true;
+      return;
+    }
+    count++;
+    if (count >= MAX_FREE) limitBar.classList.add('visible');
+    addMsg(text, 'user');
+    history.push({ role: 'user', content: text });
+    input.value = '';
+    input.style.height = 'auto';
+    isThinking = true;
+    sendBtn.disabled = true;
+    var thinking = addThinking();
+    try {
+      var res = await fetch('/api/playground', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ coach: true, lessonCoach: true, lessonContext: LESSON_CONTEXT, history: history })
+      });
+      thinking.remove();
+      var data = await res.json();
+      var reply = (data && data.coach) ? data.coach : "Sorry, something went wrong. Try again in a moment.";
+      addMsg(reply, 'coach');
+      history.push({ role: 'assistant', content: reply });
+    } catch(err) {
+      thinking.remove();
+      addMsg("Something went wrong — try again in a moment.", 'coach');
+    } finally {
+      isThinking = false;
+      sendBtn.disabled = count >= MAX_FREE;
+    }
+  }
+})();
+</script>
+
+</body>
+</html>

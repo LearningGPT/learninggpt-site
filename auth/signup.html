@@ -1,1 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Create account — LearningGPT</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#7c5cff" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a1a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14);
+  --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85;
+  --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4;
+  --danger: #ff6b8a; --radius: 14px;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg); color: var(--text);
+  min-height: 100vh; display: flex; flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--brand-2); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.4; }
+.bg-orb.one { width: 500px; height: 500px; top: -150px; left: -150px; background: #7c5cff; }
+.bg-orb.two { width: 400px; height: 400px; bottom: -100px; right: -100px; background: #44e0a4; opacity: 0.2; }
+nav { position: relative; z-index: 10; padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 8px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; }
+.auth-wrap { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 24px; position: relative; z-index: 1; }
+.auth-box { width: 100%; max-width: 420px; background: rgba(255,255,255,0.03); border: 1px solid var(--line-strong); border-radius: 20px; padding: 40px; }
+.auth-box h1 { font-size: 26px; font-weight: 800; margin: 0 0 6px; letter-spacing: -0.02em; }
+.auth-box .sub { font-size: 14px; color: var(--text-dim); margin: 0 0 32px; }
+.form-group { margin-bottom: 18px; }
+.form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--text-dim); margin-bottom: 7px; }
+.form-group input, .form-group select { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--line-strong); color: var(--text); padding: 12px 14px; border-radius: 10px; font-size: 15px; font-family: inherit; }
+.form-group select { cursor: pointer; }
+.form-group select option { background: #1a1a2e; }
+.form-group input:focus, .form-group select:focus { outline: none; border-color: var(--brand); }
+.form-group input::placeholder { color: var(--text-mute); }
+.btn-submit { width: 100%; background: linear-gradient(135deg, #7c5cff, #5b8def); color: white; border: none; padding: 14px; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; transition: opacity .15s; margin-top: 8px; }
+.btn-submit:hover { opacity: 0.9; }
+.btn-submit:disabled { opacity: 0.6; cursor: default; }
+.auth-switch { text-align: center; font-size: 14px; color: var(--text-dim); margin-top: 20px; }
+.error-msg { background: rgba(255,107,138,0.1); border: 1px solid rgba(255,107,138,0.3); border-radius: 8px; padding: 12px 14px; font-size: 13.5px; color: var(--danger); margin-bottom: 18px; display: none; }
+.error-msg.visible { display: block; }
+.plan-note { font-size: 12px; color: var(--text-mute); margin-top: 6px; }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav>
+  <a href="/" class="logo"><div class="logo-mark">L</div>LearningGPT</a>
+  <a href="/auth/login" style="font-size: 14px; color: var(--text-dim);">Sign in →</a>
+</nav>
+<div class="auth-wrap">
+  <div class="auth-box">
+    <h1>Create your account</h1>
+    <p class="sub">Start learning every AI tool. Free to get started.</p>
+    <div class="error-msg" id="errorMsg"></div>
+    <div class="form-group">
+      <label for="email">Email address</label>
+      <input type="email" id="email" placeholder="you@company.com" autocomplete="email" />
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="At least 8 characters" autocomplete="new-password" />
+    </div>
+    <div class="form-group">
+      <label for="plan">Plan</label>
+      <select id="plan">
+        <option value="free">Free — explore lessons, no credit card</option>
+<option value="pro">Pro — $9/mo · Full access + all tool tracks</option>
+<option value="pro_plus">Pro+ — $19/mo · Everything + role tracks + office hours</option>
+      </select>
+      <div class="plan-note">You can upgrade anytime from your account.</div>
+    </div>
+    <button class="btn-submit" id="submitBtn">Create account</button>
+    <div class="auth-switch">Already have an account? <a href="/auth/login">Sign in</a></div>
+  </div>
+</div>
+<script>
+  const submitBtn = document.getElementById('submitBtn');
+  const errorMsg = document.getElementById('errorMsg');
 
+  submitBtn.addEventListener('click', async () => {
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const pl

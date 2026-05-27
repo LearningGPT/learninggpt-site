@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pricing — LearningGPT</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#7c5cff" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a1a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14);
+  --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85;
+  --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4;
+  --danger: #ff6b8a;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+a { color: var(--brand-2); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.35; }
+.bg-orb.one { width: 600px; height: 600px; top: -200px; left: -200px; background: #7c5cff; }
+.bg-orb.two { width: 500px; height: 500px; bottom: -150px; right: -150px; background: #44e0a4; opacity: 0.15; }
+
+/* NAV */
+nav { position: relative; z-index: 10; padding: 20px 32px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 8px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; }
+.nav-right { display: flex; align-items: center; gap: 20px; font-size: 14px; }
+.nav-right a { color: var(--text-dim); }
+.btn-signin { background: rgba(255,255,255,0.08); border: 1px solid var(--line-strong); color: var(--text) !important; padding: 8px 16px; border-radius: 8px; font-weight: 600; }
+.btn-signin:hover { background: rgba(255,255,255,0.12); text-decoration: none !important; }
+
+/* HERO */
+.hero { position: relative; z-index: 1; text-align: center; padding: 72px 24px 48px; }
+.hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(124,92,255,0.15); border: 1px solid rgba(124,92,255,0.3); border-radius: 100px; padding: 6px 16px; font-size: 13px; font-weight: 600; color: #a78bff; margin-bottom: 24px; }
+.hero h1 { font-size: clamp(32px, 5vw, 52px); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 16px; line-height: 1.1; }
+.hero p { font-size: 18px; color: var(--text-dim); max-width: 520px; margin: 0 auto 12px; line-height: 1.6; }
+.hero-note { font-size: 13px; color: var(--text-mute); }
+
+/* PRICING GRID */
+.pricing-wrap { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 48px 24px 80px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+@media (max-width: 768px) { .pricing-wrap { grid-template-columns: 1fr; max-width: 420px; } }
+
+.plan-card { background: rgba(255,255,255,0.03); border: 1px solid var(--line-strong); border-radius: 20px; padding: 32px; display: flex; flex-direction: column; position: relative; }
+.plan-card.featured { background: rgba(124,92,255,0.08); border-color: rgba(124,92,255,0.4); }
+.plan-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #7c5cff, #5b8def); color: white; font-size: 11px; font-weight: 700; padding: 4px 14px; border-radius: 100px; white-space: nowrap; letter-spacing: 0.05em; text-transform: uppercase; }
+.plan-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-mute); margin-bottom: 16px; }
+.plan-price { margin-bottom: 6px; }
+.plan-price .amount { font-size: 52px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
+.plan-price .period { font-size: 16px; color: var(--text-dim); margin-left: 4px; }
+.plan-after { font-size: 13px; color: var(--text-mute); margin-bottom: 8px; }
+.plan-desc { font-size: 14px; color: var(--text-dim); margin-bottom: 28px; line-height: 1.5; }
+.plan-features { list-style: none; margin-bottom: 32px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+.plan-features li { font-size: 14px; color: var(--text-dim); display: flex; align-items: flex-start; gap: 10px; line-height: 1.4; }
+.plan-features li .check { color: var(--accent); font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+.plan-features li .tag { font-size: 11px; color: #f59e0b; font-weight: 600; margin-left: 4px; }
+
+.btn-plan { width: 100%; padding: 14px; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; border: none; transition: opacity .15s; }
+.btn-plan:hover { opacity: 0.85; }
+.btn-plan:disabled { opacity: 0.5; cursor: default; }
+.btn-free { background: rgba(255,255,255,0.08); color: var(--text); border: 1px solid var(--line-strong) !important; }
+.btn-pro { background: linear-gradient(135deg, #7c5cff, #5b8def); color: white; }
+.btn-proplus { background: rgba(255,255,255,0.1); color: var(--text); border: 1px solid var(--line-strong) !important; }
+
+.error-msg { background: rgba(255,107,138,0.1); border: 1px solid rgba(255,107,138,0.3); border-radius: 8px; padding: 10px 14px; font-size: 13px; color: var(--danger); margin-top: 12px; display: none; text-align: center; }
+.error-msg.visible { display: block; }
+
+/* FAQ */
+.faq-wrap { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; padding: 0 24px 80px; }
+.faq-wrap h2 { font-size: 24px; font-weight: 800; text-align: center; margin-bottom: 32px; }
+.faq-item { border-top: 1px solid var(--line); padding: 20px 0; }
+.faq-item:last-child { border-bottom: 1px solid var(--line); }
+.faq-q { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+.faq-a { font-size: 14px; color: var(--text-dim); line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+
+<nav>
+  <a href="/" class="logo"><div class="logo-mark">L</div>LearningGPT</a>
+  <div class="nav-right">
+    <a href="/lessons">Lessons</a>
+    <a href="/playground">Playground</a>
+    <a href="/auth/login" class="btn-signin">Sign in</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">🎉 Founding member pricing — first 500 only</div>
+  <h1>Simple, honest pricing.</h1>
+  <p>Start free. Upgrade when you're ready. Cancel anytime — no questions asked.</p>
+  <div class="hero-note">Founding member prices lock in forever. Regular pricing starts at $19/mo after launch.</div>
+</div>
+
+<div class="pricing-wrap">
+
+  <!-- FREE -->
+  <div class="plan-card">
+    <div class="plan-label">Explorer</div>
+    <div class="plan-price"><span class="amount">$0</span><span class="period">/ forever</span></div>
+    <div class="plan-after">&nbsp;</div>
+    <div class="plan-desc">Master the fundamentals. See if you want to go deeper.</div>
+    <ul class="plan-features">
+      <li><span class="check">✓</span> Full AI Foundations track</li>
+      <li><span class="check">✓</span> First lesson of every tool track</li>
+      <li><span class="check">✓</span> 10 playground runs / day</li>
+      <li><span class="check">✓</span> AI News digest + newsletter</li>
+      <li><span class="check">✓</span> Lesson progress tracking</li>
+    </ul>
+    <button class="btn-plan btn-free" onclick="window.location.href='/auth/signup'">Start free</button>
+  </div>
+
+  <!-- PRO -->
+  <div class="plan-card featured">
+    <div class="plan-badge">⚡ Founding Member — 50% off forever</div>
+    <div class="plan-label">Pro</div>
+    <div class="plan-price"><span class="amount">$9</span><span class="period">/ mo</span></div>
+    <div class="plan-after">$19/mo after launch</div>
+    <div class="plan-desc">Everything you need to master every major AI tool.</div>
+    <ul class="plan-features">
+      <li><span class="check">✓</span> Everything in Free</li>
+      <li><span class="check">✓</span> All five tool tracks (every lesson)</li>
+      <li><span class="check">✓</span> All role tracks as they ship</li>
+      <li><span class="check">✓</span> Unlimited playground</li>
+      <li><span class="check">✓</span> Hands-on exercises with AI grading <span class="tag">Q3 2026</span></li>
+      <li><span class="check">✓</span> Real-time skill update alerts <span class="tag">Q3 2026</span></li>
+      <li><span class="check">✓</span> Founding member status + early access</li>
+    </ul>
+    <button class="btn-plan btn-pro" id="btnPro">Claim founding spot — $9/mo</button>
+    <div class="error-msg" id="errPro"></div>
+  </div>
+
+  <!-- PRO+ -->
+  <div class="plan-card">
+    <div class="plan-label">Pro+</div>
+    <div class="plan-price"><span class="amount">$19</span><span class="period">/ mo</span></div>
+    <div class="plan-after">$39/mo after launch</div>
+    <div class="plan-desc">Everything in Pro, plus advanced tracks, coaching, and certifications.</div>
+    <ul class="plan-features">
+      <li><span class="check">✓</span> Everything in Pro</li>
+      <li><span class="check">✓</span> Pro+ exclusive lessons</li>
+      <li><span class="check">✓</span> Priority email support</li>
+      <li><span class="check">✓</span> Earliest access to every new lesson</li>
+      <li><span class="check">✓</span> Monthly office hours with Dan <span class="tag">Q3 2026</span></li>
+      <li><span class="check">✓</span> Verifiable certifications <span class="tag">Q3 2026</span></li>
+      <li><span class="check">✓</span> Practical exams + LinkedIn integration <span class="tag">Q3 2026</span></li>
+    </ul>
+    <button class="btn-plan btn-proplus" id="btnProPlus">Claim founding spot — $19/mo</button>
+    <div class="error-msg" id="errProPlus"></div>
+  </div>
+
+</div>
+
+<div class="faq-wrap">
+  <h2>Questions</h2>
+  <div class="faq-item">
+    <div class="faq-q">Do I need a credit card to start free?</div>
+    <div class="faq-a">No. The free Explorer plan requires no credit card — ever.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">What's a founding member?</div>
+    <div class="faq-a">The first 500 members who subscribe lock in 50% off forever. When we raise prices at launch, your rate never changes.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Can I cancel anytime?</div>
+    <div class="faq-a">Yes. Cancel anytime from your account page — no questions asked, no fees.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">What payment methods do you accept?</div>
+    <div class="faq-a">All major credit and debit cards via Stripe. Your card details are never stored on our servers.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">What happens when Stripe processes my payment?</div>
+    <div class="faq-a">You'll be redirected to a secure Stripe checkout page. Once complete, your account is upgraded instantly.</div>
+  </div>
+</div>
+
+<script>
+async function startCheckout(plan, btnId, errId) {
+  const btn = document.getElementById(btnId);
+  const err = document.getElementById(errId);
+  const token = localStorage.getItem('lgpt_token');
+
+  err.className = 'error-msg';
+  btn.disabled = true;
+  btn.textContent = 'Setting up checkout...';
+
+  // If not logged in, send to signup with plan pre-selected
+  if (!token) {
+    window.location.href = '/auth/signup?plan=' + plan;
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'checkout', plan: plan, token: token })
+    });
+    const data = await res.json();
+
+    if (data.checkoutUrl) {
+      window.location.href = data.checkoutUrl;
+      return;
+    }
+
+    err.textContent = data.error || 'Something went wrong. Please try again.';
+    err.className = 'error-msg visible';
+    btn.disabled = false;
+    btn.textContent = plan === 'pro' ? 'Claim founding spot — $9/mo' : 'Claim founding spot — $19/mo';
+
+  } catch(e) {
+    err.textContent = 'Something went wrong. Please try again.';
+    err.className = 'error-msg visible';
+    btn.disabled = false;
+    btn.textContent = plan === 'pro' ? 'Claim founding spot — $9/mo' : 'Claim founding spot — $19/mo';
+  }
+}
+
+document.getElementById('btnPro').addEventListener('click', function() {
+  startCheckout('pro', 'btnPro', 'errPro');
+});
+
+document.getElementById('btnProPlus').addEventListener('click', function() {
+  startCheckout('pro_plus', 'btnProPlus', 'errProPlus');
+});
+</script>
+</body>
+</html>

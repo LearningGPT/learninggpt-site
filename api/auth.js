@@ -214,6 +214,63 @@ export default async function handler(req, res) {
       return res.status(401).json({ error: 'Session verification failed', authenticated: false });
     }
   }
+// ── CHECKOUT (for logged-in users upgrading) ──────────────────────────────
+if (action === 'checkout') {
+  const { token, plan } = body;
 
+  if (!token) {
+    return res.status(401).json({ error: 'Not authenticated.' });
+  }
+
+  const priceId = plan === 'pro'
+    ? process.env.STRIPE_PRO_PRICE_ID
+    : process.env.STRIPE_PRO_PLUS_PRICE_ID;
+
+  if (!priceId) {
+    return res.status(400).json({ error: 'Invalid plan.' });
+  }
+
+  try {
+    // Get user info from token
+    const userRes = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+      headers: {
+        'apikey': SUPABASE_SECRET_KEY,
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    const userData = await userRes.json();
+
+    if (!userData.email) {
+      return res.status(401).json({ error: 'Invalid session.' });
+    }
+
+    const stripeRes = await fetch('https://api.stripe.com/v1/checkout/sessions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${STRIPE_SECRET_KEY}`,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams({
+        'mode': 'subscription',
+        'customer_email': userData.email,
+        'line_items[0][price]': priceId,
+        'line_items[0][quantity]': '1',
+        'success_url': 'https://learninggpt.ai/auth/success?session_id={CHECKOUT_SESSION_ID}',
+        'cancel_url': 'https://learninggpt.ai/pricing'
+      }).toString()
+    });
+
+    const stripeData = await stripeRes.json();
+
+    if (stripeData.error) {
+      return res.status(500).json({ error: 'Payment setup failed. Please try again.' });
+    }
+
+    return res.status(200).json({ checkoutUrl: stripeData.url });
+
+  } catch (err) {
+    return res.status(500).json({ error: 'Something went wrong. Please try again.' });
+  }
+}
   return res.status(400).json({ error: 'Invalid action' });
 }

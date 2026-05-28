@@ -1,25 +1,22 @@
 {
   "cleanUrls": true,
+  "redirects": [
+    { "source": "/claude/:path*", "destination": "/lessons/claude/:path*", "permanent": true },
+    { "source": "/chatgpt/:path*", "destination": "/lessons/chatgpt/:path*", "permanent": true },
+    { "source": "/copilot/:path*", "destination": "/lessons/copilot/:path*", "permanent": true },
+    { "source": "/foundations/:path*", "destination": "/lessons/foundations/:path*", "permanent": true },
+    { "source": "/gemini/:path*", "destination": "/lessons/gemini/:path*", "permanent": true },
+    { "source": "/perplexity/:path*", "destination": "/lessons/perplexity/:path*", "permanent": true }
+  ],
   "functions": {
-    "api/playground.js": {
-      "maxDuration": 30
-    },
-    "api/waitlist.js": {
-      "maxDuration": 10
-    },
-    "api/webhooks/stripe.js": {
-      "maxDuration": 10
-    }
+    "api/playground.js": { "maxDuration": 30 },
+    "api/waitlist.js": { "maxDuration": 10 },
+    "api/webhooks/stripe.js": { "maxDuration": 10 }
   },
   "headers": [
     {
       "source": "/(.*).js",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/javascript"
-        }
-      ]
+      "headers": [{ "key": "Content-Type", "value": "application/javascript" }]
     }
   ]
 }

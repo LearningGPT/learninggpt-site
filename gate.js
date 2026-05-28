@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if (proPlusChips.length > 0) required = 'pro_plus';
   else if (proChips.length > 0) required = 'pro';
   else if (freeChips.length > 0) isFreePreview = true;
-
+ 
   if (token) {
     fetch('/api/auth', {
       method: 'POST',

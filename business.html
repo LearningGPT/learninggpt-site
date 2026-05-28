@@ -3,280 +3,413 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>For Business — LearningGPT</title>
-<meta name="description" content="LearningGPT for teams and companies. Train your whole organization on every AI tool — not just the one a vendor sold you. Bulk seats, custom curriculum review, pilot pricing." />
+<title>LearningGPT for Business — AI Training for Your Team</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#7c5cff" />
-
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://learninggpt.ai/business" />
-<meta property="og:title" content="LearningGPT for Business — train your team on every AI" />
-<meta property="og:description" content="The neutral, hands-on AI training platform built for teams. Bulk seats, custom curriculum, pilot pricing for the first 10 companies." />
-<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
-<meta name="twitter:card" content="summary_large_image" />
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
-
 <style>
-:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --radius: 14px; --radius-lg: 20px; --container: 1100px; }
-* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
-body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-a { color: inherit; text-decoration: none; }
+:root {
+  --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a;
+  --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14);
+  --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85;
+  --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4;
+  --warn: #ffb547; --danger: #ff6b8a;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; }
+a:hover { text-decoration: underline; }
 
-.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.35; }
-.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -150px; background: #7c5cff; }
-.bg-orb.two { width: 600px; height: 600px; top: 40%; right: -200px; background: #5b8def; opacity: 0.25; }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(140px); }
+.bg-orb.one { width: 700px; height: 700px; top: -200px; left: -200px; background: #7c5cff; opacity: 0.2; }
+.bg-orb.two { width: 500px; height: 500px; bottom: -100px; right: -100px; background: #44e0a4; opacity: 0.1; }
+.bg-orb.three { width: 400px; height: 400px; top: 50%; left: 50%; background: #5b8def; opacity: 0.08; }
 
-.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
-
-nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
-.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+/* NAV */
+nav { position: relative; z-index: 10; padding: 20px 32px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
 .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
-.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
-.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 8px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; }
+.nav-right { display: flex; align-items: center; gap: 20px; font-size: 14px; }
+.nav-right a { color: var(--text-dim); }
+.btn-nav { background: rgba(255,255,255,0.08); border: 1px solid var(--line-strong); color: var(--text) !important; padding: 8px 18px; border-radius: 8px; font-weight: 600; }
+.btn-nav:hover { background: rgba(255,255,255,0.12); text-decoration: none !important; }
 
-.btn { display: inline-flex; align-items: center; gap: 8px; justify-content: center; padding: 12px 22px; border-radius: 10px; font-size: 14px; font-weight: 600; border: 1px solid transparent; transition: transform .15s ease, box-shadow .15s ease, background .2s ease; white-space: nowrap; cursor: pointer; }
-.btn-primary { background: linear-gradient(135deg, #7c5cff 0%, #5b8def 100%); color: white; box-shadow: 0 6px 24px rgba(124,92,255,0.4); }
-.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 30px rgba(124,92,255,0.55); }
-.btn-ghost { background: rgba(255,255,255,0.05); border-color: var(--line-strong); color: var(--text); }
-.btn-ghost:hover { background: rgba(255,255,255,0.09); }
-.btn-lg { padding: 16px 28px; font-size: 15px; }
+/* HERO */
+.hero { position: relative; z-index: 1; text-align: center; padding: 80px 24px 60px; max-width: 800px; margin: 0 auto; }
+.hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(91,141,239,0.12); border: 1px solid rgba(91,141,239,0.25); border-radius: 100px; padding: 6px 16px; font-size: 12px; font-weight: 700; color: var(--brand-2); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 28px; }
+.hero h1 { font-size: clamp(36px, 5vw, 58px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.08; margin-bottom: 20px; }
+.hero h1 em { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.hero p { font-size: 18px; color: var(--text-dim); line-height: 1.65; max-width: 580px; margin: 0 auto 36px; }
+.hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn-primary { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #7c5cff, #5b8def); color: white; padding: 14px 28px; border-radius: 10px; font-size: 15px; font-weight: 600; border: none; cursor: pointer; font-family: inherit; transition: transform 0.15s, box-shadow 0.15s; box-shadow: 0 6px 24px rgba(124,92,255,0.35); text-decoration: none; }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(124,92,255,0.4); text-decoration: none; color: white; }
+.btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.06); border: 1px solid var(--line-strong); color: var(--text-dim); padding: 14px 28px; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; text-decoration: none; }
+.btn-secondary:hover { background: rgba(255,255,255,0.1); color: var(--text); text-decoration: none; }
 
-.hero { padding: 80px 0 40px; text-align: center; }
-.eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--brand-2); padding: 6px 12px; border: 1px solid rgba(91,141,239,0.3); border-radius: 999px; background: rgba(91,141,239,0.08); margin-bottom: 24px; }
-.hero h1 { font-size: clamp(36px, 5vw, 60px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 18px; max-width: 880px; margin-left: auto; margin-right: auto; }
-.hero h1 .grad { background: linear-gradient(135deg, #7c5cff 0%, #5b8def 50%, #44e0a4 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.hero h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.hero p.lead { font-size: 18px; color: var(--text-dim); max-width: 660px; margin: 0 auto 32px; }
-.hero-cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+/* SOCIAL PROOF */
+.proof { position: relative; z-index: 1; text-align: center; padding: 0 24px 64px; }
+.proof-label { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-mute); margin-bottom: 20px; }
+.proof-stats { display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; }
+.stat { text-align: center; }
+.stat-num { font-size: 32px; font-weight: 800; letter-spacing: -0.02em; background: linear-gradient(135deg, #7c5cff, #44e0a4); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.stat-label { font-size: 13px; color: var(--text-mute); margin-top: 4px; }
 
-section { padding: 60px 0; position: relative; z-index: 1; }
+/* SECTION */
+.section { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 24px 80px; }
+.section-header { text-align: center; margin-bottom: 48px; }
+.section-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+.section-title { font-size: clamp(26px, 3.5vw, 38px); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 12px; }
+.section-desc { font-size: 16px; color: var(--text-dim); max-width: 500px; margin: 0 auto; line-height: 1.6; }
 
-.section-head { text-align: center; max-width: 720px; margin: 0 auto 50px; }
-.section-head h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 700; letter-spacing: -0.02em; margin: 0 0 14px; }
-.section-head h2 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; color: var(--accent); }
-.section-head p { font-size: 16px; color: var(--text-dim); }
+/* PRICING GRID */
+.pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+@media (max-width: 700px) { .pricing-grid { grid-template-columns: 1fr; } }
 
-.problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px; }
-.problem-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.problem-card h3 { font-size: 17px; font-weight: 700; margin: 0 0 10px; }
-.problem-card p { font-size: 14.5px; color: var(--text-dim); margin: 0; }
-.problem-card.us { border-color: rgba(68,224,164,0.3); background: linear-gradient(180deg, rgba(68,224,164,0.05), rgba(124,92,255,0.05)); }
-.problem-card.us h3 { color: var(--accent); }
-@media (max-width: 768px) { .problem-grid { grid-template-columns: 1fr; } }
+.plan-card { background: rgba(255,255,255,0.03); border: 1px solid var(--line-strong); border-radius: 20px; padding: 32px; display: flex; flex-direction: column; position: relative; transition: border-color 0.2s; }
+.plan-card:hover { border-color: rgba(124,92,255,0.3); }
+.plan-card.featured { background: rgba(124,92,255,0.07); border-color: rgba(124,92,255,0.35); }
+.plan-card.featured:hover { border-color: rgba(124,92,255,0.55); }
 
-.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 30px; }
-.feature { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px 24px; }
-.feature .icon { font-size: 26px; margin-bottom: 14px; }
-.feature h3 { font-size: 16px; font-weight: 700; margin: 0 0 8px; }
-.feature p { font-size: 13.5px; color: var(--text-mute); margin: 0; }
-.feature .roadmap-tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; padding: 3px 8px; border-radius: 4px; background: rgba(255,181,71,0.12); color: var(--warn); border: 1px solid rgba(255,181,71,0.3); margin-left: 6px; vertical-align: middle; }
-@media (max-width: 880px) { .features-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 560px) { .features-grid { grid-template-columns: 1fr; } }
+.plan-tag { display: inline-flex; align-items: center; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; margin-bottom: 20px; width: fit-content; }
+.plan-tag.pro { background: rgba(124,92,255,0.15); color: var(--brand); border: 1px solid rgba(124,92,255,0.3); }
+.plan-tag.proplus { background: rgba(255,181,71,0.12); color: var(--warn); border: 1px solid rgba(255,181,71,0.3); }
 
-.pricing-band { background: linear-gradient(135deg, rgba(124,92,255,0.12), rgba(68,224,164,0.06)); border: 1px solid rgba(124,92,255,0.25); border-radius: var(--radius-lg); padding: 48px 40px; text-align: center; }
-.pricing-band h2 { font-size: clamp(26px, 3.5vw, 36px); margin: 0 0 14px; letter-spacing: -0.02em; }
-.pricing-band p { font-size: 15.5px; color: var(--text-dim); max-width: 640px; margin: 0 auto 22px; }
-.pricing-band .price-rows { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 28px 0; text-align: left; }
-.pricing-band .price-rows .row { background: rgba(15,15,35,0.6); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 22px; }
-.pricing-band .price-rows .row h4 { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-mute); margin: 0 0 8px; font-weight: 600; }
-.pricing-band .price-rows .row .amt { font-size: 22px; font-weight: 800; margin: 0 0 6px; }
-.pricing-band .price-rows .row p { font-size: 13px; color: var(--text-dim); margin: 0; }
-@media (max-width: 768px) { .pricing-band .price-rows { grid-template-columns: 1fr; } }
+.plan-name { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+.plan-price-wrap { margin-bottom: 6px; }
+.plan-price { font-size: 48px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
+.plan-period { font-size: 15px; color: var(--text-dim); margin-left: 4px; }
+.plan-minimum { font-size: 12px; color: var(--text-mute); margin-bottom: 6px; }
+.plan-annual { font-size: 13px; color: var(--accent); font-weight: 600; margin-bottom: 20px; }
+.plan-desc { font-size: 14px; color: var(--text-dim); line-height: 1.55; margin-bottom: 24px; }
 
-.faq-block { max-width: 760px; margin: 0 auto; }
-.faq-item { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); margin-bottom: 10px; overflow: hidden; }
-.faq-q { padding: 18px 22px; font-weight: 600; font-size: 15px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; }
-.faq-q::after { content: '+'; font-size: 20px; color: var(--text-mute); transition: transform .2s; }
-.faq-item.open .faq-q::after { transform: rotate(45deg); }
-.faq-a { padding: 0 22px; max-height: 0; overflow: hidden; transition: max-height .25s ease, padding .25s ease; color: var(--text-dim); font-size: 14px; }
-.faq-item.open .faq-a { padding: 0 22px 20px; max-height: 400px; }
+.feature-list { list-style: none; flex: 1; display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+.feature-list li { font-size: 14px; color: var(--text-dim); display: flex; align-items: flex-start; gap: 10px; line-height: 1.4; }
+.check { color: var(--accent); flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+.check.gold { color: var(--warn); }
+.tag { font-size: 10px; color: var(--warn); font-weight: 700; margin-left: 4px; white-space: nowrap; }
 
-footer { border-top: 1px solid var(--line); padding: 30px 0; margin-top: 60px; }
-.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
-@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+.btn-plan { width: 100%; padding: 13px; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; border: none; transition: opacity 0.15s, transform 0.15s; }
+.btn-plan:hover { opacity: 0.85; transform: translateY(-1px); }
+.btn-plan.pro-btn { background: linear-gradient(135deg, #7c5cff, #5b8def); color: white; }
+.btn-plan.proplus-btn { background: linear-gradient(135deg, #ffb547, #ff6b8a); color: white; }
+
+/* ADD-ON CARD */
+.addon-card { background: rgba(68,224,164,0.04); border: 1px solid rgba(68,224,164,0.2); border-radius: 20px; padding: 36px; position: relative; overflow: hidden; }
+.addon-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, #44e0a4, #7c5cff, #5b8def); }
+.addon-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 32px; }
+.addon-info {}
+.addon-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; background: rgba(68,224,164,0.12); color: var(--accent); border: 1px solid rgba(68,224,164,0.3); margin-bottom: 12px; }
+.addon-name { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+.addon-requirement { font-size: 12px; color: var(--text-mute); }
+.addon-price-wrap { text-align: right; }
+.addon-price { font-size: 48px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; color: var(--accent); }
+.addon-price-period { font-size: 14px; color: var(--text-mute); }
+.addon-minimum { font-size: 12px; color: var(--text-mute); margin-top: 4px; }
+
+.addon-features { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-bottom: 28px; }
+.addon-feature { background: rgba(255,255,255,0.03); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; display: flex; align-items: flex-start; gap: 12px; }
+.addon-icon { width: 32px; height: 32px; border-radius: 8px; background: rgba(68,224,164,0.1); border: 1px solid rgba(68,224,164,0.2); display: grid; place-items: center; font-size: 14px; flex-shrink: 0; }
+.addon-feature-text { }
+.addon-feature-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+.addon-feature-desc { font-size: 12px; color: var(--text-mute); line-height: 1.4; }
+
+/* COMPARE TABLE */
+.compare-wrap { overflow-x: auto; margin-bottom: 80px; }
+.compare-table { width: 100%; border-collapse: collapse; min-width: 600px; }
+.compare-table th { padding: 14px 20px; text-align: left; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-mute); border-bottom: 1px solid var(--line); }
+.compare-table th:not(:first-child) { text-align: center; }
+.compare-table td { padding: 14px 20px; font-size: 14px; color: var(--text-dim); border-bottom: 1px solid var(--line); }
+.compare-table td:not(:first-child) { text-align: center; }
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table tr:hover td { background: rgba(255,255,255,0.02); }
+.yes { color: var(--accent); font-weight: 600; }
+.no { color: var(--text-mute); }
+.col-pro { background: rgba(124,92,255,0.04); }
+.col-proplus { background: rgba(255,181,71,0.04); }
+.col-addon { background: rgba(68,224,164,0.04); }
+.col-header-pro { color: var(--brand) !important; }
+.col-header-proplus { color: var(--warn) !important; }
+.col-header-addon { color: var(--accent) !important; }
+
+/* FAQ */
+.faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 700px) { .faq-grid { grid-template-columns: 1fr; } }
+.faq-item { background: rgba(255,255,255,0.02); border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px; }
+.faq-q { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+.faq-a { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+
+/* CTA SECTION */
+.cta-section { position: relative; z-index: 1; text-align: center; padding: 0 24px 100px; }
+.cta-box { max-width: 640px; margin: 0 auto; background: rgba(124,92,255,0.08); border: 1px solid rgba(124,92,255,0.25); border-radius: 24px; padding: 56px 48px; }
+.cta-box h2 { font-size: 32px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 12px; }
+.cta-box p { font-size: 16px; color: var(--text-dim); margin-bottom: 28px; line-height: 1.6; }
+.cta-note { font-size: 12px; color: var(--text-mute); margin-top: 14px; }
+
+/* DIVIDER */
+.divider { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto 80px; padding: 0 24px; }
+.divider hr { border: none; border-top: 1px solid var(--line); }
 </style>
 </head>
 <body>
 
 <div class="bg-orb one"></div>
 <div class="bg-orb two"></div>
+<div class="bg-orb three"></div>
 
-<nav class="top">
-  <div class="nav-inner">
-    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
-    <a href="/" class="nav-back">← Home</a>
+<nav>
+  <a href="/" class="logo"><div class="logo-mark">L</div>LearningGPT</a>
+  <div class="nav-right">
+    <a href="/lessons">Lessons</a>
+    <a href="/pricing">Individual</a>
+    <a href="/auth/login" class="btn-nav">Sign in</a>
   </div>
 </nav>
 
-<section class="hero">
-  <div class="container">
-    <span class="eyebrow">For Business</span>
-    <h1>Train your whole team on AI. <span class="grad serif">Without picking sides.</span></h1>
-    <p class="lead">Your engineers love Claude. Your marketers live in ChatGPT. Your CFO does everything in Copilot for Excel. LearningGPT is the only training platform that teaches all of them honestly — and tells your people which tool to reach for, by job and by task.</p>
-    <div class="hero-cta">
-      <a href="mailto:dan@learninggpt.ai?subject=LearningGPT%20business%20pilot" class="btn btn-primary btn-lg">Email about a pilot →</a>
-      <a href="#pricing" class="btn btn-ghost btn-lg">See pricing</a>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">🏢 LearningGPT for Business</div>
+  <h1>Turn your whole team into <em>AI-native</em> professionals.</h1>
+  <p>The same curriculum your employees are already using individually — now with team management, role-based training, and engagement tools built for HR and L&D teams.</p>
+  <div class="hero-ctas">
+    <a href="mailto:dan@learninggpt.ai?subject=Business Inquiry" class="btn-primary">Talk to Dan →</a>
+    <a href="/pricing" class="btn-secondary">See individual pricing</a>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="proof">
+  <div class="proof-label">Why teams choose LearningGPT</div>
+  <div class="proof-stats">
+    <div class="stat">
+      <div class="stat-num">80+</div>
+      <div class="stat-label">Lessons across 6 AI tools</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">6</div>
+      <div class="stat-label">Role-based tracks</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">$6</div>
+      <div class="stat-label">Per user/month starting</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">Weekly</div>
+      <div class="stat-label">Role-specific AI tip emails</div>
     </div>
   </div>
-</section>
+</div>
 
-<section>
-  <div class="container">
-    <div class="section-head">
-      <h2>The problem with how most companies <span class="serif">train on AI today</span></h2>
-    </div>
-
-    <div class="problem-grid">
-      <div class="problem-card">
-        <h3>Vendor training is biased</h3>
-        <p>Microsoft teaches Copilot. OpenAI teaches ChatGPT. Anthropic teaches Claude. None of them will honestly tell your team when their tool is the wrong choice — or when a competitor's tool would do a better job.</p>
-      </div>
-      <div class="problem-card">
-        <h3>Each team picks a different favorite</h3>
-        <p>Engineering uses Claude. Marketing uses ChatGPT. Finance uses Copilot. There's no shared vocabulary, no consistency, and managers can't tell whether their teams are actually getting good at AI or just feeling busy.</p>
-      </div>
-      <div class="problem-card">
-        <h3>YouTube and Twitter aren't a curriculum</h3>
-        <p>Your team is piecing together how to use AI from creators with no skin in the game and content that's 18 months old. The models change every 8 weeks. The training has to change with them.</p>
-      </div>
-      <div class="problem-card us">
-        <h3>What LearningGPT does instead</h3>
-        <p>One platform. Every major AI tool, taught honestly. Lessons by tool, lessons by job. Hands-on practice in a side-by-side playground. Built and maintained by people who use these tools daily — and updated as the models update.</p>
-      </div>
-    </div>
+<!-- PRICING -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-eyebrow">Business Pricing</div>
+    <div class="section-title">Simple per-seat pricing. No surprises.</div>
+    <div class="section-desc">Minimum 3 seats. Annual contracts available with volume discounts.</div>
   </div>
-</section>
 
-<section>
-  <div class="container">
-    <div class="section-head">
-      <h2>What your team gets <span class="serif">on day one</span></h2>
-      <p>Available today, on every paid seat.</p>
+  <div class="pricing-grid">
+
+    <!-- Business Pro -->
+    <div class="plan-card">
+      <div class="plan-tag pro">Business Pro</div>
+      <div class="plan-name">Pro</div>
+      <div class="plan-price-wrap">
+        <span class="plan-price">$6</span><span class="plan-period">/ user / mo</span>
+      </div>
+      <div class="plan-minimum">Minimum 3 users · ~$58/user/yr annual</div>
+      <div class="plan-annual">Annual billing saves ~19%</div>
+      <div class="plan-desc">Full access to every Pro lesson across all six AI tool tracks. Everything your team needs to go from AI-curious to AI-capable.</div>
+      <ul class="feature-list">
+        <li><span class="check">✓</span> All 5 tool tracks — Claude, ChatGPT, Gemini, Copilot, Perplexity</li>
+        <li><span class="check">✓</span> AI Foundations track</li>
+        <li><span class="check">✓</span> All role tracks as they ship</li>
+        <li><span class="check">✓</span> Unlimited AI playground</li>
+        <li><span class="check">✓</span> Basic team admin dashboard</li>
+        <li><span class="check">✓</span> Lesson progress tracking per employee</li>
+        <li><span class="check">✓</span> New lesson alerts</li>
+        <li><span class="check">✓</span> Power Add-on available</li>
+      </ul>
+      <button class="btn-plan pro-btn" onclick="window.location.href='mailto:dan@learninggpt.ai?subject=Business Pro Inquiry'">Get started — $6/user/mo</button>
     </div>
 
-    <div class="features-grid">
-      <div class="feature">
-        <div class="icon">🛠️</div>
-        <h3>Five tool tracks, live</h3>
-        <p>Deep curriculum for Copilot, Claude, ChatGPT, Gemini, and Perplexity. New tracks added as new tools matter.</p>
+    <!-- Business Pro+ -->
+    <div class="plan-card featured">
+      <div class="plan-tag proplus">Business Pro+</div>
+      <div class="plan-name">Pro+</div>
+      <div class="plan-price-wrap">
+        <span class="plan-price">$14</span><span class="plan-period">/ user / mo</span>
       </div>
-      <div class="feature">
-        <div class="icon">🧭</div>
-        <h3>Free AI Foundations</h3>
-        <p>The tool-agnostic patterns that work on every AI: specific friction, the constraint stack, hallucination spotting, model selection.</p>
-      </div>
-      <div class="feature">
-        <div class="icon">⚖️</div>
-        <h3>Side-by-side playground</h3>
-        <p>Your team runs the same prompt across every major AI and sees the differences. The fastest way to learn what each tool is good at.</p>
-      </div>
-      <div class="feature">
-        <div class="icon">🎯</div>
-        <h3>Role-based tracks <span class="roadmap-tag">Q3 2026</span></h3>
-        <p>AI for Marketing, Sales, Engineers, Finance, Legal, Founders. Each track teaches which tool to use for which job.</p>
-      </div>
-      <div class="feature">
-        <div class="icon">📜</div>
-        <h3>Verifiable certifications <span class="roadmap-tag">Q3 2026</span></h3>
-        <p>Open Badges 3.0 compliant, cryptographically signed, verifiable on LinkedIn. Real exams — not multiple choice.</p>
-      </div>
-      <div class="feature">
-        <div class="icon">📊</div>
-        <h3>Admin dashboards + SSO <span class="roadmap-tag">Late 2026</span></h3>
-        <p>Manage seats, view progress, see which lessons your team is completing. SAML/OIDC SSO. Bulk seat purchase.</p>
-      </div>
+      <div class="plan-minimum">Minimum 3 users · $99/user/yr annual</div>
+      <div class="plan-annual">Annual billing saves 41% — under $100/employee/yr</div>
+      <div class="plan-desc">Everything in Pro plus advanced lessons, priority support, and quarterly office hours with Dan for your whole team.</div>
+      <ul class="feature-list">
+        <li><span class="check gold">✓</span> Everything in Business Pro</li>
+        <li><span class="check gold">✓</span> Pro+ exclusive advanced lessons</li>
+        <li><span class="check gold">✓</span> Priority email support</li>
+        <li><span class="check gold">✓</span> Earliest access to every new lesson</li>
+        <li><span class="check gold">✓</span> Quarterly office hour session with Dan <span class="tag">For your team</span></li>
+        <li><span class="check gold">✓</span> Verifiable AI certifications <span class="tag">Q3 2026</span></li>
+        <li><span class="check gold">✓</span> LinkedIn certification integration <span class="tag">Q3 2026</span></li>
+        <li><span class="check gold">✓</span> Power Add-on available</li>
+      </ul>
+      <button class="btn-plan proplus-btn" onclick="window.location.href='mailto:dan@learninggpt.ai?subject=Business Pro+ Inquiry'">Get started — $14/user/mo</button>
     </div>
+
   </div>
-</section>
 
-<section id="pricing">
-  <div class="container">
-    <div class="pricing-band">
-      <h2>Pilot pricing for the <span class="serif">first 10 companies</span></h2>
-      <p>We're working closely with a small number of early customers to make sure LearningGPT becomes the AI training platform companies actually want. If you're one of them, you get pilot pricing locked in for the life of your subscription, plus a custom curriculum review with the founder.</p>
+  <!-- ADD-ON -->
+  <div class="addon-card">
+    <div class="addon-header">
+      <div class="addon-info">
+        <div class="addon-tag">⚡ Power Add-on</div>
+        <div class="addon-name">Team Engagement Suite</div>
+        <div class="addon-requirement">Requires Business Pro or Pro+ · Minimum 25 users</div>
+      </div>
+      <div class="addon-price-wrap">
+        <div class="addon-price">$3<span style="font-size:18px;color:var(--text-mute);font-weight:400;">/user/mo</span></div>
+        <div class="addon-minimum">25 users min = $75/mo</div>
+      </div>
+    </div>
 
-      <div class="price-rows">
-        <div class="row">
-          <h4>Team (under 25 seats)</h4>
-          <div class="amt">$7 / seat / mo</div>
-          <p>Pilot rate (standard: $15/seat). Founding pricing locks in.</p>
+    <div class="addon-features">
+      <div class="addon-feature">
+        <div class="addon-icon">📧</div>
+        <div class="addon-feature-text">
+          <div class="addon-feature-name">Weekly Role-Based AI Emails</div>
+          <div class="addon-feature-desc">Every employee gets a weekly tip email tailored to their role — Sales, HR, Engineering, Marketing, Finance, or Operations.</div>
         </div>
-        <div class="row">
-          <h4>Department (25–100)</h4>
-          <div class="amt">$5 / seat / mo</div>
-          <p>Pilot rate (standard: $12/seat). Volume discount included.</p>
-        </div>
-        <div class="row">
-          <h4>Enterprise (100+)</h4>
-          <div class="amt">Let's talk</div>
-          <p>Custom pricing, custom curriculum review, dedicated onboarding.</p>
+      </div>
+      <div class="addon-feature">
+        <div class="addon-icon">📊</div>
+        <div class="addon-feature-text">
+          <div class="addon-feature-name">Full Team Reporting Dashboard</div>
+          <div class="addon-feature-desc">See completions, engagement, and progress across your whole team. Know who's learning and who needs a nudge.</div>
         </div>
       </div>
-
-      <p style="font-size: 13px; color: var(--text-mute); margin-top: 8px;">Pilot pricing is honored as long as the subscription stays active. Standard pricing applies to new customers after the first 10 pilots are filled.</p>
-
-      <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 24px;">
-        <a href="mailto:dan@learninggpt.ai?subject=LearningGPT%20business%20pilot&body=Company%20name%3A%20%0AApprox%20number%20of%20seats%3A%20%0AWhich%20AI%20tools%20your%20team%20uses%20today%3A%20%0AWhat%20you%27re%20trying%20to%20solve%3A%20" class="btn btn-primary btn-lg">Apply for a pilot →</a>
-        <a href="mailto:dan@learninggpt.ai?subject=LearningGPT%20business%20questions" class="btn btn-ghost btn-lg">Just have questions</a>
+      <div class="addon-feature">
+        <div class="addon-icon">🏆</div>
+        <div class="addon-feature-text">
+          <div class="addon-feature-name">Team Leaderboard</div>
+          <div class="addon-feature-desc">Friendly competition drives completion. Employees see where they rank — managers see who their top learners are.</div>
+        </div>
+      </div>
+      <div class="addon-feature">
+        <div class="addon-icon">📰</div>
+        <div class="addon-feature-text">
+          <div class="addon-feature-name">Monthly AI Industry Digest</div>
+          <div class="addon-feature-desc">A curated monthly email of the most important AI developments, written for your team — not for developers.</div>
+        </div>
+      </div>
+      <div class="addon-feature">
+        <div class="addon-icon">🎯</div>
+        <div class="addon-feature-text">
+          <div class="addon-feature-name">Manager Summary Reports</div>
+          <div class="addon-feature-desc">Monthly automated email to team admins showing progress, completions, and engagement — ready to share with leadership.</div>
+        </div>
+      </div>
+      <div class="addon-feature">
+        <div class="addon-icon">🚀</div>
+        <div class="addon-feature-text">
+          <div class="addon-feature-name">Employee Onboarding Sequence</div>
+          <div class="addon-feature-desc">New hires get a 5-email AI onboarding series automatically — getting them up to speed from day one.</div>
+        </div>
       </div>
     </div>
-  </div>
-</section>
 
-<section>
-  <div class="container">
-    <div class="section-head">
-      <h2>Questions <span class="serif">we hear a lot</span></h2>
+    <button class="btn-plan pro-btn" style="max-width:320px;" onclick="window.location.href='mailto:dan@learninggpt.ai?subject=Power Add-on Inquiry'">Add to your plan — $3/user/mo →</button>
+  </div>
+</div>
+
+<!-- COMPARE TABLE -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-eyebrow">Full Comparison</div>
+    <div class="section-title">Everything side by side.</div>
+  </div>
+  <div class="compare-wrap">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th class="col-header-pro">Business Pro<br><span style="font-weight:400;font-size:11px;text-transform:none;letter-spacing:0;">$6/user/mo</span></th>
+          <th class="col-header-proplus">Business Pro+<br><span style="font-weight:400;font-size:11px;text-transform:none;letter-spacing:0;">$14/user/mo · $99/user/yr</span></th>
+          <th class="col-header-addon">+ Power Add-on<br><span style="font-weight:400;font-size:11px;text-transform:none;letter-spacing:0;">+$3/user/mo</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>All 5 tool tracks (80+ lessons)</td><td class="col-pro"><span class="yes">✓</span></td><td class="col-proplus"><span class="yes">✓</span></td><td class="col-addon"><span class="yes">✓</span></td></tr>
+        <tr><td>AI Foundations track</td><td class="col-pro"><span class="yes">✓</span></td><td class="col-proplus"><span class="yes">✓</span></td><td class="col-addon"><span class="yes">✓</span></td></tr>
+        <tr><td>Unlimited AI playground</td><td class="col-pro"><span class="yes">✓</span></td><td class="col-proplus"><span class="yes">✓</span></td><td class="col-addon"><span class="yes">✓</span></td></tr>
+        <tr><td>Basic team admin dashboard</td><td class="col-pro"><span class="yes">✓</span></td><td class="col-proplus"><span class="yes">✓</span></td><td class="col-addon"><span class="yes">✓</span></td></tr>
+        <tr><td>Pro+ exclusive advanced lessons</td><td class="col-pro"><span class="no">—</span></td><td class="col-proplus"><span class="yes">✓</span></td><td class="col-addon"><span class="yes">✓ (Pro+ only)</span></td></tr>
+        <tr><td>Priority email support</td><td class="col-pro"><span class="no">—</span></td><td class="col-proplus"><span class="yes">✓</span></td><td class="col-addon"><span class="yes">✓ (Pro+ only)</span></td></tr>
+        <tr><td>Quarterly office hours with Dan</td><td class="col-pro"><span class="no">—</span></td><td class="col-proplus"><span class="yes">✓</span></td><td class="col-addon"><span class="yes">✓ (Pro+ only)</span></td></tr>
+        <tr><td>Verifiable certifications</td><td class="col-pro"><span class="no">—</span></td><td class="col-proplus"><span class="yes">✓ Q3 2026</span></td><td class="col-addon"><span class="yes">✓ Q3 2026</span></td></tr>
+        <tr><td>Weekly role-based AI tip emails</td><td class="col-pro"><span class="no">—</span></td><td class="col-proplus"><span class="no">—</span></td><td class="col-addon"><span class="yes">✓</span></td></tr>
+        <tr><td>Full team reporting dashboard</td><td class="col-pro"><span class="no">—</span></td><td class="col-proplus"><span class="no">—</span></td><td class="col-addon"><span class="yes">✓</span></td></tr>
+        <tr><td>Team leaderboard</td><td class="col-pro"><span class="no">—</span></td><td class="col-proplus"><span class="no">—</span></td><td class="col-addon"><span class="yes">✓</span></td></tr>
+        <tr><td>Monthly AI industry digest</td><td class="col-pro"><span class="no">—</span></td><td class="col-proplus"><span class="no">—</span></td><td class="col-addon"><span class="yes">✓</span></td></tr>
+        <tr><td>Manager summary reports</td><td class="col-pro"><span class="no">—</span></td><td class="col-proplus"><span class="no">—</span></td><td class="col-addon"><span class="yes">✓</span></td></tr>
+        <tr><td>Employee onboarding sequence</td><td class="col-pro"><span class="no">—</span></td><td class="col-proplus"><span class="no">—</span></td><td class="col-addon"><span class="yes">✓</span></td></tr>
+        <tr><td>Minimum seats</td><td class="col-pro">3 users</td><td class="col-proplus">3 users</td><td class="col-addon">25 users</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-eyebrow">Questions</div>
+    <div class="section-title">Common questions about business plans.</div>
+  </div>
+  <div class="faq-grid">
+    <div class="faq-item">
+      <div class="faq-q">What's the minimum commitment?</div>
+      <div class="faq-a">Business Pro and Pro+ require a minimum of 3 seats. The Power Add-on requires a minimum of 25 seats and must be added to an existing business plan. No maximum — contact us for volume pricing above 200 seats.</div>
     </div>
-
-    <div class="faq-block">
-      <div class="faq-item">
-        <div class="faq-q">Why not just have our people use the free vendor training?</div>
-        <div class="faq-a"><p>Because vendor training only teaches their tool. If your engineers use Claude, your marketers use ChatGPT, and your finance team uses Copilot, you'd need three different training programs — each one telling your team their tool is best. LearningGPT teaches all of them honestly, in one place, with the same standards.</p></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Can you build custom content for our company?</div>
-        <div class="faq-a"><p>For pilot customers, yes — we do a curriculum review where we look at your specific tools, workflows, and use cases, and recommend the lesson sequence (or build a custom one) that fits your team. Larger enterprise customers can request fully bespoke lessons; we'll quote that separately.</p></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">How do you keep the content current as models change?</div>
-        <div class="faq-a"><p>Lessons are versioned. When a model update changes a workflow, we update the lesson and (starting Q3 2026) push a skill-update alert to every learner who's completed that lesson. The curriculum is continuously maintained, not a one-shot course.</p></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Do you offer invoicing and PO terms?</div>
-        <div class="faq-a"><p>For Team and Department tiers, we accept credit card via Stripe by default. For Enterprise (100+ seats), we accept ACH and POs with Net-30 terms. Email us with your procurement requirements.</p></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">What about SSO, SCIM, and admin dashboards?</div>
-        <div class="faq-a"><p>On the roadmap for late 2026. Pilot customers help shape what we build. If specific compliance or admin features are deal-breakers for you today, tell us — we triage based on what real customers need.</p></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Who's behind LearningGPT?</div>
-        <div class="faq-a"><p>Founded by Dan Allen, an AI sales professional with deep experience in the Microsoft Copilot ecosystem. LearningGPT is independent — we're not paid by any AI vendor; your subscription is the only thing that pays us.</p></div>
-      </div>
+    <div class="faq-item">
+      <div class="faq-q">Do you offer annual billing?</div>
+      <div class="faq-a">Yes — annual contracts save significantly vs monthly. Business Pro annual is ~$58/user/year (save 19%). Business Pro+ annual is $99/user/year (save 41%) — under $100 per employee for a full year of AI training. Contact us to set up annual billing.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What are the role-based emails?</div>
+      <div class="faq-a">Every week, each employee receives a short email with one AI prompt, one tip, and one LearningGPT lesson relevant to their job role — Sales, HR, Engineering, Marketing, Finance, or Operations. Content is written for practitioners, not tech people.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What are the quarterly office hours?</div>
+      <div class="faq-a">Pro+ business accounts get a dedicated 1-hour session with Dan each quarter — just for your team. Bring questions about AI tools, workflows, prompting strategy, or anything from the curriculum. Sessions are recorded and shared afterward.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can employees keep their individual accounts?</div>
+      <div class="faq-a">Yes — if an employee already has an individual Pro or Pro+ subscription, their account upgrades to the business plan. Their progress and completions carry over.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How does billing work for teams?</div>
+      <div class="faq-a">One invoice per company, billed monthly or annually. Add or remove seats at any time — additions are prorated to your billing cycle. We handle the math.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Do you offer a trial?</div>
+      <div class="faq-a">Yes — reach out and we'll set up a 2-week trial for your team on the Business Pro plan. No credit card required to start the trial.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Is there an enterprise option?</div>
+      <div class="faq-a">For teams over 200, we offer custom pricing, dedicated onboarding, a personal kickoff session with Dan, and a custom billing arrangement. Contact Dan directly to discuss what works for your organization.</div>
     </div>
   </div>
-</section>
+</div>
 
-<footer>
-  <div class="footer-inner">
-    <div>© 2026 LearningGPT · Independent. Not affiliated with OpenAI, Anthropic, Microsoft, Google, or xAI.</div>
-    <div><a href="/privacy" style="color: var(--text-dim);">Privacy</a> · <a href="/terms" style="color: var(--text-dim);">Terms</a> · <a href="/" style="color: var(--text-dim);">Home</a></div>
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-box">
+    <h2>Ready to get your team started?</h2>
+    <p>Most business accounts are set up within 24 hours. Reach out and Dan will personally get you onboarded.</p>
+    <a href="mailto:dan@learninggpt.ai?subject=Business Inquiry" class="btn-primary" style="font-size:16px;padding:16px 36px;">Talk to Dan →</a>
+    <div class="cta-note">Or email dan@learninggpt.ai · Usually replies within a few hours</div>
   </div>
-</footer>
-
-<script>
-  document.querySelectorAll('.faq-item').forEach(item => {
-    item.querySelector('.faq-q').addEventListener('click', () => {
-      const isOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-      if (!isOpen) item.classList.add('open');
-    });
-  });
-</script>
+</div>
 
 </body>
 </html>

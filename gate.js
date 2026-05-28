@@ -1,4 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
+  const nav = document.querySelector('nav');
+  if (nav && !nav.querySelector('.sign-in-btn')) {
+    const signIn = document.createElement('a');
+    signIn.href = '/auth/login';
+    signIn.className = 'sign-in-btn';
+    signIn.textContent = 'Sign in';
+    signIn.style.cssText = 'margin-left:auto; padding:8px 16px; border-radius:8px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.14); color:#f5f5fa; font-size:14px; font-weight:600; text-decoration:none;';
+    nav.appendChild(signIn);
+  }
   const s = document.createElement('style');
 s.textContent = '.lesson h1 { overflow-wrap: break-word; word-break: break-word; } .lesson h1 .serif, .lesson h1 .grad { padding-right: 0.4em; }';
   document.head.appendChild(s);

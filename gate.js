@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
       else container.appendChild(wall);
     }
   }
-
+ 
   function showSignIn(isPreview) {
     const container = hideContent(isPreview);
     if (!container) return;

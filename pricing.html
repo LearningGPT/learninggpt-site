@@ -14,7 +14,7 @@
   --bg: #0a0a1a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14);
   --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85;
   --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4;
-  --danger: #ff6b8a;
+  --danger: #ff6b8a; --warn: #ffb547;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; }
@@ -40,18 +40,52 @@ nav { position: relative; z-index: 10; padding: 20px 32px; display: flex; align-
 .hero p { font-size: 18px; color: var(--text-dim); max-width: 520px; margin: 0 auto 12px; line-height: 1.6; }
 .hero-note { font-size: 13px; color: var(--text-mute); }
 
+/* BILLING TOGGLE */
+.billing-toggle-wrap {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; justify-content: center;
+  gap: 12px; margin: 0 auto 40px; padding: 0 24px;
+}
+.toggle-label { font-size: 14px; font-weight: 600; color: var(--text-mute); cursor: pointer; transition: color 0.2s; }
+.toggle-label.active { color: var(--text); }
+.toggle-switch {
+  position: relative; width: 52px; height: 28px;
+  background: rgba(255,255,255,0.1); border: 1px solid var(--line-strong);
+  border-radius: 100px; cursor: pointer; transition: background 0.2s;
+}
+.toggle-switch.annual { background: linear-gradient(135deg, #7c5cff, #5b8def); border-color: transparent; }
+.toggle-knob {
+  position: absolute; top: 3px; left: 3px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: white; transition: transform 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+.toggle-switch.annual .toggle-knob { transform: translateX(24px); }
+.save-badge {
+  display: inline-flex; align-items: center;
+  background: rgba(68,224,164,0.15); border: 1px solid rgba(68,224,164,0.3);
+  color: var(--accent); font-size: 11px; font-weight: 700;
+  padding: 3px 10px; border-radius: 100px; letter-spacing: 0.04em;
+  opacity: 0; transition: opacity 0.2s;
+}
+.save-badge.visible { opacity: 1; }
+
 /* PRICING GRID */
-.pricing-wrap { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 48px 24px 80px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.pricing-wrap { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 24px 80px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 @media (max-width: 768px) { .pricing-wrap { grid-template-columns: 1fr; max-width: 420px; } }
 
 .plan-card { background: rgba(255,255,255,0.03); border: 1px solid var(--line-strong); border-radius: 20px; padding: 32px; display: flex; flex-direction: column; position: relative; }
 .plan-card.featured { background: rgba(124,92,255,0.08); border-color: rgba(124,92,255,0.4); }
 .plan-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #7c5cff, #5b8def); color: white; font-size: 11px; font-weight: 700; padding: 4px 14px; border-radius: 100px; white-space: nowrap; letter-spacing: 0.05em; text-transform: uppercase; }
 .plan-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-mute); margin-bottom: 16px; }
-.plan-price { margin-bottom: 6px; }
+
+/* Price display */
+.plan-price { margin-bottom: 4px; min-height: 64px; }
 .plan-price .amount { font-size: 52px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
 .plan-price .period { font-size: 16px; color: var(--text-dim); margin-left: 4px; }
-.plan-after { font-size: 13px; color: var(--text-mute); margin-bottom: 8px; }
+.plan-annual-eq { font-size: 13px; color: var(--accent); font-weight: 600; margin-bottom: 4px; min-height: 18px; }
+.plan-after { font-size: 13px; color: var(--text-mute); margin-bottom: 8px; min-height: 18px; }
+
 .plan-desc { font-size: 14px; color: var(--text-dim); margin-bottom: 28px; line-height: 1.5; }
 .plan-features { list-style: none; margin-bottom: 32px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
 .plan-features li { font-size: 14px; color: var(--text-dim); display: flex; align-items: flex-start; gap: 10px; line-height: 1.4; }
@@ -91,10 +125,20 @@ nav { position: relative; z-index: 10; padding: 20px 32px; display: flex; align-
 </nav>
 
 <div class="hero">
-  <div class="hero-badge">🎉 Founding member pricing — first 500 only</div>
+  <div class="hero-badge">🎉 Founding member pricing — sign up by September 30th</div>
   <h1>Simple, honest pricing.</h1>
   <p>Start free. Upgrade when you're ready. Cancel anytime — no questions asked.</p>
-  <div class="hero-note">Founding member prices lock in forever. Regular pricing starts at $19/mo after launch.</div>
+  <div class="hero-note">Anyone who signs up before September 30th, 2026 locks in founding member pricing forever.</div>
+</div>
+
+<!-- Billing toggle -->
+<div class="billing-toggle-wrap">
+  <span class="toggle-label active" id="labelMonthly">Monthly</span>
+  <div class="toggle-switch" id="billingToggle">
+    <div class="toggle-knob"></div>
+  </div>
+  <span class="toggle-label" id="labelAnnual">Annual</span>
+  <span class="save-badge" id="saveBadge">Save up to 34%</span>
 </div>
 
 <div class="pricing-wrap">
@@ -103,6 +147,7 @@ nav { position: relative; z-index: 10; padding: 20px 32px; display: flex; align-
   <div class="plan-card">
     <div class="plan-label">Explorer</div>
     <div class="plan-price"><span class="amount">$0</span><span class="period">/ forever</span></div>
+    <div class="plan-annual-eq" style="color:var(--accent);font-size:12px;font-weight:600;">No credit card required</div>
     <div class="plan-after">&nbsp;</div>
     <div class="plan-desc">Master the fundamentals. See if you want to go deeper.</div>
     <ul class="plan-features">
@@ -112,15 +157,18 @@ nav { position: relative; z-index: 10; padding: 20px 32px; display: flex; align-
       <li><span class="check">✓</span> AI News digest + newsletter</li>
       <li><span class="check">✓</span> Lesson progress tracking</li>
     </ul>
-    <button class="btn-plan btn-free" onclick="window.location.href='/auth/signup'">Start free</button>
+    <button class="btn-plan btn-free" onclick="window.location.href='/auth/signup'">Start free — no card needed</button>
   </div>
 
   <!-- PRO -->
   <div class="plan-card featured">
-    <div class="plan-badge">⚡ Founding Member — 50% off forever</div>
+    <div class="plan-badge" id="proBadge">⚡ Founding Member — ends Sep 30</div>
     <div class="plan-label">Pro</div>
-    <div class="plan-price"><span class="amount">$9</span><span class="period">/ mo</span></div>
-    <div class="plan-after">$19/mo after launch</div>
+    <div class="plan-price">
+      <span class="amount" id="proAmount">$9</span><span class="period" id="proPeriod">/ mo</span>
+    </div>
+    <div class="plan-annual-eq" id="proEq">or $79/yr — save 26%</div>
+    <div class="plan-after" id="proAfter">&nbsp;</div>
     <div class="plan-desc">Everything you need to master every major AI tool.</div>
     <ul class="plan-features">
       <li><span class="check">✓</span> Everything in Free</li>
@@ -138,8 +186,11 @@ nav { position: relative; z-index: 10; padding: 20px 32px; display: flex; align-
   <!-- PRO+ -->
   <div class="plan-card">
     <div class="plan-label">Pro+</div>
-    <div class="plan-price"><span class="amount">$19</span><span class="period">/ mo</span></div>
-    <div class="plan-after">$39/mo after launch</div>
+    <div class="plan-price">
+      <span class="amount" id="proplusAmount">$19</span><span class="period" id="proplusPeriod">/ mo</span>
+    </div>
+    <div class="plan-annual-eq" id="proplusEq">or $149/yr — save 34%</div>
+    <div class="plan-after" id="proplusAfter">&nbsp;</div>
     <div class="plan-desc">Everything in Pro, plus advanced tracks, coaching, and certifications.</div>
     <ul class="plan-features">
       <li><span class="check">✓</span> Everything in Pro</li>
@@ -163,36 +214,113 @@ nav { position: relative; z-index: 10; padding: 20px 32px; display: flex; align-
     <div class="faq-a">No. The free Explorer plan requires no credit card — ever.</div>
   </div>
   <div class="faq-item">
+    <div class="faq-q">What's the difference between monthly and annual?</div>
+    <div class="faq-a">Annual plans save you 26% on Pro ($79/yr vs $108/yr) and 34% on Pro+ ($149/yr vs $228/yr). Annual members also get priority access to new features.</div>
+  </div>
+  <div class="faq-item">
     <div class="faq-q">What's a founding member?</div>
-    <div class="faq-a">The first 500 members who subscribe lock in 50% off forever. When we raise prices at launch, your rate never changes.</div>
+    <div class="faq-a">Anyone who subscribes before September 30th, 2026 is a founding member. You lock in today's pricing forever — when we raise prices after launch, your rate never changes.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">What are the monthly office hours?</div>
+    <div class="faq-a">A live 1-hour session with Dan, open to all Pro+ members. Come with questions about AI tools, workflows, prompting, or anything covered in the curriculum. Sessions are recorded and posted for anyone who can't attend live. Starting Q3 2026.</div>
   </div>
   <div class="faq-item">
     <div class="faq-q">Can I cancel anytime?</div>
-    <div class="faq-a">Yes. Cancel anytime from your account page — no questions asked, no fees.</div>
+    <div class="faq-a">Yes. Monthly plans cancel anytime. Annual plans can be cancelled to stop renewal — you keep access through the end of your paid year.</div>
   </div>
   <div class="faq-item">
     <div class="faq-q">What payment methods do you accept?</div>
     <div class="faq-a">All major credit and debit cards via Stripe. Your card details are never stored on our servers.</div>
   </div>
   <div class="faq-item">
-    <div class="faq-q">What happens when Stripe processes my payment?</div>
-    <div class="faq-a">You'll be redirected to a secure Stripe checkout page. Once complete, your account is upgraded instantly.</div>
+    <div class="faq-q">Can I switch between monthly and annual?</div>
+    <div class="faq-a">Yes. Switching from monthly to annual takes effect immediately — Stripe credits any unused days from your current month toward the annual price, so you only pay the difference. Switching from annual to monthly works differently: you keep full access through the end of your paid year, and monthly billing starts at your next renewal date. Annual plans are not refunded mid-year.</div>
   </div>
 </div>
 
 <script>
+// ── Billing toggle ──────────────────────────────────────────────
+let isAnnual = false;
+
+const toggle       = document.getElementById('billingToggle');
+const labelMonthly = document.getElementById('labelMonthly');
+const labelAnnual  = document.getElementById('labelAnnual');
+const saveBadge    = document.getElementById('saveBadge');
+
+const proAmount    = document.getElementById('proAmount');
+const proPeriod    = document.getElementById('proPeriod');
+const proEq        = document.getElementById('proEq');
+const proAfter     = document.getElementById('proAfter');
+const proBadge     = document.getElementById('proBadge');
+const btnPro       = document.getElementById('btnPro');
+
+const ppAmount     = document.getElementById('proplusAmount');
+const ppPeriod     = document.getElementById('proplusPeriod');
+const ppEq         = document.getElementById('proplusEq');
+const ppAfter      = document.getElementById('proplusAfter');
+const btnProPlus   = document.getElementById('btnProPlus');
+
+function updateUI() {
+  if (isAnnual) {
+    toggle.classList.add('annual');
+    labelMonthly.classList.remove('active');
+    labelAnnual.classList.add('active');
+    saveBadge.classList.add('visible');
+
+    proAmount.textContent  = '$79';
+    proPeriod.textContent  = '/ yr';
+    proEq.textContent      = '= $6.58/mo — save 26%';
+    proAfter.innerHTML     = '&nbsp;';
+    proBadge.textContent   = '⚡ Best Value — ends Sep 30';
+    btnPro.textContent     = 'Claim annual — $79/yr';
+
+    ppAmount.textContent   = '$149';
+    ppPeriod.textContent   = '/ yr';
+    ppEq.textContent       = '= $12.42/mo — save 34%';
+    ppAfter.innerHTML      = '&nbsp;';
+    btnProPlus.textContent = 'Claim annual — $149/yr';
+  } else {
+    toggle.classList.remove('annual');
+    labelMonthly.classList.add('active');
+    labelAnnual.classList.remove('active');
+    saveBadge.classList.remove('visible');
+
+    proAmount.textContent  = '$9';
+    proPeriod.textContent  = '/ mo';
+    proEq.textContent      = 'or $79/yr — save 26%';
+    proAfter.innerHTML     = '&nbsp;';
+    proBadge.textContent   = '⚡ Founding Member — ends Sep 30';
+    btnPro.textContent     = 'Claim founding spot — $9/mo';
+
+    ppAmount.textContent   = '$19';
+    ppPeriod.textContent   = '/ mo';
+    ppEq.textContent       = 'or $149/yr — save 34%';
+    ppAfter.innerHTML      = '&nbsp;';
+    btnProPlus.textContent = 'Claim founding spot — $19/mo';
+  }
+}
+
+toggle.addEventListener('click', function() {
+  isAnnual = !isAnnual;
+  updateUI();
+});
+
+// ── Checkout ────────────────────────────────────────────────────
 async function startCheckout(plan, btnId, errId) {
   const btn = document.getElementById(btnId);
   const err = document.getElementById(errId);
   const token = localStorage.getItem('lgpt_token');
 
+  // Append billing period to plan
+  const fullPlan = isAnnual ? plan + '_annual' : plan;
+
   err.className = 'error-msg';
   btn.disabled = true;
   btn.textContent = 'Setting up checkout...';
 
-  // If not logged in, send to signup with plan pre-selected
   if (!token) {
-    window.location.href = '/auth/signup?plan=' + plan;
+    window.location.href = '/auth/signup?plan=' + fullPlan;
     return;
   }
 
@@ -200,7 +328,7 @@ async function startCheckout(plan, btnId, errId) {
     const res = await fetch('/api/auth', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'checkout', plan: plan, token: token })
+      body: JSON.stringify({ action: 'checkout', plan: fullPlan, token: token })
     });
     const data = await res.json();
 
@@ -212,21 +340,21 @@ async function startCheckout(plan, btnId, errId) {
     err.textContent = data.error || 'Something went wrong. Please try again.';
     err.className = 'error-msg visible';
     btn.disabled = false;
-    btn.textContent = plan === 'pro' ? 'Claim founding spot — $9/mo' : 'Claim founding spot — $19/mo';
+    updateUI();
 
   } catch(e) {
     err.textContent = 'Something went wrong. Please try again.';
     err.className = 'error-msg visible';
     btn.disabled = false;
-    btn.textContent = plan === 'pro' ? 'Claim founding spot — $9/mo' : 'Claim founding spot — $19/mo';
+    updateUI();
   }
 }
 
-document.getElementById('btnPro').addEventListener('click', function() {
+btnPro.addEventListener('click', function() {
   startCheckout('pro', 'btnPro', 'errPro');
 });
 
-document.getElementById('btnProPlus').addEventListener('click', function() {
+btnProPlus.addEventListener('click', function() {
   startCheckout('pro_plus', 'btnProPlus', 'errProPlus');
 });
 </script>

@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div style="font-size:40px;margin-bottom:16px;">👋</div>
         <h2 style="font-size:26px;font-weight:800;margin:0 0 12px;color:#f5f5fa;">Sign in to continue</h2>
         <p style="font-size:16px;color:#a8a8c0;margin:0 0 32px;max-width:380px;margin-left:auto;margin-right:auto;line-height:1.6;">
-          Create a free account to access this lesson and track your progress.
+          Create a free account to access this lesson and track your progress. No credit card required.
         </p>
         <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
           <a href="/auth/signup?redirect=${encodeURIComponent(window.location.pathname)}" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#7c5cff,#5b8def);color:white;padding:14px 28px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none;box-shadow:0 6px 24px rgba(124,92,255,0.3);">Create free account →</a>

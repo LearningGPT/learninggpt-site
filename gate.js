@@ -1,4 +1,4 @@
-(function() {
+document.addEventListener('DOMContentLoaded', function() {
   const plan = localStorage.getItem('lgpt_plan') || 'free';
   const token = localStorage.getItem('lgpt_token');
 
@@ -112,4 +112,4 @@
         <p style="font-size:13px;color:#6b6b85;margin:20px 0 0;">Already a member? <a href="/auth/login" style="color:#7c5cff;">Sign in →</a></p>
       </div>`);
   }
-})();
+});

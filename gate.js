@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
+  const s = document.createElement('style');
+  s.textContent = '.lesson h1 { overflow-wrap: break-word; word-break: break-word; }';
+  document.head.appendChild(s);
   const plan = localStorage.getItem('lgpt_plan') || 'free';
   const token = localStorage.getItem('lgpt_token');
 

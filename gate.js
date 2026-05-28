@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
   const s = document.createElement('style');
-  s.textContent = '.lesson h1 { overflow-wrap: break-word; word-break: break-word; }';
+s.textContent = '.lesson h1 { overflow-wrap: break-word; word-break: break-word; } .lesson h1 .serif, .lesson h1 .grad { padding-right: 0.4em; }';
   document.head.appendChild(s);
   const plan = localStorage.getItem('lgpt_plan') || 'free';
   const token = localStorage.getItem('lgpt_token');

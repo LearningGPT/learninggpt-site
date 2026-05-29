@@ -1035,7 +1035,7 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
           <li>Real-time skill update alerts <em style="color: var(--warn); font-style: normal; font-size: 12px; font-weight: 600;">(Q3 2026)</em></li>
           <li>Founding member status + early access to new tracks</li>
         </ul>
-        <a href="#waitlist" class="btn btn-primary">Claim founding spot</a>
+        <a href="/auth/signup?plan=pro" class="btn btn-primary js-buy" data-plan="pro">Claim founding spot</a>
       </div>
       <div class="price-card">
         <div class="price-name">Pro+</div>
@@ -1050,7 +1050,7 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
           <li>Verifiable certifications <em style="color: var(--warn); font-style: normal; font-size: 12px; font-weight: 600;">(Q3 2026)</em></li>
           <li>Practical exams + LinkedIn integration <em style="color: var(--warn); font-style: normal; font-size: 12px; font-weight: 600;">(Q3 2026)</em></li>
         </ul>
-        <a href="#waitlist" class="btn btn-ghost">Claim founding spot</a>
+        <a href="/auth/signup?plan=pro_plus" class="btn btn-ghost js-buy" data-plan="pro_plus">Claim founding spot</a>
       </div>
     </div>
     <p style="text-align:center; margin-top:36px; color: var(--text-mute); font-size:14px;">
@@ -1216,6 +1216,36 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
     });
   });
 
+  // ----- Founding-spot buy buttons -----
+  // Logged-in members go straight to Stripe checkout. Everyone else (or an
+  // expired session) follows the link to sign up with the plan pre-selected,
+  // which then flows into Stripe. No "invalid session" error is ever shown.
+  document.querySelectorAll('.js-buy').forEach(function (btn) {
+    btn.addEventListener('click', async function (e) {
+      var plan = btn.getAttribute('data-plan');
+      var token = localStorage.getItem('lgpt_token');
+      if (!token) return; // not logged in -> let the link go to /auth/signup?plan=...
+      e.preventDefault();
+      var originalText = btn.textContent;
+      btn.textContent = 'Setting up checkout…';
+      btn.style.pointerEvents = 'none';
+      try {
+        var res = await fetch('/api/auth', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'checkout', token: token, plan: plan })
+        });
+        var data = await res.json();
+        if (res.ok && data.checkoutUrl) {
+          window.location.href = data.checkoutUrl;
+          return;
+        }
+      } catch (err) { /* fall through to signup */ }
+      // Session expired or checkout failed -> sign up with the plan pre-selected.
+      window.location.href = '/auth/signup?plan=' + plan;
+    });
+  });
+
   // Waitlist form handler — POSTs to /api/waitlist which sends email via Resend
   async function handleWaitlist(event, form) {
     event.preventDefault();
@@ -1235,46 +1265,4 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
 
     try {
       const response = await fetch('/api/waitlist', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, source })
-      });
-
-      const data = await response.json().catch(() => ({}));
-
-      if (response.ok && data.success) {
-        button.textContent = '✓ You\'re in';
-        emailInput.value = '';
-        showWaitlistToast();
-      } else {
-        button.textContent = 'Try again';
-        button.disabled = false;
-        console.error('Waitlist error:', response.status, data);
-      }
-    } catch (err) {
-      button.textContent = 'Try again';
-      button.disabled = false;
-      console.error('Waitlist fetch error:', err);
-    }
-
-    return false;
-  }
-
-  function showWaitlistToast() {
-    const existing = document.querySelector('.waitlist-toast');
-    if (existing) existing.remove();
-
-    const toast = document.createElement('div');
-    toast.className = 'waitlist-toast';
-    toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#44e0a4,#5b8def);color:white;padding:14px 24px;border-radius:10px;font-weight:600;font-size:14px;box-shadow:0 10px 40px rgba(0,0,0,0.4);z-index:9999;max-width:90vw;text-align:center;transition:opacity .5s;';
-    toast.innerHTML = '✓ You\'re on the founding member list. We\'ll be in touch.';
-    document.body.appendChild(toast);
-    setTimeout(() => {
-      toast.style.opacity = '0';
-      setTimeout(() => toast.remove(), 500);
-    }, 4500);
-  }
-</script>
-
-</body>
-</html>
+        method:

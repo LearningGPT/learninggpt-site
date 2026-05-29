@@ -12,9 +12,9 @@ const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY_TEST;
 // SANDBOX / TEST price IDs. (Price IDs aren't secret, so they're safe in code.)
 // AT LAUNCH: replace these five with the matching LIVE price IDs.
 const PRICES = {
-  business_pro:      { monthly: 'price_1TcEP4LLT2XwxxQy8l0KIIjo', annual: 'price_1TcES8LLT2XwxxQy5lEaNNh0' },
-  business_pro_plus: { monthly: 'price_1TcEPmLLT2XwxxQypVCmaE4B', annual: 'price_1TcESmLLT2XwxxQy2cJH8WTm' },
-  team_engagement_monthly: 'price_1TcEQNLLT2XwxxQyFCOGGjMn'
+  business_pro:      { monthly: 'price_1TcGwIPtA7wbJTlEgs7udWDF', annual: 'price_1TcGwfPtA7wbJTlEhMJI109i' },
+  business_pro_plus: { monthly: 'price_1TcGx6PtA7wbJTlE3gJtkpBZ', annual: 'price_1TcGxRPtA7wbJTlEQnHV1HRu' },
+  team_engagement_monthly: 'price_1TcGxpPtA7wbJTlEcgiBla5R'
 };
 
 const MIN_SEATS = 3;

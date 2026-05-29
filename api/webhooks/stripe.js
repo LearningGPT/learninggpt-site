@@ -228,7 +228,7 @@ async function sendAdminWelcome(email, name, company, link) {
     method: 'POST',
     headers: { 'Authorization': `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      from: 'LearningGPT <onboarding@learninggpt.ai>',
+      from: 'LearningGPT <onboarding@send.learninggpt.ai>',
       to: [email],
       subject: `${company} is set up on LearningGPT — finish your admin setup`,
       html,

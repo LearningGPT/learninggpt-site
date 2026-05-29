@@ -60,6 +60,8 @@ export default async function handler(req, res) {
           let plan = 'free';
           if (priceId === process.env.STRIPE_PRO_PRICE_ID) plan = 'pro';
           if (priceId === process.env.STRIPE_PRO_PLUS_PRICE_ID) plan = 'pro_plus';
+          if (priceId === process.env.STRIPE_PRO_ANNUAL_PRICE_ID) plan = 'pro';
+          if (priceId === process.env.STRIPE_PRO_PLUS_ANNUAL_PRICE_ID) plan = 'pro_plus';
           await patchByFilter('profiles', `stripe_customer_id=eq.${enc(obj.customer)}`, {
             plan, subscription_status: obj.status, stripe_subscription_id: obj.id,
           });

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Start Your Team — LearningGPT for Business</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#7c5cff" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a;
+  --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14);
+  --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85;
+  --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4;
+  --warn: #ffb547; --danger: #ff6b8a;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(140px); }
+.bg-orb.one { width: 700px; height: 700px; top: -200px; left: -200px; background: #7c5cff; opacity: 0.2; }
+.bg-orb.two { width: 500px; height: 500px; bottom: -100px; right: -100px; background: #44e0a4; opacity: 0.1; }
+.bg-orb.three { width: 400px; height: 400px; top: 50%; left: 50%; background: #5b8def; opacity: 0.08; }
+
+/* NAV */
+nav { position: relative; z-index: 10; padding: 20px 32px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 8px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; }
+.nav-right { display: flex; align-items: center; gap: 20px; font-size: 14px; }
+.nav-right a { color: var(--text-dim); }
+.btn-nav { background: rgba(255,255,255,0.08); border: 1px solid var(--line-strong); color: var(--text) !important; padding: 8px 18px; border-radius: 8px; font-weight: 600; }
+.btn-nav:hover { background: rgba(255,255,255,0.12); text-decoration: none !important; }
+
+/* PAGE HEADER */
+.page-head { position: relative; z-index: 1; text-align: center; padding: 56px 24px 8px; max-width: 760px; margin: 0 auto; }
+.back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+.back-link:hover { color: var(--text-dim); text-decoration: none; }
+.page-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(91,141,239,0.12); border: 1px solid rgba(91,141,239,0.25); border-radius: 100px; padding: 6px 16px; font-size: 12px; font-weight: 700; color: var(--brand-2); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 20px; }
+.page-head h1 { font-size: clamp(30px, 4vw, 46px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 14px; }
+.page-head h1 em { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.page-head p { font-size: 16px; color: var(--text-dim); line-height: 1.6; max-width: 520px; margin: 0 auto; }
+
+/* LAYOUT */
+.wrap { position: relative; z-index: 1; max-width: 1040px; margin: 0 auto; padding: 40px 24px 100px; display: grid; grid-template-columns: 1fr 380px; gap: 28px; align-items: start; }
+@media (max-width: 860px) { .wrap { grid-template-columns: 1fr; } }
+
+.config { display: flex; flex-direction: column; gap: 28px; }
+.block { background: rgba(255,255,255,0.03); border: 1px solid var(--line-strong); border-radius: 18px; padding: 26px; }
+.block-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-mute); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.step-num { width: 20px; height: 20px; border-radius: 6px; background: rgba(124,92,255,0.15); border: 1px solid rgba(124,92,255,0.3); color: var(--brand); display: grid; place-items: center; font-size: 11px; font-weight: 800; }
+
+/* PLAN PICKER */
+.plan-options { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 480px) { .plan-options { grid-template-columns: 1fr; } }
+.plan-opt { background: rgba(255,255,255,0.02); border: 1.5px solid var(--line-strong); border-radius: 14px; padding: 18px; cursor: pointer; transition: border-color 0.15s, background 0.15s; position: relative; }
+.plan-opt:hover { border-color: rgba(124,92,255,0.35); }
+.plan-opt.selected { border-color: var(--brand); background: rgba(124,92,255,0.08); }
+.plan-opt .tag { display: inline-flex; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; margin-bottom: 12px; }
+.plan-opt .tag.pro { background: rgba(124,92,255,0.15); color: var(--brand); border: 1px solid rgba(124,92,255,0.3); }
+.plan-opt .tag.proplus { background: rgba(255,181,71,0.12); color: var(--warn); border: 1px solid rgba(255,181,71,0.3); }
+.plan-opt-name { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+.plan-opt-price { font-size: 14px; color: var(--text-dim); }
+.plan-opt-price b { color: var(--text); font-size: 16px; }
+.plan-radio { position: absolute; top: 16px; right: 16px; width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--line-strong); transition: all 0.15s; }
+.plan-opt.selected .plan-radio { border-color: var(--brand); background: var(--brand); box-shadow: inset 0 0 0 3px var(--bg); }
+
+/* BILLING TOGGLE */
+.billing-toggle { display: inline-flex; background: rgba(0,0,0,0.25); border: 1px solid var(--line-strong); border-radius: 10px; padding: 4px; gap: 4px; }
+.billing-toggle button { background: transparent; border: none; color: var(--text-dim); font-family: inherit; font-size: 14px; font-weight: 600; padding: 9px 20px; border-radius: 7px; cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; gap: 8px; }
+.billing-toggle button.active { background: linear-gradient(135deg, #7c5cff, #5b8def); color: white; }
+.save-badge { font-size: 10px; font-weight: 700; background: rgba(68,224,164,0.15); color: var(--accent); padding: 2px 7px; border-radius: 6px; letter-spacing: 0.03em; }
+.billing-toggle button.active .save-badge { background: rgba(255,255,255,0.2); color: white; }
+
+/* SEAT STEPPER */
+.seat-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.stepper { display: inline-flex; align-items: center; border: 1px solid var(--line-strong); border-radius: 10px; overflow: hidden; }
+.stepper button { width: 44px; height: 48px; background: rgba(255,255,255,0.04); border: none; color: var(--text); font-size: 22px; font-weight: 600; cursor: pointer; transition: background 0.15s; }
+.stepper button:hover { background: rgba(255,255,255,0.1); }
+.stepper button:disabled { opacity: 0.35; cursor: not-allowed; }
+.stepper input { width: 80px; height: 48px; background: transparent; border: none; border-left: 1px solid var(--line); border-right: 1px solid var(--line); color: var(--text); text-align: center; font-family: inherit; font-size: 18px; font-weight: 700; -moz-appearance: textfield; }
+.stepper input::-webkit-outer-spin-button, .stepper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.seat-hint { font-size: 13px; color: var(--text-mute); }
+
+/* ADD-ON */
+.addon-toggle { display: flex; align-items: flex-start; gap: 14px; background: rgba(68,224,164,0.04); border: 1px solid rgba(68,224,164,0.2); border-radius: 14px; padding: 18px; cursor: pointer; transition: opacity 0.15s; }
+.addon-toggle.disabled { opacity: 0.5; cursor: not-allowed; }
+.addon-check { width: 22px; height: 22px; border-radius: 6px; border: 2px solid var(--line-strong); flex-shrink: 0; margin-top: 2px; display: grid; place-items: center; transition: all 0.15s; color: transparent; font-size: 13px; font-weight: 800; }
+.addon-toggle.checked .addon-check { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.addon-body { flex: 1; }
+.addon-title-row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.addon-title { font-size: 15px; font-weight: 700; }
+.addon-cost { font-size: 14px; font-weight: 700; color: var(--accent); white-space: nowrap; }
+.addon-sub { font-size: 12.5px; color: var(--text-mute); line-height: 1.5; margin-top: 4px; }
+.addon-lock { font-size: 12px; color: var(--warn); font-weight: 600; margin-top: 6px; display: none; }
+.addon-toggle.disabled .addon-lock { display: block; }
+
+/* FIELDS */
+.field { margin-bottom: 16px; }
+.field:last-child { margin-bottom: 0; }
+.field label { display: block; font-size: 13px; font-weight: 600; color: var(--text-dim); margin-bottom: 7px; }
+.field input { width: 100%; background: rgba(0,0,0,0.25); border: 1px solid var(--line-strong); border-radius: 10px; padding: 13px 15px; color: var(--text); font-family: inherit; font-size: 15px; transition: border-color 0.15s; }
+.field input:focus { outline: none; border-color: var(--brand); }
+.field input::placeholder { color: var(--text-mute); }
+.field-error { border-color: var(--danger) !important; }
+
+/* SUMMARY */
+.summary { background: rgba(124,92,255,0.07); border: 1px solid rgba(124,92,255,0.25); border-radius: 18px; padding: 26px; position: sticky; top: 24px; }
+.summary h3 { font-size: 16px; font-weight: 800; margin-bottom: 18px; }
+.sum-line { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font-size: 14px; color: var(--text-dim); margin-bottom: 12px; }
+.sum-line .val { color: var(--text); font-weight: 600; white-space: nowrap; }
+.sum-line .calc { font-size: 12px; color: var(--text-mute); }
+.sum-divider { border: none; border-top: 1px solid var(--line); margin: 18px 0; }
+.sum-total { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 22px; }
+.sum-total .lbl { font-size: 15px; font-weight: 700; }
+.sum-total .amt { font-size: 34px; font-weight: 800; letter-spacing: -0.02em; }
+.sum-total .per { font-size: 14px; color: var(--text-dim); font-weight: 500; margin-left: 2px; }
+.btn-primary { width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #7c5cff, #5b8def); color: white; padding: 15px 28px; border-radius: 10px; font-size: 15px; font-weight: 600; border: none; cursor: pointer; font-family: inherit; transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s; box-shadow: 0 6px 24px rgba(124,92,255,0.35); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(124,92,255,0.4); }
+.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+.sum-note { font-size: 12px; color: var(--text-mute); text-align: center; margin-top: 14px; line-height: 1.5; }
+.form-error { background: rgba(255,107,138,0.1); border: 1px solid rgba(255,107,138,0.3); color: var(--danger); font-size: 13px; padding: 12px 14px; border-radius: 10px; margin-top: 14px; display: none; }
+.form-error.show { display: block; }
+
+.spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.4); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<div class="bg-orb three"></div>
+
+<nav>
+  <a href="/" class="logo"><div class="logo-mark">L</div>LearningGPT</a>
+  <div class="nav-right">
+    <a href="/lessons">Lessons</a>
+    <a href="/pricing">Individual</a>
+    <a href="/auth/login" class="btn-nav">Sign in</a>
+  </div>
+</nav>
+
+<div class="page-head">
+  <a href="/business" class="back-link">← Business plans</a>
+  <div class="page-eyebrow">🏢 Set up your team</div>
+  <h1>Get your team <em>learning</em> in minutes.</h1>
+  <p>Choose a plan, set your seats, and pay securely. After checkout we'll email you a link to set up your admin dashboard and invite your team.</p>
+</div>
+
+<div class="wrap">
+
+  <!-- LEFT: CONFIG -->
+  <div class="config">
+
+    <!-- PLAN -->
+    <div class="block">
+      <div class="block-label"><span class="step-num">1</span> Choose your plan</div>
+      <div class="plan-options">
+        <div class="plan-opt selected" data-plan="business_pro">
+          <div class="plan-radio"></div>
+          <span class="tag pro">Business Pro</span>
+          <div class="plan-opt-name">Pro</div>
+          <div class="plan-opt-price"><b data-price-pro>$6</b> / user / mo</div>
+        </div>
+        <div class="plan-opt" data-plan="business_pro_plus">
+          <div class="plan-radio"></div>
+          <span class="tag proplus">Business Pro+</span>
+          <div class="plan-opt-name">Pro+</div>
+          <div class="plan-opt-price"><b data-price-proplus>$14</b> / user / mo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BILLING -->
+    <div class="block">
+      <div class="block-label"><span class="step-num">2</span> Billing cycle</div>
+      <div class="billing-toggle">
+        <button data-billing="monthly" class="active">Monthly</button>
+        <button data-billing="annual">Annual <span class="save-badge">Save up to 41%</span></button>
+      </div>
+    </div>
+
+    <!-- SEATS -->
+    <div class="block">
+      <div class="block-label"><span class="step-num">3</span> How many seats?</div>
+      <div class="seat-row">
+        <div class="stepper">
+          <button id="seatMinus" type="button">−</button>
+          <input id="seatInput" type="number" value="3" min="3" inputmode="numeric" />
+          <button id="seatPlus" type="button">+</button>
+        </div>
+        <span class="seat-hint">Minimum 3 seats. Add or remove anytime.</span>
+      </div>
+    </div>
+
+    <!-- ADD-ON -->
+    <div class="block">
+      <div class="block-label"><span class="step-num">4</span> Add the Team Engagement Suite? <span style="font-weight:600;letter-spacing:0;text-transform:none;color:var(--text-mute);">(optional)</span></div>
+      <div class="addon-toggle" id="addonToggle">
+        <div class="addon-check">✓</div>
+        <div class="addon-body">
+          <div class="addon-title-row">
+            <span class="addon-title">⚡ Team Engagement Suite</span>
+            <span class="addon-cost">+$3 / user / mo</span>
+          </div>
+          <div class="addon-sub">Weekly role-based AI emails, team leaderboard, reporting dashboard, manager summaries, and the new-hire onboarding sequence.</div>
+          <div class="addon-lock" id="addonLock">Requires 25+ seats.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACCOUNT -->
+    <div class="block">
+      <div class="block-label"><span class="step-num">5</span> Your details</div>
+      <div class="field">
+        <label for="company">Company name</label>
+        <input id="company" type="text" placeholder="Acme Inc." autocomplete="organization" />
+      </div>
+      <div class="field">
+        <label for="adminName">Your name</label>
+        <input id="adminName" type="text" placeholder="Jane Smith" autocomplete="name" />
+      </div>
+      <div class="field">
+        <label for="adminEmail">Work email</label>
+        <input id="adminEmail" type="email" placeholder="jane@acme.com" autocomplete="email" />
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT: SUMMARY -->
+  <div class="summary">
+    <h3>Order summary</h3>
+
+    <div class="sum-line">
+      <div>
+        <div id="sumPlanName">Business Pro</div>
+        <div class="calc" id="sumPlanCalc">$6 × 3 seats / mo</div>
+      </div>
+      <div class="val" id="sumPlanTotal">$18</div>
+    </div>
+
+    <div class="sum-line" id="sumAddonRow" style="display:none;">
+      <div>
+        <div>Team Engagement Suite</div>
+        <div class="calc" id="sumAddonCalc">$3 × 3 seats / mo</div>
+      </div>
+      <div class="val" id="sumAddonTotal">$9</div>
+    </div>
+
+    <hr class="sum-divider" />
+
+    <div class="sum-total">
+      <span class="lbl">Total</span>
+      <span><span class="amt" id="sumTotal">$18</span><span class="per" id="sumPer">/mo</span></span>
+    </div>
+
+    <button class="btn-primary" id="checkoutBtn" type="button">Continue to payment →</button>
+
+    <div class="form-error" id="formError"></div>
+
+    <div class="sum-note">Secure checkout powered by Stripe. Cancel anytime from your dashboard.</div>
+  </div>
+
+</div>
+
+<script>
+/*
+  /business/signup — self-serve business onboarding (Phase 1)
+
+  This page collects the selection and POSTs it to /api/business.
+  The server maps these semantic choices to the correct Stripe Price ID
+  (price IDs are NOT trusted from the client). Reference mapping for the
+  backend handler (Step 4), currently SANDBOX/test IDs:
+
+    business_pro      monthly  -> price_1TcEP4LLT2XwxxQy8l0KIIjo
+    business_pro      annual   -> price_1TcES8LLT2XwxxQy5lEaNNh0
+    business_pro_plus monthly  -> price_1TcEPmLLT2XwxxQypVCmaE4B
+    business_pro_plus annual   -> price_1TcESmLLT2XwxxQy2cJH8WTm
+    team_engagement   monthly  -> price_1TcEQNLLT2XwxxQyFCOGGjMn
+*/
+
+const PRICING = {
+  business_pro:      { monthly: 6,  annual: 58, label: 'Business Pro'  },
+  business_pro_plus: { monthly: 14, annual: 99, label: 'Business Pro+' },
+  addon_monthly: 3
+};
+const MIN_SEATS = 3;
+const ADDON_MIN_SEATS = 25;
+
+const state = { plan: 'business_pro', billing: 'monthly', seats: 3, addon: false };
+
+const $ = (id) => document.getElementById(id);
+const fmt = (n) => '$' + n.toLocaleString('en-US');
+
+function addonAvailable() {
+  return state.billing === 'monthly' && state.seats >= ADDON_MIN_SEATS;
+}
+
+function render() {
+  // plan cards
+  document.querySelectorAll('.plan-opt').forEach(el => {
+    el.classList.toggle('selected', el.dataset.plan === state.plan);
+  });
+  // per-seat labels on cards reflect billing cycle
+  const perWord = state.billing === 'monthly' ? '/ user / mo' : '/ user / yr';
+  document.querySelector('[data-price-pro]').textContent = fmt(PRICING.business_pro[state.billing]);
+  document.querySelector('[data-price-proplus]').textContent = fmt(PRICING.business_pro_plus[state.billing]);
+  document.querySelectorAll('.plan-opt-price').forEach((el) => {
+    el.innerHTML = el.innerHTML.replace(/\/ user \/ (mo|yr)/, perWord);
+  });
+
+  // billing toggle
+  document.querySelectorAll('.billing-toggle button').forEach(b => {
+    b.classList.toggle('active', b.dataset.billing === state.billing);
+  });
+
+  // seats
+  $('seatInput').value = state.seats;
+  $('seatMinus').disabled = state.seats <= MIN_SEATS;
+
+  // add-on availability
+  const toggle = $('addonToggle');
+  const avail = addonAvailable();
+  if (!avail) state.addon = false;
+  toggle.classList.toggle('disabled', !avail);
+  toggle.classList.toggle('checked', state.addon);
+  const lock = $('addonLock');
+  if (state.billing === 'annual') { lock.textContent = 'Available on monthly billing.'; }
+  else { lock.textContent = 'Requires ' + ADDON_MIN_SEATS + '+ seats.'; }
+
+  // summary
+  const per = PRICING[state.plan][state.billing];
+  const base = per * state.seats;
+  const cyc = state.billing === 'monthly' ? '/ mo' : '/ yr';
+  $('sumPlanName').textContent = PRICING[state.plan].label;
+  $('sumPlanCalc').textContent = fmt(per) + ' × ' + state.seats + ' seats ' + cyc;
+  $('sumPlanTotal').textContent = fmt(base);
+
+  let total = base;
+  const addonActive = state.addon && avail;
+  $('sumAddonRow').style.display = addonActive ? 'flex' : 'none';
+  if (addonActive) {
+    const addonTotal = PRICING.addon_monthly * state.seats;
+    $('sumAddonCalc').textContent = fmt(PRICING.addon_monthly) + ' × ' + state.seats + ' seats / mo';
+    $('sumAddonTotal').textContent = fmt(addonTotal);
+    total += addonTotal;
+  }
+  $('sumTotal').textContent = fmt(total);
+  $('sumPer').textContent = state.billing === 'monthly' ? '/mo' : '/yr';
+}
+
+// plan selection
+document.querySelectorAll('.plan-opt').forEach(el => {
+  el.addEventListener('click', () => { state.plan = el.dataset.plan; render(); });
+});
+
+// billing
+document.querySelectorAll('.billing-toggle button').forEach(b => {
+  b.addEventListener('click', () => { state.billing = b.dataset.billing; render(); });
+});
+
+// seats
+function setSeats(n) {
+  if (isNaN(n)) n = MIN_SEATS;
+  state.seats = Math.max(MIN_SEATS, Math.floor(n));
+  render();
+}
+$('seatMinus').addEventListener('click', () => setSeats(state.seats - 1));
+$('seatPlus').addEventListener('click', () => setSeats(state.seats + 1));
+$('seatInput').addEventListener('input', (e) => { state.seats = parseInt(e.target.value, 10) || 0; renderSeatsLive(); });
+$('seatInput').addEventListener('blur', (e) => setSeats(parseInt(e.target.value, 10)));
+function renderSeatsLive() { // update summary while typing without snapping the input
+  const s = Math.max(0, state.seats);
+  const per = PRICING[state.plan][state.billing];
+  $('sumPlanCalc').textContent = fmt(per) + ' × ' + s + ' seats ' + (state.billing==='monthly'?'/ mo':'/ yr');
+}
+
+// add-on
+$('addonToggle').addEventListener('click', () => {
+  if (!addonAvailable()) return;
+  state.addon = !state.addon;
+  render();
+});
+
+// checkout
+$('checkoutBtn').addEventListener('click', startCheckout);
+
+function showError(msg) {
+  const e = $('formError');
+  e.textContent = msg;
+  e.classList.add('show');
+}
+function clearError() { $('formError').classList.remove('show'); }
+
+async function startCheckout() {
+  clearError();
+  ['company','adminName','adminEmail'].forEach(id => $(id).classList.remove('field-error'));
+
+  const company = $('company').value.trim();
+  const name = $('adminName').value.trim();
+  const email = $('adminEmail').value.trim();
+
+  if (state.seats < MIN_SEATS) { showError('Minimum ' + MIN_SEATS + ' seats required.'); return; }
+  if (!company) { $('company').classList.add('field-error'); showError('Please enter your company name.'); return; }
+  if (!name) { $('adminName').classList.add('field-error'); showError('Please enter your name.'); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { $('adminEmail').classList.add('field-error'); showError('Please enter a valid work email.'); return; }
+
+  const btn = $('checkoutBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Redirecting to checkout…';
+
+  try {
+    const res = await fetch('/api/business', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action: 'create-checkout',
+        plan: state.plan,
+        billing: state.billing,
+        seats: state.seats,
+        addon: state.addon && addonAvailable(),
+        company, name, email
+      })
+    });
+    const data = await res.json();
+    if (res.ok && data.url) {
+      window.location.href = data.url;
+    } else {
+      showError(data.error || 'Something went wrong starting checkout. Please try again.');
+      btn.disabled = false;
+      btn.innerHTML = 'Continue to payment →';
+    }
+  } catch (err) {
+    showError('Network error — please check your connection and try again.');
+    btn.disabled = false;
+    btn.innerHTML = 'Continue to payment →';
+  }
+}
+
+render();
+</script>
+
+</body>
+</html>

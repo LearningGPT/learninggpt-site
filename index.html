@@ -549,6 +549,26 @@ nav.top {
   .price-card.popular { transform: none; }
 }
 
+/* ---------- BILLING TOGGLE ---------- */
+.billing-toggle {
+  display: inline-flex; gap: 4px; margin: 0 0 40px; padding: 5px;
+  background: rgba(255,255,255,0.04); border: 1px solid var(--line-strong);
+  border-radius: 999px;
+}
+.bt-opt {
+  background: none; border: none; color: var(--text-dim);
+  font-family: inherit; font-size: 14px; font-weight: 600;
+  padding: 9px 20px; border-radius: 999px; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: background .15s, color .15s;
+}
+.bt-opt.active { background: linear-gradient(135deg, #7c5cff, #5b8def); color: #fff; }
+.bt-save {
+  font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 999px;
+  background: rgba(68,224,164,0.15); color: var(--accent);
+}
+.bt-opt.active .bt-save { background: rgba(255,255,255,0.22); color: #fff; }
+
 /* ---------- FOUNDER NOTE ---------- */
 .founder-note {
   max-width: 720px; margin: 0 auto;
@@ -1006,6 +1026,12 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
       <h2>Founding members get <span class="serif">half off, forever.</span></h2>
       <p>Lock in lifetime pricing while we're in early access. Cancel anytime.</p>
     </div>
+    <div style="text-align:center;">
+      <div class="billing-toggle" id="billing-toggle">
+        <button type="button" class="bt-opt active" data-billing="monthly">Monthly</button>
+        <button type="button" class="bt-opt" data-billing="annual">Annual <span class="bt-save">save up to 34%</span></button>
+      </div>
+    </div>
     <div class="pricing-grid">
       <div class="price-card">
         <div class="price-name">Explorer</div>
@@ -1024,7 +1050,7 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
         <div class="popular-badge">FOUNDING MEMBER</div>
         <div class="founder-discount">ENDS SEP 30</div>
         <div class="price-name">Pro</div>
-        <div class="price-amount">$9<span> / mo</span><div style="font-size:13px;color:#44e0a4;font-weight:600;margin-top:4px;">or $79/yr — save 26%</div></div>
+        <div class="price-amount" id="price-pro">$9<span> / mo</span><div style="font-size:13px;color:#44e0a4;font-weight:600;margin-top:4px;">or $79/yr — save 26%</div></div>
         <div class="price-desc">Everything you need to master every major AI tool.</div>
         <ul class="price-features">
           <li>Everything in Free</li>
@@ -1035,11 +1061,11 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
           <li>Real-time skill update alerts <em style="color: var(--warn); font-style: normal; font-size: 12px; font-weight: 600;">(Q3 2026)</em></li>
           <li>Founding member status + early access to new tracks</li>
         </ul>
-        <a href="/auth/signup?plan=pro" class="btn btn-primary js-buy" data-plan="pro">Claim founding spot</a>
+        <a href="/auth/signup?plan=pro" class="btn btn-primary js-buy" data-tier="pro" data-plan="pro">Claim founding spot</a>
       </div>
       <div class="price-card">
         <div class="price-name">Pro+</div>
-        <div class="price-amount">$19<span> / mo</span><div style="font-size:13px;color:#44e0a4;font-weight:600;margin-top:4px;">or $149/yr — save 34%</div></div>
+        <div class="price-amount" id="price-pro-plus">$19<span> / mo</span><div style="font-size:13px;color:#44e0a4;font-weight:600;margin-top:4px;">or $149/yr — save 34%</div></div>
         <div class="price-desc">Everything in Pro, plus advanced tracks, coaching, and certifications.</div>
         <ul class="price-features">
           <li>Everything in Pro</li>
@@ -1050,7 +1076,7 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
           <li>Verifiable certifications <em style="color: var(--warn); font-style: normal; font-size: 12px; font-weight: 600;">(Q3 2026)</em></li>
           <li>Practical exams + LinkedIn integration <em style="color: var(--warn); font-style: normal; font-size: 12px; font-weight: 600;">(Q3 2026)</em></li>
         </ul>
-        <a href="/auth/signup?plan=pro_plus" class="btn btn-ghost js-buy" data-plan="pro_plus">Claim founding spot</a>
+        <a href="/auth/signup?plan=pro_plus" class="btn btn-ghost js-buy" data-tier="pro_plus" data-plan="pro_plus">Claim founding spot</a>
       </div>
     </div>
     <p style="text-align:center; margin-top:36px; color: var(--text-mute); font-size:14px;">
@@ -1246,6 +1272,49 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
     });
   });
 
+  // ----- Monthly / Annual billing toggle (pricing section) -----
+  (function () {
+    var PRICING = {
+      'pro': {
+        monthly: { big: '$9',  suf: ' / mo', note: 'or $79/yr — save 26%',         plan: 'pro' },
+        annual:  { big: '$79', suf: ' / yr', note: 'just $6.58/mo, billed yearly',  plan: 'pro_annual' }
+      },
+      'pro-plus': {
+        monthly: { big: '$19',  suf: ' / mo', note: 'or $149/yr — save 34%',        plan: 'pro_plus' },
+        annual:  { big: '$149', suf: ' / yr', note: 'just $12.42/mo, billed yearly', plan: 'pro_plus_annual' }
+      }
+    };
+
+    function render(billing) {
+      Object.keys(PRICING).forEach(function (key) {
+        var d = PRICING[key][billing];
+        var priceEl = document.getElementById('price-' + key);
+        if (priceEl) {
+          priceEl.innerHTML = d.big + '<span>' + d.suf + '</span>' +
+            '<div style="font-size:13px;color:#44e0a4;font-weight:600;margin-top:4px;">' + d.note + '</div>';
+        }
+        var tier = key.replace('-', '_'); // 'pro-plus' -> 'pro_plus'
+        var btn = document.querySelector('.js-buy[data-tier="' + tier + '"]');
+        if (btn) {
+          btn.setAttribute('data-plan', d.plan);
+          btn.setAttribute('href', '/auth/signup?plan=' + d.plan);
+        }
+      });
+    }
+
+    var toggle = document.getElementById('billing-toggle');
+    if (toggle) {
+      toggle.querySelectorAll('[data-billing]').forEach(function (opt) {
+        opt.addEventListener('click', function () {
+          toggle.querySelectorAll('[data-billing]').forEach(function (o) { o.classList.remove('active'); });
+          opt.classList.add('active');
+          render(opt.getAttribute('data-billing'));
+        });
+      });
+      render('monthly'); // default state
+    }
+  })();
+
   // Waitlist form handler — POSTs to /api/waitlist which sends email via Resend
   async function handleWaitlist(event, form) {
     event.preventDefault();
@@ -1265,4 +1334,47 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
 
     try {
       const response = await fetch('/api/waitlist', {
-        method:
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, source })
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (response.ok && data.success) {
+        button.textContent = '✓ You\'re in';
+        emailInput.value = '';
+        showWaitlistToast();
+      } else {
+        button.textContent = 'Try again';
+        button.disabled = false;
+        console.error('Waitlist error:', response.status, data);
+      }
+    } catch (err) {
+      button.textContent = 'Try again';
+      button.disabled = false;
+      console.error('Waitlist fetch error:', err);
+    }
+
+    return false;
+  }
+
+  function showWaitlistToast() {
+    const existing = document.querySelector('.waitlist-toast');
+    if (existing) existing.remove();
+
+    const toast = document.createElement('div');
+    toast.className = 'waitlist-toast';
+    toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#44e0a4,#5b8def);color:white;padding:14px 24px;border-radius:10px;font-weight:600;font-size:14px;box-shadow:0 10px 40px rgba(0,0,0,0.4);z-index:9999;max-width:90vw;text-align:center;transition:opacity .5s;';
+    toast.innerHTML = '✓ You\'re on the founding member list. We\'ll be in touch.';
+    document.body.appendChild(toast);
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      setTimeout(() => toast.remove(), 500);
+    }, 4500);
+  }
+</script>
+
+</body>
+</html>
+

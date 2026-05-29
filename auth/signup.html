@@ -84,7 +84,9 @@ select:focus { outline: none; border-color: var(--brand); }
       <select id="plan">
         <option value="free">Free — explore lessons, no credit card</option>
         <option value="pro">Pro — $9/mo · Full access + all tool tracks</option>
+        <option value="pro_annual">Pro (annual) — $79/yr · Save 26%</option>
         <option value="pro_plus">Pro+ — $19/mo · Everything + role tracks + office hours</option>
+        <option value="pro_plus_annual">Pro+ (annual) — $149/yr · Save 34%</option>
       </select>
       <div class="plan-note">You can upgrade anytime from your account.</div>
     </div>
@@ -97,6 +99,15 @@ const submitBtn = document.getElementById('submitBtn');
 const errorMsg = document.getElementById('errorMsg');
 const eyeBtn = document.getElementById('eyeBtn');
 const passwordInput = document.getElementById('password');
+const planSelect = document.getElementById('plan');
+
+// Pre-select the plan passed in the link, e.g. /auth/signup?plan=pro_annual.
+// Only selects it if it's a real option; otherwise the default (Free) stays.
+const planParam = new URLSearchParams(window.location.search).get('plan');
+if (planParam) {
+  const isValid = Array.from(planSelect.options).some(function(o) { return o.value === planParam; });
+  if (isValid) planSelect.value = planParam;
+}
 
 eyeBtn.addEventListener('click', function() {
   if (passwordInput.type === 'password') {
@@ -111,7 +122,7 @@ eyeBtn.addEventListener('click', function() {
 submitBtn.addEventListener('click', async function() {
   const email = document.getElementById('email').value.trim();
   const password = document.getElementById('password').value;
-  const plan = document.getElementById('plan').value;
+  const plan = planSelect.value;
 
   errorMsg.className = 'error-msg';
 

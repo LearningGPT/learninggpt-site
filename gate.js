@@ -9,7 +9,7 @@ const navInner = document.querySelector('nav .nav-inner, nav');
     navInner.appendChild(signIn);
   }
   const s = document.createElement('style');
-s.textContent = '.lesson h1 { overflow-wrap: break-word; word-break: break-word; } .lesson h1 .serif, .lesson h1 .grad { padding-right: 0.4em; }';
+s.textContent = '.lesson h1 { overflow-wrap: break-word; word-break: break-word; } .lesson h1 .serif, .lesson h1 .grad { padding-right: 0.4em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }';
   document.head.appendChild(s);
   const plan = localStorage.getItem('lgpt_plan') || 'free';
   const token = localStorage.getItem('lgpt_token');
@@ -125,4 +125,3 @@ s.textContent = '.lesson h1 { overflow-wrap: break-word; word-break: break-word;
       </div>`);
   }
 });
- 

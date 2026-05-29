@@ -6,7 +6,7 @@
 // During development we use the SANDBOX test key so we don't touch the LIVE
 // individual-plan checkout (auth.js uses STRIPE_SECRET_KEY for that).
 // AT LAUNCH: change this to process.env.STRIPE_SECRET_KEY and swap PRICES to live IDs.
-const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY_TEST;
+const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
 
 // ── Price IDs ────────────────────────────────────────────────────────────────
 // SANDBOX / TEST price IDs. (Price IDs aren't secret, so they're safe in code.)

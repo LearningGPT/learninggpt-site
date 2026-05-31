@@ -11,6 +11,79 @@ const navInner = document.querySelector('nav .nav-inner, nav');
   const s = document.createElement('style');
 s.textContent = '.lesson h1 { overflow-wrap: break-word; word-break: break-word; } .lesson h1 .serif, .lesson h1 .grad { padding-right: 0.4em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }';
   document.head.appendChild(s);
+
+  // ── Auto next/prev lesson navigation ──
+  // Add a track here and every lesson in it gets prev/next buttons automatically.
+  (function injectLessonNav() {
+    var TRACKS = {
+      foundations: {
+        index: '/lessons/foundations/',
+        label: 'All Foundations lessons',
+        lessons: [
+          { url: '/lessons/sales-follow-up-emails',              title: 'Specific friction & the constraint stack' },
+          { url: '/lessons/foundations/spotting-hallucinations', title: 'Spotting hallucinations before they cost you' },
+          { url: '/lessons/foundations/which-ai-for-which-job',  title: 'Which AI for which job' },
+          { url: '/lessons/foundations/when-not-to-use-ai',      title: 'When NOT to use AI' },
+          { url: '/lessons/foundations/privacy-and-data',        title: 'Privacy, data & what not to paste' },
+          { url: '/lessons/foundations/staying-safe-with-ai',    title: 'Staying safe with AI' }
+        ]
+      }
+      // To add a track later, copy the block above, e.g.:
+      // , chatgpt: { index: '/lessons/chatgpt/', label: 'All ChatGPT lessons', lessons: [ { url: '...', title: '...' }, ... ] }
+    };
+
+    var path = window.location.pathname.replace(/\.html$/, '').replace(/\/+$/, '');
+    var track = null, idx = -1;
+    for (var key in TRACKS) {
+      var L = TRACKS[key].lessons;
+      for (var i = 0; i < L.length; i++) {
+        if (L[i].url.replace(/\/+$/, '') === path) { track = TRACKS[key]; idx = i; break; }
+      }
+      if (track) break;
+    }
+    if (!track) return; // not a mapped lesson — do nothing
+
+    var prev = idx > 0 ? track.lessons[idx - 1] : null;
+    var next = idx < track.lessons.length - 1 ? track.lessons[idx + 1] : null;
+
+    if (!document.getElementById('lgpt-lnav-style')) {
+      var st = document.createElement('style');
+      st.id = 'lgpt-lnav-style';
+      st.textContent =
+        '.lgpt-lnav-wrap{max-width:820px;margin:0 auto;padding:0 24px;}' +
+        '.lgpt-lnav{display:flex;gap:12px;align-items:stretch;margin:64px 0 20px;flex-wrap:wrap;}' +
+        '.lgpt-lnav a{text-decoration:none;}' +
+        '.lgpt-lnav-btn{flex:1;min-width:210px;display:flex;flex-direction:column;gap:4px;padding:16px 20px;border:1px solid rgba(255,255,255,0.12);border-radius:14px;background:rgba(255,255,255,0.03);color:#f5f5fa;transition:border-color .15s,transform .15s,background .15s;}' +
+        '.lgpt-lnav-btn:hover{border-color:rgba(124,92,255,0.45);background:rgba(124,92,255,0.07);transform:translateY(-2px);}' +
+        '.lgpt-lnav-next{text-align:right;align-items:flex-end;}' +
+        '.lgpt-lnav-dir{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#7c5cff;}' +
+        '.lgpt-lnav-title{font-size:14.5px;font-weight:600;line-height:1.35;color:#f5f5fa;}' +
+        '.lgpt-lnav-all{display:flex;align-items:center;justify-content:center;padding:16px 18px;border:1px solid rgba(255,255,255,0.12);border-radius:14px;background:rgba(255,255,255,0.03);color:#a8a8c0;font-size:13px;font-weight:600;white-space:nowrap;transition:color .15s,border-color .15s;}' +
+        '.lgpt-lnav-all:hover{color:#f5f5fa;border-color:rgba(255,255,255,0.2);}' +
+        '.lgpt-lnav-spacer{flex:1;min-width:210px;}' +
+        '@media(max-width:600px){.lgpt-lnav-btn,.lgpt-lnav-spacer{min-width:100%;}.lgpt-lnav-next{text-align:left;align-items:flex-start;}}';
+      document.head.appendChild(st);
+    }
+
+    function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+    var html = '<div class="lgpt-lnav">';
+    if (prev) html += '<a class="lgpt-lnav-btn lgpt-lnav-prev" href="' + prev.url + '"><span class="lgpt-lnav-dir">\u2190 Previous</span><span class="lgpt-lnav-title">' + esc(prev.title) + '</span></a>';
+    else html += '<span class="lgpt-lnav-spacer"></span>';
+    html += '<a class="lgpt-lnav-all" href="' + track.index + '">' + esc(track.label) + '</a>';
+    if (next) html += '<a class="lgpt-lnav-btn lgpt-lnav-next" href="' + next.url + '"><span class="lgpt-lnav-dir">Next \u2192</span><span class="lgpt-lnav-title">' + esc(next.title) + '</span></a>';
+    else html += '<span class="lgpt-lnav-spacer"></span>';
+    html += '</div>';
+
+    var wrap = document.createElement('div');
+    wrap.className = 'lgpt-lnav-wrap';
+    wrap.innerHTML = html;
+
+    var footer = document.querySelector('footer');
+    if (footer && footer.parentNode) footer.parentNode.insertBefore(wrap, footer);
+    else document.body.appendChild(wrap);
+  })();
+
   const plan = localStorage.getItem('lgpt_plan') || 'free';
   const token = localStorage.getItem('lgpt_token');
 

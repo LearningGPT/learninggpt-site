@@ -58,8 +58,10 @@ nav { position: relative; z-index: 10; padding: 20px 24px; display: flex; align-
 }
 
 /* medallion */
-.medallion { width: 132px; height: 132px; margin: 0 auto 22px; animation: pop .6s cubic-bezier(.34,1.56,.64,1) both; }
+.medallion { width: 132px; height: 132px; margin: 0 auto 22px; filter: drop-shadow(0 6px 34px rgba(68,224,164,0.5)); animation: pop .6s cubic-bezier(.34,1.56,.64,1) both; }
 @keyframes pop { 0% { transform: scale(.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+.confetti-piece { position: fixed; top: -24px; width: 10px; height: 14px; z-index: 60; pointer-events: none; border-radius: 2px; animation: confettiFall linear forwards; }
+@keyframes confettiFall { 0% { transform: translateY(-12vh) rotate(0deg); opacity: 1; } 100% { transform: translateY(112vh) rotate(560deg); opacity: 0; } }
 
 .pill {
   display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
@@ -121,7 +123,7 @@ footer { border-top: 1px solid var(--line); padding: 24px; text-align: center; f
       <path d="M 42 68 L 59 86 L 92 46" fill="none" stroke="url(#chk)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 
-    <span class="pill">Verified credential</span>
+    <span class="pill">🎉 Achievement unlocked</span>
     <h1>AI Foundations <span class="serif">complete.</span></h1>
     <p class="sub">You've got the patterns and judgment that make every AI tool you use better.</p>
     <p class="earned">Earned <b id="earnedDate">2026</b> · LearningGPT</p>
@@ -196,6 +198,25 @@ footer { border-top: 1px solid var(--line); padding: 24px; text-align: center; f
       navigator.clipboard.writeText(CAPTION).then(done).catch(fallback);
     } else { fallback(); }
   });
+  // Celebratory confetti burst on load
+  (function() {
+    var colors = ['#7c5cff', '#5b8def', '#44e0a4', '#ffb547', '#ff6b8a'];
+    for (var i = 0; i < 46; i++) {
+      var p = document.createElement('div');
+      p.className = 'confetti-piece';
+      p.style.left = (Math.random() * 100) + 'vw';
+      p.style.background = colors[Math.floor(Math.random() * colors.length)];
+      var dur = 2.6 + Math.random() * 2.4;
+      p.style.animationDuration = dur + 's';
+      p.style.animationDelay = (Math.random() * 0.7) + 's';
+      var w = 6 + Math.random() * 8;
+      p.style.width = w + 'px';
+      p.style.height = (w * 1.4) + 'px';
+      if (Math.random() < 0.4) p.style.borderRadius = '50%';
+      document.body.appendChild(p);
+      (function(el, d) { setTimeout(function() { el.remove(); }, (d + 1.2) * 1000); })(p, dur);
+    }
+  })();
 </script>
 </body>
 </html>

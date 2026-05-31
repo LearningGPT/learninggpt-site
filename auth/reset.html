@@ -14,7 +14,7 @@
   --bg: #0a0a1a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14);
   --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85;
   --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4;
-  --danger: #ff6b8a; --radius: 14px;
+  --warn: #ffb547; --danger: #ff6b8a; --radius: 14px;
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
@@ -42,6 +42,8 @@ nav { position: relative; z-index: 10; padding: 20px 24px; display: flex; align-
 .auth-switch { text-align: center; font-size: 14px; color: var(--text-dim); margin-top: 20px; }
 .error-msg { background: rgba(255,107,138,0.1); border: 1px solid rgba(255,107,138,0.3); border-radius: 8px; padding: 12px 14px; font-size: 13.5px; color: var(--danger); margin-bottom: 18px; display: none; }
 .error-msg.visible { display: block; }
+.notice-msg { background: rgba(255,181,71,0.1); border: 1px solid rgba(255,181,71,0.3); border-radius: 8px; padding: 12px 14px; font-size: 13.5px; color: var(--warn); margin-bottom: 18px; display: none; }
+.notice-msg.visible { display: block; }
 .success-box { text-align: center; padding: 20px 0; }
 .success-icon { font-size: 48px; margin-bottom: 16px; }
 .success-box h2 { font-size: 22px; font-weight: 800; margin: 0 0 10px; }
@@ -66,6 +68,7 @@ nav { position: relative; z-index: 10; padding: 20px 24px; display: flex; align-
     <div id="requestView">
       <h1>Reset password</h1>
       <p class="sub">Enter the email address you signed up with and we'll send you a reset link.</p>
+      <div class="notice-msg" id="requestNotice"></div>
       <div class="error-msg" id="requestError"></div>
       <div class="form-group">
         <label for="email">Email address</label>
@@ -78,7 +81,7 @@ nav { position: relative; z-index: 10; padding: 20px 24px; display: flex; align-
       <div class="success-box">
         <div class="success-icon">📬</div>
         <h2>Check your email</h2>
-        <p>We've sent a reset link to <strong id="sentEmail"></strong>. Click the link to set a new password.</p>
+        <p>We've sent a reset link to <strong id="sentEmail"></strong>. Click the link to set a new password. The link expires after one hour, so use it soon.</p>
         <p style="font-size:13px; color: var(--text-mute);">Didn't get it? Check spam, or <a href="#" id="resendLink">send it again</a>.</p>
       </div>
       <div class="auth-switch"><a href="/auth/login">← Back to sign in</a></div>
@@ -112,10 +115,15 @@ nav { position: relative; z-index: 10; padding: 20px 24px; display: flex; align-
 <script>
   const SUPABASE_URL = 'https://rokqkxjqstshebdxcmls.supabase.co';
   const SUPABASE_ANON_KEY = 'sb_publishable_B-LsiU5Zcyw99koifBQ1rQ_lJ830007';
+  // Where the email link should send people back to (must be in Supabase's allowed Redirect URLs).
+  const RESET_REDIRECT = 'https://learninggpt.ai/auth/reset';
+
+  function getHashParams() {
+    return new URLSearchParams((window.location.hash || '').replace('#', ''));
+  }
 
   function getResetTokenFromUrl() {
-    const hash = window.location.hash;
-    const params = new URLSearchParams(hash.replace('#', '?'));
+    const params = getHashParams();
     const type = params.get('type');
     const accessToken = params.get('access_token');
     if (type === 'recovery' && accessToken) return accessToken;
@@ -124,8 +132,23 @@ nav { position: relative; z-index: 10; padding: 20px 24px; display: flex; align-
     return null;
   }
 
+  // If the link came back with an error (expired / already used), show the request form with a heads-up.
+  function getLinkError() {
+    const params = getHashParams();
+    return params.get('error_code') || params.get('error') || null;
+  }
+
   const resetToken = getResetTokenFromUrl();
-  if (resetToken) { showView('newPasswordView'); } else { showView('requestView'); }
+  if (resetToken) {
+    showView('newPasswordView');
+  } else {
+    showView('requestView');
+    if (getLinkError()) {
+      const n = document.getElementById('requestNotice');
+      n.textContent = 'That reset link has expired or was already used. Enter your email to get a fresh one.';
+      n.classList.add('visible');
+    }
+  }
 
   function showView(id) {
     ['requestView','sentView','newPasswordView','successView'].forEach(v => {
@@ -141,7 +164,7 @@ nav { position: relative; z-index: 10; padding: 20px 24px; display: flex; align-
     if (!email) { err.textContent = 'Please enter your email address.'; err.classList.add('visible'); return; }
     btn.disabled = true; btn.textContent = 'Sending…';
     try {
-      await fetch(`${SUPABASE_URL}/auth/v1/recover`, {
+      await fetch(`${SUPABASE_URL}/auth/v1/recover?redirect_to=${encodeURIComponent(RESET_REDIRECT)}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY },
         body: JSON.stringify({ email })

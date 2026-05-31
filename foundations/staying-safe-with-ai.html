@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Staying safe with AI — security &amp; privacy essentials — LearningGPT</title>
+<meta name="description" content="What's safe to share with AI, the privacy settings to lock down today, and the new threats — prompt injection, deepfakes, AI phishing — everyone using AI needs to know." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#44e0a4" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/foundations/staying-safe-with-ai" />
+<meta property="og:title" content="Staying safe with AI — security & privacy essentials" />
+<meta property="og:description" content="What to share, what to lock down, and the threats to watch for when you use AI." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #44e0a4; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #44e0a4; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+.lesson { padding: 50px 0 100px; }
+.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(68,224,164,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(68,224,164,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip-free { border-color: rgba(68,224,164,0.4); color: var(--accent); background: rgba(68,224,164,0.1); }
+.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
+.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
+.lesson h1 .grad { background: linear-gradient(135deg, #44e0a4 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.25em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
+.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
+.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
+.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
+.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(68,224,164,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(68,224,164,0.25); border-radius: var(--radius-lg); position: relative; }
+.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #44e0a4, #7c5cff); border-radius: 2px 0 0 2px; }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.callout p:last-child { margin-bottom: 0; }
+.callout.warn { background: linear-gradient(135deg, rgba(255,107,138,0.12), rgba(255,181,71,0.06)); border-color: rgba(255,107,138,0.3); }
+.callout.warn::before { background: linear-gradient(180deg, #ff6b8a, #ffb547); }
+.callout.warn .lbl { color: var(--danger); }
+.tool-table { display: grid; grid-template-columns: 130px 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+.tool-table .tool-cell { padding: 14px 18px; background: var(--surface); }
+.tool-table .tool-cell.head { font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 10px; }
+.tool-table .tool-cell.head .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.tool-table .tool-cell.body { font-size: 14.5px; color: var(--text-dim); }
+.tool-table .tool-cell.body strong { color: var(--text); }
+.tree-list { background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; margin: 28px 0; }
+.tree-list h3 { margin-top: 0; }
+.tree-step { padding: 14px 0; border-top: 1px solid var(--line); font-size: 15px; }
+.tree-step:first-of-type { border-top: none; padding-top: 0; }
+.tree-step strong { color: var(--accent); }
+.tryit { margin: 24px 0; padding: 22px; background: rgba(68,224,164,0.06); border: 1px solid rgba(68,224,164,0.25); border-radius: var(--radius); }
+.tryit .lbl { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.tryit p { margin: 0 0 12px; font-size: 15px; }
+.tryit a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #44e0a4, #5b8def); color: white; padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 13px; }
+.tryit a.btn:hover { transform: translateY(-1px); color: white; }
+.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(68,224,164,0.18), rgba(124,92,255,0.1)); border: 1px solid rgba(68,224,164,0.3); border-radius: var(--radius-lg); padding: 36px; }
+.challenge h2 { margin-top: 0; }
+.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #44e0a4, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(68,224,164,0.35); transition: transform .15s; }
+.challenge a.btn:hover { transform: translateY(-1px); color: white; }
+.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; padding-top: 0; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.checklist li:first-child::before { top: 4px; }
+.next-up { margin: 60px 0 0; padding: 0; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); display: block; transition: border-color .2s, transform .2s; }
+.next-up:hover { border-color: rgba(68,224,164,0.4); transform: translateY(-2px); }
+.next-up .inner { padding: 32px; }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
+.next-up h3 { margin: 0 0 8px; font-size: 20px; color: var(--text); } .next-up p { margin: 0; color: var(--text-dim); font-size: 14.5px; }
+.next-up .go { margin-top: 14px; font-size: 14px; font-weight: 600; color: var(--accent); }
+.next-up .free-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(68,224,164,0.18); color: var(--accent); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(68,224,164,0.35); }
+.lesson-nav { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+.lesson-nav a { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 10px; font-size: 14px; font-weight: 600; background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); color: var(--text); }
+.lesson-nav a:hover { background: rgba(255,255,255,0.09); color: var(--text); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+</style>
+</head>
+<body>
+
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/foundations/" class="nav-back">← AI Foundations</a>
+  </div>
+</nav>
+
+<article class="lesson">
+  <div class="container">
+
+    <div class="lesson-meta">
+      <span class="chip">Lesson 6 · AI Foundations</span>
+      <span class="chip chip-free">Free</span>
+      <span>~11 min read</span>
+      <span class="dot"></span>
+      <span>Security setup + threats to know</span>
+    </div>
+
+    <h1>Staying safe with AI — <span class="grad serif">security &amp; privacy essentials.</span></h1>
+
+    <p class="deck">AI tools are the most useful — and the most oversharing — software most people have ever touched. You feed them your emails, your documents, your half-formed ideas, and they hand back something genuinely helpful. But that convenience has a security cost almost nobody is taught. This lesson is the practical briefing: what's safe to share, the settings to lock down today, and the brand-new threats that show up the moment you put an AI in the middle of your work.</p>
+
+    <h2><span class="num">Rule one</span></h2>
+    <h3>Treat every chat like a postcard, not a vault.</h3>
+
+    <p>The single habit that prevents most AI security disasters is this: <strong>before you paste something, assume it could end up somewhere you didn't intend</strong> — in a future data breach, in a log a support engineer reads, or in data used to train the next model. Most of the time nothing bad happens. But you only need to be wrong once with the wrong piece of information.</p>
+
+    <p>So run a one-second test before pasting anything sensitive: <em>"Would I be okay if this showed up in a leak, or in a stranger's chat?"</em> If the answer is no, don't paste it into a consumer AI tool — or use a tool with the right protections (more on that below).</p>
+
+    <p><strong>Things to never paste into a personal/consumer AI account:</strong></p>
+    <ul>
+      <li>Passwords, API keys, access tokens, or recovery codes</li>
+      <li>Full payment card numbers, bank account numbers, or government IDs (SSN, passport)</li>
+      <li>Other people's private data — health, financial, or personal details they didn't consent to share</li>
+      <li>Confidential work material — customer data, source code, contracts, unreleased plans — in a <em>personal</em> account</li>
+    </ul>
+
+    <div class="callout">
+      <span class="lbl">The reframe</span>
+      <p><strong>Convenience is not consent.</strong> Just because a tool <em>accepts</em> your data doesn't mean it's a safe place to put it. The AI doesn't know the difference between your grocery list and your company's roadmap — that judgment is entirely on you.</p>
+    </div>
+
+    <h2><span class="num">Where it goes</span></h2>
+    <h3>What actually happens to your data.</h3>
+
+    <p>Three things determine whether your data is exposed: <strong>the tier you're on, the settings you've chosen, and whether it's a personal or work account.</strong></p>
+
+    <p><strong>Free and personal plans</strong> often use your conversations to improve the models — unless you turn that off. <strong>Business, Team, and Enterprise plans</strong> generally come with a contractual promise <em>not</em> to train on your data and to keep it inside a protected boundary. That difference is the whole reason your employer pays for a business plan instead of letting everyone use the free version.</p>
+
+    <p><strong>Deleted isn't always gone.</strong> Most tools retain chats for a period even after you delete them (for abuse monitoring and legal reasons). Treat anything you've typed as recoverable for a while.</p>
+
+    <p>The practical takeaway: <strong>match the data to the account.</strong> Personal curiosity and low-stakes drafting → your personal account is fine. Anything involving your employer or customers → use the company's sanctioned, paid AI, not your personal login.</p>
+
+    <h2><span class="num">Lock it down</span></h2>
+    <h3>The settings to change today.</h3>
+
+    <p>Five minutes of setup removes most of the everyday risk. The exact menu names move around as these products update, so treat the table below as "where to look" and confirm the current wording inside each app.</p>
+
+    <div class="tool-table">
+      <div class="tool-cell head"><span class="dot" style="background:#10a37f"></span> ChatGPT</div>
+      <div class="tool-cell body">Settings → <strong>Data Controls</strong> → turn off "Improve the model for everyone." Use <strong>Temporary Chat</strong> for anything sensitive (it isn't saved to history).</div>
+
+      <div class="tool-cell head"><span class="dot" style="background:#d97757"></span> Claude</div>
+      <div class="tool-cell body">Settings → <strong>Privacy</strong>. Check whether training/data-sharing is on and turn it off if you'd rather opt out. Submitting feedback (thumbs up/down) can share that conversation — skip it for sensitive chats.</div>
+
+      <div class="tool-cell head"><span class="dot" style="background:#4285f4"></span> Gemini</div>
+      <div class="tool-cell body">Google Account → <strong>Activity controls → Gemini Apps Activity</strong>. Turning it off stops your chats from being saved and reviewed. Note: human reviewers may see retained conversations.</div>
+
+      <div class="tool-cell head"><span class="dot" style="background:#2c7be5"></span> Copilot</div>
+      <div class="tool-cell body">Make sure you're signed in with your <strong>work (M365) account</strong> — that's what gives you enterprise data protection. Don't run company data through personal Copilot.</div>
+
+      <div class="tool-cell head"><span class="dot" style="background:#20808d"></span> Perplexity</div>
+      <div class="tool-cell body">Settings → turn off <strong>"AI Data Retention."</strong> This stops your searches from being used to improve their models.</div>
+    </div>
+
+    <p>Then lock the accounts themselves — this matters as much as the settings:</p>
+    <ul>
+      <li><strong>Use a unique, strong password</strong> for every AI account, stored in a password manager. Your ChatGPT account now holds a history of your thinking — treat it like email.</li>
+      <li><strong>Turn on two-factor authentication (2FA / MFA)</strong> everywhere it's offered. This single step blocks the vast majority of account takeovers.</li>
+      <li><strong>Only install official apps and extensions.</strong> Fake "ChatGPT" apps and browser extensions are a common way data gets stolen. Download from the official site or verified app store, never a random link.</li>
+    </ul>
+
+    <h2><span class="num">New threats</span></h2>
+    <h3>The risks that come with putting AI in the loop.</h3>
+
+    <p>Some threats are specific to AI and didn't exist a few years ago. Knowing the names is half the defense.</p>
+
+    <div class="tree-list">
+      <div class="tree-step"><strong>Prompt injection.</strong> Hidden instructions buried in a web page, email, document, or file can hijack what an AI does when it reads them — especially AI that browses the web, reads your inbox, or takes actions for you. The fix: be cautious about giving an AI agent broad access, and review what it's about to do before you approve it.</div>
+      <div class="tree-step"><strong>AI phishing &amp; deepfakes.</strong> Scammers use AI to write flawless phishing emails, clone a voice ("your boss" calling to approve a wire transfer), and fake video. The fix: for any unusual money or access request, <em>verify through a second channel</em> — call the person on a known number. Treat urgency as a red flag, not a reason to hurry.</div>
+      <div class="tree-step"><strong>Malicious AI tools.</strong> Fake "free AI" apps, sites, and extensions exist purely to harvest what you paste or your login. The fix: stick to the well-known, official tools.</div>
+      <div class="tree-step"><strong>Confident hallucinations.</strong> AI will invent facts, citations, and code that <em>look</em> completely real. The fix: treat every output as a first draft to verify, never a final answer — especially for anything legal, medical, financial, or security-related.</div>
+      <div class="tree-step"><strong>Oversharing through connectors.</strong> When you connect an AI to your email, drive, or calendar, it can often read and act far more broadly than you realize. The fix: grant the least access that gets the job done, and disconnect tools you're not actively using.</div>
+    </div>
+
+    <div class="callout warn">
+      <span class="lbl">The one that catches people</span>
+      <p>The classic 2026 scam is a voice or video deepfake of a manager or family member asking for money or login help, <em>now</em>, with a believable reason. No legitimate request falls apart because you took five minutes to call back on a number you already trust. Slow down and verify.</p>
+    </div>
+
+    <h2><span class="num">Trust, but verify</span></h2>
+    <h3>Don't act on AI output blindly.</h3>
+
+    <p>The most common real-world harm isn't a hacker — it's people acting on confident, wrong AI output. Before you rely on something an AI gave you for a decision that matters:</p>
+    <ul>
+      <li><strong>Check that cited sources actually exist</strong> and say what the AI claims. Fabricated citations are extremely common.</li>
+      <li><strong>Never run or paste code you don't understand.</strong> AI-generated code can contain bugs — or, if it came from an untrusted source, something malicious.</li>
+      <li><strong>For high-stakes answers</strong> (legal, medical, tax, security), treat AI as a smart starting point and confirm with a qualified human or primary source.</li>
+    </ul>
+
+    <h2><span class="num">At work</span></h2>
+    <h3>"Shadow AI" is how company secrets leak.</h3>
+
+    <p>The number-one way confidential information escapes a company in the AI era is mundane: an employee pastes customer data, source code, or an unreleased plan into their <em>personal</em> ChatGPT to "just get help quickly." It feels harmless. It isn't.</p>
+
+    <p>If you use AI for work, three rules keep you and your employer safe:</p>
+    <ol>
+      <li><strong>Know your company's AI policy</strong> — and if there isn't one, ask. Assume customer and proprietary data is off-limits in personal tools until told otherwise.</li>
+      <li><strong>Use the sanctioned, paid tools</strong> your employer provides for anything work-related. That's what the data protections are for.</li>
+      <li><strong>When in doubt, anonymize.</strong> Strip names, account numbers, and identifying details before asking for help, so even a leak reveals nothing useful.</li>
+    </ol>
+
+    <div class="tryit">
+      <span class="lbl">Try it</span>
+      <p>Ask your main AI tool: <em>"What data of mine do you store, how long, and is it used to train your models? How do I turn that off?"</em> Then go into the actual settings and verify the answer — and turn off training while you're there. Two minutes, and you've closed the biggest everyday gap.</p>
+      <a href="/playground" class="btn">Open the Playground →</a>
+    </div>
+
+    <div class="challenge">
+      <h2 style="margin-top: 0;">Final challenge: lock down your AI accounts this week</h2>
+      <p>Run this five-point sweep across every AI tool you use:</p>
+      <ol>
+        <li>Turn off model training / data sharing in each tool's settings</li>
+        <li>Enable 2FA on every AI account</li>
+        <li>Review and disconnect any connected apps or integrations you're not using</li>
+        <li>Confirm your work data only goes through company-sanctioned tools</li>
+        <li>Delete any old chats that contain sensitive information</li>
+      </ol>
+      <p>Do it once and it stays done. You'll be more locked-down than most professionals using these tools daily.</p>
+      <div class="btn-row">
+        <a href="/lessons/foundations/" class="btn">Back to Foundations →</a>
+        <a href="/playground" class="btn ghost">Try the Playground →</a>
+      </div>
+    </div>
+
+    <div class="checklist">
+      <h3>What you can do now</h3>
+      <ul>
+        <li>Run the "postcard test" before pasting anything sensitive into AI</li>
+        <li>Keep work data in company-sanctioned, paid tools — never a personal account</li>
+        <li>Turn off model training and enable 2FA on every AI account</li>
+        <li>Recognize prompt injection, AI phishing, and deepfakes — and verify unusual requests on a second channel</li>
+        <li>Treat every AI output as a draft to verify, not a final answer</li>
+      </ul>
+    </div>
+
+    <!-- End of Foundations. If you add a Lesson 7, point this at it instead. -->
+    <a href="/lessons/" class="next-up">
+      <div class="inner">
+        <div class="lbl">You've finished the Foundations track 🎉</div>
+        <h3>Next: pick a tool track</h3>
+        <p>You've got the fundamentals down. Now go deep on the AI you use most — Claude, ChatGPT, Gemini, Copilot, or Perplexity.</p>
+        <div class="go">Browse all tracks →</div>
+      </div>
+    </a>
+
+    <div class="lesson-nav">
+      <a href="/lessons/foundations/">← All Foundations lessons</a>
+      <a href="/playground">Open the Playground →</a>
+    </div>
+
+  </div>
+</article>
+
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with OpenAI, Anthropic, Microsoft, Google, Perplexity, or xAI.</div>
+    <a href="/lessons/foundations/" style="color: var(--text-dim);">← All Foundations lessons</a>
+  </div>
+</footer>
+<script src="/gate.js"></script>
+</body>
+</html>

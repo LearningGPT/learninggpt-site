@@ -317,9 +317,10 @@ nav { position: relative; z-index: 10; padding: 18px 28px; display: flex; align-
       });
       const d = await r.json();
       if (r.ok && d.url) { window.location.href = d.url; return; }
-      throw new Error(d.error || 'unavailable');
+      toast.textContent = d.error || 'Could not open billing management right now. Please try again.';
+      toast.className = 'toast visible';
     } catch (e) {
-      toast.textContent = 'Subscription management isn\u2019t hooked up yet \u2014 coming in the next build step.';
+      toast.textContent = 'Could not open billing management right now. Please try again.';
       toast.className = 'toast visible';
     }
   }

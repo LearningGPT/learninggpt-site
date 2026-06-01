@@ -57,11 +57,11 @@ nav { position: relative; z-index: 10; padding: 18px 28px; display: flex; align-
 .overall .lbl { font-size: 13.5px; color: var(--text-dim); }
 .track { margin-bottom: 16px; }
 .track:last-child { margin-bottom: 0; }
-.track-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px; }
+.track-top { display: flex; justify-content: space-between; align-items: center; }
 .track-name { font-size: 14.5px; font-weight: 600; display: flex; align-items: center; gap: 9px; }
 .track-dot { width: 9px; height: 9px; border-radius: 50%; }
 .track-count { font-size: 13px; color: var(--text-mute); }
-.track-count a { font-size: 12.5px; }
+.track-count a { font-size: 13px; font-weight: 600; }
 .bar { height: 8px; background: rgba(255,255,255,0.06); border-radius: 99px; overflow: hidden; }
 .bar > span { display: block; height: 100%; border-radius: 99px; width: 0; transition: width .9s cubic-bezier(.2,.8,.2,1); }
 
@@ -121,21 +121,17 @@ nav { position: relative; z-index: 10; padding: 18px 28px; display: flex; align-
     </div>
   </div>
 
-  <!-- Progress -->
+  <!-- Tracks (softened: launcher, no progress tracking yet) -->
   <div class="card">
-    <h2>Your learning progress</h2>
-    <p class="card-sub">Lessons you've completed across every track.</p>
-    <div class="overall">
-      <div class="pct" id="overallPct">0%</div>
-      <div class="lbl" id="overallLbl">complete</div>
-    </div>
+    <h2>Continue learning</h2>
+    <p class="card-sub">Jump into any track below. Detailed progress tracking is coming soon.</p>
     <div id="tracks"></div>
   </div>
 
   <!-- Badges -->
   <div class="card">
     <h2>Your badges</h2>
-    <p class="card-sub">Finish a track to earn a shareable, verifiable badge for your LinkedIn.</p>
+    <p class="card-sub">Complete a track to earn a shareable, verifiable badge for your LinkedIn.</p>
     <div class="badge-grid" id="badgeGrid"></div>
   </div>
 
@@ -160,18 +156,17 @@ nav { position: relative; z-index: 10; padding: 18px 28px; display: flex; align-
   const SUPABASE_URL = 'https://rokqkxjqstshebdxcmls.supabase.co';
   const SUPABASE_ANON_KEY = 'sb_publishable_B-LsiU5Zcyw99koifBQ1rQ_lJ830007';
 
-  // Set the REAL lesson counts per track here so the bars are accurate.
-  // Foundations = 6 is correct; adjust the others to match your live lessons.
+  // The tracks shown on the dashboard. `path` is where each track lives.
   const TRACKS = [
-    { id:'foundations', name:'AI Foundations', color:'#44e0a4', total:6, path:'/lessons/foundations' },
-    { id:'chatgpt',     name:'ChatGPT',        color:'#19c37d', total:5, path:'/lessons/chatgpt' },
-    { id:'claude',      name:'Claude',         color:'#d29b76', total:5, path:'/lessons/claude' },
-    { id:'copilot',     name:'Copilot',        color:'#5b8def', total:5, path:'/lessons/copilot' },
-    { id:'gemini',      name:'Gemini',         color:'#7c5cff', total:5, path:'/lessons/gemini' },
-    { id:'perplexity',  name:'Perplexity',     color:'#ff6b8a', total:5, path:'/lessons/perplexity' },
+    { id:'foundations', name:'AI Foundations', color:'#44e0a4', path:'/lessons/foundations' },
+    { id:'chatgpt',     name:'ChatGPT',        color:'#19c37d', path:'/lessons/chatgpt' },
+    { id:'claude',      name:'Claude',         color:'#d29b76', path:'/lessons/claude' },
+    { id:'copilot',     name:'Copilot',        color:'#5b8def', path:'/lessons/copilot' },
+    { id:'gemini',      name:'Gemini',         color:'#7c5cff', path:'/lessons/gemini' },
+    { id:'perplexity',  name:'Perplexity',     color:'#ff6b8a', path:'/lessons/perplexity' },
   ];
 
-  // Which tracks have a live badge page today. (Only Foundations so far.)
+  // Which tracks have a live, claimable badge page today. (Only Foundations so far.)
   const BADGE_PAGES = { foundations: '/badge/foundations' };
 
   const PLAN_INFO = {
@@ -184,39 +179,23 @@ nav { position: relative; z-index: 10; padding: 18px 28px; display: flex; align-
   const token = localStorage.getItem('lgpt_token');
   if (!token) { location.replace('/auth/login?redirect=/account'); }
 
-  // ---- Progress (client-side v1; upgrades to Supabase later) ----
-  function getProgress() {
-    try { return JSON.parse(localStorage.getItem('lgpt_progress') || '{}'); }
-    catch (e) { return {}; }
-  }
-
-  function renderProgress() {
-    const prog = getProgress();
-    let doneAll = 0, totalAll = 0;
+  // ---- Tracks (launcher) ----
+  // Progress tracking isn't recorded yet, so this is a clean "jump back in"
+  // menu rather than a row of 0%s. When real tracking lands, this is where
+  // per-track progress bars come back.
+  function renderTracks() {
     const host = document.getElementById('tracks');
     host.innerHTML = '';
     TRACKS.forEach(t => {
-      const done = Math.min((prog[t.id] || []).length, t.total);
-      const pct = t.total ? Math.round((done / t.total) * 100) : 0;
-      doneAll += done; totalAll += t.total;
       const row = document.createElement('div');
       row.className = 'track';
       row.innerHTML =
         '<div class="track-top">' +
           '<div class="track-name"><span class="track-dot" style="background:' + t.color + '"></span>' + t.name + '</div>' +
-          '<div class="track-count">' + done + ' / ' + t.total + ' · <a href="' + t.path + '">' + (done >= t.total ? 'review' : (done ? 'continue' : 'start')) + ' →</a></div>' +
-        '</div>' +
-        '<div class="bar"><span data-w="' + pct + '" style="background:' + t.color + '"></span></div>';
+          '<div class="track-count"><a href="' + t.path + '">Open →</a></div>' +
+        '</div>';
       host.appendChild(row);
     });
-    const overall = totalAll ? Math.round((doneAll / totalAll) * 100) : 0;
-    document.getElementById('overallPct').textContent = overall + '%';
-    document.getElementById('overallLbl').textContent = doneAll + ' of ' + totalAll + ' lessons complete';
-    // animate bars in after paint
-    requestAnimationFrame(() => {
-      document.querySelectorAll('.bar > span').forEach(s => { s.style.width = s.getAttribute('data-w') + '%'; });
-    });
-    return prog;
   }
 
   // ---- Badges ----
@@ -228,55 +207,24 @@ nav { position: relative; z-index: 10; padding: 18px 28px; display: flex; align-
       '<path d="M27 41 L36 50 L55 30" fill="none" stroke="' + (gray ? 'currentColor' : 'url(#bg' + (gray ? 'g' : '') + ')') + '" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   }
 
-  function renderBadges(prog) {
+  // Softened: no fake "0/6 to unlock" counters (we don't track completion yet).
+  // Foundations has a live badge page, so it links straight there to claim/share.
+  // The rest are honestly marked "Coming soon".
+  function renderBadges() {
     const grid = document.getElementById('badgeGrid');
     grid.innerHTML = '';
     TRACKS.forEach(t => {
-      const done = Math.min((prog[t.id] || []).length, t.total);
-      const earned = done >= t.total && t.total > 0;
       const hasPage = !!BADGE_PAGES[t.id];
       const el = document.createElement('div');
-      el.className = 'badge ' + (earned ? 'earned' : 'locked');
-      let actions = '';
-      if (earned && hasPage) {
-        actions =
-          '<div class="badge-actions">' +
-            '<a class="li-btn primary" data-li-add="' + t.id + '" data-name="' + t.name + '">＋ Add to LinkedIn</a>' +
-            '<a class="li-btn secondary" data-li-share="' + t.id + '">Share</a>' +
-          '</div>';
-      } else if (!earned) {
-        actions = '<div class="badge-status">' + (t.total ? (done + '/' + t.total + ' to unlock') : 'coming soon') + '</div>';
-      }
+      el.className = 'badge';
+      const status = hasPage
+        ? '<div class="badge-status"><a href="' + BADGE_PAGES[t.id] + '" style="color:var(--accent);font-weight:600;">View badge →</a></div>'
+        : '<div class="badge-status">Coming soon</div>';
       el.innerHTML =
-        medalSvg(!earned) +
+        medalSvg(true) +
         '<div class="badge-name">' + t.name + '</div>' +
-        (earned ? '<div class="badge-status">Earned ✓</div>' : '') +
-        actions;
+        status;
       grid.appendChild(el);
-    });
-
-    // wire LinkedIn buttons (same mechanics as the badge page)
-    const now = new Date();
-    grid.querySelectorAll('[data-li-add]').forEach(b => {
-      b.addEventListener('click', () => {
-        const id = b.getAttribute('data-li-add');
-        const name = b.getAttribute('data-name') + ' — LearningGPT';
-        const certUrl = location.origin + BADGE_PAGES[id];
-        const u = 'https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME' +
-          '&name=' + encodeURIComponent(name) +
-          '&organizationName=' + encodeURIComponent('LearningGPT') +
-          '&issueYear=' + now.getFullYear() +
-          '&issueMonth=' + (now.getMonth() + 1) +
-          '&certUrl=' + encodeURIComponent(certUrl);
-        window.open(u, '_blank');
-      });
-    });
-    grid.querySelectorAll('[data-li-share]').forEach(b => {
-      b.addEventListener('click', () => {
-        const id = b.getAttribute('data-li-share');
-        const url = location.origin + BADGE_PAGES[id];
-        window.open('https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(url), '_blank');
-      });
     });
   }
 
@@ -334,8 +282,8 @@ nav { position: relative; z-index: 10; padding: 18px 28px; display: flex; align-
 
   // ---- Load everything ----
   (async function init() {
-    const prog = renderProgress();
-    renderBadges(prog);
+    renderTracks();
+    renderBadges();
     renderPlan(localStorage.getItem('lgpt_plan') || 'free');
 
     // pull email + member-since from Supabase (same direct pattern as the reset page)

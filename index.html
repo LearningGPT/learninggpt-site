@@ -127,6 +127,13 @@ p { color: var(--text-dim); margin: 0; }
 }
 .topbar-form button:hover:not(:disabled) { transform: translateY(-1px); }
 .topbar-form button:disabled { opacity: 0.7; cursor: default; }
+.topbar-cta {
+  background: linear-gradient(135deg, #7c5cff, #5b8def); color: white;
+  border: none; padding: 7px 16px; border-radius: 6px;
+  font-size: 13px; font-weight: 600; white-space: nowrap; cursor: pointer;
+  transition: transform .15s ease; display: inline-flex; align-items: center; gap: 6px;
+}
+.topbar-cta:hover { transform: translateY(-1px); color: white; }
 @media (max-width: 768px) {
   .topbar-inner { flex-direction: column; gap: 8px; padding: 10px 16px; }
   .topbar-text { text-align: center; font-size: 12px; }
@@ -609,18 +616,6 @@ nav.top {
 .cta-band h2 { max-width: 660px; margin: 0 auto 16px; }
 .cta-band p { max-width: 540px; margin: 0 auto 32px; font-size: 17px; }
 
-/* ---------- WAITLIST FORM ---------- */
-.waitlist {
-  display: flex; gap: 10px; max-width: 440px; margin: 0 auto;
-}
-.waitlist input {
-  flex: 1; background: rgba(255,255,255,0.06); border: 1px solid var(--line-strong);
-  color: var(--text); padding: 14px 16px; border-radius: 10px; font-size: 14px;
-  font-family: inherit;
-}
-.waitlist input:focus { outline: none; border-color: var(--brand); }
-@media (max-width: 540px) { .waitlist { flex-direction: column; } }
-
 /* ---------- FOOTER ---------- */
 footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30px; position: relative; z-index: 1; }
 .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; }
@@ -666,10 +661,7 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
         <span class="live-dot"></span>
         <span>🎉 <strong>Founding member pricing</strong> — sign up before September 30th and lock in your rate forever</span>
       </div>
-      <form class="topbar-form" data-source="topbar" onsubmit="return handleWaitlist(event, this);">
-        <input type="email" name="email" placeholder="you@work.com" required autocomplete="email" />
-        <button type="submit">Start free →</button>
-      </form>
+      <a href="/auth/signup" class="topbar-cta">Start free →</a>
     </div>
   </div>
 
@@ -703,7 +695,7 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
       </div>
       <div class="nav-cta">
         <a href="mailto:dan@learninggpt.ai?subject=LearningGPT%20question" class="btn btn-ghost">Talk to Dan</a>
-        <a href="#waitlist" class="btn btn-primary">Start free</a> <a href="/auth/login" class="btn btn-ghost">Sign in</a>
+        <a href="/auth/signup" class="btn btn-primary">Start free</a> <a href="/auth/login" class="btn btn-ghost">Sign in</a>
       </div>
     </div>
   </nav>
@@ -714,15 +706,15 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
 <section class="hero">
   <div class="container">
     <div class="hero-eyebrow">
-      <span class="eyebrow"><span class="live-dot"></span> Pre-launch · Founding members applications open</span>
+      <span class="eyebrow"><span class="live-dot"></span> Now live · Founding member pricing ends Sep 30</span>
     </div>
     <h1>Learn every AI tool. <span class="grad serif">In one place.</span></h1>
     <p class="hero-sub">LearningGPT is the neutral, hands-on platform for mastering ChatGPT, Claude, Copilot, Gemini, Perplexity and every other AI worth knowing. Tool-agnostic curriculum, real practice in a side-by-side playground, and certifications coming Q3 2026.</p>
     <div class="hero-cta">
-      <a href="#waitlist" class="btn btn-primary btn-lg">Start free →</a>
+      <a href="/auth/signup" class="btn btn-primary btn-lg">Start free →</a>
       <a href="#playground" class="btn btn-ghost btn-lg">See the playground</a>
     </div>
-    <p class="hero-trust">Free during early access · No credit card · Built by power users, not vendors</p>
+    <p class="hero-trust">Free to start · No credit card · Built by power users, not vendors</p>
     <p style="font-size:13px; color:var(--text-mute); margin-top:14px;">Got questions? <a href="mailto:dan@learninggpt.ai?subject=LearningGPT%20question" style="color:var(--brand-2); font-weight:600;">Talk to Dan →</a> · I read every email myself.</p>
 
     <div class="hero-tools">
@@ -948,7 +940,7 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
     <div class="sec-head">
       <span class="eyebrow">Role tracks · Coming Q3 2026</span>
       <h2>Learn the AI workflow <span class="serif">for your job</span></h2>
-      <p>Which AI for which task. Real prompts for real work. Role tracks ship to Pro and Pro+ members through Q3 2026 — join the waitlist to be notified the day yours launches.</p>
+      <p>Which AI for which task. Real prompts for real work. Role tracks ship to Pro and Pro+ members through Q3 2026 — start free now and you'll be notified the day yours launches.</p>
     </div>
     <div class="roles-grid">
       <a href="/roles#marketing" class="role-card"><div class="role-emoji">📈</div><h4>AI for Marketing</h4><p>Copy, campaigns, SEO briefs, ad creative, analysis.</p></a>
@@ -1044,7 +1036,7 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
           <li>AI News digest + skill update newsletter</li>
           <li>Lesson progress tracking</li>
         </ul>
-        <a href="#waitlist" class="btn btn-ghost">Start free</a>
+        <a href="/auth/signup" class="btn btn-ghost">Start free</a>
       </div>
       <div class="price-card popular">
         <div class="popular-badge">FOUNDING MEMBER</div>
@@ -1144,23 +1136,20 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
       </div>
       <div class="faq-item">
         <div class="faq-q">When does this actually launch?</div>
-        <div class="faq-a"><p>The lessons are live now — five tool tracks (Copilot, Claude, ChatGPT, Gemini, Perplexity) plus a free AI Foundations course. The playground is live. Paid subscriptions and the full Pro/Pro+ experience open to founding members through summer 2026. Certifications, AI-graded exercises, and skill-update alerts roll out to Pro+ in Q3 2026.</p></div>
+        <div class="faq-a"><p>It's live now — five tool tracks (Copilot, Claude, ChatGPT, Gemini, Perplexity) plus a free AI Foundations course, and the playground. Paid Pro/Pro+ subscriptions are open today at founding-member pricing. Certifications, AI-graded exercises, and skill-update alerts roll out to Pro+ in Q3 2026.</p></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ WAITLIST CTA ============ -->
+<!-- ============ START FREE CTA ============ -->
 <section style="padding-top:0; padding-bottom: 120px;" id="waitlist">
   <div class="container">
     <div style="text-align:center; max-width:720px; margin: 0 auto;">
-      <span class="eyebrow">Join the founding cohort</span>
+      <span class="eyebrow">Get started</span>
       <h2 style="margin-top:18px;">Founding pricing ends <span class="serif">September 30th.</span></h2>
-      <p style="margin: 20px 0 32px; font-size:17px;">Start free today. Upgrade anytime. No spam, easy unsub.</p>
-      <form class="waitlist" data-source="bottom" onsubmit="return handleWaitlist(event, this);">
-        <input type="email" name="email" placeholder="you@work.com" required autocomplete="email" />
-        <button type="submit" class="btn btn-primary btn-lg" style="padding: 14px 24px;">Start free →</button>
-      </form>
+      <p style="margin: 20px 0 32px; font-size:17px;">Start free today. Upgrade anytime. No credit card required.</p>
+      <a href="/auth/signup" class="btn btn-primary btn-lg" style="padding: 16px 32px;">Start free →</a>
       <p style="font-size:13px; color:var(--text-mute); margin-top:18px;">Sign up before September 30th, 2026 to lock in founding member pricing forever.</p>
     </div>
   </div>
@@ -1203,7 +1192,7 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
         <ul>
           <li><a href="/contact">Contact</a></li>
           <li><a href="/business">For business</a></li>
-          <li><a href="#waitlist">Start free</a></li>
+          <li><a href="/auth/signup">Start free</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -1314,65 +1303,6 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
       render('monthly'); // default state
     }
   })();
-
-  // Waitlist form handler — POSTs to /api/waitlist which sends email via Resend
-  async function handleWaitlist(event, form) {
-    event.preventDefault();
-    const emailInput = form.querySelector('input[type="email"]');
-    const button    = form.querySelector('button[type="submit"]');
-    const email     = emailInput.value.trim();
-    const source    = form.dataset.source || 'unknown';
-    const originalText = button.textContent;
-
-    if (!email) {
-      emailInput.focus();
-      return false;
-    }
-
-    button.textContent = 'Joining…';
-    button.disabled = true;
-
-    try {
-      const response = await fetch('/api/waitlist', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, source })
-      });
-
-      const data = await response.json().catch(() => ({}));
-
-      if (response.ok && data.success) {
-        button.textContent = '✓ You\'re in';
-        emailInput.value = '';
-        showWaitlistToast();
-      } else {
-        button.textContent = 'Try again';
-        button.disabled = false;
-        console.error('Waitlist error:', response.status, data);
-      }
-    } catch (err) {
-      button.textContent = 'Try again';
-      button.disabled = false;
-      console.error('Waitlist fetch error:', err);
-    }
-
-    return false;
-  }
-
-  function showWaitlistToast() {
-    const existing = document.querySelector('.waitlist-toast');
-    if (existing) existing.remove();
-
-    const toast = document.createElement('div');
-    toast.className = 'waitlist-toast';
-    toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#44e0a4,#5b8def);color:white;padding:14px 24px;border-radius:10px;font-weight:600;font-size:14px;box-shadow:0 10px 40px rgba(0,0,0,0.4);z-index:9999;max-width:90vw;text-align:center;transition:opacity .5s;';
-    toast.innerHTML = '✓ You\'re on the founding member list. We\'ll be in touch.';
-    document.body.appendChild(toast);
-    setTimeout(() => {
-      toast.style.opacity = '0';
-      setTimeout(() => toast.remove(), 500);
-    }, 4500);
-  }
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
   <!-- Nav: show "Account" when signed in -->
@@ -1389,4 +1319,3 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
 </script>
 </body>
 </html>
-

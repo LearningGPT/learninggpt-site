@@ -228,6 +228,29 @@ nav { position: relative; z-index: 10; padding: 18px 28px; display: flex; align-
     });
   }
 
+  // ---- Upgrade → straight to Stripe checkout ----
+  // Dashboard visitors are always logged in, so send them directly to checkout
+  // instead of routing back through the signup page (which forced a re-login).
+  // Uses the same /api/auth checkout call the homepage buy buttons use, and
+  // falls back to the signup link if the session is missing or checkout fails,
+  // so the button never dead-ends.
+  async function startCheckout(plan, btn) {
+    if (!token) { window.location.href = '/auth/signup?plan=' + plan; return; }
+    const original = btn ? btn.textContent : '';
+    if (btn) { btn.textContent = 'Setting up checkout…'; btn.style.pointerEvents = 'none'; }
+    try {
+      const r = await fetch('/api/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'checkout', token: token, plan: plan })
+      });
+      const d = await r.json();
+      if (r.ok && d.checkoutUrl) { window.location.href = d.checkoutUrl; return; }
+    } catch (e) { /* fall through to signup */ }
+    if (btn) { btn.textContent = original; btn.style.pointerEvents = ''; }
+    window.location.href = '/auth/signup?plan=' + plan;
+  }
+
   // ---- Subscription ----
   function renderPlan(plan) {
     const info = PLAN_INFO[plan] || PLAN_INFO.free;
@@ -239,9 +262,17 @@ nav { position: relative; z-index: 10; padding: 18px 28px; display: flex; align-
     const actions = document.getElementById('planActions');
     actions.innerHTML = '';
     if (plan === 'free') {
-      actions.innerHTML =
-        '<a class="btn btn-grad" href="/auth/signup?plan=pro">Upgrade to Pro</a>' +
-        '<a class="btn btn-outline" href="/auth/signup?plan=pro_plus">See Pro+</a>';
+      const proBtn = document.createElement('button');
+      proBtn.className = 'btn btn-grad';
+      proBtn.textContent = 'Upgrade to Pro';
+      proBtn.addEventListener('click', function(){ startCheckout('pro', proBtn); });
+      actions.appendChild(proBtn);
+
+      const plusBtn = document.createElement('button');
+      plusBtn.className = 'btn btn-outline';
+      plusBtn.textContent = 'See Pro+';
+      plusBtn.addEventListener('click', function(){ startCheckout('pro_plus', plusBtn); });
+      actions.appendChild(plusBtn);
     } else {
       const manage = document.createElement('button');
       manage.className = 'btn btn-grad';

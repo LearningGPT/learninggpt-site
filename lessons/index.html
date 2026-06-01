@@ -188,5 +188,17 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   </div>
 </footer>
 
+<!-- Nav: show "Account" when signed in (same behavior as the homepage) -->
+<script>
+(function(){
+  try {
+    if (!localStorage.getItem('lgpt_token')) return;   // only when signed in
+    document.querySelectorAll('a[href="/auth/login"], a[href="/auth/login/"], a[href="/login"]').forEach(function(a){
+      a.textContent = 'Account';
+      a.setAttribute('href', '/account');
+    });
+  } catch(e){}
+})();
+</script>
 </body>
 </html>

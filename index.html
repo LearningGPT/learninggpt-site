@@ -1375,6 +1375,18 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
   }
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
+  <!-- Nav: show "Account" when signed in -->
+<script>
+(function(){
+  try {
+    if (!localStorage.getItem('lgpt_token')) return;   // only when signed in
+    document.querySelectorAll('a[href="/auth/login"], a[href="/auth/login/"], a[href="/login"]').forEach(function(a){
+      a.textContent = 'Account';
+      a.setAttribute('href', '/account');
+    });
+  } catch(e){}
+})();
+</script>
 </body>
 </html>
 

@@ -159,6 +159,17 @@ submitBtn.addEventListener('click', async function() {
     localStorage.setItem('lgpt_token', data.token);
     localStorage.setItem('lgpt_plan', data.plan);
 
+    // Send the welcome email (fire-and-forget). keepalive lets the request
+    // finish even though we navigate away to checkout / lessons right after.
+    try {
+      fetch('/api/welcome', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email }),
+        keepalive: true
+      });
+    } catch (e) { /* welcome email is non-critical; never block signup */ }
+
     if (data.checkoutUrl) {
       window.location.href = data.checkoutUrl;
       return;

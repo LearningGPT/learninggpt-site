@@ -3,14 +3,57 @@
 //   POST { prompt, models }                          → runs all 5 models
 //   POST { prompt, results, coach: true }            → playground coach analysis
 //   POST { coach: true, lessonCoach: true, ... }     → per-lesson AI tutor
+//
+// Cost protection added:
+//   - CORS locked to the LearningGPT domain (blocks other sites calling it via a browser)
+//   - Per-IP daily limit (DAILY_LIMIT), enforced server-side via Supabase, covering ALL modes
+//   - Fails OPEN: if the usage counter is ever unreachable, requests still go through.
+//     Your OpenRouter spend cap is the hard backstop, so a counter glitch never takes
+//     the playground down for real visitors.
+
+const DAILY_LIMIT = 30; // requests per IP per day, shared across all three modes
+const ALLOWED_ORIGINS = ['https://learninggpt.ai', 'https://www.learninggpt.ai'];
+
+function getClientIp(req) {
+  const xff = req.headers['x-forwarded-for'];
+  if (xff) return String(xff).split(',')[0].trim();
+  return (req.socket && req.socket.remoteAddress) || 'unknown';
+}
+
+// Increments today's count for this IP and returns the new total.
+// Returns null if the check couldn't run (we then fail open).
+async function bumpUsage(ip) {
+  const url = process.env.SUPABASE_URL;
+  const key = process.env.SUPABASE_SECRET_KEY;
+  if (!url || !key) return null; // misconfigured → fail open
+  try {
+    const r = await fetch(url.replace(/\/$/, '') + '/rest/v1/rpc/bump_playground_usage', {
+      method: 'POST',
+      headers: {
+        'apikey': key,
+        'Authorization': 'Bearer ' + key,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ p_ip: ip })
+    });
+    if (!r.ok) return null; // error → fail open
+    const count = await r.json(); // RPC returns the integer count
+    return typeof count === 'number' ? count : (parseInt(count, 10) || null);
+  } catch {
+    return null; // network error → fail open
+  }
+}
 
 export default async function handler(req, res) {
-  if (req.method === 'OPTIONS') {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    return res.status(200).end();
-  }
+  // ── CORS: locked to our domain. Same-origin calls from the site are unaffected. ──
+  const origin = req.headers.origin;
+  const allowOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  res.setHeader('Access-Control-Allow-Origin', allowOrigin);
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Vary', 'Origin');
+
+  if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed.' });
 
   let body = req.body;
@@ -18,6 +61,16 @@ export default async function handler(req, res) {
 
   const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) return res.status(500).json({ error: 'OPENROUTER_API_KEY not configured in Vercel.' });
+
+  // ── RATE LIMIT: per IP per day, covers every mode below ──
+  const ip = getClientIp(req);
+  const count = await bumpUsage(ip);
+  if (count !== null && count > DAILY_LIMIT) {
+    return res.status(429).json({
+      error: "You've reached today's free playground limit. It resets tomorrow.",
+      rateLimited: true
+    });
+  }
 
   // ── LESSON COACH MODE ────────────────────────────────────────────────────────
   if (body.coach === true && body.lessonCoach === true) {

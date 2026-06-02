@@ -66,7 +66,7 @@ select:focus { outline: none; border-color: var(--brand); }
   <div class="auth-box">
     <h1>Create your account</h1>
     <p class="sub">Start learning every AI tool. Free to get started.</p>
-    <div class="invite-banner" id="inviteBanner">You've been invited to a team — just create your account with <strong id="inviteEmail"></strong> and your access turns on automatically.</div>
+    <div class="invite-banner" id="inviteBanner">You've been invited to a <strong id="inviteTier">Pro</strong> team seat — just create your account with <strong id="inviteEmail"></strong> and your access turns on automatically.</div>
     <div class="error-msg" id="errorMsg"></div>
     <div class="form-group">
       <label for="email">Email address</label>
@@ -83,7 +83,7 @@ select:focus { outline: none; border-color: var(--brand); }
         </button>
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" id="planGroup">
       <label for="plan">Plan</label>
       <select id="plan">
         <option value="free">Free — explore lessons, no credit card</option>
@@ -117,12 +117,17 @@ if (planParam) {
 // person signs up with the exact address their seat was assigned to. We also
 // show a short banner and focus the password field for them.
 const emailParam = new URLSearchParams(window.location.search).get('email');
+const seatParam = new URLSearchParams(window.location.search).get('seat');
 if (emailParam) {
   const emailInput = document.getElementById('email');
   emailInput.value = emailParam;
-  const banner = document.getElementById('inviteBanner');
   document.getElementById('inviteEmail').textContent = emailParam;
-  banner.className = 'invite-banner visible';
+  document.getElementById('inviteTier').textContent = (seatParam === 'pro_plus') ? 'Pro+' : 'Pro';
+  document.getElementById('inviteBanner').className = 'invite-banner visible';
+  // Their seat is paid for by the company — hide the plan chooser so they
+  // can't accidentally pick a paid plan and get charged. Their real access
+  // is applied automatically the moment they create the account.
+  document.getElementById('planGroup').style.display = 'none';
   setTimeout(function() { passwordInput.focus(); }, 100);
 }
 
@@ -139,7 +144,10 @@ eyeBtn.addEventListener('click', function() {
 submitBtn.addEventListener('click', async function() {
   const email = document.getElementById('email').value.trim();
   const password = document.getElementById('password').value;
-  const plan = planSelect.value;
+  // Invited teammates never pay here — their seat is covered by the company.
+  // Force 'free' so signup doesn't open Stripe; the seat activation on the
+  // server sets their real Pro / Pro+ access.
+  const plan = emailParam ? 'free' : planSelect.value;
 
   errorMsg.className = 'error-msg';
 

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Manage your team — LearningGPT</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#7c5cff" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a;
+  --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14);
+  --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85;
+  --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.32; }
+.bg-orb.one { width: 520px; height: 520px; top: -180px; left: -140px; background: #7c5cff; }
+.bg-orb.two { width: 440px; height: 440px; bottom: -160px; right: -120px; background: #44e0a4; opacity: 0.16; }
+nav { position: relative; z-index: 10; padding: 18px 28px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 8px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; }
+.nav-links { display: flex; align-items: center; gap: 20px; font-size: 14px; color: var(--text-dim); }
+.nav-links a { color: var(--text-dim); }
+.btn-ghost { background: none; border: 1px solid var(--line-strong); color: var(--text-dim); padding: 8px 14px; border-radius: 9px; font-size: 13px; font-family: inherit; cursor: pointer; }
+.btn-ghost:hover { color: var(--text); border-color: var(--text-mute); }
+.wrap { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: 44px 24px 90px; }
+
+.head { margin-bottom: 32px; }
+.head h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 6px; }
+.head h1 em { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; background: linear-gradient(90deg, #44e0a4, #7c5cff); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; padding-right: 0.08em; }
+.head .sub { font-size: 14px; color: var(--text-dim); }
+.plan-pill { display: inline-flex; align-items: center; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; padding: 4px 11px; border-radius: 999px; margin-left: 8px; background: rgba(124,92,255,.16); color: #b9a8ff; }
+
+.card { background: rgba(255,255,255,0.03); border: 1px solid var(--line-strong); border-radius: 18px; padding: 26px; margin-bottom: 22px; }
+.card h2 { font-size: 17px; font-weight: 700; margin: 0 0 4px; }
+.card .card-sub { font-size: 13.5px; color: var(--text-dim); margin: 0 0 20px; }
+
+/* seat meter */
+.seats-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+.seats-count { font-size: 22px; font-weight: 800; }
+.seats-count span { font-size: 14px; color: var(--text-dim); font-weight: 500; }
+.seats-left { font-size: 13px; color: var(--text-mute); }
+.meter { height: 10px; background: rgba(255,255,255,0.06); border-radius: 99px; overflow: hidden; }
+.meter > span { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, #7c5cff, #44e0a4); width: 0; transition: width .5s ease; }
+
+/* invite */
+.invite-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.invite-row input { flex: 1; min-width: 200px; background: rgba(0,0,0,0.25); border: 1px solid var(--line-strong); border-radius: 10px; padding: 12px 14px; color: var(--text); font-family: inherit; font-size: 14px; }
+.invite-row input:focus { outline: none; border-color: var(--brand); }
+.invite-row input::placeholder { color: var(--text-mute); }
+.btn-grad { background: linear-gradient(135deg, #7c5cff, #5b8def); color: #fff; border: none; padding: 12px 20px; border-radius: 10px; font-size: 14px; font-weight: 600; font-family: inherit; cursor: pointer; white-space: nowrap; }
+.btn-grad:hover { opacity: .92; }
+.btn-grad:disabled { opacity: .5; cursor: not-allowed; }
+.msg { font-size: 13px; margin-top: 12px; display: none; }
+.msg.show { display: block; }
+.msg.err { color: var(--danger); }
+.msg.ok { color: var(--accent); }
+
+/* member list */
+.member { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.member:last-child { border-bottom: none; }
+.m-left { min-width: 0; }
+.m-email { font-size: 14.5px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; }
+.m-meta { font-size: 12.5px; color: var(--text-mute); margin-top: 2px; }
+.status { display: inline-flex; align-items: center; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; padding: 2px 8px; border-radius: 999px; }
+.status.active { background: rgba(68,224,164,.14); color: var(--accent); }
+.status.pending { background: rgba(255,181,71,.14); color: var(--warn); }
+.status.admin { background: rgba(124,92,255,.16); color: #b9a8ff; }
+.m-remove { background: none; border: 1px solid var(--line-strong); color: var(--text-mute); font-size: 12.5px; padding: 7px 12px; border-radius: 8px; font-family: inherit; cursor: pointer; }
+.m-remove:hover { color: var(--danger); border-color: rgba(255,107,138,.4); }
+
+.state { text-align: center; padding: 60px 20px; color: var(--text-dim); }
+.state h2 { color: var(--text); font-size: 20px; margin: 0 0 10px; }
+.spinner { width: 26px; height: 26px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.12); border-top-color: var(--brand); animation: spin .8s linear infinite; margin: 40px auto; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (max-width: 560px) { .wrap { padding: 28px 16px 60px; } }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+
+<nav>
+  <a href="/" class="logo"><div class="logo-mark">L</div>LearningGPT</a>
+  <div class="nav-links">
+    <a href="/account">My account</a>
+    <a href="/lessons">Lessons</a>
+    <button class="btn-ghost" id="signOutBtn">Sign out</button>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div id="content"><div class="spinner"></div></div>
+</div>
+
+<script>
+  const token = localStorage.getItem('lgpt_token');
+  if (!token) location.replace('/auth/login?redirect=/team');
+
+  const PLAN_LABEL = { business_pro: 'Pro', business_pro_plus: 'Pro+' };
+  const content = document.getElementById('content');
+  let teamState = null;
+
+  function esc(s) { const d = document.createElement('div'); d.textContent = s == null ? '' : String(s); return d.innerHTML; }
+
+  async function api(action, extra) {
+    const r = await fetch('/api/business', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(Object.assign({ action, token }, extra || {}))
+    });
+    const data = await r.json().catch(() => ({}));
+    return { ok: r.ok, status: r.status, data };
+  }
+
+  function showNotAdmin() {
+    content.innerHTML =
+      '<div class="state">' +
+        '<h2>No team on this account</h2>' +
+        '<p>This login isn\'t set up as a team admin. If you just purchased a team plan, use the link in your setup email. ' +
+        'Otherwise, <a href="/business">see business plans</a> or <a href="mailto:dan@learninggpt.ai">email Dan</a>.</p>' +
+      '</div>';
+  }
+
+  function render() {
+    const b = teamState.business;
+    const used = teamState.seatsUsed;
+    const total = b.seats;
+    const left = Math.max(0, total - used);
+    const full = used >= total;
+    const pct = total > 0 ? Math.min(100, Math.round((used / total) * 100)) : 0;
+
+    const members = teamState.members.slice().sort((a, c) => (a.role === 'admin' ? -1 : c.role === 'admin' ? 1 : 0));
+    const rows = members.map(function (m) {
+      const statusClass = m.role === 'admin' ? 'admin' : m.status;
+      const statusText = m.role === 'admin' ? 'Admin' : (m.status === 'pending' ? 'Pending' : 'Active');
+      const name = m.full_name ? esc(m.full_name) + ' · ' : '';
+      const removeBtn = m.role === 'admin'
+        ? ''
+        : '<button class="m-remove" data-id="' + m.id + '" data-email="' + esc(m.email) + '">Remove</button>';
+      return '<div class="member">' +
+        '<div class="m-left">' +
+          '<div class="m-email">' + esc(m.email) + '</div>' +
+          '<div class="m-meta">' + name + '<span class="status ' + statusClass + '">' + statusText + '</span></div>' +
+        '</div>' + removeBtn +
+      '</div>';
+    }).join('');
+
+    content.innerHTML =
+      '<div class="head">' +
+        '<h1>Manage <em>your team</em><span class="plan-pill">' + (PLAN_LABEL[b.plan] || 'Pro') + '</span></h1>' +
+        '<div class="sub">' + esc(b.company_name) + '</div>' +
+      '</div>' +
+
+      '<div class="card">' +
+        '<div class="seats-top">' +
+          '<div class="seats-count">' + used + ' <span>/ ' + total + ' seats used</span></div>' +
+          '<div class="seats-left">' + (full ? 'All seats in use' : left + ' available') + '</div>' +
+        '</div>' +
+        '<div class="meter"><span style="width:' + pct + '%"></span></div>' +
+      '</div>' +
+
+      '<div class="card">' +
+        '<h2>Invite a teammate</h2>' +
+        '<p class="card-sub">They get an email and full ' + (PLAN_LABEL[b.plan] || 'Pro') + ' access the moment they sign in with this address.</p>' +
+        '<div class="invite-row">' +
+          '<input id="invEmail" type="email" placeholder="teammate@company.com" ' + (full ? 'disabled' : '') + ' />' +
+          '<input id="invName" type="text" placeholder="Name (optional)" ' + (full ? 'disabled' : '') + ' style="flex:0 0 180px;min-width:140px;" />' +
+          '<button class="btn-grad" id="inviteBtn" ' + (full ? 'disabled' : '') + '>Send invite</button>' +
+        '</div>' +
+        '<div class="msg" id="inviteMsg"></div>' +
+      '</div>' +
+
+      '<div class="card">' +
+        '<h2>Team members</h2>' +
+        '<p class="card-sub">' + used + ' of ' + total + ' seats assigned.</p>' +
+        (rows || '<div style="color:var(--text-mute);font-size:13.5px;">No one yet — invite your first teammate above.</div>') +
+      '</div>';
+
+    if (!full) {
+      document.getElementById('inviteBtn').addEventListener('click', doInvite);
+      document.getElementById('invEmail').addEventListener('keydown', function (e) { if (e.key === 'Enter') doInvite(); });
+    }
+    document.querySelectorAll('.m-remove').forEach(function (btn) {
+      btn.addEventListener('click', function () { doRemove(btn.dataset.id, btn.dataset.email); });
+    });
+  }
+
+  function msg(text, kind) {
+    const el = document.getElementById('inviteMsg');
+    if (!el) return;
+    el.textContent = text;
+    el.className = 'msg show ' + (kind || '');
+  }
+
+  async function doInvite() {
+    const email = document.getElementById('invEmail').value.trim();
+    const name = document.getElementById('invName').value.trim();
+    const btn = document.getElementById('inviteBtn');
+    if (!email) { msg('Enter an email address.', 'err'); return; }
+    btn.disabled = true; btn.textContent = 'Inviting…';
+    const r = await api('invite', { email: email, name: name });
+    if (r.ok && r.data.members) {
+      teamState.seatsUsed = r.data.seatsUsed;
+      teamState.members = r.data.members;
+      render();
+      msg('Invite sent to ' + email + '.', 'ok');
+    } else {
+      btn.disabled = false; btn.textContent = 'Send invite';
+      msg(r.data.error || 'Could not send the invite. Try again.', 'err');
+    }
+  }
+
+  async function doRemove(id, email) {
+    if (!confirm('Remove ' + email + ' from the team? They\'ll lose access and the seat frees up.')) return;
+    const r = await api('remove', { memberId: id });
+    if (r.ok && r.data.members) {
+      teamState.seatsUsed = r.data.seatsUsed;
+      teamState.members = r.data.members;
+      render();
+    } else {
+      alert(r.data.error || 'Could not remove that member.');
+    }
+  }
+
+  document.getElementById('signOutBtn').addEventListener('click', function () {
+    localStorage.removeItem('lgpt_token');
+    localStorage.removeItem('lgpt_plan');
+    location.href = '/';
+  });
+
+  (async function init() {
+    const r = await api('team');
+    if (r.status === 401) { location.replace('/auth/login?redirect=/team'); return; }
+    if (r.status === 403 || !r.data.business) { showNotAdmin(); return; }
+    teamState = r.data;
+    render();
+  })();
+</script>
+</body>
+</html>

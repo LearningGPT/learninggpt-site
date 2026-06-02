@@ -213,7 +213,15 @@ nav.top {
   color: var(--text-mute); padding: 8px 12px 4px; font-weight: 600;
 }
 
-@media (max-width: 768px) { .nav-links { display: none; } }
+.nav-toggle { display: none; background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); color: var(--text); width: 42px; height: 42px; border-radius: 10px; font-size: 20px; line-height: 1; align-items: center; justify-content: center; cursor: pointer; }
+.mobile-menu { display: none; flex-direction: column; padding: 4px 24px 18px; background: rgba(10,10,26,0.98); border-bottom: 1px solid var(--line); }
+.mobile-menu.open { display: flex; }
+.mobile-menu > a { padding: 13px 2px; font-size: 15px; color: var(--text-dim); border-bottom: 1px solid var(--line); }
+.mobile-menu .mm-cta { display: flex; gap: 10px; margin-top: 14px; }
+.mobile-menu .mm-cta a { flex: 1; text-align: center; padding: 13px; border-radius: 10px; font-weight: 600; }
+.mobile-menu .mm-cta a.primary { background: linear-gradient(135deg, #7c5cff, #5b8def); color: #fff; }
+.mobile-menu .mm-cta a.ghost { background: rgba(255,255,255,0.06); border: 1px solid var(--line-strong); color: var(--text); }
+@media (max-width: 768px) { .nav-links { display: none; } .nav-toggle { display: flex; } }
 
 /* ---------- BUTTONS ---------- */
 .btn {
@@ -696,6 +704,17 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
       <div class="nav-cta">
         <a href="mailto:dan@learninggpt.ai?subject=LearningGPT%20question" class="btn btn-ghost">Talk to Dan</a>
         <a href="/auth/signup" class="btn btn-primary">Start free</a> <a href="/auth/login" class="btn btn-ghost">Sign in</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Open menu">☰</button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="/lessons/">Lessons</a>
+      <a href="/playground">Playground</a>
+      <a href="#pricing">Pricing</a>
+      <a href="/business">For business</a>
+      <div class="mm-cta">
+        <a href="/auth/login" class="ghost">Sign in</a>
+        <a href="/auth/signup" class="primary">Start free</a>
       </div>
     </div>
   </nav>
@@ -1316,6 +1335,15 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
     });
   } catch(e){}
 })();
+</script><script>
+  (function(){
+    var t = document.getElementById('navToggle');
+    var m = document.getElementById('mobileMenu');
+    if (!t || !m) return;
+    t.addEventListener('click', function(){ m.classList.toggle('open'); });
+    m.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ m.classList.remove('open'); }); });
+  })();
 </script>
+
 </body>
 </html>

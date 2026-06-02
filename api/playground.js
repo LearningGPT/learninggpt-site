@@ -44,6 +44,40 @@ async function bumpUsage(ip) {
   }
 }
 
+// Returns true if the request carries a valid login token for a paying
+// (Pro / Pro+) account. Paid members get unlimited playground use — their plan
+// promises it — so they skip the per-IP daily cap. Verification failures return
+// false (treated as non-paid, still capped), so a hiccup never removes the cost
+// protection for free/anonymous traffic.
+async function isPaidUser(token) {
+  if (!token) return false;
+  const url = process.env.SUPABASE_URL;
+  const serviceKey = process.env.SUPABASE_SECRET_KEY;     // server-only, bypasses RLS
+  const anonKey = process.env.SUPABASE_PUBLISHABLE_KEY;   // needed for /auth/v1/user
+  if (!url || !serviceKey || !anonKey) return false;
+  const base = url.replace(/\/$/, '');
+  try {
+    // 1) Validate the token and get the user id.
+    const ur = await fetch(base + '/auth/v1/user', {
+      headers: { apikey: anonKey, Authorization: 'Bearer ' + token }
+    });
+    if (!ur.ok) return false;
+    const user = await ur.json();
+    if (!user || !user.id) return false;
+    // 2) Look up their plan (read-only).
+    const pr = await fetch(base + '/rest/v1/profiles?id=eq.' + encodeURIComponent(user.id) + '&select=plan', {
+      headers: { apikey: serviceKey, Authorization: 'Bearer ' + serviceKey }
+    });
+    if (!pr.ok) return false;
+    const rows = await pr.json();
+    const plan = Array.isArray(rows) && rows[0] ? rows[0].plan : null;
+    // Any "pro" tier (pro, pro_plus, and their annual variants) counts as paid.
+    return !!plan && String(plan).toLowerCase().startsWith('pro');
+  } catch {
+    return false;
+  }
+}
+
 export default async function handler(req, res) {
   // ── CORS: locked to our domain. Same-origin calls from the site are unaffected. ──
   const origin = req.headers.origin;
@@ -63,13 +97,18 @@ export default async function handler(req, res) {
   if (!apiKey) return res.status(500).json({ error: 'OPENROUTER_API_KEY not configured in Vercel.' });
 
   // ── RATE LIMIT: per IP per day, covers every mode below ──
-  const ip = getClientIp(req);
-  const count = await bumpUsage(ip);
-  if (count !== null && count > DAILY_LIMIT) {
-    return res.status(429).json({
-      error: "You've reached today's free playground limit. It resets tomorrow.",
-      rateLimited: true
-    });
+  // Paid (Pro/Pro+) members get unlimited playground use, so a valid Pro token
+  // skips the cap entirely. Everyone else (free + anonymous) stays capped per IP.
+  const paid = await isPaidUser(body.token);
+  if (!paid) {
+    const ip = getClientIp(req);
+    const count = await bumpUsage(ip);
+    if (count !== null && count > DAILY_LIMIT) {
+      return res.status(429).json({
+        error: "You've reached today's free playground limit. Upgrade to Pro for unlimited runs, or come back tomorrow.",
+        rateLimited: true
+      });
+    }
   }
 
   // ── LESSON COACH MODE ────────────────────────────────────────────────────────

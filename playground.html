@@ -54,7 +54,15 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .nav-links a:hover, .nav-links a.active { color: var(--text); }
 .nav-links a.active { font-weight: 600; }
 .nav-cta { display: flex; gap: 12px; align-items: center; }
-@media (max-width: 768px) { .nav-links { display: none; } }
+.nav-toggle { display: none; background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); color: var(--text); width: 42px; height: 42px; border-radius: 10px; font-size: 20px; line-height: 1; align-items: center; justify-content: center; cursor: pointer; }
+.mobile-menu { display: none; flex-direction: column; padding: 4px 24px 18px; background: rgba(10,10,26,0.98); border-bottom: 1px solid var(--line); }
+.mobile-menu.open { display: flex; }
+.mobile-menu > a { padding: 13px 2px; font-size: 15px; color: var(--text-dim); border-bottom: 1px solid var(--line); }
+.mobile-menu .mm-cta { display: flex; gap: 10px; margin-top: 14px; }
+.mobile-menu .mm-cta a { flex: 1; text-align: center; padding: 13px; border-radius: 10px; font-weight: 600; }
+.mobile-menu .mm-cta a.primary { background: linear-gradient(135deg, #7c5cff, #5b8def); color: #fff; }
+.mobile-menu .mm-cta a.ghost { background: rgba(255,255,255,0.06); border: 1px solid var(--line-strong); color: var(--text); }
+@media (max-width: 768px) { .nav-links { display: none; } .nav-toggle { display: flex; } }
 .btn { display: inline-flex; align-items: center; gap: 8px; justify-content: center; padding: 12px 22px; border-radius: 10px; font-size: 14px; font-weight: 600; border: 1px solid transparent; transition: transform .15s ease, box-shadow .15s ease, background .2s ease; white-space: nowrap; }
 .btn-primary { background: linear-gradient(135deg, #7c5cff 0%, #5b8def 100%); color: white; box-shadow: 0 6px 24px rgba(124,92,255,0.4); }
 .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 30px rgba(124,92,255,0.55); }
@@ -211,6 +219,18 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
     <div class="nav-cta">
       <a href="/auth/login" class="btn btn-ghost">Sign in</a>
       <a href="/auth/signup" class="btn btn-primary">Start free →</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu">☰</button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/#tools">Tools</a>
+    <a href="/roles">By role</a>
+    <a href="/playground">Playground</a>
+    <a href="/#pricing">Pricing</a>
+    <a href="/business">For business</a>
+    <div class="mm-cta">
+      <a href="/auth/login" class="ghost">Sign in</a>
+      <a href="/auth/signup" class="primary">Start free</a>
     </div>
   </div>
 </nav>
@@ -626,6 +646,15 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
     }
   }
 })();
+</script>
+<script>
+  (function(){
+    var t = document.getElementById('navToggle');
+    var m = document.getElementById('mobileMenu');
+    if (!t || !m) return;
+    t.addEventListener('click', function(){ m.classList.toggle('open'); });
+    m.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ m.classList.remove('open'); }); });
+  })();
 </script>
 
 </body>

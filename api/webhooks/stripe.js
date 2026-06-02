@@ -25,6 +25,12 @@ const sbHeaders = {
   'Content-Type': 'application/json',
 };
 
+// A business plan maps to the access tier we grant on the member's profile.
+function accessTierFor(plan) {
+  return plan === 'business_pro_plus' ? 'pro_plus' : 'pro';
+}
+function nowIso() { return new Date().toISOString(); }
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -70,7 +76,7 @@ export default async function handler(req, res) {
       }
       case 'customer.subscription.deleted': {
         if (isBusiness) {
-          await patchByFilter('businesses', `stripe_customer_id=eq.${enc(obj.customer)}`, { subscription_status: 'canceled' });
+          await revokeBusinessAccess(obj.customer);
         } else {
           await patchByFilter('profiles', `stripe_customer_id=eq.${enc(obj.customer)}`, { plan: 'free', subscription_status: 'canceled' });
         }
@@ -132,7 +138,47 @@ async function handleBusinessCheckout(session, stripeKey) {
     subscription_status: 'active',
   });
 
+  // Look up the new business row so we can link the admin's own seat to it.
+  let businessId = null;
+  const created = await sbSelect(`businesses?stripe_subscription_id=eq.${enc(subscriptionId)}&select=id`);
+  if (Array.isArray(created) && created[0]) businessId = created[0].id;
+
+  // The admin gets a seat too (per the plan): record them as an active member
+  // and unlock their lessons. This counts as 1 of the purchased seats.
+  if (businessId) {
+    await sbInsert('business_members', {
+      business_id: businessId,
+      user_id: userId,
+      email: adminEmail,
+      full_name: adminName === 'there' ? null : adminName,
+      role: 'admin',
+      status: 'active',
+      invited_at: nowIso(),
+      activated_at: nowIso(),
+    });
+  }
+  await patchProfileByEmail(adminEmail, {
+    plan: accessTierFor(plan),
+    subscription_status: 'active',
+  });
+
   await sendAdminWelcome(adminEmail, adminName, companyName, link);
+}
+
+// When a business subscription is canceled, revoke everyone's access and mark
+// the company + its members inactive — so a canceled team doesn't keep Pro forever.
+async function revokeBusinessAccess(customerId) {
+  await patchByFilter('businesses', `stripe_customer_id=eq.${enc(customerId)}`, { subscription_status: 'canceled' });
+  const biz = await sbSelect(`businesses?stripe_customer_id=eq.${enc(customerId)}&select=id`);
+  const id = Array.isArray(biz) && biz[0] ? biz[0].id : null;
+  if (!id) return;
+  const members = await sbSelect(`business_members?business_id=eq.${enc(id)}&status=eq.active&select=email`);
+  if (Array.isArray(members)) {
+    for (const mem of members) {
+      if (mem.email) await patchProfileByEmail(mem.email, { plan: 'free', subscription_status: 'canceled' });
+    }
+  }
+  await patchByFilter('business_members', `business_id=eq.${enc(id)}`, { status: 'removed' });
 }
 
 // ── Supabase REST helpers ──────────────────────────────────────────────────────
@@ -210,7 +256,7 @@ async function sendAdminWelcome(email, name, company, link) {
         <h1 style="font-size:22px;color:#14142b;margin:0 0 12px;">Welcome, ${escapeHtml(name)}!</h1>
         <p style="font-size:15px;color:#4a4a63;line-height:1.6;margin:0 0 20px;">
           Your team's plan for <strong>${escapeHtml(company)}</strong> is active. Set your password to access your
-          admin dashboard, where you can invite your team and track their progress.
+          admin dashboard, where you can invite your team and manage their seats.
         </p>
         <a href="${link}" style="display:inline-block;background:linear-gradient(135deg,#7c5cff,#5b8def);color:#ffffff;text-decoration:none;font-weight:600;font-size:15px;padding:14px 28px;border-radius:10px;">
           Set up my account &rarr;

@@ -66,9 +66,9 @@ nav { position: relative; z-index: 10; padding: 18px 28px; display: flex; align-
 .bar > span { display: block; height: 100%; border-radius: 99px; width: 0; transition: width .9s cubic-bezier(.2,.8,.2,1); }
 
 /* Badges */
-.badge-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; }
+.badge-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
 .badge { border: 1px solid var(--line); border-radius: 16px; padding: 20px 16px; text-align: center; background: rgba(255,255,255,0.02); position: relative; }
-.badge.earned { border-color: rgba(68,224,164,.35); }
+.badge.earned { border-color: rgba(68,224,164,.35); background: rgba(68,224,164,0.04); }
 .badge.locked { opacity: .55; }
 .medal { width: 64px; height: 64px; margin: 0 auto 12px; }
 .medal.gray circle.ring { stroke: var(--text-mute); } .medal.gray path { stroke: var(--text-mute); }
@@ -80,6 +80,17 @@ nav { position: relative; z-index: 10; padding: 18px 28px; display: flex; align-
 .li-btn.primary { background: #0a66c2; color: #fff; }
 .li-btn.secondary { background: rgba(255,255,255,0.06); color: var(--text); border: 1px solid var(--line-strong); }
 .li-btn:hover { opacity: .92; text-decoration: none; }
+
+/* Sticker slots (collect stickers → unlock the badge) */
+.sticker-slots { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; margin: 12px auto 8px; max-width: 150px; }
+.slot { width: 12px; height: 12px; border-radius: 4px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); transition: background .2s, border-color .2s; }
+.slot.filled { border-color: transparent; }
+.sticker-count { font-size: 11.5px; color: var(--text-mute); }
+.badge.earned .sticker-count { color: var(--accent); font-weight: 600; }
+.badge-link { display: inline-block; margin-top: 8px; font-size: 12px; font-weight: 600; }
+.badge-link.muted { color: var(--text-mute); }
+.badge-link.muted:hover { color: var(--text-dim); }
+.badge-link.earned-link { color: var(--accent); }
 
 /* Plan / subscription */
 .plan-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
@@ -130,8 +141,8 @@ nav { position: relative; z-index: 10; padding: 18px 28px; display: flex; align-
 
   <!-- Badges -->
   <div class="card">
-    <h2>Your badges</h2>
-    <p class="card-sub">Complete a track to earn a shareable, verifiable badge for your LinkedIn.</p>
+    <h2>Your badges &amp; stickers</h2>
+    <p class="card-sub">Earn a sticker for every lesson you finish. Collect the whole row to unlock that track's shareable badge.</p>
     <div class="badge-grid" id="badgeGrid"></div>
   </div>
 
@@ -166,8 +177,27 @@ nav { position: relative; z-index: 10; padding: 18px 28px; display: flex; align-
     { id:'perplexity',  name:'Perplexity',     color:'#ff6b8a', path:'/lessons/perplexity' },
   ];
 
-  // Which tracks have a live, claimable badge page today. (Only Foundations so far.)
-  const BADGE_PAGES = { foundations: '/badge/foundations' };
+  // ⚠️ SET THESE to the real number of lessons in each track.
+  // This is how many sticker slots show per badge. Foundations = 6 (from gate.js).
+  // The others are placeholders from your "21, 14, 13, 13, 12" — confirm which is which.
+  const TRACK_LESSON_COUNTS = {
+    foundations: 6,
+    chatgpt:     21,
+    claude:      14,
+    copilot:     13,
+    gemini:      13,
+    perplexity:  12,
+  };
+
+  // All six badge pages are live now.
+  const BADGE_PAGES = {
+    foundations: '/badge/foundations',
+    chatgpt:     '/badge/chatgpt',
+    claude:      '/badge/claude',
+    copilot:     '/badge/copilot',
+    gemini:      '/badge/gemini',
+    perplexity:  '/badge/perplexity',
+  };
 
   const PLAN_INFO = {
     free:     { label:'Free',  price:'',        blurb:'Exploring the free lessons.' },
@@ -178,6 +208,16 @@ nav { position: relative; z-index: 10; padding: 18px 28px; display: flex; align-
   // ---- Auth gate ----
   const token = localStorage.getItem('lgpt_token');
   if (!token) { location.replace('/auth/login?redirect=/account'); }
+
+  // ---- Sticker progress (per-device, recorded when "Get your sticker" is clicked) ----
+  function getCompleted() {
+    try { return JSON.parse(localStorage.getItem('lgpt_completed') || '{}') || {}; }
+    catch (e) { return {}; }
+  }
+  function completedCount(trackId) {
+    const c = getCompleted()[trackId];
+    return c ? Object.keys(c).length : 0;
+  }
 
   // ---- Tracks (launcher) ----
   // Progress tracking isn't recorded yet, so this is a clean "jump back in"
@@ -207,23 +247,44 @@ nav { position: relative; z-index: 10; padding: 18px 28px; display: flex; align-
       '<path d="M27 41 L36 50 L55 30" fill="none" stroke="' + (gray ? 'currentColor' : 'url(#bg' + (gray ? 'g' : '') + ')') + '" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   }
 
-  // Softened: no fake "0/6 to unlock" counters (we don't track completion yet).
-  // Foundations has a live badge page, so it links straight there to claim/share.
-  // The rest are honestly marked "Coming soon".
+  // Each track shows a row of sticker slots — one per lesson — that fill in as
+  // lessons are completed. Complete the row and the badge unlocks (earned state
+  // + a "Share your badge" link). Until then the slots show progress, with a
+  // muted "Preview badge" link so people can see what they're working toward.
   function renderBadges() {
     const grid = document.getElementById('badgeGrid');
     grid.innerHTML = '';
     TRACKS.forEach(t => {
-      const hasPage = !!BADGE_PAGES[t.id];
+      const total = TRACK_LESSON_COUNTS[t.id] || 0;
+      const done = Math.min(completedCount(t.id), total);
+      const earned = total > 0 && done >= total;
+      const page = BADGE_PAGES[t.id];
+
+      let slots = '';
+      for (let i = 0; i < total; i++) {
+        const filled = i < done;
+        slots += '<span class="slot' + (filled ? ' filled' : '') + '"' +
+          (filled ? ' style="background:' + t.color + '"' : '') + '></span>';
+      }
+
+      let footer;
+      if (earned && page) {
+        footer = '<div class="sticker-count">Earned · ' + total + ' / ' + total + '</div>' +
+                 '<a href="' + page + '" class="badge-link earned-link">Share your badge →</a>';
+      } else if (page) {
+        footer = '<div class="sticker-count">' + done + ' / ' + total + ' stickers</div>' +
+                 '<a href="' + page + '" class="badge-link muted">Preview badge →</a>';
+      } else {
+        footer = '<div class="sticker-count">' + done + ' / ' + total + ' stickers</div>';
+      }
+
       const el = document.createElement('div');
-      el.className = 'badge';
-      const status = hasPage
-        ? '<div class="badge-status"><a href="' + BADGE_PAGES[t.id] + '" style="color:var(--accent);font-weight:600;">View badge →</a></div>'
-        : '<div class="badge-status">Coming soon</div>';
+      el.className = 'badge' + (earned ? ' earned' : '');
       el.innerHTML =
-        medalSvg(true) +
+        medalSvg(!earned) +
         '<div class="badge-name">' + t.name + '</div>' +
-        status;
+        (total ? '<div class="sticker-slots">' + slots + '</div>' : '') +
+        footer;
       grid.appendChild(el);
     });
   }

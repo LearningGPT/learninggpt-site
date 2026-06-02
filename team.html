@@ -63,6 +63,9 @@ nav { position: relative; z-index: 10; padding: 18px 28px; display: flex; align-
 .msg.show { display: block; }
 .msg.err { color: var(--danger); }
 .msg.ok { color: var(--accent); }
+.bulk-file { display: block; margin-bottom: 12px; font-size: 13px; color: var(--text-dim); }
+.bulk-text { width: 100%; min-height: 88px; background: rgba(0,0,0,0.25); border: 1px solid var(--line-strong); border-radius: 10px; padding: 12px 14px; color: var(--text); font-family: inherit; font-size: 14px; resize: vertical; margin-bottom: 12px; }
+.bulk-text:focus { outline: none; border-color: var(--brand); }
 
 /* member list */
 .member { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); }
@@ -108,6 +111,7 @@ nav { position: relative; z-index: 10; padding: 18px 28px; display: flex; align-
   const PLAN_LABEL = { business_pro: 'Pro', business_pro_plus: 'Pro+' };
   const content = document.getElementById('content');
   let teamState = null;
+  let bulkFileText = '';
 
   function esc(s) { const d = document.createElement('div'); d.textContent = s == null ? '' : String(s); return d.innerHTML; }
 
@@ -180,6 +184,15 @@ nav { position: relative; z-index: 10; padding: 18px 28px; display: flex; align-
       '</div>' +
 
       '<div class="card">' +
+        '<h2>Add several at once</h2>' +
+        '<p class="card-sub">Upload a CSV or paste a list of emails — we\'ll invite as many as you have seats for, and skip duplicates.</p>' +
+        '<input class="bulk-file" type="file" id="bulkFile" accept=".csv,text/csv,text/plain" ' + (full ? 'disabled' : '') + ' />' +
+        '<textarea class="bulk-text" id="bulkText" placeholder="Or paste emails — commas, spaces, or one per line" ' + (full ? 'disabled' : '') + '></textarea>' +
+        '<button class="btn-grad" id="bulkBtn" ' + (full ? 'disabled' : '') + '>Send invites</button>' +
+        '<div class="msg" id="bulkMsg"></div>' +
+      '</div>' +
+
+      '<div class="card">' +
         '<h2>Team members</h2>' +
         '<p class="card-sub">' + used + ' of ' + total + ' seats assigned.</p>' +
         (rows || '<div style="color:var(--text-mute);font-size:13.5px;">No one yet — invite your first teammate above.</div>') +
@@ -192,6 +205,10 @@ nav { position: relative; z-index: 10; padding: 18px 28px; display: flex; align-
     document.querySelectorAll('.m-remove').forEach(function (btn) {
       btn.addEventListener('click', function () { doRemove(btn.dataset.id, btn.dataset.email); });
     });
+    const bulkBtn = document.getElementById('bulkBtn');
+    if (bulkBtn) bulkBtn.addEventListener('click', doBulkInvite);
+    const bulkFile = document.getElementById('bulkFile');
+    if (bulkFile) bulkFile.addEventListener('change', handleBulkFile);
   }
 
   function msg(text, kind) {
@@ -228,6 +245,59 @@ nav { position: relative; z-index: 10; padding: 18px 28px; display: flex; align-
       render();
     } else {
       alert(r.data.error || 'Could not remove that member.');
+    }
+  }
+
+  function parseEmails(text) {
+    const m = String(text || '').match(/[^\s,;<>"']+@[^\s,;<>"']+\.[^\s,;<>"']+/g);
+    if (!m) return [];
+    const seen = new Set(); const out = [];
+    m.forEach(function (e) { const x = e.trim().toLowerCase(); if (x && !seen.has(x)) { seen.add(x); out.push(x); } });
+    return out;
+  }
+  function bulkMsg(text, kind) {
+    const el = document.getElementById('bulkMsg');
+    if (!el) return;
+    el.textContent = text;
+    el.className = 'msg show ' + (kind || '');
+  }
+  function handleBulkFile(e) {
+    const f = e.target.files && e.target.files[0];
+    if (!f) return;
+    const reader = new FileReader();
+    reader.onload = function () {
+      bulkFileText = String(reader.result || '');
+      const box = document.getElementById('bulkText');
+      const found = parseEmails(bulkFileText + '\n' + (box ? box.value : ''));
+      bulkMsg(found.length + ' email' + (found.length === 1 ? '' : 's') + ' found — click Send invites.', 'ok');
+    };
+    reader.readAsText(f);
+  }
+  async function doBulkInvite() {
+    const box = document.getElementById('bulkText');
+    const emails = parseEmails((box ? box.value : '') + '\n' + bulkFileText);
+    if (!emails.length) { bulkMsg('No email addresses found — paste a list or choose a CSV.', 'err'); return; }
+    const btn = document.getElementById('bulkBtn');
+    btn.disabled = true; btn.textContent = 'Inviting…';
+    const r = await api('invite-bulk', { emails: emails });
+    if (r.ok && r.data.members) {
+      bulkFileText = '';
+      teamState.seatsUsed = r.data.seatsUsed;
+      teamState.members = r.data.members;
+      const inv = (r.data.invited || []).length;
+      const sk = (r.data.skipped || []);
+      render();
+      let summary = 'Invited ' + inv + '.';
+      if (sk.length) {
+        const reasons = {};
+        sk.forEach(function (s) { reasons[s.reason] = (reasons[s.reason] || 0) + 1; });
+        summary += ' Skipped ' + sk.length + ' (' +
+          Object.keys(reasons).map(function (k) { return reasons[k] + ' ' + k; }).join(', ') + ').';
+      }
+      bulkMsg(summary, inv > 0 ? 'ok' : 'err');
+    } else {
+      btn.disabled = false; btn.textContent = 'Send invites';
+      bulkMsg((r.data && r.data.error) || 'Could not send invites. Try again.', 'err');
     }
   }
 

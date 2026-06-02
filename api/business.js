@@ -8,6 +8,8 @@
 //
 // Price IDs below are the LIVE ones currently in use — DO NOT change them.
 
+import { randomUUID } from 'node:crypto';
+
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
 
 const PRICES = {
@@ -96,6 +98,7 @@ async function ensureAdminMember(biz) {
   );
   if (Array.isArray(existing) && existing.length) return;
   await sbInsert('business_members', {
+    id: randomUUID(),
     business_id: biz.id,
     user_id: biz.admin_id || null,
     email: normEmail(biz.admin_email),
@@ -287,6 +290,7 @@ export default async function handler(req, res) {
     const profileId = Array.isArray(prof) && prof[0] ? prof[0].id : null;
 
     await sbInsert('business_members', {
+      id: randomUUID(),
       business_id: biz.id,
       user_id: profileId,
       email,
@@ -339,6 +343,7 @@ export default async function handler(req, res) {
       const prof = await sbSelect(`profiles?email=eq.${enc(email)}&select=id`);
       const profileId = Array.isArray(prof) && prof[0] ? prof[0].id : null;
       await sbInsert('business_members', {
+        id: randomUUID(),
         business_id: biz.id,
         user_id: profileId,
         email,

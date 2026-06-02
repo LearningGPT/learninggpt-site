@@ -363,6 +363,11 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
   const coachPanel       = document.getElementById('coachPanel');
   const coachText        = document.getElementById('coachText');
 
+  // Pro/Pro+ members get unlimited playground use, so we send their login token
+  // with each request. The server checks it and skips the daily cap for paid
+  // accounts. Anonymous/free visitors send null and stay capped.
+  function authToken() { try { return localStorage.getItem('lgpt_token') || null; } catch (e) { return null; } }
+
   // Prompt chips at top — update static demo label and fill textarea
   const staticPrompts = {
     'Sales follow-up email': { prompt: 'Write a follow-up email to a prospect who ghosted me after our demo last week. Friendly but not desperate. 80 words max.', label: '"Write a follow-up email to a prospect who ghosted me after our demo last week. Friendly but not desperate. 80 words max."' },
@@ -435,7 +440,7 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
       const response = await fetch('/api/playground', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt, models: MODELS.map(m => ({ id: m.id, name: m.name })) })
+        body: JSON.stringify({ prompt, models: MODELS.map(m => ({ id: m.id, name: m.name })), token: authToken() })
       });
 
       if (!response.ok) {
@@ -466,7 +471,7 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
         const coachResponse = await fetch('/api/playground', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ prompt, results: data.results, coach: true })
+          body: JSON.stringify({ prompt, results: data.results, coach: true, token: authToken() })
         });
 
         if (coachResponse.ok) {
@@ -605,7 +610,7 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
       var res = await fetch('/api/playground', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ coach: true, lessonCoach: true, lessonContext: LESSON_CONTEXT, history: history })
+        body: JSON.stringify({ coach: true, lessonCoach: true, lessonContext: LESSON_CONTEXT, history: history, token: (function(){ try { return localStorage.getItem('lgpt_token') || null; } catch(e){ return null; } })() })
       });
       thinking.remove();
       var data = await res.json();

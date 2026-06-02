@@ -3,6 +3,71 @@
 // Uses Supabase for auth + Stripe for checkout
 // Supports monthly AND annual plans for Pro and Pro+.
 
+// ── Team-seat activation ─────────────────────────────────────────────────────
+// If this email was assigned a seat by a business team, switch their access on
+// the moment they authenticate (login OR signup) — no matter where they land.
+// Returns the access tier ('pro' | 'pro_plus') to apply, or null if no seat.
+async function businessSyncSeat(email, userId) {
+  const SUPABASE_URL = process.env.SUPABASE_URL;
+  const SUPABASE_SECRET_KEY = process.env.SUPABASE_SECRET_KEY;
+  if (!email || !SUPABASE_URL || !SUPABASE_SECRET_KEY) return null;
+
+  const sb = {
+    'apikey': SUPABASE_SECRET_KEY,
+    'Authorization': `Bearer ${SUPABASE_SECRET_KEY}`,
+    'Content-Type': 'application/json'
+  };
+  const e = encodeURIComponent(email.trim().toLowerCase());
+
+  try {
+    // Is there a seat assigned to this email (active or still pending)?
+    const mRes = await fetch(
+      `${SUPABASE_URL}/rest/v1/business_members?email=eq.${e}&status=in.(active,pending)&select=id,business_id,status,user_id`,
+      { headers: sb }
+    );
+    const members = await mRes.json();
+    const member = Array.isArray(members) && members[0] ? members[0] : null;
+    if (!member) return null;
+
+    // Is the company subscription active?
+    const bRes = await fetch(
+      `${SUPABASE_URL}/rest/v1/businesses?id=eq.${encodeURIComponent(member.business_id)}&select=plan,subscription_status`,
+      { headers: sb }
+    );
+    const bizArr = await bRes.json();
+    const biz = Array.isArray(bizArr) && bizArr[0] ? bizArr[0] : null;
+    if (!biz) return null;
+    if (biz.subscription_status && biz.subscription_status !== 'active') return null;
+
+    const tier = biz.plan === 'business_pro_plus' ? 'pro_plus' : 'pro';
+
+    // Activate the seat (mark active + link their user id).
+    if (member.status !== 'active' || !member.user_id) {
+      await fetch(`${SUPABASE_URL}/rest/v1/business_members?id=eq.${encodeURIComponent(member.id)}`, {
+        method: 'PATCH',
+        headers: { ...sb, 'Prefer': 'return=minimal' },
+        body: JSON.stringify({
+          user_id: userId || member.user_id || null,
+          status: 'active',
+          activated_at: new Date().toISOString()
+        })
+      });
+    }
+
+    // Grant access on their profile.
+    await fetch(`${SUPABASE_URL}/rest/v1/profiles?email=eq.${e}`, {
+      method: 'PATCH',
+      headers: { ...sb, 'Prefer': 'return=minimal' },
+      body: JSON.stringify({ plan: tier, subscription_status: 'active' })
+    });
+
+    return tier;
+  } catch (err) {
+    console.error('businessSyncSeat error:', err && err.message);
+    return null;
+  }
+}
+
 export default async function handler(req, res) {
   if (req.method === 'OPTIONS') {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -124,8 +189,9 @@ export default async function handler(req, res) {
         });
       }
 
-      // Free plan — return token directly
-      return res.status(200).json({ success: true, token, plan: 'free' });
+      // Free plan — but if they were invited to a team, turn their seat on now.
+      const seatTier = await businessSyncSeat(email, userId);
+      return res.status(200).json({ success: true, token, plan: seatTier || 'free' });
 
     } catch (err) {
       console.error('Signup error:', err);
@@ -171,10 +237,13 @@ export default async function handler(req, res) {
       const profiles = await profileRes.json();
       const plan = profiles?.[0]?.plan || 'free';
 
+      // If this person holds a team seat, make sure their access is switched on.
+      const seatTier = await businessSyncSeat(email, loginData.user.id);
+
       return res.status(200).json({
         success: true,
         token: loginData.access_token,
-        plan
+        plan: seatTier || plan
       });
 
     } catch (err) {

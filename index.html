@@ -4,7 +4,10 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>LearningGPT — Learn every AI tool. In one place.</title>
-<meta name="description" content="The neutral, hands-on learning platform for ChatGPT, Claude, Copilot, Gemini, Perplexity and every other AI worth knowing. Tool tracks, role tracks, and a side-by-side playground to compare models on your own prompts." />
+<meta name="description" content="Learn ChatGPT, Claude, Copilot, Gemini & Perplexity on one neutral, hands-on platform — with a side-by-side playground to compare models on your own prompts." />
+
+<!-- Canonical -->
+<link rel="canonical" href="https://learninggpt.ai/" />
 
 <!-- Favicon -->
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -32,6 +35,70 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+
+<!-- Structured data (SEO) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://learninggpt.ai/#organization",
+      "name": "LearningGPT",
+      "url": "https://learninggpt.ai/",
+      "logo": "https://learninggpt.ai/og-image.png",
+      "description": "The neutral, hands-on platform for learning every major AI tool — ChatGPT, Claude, Copilot, Gemini and Perplexity.",
+      "email": "dan@learninggpt.ai",
+      "founder": { "@type": "Person", "name": "Dan Allen" },
+      "sameAs": ["https://www.linkedin.com/company/learninggpt-ai"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://learninggpt.ai/#website",
+      "url": "https://learninggpt.ai/",
+      "name": "LearningGPT",
+      "publisher": { "@id": "https://learninggpt.ai/#organization" }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://learninggpt.ai/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How is this different from just learning from ChatGPT itself?",
+          "acceptedAnswer": { "@type": "Answer", "text": "ChatGPT can teach you ChatGPT, kind of — but it has blind spots about its own weaknesses, won't compare itself to Claude or Gemini honestly, can't grade your work against a rubric, and won't track your progression. LearningGPT is a structured environment with practical exams, side-by-side comparisons across every major AI, and verifiable certificates. It's a learning environment, not a chatbot." }
+        },
+        {
+          "@type": "Question",
+          "name": "Are you affiliated with OpenAI, Anthropic, Microsoft, or Google?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. That's the point. We're independent and teach you when to use each tool — including when none of them is the right answer. We're not paid by any AI vendor; you pay us, we work for you." }
+        },
+        {
+          "@type": "Question",
+          "name": "Models change every couple months. Won't your content be out of date?",
+          "acceptedAnswer": { "@type": "Answer", "text": "This is exactly why subscription beats one-off courses. Skill Update Alerts are a core feature: when a model update changes a workflow you've learned, we send a 5-minute refresher. The curriculum is versioned and continuously maintained." }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need API keys or paid AI subscriptions to use the playground?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No — we cover playground inference for Pro and Pro+ members up to generous quotas. Bring-your-own-key is an option for power users who want unlimited runs at cost." }
+        },
+        {
+          "@type": "Question",
+          "name": "Are the certifications actually worth anything yet?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Certifications launch in Q3 2026 to Pro+ members. Day one, the cert is a credible portfolio piece — cryptographically signed and verifiable on LinkedIn. It complements vendor certifications by proving you actually used the tools, and its value compounds as more learners earn it." }
+        },
+        {
+          "@type": "Question",
+          "name": "When does this actually launch?",
+          "acceptedAnswer": { "@type": "Answer", "text": "It's live now — five tool tracks (Copilot, Claude, ChatGPT, Gemini, Perplexity) plus a free AI Foundations course and the playground. Paid Pro/Pro+ subscriptions are open today at founding-member pricing. Certifications, AI-graded exercises, and skill-update alerts roll out to Pro+ in Q3 2026." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
 <style>
 :root {
   --bg: #0a0a1a;
@@ -127,13 +194,6 @@ p { color: var(--text-dim); margin: 0; }
 }
 .topbar-form button:hover:not(:disabled) { transform: translateY(-1px); }
 .topbar-form button:disabled { opacity: 0.7; cursor: default; }
-.topbar-cta {
-  background: linear-gradient(135deg, #7c5cff, #5b8def); color: white;
-  border: none; padding: 7px 16px; border-radius: 6px;
-  font-size: 13px; font-weight: 600; white-space: nowrap; cursor: pointer;
-  transition: transform .15s ease; display: inline-flex; align-items: center; gap: 6px;
-}
-.topbar-cta:hover { transform: translateY(-1px); color: white; }
 @media (max-width: 768px) {
   .topbar-inner { flex-direction: column; gap: 8px; padding: 10px 16px; }
   .topbar-text { text-align: center; font-size: 12px; }
@@ -213,15 +273,7 @@ nav.top {
   color: var(--text-mute); padding: 8px 12px 4px; font-weight: 600;
 }
 
-.nav-toggle { display: none; background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); color: var(--text); width: 42px; height: 42px; border-radius: 10px; font-size: 20px; line-height: 1; align-items: center; justify-content: center; cursor: pointer; }
-.mobile-menu { display: none; flex-direction: column; padding: 4px 24px 18px; background: rgba(10,10,26,0.98); border-bottom: 1px solid var(--line); }
-.mobile-menu.open { display: flex; }
-.mobile-menu > a { padding: 13px 2px; font-size: 15px; color: var(--text-dim); border-bottom: 1px solid var(--line); }
-.mobile-menu .mm-cta { display: flex; gap: 10px; margin-top: 14px; }
-.mobile-menu .mm-cta a { flex: 1; text-align: center; padding: 13px; border-radius: 10px; font-weight: 600; }
-.mobile-menu .mm-cta a.primary { background: linear-gradient(135deg, #7c5cff, #5b8def); color: #fff; }
-.mobile-menu .mm-cta a.ghost { background: rgba(255,255,255,0.06); border: 1px solid var(--line-strong); color: var(--text); }
-@media (max-width: 768px) { .nav-links { display: none; } .nav-toggle { display: flex; } }
+@media (max-width: 768px) { .nav-links { display: none; } }
 
 /* ---------- BUTTONS ---------- */
 .btn {
@@ -564,26 +616,6 @@ nav.top {
   .price-card.popular { transform: none; }
 }
 
-/* ---------- BILLING TOGGLE ---------- */
-.billing-toggle {
-  display: inline-flex; gap: 4px; margin: 0 0 40px; padding: 5px;
-  background: rgba(255,255,255,0.04); border: 1px solid var(--line-strong);
-  border-radius: 999px;
-}
-.bt-opt {
-  background: none; border: none; color: var(--text-dim);
-  font-family: inherit; font-size: 14px; font-weight: 600;
-  padding: 9px 20px; border-radius: 999px; cursor: pointer;
-  display: inline-flex; align-items: center; gap: 8px;
-  transition: background .15s, color .15s;
-}
-.bt-opt.active { background: linear-gradient(135deg, #7c5cff, #5b8def); color: #fff; }
-.bt-save {
-  font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 999px;
-  background: rgba(68,224,164,0.15); color: var(--accent);
-}
-.bt-opt.active .bt-save { background: rgba(255,255,255,0.22); color: #fff; }
-
 /* ---------- FOUNDER NOTE ---------- */
 .founder-note {
   max-width: 720px; margin: 0 auto;
@@ -623,6 +655,18 @@ nav.top {
 }
 .cta-band h2 { max-width: 660px; margin: 0 auto 16px; }
 .cta-band p { max-width: 540px; margin: 0 auto 32px; font-size: 17px; }
+
+/* ---------- WAITLIST FORM ---------- */
+.waitlist {
+  display: flex; gap: 10px; max-width: 440px; margin: 0 auto;
+}
+.waitlist input {
+  flex: 1; background: rgba(255,255,255,0.06); border: 1px solid var(--line-strong);
+  color: var(--text); padding: 14px 16px; border-radius: 10px; font-size: 14px;
+  font-family: inherit;
+}
+.waitlist input:focus { outline: none; border-color: var(--brand); }
+@media (max-width: 540px) { .waitlist { flex-direction: column; } }
 
 /* ---------- FOOTER ---------- */
 footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30px; position: relative; z-index: 1; }
@@ -667,9 +711,12 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
     <div class="topbar-inner">
       <div class="topbar-text">
         <span class="live-dot"></span>
-        <span>🚧 <strong>We're in soft launch.</strong> Thanks for your patience while we add the finishing touches — full go-live is <strong>June 9th</strong>. Questions or run into anything?</span>
+        <span>🎉 <strong>Founding member pricing</strong> — sign up before September 30th and lock in your rate forever</span>
       </div>
-      <a href="mailto:dan@learninggpt.ai?subject=LearningGPT%20question" class="topbar-cta">Reach out →</a>
+      <form class="topbar-form" data-source="topbar" onsubmit="return handleWaitlist(event, this);">
+        <input type="email" name="email" placeholder="you@work.com" required autocomplete="email" />
+        <button type="submit">Start free →</button>
+      </form>
     </div>
   </div>
 
@@ -703,18 +750,7 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
       </div>
       <div class="nav-cta">
         <a href="mailto:dan@learninggpt.ai?subject=LearningGPT%20question" class="btn btn-ghost">Talk to Dan</a>
-        <a href="/auth/signup" class="btn btn-primary">Start free</a> <a href="/auth/login" class="btn btn-ghost">Sign in</a>
-        <button class="nav-toggle" id="navToggle" aria-label="Open menu">☰</button>
-      </div>
-    </div>
-    <div class="mobile-menu" id="mobileMenu">
-      <a href="/lessons/">Lessons</a>
-      <a href="/playground">Playground</a>
-      <a href="#pricing">Pricing</a>
-      <a href="/business">For business</a>
-      <div class="mm-cta">
-        <a href="/auth/login" class="ghost">Sign in</a>
-        <a href="/auth/signup" class="primary">Start free</a>
+        <a href="#waitlist" class="btn btn-primary">Start free</a> <a href="/auth/login" class="btn btn-ghost">Sign in</a>
       </div>
     </div>
   </nav>
@@ -725,15 +761,15 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
 <section class="hero">
   <div class="container">
     <div class="hero-eyebrow">
-      <span class="eyebrow"><span class="live-dot"></span> Now live · Founding member pricing ends Sep 30</span>
+      <span class="eyebrow"><span class="live-dot"></span> Pre-launch · Founding members applications open</span>
     </div>
     <h1>Learn every AI tool. <span class="grad serif">In one place.</span></h1>
     <p class="hero-sub">LearningGPT is the neutral, hands-on platform for mastering ChatGPT, Claude, Copilot, Gemini, Perplexity and every other AI worth knowing. Tool-agnostic curriculum, real practice in a side-by-side playground, and certifications coming Q3 2026.</p>
     <div class="hero-cta">
-      <a href="/auth/signup" class="btn btn-primary btn-lg">Start free →</a>
+      <a href="#waitlist" class="btn btn-primary btn-lg">Start free →</a>
       <a href="#playground" class="btn btn-ghost btn-lg">See the playground</a>
     </div>
-    <p class="hero-trust">Free to start · No credit card · Built by power users, not vendors</p>
+    <p class="hero-trust">Free during early access · No credit card · Built by power users, not vendors</p>
     <p style="font-size:13px; color:var(--text-mute); margin-top:14px;">Got questions? <a href="mailto:dan@learninggpt.ai?subject=LearningGPT%20question" style="color:var(--brand-2); font-weight:600;">Talk to Dan →</a> · I read every email myself.</p>
 
     <div class="hero-tools">
@@ -959,7 +995,7 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
     <div class="sec-head">
       <span class="eyebrow">Role tracks · Coming Q3 2026</span>
       <h2>Learn the AI workflow <span class="serif">for your job</span></h2>
-      <p>Which AI for which task. Real prompts for real work. Role tracks ship to Pro and Pro+ members through Q3 2026 — start free now and you'll be notified the day yours launches.</p>
+      <p>Which AI for which task. Real prompts for real work. Role tracks ship to Pro and Pro+ members through Q3 2026 — join the waitlist to be notified the day yours launches.</p>
     </div>
     <div class="roles-grid">
       <a href="/roles#marketing" class="role-card"><div class="role-emoji">📈</div><h4>AI for Marketing</h4><p>Copy, campaigns, SEO briefs, ad creative, analysis.</p></a>
@@ -1037,12 +1073,6 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
       <h2>Founding members get <span class="serif">half off, forever.</span></h2>
       <p>Lock in lifetime pricing while we're in early access. Cancel anytime.</p>
     </div>
-    <div style="text-align:center;">
-      <div class="billing-toggle" id="billing-toggle">
-        <button type="button" class="bt-opt active" data-billing="monthly">Monthly</button>
-        <button type="button" class="bt-opt" data-billing="annual">Annual <span class="bt-save">save up to 34%</span></button>
-      </div>
-    </div>
     <div class="pricing-grid">
       <div class="price-card">
         <div class="price-name">Explorer</div>
@@ -1053,14 +1083,15 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
           <li>First lesson of every tool track (Copilot, Claude, ChatGPT, Gemini, Perplexity)</li>
           <li>10 playground runs / day</li>
           <li>AI News digest + skill update newsletter</li>
+          <li>Lesson progress tracking</li>
         </ul>
-        <a href="/auth/signup" class="btn btn-ghost">Start free</a>
+        <a href="#waitlist" class="btn btn-ghost">Start free</a>
       </div>
       <div class="price-card popular">
         <div class="popular-badge">FOUNDING MEMBER</div>
         <div class="founder-discount">ENDS SEP 30</div>
         <div class="price-name">Pro</div>
-        <div class="price-amount" id="price-pro">$9<span> / mo</span><div style="font-size:13px;color:#44e0a4;font-weight:600;margin-top:4px;">or $79/yr — save 26%</div></div>
+        <div class="price-amount">$9<span> / mo</span><div style="font-size:13px;color:#44e0a4;font-weight:600;margin-top:4px;">or $79/yr — save 26%</div></div>
         <div class="price-desc">Everything you need to master every major AI tool.</div>
         <ul class="price-features">
           <li>Everything in Free</li>
@@ -1071,11 +1102,11 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
           <li>Real-time skill update alerts <em style="color: var(--warn); font-style: normal; font-size: 12px; font-weight: 600;">(Q3 2026)</em></li>
           <li>Founding member status + early access to new tracks</li>
         </ul>
-        <a href="/auth/signup?plan=pro" class="btn btn-primary js-buy" data-tier="pro" data-plan="pro">Claim founding spot</a>
+        <a href="/auth/signup?plan=pro" class="btn btn-primary js-buy" data-plan="pro">Claim founding spot</a>
       </div>
       <div class="price-card">
         <div class="price-name">Pro+</div>
-        <div class="price-amount" id="price-pro-plus">$19<span> / mo</span><div style="font-size:13px;color:#44e0a4;font-weight:600;margin-top:4px;">or $149/yr — save 34%</div></div>
+        <div class="price-amount">$19<span> / mo</span><div style="font-size:13px;color:#44e0a4;font-weight:600;margin-top:4px;">or $149/yr — save 34%</div></div>
         <div class="price-desc">Everything in Pro, plus advanced tracks, coaching, and certifications.</div>
         <ul class="price-features">
           <li>Everything in Pro</li>
@@ -1086,7 +1117,7 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
           <li>Verifiable certifications <em style="color: var(--warn); font-style: normal; font-size: 12px; font-weight: 600;">(Q3 2026)</em></li>
           <li>Practical exams + LinkedIn integration <em style="color: var(--warn); font-style: normal; font-size: 12px; font-weight: 600;">(Q3 2026)</em></li>
         </ul>
-        <a href="/auth/signup?plan=pro_plus" class="btn btn-ghost js-buy" data-tier="pro_plus" data-plan="pro_plus">Claim founding spot</a>
+        <a href="/auth/signup?plan=pro_plus" class="btn btn-ghost js-buy" data-plan="pro_plus">Claim founding spot</a>
       </div>
     </div>
     <p style="text-align:center; margin-top:36px; color: var(--text-mute); font-size:14px;">
@@ -1154,20 +1185,23 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
       </div>
       <div class="faq-item">
         <div class="faq-q">When does this actually launch?</div>
-        <div class="faq-a"><p>It's live now — five tool tracks (Copilot, Claude, ChatGPT, Gemini, Perplexity) plus a free AI Foundations course, and the playground. Paid Pro/Pro+ subscriptions are open today at founding-member pricing. Certifications, AI-graded exercises, and skill-update alerts roll out to Pro+ in Q3 2026.</p></div>
+        <div class="faq-a"><p>The lessons are live now — five tool tracks (Copilot, Claude, ChatGPT, Gemini, Perplexity) plus a free AI Foundations course. The playground is live. Paid subscriptions and the full Pro/Pro+ experience open to founding members through summer 2026. Certifications, AI-graded exercises, and skill-update alerts roll out to Pro+ in Q3 2026.</p></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ START FREE CTA ============ -->
+<!-- ============ WAITLIST CTA ============ -->
 <section style="padding-top:0; padding-bottom: 120px;" id="waitlist">
   <div class="container">
     <div style="text-align:center; max-width:720px; margin: 0 auto;">
-      <span class="eyebrow">Get started</span>
+      <span class="eyebrow">Join the founding cohort</span>
       <h2 style="margin-top:18px;">Founding pricing ends <span class="serif">September 30th.</span></h2>
-      <p style="margin: 20px 0 32px; font-size:17px;">Start free today. Upgrade anytime. No credit card required.</p>
-      <a href="/auth/signup" class="btn btn-primary btn-lg" style="padding: 16px 32px;">Start free →</a>
+      <p style="margin: 20px 0 32px; font-size:17px;">Start free today. Upgrade anytime. No spam, easy unsub.</p>
+      <form class="waitlist" data-source="bottom" onsubmit="return handleWaitlist(event, this);">
+        <input type="email" name="email" placeholder="you@work.com" required autocomplete="email" />
+        <button type="submit" class="btn btn-primary btn-lg" style="padding: 14px 24px;">Start free →</button>
+      </form>
       <p style="font-size:13px; color:var(--text-mute); margin-top:18px;">Sign up before September 30th, 2026 to lock in founding member pricing forever.</p>
     </div>
   </div>
@@ -1208,9 +1242,9 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
       <div class="footer-col">
         <h5>Company</h5>
         <ul>
-          <li><a href="mailto:dan@learninggpt.ai?subject=LearningGPT%20question">Contact</a></li>
+          <li><a href="/contact">Contact</a></li>
           <li><a href="/business">For business</a></li>
-          <li><a href="/auth/signup">Start free</a></li>
+          <li><a href="#waitlist">Start free</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -1218,12 +1252,11 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
         <ul>
           <li><a href="/privacy">Privacy</a></li>
           <li><a href="/terms">Terms</a></li>
-          <li><a href="/refund">Refunds</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with OpenAI, Anthropic, Microsoft, Google, Perplexity, or xAI</div>
+      <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with OpenAI, Anthropic, Microsoft, Google, or xAI.</div>
       <div>Made for the curious</div>
     </div>
   </div>
@@ -1280,69 +1313,64 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
     });
   });
 
-  // ----- Monthly / Annual billing toggle (pricing section) -----
-  (function () {
-    var PRICING = {
-      'pro': {
-        monthly: { big: '$9',  suf: ' / mo', note: 'or $79/yr — save 26%',         plan: 'pro' },
-        annual:  { big: '$79', suf: ' / yr', note: 'just $6.58/mo, billed yearly',  plan: 'pro_annual' }
-      },
-      'pro-plus': {
-        monthly: { big: '$19',  suf: ' / mo', note: 'or $149/yr — save 34%',        plan: 'pro_plus' },
-        annual:  { big: '$149', suf: ' / yr', note: 'just $12.42/mo, billed yearly', plan: 'pro_plus_annual' }
+  // Waitlist form handler — POSTs to /api/waitlist which sends email via Resend
+  async function handleWaitlist(event, form) {
+    event.preventDefault();
+    const emailInput = form.querySelector('input[type="email"]');
+    const button    = form.querySelector('button[type="submit"]');
+    const email     = emailInput.value.trim();
+    const source    = form.dataset.source || 'unknown';
+    const originalText = button.textContent;
+
+    if (!email) {
+      emailInput.focus();
+      return false;
+    }
+
+    button.textContent = 'Joining…';
+    button.disabled = true;
+
+    try {
+      const response = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, source })
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (response.ok && data.success) {
+        button.textContent = '✓ You\'re in';
+        emailInput.value = '';
+        showWaitlistToast();
+      } else {
+        button.textContent = 'Try again';
+        button.disabled = false;
+        console.error('Waitlist error:', response.status, data);
       }
-    };
-
-    function render(billing) {
-      Object.keys(PRICING).forEach(function (key) {
-        var d = PRICING[key][billing];
-        var priceEl = document.getElementById('price-' + key);
-        if (priceEl) {
-          priceEl.innerHTML = d.big + '<span>' + d.suf + '</span>' +
-            '<div style="font-size:13px;color:#44e0a4;font-weight:600;margin-top:4px;">' + d.note + '</div>';
-        }
-        var tier = key.replace('-', '_'); // 'pro-plus' -> 'pro_plus'
-        var btn = document.querySelector('.js-buy[data-tier="' + tier + '"]');
-        if (btn) {
-          btn.setAttribute('data-plan', d.plan);
-          btn.setAttribute('href', '/auth/signup?plan=' + d.plan);
-        }
-      });
+    } catch (err) {
+      button.textContent = 'Try again';
+      button.disabled = false;
+      console.error('Waitlist fetch error:', err);
     }
 
-    var toggle = document.getElementById('billing-toggle');
-    if (toggle) {
-      toggle.querySelectorAll('[data-billing]').forEach(function (opt) {
-        opt.addEventListener('click', function () {
-          toggle.querySelectorAll('[data-billing]').forEach(function (o) { o.classList.remove('active'); });
-          opt.classList.add('active');
-          render(opt.getAttribute('data-billing'));
-        });
-      });
-      render('monthly'); // default state
-    }
-  })();
-</script>
-<script defer src="/_vercel/insights/script.js"></script>
-  <!-- Nav: show "Account" when signed in -->
-<script>
-(function(){
-  try {
-    if (!localStorage.getItem('lgpt_token')) return;   // only when signed in
-    document.querySelectorAll('a[href="/auth/login"], a[href="/auth/login/"], a[href="/login"]').forEach(function(a){
-      a.textContent = 'Account';
-      a.setAttribute('href', '/account');
-    });
-  } catch(e){}
-})();
-</script><script>
-  (function(){
-    var t = document.getElementById('navToggle');
-    var m = document.getElementById('mobileMenu');
-    if (!t || !m) return;
-    t.addEventListener('click', function(){ m.classList.toggle('open'); });
-    m.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ m.classList.remove('open'); }); });
-  })();
+    return false;
+  }
+
+  function showWaitlistToast() {
+    const existing = document.querySelector('.waitlist-toast');
+    if (existing) existing.remove();
+
+    const toast = document.createElement('div');
+    toast.className = 'waitlist-toast';
+    toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#44e0a4,#5b8def);color:white;padding:14px 24px;border-radius:10px;font-weight:600;font-size:14px;box-shadow:0 10px 40px rgba(0,0,0,0.4);z-index:9999;max-width:90vw;text-align:center;transition:opacity .5s;';
+    toast.innerHTML = '✓ You\'re on the founding member list. We\'ll be in touch.';
+    document.body.appendChild(toast);
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      setTimeout(() => toast.remove(), 500);
+    }, 4500);
+  }
 </script>
 
 </body>

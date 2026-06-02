@@ -126,7 +126,7 @@ async function sendInviteEmail(email, company, tier) {
           ${escapeHtml(company)} has given you a LearningGPT <strong>${tierLabel}</strong> seat — full access to the AI tool tracks,
           lessons, and playground. Create your account (or sign in) with <strong>this email</strong> and your access turns on automatically.
         </p>
-        <a href="${SITE}/auth/signup" style="display:inline-block;background:linear-gradient(135deg,#7c5cff,#5b8def);color:#ffffff;text-decoration:none;font-weight:600;font-size:15px;padding:14px 28px;border-radius:10px;">
+        <a href="${SITE}/auth/signup?email=${encodeURIComponent(email)}" style="display:inline-block;background:linear-gradient(135deg,#7c5cff,#5b8def);color:#ffffff;text-decoration:none;font-weight:600;font-size:15px;padding:14px 28px;border-radius:10px;">
           Get started &rarr;
         </a>
         <p style="font-size:13px;color:#8a8aa0;line-height:1.6;margin:24px 0 0;">

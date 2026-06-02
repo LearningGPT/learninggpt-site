@@ -304,6 +304,20 @@ nav { position: relative; z-index: 10; padding: 18px 28px; display: flex; align-
     }
   }
 
+  // ---- Manage team link (admins only) ----
+  function showManageTeam() {
+    const nav = document.querySelector('.nav-links');
+    const signOut = document.getElementById('signOutBtn');
+    if (!nav || !signOut || document.getElementById('manageTeamLink')) return;
+    const a = document.createElement('a');
+    a.id = 'manageTeamLink';
+    a.href = '/team';
+    a.textContent = 'Manage team';
+    a.style.color = 'var(--brand-2)';
+    a.style.fontWeight = '600';
+    nav.insertBefore(a, signOut);
+  }
+
   // ---- Sign out ----
   document.getElementById('signOutBtn').addEventListener('click', () => {
     localStorage.removeItem('lgpt_token');
@@ -316,6 +330,31 @@ nav { position: relative; z-index: 10; padding: 18px 28px; display: flex; align-
     renderTracks();
     renderBadges();
     renderPlan(localStorage.getItem('lgpt_plan') || 'free');
+
+    // Business seat sync: if this person was invited to a team, claim the seat
+    // and unlock their access automatically on login (no action from anyone).
+    try {
+      const sr = await fetch('/api/business', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'sync', token: token })
+      });
+      const sd = await sr.json();
+      if (sd && sd.plan) {
+        localStorage.setItem('lgpt_plan', sd.plan);
+        renderPlan(sd.plan);
+      }
+      // If this account administers a team, surface a "Manage team" link.
+      const tr = await fetch('/api/business', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'team', token: token })
+      });
+      if (tr.ok) {
+        const td = await tr.json();
+        if (td && td.business) showManageTeam();
+      }
+    } catch (e) { /* non-fatal */ }
 
     // pull email + member-since from Supabase (same direct pattern as the reset page)
     try {

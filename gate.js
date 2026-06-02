@@ -198,3 +198,43 @@ s.textContent = '.lesson h1 { overflow-wrap: break-word; word-break: break-word;
       </div>`);
   }
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// "Get your sticker" button — added to every lesson's Final-challenge row.
+// Track comes from the URL (/lessons/<track>/...); lesson title from og:title.
+// Lives in the .challenge .btn-row, which the paywall above only reveals to
+// people who can actually read (and complete) the lesson — so it shows for free
+// users on free lessons, paid users on paid lessons, and never for gated ones.
+// ─────────────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function () {
+  var m = window.location.pathname.match(/\/lessons\/([a-z0-9-]+)\//i);
+  if (!m) return;
+  var track = m[1].toLowerCase();
+  var TRACKS = { foundations: 1, chatgpt: 1, claude: 1, copilot: 1, gemini: 1, perplexity: 1 };
+  if (!TRACKS[track]) return;
+
+  var row = document.querySelector('.challenge .btn-row');
+  if (!row || document.getElementById('lgpt-sticker-btn')) return;
+
+  // Lesson title: prefer og:title, then the H1 minus its serif tagline.
+  var title = '';
+  var og = document.querySelector('meta[property="og:title"]');
+  if (og && og.content) title = og.content.trim();
+  if (!title) {
+    var h1 = document.querySelector('.lesson h1') || document.querySelector('h1');
+    if (h1) {
+      var clone = h1.cloneNode(true);
+      var serif = clone.querySelector('.serif');
+      if (serif) serif.remove();
+      title = clone.textContent.trim().replace(/[:\u2014\-\s]+$/, '') || h1.textContent.trim();
+    }
+  }
+  if (!title) title = (document.title || '').split(' \u2014 ')[0].trim();
+
+  var a = document.createElement('a');
+  a.id = 'lgpt-sticker-btn';
+  a.className = 'btn';
+  a.href = '/sticker/' + track + '?title=' + encodeURIComponent(title);
+  a.textContent = '\uD83C\uDF89 Get your sticker \u2192';
+  row.insertBefore(a, row.firstChild);
+});

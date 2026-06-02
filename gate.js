@@ -207,11 +207,21 @@ s.textContent = '.lesson h1 { overflow-wrap: break-word; word-break: break-word;
 // users on free lessons, paid users on paid lessons, and never for gated ones.
 // ─────────────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function () {
+  var KNOWN = { foundations: 1, chatgpt: 1, claude: 1, copilot: 1, gemini: 1, perplexity: 1 };
+
+  // Track: from the URL (/lessons/<track>/...), falling back to the
+  // "← <Track> Mastery" nav link for lessons that live at /lessons/<slug>.
+  var track = null;
   var m = window.location.pathname.match(/\/lessons\/([a-z0-9-]+)\//i);
-  if (!m) return;
-  var track = m[1].toLowerCase();
-  var TRACKS = { foundations: 1, chatgpt: 1, claude: 1, copilot: 1, gemini: 1, perplexity: 1 };
-  if (!TRACKS[track]) return;
+  if (m && KNOWN[m[1].toLowerCase()]) track = m[1].toLowerCase();
+  if (!track) {
+    var nb = document.querySelector('a.nav-back[href^="/lessons/"]');
+    if (nb) {
+      var m2 = (nb.getAttribute('href') || '').match(/\/lessons\/([a-z0-9-]+)/i);
+      if (m2 && KNOWN[m2[1].toLowerCase()]) track = m2[1].toLowerCase();
+    }
+  }
+  if (!track) return;
 
   var row = document.querySelector('.challenge .btn-row');
   if (!row || document.getElementById('lgpt-sticker-btn')) return;
@@ -236,5 +246,17 @@ document.addEventListener('DOMContentLoaded', function () {
   a.className = 'btn';
   a.href = '/sticker/' + track + '?title=' + encodeURIComponent(title);
   a.textContent = '\uD83C\uDF89 Get your sticker \u2192';
+
+  // Record this lesson as completed (per-device) so the account page can fill
+  // in its sticker slots. Stored under the track, keyed by the lesson path.
+  a.addEventListener('click', function () {
+    try {
+      var store = JSON.parse(localStorage.getItem('lgpt_completed') || '{}') || {};
+      if (!store[track]) store[track] = {};
+      store[track][window.location.pathname] = true;
+      localStorage.setItem('lgpt_completed', JSON.stringify(store));
+    } catch (e) {}
+  });
+
   row.insertBefore(a, row.firstChild);
 });

@@ -88,6 +88,26 @@ async function listMembers(businessId) {
   return Array.isArray(rows) ? rows : [];
 }
 
+// Make sure the admin always occupies a seat — self-heals older/edge cases where
+// the purchase webhook didn't record the admin's member row.
+async function ensureAdminMember(biz) {
+  const existing = await sbSelect(
+    `business_members?business_id=eq.${enc(biz.id)}&role=eq.admin&status=in.(active,pending)&select=id`
+  );
+  if (Array.isArray(existing) && existing.length) return;
+  await sbInsert('business_members', {
+    business_id: biz.id,
+    user_id: biz.admin_id || null,
+    email: normEmail(biz.admin_email),
+    full_name: null,
+    role: 'admin',
+    status: 'active',
+    invited_at: nowIso(),
+    activated_at: nowIso(),
+  });
+  await setProfilePlan(biz.admin_email, accessTierFor(biz.plan), 'active');
+}
+
 async function sendInviteEmail(email, company, tier) {
   if (!RESEND_API_KEY) return;
   const tierLabel = tier === 'pro_plus' ? 'Pro+' : 'Pro';
@@ -231,6 +251,7 @@ export default async function handler(req, res) {
     if (!user) return res.status(401).json({ error: 'Please sign in again.' });
     const biz = await findAdminBusiness(user);
     if (!biz) return res.status(403).json({ error: 'This account isn’t set up as a team admin.' });
+    await ensureAdminMember(biz);
     const members = await listMembers(biz.id);
     return res.status(200).json({
       business: { company_name: biz.company_name, plan: biz.plan, seats: biz.seats, status: biz.subscription_status },
@@ -248,6 +269,7 @@ export default async function handler(req, res) {
     if (biz.subscription_status && biz.subscription_status !== 'active') {
       return res.status(403).json({ error: 'Your subscription isn’t active right now.' });
     }
+    await ensureAdminMember(biz);
     const email = normEmail(body.email);
     const fullName = (body.name || '').trim() || null;
     if (!EMAIL_RE.test(email)) return res.status(400).json({ error: 'Please enter a valid email address.' });
@@ -280,6 +302,61 @@ export default async function handler(req, res) {
 
     const updated = await listMembers(biz.id);
     return res.status(200).json({ ok: true, seatsUsed: updated.length, members: updated });
+  }
+
+  // ── INVITE BULK (admin assigns many seats from a CSV / pasted list) ─────────────
+  if (action === 'invite-bulk') {
+    const user = await getUser(body.token);
+    if (!user) return res.status(401).json({ error: 'Please sign in again.' });
+    const biz = await findAdminBusiness(user);
+    if (!biz) return res.status(403).json({ error: 'This account isn’t set up as a team admin.' });
+    if (biz.subscription_status && biz.subscription_status !== 'active') {
+      return res.status(403).json({ error: 'Your subscription isn’t active right now.' });
+    }
+    await ensureAdminMember(biz);
+
+    // Clean + de-dupe the incoming list.
+    const raw = Array.isArray(body.emails) ? body.emails : [];
+    const seen = new Set();
+    const cleaned = [];
+    for (const r of raw) {
+      const e = normEmail(r);
+      if (e && !seen.has(e)) { seen.add(e); cleaned.push(e); }
+    }
+
+    const members = await listMembers(biz.id);
+    const onTeam = new Set(members.map((m) => normEmail(m.email)));
+    let used = members.length;
+    const tier = accessTierFor(biz.plan);
+
+    const invited = [];
+    const skipped = [];
+    for (const email of cleaned) {
+      if (!EMAIL_RE.test(email)) { skipped.push({ email, reason: 'invalid' }); continue; }
+      if (onTeam.has(email)) { skipped.push({ email, reason: 'already on team' }); continue; }
+      if (used >= biz.seats) { skipped.push({ email, reason: 'no seats left' }); continue; }
+
+      const prof = await sbSelect(`profiles?email=eq.${enc(email)}&select=id`);
+      const profileId = Array.isArray(prof) && prof[0] ? prof[0].id : null;
+      await sbInsert('business_members', {
+        business_id: biz.id,
+        user_id: profileId,
+        email,
+        full_name: null,
+        role: 'member',
+        status: profileId ? 'active' : 'pending',
+        invited_at: nowIso(),
+        activated_at: profileId ? nowIso() : null,
+      });
+      if (profileId) await setProfilePlan(email, tier, 'active');
+      await sendInviteEmail(email, biz.company_name, tier);
+      onTeam.add(email);
+      used++;
+      invited.push(email);
+    }
+
+    const after = await listMembers(biz.id);
+    return res.status(200).json({ ok: true, invited, skipped, seatsUsed: after.length, members: after });
   }
 
   // ── REMOVE (admin frees a seat) ────────────────────────────────────────────────

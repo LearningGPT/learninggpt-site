@@ -68,10 +68,10 @@ s.textContent = '.lesson h1 { overflow-wrap: break-word; word-break: break-word;
     function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 
     var html = '<div class="lgpt-lnav">';
-    if (prev) html += '<a class="lgpt-lnav-btn lgpt-lnav-prev" href="' + prev.url + '"><span class="lgpt-lnav-dir">\u2190 Previous</span><span class="lgpt-lnav-title">' + esc(prev.title) + '</span></a>';
+    if (prev) html += '<a class="lgpt-lnav-btn lgpt-lnav-prev" href="' + prev.url + '"><span class="lgpt-lnav-dir">← Previous</span><span class="lgpt-lnav-title">' + esc(prev.title) + '</span></a>';
     else html += '<span class="lgpt-lnav-spacer"></span>';
     html += '<a class="lgpt-lnav-all" href="' + track.index + '">' + esc(track.label) + '</a>';
-    if (next) html += '<a class="lgpt-lnav-btn lgpt-lnav-next" href="' + next.url + '"><span class="lgpt-lnav-dir">Next \u2192</span><span class="lgpt-lnav-title">' + esc(next.title) + '</span></a>';
+    if (next) html += '<a class="lgpt-lnav-btn lgpt-lnav-next" href="' + next.url + '"><span class="lgpt-lnav-dir">Next →</span><span class="lgpt-lnav-title">' + esc(next.title) + '</span></a>';
     else html += '<span class="lgpt-lnav-spacer"></span>';
     html += '</div>';
 
@@ -84,20 +84,29 @@ s.textContent = '.lesson h1 { overflow-wrap: break-word; word-break: break-word;
     else document.body.appendChild(wrap);
   })();
 
-  const plan = localStorage.getItem('lgpt_plan') || 'free';
+  // ─────────────────────────────────────────────────────────────────────────
+  // ACCESS CONTROL
+  // Free lessons  → open to everyone, no sign-in required.
+  // Pro / Pro+    → gated; require a verified account on the right plan.
+  // Lesson tier is read from the meta chips on the page:
+  //   .chip-pro-plus → Pro+, .chip-pro → Pro, otherwise → Free.
+  // ─────────────────────────────────────────────────────────────────────────
   const token = localStorage.getItem('lgpt_token');
 
   const proPlusChips = document.querySelectorAll('.chip-pro-plus');
   const proChips = document.querySelectorAll('.chip-pro');
-  const freeChips = document.querySelectorAll('.chip:not(.chip-pro):not(.chip-pro-plus)');
 
   let required = 'free';
-  let isFreePreview = false;
-
   if (proPlusChips.length > 0) required = 'pro_plus';
   else if (proChips.length > 0) required = 'pro';
-  else if (freeChips.length > 0) isFreePreview = true;
- 
+
+  // Free lessons: render fully, never wall. (Sign-in button stays in the nav,
+  // signup still works, and progress is tracked in localStorage regardless —
+  // so people can still make a free account to track progress, just aren't
+  // forced to before reading.)
+  if (required === 'free') return;
+
+  // Paid lessons (Pro / Pro+) stay gated.
   if (token) {
     fetch('/api/auth', {
       method: 'POST',
@@ -109,22 +118,19 @@ s.textContent = '.lesson h1 { overflow-wrap: break-word; word-break: break-word;
       if (data.authenticated) {
         localStorage.setItem('lgpt_plan', data.plan);
         const ok =
-          required === 'free' ||
           (required === 'pro' && (data.plan === 'pro' || data.plan === 'pro_plus')) ||
           (required === 'pro_plus' && data.plan === 'pro_plus');
         if (!ok) showPaywall(required);
       } else {
         localStorage.removeItem('lgpt_token');
         localStorage.removeItem('lgpt_plan');
-        showSignIn(isFreePreview);
+        showPaywall(required);
       }
     })
-    .catch(() => {
-      if (required !== 'free') showPaywall(required);
-      else showSignIn(isFreePreview);
-    });
+    .catch(() => { showPaywall(required); });
   } else {
-    showSignIn(isFreePreview);
+    // Logged-out visitor on a paid lesson → show the upgrade paywall.
+    showPaywall(required);
   }
 
   function hideContent(isPreview) {
@@ -158,23 +164,6 @@ s.textContent = '.lesson h1 { overflow-wrap: break-word; word-break: break-word;
       if (deck) deck.insertAdjacentElement('afterend', wall);
       else container.appendChild(wall);
     }
-  }
- 
-  function showSignIn(isPreview) {
-    const container = hideContent(isPreview);
-    if (!container) return;
-    insertWall(container, isPreview, `
-      <div style="margin:48px 0;padding:48px 40px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:20px;text-align:center;">
-        <div style="font-size:40px;margin-bottom:16px;">👋</div>
-        <h2 style="font-size:26px;font-weight:800;margin:0 0 12px;color:#f5f5fa;">Sign in to continue</h2>
-        <p style="font-size:16px;color:#a8a8c0;margin:0 0 32px;max-width:380px;margin-left:auto;margin-right:auto;line-height:1.6;">
-          Create a free account to access this lesson and track your progress. No credit card required.
-        </p>
-        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-          <a href="/auth/signup?redirect=${encodeURIComponent(window.location.pathname)}" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#7c5cff,#5b8def);color:white;padding:14px 28px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none;box-shadow:0 6px 24px rgba(124,92,255,0.3);">Create free account →</a>
-          <a href="/auth/login?redirect=${encodeURIComponent(window.location.pathname)}" style="display:inline-flex;align-items:center;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.14);color:#a8a8c0;padding:14px 28px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none;">Sign in</a>
-        </div>
-      </div>`);
   }
 
   function showPaywall(required) {
@@ -236,16 +225,16 @@ document.addEventListener('DOMContentLoaded', function () {
       var clone = h1.cloneNode(true);
       var serif = clone.querySelector('.serif');
       if (serif) serif.remove();
-      title = clone.textContent.trim().replace(/[:\u2014\-\s]+$/, '') || h1.textContent.trim();
+      title = clone.textContent.trim().replace(/[:—\-\s]+$/, '') || h1.textContent.trim();
     }
   }
-  if (!title) title = (document.title || '').split(' \u2014 ')[0].trim();
+  if (!title) title = (document.title || '').split(' — ')[0].trim();
 
   var a = document.createElement('a');
   a.id = 'lgpt-sticker-btn';
   a.className = 'btn';
   a.href = '/sticker/' + track + '?title=' + encodeURIComponent(title);
-  a.textContent = '\uD83C\uDF89 Get your sticker \u2192';
+  a.textContent = '🎉 Get your sticker →';
 
   // Record this lesson as completed (per-device) so the account page can fill
   // in its sticker slots. Stored under the track, keyed by the lesson path.

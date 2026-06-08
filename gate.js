@@ -103,8 +103,12 @@ s.textContent = '.lesson h1 { overflow-wrap: break-word; word-break: break-word;
   // Free lessons: render fully, never wall. (Sign-in button stays in the nav,
   // signup still works, and progress is tracked in localStorage regardless —
   // so people can still make a free account to track progress, just aren't
-  // forced to before reading.)
-  if (required === 'free') return;
+  // forced to before reading.) Logged-out readers get a soft, dismissible
+  // signup nudge that hides no content.
+  if (required === 'free') {
+    if (!token) showFreeSignupNudge();
+    return;
+  }
 
   // Paid lessons (Pro / Pro+) stay gated.
   if (token) {
@@ -185,6 +189,33 @@ s.textContent = '.lesson h1 { overflow-wrap: break-word; word-break: break-word;
         </div>
         <p style="font-size:13px;color:#6b6b85;margin:20px 0 0;">Already a member? <a href="/auth/login" style="color:#7c5cff;">Sign in →</a></p>
       </div>`);
+  }
+
+  // ── Soft signup nudge for free lessons (non-blocking) ──
+  // Inline card after the deck. Hides no content; dismissible and remembered.
+  function showFreeSignupNudge() {
+    try { if (localStorage.getItem('lgpt_nudge_dismissed') === '1') return; } catch (e) {}
+    const container = document.querySelector('article.lesson .container');
+    if (!container || document.getElementById('lgpt-free-nudge')) return;
+    const deck = container.querySelector('.deck');
+    const bar = document.createElement('div');
+    bar.id = 'lgpt-free-nudge';
+    bar.style.cssText = 'position:relative;margin:0 0 36px;padding:16px 44px 16px 20px;background:linear-gradient(135deg,rgba(68,224,164,0.10),rgba(124,92,255,0.08));border:1px solid rgba(68,224,164,0.28);border-radius:14px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;';
+    bar.innerHTML = `
+      <span style="font-size:22px;line-height:1;">🎓</span>
+      <span style="flex:1;min-width:200px;font-size:14.5px;color:#f5f5fa;line-height:1.5;">
+        <strong style="font-weight:700;">Free to read — no account needed.</strong>
+        <span style="color:#a8a8c0;"> Create a free account to track your progress and collect a sticker for every lesson you finish.</span>
+      </span>
+      <a href="/auth/signup?redirect=${encodeURIComponent(window.location.pathname)}" style="flex-shrink:0;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#44e0a4,#7c5cff);color:white;padding:9px 18px;border-radius:9px;font-size:13.5px;font-weight:600;text-decoration:none;white-space:nowrap;">Create free account →</a>
+      <button id="lgpt-nudge-x" aria-label="Dismiss" style="position:absolute;top:10px;right:12px;background:none;border:none;color:#6b6b85;font-size:18px;line-height:1;cursor:pointer;padding:2px;">✕</button>`;
+    if (deck && deck.parentNode) deck.insertAdjacentElement('afterend', bar);
+    else container.insertBefore(bar, container.firstChild);
+    const x = bar.querySelector('#lgpt-nudge-x');
+    if (x) x.addEventListener('click', function () {
+      bar.remove();
+      try { localStorage.setItem('lgpt_nudge_dismissed', '1'); } catch (e) {}
+    });
   }
 });
 

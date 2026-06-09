@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI for the Trades — quotes, estimates & paperwork in minutes | LearningGPT</title>
+<meta name="description" content="Practical AI for electricians, plumbers, HVAC techs and contractors. Write quotes and estimates, look up code, draft customer texts, and handle paperwork in minutes — no code, no jargon. Start free." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#ff9e4d" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://learninggpt.ai/trades" />
+<meta property="og:title" content="AI for the Trades — without the tech-bro nonsense" />
+<meta property="og:description" content="The practical AI playbook for the trades: quotes, estimates, code lookups, customer messages, and paperwork in minutes. No code, no jargon." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root {
+  --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a;
+  --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14);
+  --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85;
+  --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --danger:#ff6b8a;
+  --track:#ff9e4d; --track-2:#7c5cff;
+  --radius:14px; --radius-lg:20px; --container:1080px;
+}
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.28;}
+.bg-orb.one{width:520px;height:520px;top:-120px;left:-140px;background:#ff9e4d;}
+.bg-orb.two{width:600px;height:600px;top:45%;right:-220px;background:#7c5cff;opacity:0.22;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;box-shadow:0 4px 16px rgba(124,92,255,0.5);}
+.nav-links{display:flex;gap:20px;align-items:center;font-size:14px;}
+.nav-links a{color:var(--text-dim);} .nav-links a:hover{color:var(--text);}
+.nav-cta{padding:8px 16px;border-radius:8px;background:linear-gradient(135deg,#ff9e4d,#7c5cff);color:white !important;font-weight:600;white-space:nowrap;}
+@media(max-width:640px){.nav-links .hide-sm{display:none;}}
+
+.hero{text-align:center;padding:74px 0 30px;}
+.eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--track);border:1px solid rgba(255,158,77,0.35);background:rgba(255,158,77,0.1);padding:6px 14px;border-radius:999px;margin-bottom:22px;}
+.hero h1{font-size:clamp(34px,5.2vw,56px);font-weight:800;line-height:1.1;letter-spacing:-0.02em;margin:0 0 18px;}
+.hero h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;background:linear-gradient(135deg,#ff9e4d 0%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;padding-right:0.12em;}
+.hero p{font-size:18.5px;color:var(--text-dim);max-width:640px;margin:0 auto 30px;line-height:1.6;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 26px;border-radius:10px;font-weight:600;font-size:15px;}
+.btn-primary{background:linear-gradient(135deg,#ff9e4d,#7c5cff);color:white;box-shadow:0 6px 24px rgba(255,158,77,0.3);}
+.btn-primary:hover{color:white;transform:translateY(-1px);}
+.btn-ghost{background:rgba(255,255,255,0.05);border:1px solid var(--line-strong);color:var(--text);}
+.hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.hero-note{font-size:13px;color:var(--text-mute);margin-top:16px;}
+
+.section{padding:46px 0;}
+.section h2{font-size:clamp(26px,3.4vw,38px);font-weight:800;letter-spacing:-0.01em;margin:0 0 12px;text-align:center;}
+.section .lead{font-size:17px;color:var(--text-dim);max-width:640px;margin:0 auto 36px;text-align:center;line-height:1.6;}
+
+.problem{background:rgba(0,0,0,0.22);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.problem .wrap{max-width:760px;margin:0 auto;text-align:center;}
+.problem p{font-size:17px;color:var(--text);line-height:1.7;margin:0 0 16px;}
+.problem strong{color:var(--track);}
+
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
+@media(max-width:820px){.cards{grid-template-columns:1fr;}}
+.card{background:linear-gradient(180deg,var(--surface) 0%,var(--bg-soft) 100%);border:1px solid var(--line);border-radius:var(--radius-lg);padding:26px;}
+.card-head{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+.card-ico{width:38px;height:38px;border-radius:10px;background:rgba(255,158,77,0.14);border:1px solid rgba(255,158,77,0.35);display:grid;place-items:center;font-size:19px;flex-shrink:0;}
+.card h3{font-size:18px;font-weight:700;margin:0;}
+.card p{font-size:14.5px;color:var(--text-dim);margin:0 0 14px;line-height:1.65;}
+.prompt{background:rgba(0,0,0,0.32);border:1px solid var(--line);border-radius:10px;padding:13px 15px;font-family:'SFMono-Regular',Consolas,monospace;font-size:13px;color:var(--text);line-height:1.6;}
+.prompt .lbl{display:block;font-family:'Inter',sans-serif;font-size:10px;letter-spacing:0.8px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:6px;}
+
+.gotcha{max-width:820px;margin:36px auto 0;background:rgba(255,181,71,0.07);border:1px solid rgba(255,181,71,0.28);border-radius:var(--radius-lg);padding:22px 26px;font-size:15px;color:var(--text);line-height:1.7;}
+.gotcha b{color:var(--warn);}
+
+.trades-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:780px;margin:0 auto;}
+.trade-chip{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;background:rgba(255,255,255,0.04);border:1px solid var(--line);border-radius:999px;font-size:14px;font-weight:500;color:var(--text);}
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:900px;margin:0 auto;}
+@media(max-width:820px){.steps{grid-template-columns:1fr;}}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:24px;}
+.step .n{width:34px;height:34px;border-radius:9px;background:rgba(255,158,77,0.15);border:1px solid rgba(255,158,77,0.35);color:var(--track);display:grid;place-items:center;font-weight:700;margin-bottom:14px;}
+.step h3{font-size:17px;margin:0 0 6px;} .step p{font-size:14px;color:var(--text-dim);margin:0;line-height:1.6;}
+
+.cta-band{margin:54px 0 20px;padding:48px 40px;text-align:center;background:linear-gradient(135deg,rgba(255,158,77,0.14),rgba(124,92,255,0.1));border:1px solid rgba(255,158,77,0.28);border-radius:var(--radius-lg);}
+.cta-band h2{font-size:30px;font-weight:800;margin:0 0 10px;}
+.cta-band p{font-size:16px;color:var(--text-dim);margin:0 0 26px;}
+
+footer{border-top:1px solid var(--line);padding:30px 0;margin-top:30px;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--text-mute);flex-wrap:wrap;gap:12px;}
+@media(max-width:600px){.footer-inner{flex-direction:column;text-align:center;}}
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <div class="nav-links">
+      <a href="/lessons/" class="hide-sm">Lessons</a>
+      <a href="/pricing" class="hide-sm">Pricing</a>
+      <a href="/auth/signup" class="nav-cta">Start free →</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <span class="eyebrow">AI for the Trades</span>
+    <h1>AI for the trades — <span class="serif">without the tech-bro nonsense.</span></h1>
+    <p>You don't have time to "learn AI." You have quotes to send, customers to call, and jobs to run. This is the plain-English playbook for using AI to knock out the office work faster — so you spend more time on the tools, not the paperwork.</p>
+    <div class="hero-cta">
+      <a href="/auth/signup" class="btn btn-primary">Start free →</a>
+      <a href="#uses" class="btn btn-ghost">See what it does</a>
+    </div>
+    <p class="hero-note">Free to start · No credit card · Works on your phone</p>
+  </div>
+</header>
+
+<!-- PROBLEM -->
+<section class="section problem">
+  <div class="container">
+    <div class="wrap">
+      <h2>Every "AI" lesson is built for office workers.</h2>
+      <p>Open any AI course and it's all marketing funnels, code, and corporate buzzwords. <strong>Nobody's showing a contractor how to write an estimate, an electrician how to check a code question, or a plumber how to handle a tough customer text.</strong></p>
+      <p>That's the whole point of this. Same powerful tools — ChatGPT, Claude, Copilot, Gemini — taught for the work you actually do. No coding. No jargon. Just the stuff that saves you an hour a day.</p>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section class="section" id="uses">
+  <div class="container">
+    <h2>What AI actually does on the job</h2>
+    <p class="lead">Real tasks, with the exact words to type. Copy these, swap in your details, and go.</p>
+    <div class="cards">
+
+      <div class="card">
+        <div class="card-head"><div class="card-ico">🧾</div><h3>Write quotes &amp; estimates</h3></div>
+        <p>Turn a few rough notes into a clean, itemized estimate a customer can read and trust — in under a minute.</p>
+        <div class="prompt"><span class="lbl">Try this</span>I'm a [your trade]. Write a clear, itemized estimate for [the job]. Materials: [list]. Labor: [hours] at [$/hr]. Add a friendly one-line intro and a note that the quote is good for 30 days. Keep it professional but plain.</div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div class="card-ico">📖</div><h3>Check code &amp; spec questions</h3></div>
+        <p>Get a fast, plain-English read on a code or spec question so you know what to look up — then confirm it the right way.</p>
+        <div class="prompt"><span class="lbl">Try this</span>I'm an electrician in [state]. In simple terms, what does the code generally say about [the situation]? Explain what it means in practice and what I should double-check. Remind me to confirm with my local inspector.</div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div class="card-ico">💬</div><h3>Handle customer messages</h3></div>
+        <p>The awkward texts — running late, the job got bigger, chasing a payment — written for you, friendly and clear.</p>
+        <div class="prompt"><span class="lbl">Try this</span>Write a short, friendly text telling a customer the repair is bigger than I quoted and why, with the new price of [$], so they don't feel blindsided. Offer to call if they have questions.</div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div class="card-ico">🔍</div><h3>Think through a diagnosis</h3></div>
+        <p>Snap a photo or describe the symptom and get the most likely causes, ranked — a second opinion before you dig in.</p>
+        <div class="prompt"><span class="lbl">Try this</span>Here's a photo of [the unit/panel/fixture]. The symptom is [what's happening]. List the most likely causes, most common first, and what I should check first. (You're the expert — this is just a starting point.)</div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div class="card-ico">⭐</div><h3>Reviews &amp; simple marketing</h3></div>
+        <p>Reply to Google reviews, write a quick seasonal post, or draft a simple flyer — without staring at a blank screen.</p>
+        <div class="prompt"><span class="lbl">Try this</span>Write three short, friendly replies I can use for Google reviews — one for a great review, one for an okay one, one for an unhappy customer. Keep them human, not corporate.</div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div class="card-ico">📋</div><h3>Knock out paperwork</h3></div>
+        <p>Change orders, invoices, proposals, job notes — turn your shorthand into clean documents in seconds.</p>
+        <div class="prompt"><span class="lbl">Try this</span>Turn these notes into a clean, professional change order with a clear description, the reason for the change, and the price difference: [your notes].</div>
+      </div>
+
+    </div>
+
+    <div class="gotcha"><b>One honest rule:</b> AI is fast, but it's sometimes confidently wrong — especially on code, measurements, and safety. You're the expert. Use it to draft, speed up, and get a second opinion — then verify anything that matters with your own knowledge, the manufacturer, or your inspector. We teach you exactly when to trust it and when not to.</div>
+  </div>
+</section>
+
+<!-- WHO -->
+<section class="section">
+  <div class="container">
+    <h2>Built for the people who build, fix, and run it</h2>
+    <p class="lead">If you run jobs and customers, this is for you.</p>
+    <div class="trades-row">
+      <span class="trade-chip">⚡ Electricians</span>
+      <span class="trade-chip">🔧 Plumbers</span>
+      <span class="trade-chip">❄️ HVAC</span>
+      <span class="trade-chip">🏗️ General contractors</span>
+      <span class="trade-chip">🪜 Roofers</span>
+      <span class="trade-chip">🎨 Painters</span>
+      <span class="trade-chip">🌳 Landscapers</span>
+      <span class="trade-chip">🚗 Auto repair</span>
+      <span class="trade-chip">🪚 Carpenters</span>
+      <span class="trade-chip">🔥 Welders</span>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section class="section">
+  <div class="container">
+    <h2>No code. No jargon. Just real work.</h2>
+    <p class="lead">Three steps and you're using it on a real job today.</p>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h3>Start free</h3><p>Make a free account — no credit card. The Foundations lessons get you going in 20 minutes.</p></div>
+      <div class="step"><div class="n">2</div><h3>Copy a prompt</h3><p>Grab one of the prompts above, swap in your details, and paste it into any AI. Done.</p></div>
+      <div class="step"><div class="n">3</div><h3>Pick your tool</h3><p>Our playground runs your prompt across every major AI side by side, so you learn which one's best for your work — and why.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="container">
+  <div class="cta-band">
+    <h2>Spend less time at the desk.</h2>
+    <p>Start free today — the Foundations track and the first lesson of every track are on us.</p>
+    <a href="/auth/signup" class="btn btn-primary">Start free →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>&copy; 2026 LearningGPT, Inc. · Independent. Not affiliated with OpenAI, Anthropic, Microsoft, Google, or Perplexity.</div>
+    <a href="/" style="color:var(--text-dim);">&larr; Back to home</a>
+  </div>
+</footer>
+</body>
+</html>

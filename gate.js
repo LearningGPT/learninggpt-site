@@ -1,15 +1,29 @@
 document.addEventListener('DOMContentLoaded', function() {
-const navInner = document.querySelector('nav .nav-inner, nav');
-  if (navInner && !navInner.querySelector('.sign-in-btn')) {
-    const signIn = document.createElement('a');
-    signIn.href = '/auth/login';
-    signIn.className = 'sign-in-btn';
-    signIn.textContent = 'Sign in';
-    signIn.style.cssText = 'padding:8px 16px; border-radius:8px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.14); color:#f5f5fa; font-size:14px; font-weight:600; text-decoration:none; white-space:nowrap;';
-    navInner.appendChild(signIn);
+  // ── Unified top nav (injected on every lesson page that loads gate.js) ──
+  var navInner = document.querySelector('nav .nav-inner') || document.querySelector('nav');
+  if (navInner && !navInner.querySelector('.lgpt-nav-injected')) {
+    var nb = navInner.querySelector('.nav-back');
+    if (nb) nb.style.display = 'none'; // hidden but kept in DOM (track fallback uses it)
+    var grp = document.createElement('div');
+    grp.className = 'lgpt-nav-injected';
+    grp.innerHTML =
+      '<a href="/lessons/" class="lgpt-nl hide-md">Lessons</a>' +
+      '<a href="/playground" class="lgpt-nl hide-md">Playground</a>' +
+      '<a href="/pricing" class="lgpt-nl hide-md">Pricing</a>' +
+      '<a href="/seniors" class="lgpt-nl hide-md">AI for Seniors</a>' +
+      '<a href="/auth/login" class="lgpt-nl lgpt-signin">Sign in</a>' +
+      '<a href="/auth/signup" class="lgpt-nl lgpt-cta">Start free →</a>';
+    navInner.appendChild(grp);
   }
-  const s = document.createElement('style');
-s.textContent = '.lesson h1 { overflow-wrap: break-word; word-break: break-word; } .lesson h1 .serif, .lesson h1 .grad { padding-right: 0.4em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }';
+  var s = document.createElement('style');
+  s.textContent =
+    '.lesson h1 { overflow-wrap: break-word; word-break: break-word; } .lesson h1 .serif, .lesson h1 .grad { padding-right: 0.4em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }' +
+    '.lgpt-nav-injected{display:flex;align-items:center;gap:18px;}' +
+    '.lgpt-nl{font-size:14px;color:#a8a8c0;text-decoration:none;white-space:nowrap;font-family:inherit;}' +
+    '.lgpt-nl:hover{color:#f5f5fa;}' +
+    '.lgpt-signin{padding:8px 14px;border-radius:8px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);color:#f5f5fa;}' +
+    '.lgpt-cta{padding:8px 16px;border-radius:8px;background:linear-gradient(135deg,#7c5cff,#5b8def);color:#fff;font-weight:600;}' +
+    '@media(max-width:760px){.lgpt-nav-injected .hide-md{display:none;}}';
   document.head.appendChild(s);
 
   // ── Auto next/prev lesson navigation ──

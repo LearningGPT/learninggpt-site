@@ -3,346 +3,137 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Automate Your Documents with AI — LearningGPT</title>
-<meta name="description" content="Stop writing routine documents from scratch. Draft proposals, contracts, and reports from a template and a prompt, build reusable document systems, and generate documents from data at scale." />
+<title>Automate Your Documents with AI — step-by-step | LearningGPT</title>
+<meta name="description" content="Automate documents with AI: generate proposals, contracts, reports and invoices from a few details, build reusable templates, and produce them at scale from your data. No code to start." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<meta name="theme-color" content="#5f7596" />
+<meta name="theme-color" content="#6366f1" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
-
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/automate-documents/" />
-<meta property="og:title" content="Automate Your Documents with AI — LearningGPT" />
-<meta property="og:description" content="From your first AI-drafted document to reusable systems and merge-from-data at scale." />
+<meta property="og:title" content="Automate your documents with AI, start to finish" />
+<meta property="og:description" content="Turn the documents that eat your week into minutes of work. Start free." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
-
 <style>
-:root {
-  --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a;
-  --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14);
-  --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85;
-  --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4;
-  --warn: #ffb547;
-  --radius: 14px; --radius-lg: 20px;
-  --container: 880px;
-  --track-color: #5f7596;
-  --track-gradient: linear-gradient(135deg, #5f7596, #7c5cff);
-}
-* { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
-body {
-  font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif;
-  background: var(--bg); color: var(--text);
-  line-height: 1.6; -webkit-font-smoothing: antialiased;
-  overflow-x: hidden; min-height: 100vh;
-}
-a { color: inherit; text-decoration: none; }
-
-.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.35; }
-.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #5f7596; }
-.bg-orb.two { width: 600px; height: 600px; top: 40%; right: -200px; background: #7c5cff; opacity: 0.3; }
-
-.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
-
-nav.top {
-  position: sticky; top: 0; z-index: 100;
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  background: rgba(10,10,26,0.85);
-  border-bottom: 1px solid var(--line);
-}
-.nav-inner {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 24px; max-width: 1180px; margin: 0 auto;
-}
-.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
-.logo-mark {
-  width: 30px; height: 30px; border-radius: 7px;
-  background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4);
-  display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white;
-  box-shadow: 0 4px 16px rgba(124,92,255,0.5);
-}
-.nav-back { font-size: 13px; color: var(--text-dim); }
-.nav-back:hover { color: var(--text); }
-
-.track-header { padding: 70px 0 40px; }
-.breadcrumb { font-size: 13px; color: var(--text-mute); margin-bottom: 18px; }
-.breadcrumb a { color: var(--text-dim); }
-.breadcrumb a:hover { color: var(--text); }
-.breadcrumb .sep { margin: 0 8px; opacity: 0.6; }
-
-.track-head-row { display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap; }
-.track-icon-lg {
-  width: 72px; height: 72px; border-radius: 16px;
-  background: var(--track-gradient);
-  display: grid; place-items: center; font-size: 34px; color: white; font-weight: 800;
-  flex-shrink: 0; box-shadow: 0 8px 30px rgba(95,117,150,0.4);
-}
-.track-head-text { flex: 1; min-width: 280px; }
-.track-status-pill {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 5px 12px; border-radius: 999px;
-  font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;
-  background: rgba(68,224,164,0.15); color: var(--accent);
-  border: 1px solid rgba(68,224,164,0.35);
-  margin-bottom: 12px;
-}
-.track-status-pill .dot {
-  width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
-  animation: pulse 1.6s infinite;
-}
-@keyframes pulse { 0%,100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.2); } }
-.track-head-text h1 {
-  font-size: clamp(34px, 5vw, 48px); font-weight: 800;
-  letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 14px;
-}
-.track-head-text h1 .serif {
-  font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400;
-  padding-right: 0.15em;
-  color: var(--track-color);
-}
-.track-head-text p { font-size: 17px; color: var(--text-dim); margin: 0; max-width: 580px; }
-
-.track-meta {
-  display: flex; gap: 28px; flex-wrap: wrap;
-  margin: 32px 0 0; padding: 18px 0;
-  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
-  font-size: 13.5px; color: var(--text-dim);
-}
-.track-meta-item { display: flex; flex-direction: column; gap: 2px; }
-.track-meta-item .lbl { font-size: 10.5px; color: var(--text-mute); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
-.track-meta-item .val { color: var(--text); font-weight: 600; font-size: 14px; }
-
-.lessons-section { padding: 50px 0 80px; }
-.lessons-section h2 {
-  font-size: 24px; font-weight: 700; letter-spacing: -0.01em;
-  margin: 0 0 8px;
-}
-.lessons-section .sub { font-size: 14.5px; color: var(--text-dim); margin: 0 0 28px; }
-
-.lesson-row {
-  display: block;
-  background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%);
-  border: 1px solid var(--line); border-radius: var(--radius);
-  padding: 22px 24px; margin-bottom: 12px;
-  transition: transform .15s, border-color .15s;
-}
-.lesson-row:hover { transform: translateX(4px); border-color: rgba(95,117,150,0.35); }
-.lesson-row.locked {
-  cursor: default; opacity: 0.7;
-}
-.lesson-row.locked:hover { transform: none; border-color: var(--line); }
-
-.lesson-row-inner { display: flex; gap: 18px; align-items: center; }
-.lesson-num {
-  width: 36px; height: 36px; border-radius: 8px;
-  background: rgba(95,117,150,0.12);
-  border: 1px solid rgba(95,117,150,0.25);
-  display: grid; place-items: center;
-  font-size: 14px; font-weight: 700; color: var(--track-color);
-  flex-shrink: 0;
-}
-.lesson-row.locked .lesson-num {
-  background: rgba(255,255,255,0.04);
-  border-color: var(--line);
-  color: var(--text-mute);
-}
-.lesson-body { flex: 1; min-width: 0; }
-.lesson-title {
-  font-size: 16px; font-weight: 600; color: var(--text);
-  margin: 0 0 4px; line-height: 1.35;
-}
-.lesson-desc {
-  font-size: 13.5px; color: var(--text-dim); margin: 0;
-  line-height: 1.5;
-}
-.lesson-meta-row {
-  font-size: 11.5px; color: var(--text-mute);
-  margin-top: 6px; display: flex; gap: 14px; flex-wrap: wrap;
-}
-.lesson-meta-row span b { color: var(--text-dim); font-weight: 600; }
-
-.lesson-status {
-  font-size: 11px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase;
-  padding: 4px 10px; border-radius: 999px; white-space: nowrap;
-}
-.lesson-status.live { background: rgba(68,224,164,0.18); color: var(--accent); border: 1px solid rgba(68,224,164,0.35); }
-.lesson-status.soon { background: rgba(255,255,255,0.06); color: var(--text-mute); border: 1px solid var(--line-strong); }
-.lesson-status.free { background: rgba(68,224,164,0.12); color: var(--accent); border: 1px solid rgba(68,224,164,0.3); }
-.lesson-status.pro { background: rgba(124,92,255,0.18); color: var(--brand); border: 1px solid rgba(124,92,255,0.35); }
-.lesson-status.pro-plus { background: rgba(255,181,71,0.18); color: var(--warn); border: 1px solid rgba(255,181,71,0.4); }
-.lesson-status-group { display: flex; gap: 4px; flex-shrink: 0; align-items: center; }
-
-.cta-band {
-  margin: 60px 0 80px;
-  background: linear-gradient(135deg, rgba(124,92,255,0.15), rgba(95,117,150,0.12));
-  border: 1px solid rgba(124,92,255,0.25);
-  border-radius: var(--radius-lg);
-  padding: 40px; text-align: center;
-}
-.cta-band h2 { font-size: 24px; font-weight: 700; margin: 0 0 12px; letter-spacing: -0.01em; }
-.cta-band h2 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.cta-band p { font-size: 15px; color: var(--text-dim); max-width: 520px; margin: 0 auto 20px; }
-.cta-band a.btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: linear-gradient(135deg, #7c5cff, #5b8def); color: white;
-  padding: 12px 22px; border-radius: 10px; font-weight: 600; font-size: 14px;
-  box-shadow: 0 6px 24px rgba(124,92,255,0.35);
-  transition: transform .15s;
-}
-.cta-band a.btn:hover { transform: translateY(-1px); }
-
-footer { border-top: 1px solid var(--line); padding: 30px 0; }
-.footer-inner {
-  max-width: var(--container); margin: 0 auto; padding: 0 24px;
-  display: flex; justify-content: space-between; align-items: center;
-  font-size: 13px; color: var(--text-mute);
-}
-@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
-
-/* Featured 'Start here' card */
-.featured-lesson {
-  display: block; text-decoration: none; color: inherit;
-  margin: 0 0 36px;
-  background: linear-gradient(135deg, rgba(95,117,150,0.15), rgba(124,92,255,0.08));
-  border: 1px solid rgba(95,117,150,0.35);
-  border-radius: 18px;
-  padding: 28px 32px;
-  position: relative; overflow: hidden;
-  transition: transform .15s ease, border-color .2s ease;
-}
-.featured-lesson:hover { transform: translateY(-2px); border-color: rgba(95,117,150,0.6); }
-.featured-lesson::before {
-  content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 4px;
-  background: linear-gradient(180deg, #5f7596, #7c5cff);
-}
-.featured-badge {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: 11px; font-weight: 700; letter-spacing: 1.2px;
-  color: var(--accent); margin-bottom: 12px;
-}
-.featured-dot {
-  width: 7px; height: 7px; border-radius: 50%; background: var(--accent);
-  box-shadow: 0 0 0 3px rgba(68,224,164,0.2);
-}
-.featured-title {
-  font-size: 22px; font-weight: 700; letter-spacing: -0.015em;
-  margin: 0 0 10px; color: var(--text);
-}
-.featured-desc { font-size: 15px; color: var(--text-dim); margin: 0 0 16px; line-height: 1.6; }
-.featured-meta {
-  display: flex; gap: 14px; align-items: center; font-size: 13px; color: var(--text-mute);
-}
-.featured-meta b { color: var(--text); font-weight: 600; }
-.featured-arrow { margin-left: auto; color: var(--brand-2); font-weight: 600; font-size: 14px; }
-
+:root{--bg:#0a0a1a;--bg-soft:#14142b;--surface:#1a1a3a;--line:rgba(255,255,255,0.08);--line-strong:rgba(255,255,255,0.14);--text:#f5f5fa;--text-dim:#a8a8c0;--text-mute:#6b6b85;--brand:#7c5cff;--brand-2:#5b8def;--accent:#44e0a4;--warn:#ffb547;--radius:14px;--radius-lg:20px;--container:880px;--track-color:#6366f1;--track-gradient:linear-gradient(135deg,#6366f1,#7c5cff);}
+*{box-sizing:border-box;}html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh;}
+a{color:inherit;text-decoration:none;}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.35;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:#6366f1;}
+.bg-orb.two{width:600px;height:600px;top:40%;right:-200px;background:#7c5cff;opacity:0.3;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;box-shadow:0 4px 16px rgba(124,92,255,0.5);}
+.nav-back{font-size:13px;color:var(--text-dim);}.nav-back:hover{color:var(--text);}
+.track-header{padding:70px 0 40px;}
+.breadcrumb{font-size:13px;color:var(--text-mute);margin-bottom:18px;}
+.breadcrumb a{color:var(--text-dim);}.breadcrumb a:hover{color:var(--text);}
+.breadcrumb .sep{margin:0 8px;opacity:0.6;}
+.track-head-row{display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;}
+.track-icon-lg{width:72px;height:72px;border-radius:16px;background:var(--track-gradient);display:grid;place-items:center;font-size:34px;color:white;font-weight:800;flex-shrink:0;box-shadow:0 8px 30px rgba(99,102,241,0.4);}
+.track-head-text{flex:1;min-width:280px;}
+.track-status-pill{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;background:rgba(68,224,164,0.15);color:var(--accent);border:1px solid rgba(68,224,164,0.35);margin-bottom:12px;}
+.track-status-pill .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 1.6s infinite;}
+@keyframes pulse{0%,100%{opacity:0.5;transform:scale(1);}50%{opacity:1;transform:scale(1.2);}}
+.track-head-text h1{font-size:clamp(34px,5vw,48px);font-weight:800;letter-spacing:-0.02em;line-height:1.1;margin:0 0 14px;}
+.track-head-text h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.15em;color:var(--track-color);}
+.track-head-text p{font-size:17px;color:var(--text-dim);margin:0;max-width:580px;}
+.track-meta{display:flex;gap:28px;flex-wrap:wrap;margin:32px 0 0;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:13.5px;color:var(--text-dim);}
+.track-meta-item{display:flex;flex-direction:column;gap:2px;}
+.track-meta-item .lbl{font-size:10.5px;color:var(--text-mute);text-transform:uppercase;letter-spacing:1px;font-weight:600;}
+.track-meta-item .val{color:var(--text);font-weight:600;font-size:14px;}
+.lessons-section{padding:50px 0 80px;}
+.lessons-section h2{font-size:24px;font-weight:700;letter-spacing:-0.01em;margin:0 0 8px;}
+.lessons-section .sub{font-size:14.5px;color:var(--text-dim);margin:0 0 28px;}
+.block-gap{margin-top:48px;}
+.prose{font-size:15.5px;color:var(--text-dim);line-height:1.75;max-width:680px;margin:0 0 16px;}
+.prose strong{color:var(--text);font-weight:600;}
+.who-chips{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 0;}
+.who-chip{font-size:13.5px;color:var(--text);background:rgba(255,255,255,0.04);border:1px solid var(--line);border-radius:999px;padding:8px 14px;}
+.outcomes{list-style:none;padding:0;margin:10px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:12px 28px;}
+@media(max-width:600px){.outcomes{grid-template-columns:1fr;}}
+.outcomes li{font-size:14.5px;color:var(--text);padding-left:30px;position:relative;line-height:1.5;}
+.outcomes li::before{content:'';position:absolute;left:0;top:2px;width:19px;height:19px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E");background-size:contain;background-repeat:no-repeat;}
+.faq-q{font-size:15.5px;font-weight:600;color:var(--text);margin:20px 0 5px;}
+.faq-a{font-size:14.5px;color:var(--text-dim);margin:0;line-height:1.7;max-width:680px;}
+.lesson-row{display:block;background:linear-gradient(180deg,var(--surface) 0%,var(--bg-soft) 100%);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;margin-bottom:12px;transition:transform .15s,border-color .15s;}
+.lesson-row:hover{transform:translateX(4px);border-color:rgba(99,102,241,0.35);}
+.lesson-row-inner{display:flex;gap:18px;align-items:center;}
+.lesson-num{width:36px;height:36px;border-radius:8px;background:rgba(99,102,241,0.12);border:1px solid rgba(99,102,241,0.25);display:grid;place-items:center;font-size:14px;font-weight:700;color:var(--track-color);flex-shrink:0;}
+.lesson-body{flex:1;min-width:0;}
+.lesson-title{font-size:16px;font-weight:600;color:var(--text);margin:0 0 4px;line-height:1.35;}
+.lesson-desc{font-size:13.5px;color:var(--text-dim);margin:0;line-height:1.5;}
+.lesson-meta-row{font-size:11.5px;color:var(--text-mute);margin-top:6px;display:flex;gap:14px;flex-wrap:wrap;}
+.lesson-meta-row span b{color:var(--text-dim);font-weight:600;}
+.lesson-status{font-size:11px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;padding:4px 10px;border-radius:999px;white-space:nowrap;}
+.lesson-status.live{background:rgba(68,224,164,0.18);color:var(--accent);border:1px solid rgba(68,224,164,0.35);}
+.lesson-status.pro{background:rgba(124,92,255,0.18);color:var(--brand);border:1px solid rgba(124,92,255,0.35);}
+.lesson-status.pro-plus{background:rgba(255,181,71,0.18);color:var(--warn);border:1px solid rgba(255,181,71,0.4);}
+.cta-band{margin:60px 0 80px;background:linear-gradient(135deg,rgba(124,92,255,0.15),rgba(91,141,239,0.12));border:1px solid rgba(124,92,255,0.25);border-radius:var(--radius-lg);padding:40px;text-align:center;}
+.cta-band h2{font-size:24px;font-weight:700;margin:0 0 12px;letter-spacing:-0.01em;}
+.cta-band h2 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.15em;}
+.cta-band p{font-size:15px;color:var(--text-dim);max-width:520px;margin:0 auto 20px;}
+.cta-band a.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#7c5cff,#5b8def);color:white;padding:12px 22px;border-radius:10px;font-weight:600;font-size:14px;box-shadow:0 6px 24px rgba(124,92,255,0.35);transition:transform .15s;}
+.cta-band a.btn:hover{transform:translateY(-1px);}
+footer{border-top:1px solid var(--line);padding:30px 0;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--text-mute);}
+@media(max-width:600px){.footer-inner{flex-direction:column;gap:12px;text-align:center;}}
+.featured-lesson{display:block;text-decoration:none;color:inherit;margin:0 0 36px;background:linear-gradient(135deg,rgba(99,102,241,0.15),rgba(124,92,255,0.08));border:1px solid rgba(99,102,241,0.35);border-radius:18px;padding:28px 32px;position:relative;overflow:hidden;transition:transform .15s ease,border-color .2s ease;}
+.featured-lesson:hover{transform:translateY(-2px);border-color:rgba(99,102,241,0.6);}
+.featured-lesson::before{content:'';position:absolute;top:0;left:0;bottom:0;width:4px;background:linear-gradient(180deg,#6366f1,#7c5cff);}
+.featured-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--accent);margin-bottom:12px;}
+.featured-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px rgba(68,224,164,0.2);}
+.featured-title{font-size:22px;font-weight:700;letter-spacing:-0.015em;margin:0 0 10px;color:var(--text);}
+.featured-desc{font-size:15px;color:var(--text-dim);margin:0 0 16px;line-height:1.6;}
+.featured-meta{display:flex;gap:14px;align-items:center;font-size:13px;color:var(--text-mute);}
+.featured-meta b{color:var(--text);font-weight:600;}
+.featured-arrow{margin-left:auto;color:var(--brand-2);font-weight:600;font-size:14px;}
 </style>
 </head>
 <body>
-
-<div class="bg-orb one"></div>
-<div class="bg-orb two"></div>
-
-<nav class="top">
-  <div class="nav-inner">
-    <a href="/" class="logo">
-      <div class="logo-mark">L</div>
-      LearningGPT
-    </a>
-    <a href="/lessons/" class="nav-back">← All lessons</a>
-  </div>
-</nav>
-
-<section class="track-header">
-  <div class="container">
-
-    <div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/lessons/">Lessons</a><span class="sep">/</span><span>Automate Your Documents</span></div>
-
-    <div class="track-head-row">
-      <div class="track-icon-lg">📄</div>
-      <div class="track-head-text">
-        <span class="track-status-pill"><span class="dot"></span> All 3 lessons live</span>
-        <h1>Automate your documents <span class="serif">drafts done in seconds</span></h1>
-        <p>Proposals, quotes, contracts, reports — the documents that eat your week are mostly the same shapes filled with different details. This build turns them into drafts done in seconds: your first AI-drafted document, then reusable template systems, then generating documents from data at scale.</p>
-      </div>
-    </div>
-
-    <div class="track-meta">
-      <div class="track-meta-item"><span class="lbl">Lessons</span><span class="val">3</span></div>
-      <div class="track-meta-item"><span class="lbl">Time</span><span class="val">~2.5 hours total</span></div>
-      <div class="track-meta-item"><span class="lbl">Level</span><span class="val">Beginner → Advanced</span></div>
-      <div class="track-meta-item"><span class="lbl">First lesson</span><span class="val">Free</span></div>
-    </div>
-
-  </div>
-</section>
-
-<section class="lessons-section">
-  <div class="container">
-
-    <a href="/lessons/automate-documents/first-document" class="featured-lesson"><div class="featured-lesson-inner">
-      <div class="featured-badge"><span class="featured-dot"></span> START HERE · FREE</div>
-      <h3 class="featured-title">Your first AI-drafted document</h3>
-      <p class="featured-desc">Pick a document you write often, hand AI the structure and your specifics, and get a polished draft in seconds — then review it properly before it goes out.</p>
-      <div class="featured-meta"><span><b>~12 min</b> read</span><span class="featured-arrow">Read free →</span></div>
-    </div></a>
-
-    <h2>What’s in this build</h2>
-    <p class="sub">Three lessons that stack: get a real result for free, then make it good, then make it yours.</p>
-
-    <a href="/lessons/automate-documents/first-document" class="lesson-row">
-      <div class="lesson-row-inner">
-        <div class="lesson-num">01</div>
-        <div class="lesson-body">
-          <h3 class="lesson-title">Your first AI-drafted document</h3>
-          <p class="lesson-desc">Turn a document you write often into a draft in seconds with a template, your specifics, and a prompt.</p>
-          <div class="lesson-meta-row"><span><b>~12 min</b> read</span><span>No code</span></div>
-        </div>
-        <span class="lesson-status live">Live · Free</span>
-      </div>
-    </a>
-
-    <a href="/lessons/automate-documents/document-systems" class="lesson-row">
-      <div class="lesson-row-inner">
-        <div class="lesson-num">02</div>
-        <div class="lesson-body">
-          <h3 class="lesson-title">Reusable document systems</h3>
-          <p class="lesson-desc">Build templates with variables, lock in brand consistency, and organize a library so the right document is one prompt away.</p>
-          <div class="lesson-meta-row"><span><b>~14 min</b> read</span><span>Hands-on</span></div>
-        </div>
-        <span class="lesson-status pro">Pro</span>
-      </div>
-    </a>
-
-    <a href="/lessons/automate-documents/documents-at-scale" class="lesson-row">
-      <div class="lesson-row-inner">
-        <div class="lesson-num">03</div>
-        <div class="lesson-body">
-          <h3 class="lesson-title">Documents at scale</h3>
-          <p class="lesson-desc">Generate many documents from a spreadsheet or CRM, handle complex contracts and reports, and run a review-and-approval workflow.</p>
-          <div class="lesson-meta-row"><span><b>~16 min</b> read</span><span>Advanced</span></div>
-        </div>
-        <span class="lesson-status pro-plus">Pro+</span>
-      </div>
-    </a>
-
-    <div class="cta-band">
-      <h2>Want the advanced builds? <span class="serif">Go Pro.</span></h2>
-      <p>$9/mo founding pricing (vs $19 standard). Unlock every lesson in every build, all five tool tracks, and unlimited playground. Lock in lifetime pricing.</p>
-      <a href="/pricing" class="btn">See Pro membership →</a>
-    </div>
-
-  </div>
-</section>
-
-<footer>
-  <div class="footer-inner">
-    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with OpenAI, Anthropic, Microsoft, Google, or xAI.</div>
-    <a href="/lessons/" style="color: var(--text-dim);">← All lessons</a>
-  </div>
-</footer>
-
-</body>
-</html>
+<div class="bg-orb one"></div><div class="bg-orb two"></div>
+<nav class="top"><div class="nav-inner"><a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a><a href="/lessons/" class="nav-back">← All lessons</a></div></nav>
+<section class="track-header"><div class="container">
+<div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/lessons/">Lessons</a><span class="sep">/</span><span>Automate Documents</span></div>
+<div class="track-head-row">
+<div class="track-icon-lg">📄</div>
+<div class="track-head-text">
+<span class="track-status-pill"><span class="dot"></span> All 3 lessons live</span>
+<h1>Automate your documents <span class="serif">start to&nbsp;finish</span></h1>
+<p>Proposals, contracts, reports, invoices — the documents that eat your week. Learn to generate them from a few details, build a system that produces them on demand, and handle them at scale.</p>
+</div></div>
+<div class="track-meta">
+<div class="track-meta-item"><span class="lbl">Lessons</span><span class="val">3</span></div>
+<div class="track-meta-item"><span class="lbl">Time</span><span class="val">~2.5 hours total</span></div>
+<div class="track-meta-item"><span class="lbl">Level</span><span class="val">Beginner → Advanced</span></div>
+<div class="track-meta-item"><span class="lbl">First lesson</span><span class="val">Free</span></div>
+</div></div></section>
+<section class="lessons-section"><div class="container">
+<a href="/lessons/automate-documents/first-document" class="featured-lesson"><div class="featured-lesson-inner">
+<div class="featured-badge"><span class="featured-dot"></span> START HERE · FREE</div>
+<h3 class="featured-title">Your first document, generated in seconds</h3>
+<p class="featured-desc">Turn a few details into a clean, professional document — a proposal, a letter, a report — with AI doing the drafting and staying on-brand. No code.</p>
+<div class="featured-meta"><span><b>~12 min</b> read</span><span class="featured-arrow">Read free →</span></div>
+</div></a>
+<h2>What you'll build</h2>
+<p class="prose">By the end you'll have a system that turns the documents eating your week into a few minutes of work. You start by generating a single clean, professional document from a few details. Then you build templates and reusable workflows for the documents you make again and again. Finally you generate them at scale — merging your data and automating the whole pipeline.</p>
+<p class="prose">The trick is treating documents as a repeatable system, not a from-scratch chore — and keeping AI accurate and on-brand. It's cross-tool, so you use the best AI for drafting versus automating.</p>
+<h2 class="block-gap">Who this build is for</h2>
+<p class="sub">If repetitive paperwork eats your week, this is for you.</p>
+<div class="who-chips"><span class="who-chip">💼 Consultants & agencies</span><span class="who-chip">🏢 Small businesses</span><span class="who-chip">⚖️ Legal & professional services</span><span class="who-chip">💰 Finance & ops</span><span class="who-chip">🤝 Sales (proposals & quotes)</span><span class="who-chip">📋 Anyone buried in paperwork</span></div>
+<h2 class="block-gap">What's in this build</h2>
+<p class="sub">Three lessons that stack: get something live for free, then make it good, then make it yours.</p>
+<a href="/lessons/automate-documents/first-document" class="lesson-row"><div class="lesson-row-inner"><div class="lesson-num">01</div><div class="lesson-body"><h3 class="lesson-title">Your first document, generated in seconds</h3><p class="lesson-desc">Turn rough details into a clean, professional document, and learn the prompt that keeps it accurate and on-brand.</p><div class="lesson-meta-row"><span><b>~12 min</b> read</span><span>No code</span></div></div><span class="lesson-status live">Live · Free</span></div></a><a href="/lessons/automate-documents/document-systems" class="lesson-row"><div class="lesson-row-inner"><div class="lesson-num">02</div><div class="lesson-body"><h3 class="lesson-title">Document systems — templates &amp; reusable workflows</h3><p class="lesson-desc">Build templates and reusable workflows so the documents you make over and over take seconds, not hours.</p><div class="lesson-meta-row"><span><b>~14 min</b> read</span><span>Hands-on</span></div></div><span class="lesson-status pro">Pro</span></div></a><a href="/lessons/automate-documents/documents-at-scale" class="lesson-row"><div class="lesson-row-inner"><div class="lesson-num">03</div><div class="lesson-body"><h3 class="lesson-title">Documents at scale — data, merge &amp; automation</h3><p class="lesson-desc">Generate many documents from your data, merge in the right details, and automate the whole pipeline.</p><div class="lesson-meta-row"><span><b>~16 min</b> read</span><span>Advanced</span></div></div><span class="lesson-status pro-plus">Pro+</span></div></a>
+<h2 class="block-gap">What you'll be able to do</h2>
+<ul class="outcomes"><li>Generate a professional document from a few details</li><li>Keep it accurate and on-brand</li><li>Build reusable document templates</li><li>Create workflows for repeat documents</li><li>Generate many documents from your data</li><li>Merge in the right details automatically</li><li>Automate the whole document pipeline</li><li>Use the right AI for drafting vs. scale</li></ul>
+<h2 class="block-gap">Common questions</h2>
+<div class="faq-q">Will the documents be accurate?</div><p class="faq-a">You'll learn the prompts and checks that keep them accurate and on-brand — and to always review before sending anything that matters.</p><div class="faq-q">Do I need to code?</div><p class="faq-a">No. Templates and workflows are built in plain English, and the scale lesson stays approachable.</p><div class="faq-q">What documents does this cover?</div><p class="faq-a">Proposals, contracts, reports, letters, invoices, quotes — any document you produce repeatedly.</p>
+<div class="cta-band"><h2>Want the advanced builds? <span class="serif">Go Pro.</span></h2><p>$9/mo founding pricing (vs $19 standard). Unlock every lesson in every build, all five tool tracks, and unlimited playground. Lock in lifetime pricing.</p><a href="/pricing" class="btn">See Pro membership →</a></div>
+</div></section>
+<footer><div class="footer-inner"><div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with OpenAI, Anthropic, Microsoft, Google, or xAI.</div><a href="/lessons/" style="color: var(--text-dim);">← All lessons</a></div></footer>
+</body></html>

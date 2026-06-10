@@ -1,4 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
+  // ── Retire old waitlist links: send them to /pricing instead. ──
+  document.querySelectorAll('a[href="/#waitlist"], a[href="https://learninggpt.ai/#waitlist"]').forEach(function(a){
+    a.setAttribute('href', '/pricing');
+  });
   // ── Unified top nav: load the shared site-wide nav (one source of truth). ──
   if (!document.getElementById('lgpt-topnav') && !document.getElementById('lgpt-sitenav-loader')) {
     var sn = document.createElement('script');

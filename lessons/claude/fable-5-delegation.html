@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Working with Fable 5: delegation is the new prompting — LearningGPT</title>
+<meta name="description" content="Claude Fable 5 works autonomously for hours, which changes the core skill: from writing clever prompts to writing good briefs. The delegation patterns — goals, constraints, checkpoints, and self-validation — that get the most out of a Mythos-class model." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#d97757" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/claude/fable-5-delegation" />
+<meta property="og:title" content="Working with Fable 5: delegation is the new prompting" />
+<meta property="og:description" content="When a model can work autonomously for hours, prompting becomes briefing. The delegation patterns that get the most from Claude Fable 5." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #d97757; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #d97757; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+.lesson { padding: 50px 0 100px; }
+.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(217,119,87,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(217,119,87,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
+.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
+.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
+.lesson h1 .grad { background: linear-gradient(135deg, #d97757 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
+.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
+.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
+.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
+.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(217,119,87,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(217,119,87,0.25); border-radius: var(--radius-lg); position: relative; }
+.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #d97757, #7c5cff); border-radius: 2px 0 0 2px; }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.callout p:last-child { margin-bottom: 0; }
+.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
+.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(217,119,87,0.1); border: 1px solid rgba(217,119,87,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
+.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
+.workflow p { font-size: 15px; margin: 0 0 14px; }
+.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
+.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
+.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
+.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
+.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
+.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(217,119,87,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(217,119,87,0.25); border-radius: var(--radius-lg); padding: 36px; }
+.challenge h2 { margin-top: 0; }
+.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #d97757, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
+.challenge a.btn:hover { transform: translateY(-1px); color: white; }
+.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; padding-top: 0; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.checklist li:first-child::before { top: 4px; }
+.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
+.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/claude/" class="nav-back">← Claude Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Lesson 16 · Claude Mastery</span>
+      <span class="chip chip-pro">Pro</span>
+      <span>~12 min read</span>
+      <span class="dot"></span>
+      <span>4 delegation patterns</span>
+    </div>
+    <h1>Working with Fable 5: <span class="grad serif">delegation is the new prompting.</span></h1>
+    <p class="deck">For two years the skill was writing a clever prompt and getting a clever answer back. Fable 5 changes the game: it can work on its own for hours, across many steps. The people who get the most from it stop writing prompts and start writing <em>briefs</em> — the way you'd hand a project to a capable new hire.</p>
+
+    <h2><span class="num">The mental model</span></h2>
+    <h3>Stop asking. Start delegating.</h3>
+    <p>A prompt is a question: "Write me an email about X." A brief is an assignment: the goal, the constraints, what done looks like, and what to do when something's unclear. Earlier models needed prompts because they did one thing then stopped. Fable 5 can carry a whole task — so the quality of your <em>brief</em> now matters more than the cleverness of your wording.</p>
+    <div class="callout">
+      <span class="lbl">The shift in one line</span>
+      <p>With older models you steered every turn. With Fable 5 you set the destination well, then check the work — like managing a sharp employee instead of operating a tool. Vague brief, wandering result. Tight brief, finished work.</p>
+    </div>
+
+    <h2><span class="num">Pattern 01</span> Lead with the goal, not the steps</h2>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">1</div><h3>Say what "done" looks like before you say how</h3></div>
+      <p>Weaker models needed you to spell out each step. Fable 5 plans the steps itself — if you tell it the actual outcome you want. Define success first; let it figure out the route.</p>
+      <h4>Instead of a step list, write a brief</h4>
+      <div class="prompt-example"><span class="label">Delegation brief</span>Goal: a one-page competitive summary I can hand to my boss Friday.
+
+Cover our top 3 competitors. For each: what they do better than us, where we win, and one thing we should copy.
+
+Sources: the three URLs below, plus anything else you find that's from 2026.
+
+Done looks like: one page, plain language, no jargon, a short "what I'd do about it" at the end. If a competitor's pricing isn't public, say so rather than guessing.</div>
+      <h4>Why it works</h4>
+      <ul><li>The model owns the planning, which is what it's now good at</li><li>"Done looks like" prevents the 80%-finished result that needs three more rounds</li><li>The "say so rather than guessing" line is your hallucination guardrail</li></ul>
+      <div class="savings"><strong>Result:</strong> One brief instead of a ten-message back-and-forth.</div>
+    </div>
+
+    <h2><span class="num">Pattern 02</span> Set constraints up front</h2>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">2</div><h3>The guardrails that keep a long task on the rails</h3></div>
+      <p>When a model works for a while on its own, small wrong assumptions compound. Constraints are how you prevent drift before it starts — the same things you'd tell a contractor before they begin, not after.</p>
+      <h4>The constraints worth stating every time</h4>
+      <div class="prompt-example"><span class="label">Constraint stack</span>Audience: non-technical executives.
+Length: under 500 words.
+Tone: direct, no hype.
+Must include: real numbers where you have them.
+Must NOT include: invented statistics, fake quotes, or filler.
+If you're unsure about a fact, flag it instead of stating it confidently.
+Stop and ask me before making any assumption that would change the conclusion.</div>
+      <h4>Why it works</h4>
+      <ul><li>"Stop and ask before assuming" turns a runaway task into a checkpoint</li><li>The "must not include" line is the single most valuable instruction for trustworthy output</li><li>Constraints stated once at the start beat corrections made five steps in</li></ul>
+      <div class="gotcha">If you don't set a length and tone, Fable 5 defaults to thorough — which on a long task can mean far more than you wanted. Bound it on purpose.</div>
+    </div>
+
+    <h2><span class="num">Pattern 03</span> Build in checkpoints</h2>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">3</div><h3>Catch a wrong turn at minute 5, not hour 2</h3></div>
+      <p>The failure mode with autonomous work is discovering at the end that it went the wrong direction early. The fix is to ask for a plan first, approve it, then let it run — exactly how you'd manage a big assignment from a person.</p>
+      <h4>The two-stage handoff</h4>
+      <div class="prompt-example"><span class="label">Checkpoint pattern</span>Before you do the full task, give me:
+1. Your understanding of what I'm asking for, in 3 bullets.
+2. Your plan of attack, in 5 steps or fewer.
+3. Any assumptions you're making that I should confirm.
+
+Wait for my go-ahead before doing the work.</div>
+      <h4>Why it works</h4>
+      <ul><li>You correct a misunderstanding in 30 seconds instead of redoing an hour of output</li><li>The model's stated assumptions often surface a gap in <em>your</em> brief</li><li>For genuinely long tasks, add: "check in with me at the halfway point before continuing"</li></ul>
+      <div class="savings"><strong>Result:</strong> Long tasks that finish right the first time.</div>
+    </div>
+
+    <h2><span class="num">Pattern 04</span> Make it check its own work</h2>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">4</div><h3>The single instruction that raises quality the most</h3></div>
+      <p>One of Fable 5's genuinely new strengths is reflecting on and validating its own output — Anthropic specifically calls this out at high effort. You unlock it by asking for it explicitly.</p>
+      <h4>The self-review close</h4>
+      <div class="prompt-example"><span class="label">Self-validation</span>When you're done, review your own work as if you were a skeptical expert seeing it for the first time. List anything that's weak, unsupported, or that you'd want to double-check. Then fix the issues you found and give me the final version plus a short note on what you changed.</div>
+      <h4>Why it works</h4>
+      <ul><li>The model catches its own thin spots before you have to</li><li>The "note on what you changed" tells you where to apply your own judgment</li><li>It mirrors how good professionals work: draft, critique, revise</li></ul>
+      <div class="gotcha">Self-review reduces errors but doesn't eliminate them. You're still the editor of record — especially on anything that leaves your hands. Trust, then verify.</div>
+    </div>
+
+    <div class="challenge">
+      <h2 style="margin-top: 0;">Final challenge: write one real brief</h2>
+      <p>Take a task you'd normally hand Claude as a quick prompt — and instead write it as a full brief: goal, constraints, a checkpoint, and a self-review close. Run it on Fable 5. Notice how much less back-and-forth it takes to reach something you'd actually use. That gap is the skill this whole release rewards.</p>
+      <div class="btn-row">
+        <a href="/lessons/claude/" class="btn">Back to Claude Mastery →</a>
+        <a href="/lessons/foundations/" class="btn ghost">Brush up: the constraint stack →</a>
+      </div>
+    </div>
+
+    <div class="checklist">
+      <h3>What you can do now</h3>
+      <ul>
+        <li>Tell the difference between a prompt (a question) and a brief (an assignment)</li>
+        <li>Lead with the goal and "done looks like," and let Fable 5 plan the steps</li>
+        <li>Set constraints up front to keep a long task from drifting</li>
+        <li>Use a plan-first checkpoint to catch wrong turns early</li>
+        <li>Add a self-review close to raise output quality</li>
+        <li>Stay the editor of record on anything that leaves your hands</li>
+      </ul>
+    </div>
+
+    <div class="next-up">
+      <span class="pro-tag">Pro</span>
+      <div class="lbl" style="margin-top: 14px;">Up next in Claude Mastery</div>
+      <h3>Lesson 17 · Fable 5 vs Opus vs Sonnet: which Claude for which job now</h3>
+      <p>The most powerful model isn't always the right one. A clear decision framework for picking the right Claude — and spending usage credits wisely after June 23. <a href="/#pricing">See pricing →</a></p>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Anthropic.</div>
+    <a href="/lessons/claude/" style="color: var(--text-dim);">← All Claude lessons</a>
+  </div>
+</footer>
+<script src="/gate.js"></script>
+</body>
+</html>

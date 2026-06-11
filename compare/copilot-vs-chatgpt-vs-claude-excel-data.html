@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Copilot vs ChatGPT vs Claude for Excel & data (2026) — LearningGPT</title>
+<meta name="description" content="Which AI is best for spreadsheets and data analysis — Microsoft Copilot, ChatGPT, or Claude? An honest, vendor-neutral comparison: Copilot lives in your Excel file, ChatGPT runs deep one-off analysis, Claude reasons and builds tools. When to use each." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#7c5cff" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/compare/copilot-vs-chatgpt-vs-claude-excel-data" />
+<meta property="og:title" content="Copilot vs ChatGPT vs Claude for Excel & data" />
+<meta property="og:description" content="The honest, vendor-neutral guide to which AI wins for spreadsheets and data analysis — and when to use each." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="canonical" href="https://learninggpt.ai/compare/copilot-vs-chatgpt-vs-claude-excel-data" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "What's the best AI for Excel?", "acceptedAnswer": { "@type": "Answer", "text": "If your data lives in Excel and you want to stay there, Microsoft Copilot is best — it sees your actual workbook, writes formulas in place, builds pivot tables, and explains the result. For heavy one-off analysis of a file (cleaning messy data, statistics, custom charts), ChatGPT's Code Interpreter is stronger because it runs real Python on your uploaded file." } },
+    { "@type": "Question", "name": "Can ChatGPT analyze a spreadsheet?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — upload a CSV or Excel file and ChatGPT's Code Interpreter (also called Advanced Data Analysis) runs Python to clean it, analyze it, and generate charts. It's excellent for deep one-time analysis, but it works on the copy you upload, not your live Excel workbook." } },
+    { "@type": "Question", "name": "Is Claude good for data analysis?", "acceptedAnswer": { "@type": "Answer", "text": "Claude is strong at reasoning about data and explaining the 'why' behind the numbers, and its Artifacts feature can build small interactive dashboards or data tools. Its large context window also handles big datasets well. It's the pick when you want analysis plus a clear explanation or a built tool, rather than just a number." } },
+    { "@type": "Question", "name": "Which AI should I use for financial modeling?", "acceptedAnswer": { "@type": "Answer", "text": "For models that live in Excel, use Copilot to build and explain formulas in your actual workbook. For exploratory analysis on exported data — variance analysis, forecasting, scenario testing — ChatGPT's Code Interpreter or Claude's reasoning both do well. Many analysts use Copilot inside the file and a chat AI for the heavier thinking." } }
+  ]
+}
+</script>
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --copilot: #2c7be5; --chatgpt: #10a37f; --claude: #d97757; --radius: 14px; --radius-lg: 20px; --container: 860px; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.28; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #2c7be5; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #d97757; opacity: 0.2; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+.article { padding: 48px 0 100px; }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--brand-2); padding: 6px 12px; border: 1px solid rgba(91,141,239,0.3); border-radius: 999px; background: rgba(91,141,239,0.08); margin-bottom: 22px; }
+h1 { font-size: clamp(30px, 4.3vw, 46px); font-weight: 800; line-height: 1.12; letter-spacing: -0.02em; margin: 0 0 18px; }
+h1 .cop { color: var(--copilot); } h1 .gpt { color: var(--chatgpt); } h1 .cla { color: var(--claude); }
+.deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 28px; }
+.updated { font-size: 13px; color: var(--text-mute); margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.verdict { background: linear-gradient(135deg, rgba(44,123,229,0.1), rgba(217,119,87,0.1)); border: 1px solid rgba(124,92,255,0.25); border-radius: var(--radius-lg); padding: 28px 30px; margin: 0 0 44px; }
+.verdict .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+.verdict p { font-size: 16.5px; margin: 0 0 12px; } .verdict p:last-child { margin-bottom: 0; }
+.verdict strong { color: var(--text); }
+h2 { font-size: 27px; font-weight: 700; letter-spacing: -0.01em; margin: 52px 0 14px; }
+h3 { font-size: 19px; font-weight: 600; margin: 28px 0 8px; }
+p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; }
+strong { font-weight: 700; color: var(--text); } em { font-style: italic; }
+ul { padding-left: 24px; margin: 0 0 18px; } li { margin-bottom: 8px; }
+table.cmp { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 14px; }
+table.cmp th, table.cmp td { padding: 12px 12px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.cmp th { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 700; border-bottom: 1px solid var(--line-strong); }
+table.cmp th.cop { color: var(--copilot); } table.cmp th.gpt { color: var(--chatgpt); } table.cmp th.cla { color: var(--claude); }
+table.cmp td:first-child { font-weight: 600; color: var(--text); }
+.usewhen { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 24px 0; }
+@media (max-width: 720px) { .usewhen { grid-template-columns: 1fr; } }
+.usewhen .card { border: 1px solid var(--line-strong); border-radius: var(--radius); padding: 20px; background: var(--surface); }
+.usewhen .card.cop { border-top: 3px solid var(--copilot); }
+.usewhen .card.gpt { border-top: 3px solid var(--chatgpt); }
+.usewhen .card.cla { border-top: 3px solid var(--claude); }
+.usewhen .card h3 { margin-top: 0; font-size: 16px; }
+.usewhen .card ul { margin-bottom: 0; font-size: 14.5px; }
+.note { background: rgba(68,224,164,0.06); border: 1px solid rgba(68,224,164,0.22); border-radius: var(--radius); padding: 18px 22px; margin: 24px 0; font-size: 15px; }
+.note .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.faq h3 { font-size: 17px; margin: 26px 0 6px; }
+.cta-band { margin: 56px 0 0; background: linear-gradient(135deg, rgba(124,92,255,0.15), rgba(68,224,164,0.08)); border: 1px solid rgba(124,92,255,0.25); border-radius: var(--radius-lg); padding: 40px; text-align: center; }
+.cta-band h2 { margin: 0 0 12px; }
+.cta-band p { color: var(--text-dim); max-width: 540px; margin: 0 auto 22px; font-size: 15.5px; }
+.cta-band a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #7c5cff, #5b8def); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; margin: 0 6px 8px; }
+.cta-band a.btn:hover { transform: translateY(-1px); color: white; }
+.cta-band a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/" class="nav-back">← All lessons</a>
+  </div>
+</nav>
+<article class="article">
+  <div class="container">
+    <span class="eyebrow">Honest Comparison · Independent</span>
+    <h1><span class="cop">Copilot</span> vs <span class="gpt">ChatGPT</span> vs <span class="cla">Claude</span> for Excel &amp; data</h1>
+    <p class="deck">Three good options, three different jobs. The fastest way to pick: ask <em>where your data lives</em> and <em>what you're trying to get out of it</em>. Here's the honest breakdown for spreadsheets and analysis, from a platform paid by you — not by any of these vendors.</p>
+    <p class="updated">Last updated June 2026 · A neutral comparison from LearningGPT</p>
+
+    <div class="verdict">
+      <span class="lbl">The 20-second verdict</span>
+      <p><strong>Copilot</strong> — when the data lives in Excel and you want to stay there. It sees your actual workbook, writes formulas in place, builds pivot tables, and explains the result.</p>
+      <p><strong>ChatGPT (Code Interpreter)</strong> — for deep one-off analysis of a file you upload. It runs real Python to clean messy data, run statistics, and build custom charts.</p>
+      <p><strong>Claude</strong> — when you want analysis <em>plus</em> a clear explanation or a built tool. Strong reasoning, big context for large datasets, and Artifacts to spin up a small dashboard.</p>
+    </div>
+
+    <h2>The one question that decides it</h2>
+    <p>Where does your data live, and what do you need? If it's a <strong>live Excel workbook</strong> you're actively working in, Copilot is built for that — it operates inside the file. If it's an <strong>exported file you can upload</strong> and you want serious number-crunching, ChatGPT's Code Interpreter runs actual code on it. If you want the AI to <strong>reason about the data and explain or build something</strong> from it, Claude shines. None of them is "best" in the abstract — they're best at different moments.</p>
+
+    <h2>Head-to-head, by data task</h2>
+    <table class="cmp">
+      <tr><th>Task</th><th class="cop">Copilot</th><th class="gpt">ChatGPT</th><th class="cla">Claude</th></tr>
+      <tr><td>Write a formula in your live workbook</td><td>Best — in-place</td><td>Tells you the formula to paste</td><td>Tells you the formula to paste</td></tr>
+      <tr><td>Build a pivot table / chart in Excel</td><td>Best — native</td><td>From uploaded data only</td><td>From uploaded data only</td></tr>
+      <tr><td>Clean a messy CSV (dupes, bad rows)</td><td>Limited</td><td>Best — runs Python</td><td>Strong</td></tr>
+      <tr><td>Run statistics / forecasting on a file</td><td>Basic</td><td>Best — real code</td><td>Strong reasoning</td></tr>
+      <tr><td>Explain what the numbers mean</td><td>Good</td><td>Good</td><td>Best — clear "why"</td></tr>
+      <tr><td>Build a small interactive data tool</td><td>No</td><td>Possible</td><td>Best — Artifacts</td></tr>
+      <tr><td>Handle a very large dataset</td><td>Workbook limits</td><td>Good</td><td>Best — large context</td></tr>
+    </table>
+
+    <div class="usewhen">
+      <div class="card cop">
+        <h3 style="color:var(--copilot);">Copilot when…</h3>
+        <ul>
+          <li>You're working in a live Excel file</li>
+          <li>You want formulas and pivots built in place</li>
+          <li>The data is company data that should stay in your tenant</li>
+        </ul>
+      </div>
+      <div class="card gpt">
+        <h3 style="color:var(--chatgpt);">ChatGPT when…</h3>
+        <ul>
+          <li>You can upload the file and want heavy analysis</li>
+          <li>The data is messy and needs cleaning</li>
+          <li>You need statistics, forecasts, or custom charts</li>
+        </ul>
+      </div>
+      <div class="card cla">
+        <h3 style="color:var(--claude);">Claude when…</h3>
+        <ul>
+          <li>You want the reasoning and the "why," not just a number</li>
+          <li>You're building a dashboard or data tool</li>
+          <li>The dataset is large or context-heavy</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note">
+      <span class="lbl">The honest part vendors skip</span>
+      <p style="margin:0;">There's no single winner here, and any vendor claiming otherwise is selling. The pros don't pick one tool for data — they keep Copilot open in the workbook and reach for a chat AI when the thinking gets heavy. Knowing which moment calls for which is the actual skill.</p>
+    </div>
+
+    <h2 class="faq" id="faq">Common questions</h2>
+    <div class="faq">
+      <h3>What's the best AI for Excel?</h3>
+      <p>If the data lives in Excel and you want to stay there, Copilot — it works in your actual workbook. For heavy one-off analysis of an uploaded file, ChatGPT's Code Interpreter is stronger.</p>
+      <h3>Can ChatGPT analyze a spreadsheet?</h3>
+      <p>Yes — upload a CSV or Excel file and its Code Interpreter runs Python to clean, analyze, and chart it. It works on the uploaded copy, not your live workbook.</p>
+      <h3>Is Claude good for data analysis?</h3>
+      <p>Strong at reasoning about data and explaining the "why," with Artifacts for building small dashboards and a large context window for big datasets. Best when you want analysis plus an explanation or a tool.</p>
+      <h3>Which for financial modeling?</h3>
+      <p>Copilot to build and explain formulas inside the actual workbook; ChatGPT or Claude for exploratory analysis on exported data. Many analysts use both.</p>
+    </div>
+
+    <div class="cta-band">
+      <h2 style="margin-top:0;">See the difference yourself</h2>
+      <p>Run the same data prompt across multiple AIs side by side in our free playground — or go deep with the Copilot, ChatGPT, and Claude mastery tracks.</p>
+      <div>
+        <a href="/playground" class="btn">Try the Playground free →</a>
+        <a href="/lessons/copilot/excel-mastery" class="btn ghost">Copilot in Excel →</a>
+        <a href="/lessons/" class="btn ghost">All lessons →</a>
+      </div>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with OpenAI, Anthropic, Microsoft, Google, or xAI.</div>
+    <a href="/lessons/" style="color: var(--text-dim);">← All lessons</a>
+  </div>
+</footer>
+<script src="/site-nav.js" defer></script>
+</body>
+</html>

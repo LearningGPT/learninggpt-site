@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fable 5 vs Opus vs Sonnet: which Claude for which job — LearningGPT</title>
+<meta name="description" content="The most powerful Claude isn't always the right one. A plain decision framework for choosing between Claude Fable 5, Opus 4.8, and Sonnet — by task, speed, and cost — plus how to spend usage credits wisely after the June 23 pricing change." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#d97757" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/claude/fable-5-which-claude" />
+<meta property="og:title" content="Fable 5 vs Opus vs Sonnet: which Claude for which job" />
+<meta property="og:description" content="A clear decision framework for choosing the right Claude model by task, speed, and cost — and spending usage credits wisely after June 23." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #d97757; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #d97757; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+.lesson { padding: 50px 0 100px; }
+.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(217,119,87,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(217,119,87,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
+.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
+.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
+.lesson h1 .grad { background: linear-gradient(135deg, #d97757 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
+.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
+.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
+.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
+.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(217,119,87,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(217,119,87,0.25); border-radius: var(--radius-lg); position: relative; }
+.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #d97757, #7c5cff); border-radius: 2px 0 0 2px; }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.callout p:last-child { margin-bottom: 0; }
+table.cmp { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 14.5px; }
+table.cmp th, table.cmp td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.cmp th { color: var(--text-mute); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; border-bottom: 1px solid var(--line-strong); }
+table.cmp td:first-child { font-weight: 600; color: var(--text); white-space: nowrap; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
+.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(217,119,87,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(217,119,87,0.25); border-radius: var(--radius-lg); padding: 36px; }
+.challenge h2 { margin-top: 0; }
+.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #d97757, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
+.challenge a.btn:hover { transform: translateY(-1px); color: white; }
+.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; padding-top: 0; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.checklist li:first-child::before { top: 4px; }
+.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
+.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/claude/" class="nav-back">← Claude Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Lesson 17 · Claude Mastery</span>
+      <span class="chip chip-pro">Pro</span>
+      <span>~10 min read</span>
+      <span class="dot"></span>
+      <span>Decision framework</span>
+    </div>
+    <h1>Fable 5 vs Opus vs Sonnet: <span class="grad serif">which Claude for which job now.</span></h1>
+    <p class="deck">"Use the most powerful model" is bad advice. The most powerful model is slower, costs more, and is overkill for most of what you do all day. Here's a clear way to pick the right Claude for the task in front of you — and a plan for the June 23 pricing change.</p>
+
+    <h2><span class="num">The mental model</span></h2>
+    <h3>Match the model to the task's difficulty, not your ambition.</h3>
+    <p>Think of it like vehicles. You don't take a freight truck to pick up milk, and you don't move a houseful of furniture in a hatchback. Fable 5 is the freight truck: unmatched on long, heavy, complex hauls — and wasteful for a quick errand. Sonnet is the everyday car: fast, cheap, perfectly good for the trips you take most. Opus 4.8 sits in between, and notably, it's what Fable quietly falls back to on sensitive topics.</p>
+
+    <h2><span class="num">01</span> The three Claudes at a glance</h2>
+    <table class="cmp">
+      <tr><th>Model</th><th>Best at</th><th>Reach for it when…</th></tr>
+      <tr><td>Fable 5</td><td>Long, complex, multi-step work; vision; tasks that run for a while on their own</td><td>The job would take you hours and has many moving parts — a full analysis, a big migration, a research project, reading detailed figures</td></tr>
+      <tr><td>Opus 4.8</td><td>Strong general reasoning and writing, a step below Mythos-class</td><td>You want high quality but the task is bounded — a serious document, a tricky problem, careful reasoning that doesn't need hours of autonomy</td></tr>
+      <tr><td>Sonnet</td><td>Speed and value on everyday tasks</td><td>Most of your day: drafting emails, summarizing, quick questions, routine writing. Fast and inexpensive, and good enough that you won't miss the extra power</td></tr>
+    </table>
+    <div class="gotcha">Reaching for Fable 5 on a 30-second task doesn't make the answer better — it just makes it slower and pricier. Power you don't need is waste, not insurance.</div>
+
+    <h2><span class="num">02</span> The 3-question decision</h2>
+    <p>Before you pick, ask yourself three things:</p>
+    <ol>
+      <li><strong>How long would this take me by hand?</strong> Minutes → Sonnet. An afternoon or more → Fable 5. In between → Opus.</li>
+      <li><strong>How many steps does it involve?</strong> One ask, one answer → Sonnet. A chain of dependent steps where each builds on the last → Fable 5.</li>
+      <li><strong>Does it involve images, charts, or documents I need read precisely?</strong> If yes, lean Fable 5 — vision is where its lead is largest right now.</li>
+    </ol>
+    <p>Two or three answers pointing at "big" means Fable 5 earns its keep. Otherwise, save it — you'll get a faster answer and spend less.</p>
+
+    <h2><span class="num">03</span> Worked examples</h2>
+    <h3>Knowledge work</h3>
+    <ul>
+      <li><strong>"Summarize this email thread and draft a reply"</strong> → Sonnet. Bounded, quick, routine.</li>
+      <li><strong>"Read these 12 reports and build me a board memo with the cross-cutting themes"</strong> → Fable 5. Long, multi-source, synthesis-heavy.</li>
+      <li><strong>"Pull every number from this scanned financial statement into a clean table"</strong> → Fable 5. Vision-precise extraction is its strength.</li>
+      <li><strong>"Rewrite this proposal to sound more confident"</strong> → Opus or Sonnet. Quality matters, but it's one focused pass.</li>
+    </ul>
+    <div class="callout">
+      <span class="lbl">A useful habit</span>
+      <p>Start most tasks on Sonnet. If the answer feels thin, or the task turns out to have more moving parts than expected, <em>then</em> escalate to Fable 5. Escalating up is cheap; you rarely need to start at the top.</p>
+    </div>
+
+    <h2><span class="num">04</span> The money: pricing and the June 23 change</h2>
+    <p>Two pricing realities to plan around.</p>
+    <p><strong>On the API,</strong> Fable 5 and Mythos 5 cost $10 per million input tokens and $50 per million output tokens — less than half what the earlier Mythos Preview cost. For developers, that's a meaningful price drop for top-tier capability.</p>
+    <p><strong>On subscriptions,</strong> the window matters. Through June 22, Fable 5 is included free on Pro, Max, Team, and seat-based Enterprise plans. On June 23, Anthropic removes it from those plans — after that, using it requires usage credits, though Anthropic says it intends to restore Fable to subscriptions once capacity allows.</p>
+    <h3>How to spend credits wisely after June 23</h3>
+    <ul>
+      <li><strong>Default to Sonnet for the everyday.</strong> It stays included; it covers most of your day; it doesn't touch your credits.</li>
+      <li><strong>Save Fable 5 for the tasks that justify it</strong> — the ones from the 3-question test where the answer is clearly "big." That's where the credits pay for themselves in time saved.</li>
+      <li><strong>Don't auto-select the top model.</strong> A credit spent on a task Sonnet could've done is a credit you don't have for the migration that actually needed Fable.</li>
+    </ul>
+    <div class="gotcha">Pricing and access windows change fast — Anthropic has said it'll give notice before changes. Treat the dates here as accurate as of this writing and check Claude's current plan details before relying on them for a big workload.</div>
+
+    <div class="challenge">
+      <h2 style="margin-top: 0;">Final challenge: sort your week</h2>
+      <p>List the five Claude tasks you did this week. Tag each one Sonnet, Opus, or Fable 5 using the 3-question test. You'll likely find four are everyday Sonnet jobs and one is the real heavyweight. That ratio — mostly fast and cheap, occasionally powerful — is how to use the lineup well and keep your credits for what matters.</p>
+      <div class="btn-row">
+        <a href="/lessons/claude/" class="btn">Back to Claude Mastery →</a>
+        <a href="/playground" class="btn ghost">Compare models in the Playground →</a>
+      </div>
+    </div>
+
+    <div class="checklist">
+      <h3>What you can do now</h3>
+      <ul>
+        <li>Match a task to the right Claude by difficulty, not by ambition</li>
+        <li>Use the 3-question test (length, steps, vision) to choose quickly</li>
+        <li>Default to Sonnet and escalate to Fable 5 only when the task is genuinely big</li>
+        <li>Understand the API pricing and the June 23 subscription change</li>
+        <li>Spend usage credits on the tasks that actually justify a Mythos-class model</li>
+      </ul>
+    </div>
+
+    <div class="next-up">
+      <span class="pro-tag">Pro</span>
+      <div class="lbl" style="margin-top: 14px;">Up next in Claude Mastery</div>
+      <h3>Lesson 18 · Fable 5's safeguards and your data: what actually changed</h3>
+      <p>Why some requests get answered by Opus 4.8, why harmless ones occasionally trip the filter, and what the new 30-day data retention means for your company's AI policy. <a href="/#pricing">See pricing →</a></p>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Anthropic.</div>
+    <a href="/lessons/claude/" style="color: var(--text-dim);">← All Claude lessons</a>
+  </div>
+</footer>
+<script src="/gate.js"></script>
+</body>
+</html>

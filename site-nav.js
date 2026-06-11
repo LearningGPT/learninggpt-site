@@ -5,6 +5,21 @@
 // everywhere. Self-contained: injects its own styles, hides the page's old nav.
 // ─────────────────────────────────────────────────────────────────────────────
 (function () {
+  // ── SEO: ensure every page has exactly one canonical URL ──
+  // Strips query strings (?title=...) and trailing slashes so Google
+  // consolidates duplicates. Skips pages that already declare a canonical
+  // (the /compare pages have their own).
+  try {
+    if (!document.querySelector('link[rel="canonical"]')) {
+      var canonPath = window.location.pathname
+        .replace(/\.html$/, '')
+        .replace(/\/+$/, '');
+      var canon = document.createElement('link');
+      canon.setAttribute('rel', 'canonical');
+      canon.setAttribute('href', 'https://learninggpt.ai' + (canonPath || '/'));
+      document.head.appendChild(canon);
+    }
+  } catch (e) {}
   function build() {
     if (document.getElementById('lgpt-topnav')) return; // already injected
 

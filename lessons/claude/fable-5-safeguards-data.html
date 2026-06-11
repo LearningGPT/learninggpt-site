@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fable 5's safeguards and your data: what actually changed — LearningGPT</title>
+<meta name="description" content="Claude Fable 5 added safety classifiers that route some requests to Opus 4.8, and a new 30-day data retention policy for business traffic. A plain, honest breakdown of what changed, why harmless requests sometimes get caught, and what it means for your company's AI policy." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#d97757" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/claude/fable-5-safeguards-data" />
+<meta property="og:title" content="Fable 5's safeguards and your data: what actually changed" />
+<meta property="og:description" content="What the new safety classifiers and 30-day data retention mean for you — explained plainly, by an independent source." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #d97757; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #d97757; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+.lesson { padding: 50px 0 100px; }
+.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(217,119,87,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(217,119,87,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
+.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
+.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
+.lesson h1 .grad { background: linear-gradient(135deg, #d97757 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
+.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
+.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
+.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
+.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(217,119,87,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(217,119,87,0.25); border-radius: var(--radius-lg); position: relative; }
+.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #d97757, #7c5cff); border-radius: 2px 0 0 2px; }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.callout p:last-child { margin-bottom: 0; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.gotcha::before { content: '⚠ Worth knowing: '; color: var(--warn); font-weight: 700; }
+.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(217,119,87,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(217,119,87,0.25); border-radius: var(--radius-lg); padding: 36px; }
+.challenge h2 { margin-top: 0; }
+.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #d97757, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
+.challenge a.btn:hover { transform: translateY(-1px); color: white; }
+.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; padding-top: 0; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.checklist li:first-child::before { top: 4px; }
+.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
+.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(68,224,164,0.18); color: var(--accent); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(68,224,164,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/claude/" class="nav-back">← Claude Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Lesson 18 · Claude Mastery</span>
+      <span class="chip chip-pro">Pro</span>
+      <span>~9 min read</span>
+      <span class="dot"></span>
+      <span>For individuals &amp; teams</span>
+    </div>
+    <h1>Fable 5's safeguards and your data: <span class="grad serif">what actually changed.</span></h1>
+    <p class="deck">Two real changes shipped with Fable 5 that affect how you use it — and that the marketing glosses over. Some of your requests now get answered by a different model, and business traffic is retained for 30 days. Here's the plain version, why it's happening, and what to do about it.</p>
+
+    <h2><span class="num">Why this lesson exists</span></h2>
+    <p>We're independent — not paid by Anthropic — so we'll tell you the parts a vendor wouldn't lead with. Neither of these changes is a scandal. But if you're putting real work, or your company's data, through Fable 5, you should understand them rather than discover them mid-task. Honesty about the tools is the whole point of learning them here.</p>
+
+    <h2><span class="num">01</span> Some requests get answered by Opus 4.8, not Fable</h2>
+    <p>Fable 5 is a Mythos-class model, which means in the wrong hands its capabilities — especially in cybersecurity and biology — could genuinely help someone cause harm. To release it to the public safely, Anthropic added a layer of <strong>safety classifiers</strong>: separate systems that screen each request before Fable answers.</p>
+    <p>When a classifier flags a request as touching <strong>cybersecurity, biology/chemistry, or model "distillation"</strong> (attempts to copy the model's abilities), the request is automatically handled by <strong>Claude Opus 4.8</strong> instead — and you're told it happened. Opus 4.8 is a very capable model in its own right, so this is a fallback, not a refusal.</p>
+    <h3>The catch: it sometimes catches harmless requests</h3>
+    <p>Anthropic deliberately tuned these classifiers broad so they could ship Fable quickly and safely, which means they err toward caution. Their own data says fewer than 5% of sessions hit a fallback at all — but if you work in security, biology, healthcare, or chemistry, you may bump into it on perfectly legitimate questions. If you ever see a "this was handled by Opus 4.8" notice on something innocent, now you know why: a conservative filter, not a judgment about you. Anthropic says it's working to narrow the false positives over time.</p>
+    <div class="gotcha">If a fallback gets in the way of legitimate professional work, the practical move is to rephrase toward your actual goal and away from language that reads as offensive-security or wet-lab procedure. And know that the fallback model is still strong — you're not losing access, you're getting a slightly different answer.</div>
+
+    <h2><span class="num">02</span> Business traffic is retained for 30 days</h2>
+    <p>The second change matters most for teams. For Mythos-class models like Fable 5, Anthropic now <strong>requires 30-day retention of all traffic</strong> — including business traffic, on both Anthropic's own surfaces and third-party ones.</p>
+    <p>What Anthropic says about it:</p>
+    <ul>
+      <li>The data is used to <strong>detect novel attacks and jailbreaks</strong> and to identify false positives in the safeguards — a safety purpose, not a product one.</li>
+      <li>It <strong>won't be used to train</strong> new Claude models, or for any non-safety purpose.</li>
+      <li>Human access to it is <strong>logged</strong>, and it's <strong>deleted after 30 days</strong> in almost all cases.</li>
+    </ul>
+    <p>This is a real change from the data handling some businesses signed up for, and it applies to the most capable models going forward. It's not unreasonable — retaining traffic is genuinely how you catch attacks that play out across many requests — but it's a fact your company's policy should account for, not learn about after the fact.</p>
+
+    <h2><span class="num">03</span> What to actually do about it</h2>
+    <h3>If you're an individual user</h3>
+    <ul>
+      <li>Keep treating any consumer AI as <strong>not the place for true secrets</strong> — passwords, unreleased financials, anything you'd be harmed by if it leaked. That was already good practice; it didn't change.</li>
+      <li>Don't be alarmed by an Opus 4.8 fallback. It's a different capable model answering, and you're told when it happens.</li>
+    </ul>
+    <h3>If you own your team's AI policy</h3>
+    <ul>
+      <li><strong>Read the retention terms before routing sensitive material</strong> through Fable 5 or future Mythos-class models. Decide which categories of company data are allowed and which aren't.</li>
+      <li><strong>Write the rule down in plain language</strong> for your team — "fine for X, never for Y" — so nobody has to guess. Our <a href="/lessons/ai-security/">Secure Your AI Use</a> build walks through writing exactly this kind of policy.</li>
+      <li><strong>Match the model to the sensitivity.</strong> For routine, non-sensitive work, a model like Sonnet may not carry the same retention requirement and is often the right call anyway (see <a href="/lessons/claude/fable-5-which-claude">Lesson 17</a>). Check the current terms for each model — they evolve.</li>
+    </ul>
+    <div class="callout">
+      <span class="lbl">The honest takeaway</span>
+      <p>More capable models come with more safety machinery — that's the trade for putting Mythos-class power in public hands, and on balance it's the right trade. Your job as a user isn't to fear it; it's to know it's there, work with the fallbacks, and keep genuinely sensitive data out of any tool whose retention terms you haven't read.</p>
+    </div>
+
+    <div class="challenge">
+      <h2 style="margin-top: 0;">Final challenge: write your one-line rule</h2>
+      <p>In a single sentence, write the rule for your own use (or your team's): what you'll put through Fable 5, and what you won't. Example: "Fine for analysis, drafting, and public data — never customer PII, contracts, or anything covered by an NDA." That one line, written down, prevents most AI-data mistakes before they happen.</p>
+      <div class="btn-row">
+        <a href="/lessons/claude/" class="btn">Back to Claude Mastery →</a>
+        <a href="/lessons/ai-security/" class="btn ghost">Build an AI policy →</a>
+      </div>
+    </div>
+
+    <div class="checklist">
+      <h3>What you can do now</h3>
+      <ul>
+        <li>Explain why Fable 5 routes some requests to Opus 4.8, and recognize it when it happens</li>
+        <li>Know that the safeguards err broad, and why harmless requests sometimes trip them</li>
+        <li>Understand the 30-day retention policy for business traffic — purpose and limits</li>
+        <li>Decide what company data is and isn't allowed through Mythos-class models</li>
+        <li>Keep genuinely sensitive information out of tools whose terms you haven't read</li>
+      </ul>
+    </div>
+
+    <div class="next-up">
+      <span class="pro-tag">Free</span>
+      <div class="lbl" style="margin-top: 14px;">Keep going</div>
+      <h3>You've finished the Fable 5 series</h3>
+      <p>You now understand what Fable 5 is, how to delegate to it, which Claude to use when, and how its safeguards and data handling work. Next, put the judgment to work across every AI in our free <a href="/lessons/foundations/">AI Foundations track</a>. <a href="/lessons/claude/">See the full Claude track →</a></p>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Anthropic.</div>
+    <a href="/lessons/claude/" style="color: var(--text-dim);">← All Claude lessons</a>
+  </div>
+</footer>
+<script src="/gate.js"></script>
+</body>
+</html>

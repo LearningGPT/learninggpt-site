@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Connect OpenClaw to WhatsApp, Telegram & Discord — safely — LearningGPT</title>
+<meta name="description" content="Connecting OpenClaw to your chat apps the safe way: which channel to start with, dedicated accounts vs your own, the shared-context trap that leaks secrets into group chats, and why your agent shouldn't sit in groups at all." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#f0544f" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/openclaw/connect-your-channels" />
+<meta property="og:title" content="Connect OpenClaw to WhatsApp, Telegram &amp; Discord — safely" />
+<meta property="og:description" content="One channel, done right — including the shared-context trap and the group-chat rules that keep your agent from being steered by strangers." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #f0544f; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #f0544f; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+.lesson { padding: 50px 0 100px; }
+.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(240,84,79,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(240,84,79,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
+.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
+.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
+.lesson h1 .grad { background: linear-gradient(135deg, #f0544f 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
+.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
+.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
+.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
+.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(240,84,79,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(240,84,79,0.25); border-radius: var(--radius-lg); position: relative; }
+.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #f0544f, #7c5cff); border-radius: 2px 0 0 2px; }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.callout p:last-child { margin-bottom: 0; }
+.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
+.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(240,84,79,0.1); border: 1px solid rgba(240,84,79,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
+.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
+.workflow p { font-size: 15px; margin: 0 0 14px; }
+.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
+.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
+.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
+.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(240,84,79,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(240,84,79,0.25); border-radius: var(--radius-lg); padding: 36px; }
+.challenge h2 { margin-top: 0; }
+.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #f0544f, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
+.challenge a.btn:hover { transform: translateY(-1px); color: white; }
+.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; padding-top: 0; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.checklist li:first-child::before { top: 4px; }
+.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
+.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/openclaw/" class="nav-back">← OpenClaw, Safely</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Lesson 5 · OpenClaw, Safely</span>
+      <span class="chip chip-pro">Pro</span>
+      <span>~10 min read</span>
+      <span class="dot"></span>
+      <span>Channels, done right</span>
+    </div>
+    <h1>Connect your channels: <span class="grad serif">WhatsApp, Telegram, Discord.</span></h1>
+    <p class="deck">This is the feature that made OpenClaw famous — your agent as a contact in your own messenger. It's also where two of the nastiest real-world exploits happened. So we'll do it the way professionals connect anything: one channel, least privilege, and a hard rule about group chats.</p>
+
+    <h2>Pick ONE channel to start</h2>
+    <p>OpenClaw supports twenty-plus channels: WhatsApp, Telegram, Slack, Discord, Signal, iMessage, Teams, and more. Connect exactly one today. Every channel is a new door into your agent; doors are easier to watch when there's one of them. Honest guidance on the big three:</p>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">1</div><h3>Telegram — the easiest safe start (our pick)</h3></div>
+      <p>Telegram's bot system was built for exactly this: you create a <strong>dedicated bot</strong> via @BotFather in two minutes, get a token, and paste it into OpenClaw. Your agent is a separate identity from you by design — no account sharing, clean revocation (kill the token, kill the access), and only people who know the bot exists can message it. Set it to ignore everyone except your own Telegram user ID (the wizard offers an allowlist — use it).</p>
+    </div>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">2</div><h3>WhatsApp — the famous one, with a real trade-off</h3></div>
+      <p>The classic OpenClaw experience links via WhatsApp Web QR code — meaning the agent acts <em>as a WhatsApp account</em>. If that's your main account, your agent can see and message everyone you know. Don't do that. If you want WhatsApp, give the agent <strong>its own number</strong> (a cheap eSIM or spare SIM) so it's a contact you message, not a puppet wearing your identity. Also know that automation sits in a gray zone of WhatsApp's terms — accounts have been banned; another reason it shouldn't be your main one.</p>
+    </div>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">3</div><h3>Discord — fine, with the server caveat</h3></div>
+      <p>A dedicated Discord bot in a private server you control is a solid setup. The danger is the tempting one: inviting your agent into busy public servers — which is the group-chat problem below, at scale, with strangers.</p>
+    </div>
+
+    <h2>The two traps that burned real users</h2>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">A</div><h3>The shared-context trap</h3></div>
+      <p>Researchers found real deployments where <strong>all direct messages fed one shared conversation context</strong> — so a password or API key one person pasted became visible to anyone else who messaged the bot. The fix is configuration: ensure per-user (or at minimum per-chat) session isolation, and never paste secrets into an agent chat at all — a chat log is a place credentials go to be discovered.</p>
+    </div>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">B</div><h3>The group-chat trap</h3></div>
+      <p>An agent in a group chat takes instructions from <em>everyone in the group</em> — and acts with <em>your</em> permissions. Researchers demonstrated group members steering agents into reading environment variables and even joining other groups. One sentence of policy prevents all of it: <strong>your agent doesn't sit in group chats.</strong> If you ever relax this, it's a read-only agent in a group of people you'd hand your laptop to — and even then, no file or shell access wired up behind it.</p>
+    </div>
+    <div class="gotcha">Your agent's inbox is an attack surface. Anyone who can message your agent is effectively typing into a terminal on your agent's machine — that's the mental model. Allowlists (only my user ID, only these two numbers) are not paranoia; they're the seatbelt.</div>
+
+    <h2>Connect it (10 minutes)</h2>
+    <ol>
+      <li>Stop the service (kill-switch practice!), run <code>openclaw onboard</code> again or the channels config, and pick your one channel.</li>
+      <li>Follow the wizard: bot token for Telegram/Discord, QR link for WhatsApp (dedicated number).</li>
+      <li><strong>Set the allowlist</strong> so the agent answers only you.</li>
+      <li>Restart, message it from your phone: "introduce yourself." Savor the reply — this is the moment OpenClaw sells itself.</li>
+      <li>Then test the boundary: have a family member message it. Correct result: silence.</li>
+    </ol>
+
+    <div class="callout">
+      <span class="lbl">The payoff</span>
+      <p>From here on, your agent is ambient: in line at the store you can ask it to check a fact, kick off research, or note a thought into a file on its machine. The next lesson makes that power routine — real workflows that justify the whole project.</p>
+    </div>
+
+    <div class="challenge">
+      <h2 style="margin-top: 0;">This week's discipline</h2>
+      <p>One channel, allowlisted to you, no groups, no secrets in chat. Live with it for a week before even thinking about a second channel. Each door you add after this should answer a real need — not the collector's itch.</p>
+      <div class="btn-row">
+        <a href="/lessons/openclaw/first-real-workflows" class="btn">Next: your first real workflows →</a>
+        <a href="/lessons/openclaw/" class="btn ghost">All OpenClaw lessons →</a>
+      </div>
+    </div>
+
+    <div class="checklist">
+      <h3>What you can do now</h3>
+      <ul>
+        <li>Choose the right first channel — Telegram bot for clean identity separation, WhatsApp only with a dedicated number</li>
+        <li>Configure an allowlist so only you can command your agent</li>
+        <li>Explain the shared-context leak and verify per-user session isolation</li>
+        <li>State the group-chat rule and why an agent in a group obeys the whole group</li>
+        <li>Treat the agent's inbox as an attack surface — and never paste secrets into it</li>
+      </ul>
+    </div>
+
+    <div class="next-up">
+      <span class="pro-tag">Pro</span>
+      <div class="lbl" style="margin-top: 14px;">Up next in OpenClaw, Safely</div>
+      <h3>Lesson 6 · Your first real workflows: email triage, calendar, daily briefing</h3>
+      <p>The starter automations that turn a cool demo into a working assistant — designed so each one stays inside the safety rails you've built. <a href="/#pricing">See pricing →</a></p>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with the OpenClaw project.</div>
+    <a href="/lessons/openclaw/" style="color: var(--text-dim);">← All OpenClaw lessons</a>
+  </div>
+</footer>
+<script src="/gate.js"></script>
+</body>
+</html>

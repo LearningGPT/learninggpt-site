@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Grok: privacy, data, and the honest assessment — LearningGPT</title>
+<meta name="description" content="The Grok closer nobody else writes: training and privacy settings to check, what the data-sharing programs actually share, hallucination and bias patterns, the companions sideshow, and the clear-eyed list of when NOT to use Grok." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#9da0b0" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/grok/privacy-honest-assessment" />
+<meta property="og:title" content="Grok: privacy, data, and the honest assessment" />
+<meta property="og:description" content="Training settings, hallucination patterns, the companions sideshow, and when NOT to use Grok — clear-eyed." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #9da0b0; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #71717a; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+.lesson { padding: 50px 0 100px; }
+.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(157,160,176,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(157,160,176,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
+.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
+.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
+.lesson h1 .grad { background: linear-gradient(135deg, #c3c6d4 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
+.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
+.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
+.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
+.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(157,160,176,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(157,160,176,0.25); border-radius: var(--radius-lg); position: relative; }
+.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #9da0b0, #7c5cff); border-radius: 2px 0 0 2px; }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.callout p:last-child { margin-bottom: 0; }
+.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
+.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(157,160,176,0.1); border: 1px solid rgba(157,160,176,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
+.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
+.workflow p { font-size: 15px; margin: 0 0 14px; }
+.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
+.verdict { margin: 30px 0; border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; }
+.verdict .row { display: flex; gap: 16px; padding: 18px 22px; border-top: 1px solid var(--line); font-size: 15px; align-items: flex-start; }
+.verdict .row:first-child { border-top: none; }
+.verdict .row .tag { flex-shrink: 0; width: 110px; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.8px; padding-top: 2px; }
+.verdict .row.yes .tag { color: var(--accent); } .verdict .row.no .tag { color: var(--danger); } .verdict .row.maybe .tag { color: var(--warn); }
+.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(157,160,176,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(157,160,176,0.25); border-radius: var(--radius-lg); padding: 36px; }
+.challenge h2 { margin-top: 0; }
+.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #71717a, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
+.challenge a.btn:hover { transform: translateY(-1px); color: white; }
+.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; padding-top: 0; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.checklist li:first-child::before { top: 4px; }
+.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
+.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.next-up .free-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(68,224,164,0.18); color: var(--accent); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(68,224,164,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/grok/" class="nav-back">← Grok Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Lesson 11 · Grok Mastery</span>
+      <span class="chip chip-pro">Pro</span>
+      <span>~10 min read</span>
+      <span class="dot"></span>
+      <span>The closer</span>
+    </div>
+    <h1>Privacy, data &amp; <span class="grad serif">the honest assessment.</span></h1>
+    <p class="deck">Ten lessons of capability deserve one lesson of clear eyes. What Grok does with your data and how to set the dials, where it's most likely to be wrong, the sideshow we should mention exactly once, and the clean list of when Grok is simply not the tool. This is the lesson a vendor academy can't write.</p>
+
+    <h2><span class="num">01</span> Your data: the dials to set today</h2>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">1</div><h3>Ten minutes in settings</h3></div>
+      <ul>
+        <li><strong>Training toggle:</strong> consumer Grok conversations can be used for model training by default — find the data/privacy controls in your Grok settings and on X, and set them deliberately. Opt-out exists; it's your job to flip it.</li>
+        <li><strong>Your X posts:</strong> separate dial — X content feeds Grok training under X's settings. If that matters to you, it's in X's privacy menu, not Grok's.</li>
+        <li><strong>The API free-credits program</strong> (Lesson 10): explicit data-for-compute. Know which tier of key you're using before anything sensitive touches it.</li>
+        <li><strong>Connectors</strong> (Lesson 8): each one extends what Grok can read. The monthly audit isn't paranoia, it's hygiene.</li>
+      </ul>
+      <p>Standing rule, every AI, every vendor: <strong>the paste test.</strong> If you wouldn't want it surfacing in a stranger's chat someday, it doesn't go into a consumer AI — Grok, ChatGPT, anyone (<a href="/lessons/foundations/privacy-and-data">the Foundations privacy lesson</a> is the full treatment).</p>
+    </div>
+
+    <h2><span class="num">02</span> Where Grok is most likely to be wrong</h2>
+    <p>Every model hallucinates; Grok's pattern has a specific shape worth knowing. Its superpower — the live X diet — is also its <strong>distinctive failure mode: confidently reporting the firehose's current mood as fact.</strong> A rumor with engagement reads like signal; a coordinated push reads like consensus; the terminally-online sample reads like "people." Every workflow in this track that touches X carried the same seatbelts for this reason: evidence grading, organic-vs-coordinated checks, "label anecdote as anecdote." Add the public episodes — Grok has said genuinely unhinged things, publicly, more than once, and xAI patches fast — and the posture writes itself: <strong>use it, verify it, never forward it unread.</strong> "Less filtered" is the product's identity; your judgment is the filter that didn't come in the box.</p>
+
+    <h2><span class="num">03</span> The sideshow, mentioned once</h2>
+    <p>Grok offers "companions" — animated AI personas, some flirtatious, that drove enormous app-store downloads. Our entire treatment: it exists, it's a consumer entertainment product, it has nothing to do with the professional capabilities in this track, and the only practical note is that mixed-use accounts and limits are shared — your companion chat and your work queries draw from the same meters. If you're handing a tablet to a vulnerable family member, know the feature exists and that the <a href="/seniors">Seniors track's</a> guidance on AI emotional attachment applies. Moving on.</p>
+
+    <h2><span class="num">04</span> When NOT to use Grok</h2>
+    <div class="verdict">
+      <div class="row no"><span class="tag">Not Grok</span><span><strong>Regulated or client-confidential work</strong> on a consumer account. No consumer AI is right here without enterprise terms — and Grok's data posture is the loosest of the majors. Use your employer's sanctioned tools (usually Copilot) or enterprise agreements.</span></div>
+      <div class="row no"><span class="tag">Not Grok</span><span><strong>Single-source truth on breaking events.</strong> The fastest tool is the most exposed to the rumor phase. Grok finds it first; something slower confirms it. That ordering is a feature of your process, not a flaw in the tool.</span></div>
+      <div class="row maybe"><span class="tag">Think twice</span><span><strong>Voice-matched, high-care client writing</strong> — Claude usually edges it. <strong>Heavy data transformation</strong> — ChatGPT runs real code. <strong>Citation-grade research</strong> — Perplexity. Grok is capable everywhere; "capable" loses to "best" when the work matters (<a href="/lessons/foundations/which-ai-for-which-job">the framework</a>).</span></div>
+      <div class="row yes"><span class="tag">Yes Grok</span><span><strong>Anything live</strong> — the firehose workflows of Lesson 4. <strong>Punchy creative</strong> — the register is the asset. <strong>The full-stack second opinion</strong> — frontier reasoning plus real-time context in one brain. This is the seat it earns in a professional stack.</span></div>
+    </div>
+
+    <div class="callout">
+      <span class="lbl">The track in one paragraph</span>
+      <p>Grok is the AI with one unfair advantage and a fast, loose product culture around it. Master the firehose with evidence discipline (1, 3, 4), pick models by wrong-answer cost (2), enjoy the creative suite inside the lines (5–7), wire the work layer deliberately (8–9), build with the fine print read (10), and set your data dials today (11). Do that and you're using Grok the way it deserves: fully, and with your eyes open. That sentence is also this entire platform's mission statement, applied to one tool.</p>
+    </div>
+
+    <div class="challenge">
+      <h2 style="margin-top: 0;">Final challenge: the dials and the verdict</h2>
+      <p>Ten minutes: set every data dial in section 01. Then write your own one-paragraph verdict on Grok's slot in your stack — informed by the two-week tally from Lesson 9 if you ran it. You now know this tool better than 99% of its users, including most of the people posting hot takes about it.</p>
+      <div class="btn-row">
+        <a href="/lessons/grok/" class="btn">Back to Grok Mastery →</a>
+        <a href="/playground" class="btn ghost">Compare Grok side-by-side free →</a>
+      </div>
+    </div>
+
+    <div class="checklist">
+      <h3>What you can do now</h3>
+      <ul>
+        <li>Set the training, X-data, API-program, and connector dials deliberately</li>
+        <li>Name Grok's distinctive failure mode — firehose mood reported as fact — and run the seatbelts</li>
+        <li>Give the companions feature its correct weight: one paragraph, shared meters, vulnerable-user awareness</li>
+        <li>Recite the not-Grok list: confidential work on consumer terms, single-source breaking truth, and the jobs other tools win</li>
+        <li>State Grok's earned seat: live intelligence, punchy creative, full-stack second opinions — eyes open</li>
+      </ul>
+    </div>
+
+    <div class="next-up">
+      <span class="free-tag">Keep going</span>
+      <div class="lbl" style="margin-top: 14px;">Where next</div>
+      <h3>The Playground · every AI, side by side</h3>
+      <p>Run the same prompt across Grok's rivals and watch the differences this track taught you to see. <a href="/playground">Try it free →</a></p>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with xAI.</div>
+    <a href="/lessons/grok/" style="color: var(--text-dim);">← All Grok lessons</a>
+  </div>
+</footer>
+<script src="/gate.js"></script>
+</body>
+</html>

@@ -28,6 +28,7 @@
       { href: '/lessons',   label: 'Lessons' },
       { href: '/playground', label: 'Playground' },
       { href: '/pricing',   label: 'Pricing' },
+      { href: '/testimonials', label: 'Testimonials' },
       { href: '/business',  label: 'For business' },
       { href: '/seniors',   label: 'AI for Seniors', senior: true }
     ];

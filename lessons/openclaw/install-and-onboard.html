@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Before you install OpenClaw: the safe-setup checklist — LearningGPT</title>
-<meta name="description" content="The decisions that keep your OpenClaw agent off the exposed-instance lists, made BEFORE you install: choosing isolated hardware (spare machine, Pi, or VPS), binding the gateway to localhost, API-key hygiene, and the five isolation rules." />
+<title>Install OpenClaw step by step: the onboard walkthrough — LearningGPT</title>
+<meta name="description" content="Installing OpenClaw the safe way: Node setup, the openclaw onboard wizard, gateway binding, running it as a service, choosing a model provider, and verifying your instance is NOT publicly exposed before going further." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#f0544f" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://learninggpt.ai/lessons/openclaw/safe-setup-checklist" />
-<meta property="og:title" content="Before you install OpenClaw: the safe-setup checklist" />
-<meta property="og:description" content="The pre-install decisions that determine whether your agent stays private: hardware, network binding, key hygiene, and the five isolation rules." />
+<meta property="og:url" content="https://learninggpt.ai/lessons/openclaw/install-and-onboard" />
+<meta property="og:title" content="Install OpenClaw step by step: the onboard walkthrough" />
+<meta property="og:description" content="From bare machine to working agent in ~25 minutes — with the safety verifications most guides skip." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -60,7 +60,7 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
 .gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
 .savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '🛡'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
+.savings::before { content: '✓'; font-size: 14px; color: var(--accent); } .savings strong { color: var(--accent); font-weight: 700; }
 .challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(240,84,79,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(240,84,79,0.25); border-radius: var(--radius-lg); padding: 36px; }
 .challenge h2 { margin-top: 0; }
 .challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #f0544f, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
@@ -94,72 +94,81 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 <article class="lesson">
   <div class="container">
     <div class="lesson-meta">
-      <span class="chip">Lesson 3 · OpenClaw, Safely</span>
+      <span class="chip">Lesson 4 · OpenClaw, Safely</span>
       <span class="chip chip-pro">Pro</span>
-      <span>~10 min read</span>
+      <span>~12 min read</span>
       <span class="dot"></span>
-      <span>5 isolation rules</span>
+      <span>Hands-on install</span>
     </div>
-    <h1>Before you install: <span class="grad serif">the safe-setup checklist.</span></h1>
-    <p class="deck">Every exposed OpenClaw instance in those scans was a setup decision, not a sophisticated hack. Which means safety is also a setup decision — made <em>before</em> the installer runs. This lesson is the 30 minutes of decisions that keep your agent private for as long as you run it.</p>
+    <h1>Install and onboard, <span class="grad serif">step by step.</span></h1>
+    <p class="deck">You did the Lesson 3 prep: an isolated machine, a dedicated API key with a spend cap, a kill-switch plan. Now the fun part — from bare machine to an agent that answers you, in about 25 minutes. We follow the official <code>openclaw onboard</code> wizard, with the two safety verifications most guides skip entirely.</p>
 
-    <h2>The principle behind everything</h2>
-    <p>One sentence, worth memorizing: <strong>assume your agent will eventually be tricked, and build so that a tricked agent can't hurt you.</strong> Prompt injection can't be fully prevented (Lesson 2), so we don't rely on the agent behaving — we limit what a misbehaving agent can reach. Security people call this <em>blast radius</em>. Everything in this checklist shrinks it.</p>
+    <div class="gotcha">OpenClaw ships new releases weekly, so menus and wording drift. This lesson teaches the decisions, which are stable — when a screen looks different, the choice behind it is still the one described here. Where exact commands matter, cross-check the official docs at docs.openclaw.ai. (Independent reality: we update this lesson with each significant change — that's the point of us.)</div>
 
-    <h2><span class="num">01</span> Choose where it lives</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">A</div><h3>Spare machine — the gold standard</h3></div>
-      <p>An old laptop or a Mac mini, wiped clean, with nothing on it but the OS and OpenClaw. No saved passwords, no synced cloud drives, no work anything. If the agent is ever fully compromised, the attacker gets… an empty machine with one API key you can revoke in 60 seconds.</p>
-      <div class="savings"><strong>Blast radius:</strong> one disposable box. This is the setup this track assumes.</div>
-    </div>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">B</div><h3>Raspberry Pi — the cheap always-on box</h3></div>
-      <p>A Pi 5 runs OpenClaw comfortably, costs ~$80, sips electricity, and has the same wonderful property: nothing else lives there. Slightly more fiddly to set up (it's Linux from scratch), but a great fit for the "always-on briefings and monitors" lifestyle.</p>
-    </div>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">C</div><h3>Small VPS — offsite and disposable</h3></div>
-      <p>A $5–10/month cloud server (Hetzner, DigitalOcean, etc.) keeps the agent off your home network entirely — the strongest network isolation you can get. The trade: your agent's data lives on rented hardware, and a VPS on the public internet makes the binding rules in section 02 absolutely non-negotiable.</p>
-    </div>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">D</div><h3>Your main computer — only inside a fence</h3></div>
-      <p>If one machine is all you have: run OpenClaw inside a virtual machine or container, give it its own user account, and mount exactly one folder it's allowed to touch. This works, but understand what you lost — a VM escape or a sloppy folder grant and the fence is gone. And to say it once more for the record: <strong>never on a work machine. Not in a VM, not in a container, not at all.</strong></p>
-    </div>
+    <h2><span class="num">01</span> Prerequisites (5 minutes)</h2>
+    <p>On your prepared machine you need exactly three things:</p>
+    <ul>
+      <li><strong>Node.js</strong> — version 22 LTS or newer (the project recommends current; 22.19+ works). Install from nodejs.org or your package manager.</li>
+      <li><strong>Your dedicated API key</strong> — the spend-capped one from Lesson 3 (Anthropic, OpenAI, or OpenRouter if you want to switch models freely).</li>
+      <li><strong>A terminal you can paste into.</strong> That's the whole toolkit.</li>
+    </ul>
+    <div class="prompt-example"><span class="label">Verify Node first</span>node --version
+# Want: v22.x or newer. If "command not found," install Node before continuing.</div>
 
-    <h2><span class="num">02</span> The five isolation rules</h2>
+    <h2><span class="num">02</span> Run the onboarding wizard</h2>
     <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">1</div><h3>Bind the gateway to localhost — this single setting is most of your safety</h3></div>
-      <p>During onboarding, OpenClaw asks where to "bind" its gateway — which network doors it answers on. <strong>Localhost (127.0.0.1) means only the machine itself can talk to it. 0.0.0.0 means the whole network — potentially the whole internet — can.</strong> Nearly every one of those 42,900 exposed instances got this wrong.</p>
-      <h4>Need remote access? Use a private tunnel, not an open port</h4>
-      <p>Install Tailscale (free for personal use) on the agent box and your phone. You get an encrypted private network between your own devices — remote access with nothing exposed to the public internet. This is the standard answer; port-forwarding your router to OpenClaw is how you end up in a scan report.</p>
+      <div class="workflow-head"><div class="workflow-num">1</div><h3>Start the wizard</h3></div>
+      <div class="prompt-example"><span class="label">Terminal</span>npm install -g openclaw@latest
+openclaw onboard</div>
+      <p>The wizard walks you through gateway, workspace, channels, and skills. You'll make four decisions — here's the safe answer to each.</p>
     </div>
     <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">2</div><h3>Give it its own accounts — never yours</h3></div>
-      <p>The agent gets a fresh email address, fresh API keys, and (if you connect chat) ideally its own phone number or bot account. Never your main Google login, never your personal API key shared across projects. Two reasons: revocation (kill the agent's key without killing your own) and attribution (you always know which actor did what).</p>
+      <div class="workflow-head"><div class="workflow-num">2</div><h3>Decision: quickstart or custom? → Custom</h3></div>
+      <p>Quickstart optimizes for the demo high. Custom takes three extra minutes and lets you make the binding choice deliberately — which is the one choice that matters.</p>
     </div>
     <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">3</div><h3>API-key hygiene: scoped, capped, revocable</h3></div>
-      <p>Create a dedicated key in your model provider's console (Anthropic, OpenAI, or OpenRouter), name it <em>openclaw</em>, and <strong>set a monthly spend cap</strong> — $10–20 to start. The cap isn't just budgeting: a hijacked agent that burns tokens at 3am hits the ceiling instead of your card. Store the key only on the agent box, never in a chat message or a skill file.</p>
-      <div class="gotcha">Researchers found exposed instances leaking access tokens through URLs and logs. Treat every credential on the agent box as "will eventually be seen" — which is exactly why none of them should be credentials you care about elsewhere.</div>
+      <div class="workflow-head"><div class="workflow-num">3</div><h3>Decision: where to bind the gateway? → Localhost. Always localhost.</h3></div>
+      <p>This is THE setting from Lesson 3. When asked where the gateway should listen, choose <strong>127.0.0.1 (localhost)</strong> — never 0.0.0.0, never your machine's LAN address "just to test." Remote access comes via Tailscale later, not via an open door now.</p>
     </div>
     <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">4</div><h3>Decide its data diet before it has an appetite</h3></div>
-      <p>Write down — actually write down — what the agent is allowed to see: which folder, which calendar, which inbox (its own!), which chats. Everything else is off the menu until it earns it. The failure pattern from Lesson 2 is capability creep on a giddy first night; the antidote is a written scope you set while sober.</p>
+      <div class="workflow-head"><div class="workflow-num">4</div><h3>Decision: model provider → the brain you budgeted for</h3></div>
+      <p>Paste your dedicated API key when asked. Model guidance, honestly: <strong>a mid-tier model is the right starting brain</strong> (Claude Sonnet-class or equivalent) — smart enough for real work, cheap enough that an always-on agent doesn't sting. Save frontier models for when a specific task proves it needs one. You can change this anytime; your spend cap has your back while you learn the cost rhythm.</p>
     </div>
     <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">5</div><h3>Plan the kill switch on day zero</h3></div>
-      <p>Before you install, know your three emergency moves: <strong>stop the service</strong> (one command — you'll learn it in Lesson 4), <strong>revoke the API key</strong> (provider console, 60 seconds), and <strong>unplug the box</strong> (the one that always works). Write all three on a sticky note. Genuinely. The moment you need them is not the moment to research them.</p>
+      <div class="workflow-head"><div class="workflow-num">5</div><h3>Decision: run as a service? → Yes</h3></div>
+      <p>Let the wizard install OpenClaw as a system service (systemd on Linux, launchd on macOS) so it survives reboots. Bonus: this also teaches you half your kill switch —</p>
+      <div class="prompt-example"><span class="label">Your stop/start commands (sticky note!)</span># Linux
+sudo systemctl stop openclaw     # stop NOW
+sudo systemctl start openclaw    # resume
+# macOS: use the wizard-provided launchctl equivalents</div>
+    </div>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">6</div><h3>Skip skills and extra channels — for now</h3></div>
+      <p>The wizard will offer to connect chat apps and install skills. Decline both today. Channels are Lesson 5 (done carefully), skills are Lesson 7 (done very carefully). Today's goal is a working, private, boring agent.</p>
     </div>
 
-    <div class="callout">
-      <span class="lbl">The 30-second self-test</span>
-      <p>Finish this sentence honestly: "If a stranger fully controlled my agent's machine right now, the worst they could do is ______." If the blank contains your real email, your files, your passwords, or anything involving your employer — your setup isn't done. If the blank is "read an empty box and spend $20 of API credit," you're ready to install.</p>
+    <h2><span class="num">03</span> Say hello</h2>
+    <p>With the service running, open the local web chat (the wizard prints the localhost URL) and introduce yourself. Give it a small real task — "what's on this machine in the workspace folder?" or "summarize this pasted article." Confirm it thinks, answers, and feels alive. Enjoy the moment — it's a legitimately great one.</p>
+
+    <h2><span class="num">04</span> The two verifications nobody does (do them)</h2>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">A</div><h3>Verify you're not on the internet</h3></div>
+      <div class="prompt-example"><span class="label">From ANOTHER device on a DIFFERENT network (e.g., phone on cellular)</span># Try to reach your agent's gateway port at your home IP.
+# Expected result: nothing. Timeout. Dead air.
+# If anything answers, stop the service and revisit binding NOW.</div>
+      <p>Also worth doing: search your home's public IP on shodan.io (free) — the same scanner that finds exposed instances can confirm you're not one.</p>
     </div>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">B</div><h3>Verify the spend cap is real</h3></div>
+      <p>Check your provider's usage dashboard after the first day. You should see small, explainable numbers. You're learning the agent's cost rhythm now, while it does almost nothing — so you'll notice immediately if something later makes it spike.</p>
+    </div>
+    <div class="savings"><strong>State achieved:</strong> a working agent, reachable only from your own machines, with a capped budget and a tested off switch.</div>
 
     <div class="challenge">
-      <h2 style="margin-top: 0;">Your pre-flight checklist</h2>
-      <p>Pick your hardware (A–D above), create the agent's dedicated email + API key with a spend cap, install Tailscale if you want remote access, and write the kill-switch sticky note. That's the whole assignment. When those four things exist, you've done the hard part — the install itself is the easy 20 minutes.</p>
+      <h2 style="margin-top: 0;">Run it boring for 48 hours</h2>
+      <p>Before connecting WhatsApp or anything exciting: just use the local chat for two days. Ask it real questions, watch the usage dashboard, stop and restart the service once for practice. Trust is built in the boring phase — and you'll meet Lesson 5 knowing exactly how your agent behaves when nothing is wrong.</p>
       <div class="btn-row">
-        <a href="/lessons/openclaw/install-and-onboard" class="btn">Next: install &amp; onboard →</a>
+        <a href="/lessons/openclaw/connect-your-channels" class="btn">Next: connect your channels →</a>
         <a href="/lessons/openclaw/" class="btn ghost">All OpenClaw lessons →</a>
       </div>
     </div>
@@ -167,20 +176,20 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <div class="checklist">
       <h3>What you can do now</h3>
       <ul>
-        <li>Explain blast radius: build so a tricked agent can't reach anything that matters</li>
-        <li>Choose the right home: spare machine, Pi, VPS, or (carefully) a VM on your main computer</li>
-        <li>Bind the gateway to localhost and use Tailscale instead of ever exposing a port</li>
-        <li>Provision dedicated accounts and a spend-capped, revocable API key</li>
-        <li>Write the agent's data scope before connecting anything</li>
-        <li>Keep a three-move kill switch: stop service, revoke key, pull the plug</li>
+        <li>Install OpenClaw via the official onboard wizard with Node 22+</li>
+        <li>Make the four wizard decisions safely: custom setup, localhost binding, budgeted model, run-as-service</li>
+        <li>Start and stop the agent on command — your kill switch is now muscle memory</li>
+        <li>Verify from an outside network that your gateway is unreachable</li>
+        <li>Read your provider's usage dashboard and recognize your agent's normal cost rhythm</li>
+        <li>Resist the urge to connect everything on night one</li>
       </ul>
     </div>
 
     <div class="next-up">
       <span class="pro-tag">Pro</span>
       <div class="lbl" style="margin-top: 14px;">Up next in OpenClaw, Safely</div>
-      <h3>Lesson 4 · Install and onboard, step by step</h3>
-      <p>The `openclaw onboard` walkthrough on your prepared machine: Node, the gateway, running as a service, picking your model provider — and verifying you're NOT publicly visible before you go further. <a href="/#pricing">See pricing →</a></p>
+      <h3>Lesson 5 · Connect your channels: WhatsApp, Telegram, Discord</h3>
+      <p>Your agent meets your chat apps — one channel, done right, including the shared-context trap that leaks secrets into group chats. <a href="/#pricing">See pricing →</a></p>
     </div>
   </div>
 </article>

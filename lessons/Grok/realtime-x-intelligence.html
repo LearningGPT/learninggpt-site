@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Grok's X firehose: real-time social intelligence workflows — LearningGPT</title>
+<meta name="description" content="The capability only Grok has: native real-time access to X's 500M daily posts. Trend detection, sentiment tracking, breaking-news verification, brand and competitor monitoring — with the evidence-grading habits that keep the firehose honest." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#9da0b0" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/grok/realtime-x-intelligence" />
+<meta property="og:title" content="Grok's X firehose: real-time social intelligence workflows" />
+<meta property="og:description" content="Trend detection, sentiment tracking, news verification, and competitor monitoring — the lesson only Grok can star in." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #9da0b0; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #71717a; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+.lesson { padding: 50px 0 100px; }
+.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(157,160,176,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(157,160,176,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
+.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
+.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
+.lesson h1 .grad { background: linear-gradient(135deg, #c3c6d4 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
+.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
+.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
+.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
+.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(157,160,176,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(157,160,176,0.25); border-radius: var(--radius-lg); position: relative; }
+.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #9da0b0, #7c5cff); border-radius: 2px 0 0 2px; }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.callout p:last-child { margin-bottom: 0; }
+.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
+.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(157,160,176,0.1); border: 1px solid rgba(157,160,176,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
+.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
+.workflow p { font-size: 15px; margin: 0 0 14px; }
+.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
+.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
+.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
+.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
+.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
+.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(157,160,176,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(157,160,176,0.25); border-radius: var(--radius-lg); padding: 36px; }
+.challenge h2 { margin-top: 0; }
+.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #71717a, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
+.challenge a.btn:hover { transform: translateY(-1px); color: white; }
+.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; padding-top: 0; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.checklist li:first-child::before { top: 4px; }
+.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
+.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/grok/" class="nav-back">← Grok Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Lesson 4 · Grok Mastery</span>
+      <span class="chip chip-pro">Pro</span>
+      <span>~11 min read</span>
+      <span class="dot"></span>
+      <span>4 firehose workflows</span>
+    </div>
+    <h1>The X firehose: <span class="grad serif">real-time social intelligence.</span></h1>
+    <p class="deck">Five hundred million posts a day, readable by an AI, live. This is the lesson no other tool track on our site can have — because no other AI has the access. Four professional workflows, each with the evidence-grading discipline that separates intelligence from gossip.</p>
+
+    <h2>The mental model: signal with a noise problem</h2>
+    <p>X is where news breaks, where practitioners vent, where customers complain before they email support, and where narratives are manufactured on purpose. All four at once, in the same feed. The professional posture is therefore fixed: <strong>treat the firehose as leads, not conclusions.</strong> Every workflow below bakes that in — and the standing instruction worth adding to every firehose prompt is: <em>"Distinguish organic conversation from coordinated pushes, and label confidence on every finding."</em></p>
+
+    <h2><span class="num">01</span> Brand &amp; reputation monitoring</h2>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">1</div><h3>Know what's being said before it becomes a problem</h3></div>
+      <div class="prompt-example"><span class="label">The daily monitor</span>Check X for mentions of [my company / product / my own name] in the last 24 hours. Report:
+1. Volume vs a typical day (more, less, normal?)
+2. Sentiment split, with the 3 most-engaged posts quoted
+3. Any complaint gaining traction (replies/reposts accelerating)
+4. Anything that needs a response TODAY, and a suggested draft
+If volume is basically zero, just say "quiet day" — no padding.</div>
+      <p>For small businesses this replaces a four-figure social-listening subscription. Run it manually each morning, or — if you took our <a href="/lessons/openclaw/">OpenClaw track</a> — you already know how to make this a 7am scheduled job.</p>
+      <div class="savings"><strong>Replaces:</strong> social-listening SaaS, for the price of a prompt.</div>
+    </div>
+
+    <h2><span class="num">02</span> Competitor &amp; market watch</h2>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">2</div><h3>Their customers tell you their roadmap</h3></div>
+      <div class="prompt-example"><span class="label">The weekly sweep</span>For [competitor A] and [competitor B], from X this week:
+- What are their customers praising and complaining about?
+- Any announcements, launches, or hiring signals?
+- Any complaints about them that name a need WE could serve? Quote those exactly.
+Separate documented facts from speculation. Note post engagement so I can judge weight.</div>
+      <p>The third bullet is the gold: people publicly describing a problem your product solves is the warmest cold-lead list that exists, refreshed weekly, free.</p>
+    </div>
+
+    <h2><span class="num">03</span> Trend detection — early, not first-and-wrong</h2>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">3</div><h3>Catch the wave while it's still a ripple</h3></div>
+      <div class="prompt-example"><span class="label">The trend triage</span>In [my industry/niche] on X this week: what topics are growing fastest compared to last month? For each: who's driving it (practitioners, vendors, or media?), is engagement organic or promoted, and what stage is it — fringe chatter, early adopters, or already mainstream? Rank by "worth my attention now."</div>
+      <p>The "who's driving it" question is the trend-quality filter: practitioner-driven trends tend to be real; vendor-driven "trends" tend to be marketing wearing a trench coat.</p>
+    </div>
+
+    <h2><span class="num">04</span> Breaking-situation verification</h2>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">4</div><h3>When something's happening and you need to know what's true</h3></div>
+      <p>You met the basic version in Lesson 1; here's the professional escalation — combine the firehose with DeepSearch (Lesson 3):</p>
+      <div class="prompt-example"><span class="label">The verification ladder</span>Re: [breaking situation]. Build me a verification ladder:
+CONFIRMED: multiple independent credible sources (name them)
+REPORTED: credible single source, unverified
+RUMORED: spreading but unsourced — note where it started
+DEBUNKED: claims already disproven (and by whom)
+Update lens: what changed in the last hour vs the last 6?
+Do not blend categories. If the situation is too fresh to confirm anything, say exactly that.</div>
+      <p>This output format — the ladder — is worth keeping for any fast-moving situation that touches your work: supply chain hiccups, regulatory news, a vendor outage, weather affecting a job site.</p>
+    </div>
+
+    <div class="gotcha">The firehose's biggest trap isn't misinformation — it's <strong>availability bias</strong>. X over-represents the terminally online and under-represents your median customer (who posted nothing today). Use firehose findings as a fast, rich sample with a known skew — brilliant for early warning and qualitative texture, dangerous as your only measure of anything. Pair with boring data sources before betting money.</div>
+
+    <div class="callout">
+      <span class="lbl">The honest note</span>
+      <p>This lesson is Grok's strongest case, so here's the counterweight: if real-time social signal isn't actually load-bearing for your work, this whole capability is a toy — and a $30/month toy should lose to a better writing or work-integration tool. Audit yourself after a week of these workflows: did any finding change an action? If yes, Grok earned its seat. If no, you learned that cheaply.</p>
+    </div>
+
+    <div class="challenge">
+      <h2 style="margin-top: 0;">Stand up your monitor</h2>
+      <p>Set up the daily brand monitor (workflow 1) and run it every morning for one week. Keep a tally: findings that led to an action. That number at week's end is your personal business case for the firehose — and the habit, if it sticks, is one of the highest-leverage five minutes in your day.</p>
+      <div class="btn-row">
+        <a href="/lessons/grok/imagine-images" class="btn">Next: Grok Imagine →</a>
+        <a href="/lessons/grok/" class="btn ghost">All Grok lessons →</a>
+      </div>
+    </div>
+
+    <div class="checklist">
+      <h3>What you can do now</h3>
+      <ul>
+        <li>Run daily brand monitoring with escalation triggers and a response draft</li>
+        <li>Sweep competitors weekly — and harvest the complaints that name needs you serve</li>
+        <li>Triage trends by who's driving them, organic vs promoted, and stage</li>
+        <li>Build verification ladders for breaking situations instead of swallowing headlines</li>
+        <li>Name the firehose's skew (availability bias) and pair it with boring data before acting</li>
+      </ul>
+    </div>
+
+    <div class="next-up">
+      <span class="pro-tag">Pro</span>
+      <div class="lbl" style="margin-top: 14px;">Up next in Grok Mastery</div>
+      <h3>Lesson 5 · Grok Imagine: images</h3>
+      <p>Text-to-image, editing, style control, and per-tier limits — the practical guide to Grok's creative engine. <a href="/#pricing">See pricing →</a></p>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with xAI.</div>
+    <a href="/lessons/grok/" style="color: var(--text-dim);">← All Grok lessons</a>
+  </div>
+</footer>
+<script src="/gate.js"></script>
+</body>
+</html>

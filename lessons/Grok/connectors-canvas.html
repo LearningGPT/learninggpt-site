@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Grok Connectors & Canvas: wiring Grok into your workday — LearningGPT</title>
+<meta name="description" content="Grok's work layer: Connectors for email, calendar, documents, repos, and MCP; the Canvas collaborative workspace; multi-turn Agent Mode. What's solid, what's young, how to connect safely — and the honest comparison to Copilot and ChatGPT." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#9da0b0" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/grok/connectors-canvas" />
+<meta property="og:title" content="Grok Connectors &amp; Canvas: wiring Grok into your workday" />
+<meta property="og:description" content="Email, calendar, docs, MCP, Canvas, Agent Mode — what's solid, what's young, and how to connect safely." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #9da0b0; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #71717a; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+.lesson { padding: 50px 0 100px; }
+.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(157,160,176,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(157,160,176,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
+.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
+.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
+.lesson h1 .grad { background: linear-gradient(135deg, #c3c6d4 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
+.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
+.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
+.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
+.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(157,160,176,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(157,160,176,0.25); border-radius: var(--radius-lg); position: relative; }
+.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #9da0b0, #7c5cff); border-radius: 2px 0 0 2px; }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.callout p:last-child { margin-bottom: 0; }
+.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
+.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(157,160,176,0.1); border: 1px solid rgba(157,160,176,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
+.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
+.workflow p { font-size: 15px; margin: 0 0 14px; }
+.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
+.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
+.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
+.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(157,160,176,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(157,160,176,0.25); border-radius: var(--radius-lg); padding: 36px; }
+.challenge h2 { margin-top: 0; }
+.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #71717a, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
+.challenge a.btn:hover { transform: translateY(-1px); color: white; }
+.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; padding-top: 0; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.checklist li:first-child::before { top: 4px; }
+.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
+.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/grok/" class="nav-back">← Grok Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Lesson 8 · Grok Mastery</span>
+      <span class="chip chip-pro">Pro</span>
+      <span>~10 min read</span>
+      <span class="dot"></span>
+      <span>The work layer</span>
+    </div>
+    <h1>Connectors &amp; Canvas: <span class="grad serif">Grok meets your workday.</span></h1>
+    <p class="deck">In May 2026 xAI made its move on the territory Copilot and ChatGPT have been fighting over: your email, calendar, documents, and tools. Connectors plus Canvas plus multi-turn Agent Mode is a real work layer now — young, fast-improving, and worth wiring up deliberately rather than enthusiastically.</p>
+
+    <h2><span class="num">01</span> Connectors: what plugs in</h2>
+    <p>Connectors give Grok authorized access to your accounts: <strong>email, calendar, cloud documents, code repositories, task tools — and custom integrations via MCP</strong> (the same open protocol Claude and others use, which means connectors built for the ecosystem increasingly work everywhere). Once connected, Grok can answer across your stuff: "what did I commit to this week?", "find the contract revision Sarah sent," "summarize open PRs."</p>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">1</div><h3>Connect like you've read our other tracks</h3></div>
+      <p>The doctrine is identical to what we teach for <a href="/lessons/claude/connect-to-outlook">Claude</a> and <a href="/lessons/openclaw/safe-setup-checklist">OpenClaw</a>, because it's true everywhere:</p>
+      <ul>
+        <li><strong>One connector at a time,</strong> starting with the least sensitive (calendar before email, email before repos).</li>
+        <li><strong>Read-only postures first</strong> where offered; Grok drafting replies ≠ Grok sending replies.</li>
+        <li><strong>Personal accounts only, unless IT signed off.</strong> Connecting a work M365/Google account to a consumer AI without approval is a policy violation at most companies — and xAI's consumer terms are not enterprise data-processing terms. If your company lives in Microsoft-land, Copilot exists precisely so this question has a sanctioned answer.</li>
+        <li><strong>Audit monthly:</strong> connector list should match what you actually use; revoke the experiments.</li>
+      </ul>
+    </div>
+
+    <h2><span class="num">02</span> The workflows that work today</h2>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">2</div><h3>The cross-source answer</h3></div>
+      <div class="prompt-example"><span class="label">Where connectors shine</span>Before my 2pm with Northwind: pull the thread history from email, the doc we shared last month, and my notes — give me a one-page brief: where we left off, what they asked for, what I owe them, and suggested talking points.</div>
+      <p>One question, four sources, one brief. This — not novelty — is what the work layer is for, and Grok does it credibly today.</p>
+    </div>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">3</div><h3>Canvas: the working document</h3></div>
+      <p>Canvas is the collaborative workspace — a persistent surface where you and Grok build something across many turns: a report taking shape section by section, code being revised against feedback, a plan growing structure. The skill is the same as ChatGPT's Canvas (<a href="/lessons/chatgpt/canvas-mastery">our lesson</a>): work in <em>passes</em> — structure pass, content pass, tone pass — instead of regenerate-roulette. Add the X edge where it helps: "revise the market section against what practitioners said this week."</p>
+    </div>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">4</div><h3>Agent Mode: multi-step delegation</h3></div>
+      <p>Multi-turn Agent Mode chains the pieces: research → check your calendar → draft the email → prepare the doc. Treat it exactly like <a href="/lessons/claude/fable-5-delegation">Fable 5 delegation</a>: brief it with goal, constraints, and checkpoints — and keep a human click between the agent and anything irreversible (sending, posting, paying). That rule has now appeared in four tracks. It will keep being true.</p>
+    </div>
+
+    <h2><span class="num">03</span> The honest placement</h2>
+    <div class="callout">
+      <span class="lbl">Grok's work layer vs the incumbents</span>
+      <p><strong>Copilot</strong> still wins inside Microsoft 365 — it lives in the apps, sees the tenant, and has enterprise governance IT will actually approve (<a href="/compare/copilot-vs-chatgpt">comparison</a>). <strong>ChatGPT</strong> has the most mature consumer work-stack: longer-tested connectors, deeper file handling. <strong>Grok's edge</strong> is the combination nobody else has: your work context <em>plus</em> the live X firehose in one brain — "prep my pitch, and check what the prospect's company dealt with publicly this week" is a Grok-only sentence. Young layer, real differentiator, fast trajectory. Wire it accordingly: useful second brain, not yet the system of record.</p>
+    </div>
+    <div class="gotcha">This is the fastest-changing part of Grok — connectors appear monthly and the Canvas/Agent UIs reshuffle. The connection doctrine and the pass-based working style are the durable skills; the screenshots will keep lying. We update this lesson as the layer matures.</div>
+
+    <div class="challenge">
+      <h2 style="margin-top: 0;">Wire one connector</h2>
+      <p>Calendar first. Live with "what's my day look like, and what should I prep?" each morning for a week. If it earns trust, add email read-only and run the meeting-brief workflow before your next real meeting. Deliberate beats enthusiastic — every week, on every platform.</p>
+      <div class="btn-row">
+        <a href="/lessons/grok/grok-for-work" class="btn">Next: Grok for work →</a>
+        <a href="/lessons/grok/" class="btn ghost">All Grok lessons →</a>
+      </div>
+    </div>
+
+    <div class="checklist">
+      <h3>What you can do now</h3>
+      <ul>
+        <li>Connect one source at a time, least-sensitive first, read-only where possible</li>
+        <li>Keep work accounts out of consumer AI without IT sign-off — and know why Copilot exists</li>
+        <li>Run cross-source meeting briefs — the workflow that justifies the layer</li>
+        <li>Work Canvas in passes and brief Agent Mode like a delegation, with a human click before anything irreversible</li>
+        <li>Place Grok's work layer honestly: young, differentiated by the firehose, not yet your system of record</li>
+      </ul>
+    </div>
+
+    <div class="next-up">
+      <span class="pro-tag">Pro</span>
+      <div class="lbl" style="margin-top: 14px;">Up next in Grok Mastery</div>
+      <h3>Lesson 9 · Grok for work: the daily workflows</h3>
+      <p>Drafting, analysis, documents, files — the bread-and-butter workflows, and the honest map of where Grok wins or loses them. <a href="/#pricing">See pricing →</a></p>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with xAI.</div>
+    <a href="/lessons/grok/" style="color: var(--text-dim);">← All Grok lessons</a>
+  </div>
+</footer>
+<script src="/gate.js"></script>
+</body>
+</html>

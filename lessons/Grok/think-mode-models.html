@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Grok's Think mode & model lineup: 4 vs 4.20 vs 4.3 — LearningGPT</title>
+<meta name="description" content="Picking the right Grok: Grok 4 vs 4.20 Reasoning vs 4.3, when Think mode is worth the wait, what Big Brain does, and matching model to task instead of paying for hype." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#9da0b0" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/grok/think-mode-models" />
+<meta property="og:title" content="Grok's Think mode &amp; model lineup" />
+<meta property="og:description" content="When reasoning mode earns its wait, and which Grok model fits which task." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #9da0b0; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #71717a; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+.lesson { padding: 50px 0 100px; }
+.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(157,160,176,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(157,160,176,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
+.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
+.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
+.lesson h1 .grad { background: linear-gradient(135deg, #c3c6d4 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
+.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
+.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
+.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
+.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(157,160,176,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(157,160,176,0.25); border-radius: var(--radius-lg); position: relative; }
+.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #9da0b0, #7c5cff); border-radius: 2px 0 0 2px; }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.callout p:last-child { margin-bottom: 0; }
+.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
+.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(157,160,176,0.1); border: 1px solid rgba(157,160,176,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
+.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
+.workflow p { font-size: 15px; margin: 0 0 14px; }
+.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
+.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
+.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
+.tier-table { width: 100%; border-collapse: collapse; margin: 20px 0 28px; font-size: 14px; }
+.tier-table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--line-strong); color: var(--text-dim); font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.8px; }
+.tier-table td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.tier-table td:first-child { font-weight: 600; white-space: nowrap; }
+.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(157,160,176,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(157,160,176,0.25); border-radius: var(--radius-lg); padding: 36px; }
+.challenge h2 { margin-top: 0; }
+.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #71717a, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
+.challenge a.btn:hover { transform: translateY(-1px); color: white; }
+.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; padding-top: 0; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.checklist li:first-child::before { top: 4px; }
+.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
+.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/grok/" class="nav-back">← Grok Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Lesson 2 · Grok Mastery</span>
+      <span class="chip chip-pro">Pro</span>
+      <span>~9 min read</span>
+      <span class="dot"></span>
+      <span>Pick by task, not hype</span>
+    </div>
+    <h1>Think mode &amp; the lineup: <span class="grad serif">which Grok for which job.</span></h1>
+    <p class="deck">xAI ships models faster than anyone explains them, so most users either always use the default (leaving quality on the table) or always max out (paying in time and limits). The fix is the same one we teach on every track: a simple match between task type and model — plus knowing when Think mode is worth its wait.</p>
+
+    <h2><span class="num">01</span> The lineup, decoded</h2>
+    <table class="tier-table">
+      <tr><th>Model</th><th>Personality</th><th>Reach for it when</th></tr>
+      <tr><td>Grok 4</td><td>The flagship daily driver</td><td>Default for everything: drafting, X workflows, general questions, Imagine prompting.</td></tr>
+      <tr><td>Grok 4.20 Reasoning</td><td>The careful one — thinks first, lowest hallucination rate, strongest tool calling</td><td>Analysis, multi-step problems, anything where being wrong costs more than being slow.</td></tr>
+      <tr><td>Grok 4.3</td><td>The newest and sharpest — consumer access gated to Heavy ($300); cheaper via API</td><td>If you're on Heavy or building on the API. Most users: don't chase it.</td></tr>
+      <tr><td>Free-tier model</td><td>An older, limited workhorse</td><td>Trying Grok out. Fine for the Lesson 1 exercises, not for real work.</td></tr>
+    </table>
+    <div class="gotcha">Version numbers will have moved by the time you read this — xAI ships constantly (we update, but always sanity-check the picker). The durable skill isn't memorizing the lineup; it's the sorting rule below, which survives every rename.</div>
+
+    <h2><span class="num">02</span> The sorting rule that survives every release</h2>
+    <div class="callout">
+      <span class="lbl">One question</span>
+      <p><strong>"If this answer is subtly wrong, what does it cost me?"</strong> Low cost (a draft you'll edit, a brainstorm, a meme) → fast default model. High cost (numbers you'll act on, an analysis you'll forward, a decision) → reasoning model, Think mode on. That's the whole framework — the same one from our <a href="/lessons/claude/fable-5-which-claude">which-Claude lesson</a>, because it's true for every AI family.</p>
+    </div>
+
+    <h2><span class="num">03</span> Think mode: when the wait pays</h2>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">1</div><h3>What it actually does</h3></div>
+      <p>Think mode makes Grok work through a chain of reasoning before answering — visibly slower, measurably more reliable on hard problems. It shines on: math and logic, multi-constraint planning ("schedule these 6 things with these 4 rules"), debugging an argument or a spreadsheet formula, and reading dense material for what it <em>implies</em> rather than says.</p>
+      <h4>Where it's wasted</h4>
+      <p>Simple lookups, casual drafting, X pulse checks, image prompts. Reasoning overhead on easy questions doesn't add accuracy — it adds wait. (Sound familiar? Same lesson as "don't use a Mythos-class model to summarize an email.")</p>
+    </div>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">2</div><h3>The test that proves it to you</h3></div>
+      <div class="prompt-example"><span class="label">Run both ways — default, then Think</span>I'm choosing between [option A] and [option B] for [real decision you face].
+Constraints: [list 3-4 real ones, including one that conflicts].
+Recommend one, show the trade-offs you weighed, and tell me which
+constraint you had to compromise and why.</div>
+      <p>The default model gives you a fluent answer. Think mode usually gives you the one that noticed the conflicting constraint. That difference is what you're paying the wait for.</p>
+    </div>
+    <p><strong>Big Brain</strong>, on SuperGrok and up, is the heavier-compute variant of the same idea — more thinking budget for genuinely hard problems. Use it like Think mode's overdrive: rarely, deliberately, on the questions where being right matters most.</p>
+
+    <h2><span class="num">04</span> Daily-driver doctrine</h2>
+    <ul>
+      <li><strong>Default to Grok 4</strong> for the flow of the day.</li>
+      <li><strong>Escalate to Reasoning/Think</strong> when the wrong-answer cost is real — and say "think step by step through the constraints" to point the effort.</li>
+      <li><strong>Don't buy Heavy for 4.3</strong> unless your work measurably hits the ceiling of the standard models. (It almost certainly doesn't yet — and the API is the cheaper test if you're curious.)</li>
+      <li><strong>Re-run important answers once</strong> on the reasoning model as a check. Two agreeing models ≠ proof, but disagreement is the cheapest red flag in AI.</li>
+    </ul>
+
+    <div class="challenge">
+      <h2 style="margin-top: 0;">Calibrate yourself</h2>
+      <p>Take one real decision on your plate this week and run the two-way test above. Notice not just which answer is better, but <em>how</em> it's better — that's you learning to feel where the reasoning premium pays. From now on, model choice is a reflex, not a guess.</p>
+      <div class="btn-row">
+        <a href="/lessons/grok/deepsearch" class="btn">Next: DeepSearch →</a>
+        <a href="/lessons/grok/" class="btn ghost">All Grok lessons →</a>
+      </div>
+    </div>
+
+    <div class="checklist">
+      <h3>What you can do now</h3>
+      <ul>
+        <li>Decode the lineup: Grok 4 (default), 4.20 Reasoning (careful), 4.3 (Heavy/API), free tier (trial)</li>
+        <li>Sort tasks with the one question: what does a subtly wrong answer cost?</li>
+        <li>Use Think mode where reasoning pays — and skip it where it's just wait</li>
+        <li>Reserve Big Brain for the rare genuinely hard problem</li>
+        <li>Use model disagreement as your cheapest error detector</li>
+      </ul>
+    </div>
+
+    <div class="next-up">
+      <span class="pro-tag">Pro</span>
+      <div class="lbl" style="margin-top: 14px;">Up next in Grok Mastery</div>
+      <h3>Lesson 3 · DeepSearch &amp; DeeperSearch</h3>
+      <p>Grok's research agent: how the loop works, prompts that steer it, and the honest comparison against Perplexity and ChatGPT research. <a href="/#pricing">See pricing →</a></p>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with xAI.</div>
+    <a href="/lessons/grok/" style="color: var(--text-dim);">← All Grok lessons</a>
+  </div>
+</footer>
+<script src="/gate.js"></script>
+</body>
+</html>

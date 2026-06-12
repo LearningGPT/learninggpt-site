@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Your first real OpenClaw workflows: email triage, briefings, watchers — LearningGPT</title>
+<meta name="description" content="The starter OpenClaw automations that justify the setup: a morning briefing, email triage on a dedicated inbox, price/website watchers, and a research errand pattern — each designed to stay inside your safety rails." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#f0544f" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/openclaw/first-real-workflows" />
+<meta property="og:title" content="Your first real OpenClaw workflows" />
+<meta property="og:description" content="Morning briefing, email triage, watchers, and research errands — the automations that turn a demo into an assistant." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #f0544f; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #f0544f; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+.lesson { padding: 50px 0 100px; }
+.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(240,84,79,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(240,84,79,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
+.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
+.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
+.lesson h1 .grad { background: linear-gradient(135deg, #f0544f 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
+.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
+.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
+.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
+.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(240,84,79,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(240,84,79,0.25); border-radius: var(--radius-lg); position: relative; }
+.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #f0544f, #7c5cff); border-radius: 2px 0 0 2px; }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.callout p:last-child { margin-bottom: 0; }
+.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
+.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(240,84,79,0.1); border: 1px solid rgba(240,84,79,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
+.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
+.workflow p { font-size: 15px; margin: 0 0 14px; }
+.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
+.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
+.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
+.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
+.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
+.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(240,84,79,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(240,84,79,0.25); border-radius: var(--radius-lg); padding: 36px; }
+.challenge h2 { margin-top: 0; }
+.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #f0544f, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
+.challenge a.btn:hover { transform: translateY(-1px); color: white; }
+.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; padding-top: 0; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.checklist li:first-child::before { top: 4px; }
+.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
+.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/openclaw/" class="nav-back">← OpenClaw, Safely</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Lesson 6 · OpenClaw, Safely</span>
+      <span class="chip chip-pro">Pro</span>
+      <span>~11 min read</span>
+      <span class="dot"></span>
+      <span>4 starter workflows</span>
+    </div>
+    <h1>Your first real workflows: <span class="grad serif">briefing, triage, watchers.</span></h1>
+    <p class="deck">A safe agent that does nothing useful is a smoke detector with no kitchen. These four starter workflows are chosen on two criteria: they deliver real daily value, and every one stays inside the safety rails you built in Lessons 3–5. Notice what's <em>not</em> here — nothing that needs your passwords, your main inbox, or marketplace skills.</p>
+
+    <h2><span class="num">01</span> The morning briefing — your agent's signature move</h2>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">1</div><h3>One message, waiting for you at 7am</h3></div>
+      <p>The classic always-on win: a scheduled job that assembles your morning in one chat message. Weather, your calendar (the agent's copy — see the pattern below), top headlines on topics you care about, and anything your watchers (workflow 3) flagged overnight.</p>
+      <h4>Tell your agent (in your own words)</h4>
+      <div class="prompt-example"><span class="label">Setting it up conversationally</span>Every weekday at 7:00am, send me a briefing:
+1. Weather for Fargo today, one line.
+2. My calendar events for today (from the shared calendar).
+3. Top 3 news items on: AI tools, small business tech. One sentence each, with links.
+4. Anything your watchers flagged since yesterday.
+Keep the whole thing under 200 words. If something failed overnight, say so first.</div>
+      <p>OpenClaw turns this into a cron job (Lesson 9 goes deep on those). The "if something failed, say so first" line teaches your agent the most underrated habit: reporting its own failures instead of silently skipping.</p>
+      <div class="savings"><strong>Value:</strong> your day's dashboard, in the app you check first anyway.</div>
+    </div>
+
+    <h2><span class="num">02</span> Email triage — on the agent's OWN inbox</h2>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">2</div><h3>The dedicated-inbox pattern (this is the important part)</h3></div>
+      <p>Remember Lesson 3: the agent gets its own accounts. So don't wire it into your personal Gmail — instead, <strong>make the agent's inbox useful by forwarding into it.</strong> Set rules in YOUR email that forward selected, low-risk streams: newsletters, receipts, shipping notices, school announcements, that one chatty mailing list. The agent reads only what you've chosen to send it.</p>
+      <h4>Then ask for triage like this</h4>
+      <div class="prompt-example"><span class="label">Triage instruction</span>Each evening at 6pm, summarize what arrived in your inbox today:
+- Anything that needs action from me (deadlines, RSVPs, payments due) — list first, bold.
+- Receipts and orders: one line each.
+- Newsletters: just the 3 most interesting headlines total.
+Never click links in emails. Never reply to anyone. Read and report only.</div>
+      <p>"Never click links, never reply" matters: emails are exactly where prompt-injection payloads arrive (Lesson 2). A read-and-report agent on a forwarded-mail diet gets you 80% of the value at a tiny fraction of the risk of full inbox access.</p>
+      <div class="savings"><strong>Value:</strong> newsletter pile → 60-second digest, with deadlines surfaced.</div>
+    </div>
+
+    <h2><span class="num">03</span> Watchers — the patience you don't have</h2>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">3</div><h3>Check a thing, every day, forever</h3></div>
+      <p>Anything you'd check repeatedly is a watcher: a price you're waiting to drop, a permit status page, concert tickets, a competitor's pricing page, the release notes of software you depend on. The agent browses on schedule, compares against last time, and messages you only when something changed.</p>
+      <div class="prompt-example"><span class="label">Watcher pattern</span>Once a day, check [URL]. Compare to what you saw yesterday.
+If [the price drops below $X / the status changes / new content appears], message me immediately with what changed.
+If nothing changed, stay silent — no daily "no news" messages.
+If the page won't load two days in a row, tell me that too.</div>
+      <p>"Stay silent unless something changed" is the difference between an assistant and a notification problem. Three or four watchers running quietly is where an always-on agent starts feeling like a superpower.</p>
+      <div class="savings"><strong>Value:</strong> you stop checking; it never forgets to.</div>
+    </div>
+
+    <h2><span class="num">04</span> Research errands — fire and forget</h2>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">4</div><h3>Send a question from the grocery line, read the answer at your desk</h3></div>
+      <p>The ambient win: any moment a question occurs to you, hand it off in one message. The agent researches with the time you don't have and files the answer back — in chat, or into a notes file in its workspace folder you sync later.</p>
+      <div class="prompt-example"><span class="label">Errand brief (the Foundations patterns apply!)</span>Research errand, no rush — reply within the hour:
+Best options for [X] under [$Y]. Compare the top 3 on [criteria].
+Cite sources with links. If reviews disagree, say so instead of averaging.
+Save the full version to notes/research/ and send me just the 5-line summary.</div>
+      <p>Notice this is just a <a href="/lessons/foundations/">Foundations-style brief</a> with a delivery instruction. Everything you learned about constraint stacks and hallucination flags applies to your agent — it's the same discipline, with the answers arriving in your pocket.</p>
+    </div>
+
+    <div class="gotcha">All four workflows are read-and-report. None of them let the agent send email to other people, spend money, post publicly, or touch files outside its workspace. That's deliberate. An agent earns "write access" to your life the way a new employee earns it: weeks of clean, observable work first — and even then, one scope at a time (Lesson 8 covers exactly how).</div>
+
+    <div class="callout">
+      <span class="lbl">The cost check-in</span>
+      <p>Four daily workflows on a mid-tier model typically lands in the $5–15/month range depending on how chatty your briefings are. Check the usage dashboard after week one. If costs surprise you, the briefing word limits and "stay silent" rules above are the dials that matter.</p>
+    </div>
+
+    <div class="challenge">
+      <h2 style="margin-top: 0;">Build two this week</h2>
+      <p>The morning briefing plus one watcher is the perfect starter pair — one scheduled push, one quiet monitor. Run them a full week. When both have been boringly reliable for seven days, you've earned the next power-up: skills. Which is also where the danger comes back — so don't skip the vetting lesson.</p>
+      <div class="btn-row">
+        <a href="/lessons/openclaw/skills-and-clawhub" class="btn">Next: skills &amp; the ClawHub problem →</a>
+        <a href="/lessons/openclaw/" class="btn ghost">All OpenClaw lessons →</a>
+      </div>
+    </div>
+
+    <div class="checklist">
+      <h3>What you can do now</h3>
+      <ul>
+        <li>Set up a scheduled morning briefing with failure-reporting built in</li>
+        <li>Run email triage on a dedicated, forward-fed inbox — read-and-report only, never clicking links</li>
+        <li>Deploy watchers that alert on change and stay silent otherwise</li>
+        <li>Fire off research errands as proper briefs from anywhere</li>
+        <li>Explain why all starter workflows are read-only — and what an agent must do to earn write access</li>
+        <li>Estimate and tune your monthly model spend</li>
+      </ul>
+    </div>
+
+    <div class="next-up">
+      <span class="pro-tag">Pro</span>
+      <div class="lbl" style="margin-top: 14px;">Up next in OpenClaw, Safely</div>
+      <h3>Lesson 7 · Skills: the app store with a malware problem</h3>
+      <p>ClawHub has thousands of skills — and an audit found roughly a third with prompt-injection content. The vetting checklist, and why the safest skill is the one you write yourself. <a href="/#pricing">See pricing →</a></p>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with the OpenClaw project.</div>
+    <a href="/lessons/openclaw/" style="color: var(--text-dim);">← All OpenClaw lessons</a>
+  </div>
+</footer>
+<script src="/gate.js"></script>
+</body>
+</html>

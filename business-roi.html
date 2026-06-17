@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="See what your team's AI tools are costing you when they go unused — and what AI enablement returns. An interactive ROI calculator for AI training." />
+<title>AI Training ROI Calculator — LearningGPT for Business</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#7c5cff" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a;
+  --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14);
+  --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85;
+  --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4;
+  --warn: #ffb547; --danger: #ff6b8a;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(140px); }
+.bg-orb.one { width: 700px; height: 700px; top: -200px; left: -200px; background: #7c5cff; opacity: 0.2; }
+.bg-orb.two { width: 500px; height: 500px; bottom: -100px; right: -100px; background: #44e0a4; opacity: 0.1; }
+
+.hero { position: relative; z-index: 1; text-align: center; padding: 72px 24px 32px; max-width: 760px; margin: 0 auto; }
+.hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(91,141,239,0.12); border: 1px solid rgba(91,141,239,0.25); border-radius: 100px; padding: 6px 16px; font-size: 12px; font-weight: 700; color: var(--brand-2); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 24px; }
+.hero h1 { font-size: clamp(32px, 5vw, 50px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 18px; }
+.hero h1 em { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.hero p { font-size: 17px; color: var(--text-dim); line-height: 1.6; max-width: 560px; margin: 0 auto; }
+
+.calc { position: relative; z-index: 1; max-width: 980px; margin: 0 auto 40px; padding: 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+@media (max-width: 820px) { .calc { grid-template-columns: 1fr; } }
+
+.panel { background: rgba(255,255,255,0.03); border: 1px solid var(--line-strong); border-radius: 20px; padding: 30px; }
+.panel h2 { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+.panel .sub { font-size: 13px; color: var(--text-mute); margin-bottom: 26px; }
+
+.field { margin-bottom: 24px; }
+.field label { display: flex; justify-content: space-between; align-items: baseline; font-size: 14px; font-weight: 600; margin-bottom: 10px; }
+.field label .val { font-size: 15px; font-weight: 800; color: var(--accent); }
+input[type=range] { width: 100%; -webkit-appearance: none; appearance: none; height: 6px; border-radius: 6px; background: rgba(255,255,255,0.1); outline: none; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: linear-gradient(135deg,#7c5cff,#5b8def); cursor: pointer; box-shadow: 0 2px 10px rgba(124,92,255,0.5); }
+input[type=range]::-moz-range-thumb { width: 20px; height: 20px; border: none; border-radius: 50%; background: linear-gradient(135deg,#7c5cff,#5b8def); cursor: pointer; }
+.range-ends { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-mute); margin-top: 6px; }
+.toggle-row { display: flex; gap: 10px; }
+.toggle { flex: 1; text-align: center; padding: 12px; border-radius: 10px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); cursor: pointer; font-size: 13px; font-weight: 600; color: var(--text-dim); transition: all .15s; }
+.toggle.active { border-color: rgba(124,92,255,0.6); background: rgba(124,92,255,0.12); color: var(--text); }
+.toggle .t-price { display: block; font-size: 11px; color: var(--text-mute); margin-top: 2px; font-weight: 500; }
+
+/* RESULTS */
+.result-panel { background: linear-gradient(160deg, rgba(124,92,255,0.10), rgba(68,224,164,0.05)); border: 1px solid rgba(124,92,255,0.3); }
+.big-number { font-size: 46px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; background: linear-gradient(135deg, #7c5cff, #44e0a4); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px; }
+.big-label { font-size: 13px; color: var(--text-dim); margin-bottom: 26px; }
+.rrow { display: flex; justify-content: space-between; align-items: baseline; padding: 13px 0; border-top: 1px solid var(--line); font-size: 14px; }
+.rrow .rk { color: var(--text-dim); }
+.rrow .rv { font-weight: 700; font-size: 15px; }
+.rv.warn { color: var(--warn); }
+.rv.accent { color: var(--accent); }
+.rv.danger { color: var(--danger); }
+.roi-badge { margin-top: 22px; text-align: center; padding: 16px; border-radius: 12px; background: rgba(68,224,164,0.1); border: 1px solid rgba(68,224,164,0.3); }
+.roi-badge .roi-x { font-size: 30px; font-weight: 800; color: var(--accent); }
+.roi-badge .roi-cap { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+
+.assumptions { position: relative; z-index: 1; max-width: 980px; margin: 0 auto 28px; padding: 0 24px; }
+.assumptions details { background: rgba(255,255,255,0.02); border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; }
+.assumptions summary { font-size: 13px; font-weight: 600; color: var(--text-dim); cursor: pointer; }
+.assumptions p { font-size: 13px; color: var(--text-mute); line-height: 1.65; margin-top: 12px; }
+
+.cta-wrap { position: relative; z-index: 1; text-align: center; padding: 8px 24px 90px; }
+.btn-primary { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #7c5cff, #5b8def); color: white; padding: 15px 32px; border-radius: 10px; font-size: 15px; font-weight: 600; border: none; cursor: pointer; box-shadow: 0 6px 24px rgba(124,92,255,0.35); }
+.btn-primary:hover { transform: translateY(-2px); text-decoration: none; color: #fff; }
+.btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.06); border: 1px solid var(--line-strong); color: var(--text-dim); padding: 15px 32px; border-radius: 10px; font-size: 15px; font-weight: 600; }
+.btn-secondary:hover { background: rgba(255,255,255,0.1); color: var(--text); text-decoration: none; }
+.cta-wrap .row { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+footer { position:relative; z-index:1; border-top:1px solid var(--line); padding:28px 24px; font-size:13px; color:var(--text-mute); text-align:center; }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+
+<div class="hero">
+  <div class="hero-eyebrow">📈 ROI Calculator</div>
+  <h1>What is unused AI <em>actually costing</em> your team?</h1>
+  <p>You already pay for the AI tools. The return only shows up when people use them well. Move the sliders to your numbers.</p>
+</div>
+
+<div class="calc">
+  <!-- INPUTS -->
+  <div class="panel">
+    <h2>Your team</h2>
+    <div class="sub">Adjust to match your situation.</div>
+
+    <div class="field">
+      <label>Team size <span class="val"><span id="seatsV">25</span> people</span></label>
+      <input type="range" id="seats" min="3" max="500" value="25" step="1">
+      <div class="range-ends"><span>3</span><span>500</span></div>
+    </div>
+
+    <div class="field">
+      <label>AI tool cost / person / month <span class="val">$<span id="toolV">30</span></span></label>
+      <input type="range" id="tool" min="0" max="60" value="30" step="1">
+      <div class="range-ends"><span>$0 (free tier)</span><span>$60</span></div>
+    </div>
+
+    <div class="field">
+      <label>People using AI well today <span class="val"><span id="adoptV">40</span>%</span></label>
+      <input type="range" id="adopt" min="5" max="95" value="40" step="5">
+      <div class="range-ends"><span>5%</span><span>95%</span></div>
+    </div>
+
+    <div class="field">
+      <label>Hours AI saves a trained person / week <span class="val"><span id="hoursV">1.5</span> hrs</span></label>
+      <input type="range" id="hours" min="0.5" max="6" value="1.5" step="0.5">
+      <div class="range-ends"><span>30 min</span><span>6 hrs</span></div>
+    </div>
+
+    <div class="field">
+      <label>Avg loaded hourly cost / person <span class="val">$<span id="rateV">40</span></span></label>
+      <input type="range" id="rate" min="20" max="120" value="40" step="5">
+      <div class="range-ends"><span>$20</span><span>$120</span></div>
+    </div>
+
+    <div class="field" style="margin-bottom:0;">
+      <label style="margin-bottom:12px;">LearningGPT plan (annual per seat)</label>
+      <div class="toggle-row">
+        <div class="toggle" data-plan="pro" data-price="58">Business Pro<span class="t-price">$58/seat/yr</span></div>
+        <div class="toggle active" data-plan="proplus" data-price="99">Business Pro+<span class="t-price">$99/seat/yr</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="panel result-panel">
+    <h2>The math</h2>
+    <div class="sub">Per year, at your numbers.</div>
+
+    <div class="big-number" id="netValue">$—</div>
+    <div class="big-label">Estimated net value created in year one (after training cost)</div>
+
+    <div class="rrow"><span class="rk">You spend on AI tools / year</span><span class="rv" id="aiSpend">$—</span></div>
+    <div class="rrow"><span class="rk">AI spend not returning value today</span><span class="rv danger" id="wasted">$—</span></div>
+    <div class="rrow"><span class="rk">Productivity value unlocked by training</span><span class="rv accent" id="unlocked">$—</span></div>
+    <div class="rrow"><span class="rk">LearningGPT cost / year</span><span class="rv warn" id="lgptCost">$—</span></div>
+
+    <div class="roi-badge">
+      <div class="roi-x" id="roiX">—×</div>
+      <div class="roi-cap">return for every $1 spent on LearningGPT</div>
+    </div>
+  </div>
+</div>
+
+<div class="assumptions">
+  <details>
+    <summary>How this is calculated (and why it's conservative)</summary>
+    <p>
+      <strong>AI spend / year</strong> = team size × tool cost × 12.
+      <strong>Spend not returning value</strong> assumes a tool only pays off for people who use it well — so the rest of your license spend isn't yet earning its keep.
+      <strong>Productivity value unlocked</strong> = the additional people we help reach "using AI well" (we model training lifting adoption toward ~85%) × hours saved/week × 52 weeks × loaded hourly cost.
+      <strong>LearningGPT cost</strong> = team size × the annual per-seat price you selected.
+      We deliberately ignore harder-to-measure gains (quality, morale, retention, faster onboarding) and count only time saved. Change any number to your own — this is a model to think with, not a promise.
+    </p>
+  </details>
+</div>
+
+<div class="cta-wrap">
+  <div class="row">
+    <a href="/business" class="btn-primary">Get your team started →</a>
+    <a href="mailto:hello@learninggpt.ai?subject=Business%20demo%20%2F%20pilot" class="btn-secondary">Book a 15-min walkthrough</a>
+  </div>
+</div>
+
+<footer>© 2026 LearningGPT, Inc. · Independent. Not affiliated with OpenAI, Anthropic, Microsoft, Google, Perplexity, or xAI.</footer>
+
+<script>
+(function () {
+  var ADOPTION_CEILING = 0.75; // training lifts good usage toward ~75% (deliberately conservative)
+  var ids = ['seats','tool','adopt','hours','rate'];
+  var plan = { price: 99 }; // default Pro+
+
+  function fmt(n) {
+    n = Math.round(n);
+    return '$' + n.toLocaleString('en-US');
+  }
+
+  function calc() {
+    var seats = +document.getElementById('seats').value;
+    var tool  = +document.getElementById('tool').value;
+    var adopt = +document.getElementById('adopt').value / 100;
+    var hours = +document.getElementById('hours').value;
+    var rate  = +document.getElementById('rate').value;
+
+    // live labels
+    document.getElementById('seatsV').textContent = seats;
+    document.getElementById('toolV').textContent = tool;
+    document.getElementById('adoptV').textContent = Math.round(adopt*100);
+    document.getElementById('hoursV').textContent = hours;
+    document.getElementById('rateV').textContent = rate;
+
+    var aiSpend = seats * tool * 12;
+    var wasted  = aiSpend * (1 - adopt);
+
+    // people we move from "not using well" toward the ceiling
+    var lift = Math.max(0, ADOPTION_CEILING - adopt);
+    var peopleEnabled = seats * lift;
+    var valuePerPersonYr = hours * 52 * rate;
+    var unlocked = peopleEnabled * valuePerPersonYr;
+
+    var lgptCost = seats * plan.price;
+    var net = unlocked - lgptCost;
+    var roi = lgptCost > 0 ? unlocked / lgptCost : 0;
+
+    document.getElementById('aiSpend').textContent = fmt(aiSpend);
+    document.getElementById('wasted').textContent = fmt(wasted);
+    document.getElementById('unlocked').textContent = fmt(unlocked);
+    document.getElementById('lgptCost').textContent = fmt(lgptCost);
+    document.getElementById('netValue').textContent = fmt(net);
+    document.getElementById('roiX').textContent = (Math.round(roi*10)/10) + '×';
+  }
+
+  ids.forEach(function (id) {
+    document.getElementById(id).addEventListener('input', calc);
+  });
+  var toggles = document.querySelectorAll('.toggle');
+  toggles.forEach(function (t) {
+    t.addEventListener('click', function () {
+      toggles.forEach(function (x){ x.classList.remove('active'); });
+      t.classList.add('active');
+      plan.price = +t.getAttribute('data-price');
+      calc();
+    });
+  });
+  calc();
+})();
+</script>
+<script src="/site-nav.js" defer></script>
+</body>
+</html>

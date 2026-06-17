@@ -26,6 +26,7 @@
     // The canonical link set — edit here to change the nav site-wide.
     var LINKS = [
       { href: '/lessons',   label: 'Lessons' },
+        { href: '/whats-new', label: "What's new" },
       { href: '/playground', label: 'Playground' },
       { href: '/pricing',   label: 'Pricing' },
       { href: '/testimonials', label: 'Testimonials' },

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Grok in Word, Excel & PowerPoint: the Office add-in — LearningGPT</title>
+<meta name="description" content="xAI's Grok now runs as a free agent sidebar inside Word, Excel, and PowerPoint. How to install it, what each app's agent actually does, the live X/web edge — and the honest data trade-off vs. Microsoft 365 Copilot." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#9da0b0" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/grok/grok-in-office" />
+<meta property="og:title" content="Grok in Word, Excel & PowerPoint" />
+<meta property="og:description" content="Install the Grok Office add-in, what each app's agent does, and the honest data trade-off vs. Copilot." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #9da0b0; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #71717a; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+.lesson { padding: 50px 0 100px; }
+.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(157,160,176,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(157,160,176,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
+.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
+.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
+.lesson h1 .grad { background: linear-gradient(135deg, #c3c6d4 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
+.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
+.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
+.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
+.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(157,160,176,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(157,160,176,0.25); border-radius: var(--radius-lg); position: relative; }
+.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #9da0b0, #7c5cff); border-radius: 2px 0 0 2px; }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.callout p:last-child { margin-bottom: 0; }
+.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
+.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(157,160,176,0.1); border: 1px solid rgba(157,160,176,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
+.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
+.workflow p { font-size: 15px; margin: 0 0 14px; }
+.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
+.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
+.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
+.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
+.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
+.tier-table { width: 100%; border-collapse: collapse; margin: 20px 0 28px; font-size: 14px; }
+.tier-table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--line-strong); color: var(--text-dim); font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.8px; }
+.tier-table td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.tier-table td:first-child { font-weight: 600; }
+.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(157,160,176,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(157,160,176,0.25); border-radius: var(--radius-lg); padding: 36px; }
+.challenge h2 { margin-top: 0; }
+.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #71717a, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
+.challenge a.btn:hover { transform: translateY(-1px); color: white; }
+.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; padding-top: 0; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.checklist li:first-child::before { top: 4px; }
+.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
+.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/grok/" class="nav-back">← Grok Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Lesson 13 · Grok Mastery</span>
+      <span class="chip chip-pro">Pro</span>
+      <span>~9 min read</span>
+      <span class="dot"></span>
+      <span>Grok meets Office</span>
+    </div>
+    <h1>Grok in Word, Excel &amp; PowerPoint: <span class="grad serif">the Office add-in.</span></h1>
+    <p class="deck">xAI just put Grok where the work actually happens — a free agent sidebar living inside Word, Excel, and PowerPoint. It's genuinely useful, and it's genuinely <em>not</em> Microsoft 365 Copilot, which matters more than the demos let on. Here's how to install it, what each app's agent really does, and the one trade-off to understand before you point it at company files.</p>
+
+    <h2><span class="num">01</span> What this actually is (and isn't)</h2>
+    <p>This is an <strong>xAI add-in</strong> — Grok bolted into Office through the standard Microsoft add-in system, free from the Microsoft Marketplace (AppSource). Each of the three apps gets its own Grok agent in a sidebar pane: you type what you want, it researches and builds. It's powered by Grok 4.3 and can pull <strong>live web and X data</strong>, generate images and charts, and connect out to your apps and MCP servers.</p>
+    <p>What it is <em>not</em>: Microsoft 365 Copilot. Copilot is Microsoft's own assistant, grounded in your tenant data and governed by your Microsoft data boundary. The Grok add-in is a third-party guest that sends your prompt and selected content to xAI to process. Same window, completely different plumbing — and that distinction drives the whole "when to use it" decision later.</p>
+    <div class="gotcha">People will see "Grok in Excel" and assume Microsoft built or blessed it. It's xAI's add-in riding Office's open add-in platform. Treat it like any third-party tool you'd install, not a native Microsoft feature.</div>
+
+    <h2><span class="num">02</span> Installing it (two minutes)</h2>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">1</div><h3>Add it from inside any Office app</h3></div>
+      <p>The add-in installs per app, so add it wherever you want it:</p>
+      <ol>
+        <li>Open Word, Excel, or PowerPoint → <strong>Home</strong> (or <strong>Insert</strong>) → <strong>Add-ins</strong> → <strong>Get Add-ins</strong>.</li>
+        <li>Search <strong>“Grok”</strong> (published by xAI) → <strong>Add</strong>. You can also install it straight from the Microsoft Marketplace listing in a browser.</li>
+        <li>Open the Grok pane from the ribbon and sign in with your Grok / xAI account.</li>
+      </ol>
+      <div class="gotcha">If your workplace manages Office, an admin may have locked down which add-ins users can install. If "Get Add-ins" is greyed out or Grok is blocked, that's IT policy — talk to them rather than working around it.</div>
+      <div class="savings"><strong>Setup:</strong> ~2 minutes per app, free.</div>
+    </div>
+
+    <h2><span class="num">02</span> What each app's agent does</h2>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">2</div><h3>Three agents, three jobs</h3></div>
+      <h4>Excel</h4>
+      <p>Analyze a dataset, suggest and explain formulas, build PivotTables, clean a messy sheet, and generate summary charts — all from a plain-language ask in the sidebar.</p>
+      <div class="prompt-example"><span class="label">Excel</span>This sheet is our Q2 sales export. Clean it (fix the date column,
+drop blank rows), then build a PivotTable of revenue by region and
+a summary chart. Tell me the top 3 things that stand out.</div>
+      <h4>Word</h4>
+      <p>Draft from scratch, rewrite, summarize, and adjust tone — the everyday writing jobs, in the document instead of in a chat window.</p>
+      <div class="prompt-example"><span class="label">Word</span>Draft a one-page proposal cover letter from these bullet points.
+Tone: professional, warm, confident. Then give me a punchier
+alternative opening paragraph.</div>
+      <h4>PowerPoint</h4>
+      <p>Generate a full deck from a prompt or source content — outline, slides, and visuals — then refine slide by slide.</p>
+      <div class="prompt-example"><span class="label">PowerPoint</span>Build a 10-slide investor update from this quarter's numbers (pasted
+below). Clean, modern, one chart where it helps. Leave a notes line
+under each slide for what I should say.</div>
+    </div>
+
+    <h2><span class="num">03</span> The thing only Grok brings to Office: live signal</h2>
+    <p>The standout capability is real-time data. Because the agent can reach the live web and X, you can fold <em>current</em> context into a document without leaving it:</p>
+    <ul>
+      <li><strong>Word:</strong> "Add a paragraph on the latest developments in [topic] from this week, with sources."</li>
+      <li><strong>PowerPoint:</strong> "Add a slide on what competitors announced in the last month."</li>
+      <li><strong>Excel:</strong> "Pull current public figures for these companies into a new column."</li>
+    </ul>
+    <p>That's the one move Copilot's in-app drafting doesn't do the same way, and it's the honest reason to reach for the Grok pane. It also generates images and charts inline, and can call MCP servers for power users wiring it into other tools.</p>
+    <div class="gotcha">Live data is only as trustworthy as its source — and X chatter is not a citation. Treat anything Grok pulls in as a lead to verify, especially numbers and quotes going into a document with your name on it. (We cover this discipline in <a href="/lessons/grok/realtime-x-intelligence">the real-time X lesson</a>.)</div>
+
+    <h2><span class="num">04</span> The trade-off to understand before company files</h2>
+    <p>When you ask the Grok pane to work on a document, the relevant content goes to xAI to be processed. That's fine for a blog draft or a public-data deck. It is a real decision for anything confidential, regulated, or covered by a customer NDA — because this path sits <em>outside</em> your Microsoft 365 data boundary and your organization's Copilot governance.</p>
+    <div class="callout">
+      <span class="lbl">The one-question test</span>
+      <p>Before you point the Grok add-in at a file, ask: <em>"Would I be comfortable pasting this content into a public AI chat?"</em> If yes, the add-in is a great tool. If no — sensitive client data, financials, anything regulated — keep that work in Microsoft 365 Copilot, where it stays inside your tenant. Same Office window, very different data path.</p>
+    </div>
+
+    <h2><span class="num">05</span> The honest map</h2>
+    <table class="tier-table">
+      <tr><th>The job</th><th>Reach for…</th></tr>
+      <tr><td>Outward-facing copy, decks, marketing</td><td><strong>Grok add-in</strong> — punchy output, live context</td></tr>
+      <tr><td>Anything needing this-week / live X context</td><td><strong>Grok add-in</strong> — the one thing it does that Copilot doesn't</td></tr>
+      <tr><td>Inline images &amp; quick charts in a draft</td><td><strong>Grok add-in</strong> — generates them in the pane</td></tr>
+      <tr><td>Confidential, regulated, or client-NDA data</td><td><strong>Microsoft 365 Copilot</strong> — stays in your tenant</td></tr>
+      <tr><td>Work grounded in your emails / files / Teams</td><td><strong>Microsoft 365 Copilot</strong> — it can see your tenant; Grok can't</td></tr>
+      <tr><td>Heavy, real data transformation</td><td>ChatGPT Code Interpreter still wins serious crunching (<a href="/compare/copilot-vs-chatgpt-vs-claude-excel-data">comparison</a>)</td></tr>
+    </table>
+    <p>The next lesson takes this map and goes deep on the head-to-head you'll actually face: <strong>Grok's add-in vs. Microsoft 365 Copilot inside the very same apps.</strong></p>
+
+    <div class="challenge">
+      <h2 style="margin-top: 0;">Install it and run one real job per app</h2>
+      <p>Add the Grok add-in to Word, Excel, and PowerPoint. Give each one a real (non-sensitive) task from your week — a draft, a messy sheet, a short deck — and time it against how you'd normally do it. Then deliberately try a "what happened this week with [topic]" prompt to feel the live-data edge. You'll know within an hour where it earns a slot.</p>
+      <div class="btn-row">
+        <a href="/lessons/grok/grok-vs-copilot-office" class="btn">Next: Grok vs. Copilot in Office →</a>
+        <a href="/lessons/grok/" class="btn ghost">All Grok lessons →</a>
+      </div>
+    </div>
+
+    <div class="checklist">
+      <h3>What you can do now</h3>
+      <ul>
+        <li>Install the free Grok add-in from the Office Add-ins store, per app</li>
+        <li>Use the right agent for the job: Excel for data/charts, Word for drafting, PowerPoint for decks</li>
+        <li>Fold live web/X context into documents — the one move Copilot doesn't match</li>
+        <li>Run the one-question test before pointing it at any sensitive file</li>
+        <li>Verify anything live before it goes into a document with your name on it</li>
+      </ul>
+    </div>
+
+    <div class="next-up">
+      <span class="pro-tag">Pro</span>
+      <div class="lbl" style="margin-top: 14px;">Up next in Grok Mastery</div>
+      <h3>Lesson 14 · Grok vs. Copilot inside Office</h3>
+      <p>Two AI sidebars, the same three apps. The honest, neutral breakdown of which one to reach for and when. <a href="/#pricing">See pricing →</a></p>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with xAI or Microsoft.</div>
+    <a href="/lessons/grok/" style="color: var(--text-dim);">← All Grok lessons</a>
+  </div>
+</footer>
+<script src="/gate.js"></script>
+</body>
+</html>

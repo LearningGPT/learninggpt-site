@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Practical AI training for trades and contractor teams — estimating, quoting, scheduling, and customer communication. No jargon, no fluff. Plans from $6/user/month." />
+<title>AI Training for Trades &amp; Contractor Teams — LearningGPT</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#7c5cff" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a;
+  --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14);
+  --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85;
+  --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(140px); }
+.bg-orb.one { width: 700px; height: 700px; top: -200px; left: -200px; background: #7c5cff; opacity: 0.18; }
+.bg-orb.two { width: 500px; height: 500px; bottom: -100px; right: -100px; background: #ffb547; opacity: 0.08; }
+
+.hero { position: relative; z-index: 1; text-align: center; padding: 76px 24px 40px; max-width: 800px; margin: 0 auto; }
+.hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,181,71,0.12); border: 1px solid rgba(255,181,71,0.28); border-radius: 100px; padding: 6px 16px; font-size: 12px; font-weight: 700; color: var(--warn); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 26px; }
+.hero h1 { font-size: clamp(34px, 5vw, 54px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.08; margin-bottom: 20px; }
+.hero h1 em { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.hero p { font-size: 18px; color: var(--text-dim); line-height: 1.6; max-width: 600px; margin: 0 auto 34px; }
+.hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn-primary { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #7c5cff, #5b8def); color: white; padding: 15px 30px; border-radius: 10px; font-size: 15px; font-weight: 600; box-shadow: 0 6px 24px rgba(124,92,255,0.35); }
+.btn-primary:hover { transform: translateY(-2px); text-decoration: none; color: #fff; }
+.btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.06); border: 1px solid var(--line-strong); color: var(--text-dim); padding: 15px 30px; border-radius: 10px; font-size: 15px; font-weight: 600; }
+.btn-secondary:hover { background: rgba(255,255,255,0.1); color: var(--text); text-decoration: none; }
+
+.section { position: relative; z-index: 1; max-width: 1000px; margin: 0 auto; padding: 24px 24px 70px; }
+.section-title { font-size: clamp(24px,3.2vw,34px); font-weight: 800; letter-spacing: -0.02em; text-align: center; margin-bottom: 12px; }
+.section-desc { font-size: 16px; color: var(--text-dim); text-align: center; max-width: 560px; margin: 0 auto 44px; line-height: 1.6; }
+
+.use-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; }
+.use-card { background: rgba(255,255,255,0.03); border: 1px solid var(--line-strong); border-radius: 16px; padding: 24px; }
+.use-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(124,92,255,0.12); border: 1px solid rgba(124,92,255,0.25); display: grid; place-items: center; font-size: 19px; margin-bottom: 14px; }
+.use-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.use-card p { font-size: 14px; color: var(--text-dim); line-height: 1.55; }
+
+.why-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+@media (max-width: 760px){ .why-row { grid-template-columns: 1fr; } }
+.why-card { background: rgba(255,255,255,0.02); border: 1px solid var(--line); border-radius: 14px; padding: 22px; }
+.why-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 8px; color: var(--accent); }
+.why-card p { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+
+.cta-box { max-width: 640px; margin: 0 auto; background: rgba(124,92,255,0.08); border: 1px solid rgba(124,92,255,0.25); border-radius: 24px; padding: 50px 44px; text-align: center; }
+.cta-box h2 { font-size: 30px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 12px; }
+.cta-box p { font-size: 16px; color: var(--text-dim); margin-bottom: 26px; line-height: 1.6; }
+footer { position:relative; z-index:1; border-top:1px solid var(--line); padding:28px 24px; font-size:13px; color:var(--text-mute); text-align:center; }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+
+<div class="hero">
+  <div class="hero-eyebrow">🔧 For trades &amp; contractor teams</div>
+  <h1>AI that earns its keep on the <em>job site</em>, not in a lecture hall.</h1>
+  <p>Most AI training is written for office workers at big tech companies. This isn't. It's plain-language, hands-on AI training for the people who run estimates, quotes, schedules, and customers — built for crews, not coders.</p>
+  <div class="hero-ctas">
+    <a href="/business" class="btn-primary">See team pricing →</a>
+    <a href="/business-roi" class="btn-secondary">Calculate your ROI</a>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">What your crew will actually do with it</div>
+  <div class="section-desc">Real tasks from real shops — not "prompt engineering."</div>
+  <div class="use-grid">
+    <div class="use-card">
+      <div class="use-icon">📝</div>
+      <h3>Faster, sharper estimates</h3>
+      <p>Turn rough job notes into clean, itemized estimates and scopes of work in minutes — so bids go out the same day instead of next week.</p>
+    </div>
+    <div class="use-card">
+      <div class="use-icon">💬</div>
+      <h3>Customer messages that don't sit in drafts</h3>
+      <p>Draft professional quotes, follow-ups, change-order explanations, and "sorry we're running late" texts that keep customers happy.</p>
+    </div>
+    <div class="use-card">
+      <div class="use-icon">📅</div>
+      <h3>Scheduling &amp; dispatch without the headache</h3>
+      <p>Use AI to juggle crews, weather delays, and material lead times — and explain the plan to everyone in one clear message.</p>
+    </div>
+    <div class="use-card">
+      <div class="use-icon">📋</div>
+      <h3>Bids, proposals &amp; permits</h3>
+      <p>Summarize spec sheets and permit requirements, and turn them into proposals that win — without staring at a blank page.</p>
+    </div>
+    <div class="use-card">
+      <div class="use-icon">⭐</div>
+      <h3>Reviews &amp; marketing that bring in work</h3>
+      <p>Reply to reviews, write service-area posts, and keep your Google listing fresh — the marketing you never have time for.</p>
+    </div>
+    <div class="use-card">
+      <div class="use-icon">🛡️</div>
+      <h3>Spotting the AI scams aimed at you</h3>
+      <p>Fake invoices and AI-written phishing are hitting small shops hard. We teach your team to catch them before they cost you.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Why trades teams pick LearningGPT</div>
+  <div class="why-row">
+    <div class="why-card">
+      <h4>No jargon</h4>
+      <p>Every lesson is written for a working person, not a software engineer. If your office manager can read a text, they can use this.</p>
+    </div>
+    <div class="why-card">
+      <h4>Tool-neutral &amp; current</h4>
+      <p>We're independent. We teach whichever AI is best for the task and keep up as they change — no vendor agenda, never out of date.</p>
+    </div>
+    <div class="why-card">
+      <h4>Priced for a small shop</h4>
+      <p>From $6 per person a month — three seats gets your office and lead techs going. No enterprise contract, cancel anytime.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="cta-box">
+    <h2>Get your shop AI-ready</h2>
+    <p>Start with three seats, add more as it sticks. Most teams are set up within a day — and you'll get real help from the founder, not a call center.</p>
+    <a href="/business" class="btn-primary" style="font-size:16px;padding:16px 34px;">See team pricing →</a>
+  </div>
+</div>
+
+<footer>© 2026 LearningGPT, Inc. · Independent. Not affiliated with OpenAI, Anthropic, Microsoft, Google, Perplexity, or xAI.</footer>
+
+<script src="/site-nav.js" defer></script>
+</body>
+</html>

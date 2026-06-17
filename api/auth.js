@@ -224,6 +224,26 @@ export default async function handler(req, res) {
         return res.status(401).json({ error: 'Invalid email or password.' });
       }
 
+      // Log the login event (best-effort — never blocks login)
+      try {
+        await fetch(`${SUPABASE_URL}/rest/v1/login_events`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_SECRET_KEY,
+            'Authorization': `Bearer ${SUPABASE_SECRET_KEY}`,
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify({
+            user_id: loginData.user.id,
+            email: email,
+            created_at: new Date().toISOString()
+          })
+        });
+      } catch (logErr) {
+        console.error('login_events insert failed:', logErr);
+      }
+
       const profileRes = await fetch(
         `${SUPABASE_URL}/rest/v1/profiles?id=eq.${loginData.user.id}&select=plan`,
         {

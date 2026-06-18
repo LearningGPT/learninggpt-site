@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Grok vs Copilot in Microsoft Office (2026) — LearningGPT</title>
+<meta name="description" content="Grok's new Office add-in vs Microsoft 365 Copilot inside Word, Excel, and PowerPoint — an honest, vendor-neutral comparison. The deciding factor is where your information lives and how sensitive it is. Where each one leads, and the data-path difference the demos skip." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#7c5cff" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/compare/grok-vs-copilot-office" />
+<meta property="og:title" content="Grok vs Copilot in Microsoft Office" />
+<meta property="og:description" content="An honest, vendor-neutral comparison of Grok's Office add-in vs Microsoft 365 Copilot — decided by where your data lives." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="canonical" href="https://learninggpt.ai/compare/grok-vs-copilot-office" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Should I use Grok or Copilot in Office?", "acceptedAnswer": { "@type": "Answer", "text": "It depends on where the information lives and how sensitive it is. Use Microsoft 365 Copilot for work grounded in your own emails, files, and tenant data, and for anything confidential or regulated — it stays inside your Microsoft data boundary. Use the Grok add-in for outward-facing, current, or punchy content where live web and X data help, as long as the content isn't sensitive. They can both run in the same Office app, so many people keep both and route by the task." } },
+    { "@type": "Question", "name": "Is Grok better than Copilot for Word, Excel, and PowerPoint?", "acceptedAnswer": { "@type": "Answer", "text": "Neither is better overall — they're built on opposite premises. Copilot is grounded in your company's data and governance; Grok brings live web and X data plus image generation but cannot see your tenant. Grok often wins on punchy, current, outward-facing content; Copilot wins on work that draws on your existing mail and files and on anything confidential." } },
+    { "@type": "Question", "name": "Is the Grok Office add-in safe for company data?", "acceptedAnswer": { "@type": "Answer", "text": "The Grok add-in is a third-party xAI tool: when it works on a document, that content is sent to xAI to be processed, outside your Microsoft 365 data boundary and Copilot governance. That's fine for public or non-sensitive content, but confidential, regulated, or client-NDA material should stay in Microsoft 365 Copilot, which keeps the work inside your tenant. A simple test: would you be comfortable pasting this into a public AI chat? If not, use Copilot." } },
+    { "@type": "Question", "name": "Do I need Microsoft 365 Copilot if I have the Grok add-in?", "acceptedAnswer": { "@type": "Answer", "text": "They do different jobs. The Grok add-in is free and great for current, outward-facing content, but it can't see your tenant data and isn't governed by Microsoft. Copilot can read your emails, files, and calendar and keeps work inside your data boundary. If you rely on tenant-grounded or sensitive work, Copilot isn't replaced by the Grok add-in." } }
+  ]
+}
+</script>
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --grok: #9da0b0; --copilot: #2c7be5; --radius: 14px; --radius-lg: 20px; --container: 860px; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.28; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #71717a; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #2c7be5; opacity: 0.25; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+.article { padding: 48px 0 100px; }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--brand-2); padding: 6px 12px; border: 1px solid rgba(91,141,239,0.3); border-radius: 999px; background: rgba(91,141,239,0.08); margin-bottom: 22px; }
+h1 { font-size: clamp(32px, 4.5vw, 48px); font-weight: 800; line-height: 1.12; letter-spacing: -0.02em; margin: 0 0 18px; }
+h1 .grk { color: var(--grok); } h1 .cop { color: var(--copilot); }
+.deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 28px; }
+.updated { font-size: 13px; color: var(--text-mute); margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.verdict { background: linear-gradient(135deg, rgba(157,160,176,0.12), rgba(44,123,229,0.1)); border: 1px solid rgba(124,92,255,0.25); border-radius: var(--radius-lg); padding: 28px 30px; margin: 0 0 44px; }
+.verdict .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+.verdict p { font-size: 16.5px; margin: 0 0 12px; } .verdict p:last-child { margin-bottom: 0; }
+.verdict strong { color: var(--text); }
+h2 { font-size: 27px; font-weight: 700; letter-spacing: -0.01em; margin: 52px 0 14px; }
+h3 { font-size: 19px; font-weight: 600; margin: 28px 0 8px; }
+p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; }
+strong { font-weight: 700; color: var(--text); } em { font-style: italic; }
+ul { padding-left: 24px; margin: 0 0 18px; } li { margin-bottom: 8px; }
+table.cmp { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 14.5px; }
+table.cmp th, table.cmp td { padding: 13px 14px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.cmp th { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; border-bottom: 1px solid var(--line-strong); }
+table.cmp th.grk { color: var(--grok); } table.cmp th.cop { color: var(--copilot); }
+table.cmp td:first-child { font-weight: 600; color: var(--text); }
+.winner-grk { color: var(--grok); font-weight: 700; } .winner-cop { color: var(--copilot); font-weight: 700; } .tie { color: var(--text-mute); }
+.usewhen { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
+@media (max-width: 640px) { .usewhen { grid-template-columns: 1fr; } }
+.usewhen .card { border: 1px solid var(--line-strong); border-radius: var(--radius); padding: 22px; background: var(--surface); }
+.usewhen .card.grk { border-top: 3px solid var(--grok); }
+.usewhen .card.cop { border-top: 3px solid var(--copilot); }
+.usewhen .card h3 { margin-top: 0; }
+.usewhen .card ul { margin-bottom: 0; }
+.note { background: rgba(68,224,164,0.06); border: 1px solid rgba(68,224,164,0.22); border-radius: var(--radius); padding: 18px 22px; margin: 24px 0; font-size: 15px; }
+.note .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.faq h3 { font-size: 17px; margin: 26px 0 6px; }
+.cta-band { margin: 56px 0 0; background: linear-gradient(135deg, rgba(124,92,255,0.15), rgba(68,224,164,0.08)); border: 1px solid rgba(124,92,255,0.25); border-radius: var(--radius-lg); padding: 40px; text-align: center; }
+.cta-band h2 { margin: 0 0 12px; }
+.cta-band p { color: var(--text-dim); max-width: 540px; margin: 0 auto 22px; font-size: 15.5px; }
+.cta-band a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #7c5cff, #5b8def); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; margin: 0 6px 8px; }
+.cta-band a.btn:hover { transform: translateY(-1px); color: white; }
+.cta-band a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/" class="nav-back">← All lessons</a>
+  </div>
+</nav>
+<article class="article">
+  <div class="container">
+    <span class="eyebrow">Honest Comparison · Independent</span>
+    <h1><span class="grk">Grok</span> vs <span class="cop">Copilot</span> in Microsoft Office</h1>
+    <p class="deck">There are now two AI agents that live inside Word, Excel, and PowerPoint: xAI's new Grok add-in and Microsoft 365 Copilot. They look alike in the sidebar and work in opposite ways underneath. The deciding factor isn't quality — it's <em>where your information lives and how sensitive it is</em>. Here's the honest breakdown, from a platform paid by you, not by Microsoft or xAI.</p>
+    <p class="updated">Last updated June 2026 · A neutral comparison from LearningGPT</p>
+
+    <div class="verdict">
+      <span class="lbl">The 20-second verdict</span>
+      <p><strong>Work grounded in your own data, or anything confidential?</strong> Use Microsoft 365 Copilot. It can read your emails, files, and calendar, and it keeps the work inside your Microsoft data boundary.</p>
+      <p><strong>Outward-facing, current, or punchy content?</strong> Use the Grok add-in. It brings live web and X data plus image generation — as long as the content isn't sensitive.</p>
+      <p>They run in the same Office apps, so the smart move is usually <strong>keep both and route by the task</strong> — not pick a winner.</p>
+    </div>
+
+    <h2>The one factor that decides it</h2>
+    <p>Both are capable. What separates them is design intent. <strong>Copilot is an insider</strong>: grounded in your tenant — your mail, files, chats, calendar — and governed by your organization's Microsoft data boundary. <strong>The Grok add-in is an outsider</strong>: it can't see your tenant, but it can see the live web and X, and it generates images and charts inline. So the question is never "which is better" — it's "where does the information for this task live?" Inside your company → Copilot. Out in the world → Grok.</p>
+
+    <h2>Head-to-head, by task</h2>
+    <table class="cmp">
+      <tr><th>Task</th><th class="grk">Grok add-in</th><th class="cop">Copilot</th><th>Winner</th></tr>
+      <tr><td>Draft using context from my inbox/files</td><td>Can't see your tenant</td><td>Reads your M365 data</td><td class="winner-cop">Copilot</td></tr>
+      <tr><td>Punchy marketing copy or bold announcement</td><td>Sharper default voice</td><td>More buttoned-up</td><td class="winner-grk">Grok</td></tr>
+      <tr><td>Deck needing this-month market context</td><td>Live web + X</td><td>Narrower web access</td><td class="winner-grk">Grok</td></tr>
+      <tr><td>Summarize a confidential contract</td><td>Sends content to xAI</td><td>Stays in your boundary</td><td class="winner-cop">Copilot</td></tr>
+      <tr><td>PivotTable &amp; chart from an export</td><td>Capable</td><td>Capable</td><td class="tie">Either</td></tr>
+      <tr><td>Generate an image for a slide</td><td>Native in the pane</td><td>Limited</td><td class="winner-grk">Grok</td></tr>
+      <tr><td>Regulated / client-NDA / financial data</td><td>Outside M365 governance</td><td>Governed &amp; tenant-bound</td><td class="winner-cop">Copilot</td></tr>
+    </table>
+    <p>Notice the pattern: Grok wins on outward-facing and current; Copilot wins on tenant-grounded and confidential. Almost every row is decided by where the data lives — not by which model is "smarter."</p>
+
+    <div class="usewhen">
+      <div class="card grk">
+        <h3 style="color:var(--grok);">Grok add-in when…</h3>
+        <ul>
+          <li>The content is outward-facing or non-sensitive</li>
+          <li>You want this-week web or X context in a document</li>
+          <li>You need an image or chart generated inline</li>
+          <li>You want a punchier, less corporate voice</li>
+        </ul>
+      </div>
+      <div class="card cop">
+        <h3 style="color:var(--copilot);">Copilot when…</h3>
+        <ul>
+          <li>The work draws on your emails, files, or calendar</li>
+          <li>The content is confidential, regulated, or under NDA</li>
+          <li>You need it to respect your Microsoft tenant's permissions</li>
+          <li>Excel and Teams are central to the task</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note">
+      <span class="lbl">The honest part the demos skip</span>
+      <p style="margin:0;">Being inside the same Word window does <em>not</em> mean both tools are equally safe. When the Grok add-in processes your document, the content goes to xAI — a third party — outside your Microsoft data boundary and Copilot governance. When Copilot processes it, it stays in your tenant. Decide by the sensitivity of the file's content, not by which sidebar is more convenient. A simple test: would you be comfortable pasting this into a public AI chat? If yes, the Grok add-in is great. If no, keep it in Copilot.</p>
+    </div>
+
+    <h2 class="faq" id="faq">Common questions</h2>
+    <div class="faq">
+      <h3>Should I use Grok or Copilot in Office?</h3>
+      <p>Route by where the information lives and how sensitive it is — Copilot for tenant-grounded or confidential work, the Grok add-in for outward-facing, current content. Many people keep both.</p>
+      <h3>Is Grok better than Copilot for Word, Excel, and PowerPoint?</h3>
+      <p>Neither overall. Grok leads on punchy, current, image-rich content; Copilot leads on work that draws on your own data and on anything confidential.</p>
+      <h3>Is the Grok Office add-in safe for company data?</h3>
+      <p>It sends document content to xAI, outside your Microsoft boundary — fine for public content, not for confidential or regulated material. Use Copilot for sensitive work.</p>
+      <h3>Do I need Microsoft 365 Copilot if I have the Grok add-in?</h3>
+      <p>They do different jobs. The free Grok add-in can't see your tenant or keep work governed; Copilot can. If you rely on tenant-grounded or sensitive work, the add-in doesn't replace Copilot.</p>
+    </div>
+
+    <div class="cta-band">
+      <h2 style="margin-top:0;">Go deeper than the demo</h2>
+      <p>We teach both — how to actually use the Grok Office add-in, and how to get the most out of Microsoft 365 Copilot — kept current as they change.</p>
+      <div>
+        <a href="/lessons/grok/grok-in-office" class="btn">Grok in Office lesson →</a>
+        <a href="/lessons/copilot/" class="btn ghost">Copilot Mastery →</a>
+        <a href="/lessons/grok/" class="btn ghost">Grok Mastery →</a>
+      </div>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with OpenAI, Anthropic, Microsoft, Google, or xAI.</div>
+    <a href="/lessons/" style="color: var(--text-dim);">← All lessons</a>
+  </div>
+</footer>
+<script src="/site-nav.js" defer></script>
+</body>
+</html>

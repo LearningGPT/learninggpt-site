@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>What OpenClaw actually costs: free software, but you pay for the model (2026) — LearningGPT</title>
+<meta name="description" content="OpenClaw is free, self-hosted software — but it's not free to run. Your real costs are the API tokens of whatever model you plug in, plus hosting. The bring-your-own-key math, explained plainly. Free, vendor-neutral." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#f0544f" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/openclaw/what-openclaw-costs" />
+<meta property="og:title" content="What OpenClaw actually costs (2026)" />
+<meta property="og:description" content="Free software, real costs — the bring-your-own-key math behind self-hosted AI, explained independently." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --radius:14px; --radius-lg:20px; --container:820px; --track:#f0544f; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:#f0544f;}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.25;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(240,84,79,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(240,84,79,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#ff8a85 0%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.15em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:52px 0 14px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(240,84,79,0.12),rgba(124,92,255,0.06));border:1px solid rgba(240,84,79,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,#f0544f,#7c5cff);border-radius:2px 0 0 2px;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.cost-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;}
+.cost-table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--line-strong);color:var(--text-dim);font-size:11.5px;text-transform:uppercase;letter-spacing:0.6px;}
+.cost-table td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.cost-table td:first-child{font-weight:700;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:14px 0;font-size:14.5px;}
+.gotcha::before{content:'⚠ Read the fine print: ';color:var(--warn);font-weight:700;}
+.tryit{margin:28px 0;padding:22px;background:rgba(68,224,164,0.06);border:1px solid rgba(68,224,164,0.25);border-radius:var(--radius);}
+.tryit .lbl{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.tryit p{margin:0 0 14px;font-size:15.5px;}
+.tryit a.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#44e0a4,#5b8def);color:white;padding:12px 22px;border-radius:9px;font-weight:600;font-size:14px;}
+.tryit a.btn:hover{transform:translateY(-1px);color:white;}
+.challenge{margin:52px 0 40px;background:linear-gradient(135deg,rgba(240,84,79,0.14),rgba(124,92,255,0.1));border:1px solid rgba(240,84,79,0.28);border-radius:var(--radius-lg);padding:34px;}
+.challenge h2{margin-top:0;}
+.challenge a.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#f0544f,#7c5cff);color:white;padding:13px 24px;border-radius:10px;font-weight:600;font-size:15px;}
+.challenge a.btn:hover{transform:translateY(-1px);color:white;}
+.checklist{margin:40px 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);}
+.checklist h3{margin-top:0;font-size:18px;} .checklist ul{list-style:none;padding:0;margin:0;}
+.checklist li{padding:10px 0 10px 30px;position:relative;font-size:15px;border-top:1px solid var(--line);}
+.checklist li:first-child{border-top:none;padding-top:0;}
+.checklist li::before{content:'✓';position:absolute;left:0;color:var(--accent);font-weight:700;}
+.next-up{margin:50px 0 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.next-up .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:10px;}
+.next-up h3{margin:0 0 8px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:14.5px;}
+footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);}
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top"><div class="nav-inner">
+  <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+  <a href="/lessons/openclaw/" class="nav-back">← OpenClaw, Safely</a>
+</div></nav>
+<article class="lesson"><div class="container">
+  <div class="lesson-meta">
+    <span class="chip">OpenClaw, Safely</span>
+    <span class="chip chip-free">Free</span>
+    <span>~6 min read</span>
+    <span class="dot"></span>
+    <span>"Free" software, real running costs</span>
+  </div>
+  <h1>What OpenClaw <span class="grad serif">actually costs.</span></h1>
+  <p class="deck">OpenClaw is free, open-source software — there's no subscription, no seat fee, no bill from a vendor. But "free to download" is not "free to run." Your real cost is whatever you plug into it. Here's the honest math.</p>
+
+  <h2><span class="num">01</span> The software is free. The intelligence is not.</h2>
+  <p>OpenClaw itself costs nothing — you download it and run it yourself. What it does <em>not</em> include is a brain. OpenClaw is a shell that drives a model; you supply the model. That means your cost is one (or both) of two things:</p>
+  <ul>
+    <li><strong>Bring your own key (BYOK):</strong> you connect your own API key from OpenAI, Anthropic, Google, xAI, etc. OpenClaw then spends <em>your</em> API tokens — billed by that provider, not by OpenClaw.</li>
+    <li><strong>Run a local model:</strong> you host an open-weights model on your own hardware. No per-token bill, but you pay in compute — a capable GPU, electricity, and your time keeping it running.</li>
+  </ul>
+
+  <h2><span class="num">02</span> Path A — Bring your own key</h2>
+  <p>This is the common setup. Your cost is just the underlying model's per-token API price. So OpenClaw's "cost" is really a passthrough of whatever you connect:</p>
+  <div style="overflow-x:auto;"><table class="cost-table">
+    <tr><th>Model you plug in</th><th>Input / Output (per 1M)</th></tr>
+    <tr><td>Grok 4.1 Fast</td><td>$0.20 / $0.50 — cheapest</td></tr>
+    <tr><td>Gemini 3.5 Flash</td><td>$1.50 / $9</td></tr>
+    <tr><td>Claude Sonnet</td><td>$3 / $15</td></tr>
+    <tr><td>GPT-5.2</td><td>$1.75 / $14</td></tr>
+  </table></div>
+  <p>The lesson: <strong>OpenClaw doesn't have a price — the model you choose does.</strong> Pick a cheap fast model for everyday work and a frontier model only when the task needs it.</p>
+  <div class="gotcha">Agentic tools like OpenClaw can fire many model calls behind a single instruction — reading files, planning, retrying. That means token usage adds up faster than a chat window. Set a spending cap in your provider's console <em>before</em> you let it run unattended.</div>
+
+  <h2><span class="num">03</span> Path B — Run a local model</h2>
+  <p>If you host an open-weights model yourself, there's no per-token bill at all. Instead you pay in:</p>
+  <ul>
+    <li><strong>Hardware</strong> — a capable GPU (or a paid cloud GPU by the hour).</li>
+    <li><strong>Electricity</strong> — running that hardware.</li>
+    <li><strong>Your time</strong> — setup, updates, and troubleshooting. Often the biggest real cost.</li>
+  </ul>
+  <p>Local makes sense when privacy is paramount (nothing leaves your machine) or when you run so much volume that fixed hardware beats per-token fees. For most people starting out, BYOK with a cheap API model is simpler and cheaper.</p>
+
+  <h2><span class="num">04</span> What a task actually costs</h2>
+  <p>Say OpenClaw handles a multi-step task and makes ~10 model calls totaling 30K input / 15K output tokens:</p>
+  <ul>
+    <li>On <strong>Grok 4.1 Fast</strong>: about <strong>$0.01</strong>.</li>
+    <li>On <strong>Claude Sonnet</strong>: about <strong>$0.32</strong>.</li>
+  </ul>
+  <p>Same task, 30× cost difference — entirely from the model you picked. That's the only pricing lever OpenClaw gives you, and it's a powerful one.</p>
+
+  <div class="callout">
+    <span class="lbl">The honest summary</span>
+    <p>OpenClaw is free software with a real running cost. Budget for the model — BYOK token spend, or hardware + power if local — and set a cap before any unattended run. There's no subscription to cancel, but there's no free lunch either.</p>
+  </div>
+
+  <div class="tryit">
+    <span class="lbl">Price your model choice</span>
+    <p>Use the calculator to compare what the same OpenClaw workload would cost across different models you might plug in.</p>
+    <a href="/ai-cost-calculator" class="btn">Open the AI Cost Calculator →</a>
+  </div>
+
+  <div class="challenge">
+    <h2 style="margin-top:0;">Set the cap first</h2>
+    <p>Before you run OpenClaw on anything real, go to your API provider's console and set a hard monthly spending limit — start at $10. Then run one task and watch the usage. You'll learn your true per-task cost <em>and</em> sleep better knowing a runaway loop can't drain your card.</p>
+    <a href="/ai-cost-calculator" class="btn">Run the numbers →</a>
+  </div>
+
+  <div class="checklist">
+    <h3>What you can do now</h3>
+    <ul>
+      <li>Separate "free software" from "free to run" — they're not the same</li>
+      <li>Know your two cost paths: BYOK tokens, or local hardware + power</li>
+      <li>Treat OpenClaw's cost as a passthrough of the model you choose</li>
+      <li>Always set a provider spending cap before unattended runs</li>
+    </ul>
+  </div>
+
+  <div class="next-up">
+    <div class="lbl">Go deeper</div>
+    <h3>What AI actually costs — the full picture</h3>
+    <p>Tokens, credits, messages and per-seat across every tool, explained. <a href="/lessons/foundations/what-ai-actually-costs">Read the free master lesson →</a></p>
+  </div>
+</div></article>
+<footer><div class="footer-inner">
+  <div>© 2026 LearningGPT, Inc. · Pricing as of June 2026 — model API rates change; verify with each provider.</div>
+  <a href="/lessons/openclaw/" style="color:var(--text-dim);">← All OpenClaw lessons</a>
+</div></footer>
+<script src="/gate.js"></script>
+</body>
+</html>

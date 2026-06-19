@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Free AI cost calculator — see what ChatGPT, Claude, Gemini, Grok, Perplexity and Copilot actually cost for your usage. Compare flat subscriptions vs pay-per-use (API tokens), with a plain-English breakdown of cost per prompt." />
+<title>AI Cost Calculator: What Does Your AI Usage Actually Cost? — LearningGPT</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#7c5cff" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://learninggpt.ai/ai-cost-calculator" />
+<meta property="og:title" content="AI Cost Calculator — what your AI usage actually costs" />
+<meta property="og:description" content="Compare flat subscriptions vs pay-per-use (tokens) for every major AI. Free, independent, no signup." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="canonical" href="https://learninggpt.ai/ai-cost-calculator" />
+<style>
+:root {
+  --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a;
+  --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14);
+  --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85;
+  --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { text-decoration: underline; }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(140px); }
+.bg-orb.one { width: 700px; height: 700px; top: -200px; left: -200px; background: #7c5cff; opacity: 0.18; }
+.bg-orb.two { width: 500px; height: 500px; bottom: -100px; right: -100px; background: #44e0a4; opacity: 0.1; }
+.hero { position: relative; z-index: 1; text-align: center; padding: 64px 24px 24px; max-width: 760px; margin: 0 auto; }
+.hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(91,141,239,0.12); border: 1px solid rgba(91,141,239,0.25); border-radius: 100px; padding: 6px 16px; font-size: 12px; font-weight: 700; color: var(--brand-2); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 22px; }
+.hero h1 { font-size: clamp(30px, 5vw, 46px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 16px; }
+.hero h1 em { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.hero p { font-size: 17px; color: var(--text-dim); line-height: 1.6; max-width: 580px; margin: 0 auto; }
+.wrap { position: relative; z-index: 1; max-width: 920px; margin: 0 auto 30px; padding: 0 24px; }
+.panel { background: rgba(255,255,255,0.03); border: 1px solid var(--line-strong); border-radius: 20px; padding: 28px; margin-bottom: 22px; }
+.panel h2 { font-size: 17px; font-weight: 800; margin-bottom: 18px; }
+.field { margin-bottom: 22px; }
+.field:last-child { margin-bottom: 0; }
+.field label { display: flex; justify-content: space-between; align-items: baseline; font-size: 14px; font-weight: 600; margin-bottom: 10px; }
+.field label .val { font-size: 15px; font-weight: 800; color: var(--accent); }
+input[type=range] { width: 100%; -webkit-appearance: none; appearance: none; height: 6px; border-radius: 6px; background: rgba(255,255,255,0.1); outline: none; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: linear-gradient(135deg,#7c5cff,#5b8def); cursor: pointer; box-shadow: 0 2px 10px rgba(124,92,255,0.5); }
+.seg { display: flex; gap: 8px; }
+.seg button { flex: 1; padding: 12px; border-radius: 10px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); color: var(--text-dim); cursor: pointer; font-size: 13px; font-weight: 600; font-family: inherit; transition: all .15s; }
+.seg button.active { border-color: rgba(124,92,255,0.6); background: rgba(124,92,255,0.12); color: var(--text); }
+.seg button .sub { display: block; font-size: 11px; color: var(--text-mute); font-weight: 500; margin-top: 2px; }
+.result-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 6px; }
+.result-head h2 { margin: 0; }
+.result-head .note { font-size: 12px; color: var(--text-mute); }
+.bars { margin-top: 8px; }
+.bar-row { display: grid; grid-template-columns: 190px 1fr 110px; gap: 12px; align-items: center; padding: 9px 0; border-top: 1px solid var(--line); font-size: 14px; }
+.bar-row:first-child { border-top: none; }
+.bar-row .nm { color: var(--text-dim); font-weight: 600; }
+.bar-row.win .nm { color: var(--accent); }
+.bar-track { background: rgba(255,255,255,0.05); border-radius: 6px; height: 10px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 6px; background: linear-gradient(90deg,#5b8def,#7c5cff); }
+.bar-row.win .bar-fill { background: linear-gradient(90deg,#44e0a4,#5b8def); }
+.bar-row .amt { text-align: right; font-weight: 800; }
+.insight { margin-top: 20px; padding: 18px 20px; border-radius: 14px; background: linear-gradient(135deg, rgba(124,92,255,0.12), rgba(68,224,164,0.06)); border: 1px solid rgba(124,92,255,0.28); font-size: 15px; line-height: 1.6; color: var(--text); }
+.insight strong { color: var(--accent); }
+.assump { font-size: 12.5px; color: var(--text-mute); line-height: 1.6; margin-top: 16px; }
+.assump details summary { cursor: pointer; font-weight: 600; color: var(--text-dim); }
+.cta { position: relative; z-index: 1; text-align: center; padding: 6px 24px 80px; }
+.cta a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg,#7c5cff,#5b8def); color: white; padding: 14px 28px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.35); }
+.cta a.btn:hover { transform: translateY(-2px); color: #fff; text-decoration: none; }
+.cta p { font-size: 14px; color: var(--text-dim); margin-bottom: 16px; }
+footer { position:relative; z-index:1; border-top:1px solid var(--line); padding:26px 24px; font-size:13px; color:var(--text-mute); text-align:center; }
+@media (max-width:560px){ .bar-row { grid-template-columns: 130px 1fr 84px; font-size:13px; } }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+
+<div class="hero">
+  <div class="hero-eyebrow">🧮 Free Cost Calculator</div>
+  <h1>What does your AI usage <em>actually cost?</em></h1>
+  <p>Every tool prices differently — flat subscriptions, tokens, credits, per-seat. Tell us how you use AI and see the real monthly cost across all of them. No tokens math required.</p>
+</div>
+
+<div class="wrap">
+  <!-- INPUTS -->
+  <div class="panel">
+    <h2>How do you use AI?</h2>
+    <div class="field">
+      <label>Messages / prompts per day <span class="val"><span id="msgV">20</span></span></label>
+      <input type="range" id="msg" min="1" max="200" value="20" step="1">
+    </div>
+    <div class="field">
+      <label>Typical message size</label>
+      <div class="seg" id="sizeSeg">
+        <button data-size="short">Short<span class="sub">a question, a quick rewrite</span></button>
+        <button data-size="medium" class="active">Medium<span class="sub">summarize a doc, draft an email</span></button>
+        <button data-size="long">Long<span class="sub">long docs, deep analysis</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAY PER USE -->
+  <div class="panel">
+    <div class="result-head">
+      <h2>💳 Pay-per-use (API / tokens)</h2>
+      <span class="note">est. monthly cost at your volume</span>
+    </div>
+    <div class="bars" id="apiBars"></div>
+  </div>
+
+  <!-- SUBSCRIPTIONS -->
+  <div class="panel">
+    <div class="result-head">
+      <h2>📅 Flat subscriptions</h2>
+      <span class="note">you pay this regardless of usage</span>
+    </div>
+    <div class="bars" id="subBars"></div>
+    <div class="insight" id="insight"></div>
+    <div class="assump">
+      <details>
+        <summary>How this is calculated &amp; assumptions</summary>
+        <p style="margin-top:10px;">Pay-per-use = (your message volume × estimated tokens per message) × each model's per-token price. We assume per message — Short ≈ 250 in / 350 out tokens, Medium ≈ 800 in / 1,200 out, Long ≈ 2,500 in / 3,500 out — across ~30 days/month. Real usage varies; treat this as a ballpark, not a bill. Subscriptions are the standard individual plans. <strong>Prices as of June 2026 — always check the provider's current pricing.</strong> OpenClaw is self-hosted (free software): your cost is whichever model's API you plug in, plus your own hosting/compute — so it tracks the pay-per-use numbers above for the model you choose.</p>
+      </details>
+    </div>
+  </div>
+
+  <!-- AGENTIC TASKS (COWORK CREDITS) -->
+  <div class="panel">
+    <div class="result-head">
+      <h2>🤖 Agentic tasks — Copilot Cowork (credits)</h2>
+      <span class="note">a different beast from chat</span>
+    </div>
+    <p style="font-size:14px;color:var(--text-dim);margin:0 0 18px;line-height:1.6;">Cowork doesn't charge per message — it charges <strong style="color:var(--text)">credits per task</strong> (one "task" = a whole multi-step job the agent runs), billed at $0.01/credit. Usage billing starts July 1, 2026.</p>
+    <div class="field">
+      <label>Cowork tasks per month <span class="val"><span id="taskV">20</span></span></label>
+      <input type="range" id="tasks" min="1" max="300" value="20" step="1">
+    </div>
+    <div class="field">
+      <label>Typical task complexity</label>
+      <div class="seg" id="taskSeg">
+        <button data-task="light" class="active">Light<span class="sub">~70–200 credits</span></button>
+        <button data-task="medium">Medium<span class="sub">~400–600 credits</span></button>
+        <button data-task="heavy">Heavy<span class="sub">1,500+ credits</span></button>
+      </div>
+    </div>
+    <div class="insight" id="coworkResult" style="margin-top:18px;"></div>
+  </div>
+</div>
+
+<div class="cta">
+  <p>Want to understand <em>why</em> these prices differ — tokens vs credits vs messages?</p>
+  <a href="/lessons/foundations/" class="btn">Read the free cost lesson →</a>
+</div>
+
+<footer>© 2026 LearningGPT, Inc. · Independent. Not affiliated with OpenAI, Anthropic, Microsoft, Google, Perplexity, or xAI. Pricing as of June 2026 — verify current rates with each provider.</footer>
+
+<script>
+(function(){
+  // ── EDIT PRICES HERE (as of June 2026) ───────────────────────────────
+  // API: USD per 1,000,000 tokens {in, out}
+  var API = [
+    { name: 'Grok 4.1 Fast (xAI)', in: 0.20, out: 0.50 },
+    { name: 'Gemini 3.5 Flash',    in: 1.50, out: 9 },
+    { name: 'GPT-5.2 (OpenAI)',    in: 1.75, out: 14 },
+    { name: 'Claude Haiku',        in: 1,    out: 5 },
+    { name: 'GPT-5.4 (OpenAI)',    in: 2.50, out: 15 },
+    { name: 'Claude Sonnet 4.6',   in: 3,    out: 15 },
+    { name: 'Claude Opus 4.7',     in: 5,    out: 25 }
+  ];
+  // Subscriptions: USD per month (standard individual plans)
+  var SUBS = [
+    { name: 'ChatGPT Plus',        price: 20 },
+    { name: 'Claude Pro',          price: 20 },
+    { name: 'Google AI Pro (Gemini)', price: 19.99 },
+    { name: 'Perplexity Pro',      price: 20 },
+    { name: 'Copilot Pro',         price: 20 },
+    { name: 'SuperGrok (xAI)',     price: 30 }
+  ];
+  var SIZES = {
+    short:  { in: 250,  out: 350 },
+    medium: { in: 800,  out: 1200 },
+    long:   { in: 2500, out: 3500 }
+  };
+  var DAYS = 30;
+  var CREDIT_PRICE = 0.01; // Copilot Cowork: $0.01 per credit (as of June 2026)
+  var TASK_CREDITS = { light: 135, medium: 500, heavy: 1800 }; // avg credits per Cowork task
+  // ─────────────────────────────────────────────────────────────────────
+
+  var size = 'medium';
+  function fmt(n){ if (n < 10) return '$' + n.toFixed(2); return '$' + Math.round(n).toLocaleString('en-US'); }
+
+  function calc(){
+    var msgs = +document.getElementById('msg').value;
+    document.getElementById('msgV').textContent = msgs;
+    var s = SIZES[size];
+    var perMonthMsgs = msgs * DAYS;
+
+    // API costs
+    var api = API.map(function(m){
+      var costPerMsg = (s.in/1e6)*m.in + (s.out/1e6)*m.out;
+      return { name: m.name, cost: costPerMsg * perMonthMsgs };
+    }).sort(function(a,b){ return a.cost - b.cost; });
+
+    var apiMax = Math.max.apply(null, api.map(function(x){return x.cost;})) || 1;
+    document.getElementById('apiBars').innerHTML = api.map(function(x,i){
+      var w = Math.max(3, (x.cost/apiMax)*100);
+      return '<div class="bar-row'+(i===0?' win':'')+'"><span class="nm">'+x.name+'</span>'+
+        '<span class="bar-track"><span class="bar-fill" style="width:'+w+'%"></span></span>'+
+        '<span class="amt">'+fmt(x.cost)+'/mo</span></div>';
+    }).join('');
+
+    // Subscriptions
+    var subMax = Math.max.apply(null, SUBS.map(function(x){return x.price;}));
+    var subsSorted = SUBS.slice().sort(function(a,b){return a.price-b.price;});
+    document.getElementById('subBars').innerHTML = subsSorted.map(function(x){
+      var w = Math.max(3,(x.price/subMax)*100);
+      return '<div class="bar-row"><span class="nm">'+x.name+'</span>'+
+        '<span class="bar-track"><span class="bar-fill" style="width:'+w+'%"></span></span>'+
+        '<span class="amt">'+fmt(x.price)+'/mo</span></div>';
+    }).join('');
+
+    // Insight: cheapest API vs a $20 subscription
+    var cheapest = api[0];
+    var sub = 20;
+    var msg;
+    if (cheapest.cost < sub * 0.8) {
+      msg = 'At <strong>'+msgs+' messages/day</strong>, pay-per-use on '+cheapest.name+' is about <strong>'+fmt(cheapest.cost)+'/mo</strong> — well under a $20 subscription. If you\'re a light-to-moderate user comfortable with the API, you\'re likely overpaying for a flat plan.';
+    } else if (cheapest.cost > sub * 1.5) {
+      msg = 'At <strong>'+msgs+' messages/day</strong>, even the cheapest pay-per-use option runs about <strong>'+fmt(cheapest.cost)+'/mo</strong> — more than a $20 flat subscription. At your volume, a subscription is the better deal.';
+    } else {
+      msg = 'At <strong>'+msgs+' messages/day</strong>, pay-per-use (~<strong>'+fmt(cheapest.cost)+'/mo</strong> on the cheapest model) is roughly a wash with a $20 subscription. Pick on features and convenience, not price.';
+    }
+    document.getElementById('insight').innerHTML = msg;
+  }
+
+  document.getElementById('msg').addEventListener('input', calc);
+  var segBtns = document.querySelectorAll('#sizeSeg button');
+  segBtns.forEach(function(b){
+    b.addEventListener('click', function(){
+      segBtns.forEach(function(x){x.classList.remove('active');});
+      b.classList.add('active');
+      size = b.getAttribute('data-size');
+      calc();
+    });
+  });
+  // ── Cowork agentic-task credits ──
+  var taskC = 'light';
+  function coworkCalc(){
+    var t = +document.getElementById('tasks').value;
+    document.getElementById('taskV').textContent = t;
+    var credits = TASK_CREDITS[taskC];
+    var perTask = credits * CREDIT_PRICE;
+    var monthly = perTask * t;
+    document.getElementById('coworkResult').innerHTML =
+      'A <strong>'+taskC+'</strong> Cowork task ≈ <strong>'+credits.toLocaleString()+' credits ≈ '+fmt(perTask)+'</strong>. At '+t+' tasks/month, about <strong>'+fmt(monthly)+'/mo</strong>. One agentic task does the work of many chat prompts — which is why it costs far more than the per-message numbers above.';
+  }
+  document.getElementById('tasks').addEventListener('input', coworkCalc);
+  var taskBtns = document.querySelectorAll('#taskSeg button');
+  taskBtns.forEach(function(b){
+    b.addEventListener('click', function(){
+      taskBtns.forEach(function(x){ x.classList.remove('active'); });
+      b.classList.add('active');
+      taskC = b.getAttribute('data-task');
+      coworkCalc();
+    });
+  });
+
+  calc();
+  coworkCalc();
+})();
+</script>
+<script src="/site-nav.js" defer></script>
+</body>
+</html>

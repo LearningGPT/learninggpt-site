@@ -772,22 +772,22 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
     <p class="hero-sub">LearningGPT is the independent, hands-on platform for mastering every AI worth knowing — ChatGPT, Claude, Copilot, Gemini, Grok, and more. 160+ always-current lessons, a side-by-side playground to prove what works, and no vendor telling you what to like.</p>
     <div class="hero-cta">
       <a href="/auth/signup" class="btn btn-primary btn-lg">Start free →</a>
-      <a href="#playground" class="btn btn-ghost btn-lg">See the playground</a>
+      <a href="/lessons" class="btn btn-ghost btn-lg">Read a free lesson →</a>
     </div>
     <p class="hero-trust">150+ hands-on lessons · Free to start · No credit card · Built by power users, not vendors</p>
     <p style="font-size:13px; color:var(--text-mute); margin-top:14px;">Got questions? <a href="mailto:dan@learninggpt.ai?subject=LearningGPT%20question" style="color:var(--brand-2); font-weight:600;">Talk to Dan →</a> · I read every email myself.</p>
 
     <div class="hero-tools">
       <div class="hero-tools-label">150+ lessons · live today</div>
-      <span class="tool-chip"><span class="dot" style="background:linear-gradient(135deg,#7c5cff,#44e0a4)"></span> AI Foundations</span>
-      <span class="tool-chip"><span class="dot" style="background:#2c7be5"></span> Copilot</span>
-      <span class="tool-chip"><span class="dot" style="background:#d97757"></span> Claude</span>
-      <span class="tool-chip"><span class="dot" style="background:#10a37f"></span> ChatGPT</span>
-      <span class="tool-chip"><span class="dot" style="background:#4285f4"></span> Gemini</span>
-      <span class="tool-chip"><span class="dot" style="background:#20808d"></span> Perplexity</span>
-      <span class="tool-chip"><span class="dot" style="background:#9da0b0"></span> Grok</span>
-      <span class="tool-chip"><span class="dot" style="background:#f0544f"></span> OpenClaw</span>
-      <span class="tool-chip"><span class="dot" style="background:var(--brand)"></span> + more added monthly</span>
+      <a class="tool-chip" href="/lessons/foundations/"><span class="dot" style="background:linear-gradient(135deg,#7c5cff,#44e0a4)"></span> AI Foundations</a>
+      <a class="tool-chip" href="/lessons/copilot/"><span class="dot" style="background:#2c7be5"></span> Copilot</a>
+      <a class="tool-chip" href="/lessons/claude/"><span class="dot" style="background:#d97757"></span> Claude</a>
+      <a class="tool-chip" href="/lessons/chatgpt/"><span class="dot" style="background:#10a37f"></span> ChatGPT</a>
+      <a class="tool-chip" href="/lessons/gemini/"><span class="dot" style="background:#4285f4"></span> Gemini</a>
+      <a class="tool-chip" href="/lessons/perplexity/"><span class="dot" style="background:#20808d"></span> Perplexity</a>
+      <a class="tool-chip" href="/lessons/grok/"><span class="dot" style="background:#9da0b0"></span> Grok</a>
+      <a class="tool-chip" href="/lessons/openclaw/"><span class="dot" style="background:#f0544f"></span> OpenClaw</a>
+      <a class="tool-chip" href="/lessons/"><span class="dot" style="background:var(--brand)"></span> + more added monthly</a>
     </div>
   </div>
 </section>
@@ -1371,6 +1371,13 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
   })();
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
+<script>
+  // Funnel tracking: fire a Vercel event whenever someone clicks a "Start free"/signup link
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href^="/auth/signup"]');
+    if (a && window.va) { window.va('event', { name: 'start_free_click', from: 'homepage' }); }
+  }, true);
+</script>
   <!-- Nav: show "Account" when signed in -->
 <script>
 (function(){

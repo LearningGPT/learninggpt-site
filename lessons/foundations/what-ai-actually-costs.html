@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>What AI actually costs: tokens, credits & messages, explained — LearningGPT</title>
+<meta name="description" content="Tokens, credits, messages, per-seat — every AI prices differently and it's confusing on purpose. A plain-English breakdown of how ChatGPT, Claude, Gemini, Grok, Perplexity and Copilot charge, and what a single prompt really costs. Free." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#44e0a4" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/foundations/what-ai-actually-costs" />
+<meta property="og:title" content="What AI actually costs: tokens, credits & messages, explained" />
+<meta property="og:description" content="How every major AI charges, in plain English — and what a single prompt really costs. Free, vendor-neutral." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #44e0a4; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #44e0a4; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+.lesson { padding: 50px 0 100px; }
+.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(68,224,164,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(68,224,164,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip-free { border-color: rgba(68,224,164,0.4); color: var(--accent); background: rgba(68,224,164,0.1); }
+.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
+.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
+.lesson h1 .grad { background: linear-gradient(135deg, #44e0a4 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
+.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
+.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
+.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
+.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(68,224,164,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(68,224,164,0.25); border-radius: var(--radius-lg); position: relative; }
+.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #44e0a4, #7c5cff); border-radius: 2px 0 0 2px; }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.callout p:last-child { margin-bottom: 0; }
+.cost-table { width: 100%; border-collapse: collapse; margin: 20px 0 14px; font-size: 14px; }
+.cost-table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--line-strong); color: var(--text-dim); font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.6px; }
+.cost-table td { padding: 11px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.cost-table td:first-child { font-weight: 700; }
+.cost-table .pp { color: var(--accent); font-weight: 600; white-space: nowrap; }
+.table-scroll { overflow-x: auto; }
+.tryit { margin: 28px 0; padding: 24px; background: rgba(68,224,164,0.06); border: 1px solid rgba(68,224,164,0.25); border-radius: var(--radius); }
+.tryit .lbl { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.tryit p { margin: 0 0 14px; font-size: 15.5px; }
+.tryit a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #44e0a4, #5b8def); color: white; padding: 12px 22px; border-radius: 9px; font-weight: 600; font-size: 14px; }
+.tryit a.btn:hover { transform: translateY(-1px); color: white; }
+.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(68,224,164,0.18), rgba(124,92,255,0.1)); border: 1px solid rgba(68,224,164,0.3); border-radius: var(--radius-lg); padding: 36px; }
+.challenge h2 { margin-top: 0; }
+.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #44e0a4, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(68,224,164,0.35); }
+.challenge a.btn:hover { transform: translateY(-1px); color: white; }
+.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; padding-top: 0; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.checklist li:first-child::before { top: 4px; }
+.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
+.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.next-up .free-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(68,224,164,0.18); color: var(--accent); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(68,224,164,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/foundations/" class="nav-back">← AI Foundations</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">AI Foundations</span>
+      <span class="chip chip-free">Free</span>
+      <span>~10 min read</span>
+      <span class="dot"></span>
+      <span>Stop guessing what AI costs</span>
+    </div>
+    <h1>What AI actually costs: <span class="grad serif">tokens, credits &amp; messages, explained.</span></h1>
+    <p class="deck">Every AI company prices differently — tokens, credits, "messages," per-seat — and the names are confusing on purpose. Once you understand the three or four models underneath, you can answer the only question that matters: <em>what is this actually going to cost me?</em> Here's the plain-English version, plus what a single prompt really runs you on each tool.</p>
+
+    <h2><span class="num">01</span> The 4 ways AI gets priced</h2>
+    <p>Strip away the branding and almost every AI uses one of four pricing models:</p>
+    <ul>
+      <li><strong>Per-token (pay-per-use / API).</strong> You pay for the text in and out, measured in "tokens." This is how the APIs charge — you pay only for what you use.</li>
+      <li><strong>Flat subscription with usage caps.</strong> The $20/month apps (ChatGPT Plus, Claude Pro, etc.). You pay a fixed price and get generous-but-limited usage — measured in "messages," not dollars.</li>
+      <li><strong>Credits.</strong> A prepaid bucket you spend down — one action costs N credits. Common for image/video generation, and now for agentic work: <strong>Microsoft's Copilot Cowork</strong> bills $0.01 per credit, where a single multi-step task runs anywhere from ~70 to 1,500+ credits.</li>
+      <li><strong>Per-seat.</strong> Business pricing — a flat monthly fee per employee (e.g., Microsoft 365 Copilot). The company pays per person, not per use.</li>
+    </ul>
+    <div class="callout">
+      <span class="lbl">Why the confusion is on purpose</span>
+      <p>Different units make tools hard to compare. "$20/month" feels concrete; "$3 per million tokens" feels abstract; "1,000 credits" feels generous. Same money, different framing. Once you can convert between them, the marketing stops working on you.</p>
+    </div>
+
+    <h2><span class="num">02</span> What's a "token," really?</h2>
+    <p>A token is just a chunk of text — roughly <strong>¾ of a word</strong> in English. "Learning" might be one token; "antidisestablishmentarianism" is several. A rule of thumb: <strong>~750 words ≈ 1,000 tokens</strong>.</p>
+    <p>Every prompt has two token counts that both cost money:</p>
+    <ul>
+      <li><strong>Input tokens</strong> — everything you send (your prompt + any document or context).</li>
+      <li><strong>Output tokens</strong> — everything the AI writes back. Output is almost always priced higher than input — often 4–5× — because generating is the expensive part.</li>
+    </ul>
+    <p>So a "cost per prompt" = (your input tokens × input price) + (the reply's output tokens × output price). That's the whole formula. Everything below is just plugging in numbers.</p>
+
+    <h2><span class="num">03</span> What each tool charges (June 2026)</h2>
+    <p>Here's the honest, side-by-side. "Pay-per-use" is the API price per <strong>million</strong> tokens (input / output). "Subscription" is the standard individual plan. The last column is roughly what <em>one medium prompt</em> costs on the API (about 800 tokens in, 1,200 out).</p>
+    <div class="table-scroll">
+    <table class="cost-table">
+      <tr><th>Tool</th><th>Pay-per-use (per 1M, in / out)</th><th>Subscription</th><th>~1 medium prompt</th></tr>
+      <tr><td>ChatGPT (GPT-5.2)</td><td>$1.75 / $14</td><td>Plus $20/mo · Pro $200/mo</td><td class="pp">~$0.018</td></tr>
+      <tr><td>Claude (Sonnet 4.6)</td><td>$3 / $15</td><td>Pro $20/mo · Max $100–200/mo</td><td class="pp">~$0.020</td></tr>
+      <tr><td>Gemini (3.5 Flash)</td><td>$1.50 / $9</td><td>Google AI Pro $19.99/mo</td><td class="pp">~$0.012</td></tr>
+      <tr><td>Grok (4.1 Fast)</td><td>$0.20 / $0.50</td><td>SuperGrok $30/mo</td><td class="pp">~$0.0008</td></tr>
+      <tr><td>Perplexity</td><td>Sonar API (per request + tokens)</td><td>Pro $20/mo</td><td class="pp">query-based*</td></tr>
+      <tr><td>Copilot (M365 chat)</td><td>n/a — per seat</td><td>$18–30 / seat / mo</td><td class="pp">included</td></tr>
+      <tr><td>Copilot Cowork (agentic)</td><td>$0.01 / credit · ~70–1,500+ credits per task</td><td>usage-based (from Jul 1, 2026)</td><td class="pp">~$1–$15+/task</td></tr>
+      <tr><td>OpenClaw</td><td>free software + the model's API you plug in</td><td>self-hosted</td><td class="pp">= your model's price</td></tr>
+    </table>
+    </div>
+    <p style="font-size:13.5px;color:var(--text-mute);">*Perplexity prices around "searches," not raw tokens — Pro gives you a large daily allowance; the Sonar API charges per request plus tokens. Copilot is per-seat, so individual prompts have no marginal cost. Premium reasoning models (GPT-5.4, Claude Opus) cost more than the figures above. Prices as of June 2026 — always check current rates.</p>
+
+    <h2><span class="num">04</span> What a real prompt costs (worked examples)</h2>
+    <p>Numbers feel abstract until you map them to real work. Using mid-range pricing:</p>
+    <ul>
+      <li><strong>A quick question + short answer</strong> (≈250 in / 350 out): a fraction of a cent — well under <strong>$0.01</strong> on any model.</li>
+      <li><strong>Summarize a 2-page document</strong> (≈800 in / 1,200 out): about <strong>$0.01–$0.02</strong> on most models; under a tenth of a cent on Grok 4.1 Fast.</li>
+      <li><strong>Analyze a long report</strong> (≈2,500 in / 3,500 out): roughly <strong>$0.05–$0.07</strong> on a mid model; more on premium reasoning models.</li>
+    </ul>
+    <div class="callout">
+      <span class="lbl">The takeaway most people miss</span>
+      <p>Individual prompts are <em>cheap</em> — pennies. The cost only adds up at <strong>volume</strong> (hundreds of prompts a day) or with <strong>premium models on long documents</strong>. For normal daily use, a flat $20 subscription is often <em>more</em> than your usage would cost on the API — you're paying for convenience and unlimited peace of mind, not because the usage is expensive.</p>
+    </div>
+
+    <div class="callout">
+      <span class="lbl">But agentic "tasks" are a different beast</span>
+      <p>The pennies-per-prompt math above is for <em>chat</em>. When AI runs a whole multi-step job for you — an <strong>agentic task</strong> — it costs far more, because one task is dozens of model calls under the hood. <strong>Microsoft Copilot Cowork</strong> prices this with credits: $0.01 each, and one task runs ~70 credits (light, under $1) to 1,500+ (heavy, $15+). Usage billing starts <strong>July 1, 2026</strong>. So "AI is basically free per prompt" is true for chatting — and very much not true for agents doing real work. Always know which one you're paying for.</p>
+    </div>
+
+    <h2><span class="num">05</span> Subscription or pay-per-use — which is cheaper for you?</h2>
+    <p>The honest decision rule:</p>
+    <ul>
+      <li><strong>Light-to-moderate user</strong> (a few to a few dozen prompts a day)? Your API usage would likely cost <em>less</em> than $20/month — but the subscription buys you the polished app, no metering anxiety, and features like voice and image gen. Most people happily pay for that.</li>
+      <li><strong>Heavy daily user</strong> (hundreds of prompts, or long documents all day)? A flat subscription is the better deal — unlimited beats per-token once you cross a few dollars of daily usage.</li>
+      <li><strong>Builder / automating things</strong>? The API (pay-per-use) is the right tool — you only pay for what runs, and you can pick a cheap model (Grok 4.1 Fast, Gemini Flash) for high-volume jobs.</li>
+    </ul>
+    <div class="tryit">
+      <span class="lbl">Do the math for your usage</span>
+      <p>Don't guess — plug your actual usage into our free calculator and see the real monthly cost across every tool, subscription vs pay-per-use, side by side.</p>
+      <a href="/ai-cost-calculator" class="btn">Open the AI Cost Calculator →</a>
+    </div>
+
+    <div class="challenge">
+      <h2 style="margin-top: 0;">Final challenge: price your own AI habit</h2>
+      <p>Estimate your real usage: how many prompts a day, and how long are they (a quick question, a doc summary, a long analysis)? Run it through the <a href="/ai-cost-calculator">calculator</a>. You'll get a clear answer to whether your subscription is worth it — and which tool is cheapest for the way <em>you</em> actually work.</p>
+      <div class="btn-row">
+        <a href="/ai-cost-calculator" class="btn">Open the calculator →</a>
+        <a href="/lessons/foundations/" class="btn ghost">Back to Foundations →</a>
+      </div>
+    </div>
+
+    <div class="checklist">
+      <h3>What you can do now</h3>
+      <ul>
+        <li>Recognize the 4 pricing models: per-token, flat subscription, credits, per-seat</li>
+        <li>Read a token price: per million, input vs output (output costs more)</li>
+        <li>Estimate a prompt's cost — input tokens + output tokens × their prices</li>
+        <li>Know that individual prompts are pennies; cost lives in volume and premium models</li>
+        <li>Decide subscription vs pay-per-use based on your real usage, not vibes</li>
+      </ul>
+    </div>
+
+    <div class="next-up">
+      <span class="free-tag">Free</span>
+      <div class="lbl" style="margin-top: 14px;">Keep going in Foundations</div>
+      <h3>Which AI for which job — the decision framework</h3>
+      <p>Now that you know what each costs, learn which one to actually reach for, task by task. <a href="/lessons/foundations/which-ai-for-which-job">Read it →</a></p>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Pricing as of June 2026 — verify current rates with each provider.</div>
+    <a href="/lessons/foundations/" style="color: var(--text-dim);">← All Foundations lessons</a>
+  </div>
+</footer>
+<script src="/gate.js"></script>
+</body>
+</html>

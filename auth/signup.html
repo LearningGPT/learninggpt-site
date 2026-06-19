@@ -181,8 +181,11 @@ submitBtn.addEventListener('click', async function() {
       return;
     }
 
-    localStorage.setItem('lgpt_token', data.token);
+   localStorage.setItem('lgpt_token', data.token);
     localStorage.setItem('lgpt_plan', data.plan);
+
+    // Funnel tracking: signup completed
+    if (window.va) { window.va('event', { name: 'signup_complete', plan: data.plan || 'free' }); }
 
     // Send the welcome email (fire-and-forget). keepalive lets the request
     // finish even though we navigate away to checkout / lessons right after.

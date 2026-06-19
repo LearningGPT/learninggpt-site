@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Copilot's 2026 upgrade: GPT-5.2, Think Deeper & doing the work in Office — LearningGPT</title>
+<meta name="description" content="Microsoft 365 Copilot's 2026 upgrade — the GPT-5.2 brain, the Quick Response vs Think Deeper modes, and the shift from suggesting to executing: creating events, routing email, and editing live documents in Word, Excel, and PowerPoint." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#2c7be5" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/copilot/copilot-2026-upgrade" />
+<meta property="og:title" content="Copilot's 2026 upgrade: GPT-5.2, Think Deeper & doing the work" />
+<meta property="og:description" content="The modes, the new GPT-5.2 brain, and Copilot's shift from suggesting to executing inside Office." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #2c7be5; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #2c7be5; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+.lesson { padding: 50px 0 100px; }
+.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(44,123,229,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(44,123,229,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
+.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
+.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
+.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
+.lesson h1 .grad { background: linear-gradient(135deg, #2c7be5 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
+.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
+.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
+.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
+.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); position: relative; }
+.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #2c7be5, #7c5cff); border-radius: 2px 0 0 2px; }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.callout p:last-child { margin-bottom: 0; }
+.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
+.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(44,123,229,0.1); border: 1px solid rgba(44,123,229,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
+.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
+.workflow p { font-size: 15px; margin: 0 0 14px; }
+.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
+.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
+.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
+.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
+.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
+.tier-table { width: 100%; border-collapse: collapse; margin: 20px 0 28px; font-size: 14px; }
+.tier-table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--line-strong); color: var(--text-dim); font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.8px; }
+.tier-table td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.tier-table td:first-child { font-weight: 600; }
+.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); padding: 36px; }
+.challenge h2 { margin-top: 0; }
+.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #2c7be5, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
+.challenge a.btn:hover { transform: translateY(-1px); color: white; }
+.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; padding-top: 0; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.checklist li:first-child::before { top: 4px; }
+.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
+.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/copilot/" class="nav-back">← Copilot Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">2026 Update · Copilot Mastery</span>
+      <span class="chip chip-pro">Pro</span>
+      <span>~9 min read</span>
+      <span class="dot"></span>
+      <span>From suggesting to doing</span>
+    </div>
+    <h1>Copilot's 2026 upgrade: <span class="grad serif">it stopped suggesting and started doing.</span></h1>
+    <p class="deck">For two years, Copilot mostly <em>told you</em> things — drafts, summaries, suggestions you then acted on. The 2026 update changes the verb. On a new GPT-5.2 brain, with two distinct thinking modes, Copilot now <strong>executes</strong>: it creates calendar events, drafts and routes email, and edits live documents in Word, Excel, and PowerPoint. That's a real shift in what your existing license can do — and a few new habits to keep it from doing the wrong thing confidently.</p>
+
+    <h2><span class="num">01</span> What actually changed</h2>
+    <p>Three things landed together in the 2026 update:</p>
+    <ul>
+      <li><strong>A new brain — GPT-5.2.</strong> Stronger reasoning and fewer fumbles on multi-step asks. You don't configure this; it's just the model under the hood now.</li>
+      <li><strong>Two modes — Quick Response and Think Deeper.</strong> You now choose how hard Copilot works on a given request (next section).</li>
+      <li><strong>Execution, not just suggestion.</strong> The big one: Copilot can now <em>take actions</em> — create a calendar event, draft and route an email, and make edits directly in your open Word/Excel/PowerPoint document, not just hand you text to paste.</li>
+    </ul>
+    <div class="callout">
+      <span class="lbl">Why it matters</span>
+      <p>The gap between "Copilot wrote me a draft" and "Copilot updated the deck and put the meeting on three calendars" is the difference between an assistant that advises and one that does the chore. That's genuinely more useful — and genuinely more able to make a confident mistake on your behalf. Both halves of that are this lesson.</p>
+    </div>
+
+    <h2><span class="num">02</span> Quick Response vs. Think Deeper</h2>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">1</div><h3>Pick the mode to fit the task</h3></div>
+      <p>The new modes are just an effort dial. Most people should default to Quick Response and reach for Think Deeper only when the task earns the wait.</p>
+      <table class="tier-table">
+        <tr><th>Use Quick Response for…</th><th>Use Think Deeper for…</th></tr>
+        <tr><td>Drafting a routine email</td><td>A multi-step analysis or plan</td></tr>
+        <tr><td>Summarizing a thread or doc</td><td>Reconciling data across several files</td></tr>
+        <tr><td>Quick formula or rewrite</td><td>A first-draft strategy memo or proposal</td></tr>
+        <tr><td>"What did I miss in this meeting?"</td><td>Anything where a wrong answer is expensive</td></tr>
+      </table>
+      <div class="savings"><strong>Rule of thumb:</strong> Quick Response by default; Think Deeper when the cost of being wrong is higher than the cost of waiting.</div>
+    </div>
+
+    <h2><span class="num">03</span> Copilot now does the work — in Office</h2>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">2</div><h3>The execution moves worth learning</h3></div>
+      <p>This is the headline. Three places it shows up day to day:</p>
+      <h4>Email &amp; calendar</h4>
+      <div class="prompt-example"><span class="label">Outlook</span>Draft a reply to this thread proposing Thursday or Friday afternoon,
+then put a 30-min hold on my calendar for whichever they pick and
+send the invite once they reply.</div>
+      <h4>Live document edits</h4>
+      <p>Instead of returning text to paste, Copilot edits the document you're in: "Tighten section 2 to half its length and fix the heading styles" in Word; "Add a Q3 column, fill the formulas, and chart revenue by region" in Excel; "Turn these notes into 8 slides with a clean layout" in PowerPoint.</p>
+      <h4>Multi-step chores</h4>
+      <p>"Pull the numbers from this email into the tracker and flag anything over budget" now runs as one action instead of three copy-pastes.</p>
+      <div class="gotcha">Execution means Copilot can act on the wrong target — edit the wrong section, email the wrong person, hold the wrong day. Always keep it on <strong>draft-and-confirm</strong> for anything that sends or changes a shared file. The first time it auto-sends something slightly wrong, you'll wish you'd reviewed.</div>
+    </div>
+
+    <h2><span class="num">04</span> The new habits (so it helps, not haunts)</h2>
+    <ul>
+      <li><strong>Review before it sends or shares.</strong> Treat "route this email" and "edit this shared deck" like a junior teammate's work — glance before it goes out.</li>
+      <li><strong>Name the target precisely.</strong> "This document," "this thread," "my 2pm" — ambiguity is where execution mistakes happen.</li>
+      <li><strong>Your tenant rules still apply.</strong> Copilot acts inside your Microsoft 365 permissions and data boundary — it can't touch what you can't, and admins still govern it. (Good news for the security conversation.)</li>
+      <li><strong>It's rolling out in stages.</strong> Exact features and availability vary by license and tenant and are still expanding — if a capability isn't there yet, that's rollout, not you.</li>
+    </ul>
+    <div class="callout">
+      <span class="lbl">How this changes the Grok-in-Office question</span>
+      <p>We recently compared <a href="/lessons/grok/grok-vs-copilot-office">Grok's Office add-in vs. Copilot</a>. This upgrade widens Copilot's lead on <em>doing</em> tenant-grounded work — editing your real files, acting on your real calendar — while Grok's edge stays the live web/X angle. Same rule, sharper: information that lives inside your company → Copilot; out in the world → Grok.</p>
+    </div>
+
+    <div class="challenge">
+      <h2 style="margin-top: 0;">Run one execution task end-to-end</h2>
+      <p>Pick one safe, real chore this week — turning meeting notes into a deck, or drafting a reply plus a calendar hold. Ask Copilot to do the whole thing, then <em>review before you let it send or save</em>. Notice where it nailed it and where you had to correct the target. That review reflex is the whole skill now that Copilot can act.</p>
+      <div class="btn-row">
+        <a href="/lessons/copilot/" class="btn">All Copilot lessons →</a>
+        <a href="/lessons/grok/grok-vs-copilot-office" class="btn ghost">Grok vs. Copilot in Office →</a>
+      </div>
+    </div>
+
+    <div class="checklist">
+      <h3>What you can do now</h3>
+      <ul>
+        <li>Know the 2026 stack: GPT-5.2 brain, Quick Response / Think Deeper modes, and real execution</li>
+        <li>Default to Quick Response; use Think Deeper when being wrong is costly</li>
+        <li>Use Copilot to act — create events, route email, edit live Office docs</li>
+        <li>Keep draft-and-confirm on anything that sends or changes a shared file</li>
+        <li>Name the target precisely, and remember your tenant governance still applies</li>
+      </ul>
+    </div>
+
+    <div class="next-up">
+      <span class="pro-tag">Pro</span>
+      <div class="lbl" style="margin-top: 14px;">Keep going in Copilot Mastery</div>
+      <h3>The full Copilot track</h3>
+      <p>Outlook, Excel, Word, Teams, the named agents, and Copilot Studio — all kept current as Copilot changes. <a href="/lessons/copilot/">See the track →</a></p>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Microsoft.</div>
+    <a href="/lessons/copilot/" style="color: var(--text-dim);">← All Copilot Mastery lessons</a>
+  </div>
+</footer>
+<script src="/gate.js"></script>
+</body>
+</html>

@@ -155,6 +155,31 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .coach-spinner { width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgba(68,224,164,0.2); border-top-color: #44e0a4; animation: spin .8s linear infinite; flex-shrink: 0; }
 @media (max-width: 880px) { .results-grid { grid-template-columns: 1fr; } }
 
+/* ── PLAYGROUND UPGRADES (blind mode · cost · share) ── */
+.pg-controls { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 14px; }
+.pg-switch { display: inline-flex; align-items: center; gap: 9px; font-size: 12.5px; color: var(--text-dim); cursor: pointer; user-select: none; }
+.pg-switch input { position: absolute; opacity: 0; width: 0; height: 0; }
+.pg-switch .track { width: 38px; height: 22px; border-radius: 999px; background: rgba(255,255,255,0.12); position: relative; transition: background .15s; flex-shrink: 0; }
+.pg-switch .track::after { content: ''; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%; background: #fff; transition: transform .15s; }
+.pg-switch input:checked + .track { background: linear-gradient(135deg, #44e0a4, #7c5cff); }
+.pg-switch input:checked + .track::after { transform: translateX(16px); }
+.pg-scoreboard { font-size: 12px; color: var(--text-mute); }
+.pg-scoreboard b { color: #44e0a4; }
+.pg-cost { color: var(--text-mute); }
+.blind-letter { width: 26px; height: 26px; border-radius: 6px; display: grid; place-items: center; font-weight: 700; font-size: 12px; color: #fff; background: rgba(255,255,255,0.16); }
+.pick-btn { margin-top: 14px; width: 100%; background: rgba(124,92,255,0.12); border: 1px solid rgba(124,92,255,0.3); color: var(--text); font-size: 12.5px; font-weight: 600; padding: 10px; border-radius: 8px; cursor: pointer; transition: background .15s, border-color .15s; }
+.pick-btn:hover { background: rgba(124,92,255,0.22); border-color: rgba(124,92,255,0.5); }
+.result-col.picked { border-color: rgba(124,92,255,0.6); box-shadow: 0 0 0 1px rgba(124,92,255,0.3); }
+.result-col.is-winner { border-color: rgba(68,224,164,0.5); }
+.pg-reveal-note { margin: 16px 24px 0; font-size: 13.5px; color: var(--text); padding: 13px 16px; border-radius: 10px; background: rgba(124,92,255,0.08); border: 1px solid rgba(124,92,255,0.22); display: none; line-height: 1.55; }
+.pg-reveal-note.show { display: block; }
+.pg-reveal-note.correct { background: rgba(68,224,164,0.1); border-color: rgba(68,224,164,0.3); }
+.pg-reveal-note b { color: var(--text); }
+.pg-actions-bar { display: flex; justify-content: flex-end; padding: 0 24px 18px; }
+.share-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); color: var(--text); font-size: 12.5px; font-weight: 600; padding: 9px 16px; border-radius: 8px; cursor: pointer; display: none; align-items: center; gap: 7px; transition: background .15s; }
+.share-btn.show { display: inline-flex; }
+.share-btn:hover { background: rgba(255,255,255,0.09); }
+
 /* CTA */
 .cta-section { padding: 80px 0; text-align: center; }
 .cta-box { max-width: 600px; margin: 0 auto; background: rgba(124,92,255,0.08); border: 1px solid rgba(124,92,255,0.25); border-radius: 24px; padding: 48px 40px; }
@@ -330,6 +355,14 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
           </div>
           <button class="run-btn" id="runBtn">Run all ▶</button>
         </div>
+        <div class="pg-controls">
+          <label class="pg-switch">
+            <input type="checkbox" id="blindToggle">
+            <span class="track"></span>
+            Blind mode — hide the names and guess the winner
+          </label>
+          <span class="pg-scoreboard" id="pgScore"></span>
+        </div>
       </div>
       <div class="results" id="results">
         <div class="result-empty">✨ Enter a prompt above and click <strong>Run all</strong> to compare ChatGPT, Claude, Gemini, and Perplexity side by side.</div>
@@ -343,6 +376,10 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
           <div class="coach-loading"><div class="coach-spinner"></div>Analyzing responses…</div>
         </div>
       </div>
+      <div class="pg-reveal-note" id="pgRevealNote"></div>
+      <div class="pg-actions-bar">
+        <button class="share-btn" id="shareBtn">🖼️ Share as image</button>
+      </div>
     </div>
   </div>
 </section>
@@ -352,7 +389,7 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
   <div class="container">
     <div class="cta-box">
       <h2>Want to go deeper on <span class="grad serif">every AI tool?</span></h2>
-      <p>The playground is just the start. Pro members get all 130 lessons across Copilot, Claude, ChatGPT, Gemini, Perplexity, and the hands-on builds — plus role tracks, certifications, and skill-update alerts as they ship through Q3 2026.</p>
+      <p>The playground is just the start. Pro members get 80+ lessons across ChatGPT, Claude, Copilot, Gemini, and Perplexity — with role-based tracks, certifications, and weekly AI tip emails.</p>
       <div class="cta-btns">
         <a href="/auth/signup" class="btn btn-primary btn-lg">Start free →</a>
         <a href="/pricing" class="btn btn-ghost btn-lg">See pricing</a>
@@ -370,11 +407,16 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
 </footer>
 
 <script>
+  // costIn / costOut = approx USD per 1,000,000 tokens (input / output), as of June 2026.
+  // Used only to show an estimated per-run cost; verify against each provider's pricing page.
   const MODELS = [
-    { id: 'openai/gpt-4.1',              name: 'ChatGPT',    color: '#10a37f', short: 'G' },
-    { id: 'anthropic/claude-sonnet-4-6', name: 'Claude',     color: '#d97757', short: 'C' },
-    { id: 'google/gemini-2.5-flash',     name: 'Gemini',     color: '#4285f4', short: '⬢' },
-    { id: 'perplexity/sonar-pro',        name: 'Perplexity', color: '#20808d', short: 'P' }
+    { id: 'openai/gpt-4.1',              name: 'ChatGPT',    color: '#10a37f', short: 'G', costIn: 2,   costOut: 8 },
+    { id: 'anthropic/claude-sonnet-4-6', name: 'Claude',     color: '#d97757', short: 'C', costIn: 3,   costOut: 15 },
+    { id: 'google/gemini-2.5-flash',     name: 'Gemini',     color: '#4285f4', short: '⬢', costIn: 0.3, costOut: 2.5 },
+    { id: 'perplexity/sonar-pro',        name: 'Perplexity', color: '#20808d', short: 'P', costIn: 3,   costOut: 15 }
+    // To add Grok, uncomment the next line. NOTE: this adds a 5th model call per run and
+    // raises your OpenRouter bill — enable only after the daily-run cap is live.
+    // ,{ id: 'x-ai/grok-4', name: 'Grok', color: '#9da0b0', short: '✦', costIn: 3, costOut: 15 }
   ];
 
   const promptInput      = document.getElementById('prompt');
@@ -387,6 +429,120 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
   // with each request. The server checks it and skips the daily cap for paid
   // accounts. Anonymous/free visitors send null and stay capped.
   function authToken() { try { return localStorage.getItem('lgpt_token') || null; } catch (e) { return null; } }
+
+  // ── Playground upgrade state + helpers ──
+  let lastResults = null;   // results array from the last run
+  let displayOrder = [];    // model ids in the order they're shown (shuffled in blind mode)
+  let blindPick = null;     // model id the user picked in blind mode
+  let pendingCoach = null;  // { html, winnerId } stashed until reveal in blind mode
+
+  function blindOn() { const el = document.getElementById('blindToggle'); return !!(el && el.checked); }
+  function letterFor(i) { return String.fromCharCode(65 + i); } // 0->A, 1->B, ...
+  function safe(id) { return id.replace(/\//g, '-'); }
+
+  function shuffled(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+    return a;
+  }
+
+  // Estimated USD cost of one model's response. Uses the input/output token split
+  // when the API provides it; otherwise approximates from total tokens at the output rate.
+  function fmtCost(r, m) {
+    if (!m || (m.costIn == null && m.costOut == null)) return '';
+    let c;
+    if (typeof r.promptTokens === 'number' && typeof r.completionTokens === 'number') {
+      c = (r.promptTokens / 1e6) * m.costIn + (r.completionTokens / 1e6) * m.costOut;
+    } else {
+      c = ((r.tokens || 0) / 1e6) * m.costOut;
+    }
+    return '~$' + c.toFixed(4);
+  }
+
+  // Blind-mode running score (persisted locally)
+  function getScore() { try { return JSON.parse(localStorage.getItem('pg_blind_score') || '{"correct":0,"total":0}'); } catch (e) { return { correct: 0, total: 0 }; } }
+  function renderScore() {
+    const s = getScore(); const el = document.getElementById('pgScore');
+    if (el) el.innerHTML = s.total ? ('Blind score: <b>' + s.correct + '/' + s.total + '</b> correct') : '';
+  }
+  function bumpScore(correct) {
+    const s = getScore(); s.total++; if (correct) s.correct++;
+    try { localStorage.setItem('pg_blind_score', JSON.stringify(s)); } catch (e) {}
+    renderScore();
+  }
+
+  // Apply the coach verdict text + winner highlight to whatever grid is currently shown
+  function applyCoach(c) {
+    if (!c) { coachPanel.classList.remove('visible'); return; }
+    coachText.innerHTML = c.html;
+    if (c.winnerId) {
+      const col = document.getElementById('col-' + safe(c.winnerId));
+      const badge = document.getElementById('badge-' + safe(c.winnerId));
+      if (col) col.classList.add('is-winner');
+      if (badge) { badge.className = 'badge-winner'; badge.textContent = '★ Winner'; }
+    }
+    coachPanel.classList.add('visible');
+  }
+
+  // Build the column markup for one result (blind = hide identity + show a Pick button)
+  function colHtml(r, i, blind) {
+    const m = MODELS.find(x => x.id === r.modelId) || { color: '#666', short: '?', name: r.modelName };
+    const isError = !!r.error;
+    const letter = letterFor(i);
+    let head;
+    if (blind) {
+      head = '<div class="model-name"><div class="blind-letter">' + letter + '</div>Model ' + letter + '</div>';
+    } else {
+      const badge = !isError
+        ? '<span class="badge" id="badge-' + safe(r.modelId) + '">' + r.tokens + ' tok · ' + (r.timeMs / 1000).toFixed(1) + 's · <span class="pg-cost">' + fmtCost(r, m) + '</span></span>'
+        : '';
+      head = '<div class="model-name"><div class="model-icon" style="background:' + m.color + '">' + m.short + '</div>' + r.modelName + '</div>' + badge;
+    }
+    const body = isError ? '<div class="error">⚠️ ' + escapeHtml(r.error) + '</div>' : '<div class="response">' + escapeHtml(r.response) + '</div>';
+    const pick = (blind && !isError) ? '<button class="pick-btn" data-model="' + r.modelId + '">Pick Model ' + letter + ' as winner</button>' : '';
+    return '<div class="result-col" id="col-' + safe(r.modelId) + '"><div class="result-head">' + head + '</div><div class="result-body">' + body + '</div>' + pick + '</div>';
+  }
+
+  function renderResults(results) {
+    const blind = blindOn();
+    const ordered = blind ? shuffled(results) : results.slice();
+    displayOrder = ordered.map(r => r.modelId);
+    resultsContainer.innerHTML = '<div class="results-grid" id="resultsGrid">' + ordered.map((r, i) => colHtml(r, i, blind)).join('') + '</div>';
+    if (blind) {
+      resultsContainer.querySelectorAll('.pick-btn').forEach(b => {
+        b.addEventListener('click', () => handlePick(b.getAttribute('data-model')));
+      });
+    }
+  }
+
+  // User picked a model in blind mode → reveal real identities, score it, show the coach
+  function handlePick(modelId) {
+    if (blindPick) return;
+    blindPick = modelId;
+    const ordered = displayOrder.map(id => lastResults.find(r => r.modelId === id));
+    resultsContainer.innerHTML = '<div class="results-grid" id="resultsGrid">' + ordered.map((r, i) => {
+      const html = colHtml(r, i, false);
+      return (r.modelId === blindPick) ? html.replace('class="result-col"', 'class="result-col picked"') : html;
+    }).join('') + '</div>';
+
+    applyCoach(pendingCoach);
+
+    const note = document.getElementById('pgRevealNote');
+    if (pendingCoach && pendingCoach.winnerId) {
+      const correct = pendingCoach.winnerId === blindPick;
+      bumpScore(correct);
+      const winnerName = (MODELS.find(m => m.id === pendingCoach.winnerId) || {}).name || 'another model';
+      const pickName = (MODELS.find(m => m.id === blindPick) || {}).name || 'your pick';
+      note.className = 'pg-reveal-note show' + (correct ? ' correct' : '');
+      note.innerHTML = correct
+        ? '✅ Nice — you picked <b>' + pickName + '</b>, and the coach agrees it won this round.'
+        : 'You picked <b>' + pickName + '</b>; the coach gave it to <b>' + winnerName + '</b>. Read the reasoning below — that gap is the skill.';
+    } else if (note) {
+      note.className = 'pg-reveal-note show';
+      note.innerHTML = 'Revealed. The coach couldn’t call a clear winner this time — read its take below.';
+    }
+    const sb = document.getElementById('shareBtn'); if (sb) sb.classList.add('show');
+  }
 
   // Prompt chips at top — update static demo label and fill textarea
   const staticPrompts = {
@@ -440,15 +596,21 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
     const prompt = promptInput.value.trim();
     if (!prompt) { promptInput.focus(); return; }
 
+    const blind = blindOn();
+    blindPick = null;
+    pendingCoach = null;
     runBtn.disabled = true;
     runBtn.textContent = 'Running…';
     coachPanel.classList.remove('visible');
     coachText.innerHTML = '<div class="coach-loading"><div class="coach-spinner"></div>Analyzing responses…</div>';
+    const shareBtn = document.getElementById('shareBtn'); if (shareBtn) shareBtn.classList.remove('show');
+    const revealNote = document.getElementById('pgRevealNote'); if (revealNote) { revealNote.className = 'pg-reveal-note'; revealNote.innerHTML = ''; }
 
-    resultsContainer.innerHTML = '<div class="results-grid">' + MODELS.map(m => `
+    // Loading grid (hide identities in blind mode)
+    resultsContainer.innerHTML = '<div class="results-grid">' + MODELS.map((m, i) => `
       <div class="result-col">
         <div class="result-head">
-          <div class="model-name"><div class="model-icon" style="background:${m.color}">${m.short}</div>${m.name}</div>
+          <div class="model-name">${blind ? `<div class="blind-letter">${letterFor(i)}</div>Model ${letterFor(i)}` : `<div class="model-icon" style="background:${m.color}">${m.short}</div>${m.name}`}</div>
           <span class="loading">Thinking…</span>
         </div>
         <div class="result-body" style="display:flex;align-items:center;justify-content:center;">
@@ -469,24 +631,10 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
       }
 
       const data = await response.json();
+      lastResults = data.results;
+      renderResults(data.results);
 
-      resultsContainer.innerHTML = '<div class="results-grid" id="resultsGrid">' + data.results.map(r => {
-        const m = MODELS.find(x => x.id === r.modelId) || { color:'#666', short:'?' };
-        const isError = !!r.error;
-        return `
-          <div class="result-col" id="col-${r.modelId.replace(/\//g,'-')}">
-            <div class="result-head">
-              <div class="model-name"><div class="model-icon" style="background:${m.color}">${m.short}</div>${r.modelName}</div>
-              ${!isError ? `<span class="badge" id="badge-${r.modelId.replace(/\//g,'-')}">${r.tokens} tok · ${(r.timeMs/1000).toFixed(1)}s</span>` : ''}
-            </div>
-            <div class="result-body">
-              ${isError ? `<div class="error">⚠️ ${escapeHtml(r.error)}</div>` : `<div class="response">${escapeHtml(r.response)}</div>`}
-            </div>
-          </div>`;
-      }).join('') + '</div>';
-
-      coachPanel.classList.add('visible');
-
+      // Coach: fetch the verdict. In blind mode we stash it and reveal after the user picks.
       try {
         const coachResponse = await fetch('/api/playground', {
           method: 'POST',
@@ -497,28 +645,25 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
         if (coachResponse.ok) {
           const coachData = await coachResponse.json();
           if (coachData.coach) {
-            coachText.innerHTML = coachData.coach
+            const html = coachData.coach
               .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
               .replace(/^##\s+/gm, '')
               .replace(/\n/g, '<br>');
-
             const winnerModel = MODELS.find(m => coachData.coach.toLowerCase().includes(m.name.toLowerCase()));
-            if (winnerModel) {
-              const safeId = winnerModel.id.replace(/\//g, '-');
-              const col = document.getElementById('col-' + safeId);
-              const badge = document.getElementById('badge-' + safeId);
-              if (col) col.style.borderColor = 'rgba(68,224,164,0.35)';
-              if (badge) { badge.className = 'badge-winner'; badge.textContent = '★ Winner'; }
-            }
-          } else {
+            pendingCoach = { html: html, winnerId: winnerModel ? winnerModel.id : null };
+            if (!blind) { applyCoach(pendingCoach); if (shareBtn) shareBtn.classList.add('show'); }
+          } else if (!blind) {
             coachPanel.classList.remove('visible');
           }
-        } else {
+        } else if (!blind) {
           coachPanel.classList.remove('visible');
         }
       } catch (coachErr) {
-        coachPanel.classList.remove('visible');
+        if (!blind) coachPanel.classList.remove('visible');
       }
+
+      // In blind mode, keep the coach hidden until the user commits to a pick.
+      if (blind) coachText.innerHTML = '';
 
     } catch (error) {
       resultsContainer.innerHTML = `
@@ -656,6 +801,31 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
     m.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ m.classList.remove('open'); }); });
   })();
 </script>
-<script src="/site-nav.js" defer></script>
+
+<!-- html2canvas powers the "Share as image" button -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+<script>
+  (function(){
+    // Show any saved blind-mode score on load
+    try { if (typeof renderScore === 'function') renderScore(); } catch (e) {}
+
+    var shareBtn = document.getElementById('shareBtn');
+    if (shareBtn) shareBtn.addEventListener('click', function(){
+      var node = document.querySelector('.playground-box');
+      if (!window.html2canvas || !node) return;
+      var old = shareBtn.innerHTML;
+      shareBtn.innerHTML = 'Rendering…';
+      shareBtn.disabled = true;
+      window.html2canvas(node, { backgroundColor: '#0e0e22', scale: 2, useCORS: true }).then(function(canvas){
+        var link = document.createElement('a');
+        link.download = 'learninggpt-playground.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        shareBtn.innerHTML = old; shareBtn.disabled = false;
+      }).catch(function(){ shareBtn.innerHTML = old; shareBtn.disabled = false; });
+    });
+  })();
+</script>
+
 </body>
 </html>

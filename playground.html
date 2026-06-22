@@ -175,11 +175,15 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .pg-reveal-note.show { display: block; }
 .pg-reveal-note.correct { background: rgba(68,224,164,0.1); border-color: rgba(68,224,164,0.3); }
 .pg-reveal-note b { color: var(--text); }
-.pg-actions-bar { display: flex; justify-content: flex-end; padding: 0 24px 18px; }
+.pg-actions-bar { display: flex; justify-content: flex-end; gap: 10px; padding: 0 24px 18px; }
 .share-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); color: var(--text); font-size: 12.5px; font-weight: 600; padding: 9px 16px; border-radius: 8px; cursor: pointer; display: none; align-items: center; gap: 7px; transition: background .15s; }
 .share-btn.show { display: inline-flex; }
 .share-btn:hover { background: rgba(255,255,255,0.09); }
-
+#shareBtn.show ~ .share-btn { display: inline-flex; }
+.pg-share-link { display: none; margin: 0 24px 18px; }
+.pg-share-link.show { display: flex; gap: 8px; align-items: center; }
+.pg-share-link input { flex: 1; background: rgba(0,0,0,0.3); border: 1px solid var(--line); color: var(--text); border-radius: 8px; padding: 9px 12px; font-size: 12.5px; font-family: inherit; }
+.pg-share-link button { background: linear-gradient(135deg, #44e0a4, #5b8def); color: #fff; border: none; border-radius: 8px; padding: 9px 14px; font-size: 12.5px; font-weight: 600; cursor: pointer; white-space: nowrap; }
 /* Toggle hard-fix: beats the .prompt-area label { display:block } rule that was collapsing the switch */
 .pg-controls .pg-switch { display: inline-flex !important; align-items: center; gap: 10px; margin: 0 !important; }
 .pg-controls .pg-switch input { display: none !important; }
@@ -384,8 +388,11 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
         </div>
       </div>
       <div class="pg-reveal-note" id="pgRevealNote"></div>
-      <div class="pg-actions-bar">
+     <div class="pg-actions-bar">
         <button class="share-btn" id="shareBtn">🖼️ Share as image</button>
+        <button class="share-btn" id="saveShareBtn">🔗 Save &amp; share link</button>
+      </div>
+      <div class="pg-share-link" id="pgShareLink"></div>
       </div>
     </div>
   </div>
@@ -436,7 +443,9 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
   function authToken() { try { return localStorage.getItem('lgpt_token') || null; } catch (e) { return null; } }
 
   // ── Playground upgrade state + helpers ──
-  let lastResults = null;   // results array from the last run
+ let lastResults = null;   // results array from the last run
+  let lastPrompt = '';      // prompt from the last run (for Save & share)
+  let lastCoachRaw = '';    // raw coach text from the last run (for Save & share)
   let displayOrder = [];    // model ids in the order they're shown (shuffled in blind mode)
   let blindPick = null;     // model id the user picked in blind mode
   let pendingCoach = null;  // { html, winnerId } stashed until reveal in blind mode
@@ -610,6 +619,7 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
     coachText.innerHTML = '<div class="coach-loading"><div class="coach-spinner"></div>Analyzing responses…</div>';
     const shareBtn = document.getElementById('shareBtn'); if (shareBtn) shareBtn.classList.remove('show');
     const revealNote = document.getElementById('pgRevealNote'); if (revealNote) { revealNote.className = 'pg-reveal-note'; revealNote.innerHTML = ''; }
+    const shareLinkBox = document.getElementById('pgShareLink'); if (shareLinkBox) { shareLinkBox.className = 'pg-share-link'; shareLinkBox.innerHTML = ''; }
 
     // Loading grid (hide identities in blind mode)
     resultsContainer.innerHTML = '<div class="results-grid">' + MODELS.map((m, i) => `
@@ -636,7 +646,9 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
       }
 
       const data = await response.json();
-      lastResults = data.results;
+     lastResults = data.results;
+      lastPrompt = prompt;
+      lastCoachRaw = '';
       renderResults(data.results);
 
       // Coach: fetch the verdict. In blind mode we stash it and reveal after the user picks.
@@ -650,6 +662,7 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
         if (coachResponse.ok) {
           const coachData = await coachResponse.json();
           if (coachData.coach) {
+            lastCoachRaw = coachData.coach;
             const html = coachData.coach
               .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
               .replace(/^##\s+/gm, '')
@@ -827,7 +840,47 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
         link.href = canvas.toDataURL('image/png');
         link.click();
         shareBtn.innerHTML = old; shareBtn.disabled = false;
-      }).catch(function(){ shareBtn.innerHTML = old; shareBtn.disabled = false; });
+}).catch(function(){ shareBtn.innerHTML = old; shareBtn.disabled = false; });
+    });
+
+    // Save & share — persist the last run and return a permalink
+    var saveBtn = document.getElementById('saveShareBtn');
+    var linkBox = document.getElementById('pgShareLink');
+    if (saveBtn) saveBtn.addEventListener('click', async function(){
+      if (typeof lastResults === 'undefined' || !lastResults || !lastResults.length) return;
+      var old = saveBtn.innerHTML;
+      saveBtn.innerHTML = 'Saving…';
+      saveBtn.disabled = true;
+      try {
+        var res = await fetch('/api/playground-save', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt: lastPrompt, results: lastResults, coach: lastCoachRaw })
+        });
+        var data = await res.json();
+        if (res.ok && data.id) {
+          var url = 'https://learninggpt.ai/playground-share?id=' + data.id;
+          linkBox.innerHTML = '<input id="pgShareUrl" readonly value="' + url + '"><button type="button" id="pgCopyBtn">Copy</button>';
+          linkBox.classList.add('show');
+          var urlInput = document.getElementById('pgShareUrl');
+          var copyBtn = document.getElementById('pgCopyBtn');
+          urlInput.focus(); urlInput.select();
+          try { await navigator.clipboard.writeText(url); copyBtn.textContent = 'Copied!'; } catch (e) {}
+          copyBtn.addEventListener('click', function(){
+            urlInput.select();
+            navigator.clipboard.writeText(url).then(function(){ copyBtn.textContent = 'Copied!'; }).catch(function(){});
+          });
+        } else {
+          linkBox.innerHTML = '<span style="color:var(--text-mute);font-size:12.5px;">Couldn’t save — try again.</span>';
+          linkBox.classList.add('show');
+        }
+      } catch (e) {
+        linkBox.innerHTML = '<span style="color:var(--text-mute);font-size:12.5px;">Couldn’t save — try again.</span>';
+        linkBox.classList.add('show');
+      } finally {
+        saveBtn.innerHTML = old;
+        saveBtn.disabled = false;
+      }
     });
   })();
 </script>

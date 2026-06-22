@@ -10,16 +10,13 @@
 //   - Fails OPEN: if the usage counter is ever unreachable, requests still go through.
 //     Your OpenRouter spend cap is the hard backstop, so a counter glitch never takes
 //     the playground down for real visitors.
-
 const DAILY_LIMIT = 30; // requests per IP per day, shared across all three modes
 const ALLOWED_ORIGINS = ['https://learninggpt.ai', 'https://www.learninggpt.ai'];
-
 function getClientIp(req) {
   const xff = req.headers['x-forwarded-for'];
   if (xff) return String(xff).split(',')[0].trim();
   return (req.socket && req.socket.remoteAddress) || 'unknown';
 }
-
 // Increments today's count for this IP and returns the new total.
 // Returns null if the check couldn't run (we then fail open).
 async function bumpUsage(ip) {
@@ -43,7 +40,6 @@ async function bumpUsage(ip) {
     return null; // network error → fail open
   }
 }
-
 // Returns true if the request carries a valid login token for a paying
 // (Pro / Pro+) account. Paid members get unlimited playground use — their plan
 // promises it — so they skip the per-IP daily cap. Verification failures return
@@ -77,7 +73,6 @@ async function isPaidUser(token) {
     return false;
   }
 }
-
 export default async function handler(req, res) {
   // ── CORS: locked to our domain. Same-origin calls from the site are unaffected. ──
   const origin = req.headers.origin;
@@ -86,16 +81,12 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   res.setHeader('Vary', 'Origin');
-
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed.' });
-
   let body = req.body;
   if (typeof body === 'string') { try { body = JSON.parse(body); } catch { body = {}; } }
-
   const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) return res.status(500).json({ error: 'OPENROUTER_API_KEY not configured in Vercel.' });
-
   // ── RATE LIMIT: per IP per day, covers every mode below ──
   // Paid (Pro/Pro+) members get unlimited playground use, so a valid Pro token
   // skips the cap entirely. Everyone else (free + anonymous) stays capped per IP.
@@ -110,14 +101,12 @@ export default async function handler(req, res) {
       });
     }
   }
-
   // ── LESSON COACH MODE ────────────────────────────────────────────────────────
   if (body.coach === true && body.lessonCoach === true) {
     const { lessonContext, history } = body;
     if (!lessonContext || !Array.isArray(history)) {
       return res.status(400).json({ error: 'Missing lessonContext or history' });
     }
-
     try {
       const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
@@ -137,7 +126,6 @@ export default async function handler(req, res) {
           temperature: 0.6
         })
       });
-
       const data = await response.json();
       const coach = data.choices?.[0]?.message?.content || null;
       return res.status(200).json({ coach });
@@ -145,31 +133,23 @@ export default async function handler(req, res) {
       return res.status(200).json({ coach: null });
     }
   }
-
   // ── PLAYGROUND COACH MODE ────────────────────────────────────────────────────
   if (body.coach === true) {
     const { prompt, results } = body;
     if (!prompt || !Array.isArray(results)) {
       return res.status(400).json({ error: 'Missing prompt or results' });
     }
-
     const successful = results.filter(r => !r.error && r.response);
     if (successful.length < 2) return res.status(200).json({ coach: null });
-
     const context = successful.map(r => `### ${r.modelName}\n${r.response}`).join('\n\n');
     const coachPrompt = `You are an AI learning coach for LearningGPT.ai. A student ran this prompt across multiple AI models.
-
 STUDENT'S PROMPT: "${prompt}"
-
 MODEL RESPONSES:
 ${context}
-
 1. Pick the strongest response and name the model clearly (e.g. "Claude wins this round")
 2. In 2-3 sentences explain specifically WHY it won
 3. In 1-2 sentences give a concrete actionable takeaway
-
 Under 120 words. Direct and specific. Plain text only, no markdown symbols.`;
-
     try {
       const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
@@ -186,20 +166,17 @@ Under 120 words. Direct and specific. Plain text only, no markdown symbols.`;
           temperature: 0.5
         })
       });
-
       const data = await response.json();
       return res.status(200).json({ coach: data.choices?.[0]?.message?.content || null });
     } catch (err) {
       return res.status(200).json({ coach: null });
     }
   }
-
   // ── MODELS MODE ──────────────────────────────────────────────────────────────
   const { prompt, models } = body;
   if (!prompt || typeof prompt !== 'string') return res.status(400).json({ error: 'Missing prompt' });
   if (prompt.length > 4000) return res.status(400).json({ error: 'Prompt too long' });
   if (!Array.isArray(models) || models.length === 0 || models.length > 5) return res.status(400).json({ error: 'Invalid models array' });
-
   try {
     const promises = models.map(async (model) => {
       const startTime = Date.now();
@@ -224,12 +201,11 @@ Under 120 words. Direct and specific. Plain text only, no markdown symbols.`;
         if (!response.ok || data.error) {
           return { modelId: model.id, modelName: model.name || model.id, response: '', tokens: 0, timeMs: elapsedMs, error: (data.error?.message || data.error) || ('HTTP ' + response.status) };
         }
-        return { modelId: model.id, modelName: model.name || model.id, response: data.choices?.[0]?.message?.content || '', tokens: data.usage?.total_tokens || 0, timeMs: elapsedMs, error: null };
+        return { modelId: model.id, modelName: model.name || model.id, response: data.choices?.[0]?.message?.content || '', tokens: data.usage?.total_tokens || 0, promptTokens: data.usage?.prompt_tokens || 0, completionTokens: data.usage?.completion_tokens || 0, timeMs: elapsedMs, error: null };
       } catch (err) {
         return { modelId: model.id, modelName: model.name || model.id, response: '', tokens: 0, timeMs: Date.now() - startTime, error: err.message };
       }
     });
-
     const results = await Promise.all(promises);
     return res.status(200).json({ results });
   } catch (error) {

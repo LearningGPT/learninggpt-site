@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Shared AI comparison — LearningGPT Playground</title>
+<meta name="description" content="A side-by-side AI comparison shared from the LearningGPT Playground — ChatGPT, Claude, Gemini, Perplexity, and Grok on the same prompt, with an AI coach's verdict." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#7c5cff" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Shared AI comparison — LearningGPT Playground" />
+<meta property="og:description" content="See how ChatGPT, Claude, Gemini, Perplexity, and Grok answered the same prompt — with an AI coach's verdict. Run your own free." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --danger:#ff6b8a; --radius:14px; --radius-lg:20px; --container:1180px; }
+* { box-sizing: border-box; } html, body { margin:0; padding:0; }
+body { font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif; background:var(--bg); color:var(--text); line-height:1.55; -webkit-font-smoothing:antialiased; overflow-x:hidden; min-height:100vh; }
+a { color:inherit; text-decoration:none; }
+.bg-orb { position:fixed; pointer-events:none; z-index:0; border-radius:50%; filter:blur(120px); opacity:0.4; }
+.bg-orb.one { width:500px; height:500px; top:-120px; left:-120px; background:#7c5cff; }
+.bg-orb.two { width:600px; height:600px; top:30%; right:-200px; background:#5b8def; opacity:0.3; }
+.container { max-width:var(--container); margin:0 auto; padding:0 24px; position:relative; z-index:1; }
+nav.top { position:sticky; top:0; z-index:100; backdrop-filter:blur(20px) saturate(180%); -webkit-backdrop-filter:blur(20px) saturate(180%); background:rgba(10,10,26,0.85); border-bottom:1px solid var(--line); }
+.nav-inner { display:flex; align-items:center; justify-content:space-between; padding:16px 24px; max-width:var(--container); margin:0 auto; }
+.logo { display:flex; align-items:center; gap:10px; font-weight:700; font-size:18px; }
+.logo-mark { width:32px; height:32px; border-radius:8px; background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4); display:grid; place-items:center; font-weight:800; font-size:16px; color:white; box-shadow:0 4px 16px rgba(124,92,255,0.5); }
+.btn { display:inline-flex; align-items:center; gap:8px; justify-content:center; padding:11px 20px; border-radius:10px; font-size:14px; font-weight:600; border:1px solid transparent; transition:transform .15s; }
+.btn-primary { background:linear-gradient(135deg,#7c5cff,#5b8def); color:white; box-shadow:0 6px 24px rgba(124,92,255,0.4); }
+.btn-primary:hover { transform:translateY(-1px); }
+.btn-ghost { background:rgba(255,255,255,0.05); border-color:var(--line-strong); color:var(--text); }
+.wrap { padding:50px 0 80px; }
+.eyebrow { display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:1.5px; color:var(--brand-2); padding:6px 12px; border:1px solid rgba(91,141,239,0.3); border-radius:999px; background:rgba(91,141,239,0.08); margin-bottom:18px; }
+h1 { font-size:clamp(26px,3.4vw,38px); font-weight:800; letter-spacing:-0.02em; line-height:1.15; margin:0 0 24px; max-width:820px; }
+h1 .serif { font-family:'Instrument Serif',serif; font-style:italic; font-weight:400; padding-right:0.15em; background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+.prompt-card { background:linear-gradient(180deg,#15152e,#0e0e22); border:1px solid var(--line-strong); border-radius:var(--radius-lg); padding:20px 24px; margin-bottom:24px; box-shadow:0 20px 60px -20px rgba(124,92,255,0.35); }
+.prompt-card .lbl { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--text-mute); margin-bottom:8px; }
+.prompt-card .txt { font-size:16px; color:var(--text); line-height:1.5; }
+.results-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; }
+.result-col { background:rgba(0,0,0,0.2); border:1px solid var(--line); border-radius:var(--radius); padding:16px; display:flex; flex-direction:column; }
+.result-col.is-winner { border-color:rgba(68,224,164,0.5); }
+.result-head { display:flex; align-items:center; justify-content:space-between; padding-bottom:12px; border-bottom:1px solid var(--line); margin-bottom:12px; }
+.model-name { display:flex; align-items:center; gap:10px; font-weight:600; font-size:14px; }
+.model-icon { width:26px; height:26px; border-radius:6px; display:grid; place-items:center; font-weight:700; font-size:12px; color:white; }
+.badge { font-size:10px; padding:3px 8px; border-radius:4px; background:rgba(255,255,255,0.06); color:var(--text-mute); font-weight:500; }
+.badge-winner { font-size:10px; padding:3px 8px; border-radius:4px; background:rgba(68,224,164,0.15); color:#44e0a4; font-weight:600; border:1px solid rgba(68,224,164,0.3); }
+.pg-cost { color:var(--text-mute); }
+.result-body { flex:1; font-size:13.5px; line-height:1.6; color:var(--text); white-space:pre-wrap; word-wrap:break-word; }
+.result-body .error { background:rgba(255,107,138,0.08); border:1px solid rgba(255,107,138,0.25); border-radius:8px; padding:12px; color:var(--danger); font-size:13px; }
+.coach-panel { margin-top:24px; background:linear-gradient(135deg,rgba(68,224,164,0.06),rgba(124,92,255,0.06)); border:1px solid rgba(68,224,164,0.2); border-radius:var(--radius); padding:20px 24px; }
+.coach-header { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+.coach-icon { width:28px; height:28px; border-radius:8px; background:linear-gradient(135deg,#44e0a4,#7c5cff); display:grid; place-items:center; font-size:14px; }
+.coach-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1.2px; color:#44e0a4; }
+.coach-text { font-size:14px; line-height:1.7; color:var(--text); }
+.cta-band { margin-top:40px; background:linear-gradient(135deg,rgba(124,92,255,0.15),rgba(68,224,164,0.08)); border:1px solid rgba(124,92,255,0.25); border-radius:var(--radius-lg); padding:36px; text-align:center; }
+.cta-band h2 { font-size:24px; font-weight:800; margin:0 0 10px; }
+.cta-band h2 .serif { font-family:'Instrument Serif',serif; font-style:italic; font-weight:400; }
+.cta-band p { font-size:15px; color:var(--text-dim); margin:0 0 20px; }
+.state { text-align:center; padding:80px 24px; color:var(--text-mute); font-size:15px; }
+.state .spinner { width:28px; height:28px; border-radius:50%; border:3px solid rgba(255,255,255,0.1); border-top-color:var(--brand); animation:spin .8s linear infinite; margin:0 auto 18px; }
+@keyframes spin { to { transform:rotate(360deg); } }
+footer { border-top:1px solid var(--line); padding:30px 0; }
+.footer-inner { max-width:var(--container); margin:0 auto; padding:0 24px; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; font-size:13px; color:var(--text-mute); }
+@media (max-width:880px) { .results-grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div>LearningGPT</a>
+    <a href="/playground" class="btn btn-primary">Try the Playground →</a>
+  </div>
+</nav>
+<section class="wrap">
+  <div class="container">
+    <div id="content">
+      <div class="state"><div class="spinner"></div>Loading this comparison…</div>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with OpenAI, Anthropic, Microsoft, Google, or xAI.</div>
+    <a href="/playground" style="color:var(--text-dim);">← Back to the Playground</a>
+  </div>
+</footer>
+<script>
+  // Display metadata for known models (icon + color). Falls back gracefully.
+  var MODEL_META = {
+    'openai/gpt-4.1':              { color:'#10a37f', short:'G', costIn:2,    costOut:8 },
+    'anthropic/claude-sonnet-4-6': { color:'#d97757', short:'C', costIn:3,    costOut:15 },
+    'google/gemini-2.5-flash':     { color:'#4285f4', short:'⬢', costIn:0.3,  costOut:2.5 },
+    'perplexity/sonar-pro':        { color:'#20808d', short:'P', costIn:3,    costOut:15 },
+    'x-ai/grok-4.3':               { color:'#9da0b0', short:'✦', costIn:1.25, costOut:2.5 }
+  };
+  function esc(t){ if(t==null) return ''; var d=document.createElement('div'); d.textContent=String(t); return d.innerHTML; }
+  function fmtCost(r, m){
+    if(!m) return '';
+    var c;
+    if(typeof r.promptTokens==='number' && typeof r.completionTokens==='number'){ c=(r.promptTokens/1e6)*m.costIn+(r.completionTokens/1e6)*m.costOut; }
+    else { c=((r.tokens||0)/1e6)*m.costOut; }
+    return '~$'+c.toFixed(4);
+  }
+  function render(run){
+    var results = Array.isArray(run.results) ? run.results : [];
+    var coach = run.coach || '';
+    var winnerId = null;
+    if(coach){
+      for(var i=0;i<results.length;i++){
+        var nm = (results[i].modelName||'').toLowerCase();
+        if(nm && coach.toLowerCase().indexOf(nm)!==-1){ winnerId = results[i].modelId; break; }
+      }
+    }
+    var cols = results.map(function(r){
+      var m = MODEL_META[r.modelId] || { color:'#666', short:'?' };
+      var isError = !!r.error;
+      var win = (r.modelId===winnerId);
+      var badge = isError ? '' : '<span class="'+(win?'badge-winner':'badge')+'">'+(win?'★ Winner':(r.tokens+' tok · '+((r.timeMs||0)/1000).toFixed(1)+'s · <span class="pg-cost">'+fmtCost(r,m)+'</span>'))+'</span>';
+      var body = isError ? '<div class="error">⚠️ '+esc(r.error)+'</div>' : esc(r.response);
+      return '<div class="result-col'+(win?' is-winner':'')+'"><div class="result-head"><div class="model-name"><div class="model-icon" style="background:'+m.color+'">'+m.short+'</div>'+esc(r.modelName)+'</div>'+badge+'</div><div class="result-body">'+body+'</div></div>';
+    }).join('');
+    var coachHtml = coach ? ('<div class="coach-panel"><div class="coach-header"><div class="coach-icon">🎓</div><span class="coach-label">AI Coach</span></div><div class="coach-text">'+esc(coach).replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>')+'</div></div>') : '';
+    document.getElementById('content').innerHTML =
+      '<div class="eyebrow">⚡ Shared from the Playground</div>'+
+      '<h1>One prompt, <span class="serif">every AI.</span></h1>'+
+      '<div class="prompt-card"><div class="lbl">The prompt</div><div class="txt">'+esc(run.prompt)+'</div></div>'+
+      '<div class="results-grid">'+cols+'</div>'+
+      coachHtml+
+      '<div class="cta-band"><h2>Run your own <span class="serif">comparison.</span></h2><p>Compare ChatGPT, Claude, Gemini, Perplexity, and Grok on any prompt — free, no signup.</p><a href="/playground" class="btn btn-primary">Open the Playground →</a></div>';
+    if(run.prompt){ document.title = '“'+String(run.prompt).slice(0,60)+'” — AI comparison · LearningGPT'; }
+  }
+  (function(){
+    var id = new URLSearchParams(window.location.search).get('id');
+    if(!id){ document.getElementById('content').innerHTML = '<div class="state">No comparison id provided. <a href="/playground" style="color:var(--brand-2);">Open the Playground →</a></div>'; return; }
+    fetch('/api/playground-save?id='+encodeURIComponent(id)).then(function(r){ return r.json().then(function(d){ return { ok:r.ok, d:d }; }); }).then(function(x){
+      if(x.ok && x.d && x.d.run){ render(x.d.run); }
+      else { document.getElementById('content').innerHTML = '<div class="state">This comparison couldn’t be found — it may have expired or the link is wrong.<br><br><a href="/playground" class="btn btn-primary">Open the Playground →</a></div>'; }
+    }).catch(function(){
+      document.getElementById('content').innerHTML = '<div class="state">Something went wrong loading this comparison.<br><br><a href="/playground" class="btn btn-primary">Open the Playground →</a></div>';
+    });
+  })();
+</script>
+</body>
+</html>

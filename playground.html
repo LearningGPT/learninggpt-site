@@ -180,7 +180,14 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .share-btn.show { display: inline-flex; }
 .share-btn:hover { background: rgba(255,255,255,0.09); }
 
-/* CTA */
+/* Toggle hard-fix: beats the .prompt-area label { display:block } rule that was collapsing the switch */
+.pg-controls .pg-switch { display: inline-flex !important; align-items: center; gap: 10px; margin: 0 !important; }
+.pg-controls .pg-switch input { display: none !important; }
+.pg-controls .pg-switch .pg-track, .pg-controls .pg-switch .track { display: inline-block; vertical-align: middle; width: 38px; height: 22px; border-radius: 999px; background: rgba(255,255,255,0.14); position: relative; flex-shrink: 0; }
+.pg-controls .pg-switch .pg-track::after, .pg-controls .pg-switch .track::after { content: ''; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%; background: #fff; transition: transform .15s; }
+.pg-controls .pg-switch input:checked + .pg-track, .pg-controls .pg-switch input:checked + .track { background: linear-gradient(135deg, #44e0a4, #7c5cff); }
+.pg-controls .pg-switch input:checked + .pg-track::after, .pg-controls .pg-switch input:checked + .track::after { transform: translateX(16px); }
+  /* CTA */
 .cta-section { padding: 80px 0; text-align: center; }
 .cta-box { max-width: 600px; margin: 0 auto; background: rgba(124,92,255,0.08); border: 1px solid rgba(124,92,255,0.25); border-radius: 24px; padding: 48px 40px; }
 .cta-box h2 { font-size: clamp(24px, 3vw, 34px); font-weight: 800; margin-bottom: 12px; letter-spacing: -0.02em; }

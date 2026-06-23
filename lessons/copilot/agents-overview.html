@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#2c7be5" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/copilot/agents-overview" />
 <meta property="og:title" content="Microsoft 365 Copilot Agents: What They Are & Where to Find Them" />
@@ -21,6 +21,7 @@
 * { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
 body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+button { font-family: inherit; cursor: pointer; }
 .bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
 .bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #2c7be5; }
 .bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
@@ -30,90 +31,74 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
 .logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
 .nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
-.lesson { padding: 50px 0 100px; }
-.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
-.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(44,123,229,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(44,123,229,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
-.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
-.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
-.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #2c7be5 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
-.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
-.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #2c7be5, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(44,123,229,0.1); border: 1px solid rgba(44,123,229,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #2c7be5, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
-.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
-.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
-.checklist li:first-child { border-top: none; padding-top: 0; }
-.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
-.checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
-.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
-.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
-.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
-.next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
 footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
+/* ===== Interactive lesson component (shared kit) ===== */
+.sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
+.serif { font-family:'Instrument Serif', serif; font-style:italic; font-weight:400; }
+.ilesson { max-width:720px; margin:0 auto; padding:44px 0 90px; }
+.l-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; font-size:12.5px; }
+.l-tag { font-weight:600; color:var(--track); }
+.l-count { color:var(--text-mute); }
+.prog-track { height:6px; background:var(--surface); border-radius:99px; overflow:hidden; margin-bottom:30px; }
+#prog { height:100%; width:20%; background:linear-gradient(90deg,var(--track),var(--brand)); border-radius:99px; transition:width .45s ease; }
+.step h1 { font-size:33px; line-height:1.12; letter-spacing:-.02em; margin:0 0 14px; font-weight:800; color:var(--text); }
+.step h3 { font-size:21px; line-height:1.2; margin:0 0 10px; font-weight:700; color:var(--text); }
+.step p { color:var(--text-dim); margin:0 0 16px; font-size:16px; line-height:1.65; }
+.step p strong { color:var(--text); font-weight:600; }
+.step em { color:var(--text); font-style:italic; }
+.eyebrow-do { font-size:12px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--track); margin-bottom:8px; }
+.btn { font-family:inherit; font-weight:600; font-size:14.5px; border-radius:10px; padding:11px 18px; cursor:pointer; border:1px solid transparent; display:inline-flex; align-items:center; gap:8px; transition:.15s; color:#fff; background:linear-gradient(135deg,#7c5cff,#5b8def); box-shadow:0 8px 22px -10px rgba(124,92,255,.8); }
+.btn:hover { transform:translateY(-1px); color:#fff; }
+.btn-ghost { background:transparent; border-color:var(--line-strong); color:var(--text); box-shadow:none; }
+.btn-ghost:hover { background:rgba(255,255,255,.05); color:var(--text); }
+.btn-block { width:100%; justify-content:center; }
+.callout { background:rgba(44,123,229,.1); border:1px solid rgba(44,123,229,.28); border-radius:var(--radius); padding:14px 16px; margin-bottom:18px; font-size:14.5px; color:var(--text-dim); line-height:1.65; }
+.callout b { color:var(--text); }
+.ref-lbl { font-size:11px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--text-mute); margin:18px 0 8px; }
+.agent { background:var(--bg-soft); border:1px solid var(--line); border-left:3px solid var(--track); border-radius:0 var(--radius) var(--radius) 0; padding:12px 15px; margin-bottom:9px; }
+.agent .an { font-size:15px; font-weight:700; color:var(--text); }
+.agent .ar { font-size:13.5px; color:var(--text-dim); margin:3px 0 6px; line-height:1.5; }
+.agent .ax { font-size:12.5px; color:var(--text-mute); line-height:1.5; }
+.agent .ax b { color:var(--brand-2); font-weight:600; }
+.opts { display:flex; flex-direction:column; gap:10px; margin-bottom:6px; }
+.opt { text-align:left; padding:13px 15px; line-height:1.5; font-size:14.5px; font-weight:600; font-family:inherit; color:var(--text); background:var(--surface); border:1px solid var(--line-strong); border-radius:var(--radius); cursor:pointer; transition:.15s; }
+.opt:hover:not(:disabled) { border-color:var(--brand); background:#20204a; }
+.opt:disabled { cursor:default; }
+.gymbar { display:flex; justify-content:space-between; font-size:12.5px; font-weight:600; color:var(--text-mute); margin-bottom:8px; }
+#gym-score { color:var(--accent); }
+.gym-prog { height:5px; background:var(--surface); border-radius:99px; overflow:hidden; margin-bottom:18px; }
+#gym-fill { height:100%; width:0; background:linear-gradient(90deg,var(--track),var(--brand)); border-radius:99px; transition:width .35s ease; }
+.scenario { background:var(--bg-soft); border:1px solid var(--line); border-left:3px solid var(--track); border-radius:0 var(--radius) var(--radius) 0; padding:15px 16px; margin-bottom:16px; font-size:16px; color:var(--text); line-height:1.5; min-height:48px; }
+.fb { display:none; margin-top:14px; padding:12px 14px; border-radius:var(--radius); font-size:14px; line-height:1.6; }
+.fb.good { background:rgba(68,224,164,.1); border:1px solid rgba(68,224,164,.35); color:#a7efd2; }
+.fb.bad { background:rgba(124,92,255,.1); border:1px solid rgba(124,92,255,.3); color:#cfc4ff; }
+.scorebig { text-align:center; font-size:40px; font-weight:800; color:var(--accent); letter-spacing:-.02em; margin:2px 0 4px; }
+.scoresub { text-align:center; color:var(--text-dim); font-size:15px; margin-bottom:20px; }
+.cta-row { display:flex; gap:12px; flex-wrap:wrap; margin-top:22px; }
+.done-top { text-align:center; padding:6px 0 8px; }
+.done-check { width:52px; height:52px; border-radius:50%; background:rgba(44,123,229,.16); color:var(--track); display:flex; align-items:center; justify-content:center; margin:0 auto 14px; font-size:26px; border:1px solid rgba(44,123,229,.4); }
+.recap { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:16px 18px; margin-bottom:14px; }
+.recap .lbl { font-size:12px; color:var(--text-mute); }
+.recap p { margin:4px 0 0; color:var(--text); font-weight:500; font-size:15px; }
+.upsell { background:linear-gradient(135deg, rgba(44,123,229,.16), rgba(124,92,255,.12)); border:1px solid rgba(44,123,229,.3); border-radius:var(--radius); padding:18px 18px; margin-bottom:14px; }
+.upsell h4 { margin:0 0 6px; font-size:16px; color:var(--text); }
+.upsell p { margin:0; font-size:13.5px; color:var(--text-dim); line-height:1.55; }
+.upsell .price { color:var(--accent); font-weight:700; }
+.upnext { background:var(--bg-soft); border:1px solid var(--line); border-radius:var(--radius); padding:14px 16px; margin-bottom:14px; }
+.upnext .lbl { font-size:12px; color:var(--text-mute); }
+.upnext p { margin:3px 0 0; font-weight:600; color:var(--text); }
+@media(max-width:560px){ .step h1{ font-size:27px; } }
+
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -142,7 +127,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -154,56 +138,96 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <a href="/lessons/copilot/" class="nav-back">← Copilot Mastery</a>
   </div>
 </nav>
-<article class="lesson">
-  <div class="container">
-    <div class="lesson-meta">
-      <span class="chip">Start here · Agents</span>
-      <span>~10 min read</span>
-      <span class="dot"></span>
-      <span>Free survey</span>
+
+<div class="container">
+  <div class="sr-only">An interactive free Copilot lesson surveying Microsoft 365's named agents: it explains the named-agent mental model, introduces the eight agents (Researcher, Analyst, Facilitator, Interpreter, Sales Agent, Customer Service Agent, SharePoint Agent, Copilot Studio), then runs a ten-question 'which agent for the job?' matching gym.</div>
+
+  <main class="ilesson">
+    <div class="l-top">
+      <span class="l-tag">Copilot Mastery · Start here · Free</span>
+      <span class="l-count" id="step-count">Step 1 of 5 · ~10 min</span>
     </div>
-    <h1>Copilot agents: <span class="grad serif">8 coworkers, one license.</span></h1>
-    <p class="deck">Microsoft has been shipping named Copilot agents at an aggressive pace. Most M365 users haven't even noticed. Researcher, Analyst, Facilitator, Interpreter, Sales agents, Service agents, SharePoint Agent, Copilot Studio for custom builds. Each one is essentially a specialized coworker that lives inside your tenant. This free lesson maps them and shows what each makes possible.</p>
-    <h2><span class="num">The mental model</span></h2><h3>Named agents = specialized coworkers, not generic AI.</h3><p>The first generation of AI was generic — one model, you bend it to your task with prompts. The second generation is named agents — specialized AI workers tuned for specific jobs.</p><p>Microsoft's bet is that most knowledge work doesn't need a single all-powerful AI — it needs a researcher, an analyst, a meeting facilitator, a sales rep, a customer service agent. Each one tuned for its role, knowing your M365 data, working alongside your team.</p><p>The advantage for you: zero prompt engineering. You don't have to coax the AI into being a researcher — Researcher already is one. Same for Analyst, Facilitator, etc.</p><h2><span class="num">Workflow 01</span> Researcher + Analyst</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>Researcher and Analyst — the analyst duo</h3></div><p>These are Microsoft's flagship Copilot agents. Researcher synthesizes from documents and the web; Analyst crunches data. Together they handle most of what a small research-and-analysis team would do.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">What Researcher + Analyst do</span>Researcher example:
-&quot;Run a competitive analysis on [Competitor X]. Use our SharePoint sales notes and our competitive battlecard alongside web sources. Produce: their positioning, top 3 strengths, top 3 weaknesses, 3 talking points for the customer meeting.&quot;
+    <div class="prog-track"><div id="prog"></div></div>
 
-Analyst example:
-&quot;Analyze our Q1 sales rep performance data. Top performers, regional patterns, outliers, correlation between deal count and average deal size. Build 3 charts for an executive presentation.&quot;</div><h4>Best use cases</h4><ul><li>Competitive intelligence (Researcher)</li><li>Quarterly business reviews (both)</li><li>Sales-rep performance analysis (Analyst)</li><li>Decision-support research (Researcher)</li></ul><div class="savings"><strong>Time savings:</strong> A real research report or analysis: hours of analyst time → 15-30 min agent + review.</div></div><h2><span class="num">Workflow 02</span> Facilitator + Interpreter</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>Facilitator and Interpreter — meetings, fixed</h3></div><p>Facilitator handles meeting notes, action items, and decision capture in Teams. Interpreter translates speech in real time across 9 languages. Together they remove the two biggest sources of meeting waste.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">What Facilitator + Interpreter do</span>Facilitator example:
-You run a working session in Teams. Facilitator listens, captures action items as they&#x27;re created, builds a decision log, and produces a structured post-meeting summary. You can ask it questions during the meeting like &quot;what did we decide about the budget&quot; without breaking flow.
+    <!-- STEP 1 · intro -->
+    <section id="step-1" class="step">
+      <h1>8 coworkers, <span class="serif">one license.</span></h1>
+      <p>Microsoft has been shipping named Copilot agents at an aggressive pace — and most M365 users haven't even noticed. Each one is a specialized coworker that already lives inside your tenant: a researcher, an analyst, a meeting facilitator, a translator, sales and service reps, and more.</p>
+      <p>This free survey maps all eight, then a <strong>10-question "which agent for the job?" gym</strong> makes the roster stick. About 10 minutes — and it's the map for the whole Copilot track.</p>
+      <button class="btn" onclick="go(2)">Start the tour →</button>
+    </section>
 
-Interpreter example:
-A customer call with a French team. You speak English; they hear French. They speak French; you hear English. The transcript is generated in both languages. Conversations that were impossible become routine.</div><h4>Best use cases</h4><ul><li>Working meetings where action items matter</li><li>Customer calls with international stakeholders</li><li>Cross-region team coordination</li><li>Decision logs from strategy sessions</li></ul><div class="savings"><strong>Time savings:</strong> Post-meeting cleanup: 20-30 min per meeting → 2 min review.</div></div><h2><span class="num">Workflow 03</span> Sales agents</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>Sales Agent, Qualification, and Development — pipeline that works for you</h3></div><p>Microsoft has three sales-focused agents in Dynamics 365 and Copilot. They handle pre-call research, lead scoring, follow-up drafting, and pipeline hygiene — the operational work that consumed half of a rep's day.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">What Sales agents do</span>Sales Agent auto-brief example:
-2 hours before each customer meeting, you get a Teams message with the account summary, relationship history, open opportunities, recent customer news, 3 smart questions to ask, and one risk to flag. You walked in prepared without prepping.
+    <!-- STEP 2 · mental model -->
+    <section id="step-2" class="step" style="display:none">
+      <h3>01 · Named agents aren't "smarter AI" — they're specialized</h3>
+      <p>The first generation of AI was <em>generic</em>: one model, and you bend it to your task with careful prompting. The second generation is <em>named agents</em> — AI workers pre-tuned for a specific job and wired into your M365 data.</p>
+      <p>Microsoft's bet: most knowledge work doesn't need one all-powerful AI. It needs a researcher, an analyst, a facilitator, a sales rep, a service agent — each tuned for its role and working alongside your team.</p>
+      <div class="callout"><b>The practical win: zero prompt engineering.</b> You don't coax a generic model into acting like a researcher — <em>Researcher already is one.</em> You pick the right coworker for the task instead of crafting the perfect prompt. The skill shifts from prompting to <b>knowing who to ask.</b></div>
+      <button class="btn" onclick="go(3)">Meet the eight →</button>
+    </section>
 
-Sales Qualification Agent: handles inbound leads. Enriches data, scores against your ICP, routes hot leads to AEs and warm leads to SDRs. The first-touch email is already drafted.</div><h4>Best use cases</h4><ul><li>Pre-call research automation</li><li>Inbound lead qualification at scale</li><li>Pipeline hygiene and follow-up drafting</li><li>Stuck-deal identification with action proposals</li></ul><div class="savings"><strong>Time savings:</strong> 5-10 hours/rep/week of operational work eliminated.</div></div><h2><span class="num">Workflow 04</span> Service Agent + Copilot Studio</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">4</div><h3>Customer Service Agent and Copilot Studio — the rest of the ecosystem</h3></div><p>Customer Service Agent handles case triage, response drafting, and SLA tracking in Dynamics. Copilot Studio is the platform for building your own custom agents when the named ones don't fit.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Service + Studio</span>Service Agent: incoming customer support tickets are triaged in real time. Categorized, prioritized, suggested responses drafted from your knowledge base. SLA timers watch the clock and auto-escalate before you miss one.
+    <!-- STEP 3 · roster -->
+    <section id="step-3" class="step" style="display:none">
+      <h3>02 · Your eight Copilot coworkers</h3>
+      <p>What each does, and where it lives. You won't memorize this — the gym next will lock it in.</p>
+      <div class="ref-lbl">The analyst duo · in Copilot Chat</div>
+      <div class="agent"><div class="an">Researcher</div><div class="ar">Synthesizes your documents and the web into a structured brief.</div><div class="ax"><b>Where:</b> Copilot Chat · <b>e.g.</b> "Competitive analysis on Competitor X using our SharePoint notes + the web."</div></div>
+      <div class="agent"><div class="an">Analyst</div><div class="ar">Crunches your numbers and builds charts — your Excel files, CRM data, dashboards.</div><div class="ax"><b>Where:</b> Copilot Chat · <b>e.g.</b> "Analyze Q1 rep performance and build 3 charts for the exec deck."</div></div>
+      <div class="ref-lbl">Meetings · in Teams</div>
+      <div class="agent"><div class="an">Facilitator</div><div class="ar">Live notes, action items, and a decision log during a Teams meeting.</div><div class="ax"><b>Where:</b> Teams meetings · <b>e.g.</b> Ask mid-meeting "what did we decide on the budget?" without breaking flow.</div></div>
+      <div class="agent"><div class="an">Interpreter</div><div class="ar">Real-time speech-to-speech translation across languages.</div><div class="ax"><b>Where:</b> Teams meetings · <b>e.g.</b> You speak English, they hear French — both transcripts generated.</div></div>
+      <div class="ref-lbl">Revenue &amp; support · in Dynamics 365 / Copilot</div>
+      <div class="agent"><div class="an">Sales Agent</div><div class="ar">Pre-call research, lead scoring, follow-up drafting, pipeline hygiene (with its Qualification &amp; Development siblings).</div><div class="ax"><b>Where:</b> Dynamics 365 / Copilot · <b>e.g.</b> A Teams auto-brief 2 hours before each meeting with account history + smart questions.</div></div>
+      <div class="agent"><div class="an">Customer Service Agent</div><div class="ar">Ticket triage, responses drafted from your knowledge base, SLA tracking and auto-escalation.</div><div class="ax"><b>Where:</b> Dynamics 365 / Copilot · <b>e.g.</b> Incoming tickets categorized, prioritized, and drafted before an agent opens them.</div></div>
+      <div class="ref-lbl">Knowledge &amp; custom</div>
+      <div class="agent"><div class="an">SharePoint Agent</div><div class="ar">Answers questions grounded only in a specific SharePoint site or library.</div><div class="ax"><b>Where:</b> SharePoint · <b>e.g.</b> Staff Q&amp;A bot over your HR policy library — answers from <em>your</em> docs, nothing else.</div></div>
+      <div class="agent"><div class="an">Copilot Studio</div><div class="ar">The platform for building your own agent when the named ones don't fit your workflow.</div><div class="ax"><b>Where:</b> Copilot Studio · <b>e.g.</b> A custom expense-approval agent on your APIs, deployed into Copilot Chat.</div></div>
+      <button class="btn" style="margin-top:16px" onclick="startGym()">Test yourself — which agent for the job? →</button>
+    </section>
 
-Copilot Studio: when your workflow is unique (industry-specific compliance flows, custom approval chains, line-of-business apps), you build a Copilot agent for it. Visual flow editor, your knowledge sources, your APIs as actions. Deploy as a real agent inside Copilot Chat.</div><h4>Best use cases</h4><ul><li>Support ticket triage and response drafting</li><li>SLA enforcement automation</li><li>Custom workflow agents (HR, IT, expense, etc.)</li><li>Internal self-service tools</li></ul><div class="savings"><strong>Time savings:</strong> Support team capacity: 2-3x with same headcount.</div></div><div class="callout"><span class="lbl">Most M365 users haven't found these yet</span><p>Microsoft ships these agents quietly. Researcher, Analyst, Facilitator, Interpreter, the three Sales agents, Customer Service Agent — most are sitting unused in your Copilot tenant right now. The Pro lessons cover each one in depth: how to find them, configure them, and integrate them into your daily work.</p></div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Want each agent walked through in detail?</h2>
-      <p>Pro members get 21 hands-on Copilot lessons: deep dives on Researcher, Analyst, Facilitator, Interpreter, the Sales agent family, Customer Service Agent, Copilot Studio for custom builds, plus the Cowork lessons that work in Copilot's Frontier Firm program. Founding members lock in $9/mo forever (vs. $19 standard).</p>
-      <div class="btn-row">
-        <a href="/lessons/copilot/" class="btn">Back to Copilot Mastery →</a>
-        <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+    <!-- STEP 4 · gym -->
+    <section id="step-4" class="step" style="display:none">
+      <h3>03 · Which agent for the job?</h3>
+      <p style="margin-bottom:18px">Ten real tasks. Pick the coworker you'd hand each one to.</p>
+      <div class="gymbar"><span id="gym-count">Question 1 of 10</span><span id="gym-score">Score 0</span></div>
+      <div class="gym-prog"><div id="gym-fill"></div></div>
+      <div class="scenario" id="gym-scenario">—</div>
+      <div class="opts" id="gym-opts"></div>
+      <div class="fb" id="gym-fb"></div>
+      <button class="btn" id="gym-next" style="display:none;margin-top:16px" onclick="nextQ()">Next question →</button>
+    </section>
+
+    <!-- STEP 5 · complete -->
+    <section id="step-5" class="step" style="display:none">
+      <div class="done-top">
+        <div class="done-check">✓</div>
+        <h3>You've got the map</h3>
       </div>
-    </div>
-    <div class="checklist">
-      <h3>What you can do now</h3>
-      <ul>
-        <li>You know the seven major Copilot named agents and their roles</li>
-        <li>You understand the difference between named agents and Copilot Studio (custom)</li>
-        <li>You've seen concrete examples of each agent's value</li>
-        <li>You can identify which agents would matter most for your role</li>
-        <li>Next step: hands-on Pro lessons walk you through each one</li>
-      </ul>
-    </div>
-    <div class="next-up">
-      <span class="pro-tag">Pro</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in Copilot Mastery</div>
-      <h3>Lesson 02 · Outlook mastery — Copilot in your inbox</h3>
-      <p>The first hands-on Pro lesson: real Copilot patterns for Outlook — triage, drafting, meeting prep, and the things most M365 users don't realize Copilot can already do. <a href="/lessons/copilot/">See the track →</a></p>
-    </div>
-  </div>
-</article>
+      <div class="scorebig" id="final-score">0 / 10</div>
+      <div class="scoresub" id="final-sub">You matched all ten.</div>
+      <div class="recap">
+        <span class="lbl">What you can do now</span>
+        <p>Name the eight Copilot agents, know where each lives, and pick the right one for a task instead of wrestling a generic prompt.</p>
+      </div>
+      <div class="upsell">
+        <h4>Now actually use them</h4>
+        <p>Pro turns this map into hands-on skill: 21 lessons walking through Researcher, Analyst, Facilitator, Interpreter, the Sales family, Service Agent, and Copilot Studio — how to find, configure, and run each one in your real work. Founding members lock in <span class="price">$9/mo for life</span> (vs $19 standard).</p>
+      </div>
+      <div class="upnext">
+        <span class="lbl">Up next — your first hands-on lesson</span>
+        <p>Lesson 01 · Copilot in Outlook — write 10 emails in the time it takes to write 1</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-block" href="/lessons/copilot/outlook-mastery">Continue to Lesson 01 · Copilot in Outlook →</a>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-ghost" href="/auth/signup">Start free</a>
+        <a class="btn btn-ghost" href="/lessons/copilot/">Back to Copilot Mastery</a>
+      </div>
+    </section>
+  </main>
+</div>
+
 <footer>
   <div class="footer-inner">
     <div>© 2026 LearningGPT · Independent. Not affiliated with Microsoft.</div>
@@ -216,7 +240,6 @@ Copilot Studio: when your workflow is unique (industry-specific compliance flows
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -228,10 +251,10 @@ Copilot Studio: when your workflow is unique (industry-specific compliance flows
     <button class="coach-close" id="coachClose">✕</button>
   </div>
   <div class="coach-messages" id="coachMessages">
-    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about the Copilot agents — what each does, where to find it, or which one fits a task you have in mind. What's on your mind?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -239,15 +262,120 @@ Copilot Studio: when your workflow is unique (industry-specific compliance flows
   </div>
 </div>
 
+<!-- ── Interactive lesson logic ── -->
+<script>
+  var TOTAL = 5;
+  function go(n){
+    document.querySelectorAll('.step').forEach(function(s){ s.style.display='none'; });
+    document.getElementById('step-'+n).style.display='block';
+    document.getElementById('prog').style.width = Math.round(n/TOTAL*100)+'%';
+    document.getElementById('step-count').textContent = 'Step '+n+' of '+TOTAL+' · ~10 min';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
 
+  var GYM = [
+    { t:"Run a competitive analysis on a rival using your SharePoint sales notes and the web.", opts:["Researcher","Analyst","Interpreter"], c:0, why:"Researcher synthesizes documents + the web into a brief." },
+    { t:"Crunch Q1 sales-rep numbers and build three charts for the exec deck.", opts:["Analyst","Researcher","Facilitator"], c:0, why:"Analyst is the quantitative one — it crunches your data and makes charts." },
+    { t:"Capture action items and a decision log live during a Teams working session.", opts:["Facilitator","Researcher","SharePoint Agent"], c:0, why:"Facilitator handles notes, action items, and decisions inside Teams meetings." },
+    { t:"On a call, you speak English and the customer hears French in real time.", opts:["Interpreter","Facilitator","Analyst"], c:0, why:"Interpreter does real-time speech-to-speech translation in Teams." },
+    { t:"Get a brief two hours before each customer meeting with account history and smart questions.", opts:["Sales Agent","Researcher","Service Agent"], c:0, why:"The Sales Agent auto-briefs you ahead of meetings and handles pipeline work." },
+    { t:"Triage inbound support tickets, draft replies from your knowledge base, and watch SLA timers.", opts:["Customer Service Agent","Sales Agent","Facilitator"], c:0, why:"The Customer Service Agent triages cases, drafts from your KB, and tracks SLAs." },
+    { t:"A staff Q&A bot that answers only from your HR policy library — nothing else.", opts:["SharePoint Agent","Researcher","Copilot Studio"], c:0, why:"SharePoint Agent grounds answers in a specific SharePoint site/library." },
+    { t:"Build a custom agent for your company's unique expense-approval workflow.", opts:["Copilot Studio","Service Agent","Analyst"], c:0, why:"Copilot Studio is where you build custom agents when the named ones don't fit." },
+    { t:"You missed a meeting — get a recap and exactly what was decided about the budget.", opts:["Facilitator","Interpreter","Sales Agent"], c:0, why:"Facilitator produces the structured summary and decision log from the meeting." },
+    { t:"Synthesize 40 pages of internal docs plus web sources into a single decision brief.", opts:["Researcher","Analyst","Copilot Studio"], c:0, why:"Researcher is built for document + web synthesis into a brief." }
+  ];
+  var qi = 0, score = 0;
+
+  function startGym(){ qi = 0; score = 0; go(4); renderQ(); }
+
+  function renderQ(){
+    var q = GYM[qi];
+    document.getElementById('gym-count').textContent = 'Question '+(qi+1)+' of '+GYM.length;
+    document.getElementById('gym-score').textContent = 'Score '+score;
+    document.getElementById('gym-fill').style.width = Math.round(qi/GYM.length*100)+'%';
+    document.getElementById('gym-scenario').textContent = q.t;
+    var box = document.getElementById('gym-opts');
+    box.innerHTML = '';
+    q.opts.forEach(function(label, i){
+      var b = document.createElement('button');
+      b.className = 'opt';
+      b.textContent = label;
+      b.onclick = function(){ answer(i); };
+      box.appendChild(b);
+    });
+    document.getElementById('gym-fb').style.display='none';
+    document.getElementById('gym-next').style.display='none';
+  }
+
+  function answer(i){
+    var q = GYM[qi];
+    var correct = (i === q.c);
+    if(correct) score++;
+    document.getElementById('gym-score').textContent = 'Score '+score;
+    var btns = document.getElementById('gym-opts').querySelectorAll('.opt');
+    btns.forEach(function(b, idx){
+      b.disabled = true;
+      b.style.opacity = (idx === i || idx === q.c) ? '1' : '0.5';
+      if(idx === q.c){ b.style.borderColor = 'var(--accent)'; }
+    });
+    if(!correct){ btns[i].style.borderColor = 'var(--danger)'; }
+    var fb = document.getElementById('gym-fb');
+    fb.className = 'fb ' + (correct ? 'good' : 'bad');
+    fb.textContent = (correct ? '✓ ' : '✗ ') + q.opts[q.c] + '. ' + q.why;
+    fb.style.display='block';
+    var nx = document.getElementById('gym-next');
+    nx.textContent = (qi === GYM.length-1) ? 'See your result →' : 'Next question →';
+    nx.style.display='inline-flex';
+  }
+
+  function nextQ(){
+    qi++;
+    if(qi >= GYM.length){ finishGym(); }
+    else { renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+  }
+
+  function finishGym(){
+    document.getElementById('final-score').textContent = score + ' / ' + GYM.length;
+    var sub;
+    if(score >= 9) sub = "You know the roster cold — now go put them to work.";
+    else if(score >= 6) sub = "Good start. Glance back at the cards for the ones you missed.";
+    else sub = "Worth another look at the roster — then you'll have it.";
+    document.getElementById('final-sub').textContent = sub;
+    go(5);
+  }
+</script>
+
+<!-- ── AI Coach logic ── -->
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Copilot agents \u2014 your M365 just got 8 specialized coworkers\nTRACK: Copilot Mastery\n\nLESSON CONTENT SUMMARY:\nCopilot agents \u2014 your M365 just got 8 specialized coworkers \u2014 LearningGPT L LearningGPT \u2190 Copilot Mastery Start here \u00b7 Agents Pro ~10 min read Free survey Copilot agents: 8 coworkers, one license. Microsoft has been shipping named Copilot agents at an aggressive pace. Most M365 users haven't even noticed. Researcher, Analyst, Facilitator, Interpreter, Sales agents, Service agents, SharePoint Agent, Copilot Studio for custom builds. Each one is essentially a specialized coworker that lives inside your tenant. This free lesson maps them and shows what each makes possible. The mental model Named agents = specialized coworkers, not generic AI. The first generation of AI was generic \u2014 one model, you bend it to your task with prompts. The second generation is named agents \u2014 specialized AI workers tuned for specific jobs. Microsoft's bet is that most knowledge work doesn't need a single all-powerful AI \u2014 it needs a researcher, an analyst, a meeting facilitator, a sales rep, a customer service agent. Each one tuned for its role, knowing your M365 data, working alongside your team. The advantage for you: zero prompt engineering. You don't have to coax the AI into being a researcher \u2014 Researcher already is one. Same for Analyst, Facilitator, etc. Workflow 01 Researcher + Analyst 1 Researcher and Analyst \u2014 the analyst duo These are Microsoft's flagship Copilot agents. Researcher synthesizes from documents and the web; Analyst crunches data. Together they handle most of what a small research-and-analysis team would do. The prompt that works What Researcher + Analyst do Researcher example: &quot;Run a competitive analysis on [Competitor X]. Use our SharePoint sales notes and our competitive battlecard alongside web sources. Produce: their positioning, top 3 strengths, top 3 weaknesses, 3 talking points for the customer meeting.&quot; Analyst example: &quot;Analyze our Q1 sales rep performance data. Top performers, regional patterns, outliers, correlation between deal count and average deal size. Build 3 charts for an executive presentation.&quot; Best use cases Competitive intelligence (Researcher) Quarterly business reviews (both) Sales-rep performance analysis (Analyst) Decision-support research (Researcher) Time savings: A real research report or analysis: hours of analyst time \u2192 15-30 min agent + review. Workflow 02 Facilitator + Interpreter 2 Facilitator and Interpreter \u2014 meetings, fixed Facilitator handles meeting notes, action items, and decision capture in Teams. Interpreter translates speech in real time across 9 languages. Together they remove the two biggest sources of meeting waste. The prompt that works What Facilitator + Interpreter do Facilitator example: You run a working session in Teams. Facilitator listens, captures action items as they&#x27;re created, builds a decision log, and produces a structured post-meeting summary. You can ask it questions during the meeting like &quot;what did we decide about the budget&quot; without breaking flow.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = `You are an AI learning coach embedded in a lesson on LearningGPT.ai.
+LESSON TITLE: Copilot agents — 8 coworkers, one license (free survey of M365 named agents)
+TRACK: Copilot Mastery (this is the free start-here lesson)
+LESSON CONTENT SUMMARY:
+Microsoft 365 Copilot now includes named agents — specialized AI workers pre-tuned for a role and wired into your M365 data, versus generic AI you bend with prompts. The practical win is zero prompt engineering: you pick the right agent instead of crafting the perfect prompt; the skill shifts from prompting to knowing who to ask.
+The eight agents covered:
+- Researcher (Copilot Chat): synthesizes your documents + the web into a structured brief. Example: competitive analysis using SharePoint notes + web.
+- Analyst (Copilot Chat): crunches your numbers and builds charts from Excel/CRM/dashboards. Example: analyze Q1 rep performance, build 3 charts.
+- Facilitator (Teams meetings): live notes, action items, decision log; answer "what did we decide?" mid-meeting; recap meetings you missed.
+- Interpreter (Teams meetings): real-time speech-to-speech translation; you speak English, they hear French.
+- Sales Agent (Dynamics 365 / Copilot), with Qualification and Development siblings: pre-call auto-briefs, lead scoring against your ICP, follow-up drafting, pipeline hygiene.
+- Customer Service Agent (Dynamics 365 / Copilot): ticket triage, responses drafted from your knowledge base, SLA tracking and auto-escalation.
+- SharePoint Agent (SharePoint): answers grounded only in a specific SharePoint site/library, e.g. a Q&A bot over your HR policy library.
+- Copilot Studio: the platform to build your own custom agent when the named ones don't fit (visual flow editor, your knowledge sources, your APIs as actions).
+Most M365 users haven't found these — they sit unused in the tenant. The paid Pro lessons walk through each one hands-on.
+YOUR ROLE:
+- Answer questions specifically about this lesson content
+- Be concise, 2-4 sentences per answer unless the question genuinely needs more
+- Be practical, give real work examples when helpful
+- If asked about something not in this lesson, briefly answer and point to where they can learn more (the Pro Copilot lessons cover each agent in depth)
+- Never make up features that don't exist
+- Plain conversational text only, no markdown symbols like ** or ##
+- Do not start responses with "Great question!" or similar filler phrases`;
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -255,27 +383,21 @@ Copilot Studio: when your workflow is unique (industry-specific compliance flows
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
   if (!fab) return; // safety check
-
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -284,7 +406,6 @@ Copilot Studio: when your workflow is unique (industry-specific compliance flows
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -293,7 +414,6 @@ Copilot Studio: when your workflow is unique (industry-specific compliance flows
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

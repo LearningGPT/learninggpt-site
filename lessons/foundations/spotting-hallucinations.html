@@ -9,20 +9,19 @@
 <meta name="theme-color" content="#44e0a4" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/foundations/spotting-hallucinations" />
 <meta property="og:title" content="Spotting AI hallucinations before they cost you" />
 <meta property="og:description" content="The 4 patterns that should make you fact-check, and the 3 prompt tricks that lower hallucination rates." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
-
 <style>
 :root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #44e0a4; }
 * { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
 body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+button { font-family: inherit; cursor: pointer; }
 .bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
 .bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #44e0a4; }
 .bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
@@ -32,93 +31,85 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
 .logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
 .nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
-.lesson { padding: 50px 0 100px; }
-.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
-.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(68,224,164,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(68,224,164,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-.lesson-meta .chip-free { border-color: rgba(68,224,164,0.4); color: var(--accent); background: rgba(68,224,164,0.1); }
-.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
-.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #44e0a4 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
-.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
-.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(68,224,164,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(68,224,164,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #44e0a4, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.pattern { margin: 24px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px; }
-.pattern-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
-.pattern-num { width: 28px; height: 28px; border-radius: 8px; background: rgba(255,107,138,0.15); border: 1px solid rgba(255,107,138,0.35); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--danger); flex-shrink: 0; }
-.pattern h3 { font-size: 18px; font-weight: 600; margin: 0; flex: 1; }
-.pattern p { font-size: 15px; margin: 0 0 10px; }
-.technique { margin: 24px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px; }
-.technique-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
-.technique-num { width: 28px; height: 28px; border-radius: 8px; background: rgba(68,224,164,0.15); border: 1px solid rgba(68,224,164,0.35); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--accent); flex-shrink: 0; }
-.technique h3 { font-size: 18px; font-weight: 600; margin: 0; flex: 1; }
-.technique p { font-size: 15px; margin: 0 0 10px; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.tryit { margin: 24px 0; padding: 22px; background: rgba(68,224,164,0.06); border: 1px solid rgba(68,224,164,0.25); border-radius: var(--radius); }
-.tryit .lbl { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
-.tryit p { margin: 0 0 12px; font-size: 15px; }
-.tryit a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #44e0a4, #5b8def); color: white; padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 13px; text-decoration: none; }
-.tryit a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(68,224,164,0.18), rgba(124,92,255,0.1)); border: 1px solid rgba(68,224,164,0.3); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #44e0a4, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(68,224,164,0.35); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
-.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
-.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
-.checklist li:first-child { border-top: none; padding-top: 0; }
-.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
-.checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
-.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
-.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
-.next-up .free-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(68,224,164,0.18); color: var(--accent); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(68,224,164,0.35); }
 footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
+/* ===================================================================
+   INTERACTIVE LESSON COMPONENT (show -> explain -> do) — shared kit
+   Unique class names; sits in .container > .ilesson (not .lesson).
+   =================================================================== */
+.sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
+.serif { font-family:'Instrument Serif', serif; font-style:italic; font-weight:400; }
+.ilesson { max-width:720px; margin:0 auto; padding:44px 0 90px; }
+.l-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; font-size:12.5px; }
+.l-tag { font-weight:600; color:var(--accent); }
+.l-count { color:var(--text-mute); }
+.prog-track { height:6px; background:var(--surface); border-radius:99px; overflow:hidden; margin-bottom:30px; }
+#prog { height:100%; width:16.6%; background:linear-gradient(90deg,var(--accent),var(--brand)); border-radius:99px; transition:width .45s ease; }
+.step h1 { font-size:33px; line-height:1.12; letter-spacing:-.02em; margin:0 0 14px; font-weight:800; color:var(--text); }
+.step h3 { font-size:21px; line-height:1.2; margin:0 0 10px; font-weight:700; color:var(--text); }
+.step p { color:var(--text-dim); margin:0 0 16px; font-size:16px; line-height:1.65; }
+.step p strong { color:var(--text); font-weight:600; }
+.step em { color:var(--text); font-style:italic; }
+.eyebrow-do { font-size:12px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--accent); margin-bottom:8px; }
+.btn { font-family:inherit; font-weight:600; font-size:14.5px; border-radius:10px; padding:11px 18px; cursor:pointer; border:1px solid transparent; display:inline-flex; align-items:center; gap:8px; transition:.15s; color:#fff; background:linear-gradient(135deg,#7c5cff,#5b8def); box-shadow:0 8px 22px -10px rgba(124,92,255,.8); }
+.btn:hover { transform:translateY(-1px); color:#fff; }
+.btn-ghost { background:transparent; border-color:var(--line-strong); color:var(--text); box-shadow:none; }
+.btn-ghost:hover { background:rgba(255,255,255,.05); color:var(--text); }
+.btn-block { width:100%; justify-content:center; }
+.aicard { background:var(--bg-soft); border:1px solid var(--line-strong); border-radius:var(--radius); padding:14px 16px; margin-bottom:16px; }
+.aicard .who { display:flex; align-items:center; gap:8px; font-weight:600; font-size:13px; margin-bottom:9px; color:var(--text); }
+.aicard .ic { width:22px; height:22px; border-radius:6px; display:grid; place-items:center; font-size:11px; font-weight:700; color:#fff; background:#10a37f; flex-shrink:0; }
+.aicard .abody { font-size:14.5px; color:var(--text); line-height:1.6; }
+.flag { background:rgba(255,181,71,0.16); border-bottom:1px dashed rgba(255,181,71,0.6); padding:0 2px; }
+.reveal-note { background:rgba(255,107,138,.08); border:1px solid rgba(255,107,138,.28); border-radius:var(--radius); padding:13px 15px; margin-bottom:18px; font-size:13.5px; color:#ffc9d4; line-height:1.6; }
+.reveal-note b { color:#fff; }
+.callout { background:rgba(124,92,255,.08); border:1px solid rgba(124,92,255,.22); border-radius:var(--radius); padding:14px 16px; margin-bottom:18px; font-size:14.5px; color:var(--text-dim); line-height:1.65; }
+.callout b { color:var(--text); }
+.pg-link { display:inline-flex; align-items:center; gap:6px; font-size:13.5px; font-weight:600; color:var(--brand-2); margin-bottom:8px; }
+.pg-link:hover { color:var(--accent); }
+.flags { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin-bottom:20px; }
+.flagcard { background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--danger); border-radius:0 var(--radius) var(--radius) 0; padding:12px 14px; }
+.flagcard .t { font-size:14.5px; font-weight:600; color:var(--text); margin-bottom:2px; }
+.flagcard .d { font-size:12.5px; color:var(--text-mute); line-height:1.45; }
+.opts { display:flex; flex-direction:column; gap:10px; margin-bottom:6px; }
+.opt { text-align:left; padding:14px 15px; line-height:1.5; font-size:14.5px; font-family:inherit; color:var(--text); background:var(--surface); border:1px solid var(--line-strong); border-radius:var(--radius); cursor:pointer; transition:.15s; }
+.opt:hover:not(:disabled) { border-color:var(--brand); background:#20204a; }
+.opt:disabled { cursor:default; }
+.fb { display:none; margin-top:14px; padding:12px 14px; border-radius:var(--radius); font-size:14px; line-height:1.6; }
+.fb.good { background:rgba(68,224,164,.1); border:1px solid rgba(68,224,164,.35); color:#a7efd2; }
+.fb.bad { background:rgba(124,92,255,.1); border:1px solid rgba(124,92,255,.3); color:#cfc4ff; }
+.chips { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; }
+.chip { font-size:13.5px; padding:8px 13px; font-family:inherit; color:var(--text-dim); background:var(--surface); border:1px solid var(--line-strong); border-radius:99px; cursor:pointer; transition:.15s; }
+.chip:hover { color:var(--text); border-color:var(--brand); }
+.chip.on { background:rgba(68,224,164,.16); color:#a7efd2; border-color:var(--accent); }
+.buildbox { background:var(--bg-soft); border:1px solid var(--line-strong); border-radius:var(--radius); padding:15px 16px; font-size:14px; line-height:1.6; min-height:64px; color:var(--text); white-space:pre-wrap; }
+.buildbox .lbl { font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-mute); display:block; margin-bottom:7px; }
+.meter { margin-top:14px; font-size:13.5px; color:var(--text-dim); display:flex; align-items:center; gap:10px; }
+.meter-bar { flex:1; height:5px; background:var(--surface); border-radius:99px; overflow:hidden; }
+.meter-fill { height:100%; width:0; background:var(--accent); border-radius:99px; transition:width .35s ease; }
+#score-n { font-weight:600; }
+.sendcard { background:rgba(68,224,164,.07); border:1px solid rgba(68,224,164,.3); border-radius:var(--radius); padding:14px 16px; margin-bottom:18px; font-size:13.5px; color:var(--text); line-height:1.6; }
+.sendcard .lbl { font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--accent); display:block; margin-bottom:7px; font-weight:700; }
+.cta-row { display:flex; gap:12px; flex-wrap:wrap; margin-top:22px; }
+.done-top { text-align:center; padding:6px 0 8px; }
+.done-check { width:52px; height:52px; border-radius:50%; background:rgba(68,224,164,.14); color:var(--accent); display:flex; align-items:center; justify-content:center; margin:0 auto 14px; font-size:26px; border:1px solid rgba(68,224,164,.4); }
+.recap { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:16px 18px; margin-bottom:14px; }
+.recap .lbl { font-size:12px; color:var(--text-mute); }
+.recap p { margin:4px 0 0; color:var(--text); font-weight:500; font-size:15px; }
+.upnext { background:var(--bg-soft); border:1px solid var(--line); border-radius:var(--radius); padding:14px 16px; margin-bottom:14px; }
+.upnext .lbl { font-size:12px; color:var(--text-mute); }
+.upnext p { margin:3px 0 0; font-weight:600; color:var(--text); }
+@media(max-width:560px){ .step h1{ font-size:27px; } }
+
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -147,14 +138,11 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
-
 <div class="bg-orb one"></div>
 <div class="bg-orb two"></div>
-
 <nav class="top">
   <div class="nav-inner">
     <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
@@ -162,125 +150,131 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   </div>
 </nav>
 
-<article class="lesson">
-  <div class="container">
+<div class="container">
+  <div class="sr-only">An interactive AI Foundations lesson on spotting AI hallucinations: it shows a confident AI answer with a fabricated citation and asks the learner to spot it, explains why models hallucinate, teaches the 4 risk patterns, and has the learner build a hallucination-resistant prompt.</div>
 
-    <div class="lesson-meta">
-      <span class="chip">Lesson 2 · AI Foundations</span>
-      <span class="chip chip-free">Free</span>
-      <span>~8 min read</span>
-      <span class="dot"></span>
-      <span>4 patterns + 3 techniques</span>
+  <main class="ilesson">
+    <div class="l-top">
+      <span class="l-tag">AI Foundations · Lesson 2</span>
+      <span class="l-count" id="step-count">Step 1 of 6 · ~9 min</span>
     </div>
+    <div class="prog-track"><div id="prog"></div></div>
 
-    <h1>Spotting hallucinations <span class="grad serif">before they cost you.</span></h1>
+    <!-- STEP 1 · intro -->
+    <section id="step-1" class="step">
+      <h1>Spotting hallucinations <span class="serif">before they cost you.</span></h1>
+      <p>Every AI you've used has confidently lied to you at some point. It's not a bug — it's how the technology works. You can't stop hallucinations, so the skill is <strong>catching them fast</strong>.</p>
+      <p>You'll watch an AI invent something believable, learn why it happens, then build a prompt that's much harder to fool. About 9 minutes.</p>
+      <button class="btn" onclick="go(2)">Start the lesson →</button>
+    </section>
 
-    <p class="deck">Every AI you've ever used has confidently lied to you at some point. It's not a bug — it's how the underlying technology works. The skill isn't avoiding hallucinations; that's impossible. The skill is <strong>recognizing them fast</strong>. This lesson covers the four patterns that should make you stop and verify, and three prompt techniques that lower hallucination rates dramatically.</p>
-
-    <h2><span class="num">The mental model</span></h2>
-    <h3>AI generates plausible-sounding tokens. "Plausible" isn't "true."</h3>
-
-    <p>Language models predict the next likely word based on patterns in their training data. That's it. There's no internal database of facts being looked up. When asked "what year did X happen?" the model isn't checking a record — it's predicting what year would sound right given the context. Usually right. Sometimes confidently, charmingly, dangerously wrong.</p>
-
-    <div class="callout">
-      <span class="lbl">The Reframe</span>
-      <p><strong>Treat AI output like advice from a brilliant friend who's been drinking.</strong> Most of what they say is solid. Some of it is confidently made up. You don't take their advice to court without checking. You don't quote them in your CFO meeting without verifying. But you also don't refuse to talk to them — because they're often genuinely helpful.</p>
-    </div>
-
-    <h2><span class="num">The 4 patterns</span></h2>
-    <h3>Situations where hallucinations are most likely</h3>
-
-    <div class="pattern">
-      <div class="pattern-head"><div class="pattern-num">1</div><h3>Specific numbers, dates, or statistics</h3></div>
-      <p>"73% of CFOs report..." — this is the classic hallucination shape. AI will fabricate confident-sounding statistics with precise-feeling decimals. The made-up stats often look more authoritative than real ones. Any time you see a specific percentage, study citation, or date in AI output, treat it as a claim to verify, not a fact to repeat.</p>
-    </div>
-
-    <div class="pattern">
-      <div class="pattern-head"><div class="pattern-num">2</div><h3>Names of people, books, or papers</h3></div>
-      <p>"As Daniel Kahneman wrote in his 2014 paper..." — even when the person, book, and field are real, the specific paper or quote may not exist. AI is especially prone to inventing plausible-sounding academic citations. If a name is attached to a specific claim, verify before citing.</p>
-    </div>
-
-    <div class="pattern">
-      <div class="pattern-head"><div class="pattern-num">3</div><h3>Anything time-sensitive or current</h3></div>
-      <p>Model training data has a cutoff date. Ask about anything that happened recently — a product feature, a current price, a regulatory change, a leadership move — and the model may confidently state what it remembers from training, which is outdated. The fix: use <a href="/lessons/perplexity/basics">Perplexity</a> for current-fact questions instead of a chat AI.</p>
-    </div>
-
-    <div class="pattern">
-      <div class="pattern-head"><div class="pattern-num">4</div><h3>Technical syntax: code, formulas, APIs, regulations</h3></div>
-      <p>AI will hallucinate functions that don't exist, API endpoints that aren't real, and legal sections that don't appear in the actual statute. Especially in newer or less-common technologies. Always test code before shipping; always check legal citations against actual sources.</p>
-    </div>
-
-    <h2><span class="num">The 3 techniques</span></h2>
-    <h3>How to reduce hallucination rates before they happen</h3>
-
-    <div class="technique">
-      <div class="technique-head"><div class="technique-num">1</div><h3>Give it permission to say "I don't know"</h3></div>
-      <p>Most AI defaults to confident answers. Explicitly tell it that uncertainty is acceptable, and it dramatically reduces fabrication:</p>
-      <div class="prompt-example">
-        <span class="label">The "permission" prompt</span>
-        Answer this question. If you don't know with high confidence, say so explicitly. Better to say "I'm not sure" than to guess.
+    <!-- STEP 2 · PREDICT then SHOW (spot the hallucination) -->
+    <section id="step-2" class="step" style="display:none">
+      <h3>01 · Catch one in the wild</h3>
+      <p>Here's a real-shaped answer an AI gave to "What does the research say about the four-day work week?" Read it like you'd read it at work:</p>
+      <div class="aicard">
+        <div class="who"><span class="ic">G</span> AI assistant</div>
+        <div class="abody">The evidence is encouraging. A <span class="flag">2022 study by Dr. Helena Marsh at Cambridge, published in the Journal of Organizational Behavior,</span> tracked 61 companies and found a <span class="flag">27% jump in productivity</span> and a <span class="flag">19% drop in burnout</span> after switching to a four-day week.</div>
       </div>
-      <p>This single sentence cuts hallucination on factual questions by something like 40-60% in my experience. Why most people don't use it: they don't realize the model needs permission.</p>
-    </div>
-
-    <div class="technique">
-      <div class="technique-head"><div class="technique-num">2</div><h3>Ask for sources, then check them</h3></div>
-      <p>Ask the model to cite its sources. This forces it to commit to specific references it claims exist:</p>
-      <div class="prompt-example">
-        <span class="label">The "source" prompt</span>
-        Answer this question, then cite the sources you're drawing from. If you're inferring rather than citing a specific source, flag that.
+      <div class="eyebrow-do">Predict first</div>
+      <p style="margin-bottom:12px">Which part should you <em>not</em> repeat in a work email without checking?</p>
+      <div class="opts">
+        <button class="opt" data-c="0" onclick="pick(this,2)">Nothing — it named a real journal, so it's sourced</button>
+        <button class="opt" data-c="1" onclick="pick(this,2)">The exact 27% / 19% figures and the named researcher &amp; study</button>
+        <button class="opt" data-c="0" onclick="pick(this,2)">The whole thing — AI is always wrong about research</button>
       </div>
-      <p>Then — and this is the part most people skip — actually click through to verify the sources are real. AI will sometimes invent plausible-looking citations. The act of <em>checking</em> protects you; just asking doesn't.</p>
-    </div>
-
-    <div class="technique">
-      <div class="technique-head"><div class="technique-num">3</div><h3>Use research-grounded AI for facts</h3></div>
-      <p>For anything factual or current, use a tool that searches the web in real time (Perplexity, ChatGPT with search, Gemini with grounding). These tools fetch live sources and cite them — fundamentally different from a chat AI generating from memory.</p>
-      <p>Rule of thumb: <strong>chat AIs for writing, research-grounded AIs for facts.</strong> They're complementary, not competing.</p>
-    </div>
-
-    <div class="tryit">
-      <span class="lbl">Try it in the playground</span>
-      <p>Ask all five models a question with a built-in trap: "Who won the Nobel Prize in Literature in 2024?" Then "What's the population of Reykjavik?" Then "What's the syntax for a Python decorator that adds retry logic?" Compare which models hedge, which fabricate, and which actually know.</p>
-      <a href="/playground?prompt=Who%20won%20the%20Nobel%20Prize%20in%20Literature%20in%202024%3F" class="btn">Open Playground →</a>
-    </div>
-
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Final challenge: build a personal hallucination filter</h2>
-      <p>For the next week, every time you use AI for work:</p>
-      <ol>
-        <li>Add "if you don't know with high confidence, say so" to every factual prompt</li>
-        <li>Before citing any AI-generated statistic externally, verify it with a search</li>
-        <li>When AI mentions a specific person, paper, or law — Google it before quoting</li>
-        <li>Track how many times AI confidently said something that turned out to be wrong</li>
-      </ol>
-      <p>Most people are shocked at the count their first week. It's not a reason to stop using AI — it's a reason to use it like an adult.</p>
-      <div class="btn-row">
-        <a href="/lessons/foundations/" class="btn">Back to Foundations →</a>
-        <a href="/lessons/" class="btn ghost">All lessons →</a>
+      <div class="fb" id="fb-2"></div>
+      <div id="reveal-2" style="display:none">
+        <div class="reveal-note"><b>The highlighted parts are the trap.</b> Precise figures attached to a specific named researcher and journal are exactly what models fabricate most convincingly — the detail is what makes it <em>feel</em> authoritative. "Dr. Helena Marsh" and that study may not exist at all.</div>
       </div>
-    </div>
+      <button class="btn" id="next-2" style="display:none;margin-top:4px" onclick="go(3)">But why would it make that up? →</button>
+    </section>
 
-    <div class="checklist">
-      <h3>What you can do now</h3>
-      <ul>
-        <li>Recognize the 4 patterns most likely to produce hallucinations</li>
-        <li>Add explicit "I don't know is OK" permission to your factual prompts</li>
-        <li>Ask for sources — and actually verify them, not just collect them</li>
-        <li>Know when to use a chat AI vs. a research-grounded AI</li>
-        <li>Read AI output skeptically without becoming so paranoid you can't use it</li>
-      </ul>
-    </div>
+    <!-- STEP 3 · EXPLAIN (mental model) + DO -->
+    <section id="step-3" class="step" style="display:none">
+      <h3>02 · Why AI invents things</h3>
+      <p>A language model predicts the <em>most plausible next words</em> from patterns in its training data. There's no fact being looked up. Ask "what year did X happen?" and it isn't checking a record — it's predicting what year would <em>sound</em> right. A precise-looking citation is highly "plausible," and <strong>plausible isn't true.</strong></p>
+      <div class="callout">Treat AI like advice from a <b>brilliant friend who's had a few drinks.</b> Most of what they say is solid. Some is confidently made up. You wouldn't quote them in a CFO meeting without checking — but you wouldn't stop talking to them either, because they're genuinely useful.</div>
+      <div class="eyebrow-do">Quick check</div>
+      <p style="margin-bottom:12px">So why did the AI invent that Cambridge study?</p>
+      <div class="opts">
+        <button class="opt" data-c="0" onclick="pick(this,3)">It was trained on a bad dataset that one time</button>
+        <button class="opt" data-c="0" onclick="pick(this,3)">It's deliberately trying to deceive you</button>
+        <button class="opt" data-c="1" onclick="pick(this,3)">It generates text that sounds right — a fake citation is "plausible"</button>
+      </div>
+      <div class="fb" id="fb-3"></div>
+      <button class="btn" id="next-3" style="display:none;margin-top:16px" onclick="go(4)">Where it happens most →</button>
+    </section>
 
-    <div class="next-up">
-      <span class="free-tag">Free</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in Foundations</div>
-      <h3>Lesson 3 · Which AI for which job — a decision framework</h3>
-      <p>ChatGPT, Claude, Gemini, Perplexity, Copilot, Grok — they're not interchangeable. A simple decision tree for picking the right AI by task type, plus the use cases each one wins.</p>
-    </div>
+    <!-- STEP 4 · SHOW the 4 patterns + DO -->
+    <section id="step-4" class="step" style="display:none">
+      <h3>03 · The four high-risk patterns</h3>
+      <p>Hallucinations aren't random — they cluster. These four are where to raise your guard:</p>
+      <div class="flags">
+        <div class="flagcard"><div class="t">Numbers &amp; stats</div><div class="d">Precise percentages, dates, study figures</div></div>
+        <div class="flagcard"><div class="t">Names &amp; citations</div><div class="d">People, books, papers, exact quotes</div></div>
+        <div class="flagcard"><div class="t">Anything current</div><div class="d">Past the model's training cutoff</div></div>
+        <div class="flagcard"><div class="t">Technical syntax</div><div class="d">Code, APIs, formulas, legal sections</div></div>
+      </div>
+      <div class="eyebrow-do">Quick check</div>
+      <p style="margin-bottom:12px">You're skimming an AI draft for a client email. Which line should make you stop and verify?</p>
+      <div class="opts">
+        <button class="opt" data-c="0" onclick="pick(this,4)">"Remote work has real trade-offs worth weighing."</button>
+        <button class="opt" data-c="1" onclick="pick(this,4)">"Per a 2021 McKinsey report, 64% of leaders plan to expand it."</button>
+        <button class="opt" data-c="0" onclick="pick(this,4)">"Here's how I'd structure your message:"</button>
+      </div>
+      <div class="fb" id="fb-4"></div>
+      <button class="btn" id="next-4" style="display:none;margin-top:16px" onclick="go(5)">Now lower the odds →</button>
+    </section>
 
-  </div>
-</article>
+    <!-- STEP 5 · BUILD (3 techniques) -->
+    <section id="step-5" class="step" style="display:none">
+      <h3>04 · Build a hallucination-resistant prompt</h3>
+      <p>You can cut the odds before they happen. Start with a risky factual prompt, then add each guardrail and watch your protection climb:</p>
+      <div class="chips">
+        <button class="chip" data-k="permission" onclick="chip(this)">+ Permission to say "I don't know"</button>
+        <button class="chip" data-k="sources" onclick="chip(this)">+ Ask for sources</button>
+        <button class="chip" data-k="grounded" onclick="chip(this)">+ Use a research-grounded AI</button>
+      </div>
+      <div class="buildbox"><span class="lbl">Your prompt</span><span id="prompt-text">Summarize the current state of [your topic].</span></div>
+      <div class="meter">
+        <span>Protection:</span>
+        <div class="meter-bar"><div class="meter-fill" id="meter-fill"></div></div>
+        <span id="score-n">exposed</span>
+      </div>
+      <div id="reveal-5" style="display:none;margin-top:16px">
+        <div class="sendcard"><span class="lbl">The takeaway prompt</span>Most people skip the first line. Just <b style="color:#fff">giving the model permission to say "I'm not sure"</b> cuts fabrication on factual questions dramatically — it defaults to confident answers until you tell it not to.</div>
+      </div>
+      <a class="pg-link" id="pg-5" style="display:none" href="/playground?prompt=Who%20won%20the%20Nobel%20Prize%20in%20Literature%20in%202024%3F%20If%20you%20are%20not%20highly%20confident%2C%20say%20so%20explicitly." target="_blank" rel="noopener">▶ Optional: run a trap question across the models →</a>
+      <br>
+      <button class="btn" id="next-5" style="display:none;margin-top:14px" onclick="go(6)">See what you learned →</button>
+    </section>
+
+    <!-- STEP 6 · complete -->
+    <section id="step-6" class="step" style="display:none">
+      <div class="done-top">
+        <div class="done-check">✓</div>
+        <h3>Lesson complete</h3>
+      </div>
+      <p style="text-align:center;max-width:470px;margin:0 auto 20px">The rule to keep: <strong>chat AIs for writing, research-grounded AIs for facts.</strong> Give the model permission to say "I don't know," ask for sources and actually check them, and raise your guard on numbers, names, anything current, and technical syntax.</p>
+      <div class="recap">
+        <span class="lbl">What you can do now</span>
+        <p>Spot the four hallucination patterns, build a prompt that resists them, and read AI output skeptically without being so paranoid you can't use it.</p>
+      </div>
+      <div class="upnext">
+        <span class="lbl">Up next</span>
+        <p>Lesson 3 · Which AI for which job — a decision framework</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-block" href="/lessons/foundations/which-ai-for-which-job">Continue to Lesson 3 →</a>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-ghost" href="/playground" target="_blank" rel="noopener">Open the Playground</a>
+        <a class="btn btn-ghost" href="/lessons/foundations/">Back to AI Foundations</a>
+      </div>
+    </section>
+  </main>
+</div>
 
 <footer>
   <div class="footer-inner">
@@ -289,13 +283,11 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   </div>
 </footer>
 
-
 <!-- ── AI COACH FAB ── -->
 <button class="coach-fab" id="coachFab" title="Ask the AI Coach">
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -307,10 +299,10 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <button class="coach-close" id="coachClose">✕</button>
   </div>
   <div class="coach-messages" id="coachMessages">
-    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about spotting hallucinations — the four risk patterns, the permission prompt, when to use a research-grounded AI, or how to apply it to your own work. What's on your mind?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -318,15 +310,82 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   </div>
 </div>
 
+<!-- ── Interactive lesson logic ── -->
+<script>
+  var TOTAL = 6;
+  function go(n){
+    document.querySelectorAll('.step').forEach(function(s){ s.style.display='none'; });
+    document.getElementById('step-'+n).style.display='block';
+    document.getElementById('prog').style.width = Math.round(n/TOTAL*100)+'%';
+    document.getElementById('step-count').textContent = 'Step '+n+' of '+TOTAL+' · ~9 min';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  var pickMsg = {
+    2:{good:"Right. Verify the highlighted parts before repeating them — precise figures plus a named study are the classic fabrication shape.",
+       bad:"Look again — the risk isn't the general idea or the tone, and it's not the whole answer. It's the exact figures and the named study; AI invents citations that look real."},
+    3:{good:"Exactly. It predicts text that sounds right, and a precise citation reads as plausible. Plausible isn't true — there's no fact lookup underneath.",
+       bad:"Not quite — it's not a one-off data bug or deliberate lying. The model just predicts plausible-sounding text, and a fake citation is very 'plausible.'"},
+    4:{good:"Right — a specific stat, a named firm, and a date that may be past the cutoff hits three risk patterns at once. Verify before it goes out.",
+       bad:"That line is low-risk — it's general framing or your own structure. The risky one is the precise stat tied to a named report and a date."}
+  };
+  function pick(btn, step){
+    var correct = btn.dataset.c === '1';
+    document.getElementById('step-'+step).querySelectorAll('.opt').forEach(function(b){ b.disabled=true; b.style.opacity='0.5'; });
+    btn.style.opacity='1';
+    var fb = document.getElementById('fb-'+step);
+    btn.style.borderColor = correct ? 'var(--accent)' : 'var(--danger)';
+    fb.className = 'fb ' + (correct ? 'good' : 'bad');
+    fb.textContent = pickMsg[step][correct ? 'good' : 'bad'];
+    fb.style.display='block';
+    if(step===2){ document.getElementById('reveal-2').style.display='block'; }
+    document.getElementById('next-'+step).style.display='inline-flex';
+  }
+  var parts = {permission:false, sources:false, grounded:false};
+  var frag = {
+    permission:'If you are not highly confident, say "I’m not sure" instead of guessing.',
+    sources:'Cite the specific sources you used, and flag anything you inferred rather than looked up.',
+    grounded:'(Run this in a research-grounded tool — Perplexity, or ChatGPT/Gemini with search — so it pulls live sources.)'
+  };
+  var labels = ['exposed','guarded','solid','locked down'];
+  function chip(btn){
+    var k = btn.dataset.k; parts[k] = !parts[k]; btn.classList.toggle('on');
+    var lines = ['Summarize the current state of [your topic].'];
+    ['permission','sources','grounded'].forEach(function(key){ if(parts[key]) lines.push(frag[key]); });
+    document.getElementById('prompt-text').textContent = lines.join('\n\n');
+    var n = Object.values(parts).filter(Boolean).length;
+    document.getElementById('score-n').textContent = labels[n];
+    document.getElementById('meter-fill').style.width = Math.round(n/3*100)+'%';
+    var sn = document.getElementById('score-n');
+    sn.style.color = n>=3 ? 'var(--accent)' : n>=1 ? 'var(--brand-2)' : 'var(--text-dim)';
+    document.getElementById('next-5').style.display = n>=3 ? 'inline-flex' : 'none';
+    document.getElementById('pg-5').style.display = n>=3 ? 'inline-flex' : 'none';
+    document.getElementById('reveal-5').style.display = n>=3 ? 'block' : 'none';
+  }
+</script>
 
+<!-- ── AI Coach logic ── -->
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Spotting hallucinations before they cost you\nTRACK: Foundations Mastery\n\nLESSON CONTENT SUMMARY:\nSpotting hallucinations before they cost you \u2014 LearningGPT L LearningGPT \u2190 AI Foundations Lesson 2 \u00b7 AI Foundations Free ~8 min read 4 patterns + 3 techniques Spotting hallucinations before they cost you. Every AI you've ever used has confidently lied to you at some point. It's not a bug \u2014 it's how the underlying technology works. The skill isn't avoiding hallucinations; that's impossible. The skill is recognizing them fast . This lesson covers the four patterns that should make you stop and verify, and three prompt techniques that lower hallucination rates dramatically. The mental model AI generates plausible-sounding tokens. \"Plausible\" isn't \"true.\" Language models predict the next likely word based on patterns in their training data. That's it. There's no internal database of facts being looked up. When asked \"what year did X happen?\" the model isn't checking a record \u2014 it's predicting what year would sound right given the context. Usually right. Sometimes confidently, charmingly, dangerously wrong. The Reframe Treat AI output like advice from a brilliant friend who's been drinking. Most of what they say is solid. Some of it is confidently made up. You don't take their advice to court without checking. You don't quote them in your CFO meeting without verifying. But you also don't refuse to talk to them \u2014 because they're often genuinely helpful. The 4 patterns Situations where hallucinations are most likely 1 Specific numbers, dates, or statistics \"73% of CFOs report...\" \u2014 this is the classic hallucination shape. AI will fabricate confident-sounding statistics with precise-feeling decimals. The made-up stats often look more authoritative than real ones. Any time you see a specific percentage, study citation, or date in AI output, treat it as a claim to verify, not a fact to repeat. 2 Names of people, books, or papers \"As Daniel Kahneman wrote in his 2014 paper...\" \u2014 even when the person, book, and field are real, the specific paper or quote may not exist. AI is especially prone to inventing plausible-sounding academic citations. If a name is attached to a specific claim, verify before citing. 3 Anything time-sensitive or current Model training data has a cutoff date. Ask about anything that happened recently \u2014 a product feature, a current price, a regulatory change, a leadership move \u2014 and the model may confidently state what it remembers from training, which is outdated. The fix: use Perplexity for current-fact questions instead of a chat AI. 4 Technical syntax: code, formulas, APIs, regulations AI will hallucinate functions that don't exist, API endpoints that aren't real, and legal sections that don't appear in the actual statute. Especially in newer or less-common technologies. Always test code before shipping; always check legal citations against actual sources. The 3 techniques How to reduce hallucination rates before they happen 1 Give it permission to say \"I don't know\" Most AI defaults to confident answers. Explicitly tell it that unc\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = `You are an AI learning coach embedded in a lesson on LearningGPT.ai.
+LESSON TITLE: Spotting hallucinations before they cost you
+TRACK: AI Foundations (free)
+LESSON CONTENT SUMMARY:
+This lesson teaches how to recognize AI hallucinations fast (you can't avoid them; you can catch them).
+- Mental model: language models predict plausible-sounding next words; there is no internal fact lookup, so "plausible" is not "true." Reframe: treat AI like advice from a brilliant friend who's had a few drinks — usually solid, sometimes confidently made up, always worth verifying before high-stakes use.
+- The 4 patterns most likely to be hallucinated: (1) specific numbers, dates, statistics (e.g. "73% of CFOs report..."); (2) names of people, books, or papers and their specific quotes/citations (AI invents plausible academic citations); (3) anything time-sensitive or current (training has a cutoff — use a research-grounded tool like Perplexity instead); (4) technical syntax — code functions, API endpoints, formulas, legal/regulation sections.
+- The 3 techniques to lower hallucination rates: (1) give the model explicit permission to say "I don't know" rather than guess; (2) ask it to cite sources AND actually verify them (it can invent plausible citations); (3) use research-grounded AI (Perplexity, or ChatGPT/Gemini with search) for facts. Rule of thumb: chat AIs for writing, research-grounded AIs for facts.
+YOUR ROLE:
+- Answer questions specifically about this lesson content
+- Be concise, 2-4 sentences per answer unless the question genuinely needs more
+- Be practical, give real work examples when helpful
+- If asked about something not in this lesson, briefly answer and point to where they can learn more
+- Never make up features that don't exist
+- Plain conversational text only, no markdown symbols like ** or ##
+- Do not start responses with "Great question!" or similar filler phrases`;
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -334,27 +393,21 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
   if (!fab) return; // safety check
-
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -363,7 +416,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -372,7 +424,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

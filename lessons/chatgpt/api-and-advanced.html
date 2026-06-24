@@ -4,16 +4,16 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ChatGPT API, projects, and advanced prompting — LearningGPT</title>
-<meta name="description" content="The advanced ChatGPT curriculum for technical users and serious power users. When to use the OpenAI API instead of the app, ChatGPT Projects for power" />
+<meta name="description" content="The advanced ChatGPT curriculum: when to move from the app to the OpenAI API, ChatGPT Projects for power users, advanced reasoning prompts, and building evals." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#10a37f" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/chatgpt/api-and-advanced" />
 <meta property="og:title" content="ChatGPT API, projects, and advanced prompting" />
-<meta property="og:description" content="The advanced ChatGPT curriculum for technical users and serious power users. When to use the OpenAI API instead of the app, ChatGPT Projects for power" />
+<meta property="og:description" content="When to move from the app to the OpenAI API, Projects for power users, advanced reasoning prompts, and building evals." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -33,86 +33,100 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .lesson { padding: 50px 0 100px; }
 .lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
 .lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(16,163,127,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(16,163,127,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
 .lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
 .lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #10a37f 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .grad { background: linear-gradient(135deg, #10a37f 0%, #44e0a4 50%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 24px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.sec { margin: 46px 0 0; }
+.sec-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.lesson h2 { font-size: 27px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; }
 .lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
 .lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(16,163,127,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(16,163,127,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #10a37f, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(16,163,127,0.1); border: 1px solid rgba(16,163,127,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(16,163,127,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(16,163,127,0.25); border-radius: var(--radius-lg); padding: 36px; }
+
+/* ── DECISION TOOL ── */
+.decide { margin: 22px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden; background: #0d0d20; }
+.dq { padding: 14px 18px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.dq:last-of-type { border-bottom: none; }
+.dq-t { flex: 1; min-width: 200px; font-size: 14.5px; }
+.dq-t .sig { display: block; font-size: 11.5px; color: var(--text-mute); margin-top: 1px; }
+.dq-btns { display: flex; gap: 8px; }
+.dbtn { font-size: 12.5px; font-weight: 700; font-family: inherit; padding: 7px 18px; border-radius: 8px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); color: var(--text-dim); cursor: pointer; transition: all .15s; }
+.dbtn:hover:not(:disabled) { color: var(--text); border-color: var(--track); }
+.dbtn:disabled { cursor: default; }
+.dbtn.pick { background: rgba(16,163,127,0.16); border-color: var(--track); color: #b8f0e0; }
+.dbtn.dim { opacity: 0.4; }
+.dverdict { padding: 18px; background: rgba(16,163,127,0.07); border-top: 1px solid var(--line); display: none; }
+.dverdict.show { display: block; animation: fadeIn .4s ease; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(6px);} to{opacity:1;transform:none;} }
+.dverdict .vt { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.dverdict.stay .vt { color: #cdbcff; }
+.dverdict.edge .vt { color: var(--warn); }
+.dverdict.go .vt { color: #b6f4dc; }
+.dverdict p { margin: 0; font-size: 14px; color: var(--text-dim); }
+.dcount { padding: 12px 18px; font-size: 12px; color: var(--text-mute); border-top: 1px solid var(--line); }
+
+/* ── PATTERN CARDS ── */
+.pcards { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 18px 0; }
+.pc { padding: 16px 18px; border-radius: var(--radius-lg); background: linear-gradient(180deg, var(--surface), var(--bg-soft)); border: 1px solid var(--line); }
+.pc .h { font-size: 16px; font-weight: 700; margin-bottom: 4px; color: #b8f0e0; }
+.pc .ex { font-family: 'SFMono-Regular', Consolas, monospace; font-size: 12.5px; color: var(--text); background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; margin: 6px 0; }
+.pc .when { font-size: 13px; color: var(--text-dim); }
+.pc .when b { color: var(--track); }
+.pc .cost { font-size: 12px; color: var(--text-mute); border-left: 2px solid rgba(255,181,71,0.4); padding-left: 9px; margin-top: 6px; }
+
+/* ── ROUTER ── */
+.router { margin: 18px 0; }
+.rrow { padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); margin-bottom: 10px; }
+.rrow-scn { font-size: 14.5px; margin-bottom: 10px; }
+.rrow-btns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+@media (max-width: 560px){ .rrow-btns { grid-template-columns: 1fr; } }
+.rbtn { font-size: 12px; font-weight: 600; font-family: inherit; padding: 9px 10px; border-radius: 8px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); color: var(--text-dim); cursor: pointer; transition: all .15s; }
+.rbtn:hover:not(:disabled) { border-color: var(--track); color: var(--text); }
+.rbtn:disabled { cursor: default; }
+.rbtn.right { background: rgba(68,224,164,0.16); border-color: var(--accent); color: #b6f4dc; }
+.rbtn.wrong { background: rgba(255,107,138,0.12); border-color: var(--danger); color: #ffb0c1; }
+.rrow-fb { margin-top: 10px; font-size: 13px; color: var(--text-dim); display: none; }
+.rrow-fb.show { display: block; }
+.rrow-fb b { color: var(--track); }
+
+/* ── MINI REFERENCE ── */
+.mini { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 18px 0; }
+@media (max-width: 600px){ .mini { grid-template-columns: 1fr; } }
+.mc { padding: 16px 18px; border-radius: var(--radius-lg); background: var(--surface); border: 1px solid var(--line); }
+.mc h3 { margin: 0 0 6px; font-size: 16px; }
+.mc p { font-size: 13.5px; margin: 0; color: var(--text-dim); }
+.mc .tip { font-size: 12px; color: var(--text-mute); border-left: 2px solid rgba(16,163,127,0.4); padding-left: 9px; margin-top: 8px; }
+
+.challenge { margin: 46px 0 30px; background: linear-gradient(135deg, rgba(16,163,127,0.14), rgba(124,92,255,0.1)); border: 1px solid rgba(16,163,127,0.3); border-radius: var(--radius-lg); padding: 32px; }
 .challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #10a37f, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
 .challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #10a37f, #7c5cff); color: white; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: inherit; box-shadow: 0 6px 24px rgba(16,163,127,0.28); transition: transform .15s; text-decoration: none; }
+.btn:hover { transform: translateY(-1px); color: white; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.checklist { margin: 30px 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
 .checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
 .checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
 .checklist li:first-child { border-top: none; padding-top: 0; }
 .checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up { margin: 40px 0 0; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
 .next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
 .next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
-.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
-footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; margin-top: 40px; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -141,7 +155,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -153,49 +166,121 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <a href="/lessons/chatgpt/" class="nav-back">← ChatGPT Mastery</a>
   </div>
 </nav>
+
 <article class="lesson">
   <div class="container">
     <div class="lesson-meta">
-      <span class="chip">Lesson 08 · ChatGPT Mastery</span>
+      <span class="chip">Lesson 11 · ChatGPT Mastery</span>
       <span class="chip chip-pro-plus">Pro+</span>
-      <span>~16 min read</span>
+      <span>~16 min</span>
       <span class="dot"></span>
-      <span>4 advanced patterns</span>
+      <span>API · Projects · prompting · evals</span>
     </div>
-    <h1>API, projects, advanced prompting: <span class="grad serif">the power user end.</span></h1>
-    <p class="deck">The advanced ChatGPT curriculum for technical users and serious power users. When to use the OpenAI API instead of the app, ChatGPT Projects for power-user organization, evaluation patterns, and advanced reasoning prompts that consistently produce better output. By the end, you'll know how to operate ChatGPT at a level most users don't realize is possible.</p>
-    <h2><span class="num">The mental model</span></h2><h3>Advanced ChatGPT is mostly about the API, not the app.</h3><p>Once you're hitting the limits of the app (no automation, manual repetition, no version control, no scale), the API is where serious work happens. The skill stops being prompt-craft and starts being software engineering with AI as a building block.</p><h2><span class="num">Workflow 01</span> When to use the API instead of the app</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>The 4 signals you've outgrown the app</h3></div><p>Most users should stay in the app. But four signals mean you need the API: you'd benefit from automation; you process batches; you want to integrate ChatGPT into other software; you need cost control at scale.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Migration pattern</span>Sign up for an OpenAI API account (separate from your ChatGPT Plus). Get an API key. Make first call via curl/Postman. Then graduate to a real script that processes your specific workload.</div><h4>Best use cases</h4><ul><li>Engineers building AI features into products</li><li>Operations teams running batch workflows</li><li>Analysts processing 100s of items at once</li><li>Anyone whose ChatGPT usage hit "copy/paste" pain</li></ul><div class="gotcha">API costs add up at scale. Set per-call max_tokens. Cache repeat calls. Use cheaper models (gpt-5-mini) for tasks that don't need flagship reasoning.</div><div class="savings"><strong>Time savings:</strong> Manual app workflows: automated. Cost: typically lower than $20/mo ChatGPT Plus once cached.</div></div><h2><span class="num">Workflow 02</span> ChatGPT Projects for power users</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>Organize across many topics without losing context</h3></div><p>ChatGPT Projects let you bundle conversations, knowledge files, and custom instructions per topic. Most users don't use them; power users live in them.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Project structure</span>Create one Project per major topic or client. Add project-specific files (briefs, references, past work). Set project-specific custom instructions. Now every conversation in that project has the right context loaded.</div><h4>Best use cases</h4><ul><li>Consultants juggling 5+ clients</li><li>Engineers working across multiple codebases</li><li>Anyone with distinct, recurring topics</li><li>Maintaining context across long projects</li></ul><div class="gotcha">Don't create too many projects — managing 50 of them defeats the point. Aim for 5-10 active projects with retired ones archived.</div><div class="savings"><strong>Time savings:</strong> Re-establishing context across long projects: gone.</div></div><h2><span class="num">Workflow 03</span> Advanced reasoning prompts</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>The patterns that beat default ChatGPT</h3></div><p>Default ChatGPT gives default-quality output. Three patterns consistently produce 30-50% better results: chain-of-thought, self-critique, and few-shot examples.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">The three patterns</span>Chain-of-thought: 'Think step by step before answering.'
+    <h1>API, projects, advanced prompting: <span class="grad serif">the power-user end.</span></h1>
+    <p class="deck">The advanced end of ChatGPT, for technical and serious power users. When to graduate from the app to the OpenAI API, how power users live inside Projects, the reasoning patterns that beat default output, and how to build a real eval before you rely on a prompt.</p>
 
-Self-critique: 'Generate an answer. Then critique your own answer. Then revise.'
+    <!-- mental model -->
+    <div class="sec">
+      <span class="sec-eyebrow">The mental model</span>
+      <h2>Advanced ChatGPT is mostly the API, not the app.</h2>
+      <p>Once you're hitting the app's ceiling — no automation, manual repetition, no version control, no scale — the API is where the serious work happens. The skill stops being prompt-craft and starts being software engineering with AI as a building block. But most people <em>shouldn't</em> leave the app. Find out where you actually stand.</p>
+    </div>
 
-Few-shot: 'Here are 3 examples of what good output looks like: [examples]. Now do the same for this input.'</div><h4>Best use cases</h4><ul><li>Complex analytical tasks</li><li>Tasks where accuracy matters more than speed</li><li>Generating consistently-formatted output</li><li>Tasks where you've been disappointed by default ChatGPT</li></ul><div class="gotcha">Self-critique uses more tokens. For trivial tasks, skip it. For consequential work where you'd review the output anyway, it's worth the cost.</div><div class="savings"><strong>Time savings:</strong> Output quality on complex tasks: noticeably better.</div></div><h2><span class="num">Workflow 04</span> Evaluation: measure your prompts</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">4</div><h3>Build a real eval before you ship</h3></div><p>If you're using a prompt in production (even production-for-you), you need to know how often it works. Build an eval.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Eval pattern</span>1. Define what "good output" means (specific criteria).
-2. Build 20-50 test inputs.
-3. Run them through your prompt.
-4. Grade each output (LLM-as-judge with another GPT call, or human grading).
-5. Compare to baseline / previous version.</div><h4>Best use cases</h4><ul><li>Anyone shipping a Custom GPT to customers</li><li>Production AI features at any scale</li><li>Prompts that matter (legal, medical, financial domains)</li><li>A/B testing prompt variants</li></ul><div class="gotcha">LLM-as-judge is reliable for some criteria (format, length) and shaky on others (correctness, nuance). Calibrate with manual review.</div><div class="savings"><strong>Time savings:</strong> Confidence that production prompts actually work: real.</div></div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Final challenge: graduate to the API on one workflow</h2>
-      <p>Pick one ChatGPT workflow you currently do in the app that involves repetition or batches. Re-build it via the API in 30-60 min. Add a simple eval. Compare quality and cost to the app workflow.</p>
-      <div class="btn-row">
-        <a href="/lessons/chatgpt/" class="btn">Back to ChatGPT Mastery →</a>
-        <a href="/#pricing" class="btn ghost">See pricing →</a>
+    <!-- SIGNATURE: decision tool -->
+    <div class="sec">
+      <span class="sec-eyebrow">Do it · should you move to the API?</span>
+      <h2>Four signals you've outgrown the app.</h2>
+      <p>Answer honestly. The more yeses, the more the API is worth the engineering overhead.</p>
+
+      <div class="decide">
+        <div id="dqList"></div>
+        <div class="dcount" id="dCount">Answer all four to see where you land.</div>
+        <div class="dverdict" id="dVerdict"><div class="vt" id="dvt"></div><p id="dvp"></p></div>
       </div>
     </div>
+
+    <!-- pattern cards -->
+    <div class="sec">
+      <span class="sec-eyebrow">Prompts that beat the default</span>
+      <h2>Three reasoning patterns.</h2>
+      <p>Default ChatGPT gives default-quality output. These three lift complex tasks 30–50%.</p>
+      <div class="pcards">
+        <div class="pc">
+          <div class="h">Chain-of-thought</div>
+          <div class="ex">"Think step by step before you answer."</div>
+          <div class="when"><b>Use for</b> multi-step logic, math, anything it tends to rush.</div>
+        </div>
+        <div class="pc">
+          <div class="h">Self-critique</div>
+          <div class="ex">"Give an answer. Then critique your own answer. Then revise."</div>
+          <div class="when"><b>Use for</b> consequential work you'd review anyway.</div>
+          <div class="cost">Costs more tokens — skip it for trivial tasks.</div>
+        </div>
+        <div class="pc">
+          <div class="h">Few-shot examples</div>
+          <div class="ex">"Here are 3 examples of good output: […]. Now do the same for this input."</div>
+          <div class="when"><b>Use for</b> consistent format and tone at volume.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- pattern quiz -->
+    <div class="sec">
+      <span class="sec-eyebrow">Your call · match the pattern</span>
+      <h2>Which technique fits?</h2>
+      <div class="router" id="router"></div>
+    </div>
+
+    <!-- projects + evals -->
+    <div class="sec">
+      <span class="sec-eyebrow">Two more power-user moves</span>
+      <h2>Projects and evals.</h2>
+      <div class="mini">
+        <div class="mc">
+          <h3>ChatGPT Projects</h3>
+          <p>Bundle conversations, knowledge files, and custom instructions per topic or client, so every chat loads the right context.</p>
+          <div class="tip">Keep 5–10 active; archive the rest. Managing 50 defeats the point.</div>
+        </div>
+        <div class="mc">
+          <h3>Build an eval</h3>
+          <p>Define what "good" means, write 20–50 test inputs, run your prompt, grade each output, and compare to the previous version.</p>
+          <div class="tip">LLM-as-judge is fine for format/length, shaky on correctness — calibrate with manual review.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="challenge">
+      <h2 style="margin-top:0;">Graduate one workflow to the API</h2>
+      <p>Pick one app workflow that involves repetition or batches. Rebuild it via the OpenAI API in 30–60 minutes, add a simple eval, and compare quality and cost to the app version. Set per-call max_tokens, cache repeat calls, and use a cheaper model (like gpt-5-mini) where flagship reasoning isn't needed.</p>
+      <div class="btn-row">
+        <a href="/playground" class="btn">Try a prompt in the playground →</a>
+        <a href="/lessons/chatgpt/" class="btn ghost">Back to ChatGPT Mastery</a>
+      </div>
+    </div>
+
     <div class="checklist">
       <h3>What you can do now</h3>
-      <ul><li>Recognize when ChatGPT app isn't enough anymore</li><li>Make your first OpenAI API call and graduate to real scripts</li><li>Use Projects to organize topical work with persistent context</li><li>Apply advanced reasoning patterns (CoT, self-critique, few-shot) when accuracy matters</li><li>Build evals before relying on prompts in production</li></ul>
+      <ul>
+        <li>Recognize the four signals that you've outgrown the app</li>
+        <li>Make your first OpenAI API call and graduate to real scripts</li>
+        <li>Use Projects to keep topical work in persistent context</li>
+        <li>Apply chain-of-thought, self-critique, and few-shot when accuracy matters</li>
+        <li>Build an eval before relying on a prompt in production</li>
+      </ul>
     </div>
+
     <div class="next-up">
-      <span class="pro-tag">Pro+</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in ChatGPT Mastery</div>
-      <h3>Track complete — what comes next</h3>
-      <p>You've completed the ChatGPT Mastery track. Watch for new lessons as OpenAI ships features. Consider Copilot or Claude tracks for breadth. <a href="/#pricing">See pricing →</a></p>
+      <span class="pro-plus-tag">Pro+</span>
+      <div class="lbl" style="margin-top:14px;">Up next in ChatGPT Mastery</div>
+      <h3>Lesson 12 · Custom GPTs — build agents that match your work</h3>
+      <p>Package a system prompt, knowledge files, and tool actions into a reusable agent that knows your context, your tone, and your data. <a href="/lessons/chatgpt/custom-gpts-build">Start lesson 12 →</a></p>
     </div>
   </div>
 </article>
+
 <footer>
   <div class="footer-inner">
-    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with OpenAI.</div>
+    <div>© 2026 LearningGPT · Independent. Not affiliated with OpenAI.</div>
     <a href="/lessons/chatgpt/" style="color: var(--text-dim);">← All ChatGPT lessons</a>
   </div>
 </footer>
@@ -205,7 +290,6 @@ Few-shot: 'Here are 3 examples of what good output looks like: [examples]. Now d
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -220,7 +304,7 @@ Few-shot: 'Here are 3 examples of what good output looks like: [examples]. Now d
     <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -228,15 +312,105 @@ Few-shot: 'Here are 3 examples of what good output looks like: [examples]. Now d
   </div>
 </div>
 
+<script id="lessonScript">
+(function () {
+  // ── DECISION TOOL ──
+  var QS = [
+    { t: 'Do you repeat the same ChatGPT task many times a week?', sig: 'Signal: automation' },
+    { t: 'Do you process things in batches — dozens or hundreds of items at once?', sig: 'Signal: batch' },
+    { t: 'Do you want ChatGPT working inside other software — a script, app, or pipeline?', sig: 'Signal: integration' },
+    { t: 'Are you hitting copy/paste pain, or need cost control at scale?', sig: 'Signal: scale & cost' }
+  ];
+  var answers = {};
+  var dqList = document.getElementById('dqList');
+  var dCount = document.getElementById('dCount');
+  var dVerdict = document.getElementById('dVerdict');
+  var dvt = document.getElementById('dvt');
+  var dvp = document.getElementById('dvp');
+
+  QS.forEach(function (q, i) {
+    var row = document.createElement('div');
+    row.className = 'dq';
+    row.innerHTML =
+      '<div class="dq-t">' + q.t + '<span class="sig">' + q.sig + '</span></div>' +
+      '<div class="dq-btns"><button class="dbtn" data-v="yes">Yes</button><button class="dbtn" data-v="no">No</button></div>';
+    dqList.appendChild(row);
+    var btns = row.querySelectorAll('.dbtn');
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        answers[i] = b.dataset.v;
+        btns.forEach(function (x) {
+          x.classList.remove('pick', 'dim');
+          if (x === b) x.classList.add('pick'); else x.classList.add('dim');
+        });
+        tally();
+      });
+    });
+  });
+
+  function tally() {
+    var keys = Object.keys(answers);
+    var yes = keys.filter(function (k) { return answers[k] === 'yes'; }).length;
+    dCount.textContent = keys.length + ' / 4 answered · ' + yes + ' yes';
+    if (keys.length < QS.length) { dVerdict.classList.remove('show'); return; }
+    dVerdict.className = 'dverdict show';
+    if (yes <= 1) {
+      dVerdict.classList.add('stay');
+      dvt.textContent = 'Stay in the app.';
+      dvp.textContent = 'You\'re well inside what the app handles. The API would add engineering overhead for little gain — keep your edge in Projects and prompt-craft.';
+    } else if (yes <= 3) {
+      dVerdict.classList.add('edge');
+      dvt.textContent = 'You\'re at the edge — try the API on one workflow.';
+      dvp.textContent = 'A couple of these signals are firing. Pick your most repetitive task and rebuild just that one via the API before committing further.';
+    } else {
+      dVerdict.classList.add('go');
+      dvt.textContent = 'You\'ve outgrown the app — move to the API.';
+      dvp.textContent = 'All four signals are firing: automate, batch, integrate, and control cost. Get an API key (separate from Plus), make a first call, then script your workload.';
+    }
+  }
+
+  // ── PATTERN QUIZ ──
+  var OPTS = ['Chain-of-thought', 'Self-critique', 'Few-shot examples'];
+  var ITEMS = [
+    { scn: 'A multi-step logic problem where it keeps skipping steps and getting it wrong.', correct: 'Chain-of-thought',
+      why: '"Think step by step" forces it to show the reasoning instead of jumping to a wrong answer.' },
+    { scn: 'A consequential analysis you\'ll review anyway and want noticeably tighter.', correct: 'Self-critique',
+      why: 'Answer → critique → revise catches its own weak spots; worth the extra tokens on work that matters.' },
+    { scn: 'You need 50 outputs in the exact same structure and tone.', correct: 'Few-shot examples',
+      why: 'Show 3 examples of the format you want and it matches them — the reliable way to get consistency at volume.' }
+  ];
+  var router = document.getElementById('router');
+  ITEMS.forEach(function (it) {
+    var row = document.createElement('div');
+    row.className = 'rrow';
+    var btns = OPTS.map(function (o) { return '<button class="rbtn" data-o="' + o + '">' + o + '</button>'; }).join('');
+    row.innerHTML = '<div class="rrow-scn">' + it.scn + '</div><div class="rrow-btns">' + btns + '</div><div class="rrow-fb"></div>';
+    router.appendChild(row);
+    var fb = row.querySelector('.rrow-fb');
+    var rbtns = row.querySelectorAll('.rbtn');
+    var done = false;
+    rbtns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (done) return;
+        done = true;
+        var ok = b.dataset.o === it.correct;
+        rbtns.forEach(function (x) { x.disabled = true; if (x.dataset.o === it.correct) x.classList.add('right'); });
+        if (!ok) b.classList.add('wrong');
+        fb.innerHTML = (ok ? '' : '<b>' + it.correct + '.</b> ') + it.why;
+        fb.classList.add('show');
+      });
+    });
+  });
+})();
+</script>
 
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: ChatGPT API, projects, and advanced prompting\nTRACK: Chatgpt Mastery\n\nLESSON CONTENT SUMMARY:\nChatGPT API, projects, and advanced prompting \u2014 LearningGPT L LearningGPT \u2190 ChatGPT Mastery Lesson 08 \u00b7 ChatGPT Mastery Pro+ ~16 min read 4 advanced patterns API, projects, advanced prompting: the power user end. The advanced ChatGPT curriculum for technical users and serious power users. When to use the OpenAI API instead of the app, ChatGPT Projects for power-user organization, evaluation patterns, and advanced reasoning prompts that consistently produce better output. By the end, you'll know how to operate ChatGPT at a level most users don't realize is possible. The mental model Advanced ChatGPT is mostly about the API, not the app. Once you're hitting the limits of the app (no automation, manual repetition, no version control, no scale), the API is where serious work happens. The skill stops being prompt-craft and starts being software engineering with AI as a building block. Workflow 01 When to use the API instead of the app 1 The 4 signals you've outgrown the app Most users should stay in the app. But four signals mean you need the API: you'd benefit from automation; you process batches; you want to integrate ChatGPT into other software; you need cost control at scale. The prompt that works Migration pattern Sign up for an OpenAI API account (separate from your ChatGPT Plus). Get an API key. Make first call via curl/Postman. Then graduate to a real script that processes your specific workload. Best use cases Engineers building AI features into products Operations teams running batch workflows Analysts processing 100s of items at once Anyone whose ChatGPT usage hit \"copy/paste\" pain API costs add up at scale. Set per-call max_tokens. Cache repeat calls. Use cheaper models (gpt-5-mini) for tasks that don't need flagship reasoning. Time savings: Manual app workflows: automated. Cost: typically lower than $20/mo ChatGPT Plus once cached. Workflow 02 ChatGPT Projects for power users 2 Organize across many topics without losing context ChatGPT Projects let you bundle conversations, knowledge files, and custom instructions per topic. Most users don't use them; power users live in them. The prompt that works Project structure Create one Project per major topic or client. Add project-specific files (briefs, references, past work). Set project-specific custom instructions. Now every conversation in that project has the right context loaded. Best use cases Consultants juggling 5+ clients Engineers working across multiple codebases Anyone with distinct, recurring topics Maintaining context across long projects Don't create too many projects \u2014 managing 50 of them defeats the point. Aim for 5-10 active projects with retired ones archived. Time savings: Re-establishing context across long projects: gone. Workflow 03 Advanced reasoning prompts 3 The patterns that beat default ChatGPT Default ChatGPT gives default-quality output. Three patterns consistently produce 30-50% better results: chain-of-thought, self-critique, and few-shot examples. The prompt tha\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: ChatGPT API, projects, and advanced prompting\nTRACK: ChatGPT Mastery (Lesson 11, Pro+)\n\nLESSON CONTENT SUMMARY:\nThe advanced end of ChatGPT. Mental model: advanced ChatGPT is mostly about the API, not the app. Once you hit the app's ceiling (no automation, manual repetition, no version control, no scale), the API is where serious work happens — the skill shifts from prompt-craft to software engineering with AI as a building block. Most users SHOULD stay in the app.\n\nFour signals you've outgrown the app: (1) you'd benefit from automation (repeat the same task often); (2) you process batches (dozens/hundreds of items); (3) you want ChatGPT integrated into other software; (4) you need cost control at scale / hit copy-paste pain. Migration: get an OpenAI API account separate from ChatGPT Plus, get a key, make a first call via curl/Postman, then graduate to a real script. Cost control: set per-call max_tokens, cache repeat calls, use cheaper models (e.g., gpt-5-mini) for tasks that don't need flagship reasoning — once cached it's often cheaper than $20/mo Plus.\n\nChatGPT Projects: bundle conversations, knowledge files, and custom instructions per topic/client so every chat loads the right context. Keep 5–10 active and archive the rest; managing 50 defeats the point.\n\nThree advanced reasoning patterns (30–50% better on complex tasks): Chain-of-thought ('think step by step') for multi-step logic/math; Self-critique ('answer, then critique your answer, then revise') for consequential work you'd review anyway — costs more tokens, skip on trivial tasks; Few-shot ('here are 3 examples of good output, now do the same') for consistent format/tone at volume.\n\nEvals: if a prompt is in production (even production-for-you), measure it. Define what 'good' means, build 20–50 test inputs, run them, grade each (LLM-as-judge with another GPT call, or human grading), and compare to baseline/previous version. LLM-as-judge is reliable for format/length but shaky on correctness and nuance — calibrate with manual review.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more\n- Be practical — give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only — no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -244,27 +418,21 @@ Few-shot: 'Here are 3 examples of what good output looks like: [examples]. Now d
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -273,7 +441,6 @@ Few-shot: 'Here are 3 examples of what good output looks like: [examples]. Now d
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -282,7 +449,6 @@ Few-shot: 'Here are 3 examples of what good output looks like: [examples]. Now d
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

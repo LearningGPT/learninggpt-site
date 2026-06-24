@@ -4,16 +4,16 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Gemini in Slides, Meet, and advanced Workspace workflows — LearningGPT</title>
-<meta name="description" content="The lesson covering everything else Gemini does in Workspace beyond Gmail/Docs/Sheets. Gemini in Slides for presentations, Meet for live note-taking a" />
+<meta name="description" content="Everything else Gemini does in Workspace beyond Gmail/Docs/Sheets — Slides for decks, Meet for live notes, mobile-native captures, and Calendar/Tasks planning." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#4285f4" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/gemini/advanced-workflows" />
 <meta property="og:title" content="Gemini in Slides, Meet, and advanced Workspace workflows" />
-<meta property="og:description" content="The lesson covering everything else Gemini does in Workspace beyond Gmail/Docs/Sheets. Gemini in Slides for presentations, Meet for live note-taking a" />
+<meta property="og:description" content="Slides for decks, Meet for live notes, mobile-native captures, and Calendar/Tasks planning — the four surfaces beyond Gmail and Docs." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -23,7 +23,7 @@ body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; bac
 a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
 .bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
 .bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #4285f4; }
-.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #d96570; opacity: 0.2; }
 .container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
 nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
@@ -33,86 +33,97 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .lesson { padding: 50px 0 100px; }
 .lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
 .lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(66,133,244,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(66,133,244,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
 .lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
 .lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #4285f4 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .grad { background: linear-gradient(135deg, #4285f4 0%, #9b72cb 50%, #d96570 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 24px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.sec { margin: 46px 0 0; }
+.sec-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.lesson h2 { font-size: 27px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; }
 .lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
 .lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(66,133,244,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(66,133,244,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #4285f4, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(66,133,244,0.1); border: 1px solid rgba(66,133,244,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(66,133,244,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(66,133,244,0.25); border-radius: var(--radius-lg); padding: 36px; }
+
+/* ── SLIDE DECK SIM ── */
+.deckgen { margin: 22px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden; background: #0d0d20; }
+.dg-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--line); background: linear-gradient(90deg, rgba(66,133,244,0.07), rgba(217,101,112,0.05)); }
+.dg-bar .t { font-size: 12.5px; font-weight: 600; color: var(--text-dim); }
+.dg-brief { padding: 12px 16px; font-size: 13px; color: var(--text-dim); border-bottom: 1px solid var(--line); background: rgba(124,92,255,0.06); }
+.dg-brief b { color: #c9aef0; }
+.dg-run { padding: 14px 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.genbtn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg,#4285f4,#9b72cb); color: #fff; border: none; border-radius: 10px; padding: 10px 18px; font-size: 13.5px; font-weight: 700; font-family: inherit; cursor: pointer; transition: transform .15s, opacity .15s; }
+.genbtn:hover:not(:disabled) { transform: translateY(-1px); }
+.genbtn:disabled { opacity: 0.5; cursor: default; }
+.gen-hint { font-size: 12.5px; color: var(--text-mute); }
+.slidegrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 0 16px 14px; }
+@media (max-width: 600px){ .slidegrid { grid-template-columns: repeat(2, 1fr); } }
+.thumb { border: 1px solid var(--line); border-radius: 8px; background: rgba(255,255,255,0.03); padding: 10px; min-height: 76px; display: flex; flex-direction: column; gap: 6px; opacity: 0; transform: translateY(8px); }
+.thumb.in { opacity: 1; transform: none; transition: opacity .3s, transform .3s; animation: flashbg .5s ease; }
+@keyframes flashbg { 0%{ background: rgba(66,133,244,0.25); } 100%{ background: rgba(255,255,255,0.03); } }
+.thumb .tn { font-size: 9.5px; color: var(--text-mute); font-weight: 700; }
+.thumb .tt { font-size: 11px; font-weight: 600; color: #cfe0fd; line-height: 1.3; }
+.thumb .ly { margin-top: auto; height: 5px; border-radius: 3px; background: rgba(66,133,244,0.4); }
+.thumb .ly.bul { background: none; display: flex; flex-direction: column; gap: 2px; height: auto; }
+.thumb .ly.bul span { height: 3px; border-radius: 2px; background: rgba(255,255,255,0.18); }
+.thumb .ly.bul span:nth-child(2){ width: 80%; } .thumb .ly.bul span:nth-child(3){ width: 60%; }
+.thumb .ly.chart { height: 22px; background: none; display: flex; align-items: flex-end; gap: 3px; }
+.thumb .ly.chart i { flex: 1; background: rgba(68,224,164,0.5); border-radius: 1px; }
+.dg-note { padding: 0 16px 16px; font-size: 13.5px; color: var(--text-dim); display: none; }
+.dg-note.show { display: block; }
+.dg-note b { color: var(--track); }
+
+/* ── SURFACE CARDS ── */
+.surfs { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 18px 0; }
+.surf { padding: 16px 18px; border-radius: var(--radius-lg); background: linear-gradient(180deg, var(--surface), var(--bg-soft)); border: 1px solid var(--line); }
+.surf .sh { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.surf .sh h3 { margin: 0; font-size: 16px; }
+.surf p { font-size: 14px; margin: 0 0 6px; color: var(--text-dim); }
+.surf .g { font-size: 12.5px; color: var(--text-mute); border-left: 2px solid rgba(255,181,71,0.4); padding-left: 10px; }
+
+/* ── ROUTER ── */
+.router { margin: 16px 0; }
+.rrow { padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); margin-bottom: 10px; }
+.rrow-scn { font-size: 14.5px; margin-bottom: 10px; }
+.rrow-btns { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+@media (max-width: 520px){ .rrow-btns { grid-template-columns: 1fr; } }
+.rbtn { font-size: 12.5px; font-weight: 600; font-family: inherit; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); color: var(--text-dim); cursor: pointer; transition: all .15s; text-align: left; }
+.rbtn:hover:not(:disabled) { border-color: var(--track); color: var(--text); }
+.rbtn:disabled { cursor: default; }
+.rbtn.right { background: rgba(68,224,164,0.16); border-color: var(--accent); color: #b6f4dc; }
+.rbtn.wrong { background: rgba(255,107,138,0.12); border-color: var(--danger); color: #ffb0c1; }
+.rrow-fb { margin-top: 10px; font-size: 13px; color: var(--text-dim); display: none; }
+.rrow-fb.show { display: block; }
+.rrow-fb b { color: var(--track); }
+
+.challenge { margin: 46px 0 30px; background: linear-gradient(135deg, rgba(66,133,244,0.16), rgba(155,114,203,0.1)); border: 1px solid rgba(66,133,244,0.3); border-radius: var(--radius-lg); padding: 32px; }
 .challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #4285f4, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
 .challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #4285f4, #9b72cb); color: white; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: inherit; box-shadow: 0 6px 24px rgba(66,133,244,0.28); transition: transform .15s; text-decoration: none; }
+.btn:hover { transform: translateY(-1px); color: white; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.checklist { margin: 30px 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
 .checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
 .checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
 .checklist li:first-child { border-top: none; padding-top: 0; }
 .checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up { margin: 40px 0 0; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
 .next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
 .next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
-.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
-footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; margin-top: 40px; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -141,7 +152,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -153,51 +163,94 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <a href="/lessons/gemini/" class="nav-back">← Gemini Mastery</a>
   </div>
 </nav>
+
 <article class="lesson">
   <div class="container">
     <div class="lesson-meta">
-      <span class="chip">Lesson 08 · Gemini Mastery</span>
-      <span class="chip chip-pro">Pro</span>
-      <span>~13 min read</span>
+      <span class="chip">Lesson 09 · Gemini Mastery</span>
+      <span class="chip chip-pro-plus">Pro+</span>
+      <span>~13 min</span>
       <span class="dot"></span>
       <span>4 surfaces</span>
     </div>
     <h1>Slides, Meet, advanced: <span class="grad serif">the rest of Workspace.</span></h1>
-    <p class="deck">The lesson covering everything else Gemini does in Workspace beyond Gmail/Docs/Sheets. Gemini in Slides for presentations, Meet for live note-taking and transcription, mobile workflows, and integration with Calendar and Tasks. By the end, you'll have covered every meaningful Gemini surface in Workspace.</p>
-    <h2><span class="num">The mental model</span></h2><h3>Gemini is everywhere in Workspace; learn to use the surfaces beyond Gmail and Docs.</h3><p>Most Gemini users stick to the core surfaces (Gmail, Docs, Sheets). But Gemini in Slides, Meet, Calendar, and on mobile each has its own win. This lesson covers the four that compound on top of what you already know.</p><h2><span class="num">Workflow 01</span> Gemini in Slides: from outline to deck</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>Generate slide content from natural language</h3></div><p>Most people fight Slides templates for hours. With Gemini, you describe what you want and get a draft deck to refine.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Slide-generation prompt</span>Generate a 10-slide deck on [topic] for [audience]. Include: title, agenda, 3 key points each with a slide, a data slide (suggest the chart), Q&A, contact slide. Match a clean, professional style.</div><h4>Best use cases</h4><ul><li>Sales decks and proposals</li><li>Internal presentations</li><li>Training materials</li><li>Speaker decks for events</li></ul><div class="gotcha">Generated slide layouts are functional but not magazine-quality. For high-stakes external presentations, treat Gemini's output as a starting point that a designer will polish.</div><div class="savings"><strong>Time savings:</strong> Deck-from-scratch: 4 hours → 30 min including polish.</div></div><h2><span class="num">Workflow 02</span> Gemini in Meet: live transcription + summary</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>Auto-transcribe and summarize meetings</h3></div><p>Enable Gemini in Meet. Recording with auto-transcription captures everything. After the meeting, Gemini generates the summary, action items, and decisions.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Setup</span>In any Meet call → click the Gemini icon in the call controls → enable "Take notes for me" → at end of meeting, Gemini delivers the recap to all attendees via email.</div><h4>Best use cases</h4><ul><li>All-hands and team meetings where notes matter</li><li>Customer calls where action items need follow-up</li><li>Interviews and 1:1s for personal records</li><li>Multi-stakeholder meetings where alignment matters</li></ul><div class="gotcha">Meeting notes from Gemini are accurate but not perfect. Spot-check critical decisions and action items against the recording for high-stakes meetings.</div><div class="savings"><strong>Time savings:</strong> Meeting note-taking: gone, structured.</div></div><h2><span class="num">Workflow 03</span> Mobile workflows: Gemini on the phone</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>The use cases that make sense on mobile</h3></div><p>Gemini on iOS/Android isn't just smaller-screen ChatGPT. There are specific workflows that work great on mobile and bad on desktop.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Mobile-native workflows</span>Voice-input notes after meetings on the walk back.
+    <p class="deck">Everything else Gemini does beyond Gmail, Docs, and Sheets. Four more surfaces — Slides for decks, Meet for live notes, mobile-native captures, and Calendar/Tasks planning — each with its own win. We'll start with the one that turns a four-hour job into a draft you refine.</p>
 
-Photograph receipts/whiteboards for instant transcription.
+    <!-- mental model -->
+    <div class="sec">
+      <span class="sec-eyebrow">The mental model</span>
+      <h2>Gemini lives on more than two apps.</h2>
+      <p>Most people stop at Gmail and Docs. But Slides, Meet, mobile, and Calendar each compound on top of what you already know — and the skill is matching the surface to the moment. First, watch the one that feels like magic.</p>
+    </div>
 
-Quick research between calls without opening a laptop.
+    <!-- SIGNATURE: slide deck gen -->
+    <div class="sec">
+      <span class="sec-eyebrow">Do it · Slides from a brief</span>
+      <h2>Describe the deck. Get a draft.</h2>
+      <p>Stop fighting templates. Give Gemini a brief and it drafts the whole deck — structure, layouts, and all. Hit generate.</p>
 
-Live translation in conversations or while reading.</div><h4>Best use cases</h4><ul><li>Field sales reps</li><li>Anyone who's frequently away from their desk</li><li>Travelers needing translation help</li><li>Note-taking after offsite meetings</li></ul><div class="gotcha">Don't try to do deep work on mobile. Mobile Gemini is for quick captures and quick answers. Move to desktop for anything multi-step.</div><div class="savings"><strong>Time savings:</strong> Dead time on phone: productive thinking time.</div></div><h2><span class="num">Workflow 04</span> Calendar and Tasks integration</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">4</div><h3>Let Gemini schedule and plan</h3></div><p>Gemini integrates with Calendar and Tasks to help with scheduling, planning, and follow-through.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Integration prompts</span>Schedule a 30-min sync with [person] for next week, ideally Tuesday afternoon. Add it to my Calendar.
-
-Review my Tasks for this week. Re-prioritize based on these emails I just received.
-
-What does my Calendar look like for the next two weeks? Block 4 hours of focus time.</div><h4>Best use cases</h4><ul><li>Manager scheduling many meetings</li><li>Planning weeks with many constraints</li><li>Maintaining personal task lists</li><li>Pre-meeting prep automation</li></ul><div class="gotcha">Calendar integration uses your access permissions. It can't see others' calendars unless they've shared. Gemini works with what it can see.</div><div class="savings"><strong>Time savings:</strong> Calendar admin and scheduling: dramatically reduced.</div></div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Final challenge: use all 4 surfaces in one week</h2>
-      <p>For one work week, deliberately use Gemini in Slides, Meet, mobile, and Calendar at least once each. Track which surfaces actually save time vs. which are novelty. Keep the wins, drop the rest.</p>
-      <div class="btn-row">
-        <a href="/lessons/gemini/" class="btn">Back to Gemini Mastery →</a>
-        <a href="/#pricing" class="btn ghost">See pricing →</a>
+      <div class="deckgen">
+        <div class="dg-bar"><span class="t">📊 Gemini in Slides</span></div>
+        <div class="dg-brief">Brief: <b>10-slide deck on Q3 results for the leadership team</b> — title, agenda, 3 key points (one slide each), a data slide, Q&amp;A, contact. Clean, professional.</div>
+        <div class="dg-run">
+          <button class="genbtn" id="genBtn">✨ Generate deck</button>
+          <span class="gen-hint" id="genHint">Gemini drafts the structure and layout for every slide.</span>
+        </div>
+        <div class="slidegrid" id="slides"></div>
+        <div class="dg-note" id="dgNote"><strong>A full draft deck in seconds.</strong> Structure, layout suggestions, even the chart placement. <b>The catch:</b> layouts are functional, not magazine-quality — for a high-stakes external pitch, treat this as the starting point a designer polishes.</div>
       </div>
     </div>
+
+    <!-- surface cards -->
+    <div class="sec">
+      <span class="sec-eyebrow">Three more surfaces</span>
+      <h2>Beyond the deck.</h2>
+      <div class="surfs">
+        <div class="surf"><div class="sh"><h3>🎥 Gemini in Meet</h3></div><p>Turn on "Take notes for me" in the call controls; at the end, Gemini emails the recap — summary, decisions, action items — to attendees.</p><div class="g">Accurate, not perfect — spot-check critical decisions against the recording for high-stakes meetings.</div></div>
+        <div class="surf"><div class="sh"><h3>📱 Mobile-native captures</h3></div><p>Voice-input notes on the walk back, photograph a receipt or whiteboard to transcribe, quick research between calls, live translation.</p><div class="g">Don't do deep work on mobile — it's for quick captures and answers. Move multi-step work to desktop.</div></div>
+        <div class="surf"><div class="sh"><h3>📅 Calendar &amp; Tasks</h3></div><p>"Book a 30-min sync next Tuesday afternoon," "re-prioritize my Tasks from these emails," "block 4 hours of focus time."</p><div class="g">It uses your access — it can't see others' calendars unless they've shared them.</div></div>
+      </div>
+    </div>
+
+    <!-- router -->
+    <div class="sec">
+      <span class="sec-eyebrow">Your call · which surface?</span>
+      <h2>Match the job to the surface.</h2>
+      <div class="router" id="router"></div>
+    </div>
+
+    <div class="challenge">
+      <h2 style="margin-top:0;">Use all four surfaces in one week</h2>
+      <p>For one work week, deliberately use Gemini in Slides, Meet, mobile, and Calendar at least once each. Track which actually save time and which are just novelty — keep the wins, drop the rest.</p>
+      <div class="btn-row">
+        <a href="/playground" class="btn">Try a prompt in the playground →</a>
+        <a href="/lessons/gemini/" class="btn ghost">Back to Gemini Mastery</a>
+      </div>
+    </div>
+
     <div class="checklist">
       <h3>What you can do now</h3>
-      <ul><li>Generate slide decks from natural-language briefs</li><li>Use Gemini in Meet for transcription and summary</li><li>Adopt 2-3 mobile workflows that fit your day</li><li>Let Gemini help with Calendar and Task planning</li><li>Calibrate which Gemini surfaces save time vs. just add novelty</li></ul>
+      <ul>
+        <li>Generate slide decks from a natural-language brief — then polish the layout</li>
+        <li>Use Gemini in Meet for transcription and recap, spot-checking key decisions</li>
+        <li>Adopt 2–3 mobile-native workflows; keep deep work on desktop</li>
+        <li>Let Gemini handle Calendar and Task planning within your permissions</li>
+        <li>Calibrate which surfaces save time vs. just add novelty</li>
+      </ul>
     </div>
+
     <div class="next-up">
-      <span class="pro-tag">Pro</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in Gemini Mastery</div>
-      <h3>Track complete — what comes next</h3>
-      <p>You've completed the Gemini Mastery track. Watch for new lessons as Google ships features. Try the Copilot or ChatGPT tracks for cross-tool breadth. <a href="/#pricing">See pricing →</a></p>
+      <span class="pro-plus-tag">Pro+</span>
+      <div class="lbl" style="margin-top:14px;">Up next in Gemini Mastery</div>
+      <h3>Lesson 10 · Gemini Agent — Google's unified agentic mode</h3>
+      <p>In May 2026 Google folded Project Mariner into Gemini Agent — the unified agentic mode inside the Gemini app. What it does, and the oversight that keeps it safe. <a href="/lessons/gemini/gemini-agent">Start lesson 10 →</a></p>
     </div>
   </div>
 </article>
+
 <footer>
   <div class="footer-inner">
-    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Google.</div>
+    <div>© 2026 LearningGPT · Independent. Not affiliated with Google.</div>
     <a href="/lessons/gemini/" style="color: var(--text-dim);">← All Gemini lessons</a>
   </div>
 </footer>
@@ -207,7 +260,6 @@ What does my Calendar look like for the next two weeks? Block 4 hours of focus t
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -222,7 +274,7 @@ What does my Calendar look like for the next two weeks? Block 4 hours of focus t
     <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -230,15 +282,102 @@ What does my Calendar look like for the next two weeks? Block 4 hours of focus t
   </div>
 </div>
 
+<script id="lessonScript">
+(function () {
+  // ── SLIDE DECK GENERATION ──
+  var SLIDES = [
+    { n: 1, t: 'Q3 Results', ly: 'title' },
+    { n: 2, t: 'Agenda', ly: 'bul' },
+    { n: 3, t: 'Revenue beat plan', ly: 'bul' },
+    { n: 4, t: 'Pipeline health', ly: 'bul' },
+    { n: 5, t: 'Where we slipped', ly: 'bul' },
+    { n: 6, t: 'Revenue by quarter', ly: 'chart' },
+    { n: 7, t: 'Q4 priorities', ly: 'bul' },
+    { n: 8, t: 'Q & A', ly: 'title' }
+  ];
+  var slides = document.getElementById('slides');
+  var genBtn = document.getElementById('genBtn');
+  var genHint = document.getElementById('genHint');
+  var dgNote = document.getElementById('dgNote');
+
+  SLIDES.forEach(function (s) {
+    var div = document.createElement('div');
+    div.className = 'thumb';
+    var ly;
+    if (s.ly === 'title') ly = '<div class="ly"></div>';
+    else if (s.ly === 'chart') ly = '<div class="ly chart"><i style="height:40%"></i><i style="height:70%"></i><i style="height:100%"></i></div>';
+    else ly = '<div class="ly bul"><span></span><span></span><span></span></div>';
+    div.innerHTML = '<div class="tn">Slide ' + s.n + '</div><div class="tt">' + s.t + '</div>' + ly;
+    slides.appendChild(div);
+  });
+  var thumbs = slides.querySelectorAll('.thumb');
+
+  var gen = false;
+  genBtn.addEventListener('click', function () {
+    if (gen) return;
+    gen = true;
+    genBtn.disabled = true;
+    genBtn.textContent = '✨ Generating…';
+    genHint.textContent = 'Drafting each slide…';
+    var i = 0;
+    (function step() {
+      if (i >= thumbs.length) {
+        genBtn.textContent = '✓ ' + thumbs.length + '-slide draft ready';
+        genHint.textContent = '';
+        dgNote.classList.add('show');
+        return;
+      }
+      thumbs[i].classList.add('in');
+      thumbs[i].scrollIntoView({ block: 'nearest' });
+      i++;
+      setTimeout(step, 320);
+    })();
+  });
+
+  // ── ROUTER ──
+  var OPTS = ['Slides', 'Meet', 'Mobile', 'Calendar & Tasks'];
+  var ITEMS = [
+    { scn: 'Turn a rough brief into a first-draft presentation.', correct: 'Slides',
+      why: 'Describe the deck and Gemini in Slides drafts the structure and layouts for you to refine.' },
+    { scn: 'Capture the decisions and action items from a 60-minute call.', correct: 'Meet',
+      why: '"Take notes for me" in Meet transcribes live and emails a structured recap to attendees.' },
+    { scn: 'Jot voice notes on the walk back from an offsite.', correct: 'Mobile',
+      why: 'Voice-input capture on the go is a mobile-native win — quick capture, not deep work.' },
+    { scn: 'Find a Tuesday-afternoon slot and book a 30-minute sync.', correct: 'Calendar & Tasks',
+      why: 'Scheduling and planning is the Calendar/Tasks integration — within your access permissions.' }
+  ];
+  var router = document.getElementById('router');
+  ITEMS.forEach(function (it) {
+    var row = document.createElement('div');
+    row.className = 'rrow';
+    var btns = OPTS.map(function (o) { return '<button class="rbtn" data-o="' + o + '">' + o + '</button>'; }).join('');
+    row.innerHTML = '<div class="rrow-scn">' + it.scn + '</div><div class="rrow-btns">' + btns + '</div><div class="rrow-fb"></div>';
+    router.appendChild(row);
+    var fb = row.querySelector('.rrow-fb');
+    var rbtns = row.querySelectorAll('.rbtn');
+    var done = false;
+    rbtns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (done) return;
+        done = true;
+        var ok = b.dataset.o === it.correct;
+        rbtns.forEach(function (x) { x.disabled = true; if (x.dataset.o === it.correct) x.classList.add('right'); });
+        if (!ok) b.classList.add('wrong');
+        fb.innerHTML = (ok ? '' : '<b>' + it.correct + '.</b> ') + it.why;
+        fb.classList.add('show');
+      });
+    });
+  });
+})();
+</script>
 
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Gemini in Slides, Meet, and advanced Workspace workflows\nTRACK: Gemini Mastery\n\nLESSON CONTENT SUMMARY:\nGemini in Slides, Meet, and advanced Workspace workflows \u2014 LearningGPT L LearningGPT \u2190 Gemini Mastery Lesson 08 \u00b7 Gemini Mastery Pro ~13 min read 4 surfaces Slides, Meet, advanced: the rest of Workspace. The lesson covering everything else Gemini does in Workspace beyond Gmail/Docs/Sheets. Gemini in Slides for presentations, Meet for live note-taking and transcription, mobile workflows, and integration with Calendar and Tasks. By the end, you'll have covered every meaningful Gemini surface in Workspace. The mental model Gemini is everywhere in Workspace; learn to use the surfaces beyond Gmail and Docs. Most Gemini users stick to the core surfaces (Gmail, Docs, Sheets). But Gemini in Slides, Meet, Calendar, and on mobile each has its own win. This lesson covers the four that compound on top of what you already know. Workflow 01 Gemini in Slides: from outline to deck 1 Generate slide content from natural language Most people fight Slides templates for hours. With Gemini, you describe what you want and get a draft deck to refine. The prompt that works Slide-generation prompt Generate a 10-slide deck on [topic] for [audience]. Include: title, agenda, 3 key points each with a slide, a data slide (suggest the chart), Q&A, contact slide. Match a clean, professional style. Best use cases Sales decks and proposals Internal presentations Training materials Speaker decks for events Generated slide layouts are functional but not magazine-quality. For high-stakes external presentations, treat Gemini's output as a starting point that a designer will polish. Time savings: Deck-from-scratch: 4 hours \u2192 30 min including polish. Workflow 02 Gemini in Meet: live transcription + summary 2 Auto-transcribe and summarize meetings Enable Gemini in Meet. Recording with auto-transcription captures everything. After the meeting, Gemini generates the summary, action items, and decisions. The prompt that works Setup In any Meet call \u2192 click the Gemini icon in the call controls \u2192 enable \"Take notes for me\" \u2192 at end of meeting, Gemini delivers the recap to all attendees via email. Best use cases All-hands and team meetings where notes matter Customer calls where action items need follow-up Interviews and 1:1s for personal records Multi-stakeholder meetings where alignment matters Meeting notes from Gemini are accurate but not perfect. Spot-check critical decisions and action items against the recording for high-stakes meetings. Time savings: Meeting note-taking: gone, structured. Workflow 03 Mobile workflows: Gemini on the phone 3 The use cases that make sense on mobile Gemini on iOS/Android isn't just smaller-screen ChatGPT. There are specific workflows that work great on mobile and bad on desktop. The prompt that works Mobile-native workflows Voice-input notes after meetings on the walk back. Photograph receipts/whiteboards for instant transcription. Quick research between calls without opening a laptop. Live translation in conversations or while reading. Best use cases Field\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Gemini in Slides, Meet, and advanced Workspace workflows\nTRACK: Gemini Mastery (Lesson 9, Pro+)\n\nLESSON CONTENT SUMMARY:\nThis covers everything Gemini does in Workspace beyond Gmail/Docs/Sheets — four more surfaces, each with its own win. The mental model: most users stop at the core apps, but Slides, Meet, mobile, and Calendar/Tasks each compound on what you know; the skill is matching the surface to the moment.\n\n(1) Gemini in Slides — describe a deck in natural language ('10-slide deck on [topic] for [audience]: title, agenda, 3 key points each on a slide, a data slide with a suggested chart, Q&A, contact, clean professional style') and get a draft deck to refine. Gotcha: layouts are functional, not magazine-quality — for high-stakes external presentations, treat the output as a starting point a designer polishes.\n\n(2) Gemini in Meet — turn on 'Take notes for me' in the call controls; it transcribes live and, at the end, emails the recap (summary, decisions, action items) to attendees. Gotcha: accurate but not perfect — spot-check critical decisions/action items against the recording for high-stakes meetings.\n\n(3) Mobile-native workflows — Gemini on iOS/Android is for things that work better on a phone: voice-input notes after meetings, photographing receipts/whiteboards to transcribe, quick research between calls, live translation. Gotcha: don't do deep multi-step work on mobile — move that to desktop.\n\n(4) Calendar & Tasks — scheduling and planning: 'book a 30-min sync next Tuesday afternoon,' 're-prioritize my Tasks from these emails,' 'block 4 hours of focus time.' Gotcha: it works within your access permissions — it can't see others' calendars unless they've shared them.\n\nThe throughline: match the surface to the job, treat generated output (decks, notes) as drafts that need your judgment, and calibrate which surfaces actually save time vs. just add novelty.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more\n- Be practical — give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only — no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -246,27 +385,21 @@ What does my Calendar look like for the next two weeks? Block 4 hours of focus t
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -275,7 +408,6 @@ What does my Calendar look like for the next two weeks? Block 4 hours of focus t
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -284,7 +416,6 @@ What does my Calendar look like for the next two weeks? Block 4 hours of focus t
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

@@ -9,317 +9,116 @@
 <meta name="theme-color" content="#2c7be5" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/copilot/outlook-mastery" />
 <meta property="og:title" content="Copilot in Outlook: write 10 emails in the time it takes you to write 1" />
 <meta property="og:description" content="Free LearningGPT lesson. 5 Copilot Outlook workflows that turn a 2-hour inbox session into 20 minutes." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
-
 <style>
-:root {
-  --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a;
-  --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14);
-  --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85;
-  --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4;
-  --warn: #ffb547; --danger: #ff6b8a;
-  --radius: 14px; --radius-lg: 20px;
-  --container: 820px;
-  --track: #2c7be5;
-}
-* { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
-body {
-  font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif;
-  background: var(--bg); color: var(--text);
-  line-height: 1.7; -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
-a { color: var(--brand-2); text-decoration: none; }
-a:hover { color: var(--text); }
-
-.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.35; }
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #2c7be5; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+button { font-family: inherit; cursor: pointer; }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
 .bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #2c7be5; }
-.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.3; }
-
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
 .container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
-
-nav.top {
-  position: sticky; top: 0; z-index: 100;
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  background: rgba(10,10,26,0.85);
-  border-bottom: 1px solid var(--line);
-}
-.nav-inner {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 24px; max-width: 1180px; margin: 0 auto;
-}
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
 .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
-.logo-mark {
-  width: 30px; height: 30px; border-radius: 7px;
-  background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4);
-  display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white;
-  box-shadow: 0 4px 16px rgba(124,92,255,0.5);
-}
-.nav-back { font-size: 13px; color: var(--text-dim); }
-.nav-back:hover { color: var(--text); }
-
-/* Lesson layout */
-.lesson { padding: 50px 0 100px; }
-
-.lesson-meta {
-  display: flex; gap: 16px; flex-wrap: wrap; align-items: center;
-  font-size: 13px; color: var(--text-mute); margin-bottom: 20px;
-}
-.lesson-meta .chip {
-  padding: 4px 10px; border: 1px solid rgba(44,123,229,0.4); border-radius: 999px;
-  font-size: 11px; color: var(--track); background: rgba(44,123,229,0.1);
-  font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px;
-}
-.lesson-meta .chip-free {
-  border-color: rgba(68,224,164,0.4); color: var(--accent); background: rgba(68,224,164,0.1);
-}
-.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
-
-.lesson h1 {
-  font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15;
-  letter-spacing: -0.02em; margin: 0 0 20px;
-}
-.lesson h1 .grad {
-  background: linear-gradient(135deg, #2c7be5 0%, #5b8def 50%, #7c5cff 100%);
-  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-}
-.lesson h1 .serif {
-  font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400;
-  padding-right: 0.15em;
-}
-
-.lesson .deck {
-  font-size: 19px; color: var(--text-dim); line-height: 1.55;
-  margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line);
-}
-
-.lesson h2 {
-  font-size: 28px; font-weight: 700; letter-spacing: -0.01em;
-  margin: 56px 0 16px;
-}
-.lesson h2 .num {
-  display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px;
-  font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle;
-}
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
-.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
-.lesson strong { font-weight: 700; color: var(--text); }
-.lesson em { font-style: italic; color: var(--text); }
-.lesson ul, .lesson ol { padding-left: 24px; margin: 0 0 18px; }
-.lesson li { margin-bottom: 8px; color: var(--text); }
-
-/* Mental model callout */
-.callout {
-  margin: 28px 0; padding: 22px 26px;
-  background: linear-gradient(135deg, rgba(44,123,229,0.10), rgba(124,92,255,0.06));
-  border: 1px solid rgba(44,123,229,0.25);
-  border-radius: var(--radius-lg);
-  position: relative;
-}
-.callout::before {
-  content: ''; position: absolute; top: 0; left: 0; bottom: 0;
-  width: 3px; background: linear-gradient(180deg, #2c7be5, #7c5cff);
-  border-radius: 2px 0 0 2px;
-}
-.callout .lbl {
-  display: inline-block; font-size: 10.5px; font-weight: 700;
-  letter-spacing: 1.2px; text-transform: uppercase; color: var(--track);
-  margin-bottom: 8px;
-}
-.callout p:last-child { margin-bottom: 0; }
-
-/* Workflow boxes */
-.workflow {
-  margin: 30px 0;
-  background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  padding: 28px;
-}
-.workflow-head {
-  display: flex; align-items: center; gap: 12px; margin-bottom: 6px;
-}
-.workflow-num {
-  width: 30px; height: 30px; border-radius: 8px;
-  background: rgba(44,123,229,0.15);
-  border: 1px solid rgba(44,123,229,0.35);
-  display: grid; place-items: center;
-  font-size: 12px; font-weight: 700; color: var(--track);
-}
-.workflow-difficulty {
-  margin-left: auto;
-  font-size: 10.5px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;
-  padding: 3px 9px; border-radius: 999px;
-}
-.workflow-difficulty.basic { background: rgba(68,224,164,0.15); color: var(--accent); border: 1px solid rgba(68,224,164,0.35); }
-.workflow-difficulty.intermediate { background: rgba(91,141,239,0.15); color: var(--brand-2); border: 1px solid rgba(91,141,239,0.35); }
-.workflow-difficulty.advanced { background: rgba(255,181,71,0.15); color: var(--warn); border: 1px solid rgba(255,181,71,0.35); }
-.workflow-difficulty.power { background: rgba(255,107,138,0.15); color: var(--danger); border: 1px solid rgba(255,107,138,0.35); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-
-.workflow .where {
-  font-size: 13px; color: var(--text-mute); margin: 4px 0 18px;
-}
-.workflow .where strong { color: var(--text-dim); font-weight: 600; }
-
-.workflow h4 {
-  font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px;
-  color: var(--text-mute); margin: 18px 0 8px; font-weight: 600;
-}
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-
-.prompt-example {
-  background: rgba(0,0,0,0.3); border: 1px solid var(--line);
-  border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px;
-  font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px;
-  color: var(--text); line-height: 1.6;
-}
-.prompt-example .label {
-  display: block; font-family: 'Inter', sans-serif; font-size: 10.5px;
-  color: var(--text-mute); margin-bottom: 6px;
-  text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600;
-}
-
-.gotcha {
-  background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2);
-  border-radius: 10px; padding: 14px 16px; margin: 14px 0;
-  font-size: 14.5px;
-}
-.gotcha::before {
-  content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700;
-}
-
-.savings {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(68,224,164,0.10);
-  border: 1px solid rgba(68,224,164,0.3);
-  padding: 8px 14px; border-radius: 8px;
-  font-size: 13.5px; color: var(--text); margin-top: 6px;
-}
-.savings::before {
-  content: '⏱'; font-size: 14px;
-}
-.savings strong { color: var(--accent); font-weight: 700; }
-
-/* Limitations section */
-.limitations {
-  margin: 36px 0;
-  background: rgba(255,107,138,0.04); border: 1px solid rgba(255,107,138,0.2);
-  border-radius: var(--radius-lg); padding: 26px 28px;
-}
-.limitations h3 { margin-top: 0; color: var(--text); }
-.limitations p { font-size: 15px; }
-.limitations ul li { font-size: 14.5px; }
-
-/* Final challenge */
-.challenge {
-  margin: 56px 0 40px;
-  background: linear-gradient(135deg, rgba(44,123,229,0.18), rgba(124,92,255,0.1));
-  border: 1px solid rgba(44,123,229,0.3);
-  border-radius: var(--radius-lg); padding: 36px;
-}
-.challenge h2 { margin-top: 0; }
-.challenge ol li { margin-bottom: 10px; font-size: 15px; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.challenge a.btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: linear-gradient(135deg, #2c7be5, #5b8def); color: white;
-  padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px;
-  box-shadow: 0 6px 24px rgba(44,123,229,0.4); transition: transform .15s;
-}
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost {
-  background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none;
-}
-
-/* Checklist */
-.checklist {
-  margin: 40px 0; padding: 28px; border: 1px solid var(--line);
-  border-radius: var(--radius-lg); background: var(--surface);
-}
-.checklist h3 { margin-top: 0; font-size: 18px; }
-.checklist ul { list-style: none; padding: 0; margin: 0; }
-.checklist li {
-  padding: 10px 0 10px 32px; position: relative; font-size: 15px;
-  color: var(--text); border-top: 1px solid var(--line);
-}
-.checklist li:first-child { border-top: none; padding-top: 0; }
-.checklist li::before {
-  content: ''; position: absolute; left: 0; top: 14px;
-  width: 20px; height: 20px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E");
-  background-size: contain; background-repeat: no-repeat;
-}
-.checklist li:first-child::before { top: 4px; }
-
-/* Next up */
-.next-up {
-  margin: 60px 0 0; padding: 32px;
-  border: 1px solid var(--line); border-radius: var(--radius-lg);
-  background: var(--bg-soft);
-}
-.next-up .lbl {
-  font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase;
-  color: var(--text-mute); font-weight: 600; margin-bottom: 10px;
-}
-.next-up h3 { margin: 0 0 8px; font-size: 20px; }
-.next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
-.next-up .pro-tag {
-  display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px;
-  background: rgba(124,92,255,0.18); color: var(--brand);
-  padding: 3px 10px; border-radius: 999px;
-  border: 1px solid rgba(124,92,255,0.35);
-}
-
-/* Footer */
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
 footer { border-top: 1px solid var(--line); padding: 30px 0; }
-.footer-inner {
-  max-width: var(--container); margin: 0 auto; padding: 0 24px;
-  display: flex; justify-content: space-between; align-items: center;
-  font-size: 13px; color: var(--text-mute);
-}
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
+/* ===== Interactive lesson component (shared kit) ===== */
+.sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
+.serif { font-family:'Instrument Serif', serif; font-style:italic; font-weight:400; }
+.ilesson { max-width:720px; margin:0 auto; padding:44px 0 90px; }
+.l-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; font-size:12.5px; }
+.l-tag { font-weight:600; color:var(--track); }
+.l-count { color:var(--text-mute); }
+.prog-track { height:6px; background:var(--surface); border-radius:99px; overflow:hidden; margin-bottom:30px; }
+#prog { height:100%; width:12.5%; background:linear-gradient(90deg,var(--track),var(--brand)); border-radius:99px; transition:width .45s ease; }
+.step h1 { font-size:32px; line-height:1.12; letter-spacing:-.02em; margin:0 0 14px; font-weight:800; color:var(--text); }
+.step h3 { font-size:21px; line-height:1.2; margin:0 0 10px; font-weight:700; color:var(--text); }
+.step p { color:var(--text-dim); margin:0 0 16px; font-size:16px; line-height:1.65; }
+.step p strong { color:var(--text); font-weight:600; }
+.step em { color:var(--text); font-style:italic; }
+.eyebrow-do { font-size:12px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--track); margin-bottom:8px; }
+.wf-head { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+.wf-badge { margin-left:auto; font-size:10px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; padding:3px 9px; border-radius:999px; }
+.wf-badge.basic { background:rgba(68,224,164,.15); color:var(--accent); border:1px solid rgba(68,224,164,.35); }
+.wf-badge.inter { background:rgba(91,141,239,.15); color:var(--brand-2); border:1px solid rgba(91,141,239,.35); }
+.wf-badge.adv { background:rgba(255,181,71,.15); color:var(--warn); border:1px solid rgba(255,181,71,.35); }
+.wf-badge.power { background:rgba(255,107,138,.15); color:var(--danger); border:1px solid rgba(255,107,138,.35); }
+.btn { font-family:inherit; font-weight:600; font-size:14.5px; border-radius:10px; padding:11px 18px; cursor:pointer; border:1px solid transparent; display:inline-flex; align-items:center; gap:8px; transition:.15s; color:#fff; background:linear-gradient(135deg,#7c5cff,#5b8def); box-shadow:0 8px 22px -10px rgba(124,92,255,.8); }
+.btn:hover { transform:translateY(-1px); color:#fff; }
+.btn-ghost { background:transparent; border-color:var(--line-strong); color:var(--text); box-shadow:none; }
+.btn-ghost:hover { background:rgba(255,255,255,.05); color:var(--text); }
+.btn-block { width:100%; justify-content:center; }
+.where { font-size:12.5px; color:var(--text-mute); margin-bottom:14px; line-height:1.5; }
+.where b { color:var(--text-dim); font-weight:600; }
+.callout { background:rgba(44,123,229,.1); border:1px solid rgba(44,123,229,.28); border-radius:var(--radius); padding:14px 16px; margin-bottom:18px; font-size:14.5px; color:var(--text-dim); line-height:1.65; }
+.callout b { color:var(--text); }
+.promptbox { background:rgba(0,0,0,0.3); border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin-bottom:12px; font-family:'SFMono-Regular',Consolas,monospace; font-size:12.5px; color:var(--text); line-height:1.6; white-space:pre-wrap; }
+.promptbox .label { display:block; font-family:'Inter',sans-serif; font-size:10.5px; color:var(--text-mute); margin-bottom:6px; text-transform:uppercase; letter-spacing:.8px; font-weight:600; }
+.promptbox.good { border-color:rgba(68,224,164,.3); }
+.promptbox.bad { border-color:rgba(255,107,138,.3); }
+.resultcard { background:var(--bg-soft); border:1px solid var(--line); border-left:3px solid var(--track); border-radius:0 var(--radius) var(--radius) 0; padding:12px 14px; margin-bottom:12px; font-size:13.5px; color:var(--text-dim); line-height:1.55; }
+.resultcard .who { font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--track); font-weight:700; margin-bottom:6px; display:block; }
+.gotcha { background:rgba(255,181,71,.06); border:1px solid rgba(255,181,71,.22); border-radius:var(--radius); padding:12px 14px; margin-bottom:14px; font-size:13.5px; color:var(--text-dim); line-height:1.55; }
+.gotcha b { color:var(--warn); }
+.savings { display:inline-flex; align-items:center; gap:7px; background:rgba(68,224,164,.1); border:1px solid rgba(68,224,164,.3); padding:6px 12px; border-radius:8px; font-size:13px; color:var(--text); margin-bottom:6px; }
+.savings b { color:var(--accent); font-weight:700; }
+.chips { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; }
+.chip { font-size:13px; padding:8px 13px; font-family:inherit; color:var(--text-dim); background:var(--surface); border:1px solid var(--line-strong); border-radius:99px; cursor:pointer; transition:.15s; }
+.chip:hover { color:var(--text); border-color:var(--brand); }
+.chip.on { background:rgba(44,123,229,.18); color:#bcd6f7; border-color:var(--track); }
+.buildbox { background:rgba(0,0,0,0.3); border:1px solid var(--line-strong); border-radius:var(--radius); padding:14px 16px; font-size:13px; line-height:1.6; min-height:58px; color:var(--text); font-family:'SFMono-Regular',Consolas,monospace; }
+.buildbox .lbl { font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-mute); display:block; margin-bottom:7px; font-family:'Inter',sans-serif; font-weight:600; }
+.meter { margin-top:14px; font-size:13px; color:var(--text-dim); display:flex; align-items:center; gap:10px; }
+.meter-bar { flex:1; height:5px; background:var(--surface); border-radius:99px; overflow:hidden; }
+.meter-fill { height:100%; width:0; background:var(--accent); border-radius:99px; transition:width .35s ease; }
+#score-n { font-weight:600; }
+.eyebrow-do2 { font-size:12px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--track); margin:6px 0 8px; }
+.opts { display:flex; flex-direction:column; gap:10px; margin-bottom:6px; }
+.opt { text-align:left; padding:13px 15px; line-height:1.5; font-size:14.5px; font-family:inherit; color:var(--text); background:var(--surface); border:1px solid var(--line-strong); border-radius:var(--radius); cursor:pointer; transition:.15s; }
+.opt:hover:not(:disabled) { border-color:var(--brand); background:#20204a; }
+.opt:disabled { cursor:default; }
+.fb { display:none; margin-top:14px; padding:12px 14px; border-radius:var(--radius); font-size:14px; line-height:1.6; }
+.fb.good { background:rgba(68,224,164,.1); border:1px solid rgba(68,224,164,.35); color:#a7efd2; }
+.fb.bad { background:rgba(124,92,255,.1); border:1px solid rgba(124,92,255,.3); color:#cfc4ff; }
+.edges { list-style:none; padding:0; margin:6px 0 14px; }
+.edges li { padding:8px 0 8px 24px; position:relative; font-size:13.5px; color:var(--text-dim); border-top:1px solid var(--line); line-height:1.5; }
+.edges li:first-child { border-top:none; }
+.edges li::before { content:"✕"; position:absolute; left:0; top:8px; color:var(--danger); font-weight:700; font-size:12px; }
+.cta-row { display:flex; gap:12px; flex-wrap:wrap; margin-top:22px; }
+.done-top { text-align:center; padding:6px 0 8px; }
+.done-check { width:52px; height:52px; border-radius:50%; background:rgba(44,123,229,.16); color:var(--track); display:flex; align-items:center; justify-content:center; margin:0 auto 14px; font-size:26px; border:1px solid rgba(44,123,229,.4); }
+.recap { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:16px 18px; margin-bottom:14px; }
+.recap .lbl { font-size:12px; color:var(--text-mute); }
+.recap p { margin:4px 0 0; color:var(--text); font-weight:500; font-size:15px; }
+.challenge-box { background:linear-gradient(135deg, rgba(44,123,229,.14), rgba(124,92,255,.1)); border:1px solid rgba(44,123,229,.3); border-radius:var(--radius); padding:16px 18px; margin-bottom:14px; }
+.challenge-box h4 { margin:0 0 8px; font-size:15px; color:var(--text); }
+.challenge-box ol { margin:0; padding-left:18px; }
+.challenge-box li { font-size:13.5px; color:var(--text-dim); margin-bottom:6px; line-height:1.5; }
+.upnext { background:var(--bg-soft); border:1px solid var(--line); border-radius:var(--radius); padding:14px 16px; margin-bottom:14px; }
+.upnext .lbl { font-size:12px; color:var(--text-mute); }
+.upnext p { margin:3px 0 0; font-weight:600; color:var(--text); }
+@media(max-width:560px){ .step h1{ font-size:26px; } }
+
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -348,316 +147,190 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
-
 <div class="bg-orb one"></div>
 <div class="bg-orb two"></div>
-
 <nav class="top">
   <div class="nav-inner">
-    <a href="/" class="logo">
-      <div class="logo-mark">L</div>
-      LearningGPT
-    </a>
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
     <a href="/lessons/copilot/" class="nav-back">← Copilot Mastery</a>
   </div>
 </nav>
 
-<article class="lesson">
-  <div class="container">
+<div class="container">
+  <div class="sr-only">An interactive hands-on Copilot lesson: it walks through five Outlook workflows (draft, summarize, context-aware replies, inbox-wide briefings, tone rewrite), showing the real prompt and result for each, then has the learner practice — building a sharper prompt, predicting outputs, and spotting limitations.</div>
 
-    <div class="lesson-meta">
-      <span class="chip">Lesson 1 · Copilot Mastery</span>
-      <span class="chip chip-free">Free</span>
-      <span>~15 min read</span>
-      <span class="dot"></span>
-      <span>5 workflows</span>
-      <span class="dot"></span>
-      <span>Microsoft 365 Copilot license required</span>
+  <main class="ilesson">
+    <div class="l-top">
+      <span class="l-tag">Copilot Mastery · Lesson 01 · Free</span>
+      <span class="l-count" id="step-count">Step 1 of 8 · ~15 min</span>
     </div>
+    <div class="prog-track"><div id="prog"></div></div>
 
-    <h1>Copilot in Outlook: write 10 emails in the time it takes you to write <span class="grad serif">one.</span></h1>
+    <!-- STEP 1 · intro -->
+    <section id="step-1" class="step">
+      <h1>Write 10 emails in the time it takes to write <span class="serif">one.</span></h1>
+      <p>Email eats roughly a quarter of every knowledge worker's day. Most companies that bought Copilot get maybe 10% of its value — their teams only learned the demo move, "draft a reply." This lesson walks the <strong>five workflows that actually save hours a week</strong>, each one hands-on.</p>
+      <p style="font-size:14px;color:var(--text-mute)">Assumes a Microsoft 365 Copilot license (not consumer Copilot Pro — different product). Buttons move around between New Outlook, Classic, and web; the workflows are identical. I'll point out where each lives.</p>
+      <button class="btn" onclick="go(2)">Start workflow 1 →</button>
+    </section>
 
-    <p class="deck">Email eats roughly a quarter of every knowledge worker's day. Most companies that bought Copilot are getting maybe 10% of its value because their teams only learned the demo move — "draft a reply." This lesson walks you through the five workflows that actually save hours per week: drafting, summarizing, context-aware replies, inbox-wide briefings, and tone adjustments. By the end, you'll have a repeatable Monday-morning routine that turns a 2-hour inbox into 20 minutes.</p>
-
-    <p>Two notes before we start. First: this lesson assumes you have a Microsoft 365 Copilot license (not just Copilot Pro for consumers — those are different products). Second: you'll see "Copilot" appear in different places depending on whether you use New Outlook, Classic Outlook, or Outlook on the web. The workflows are the same; the buttons move around. I'll point out where each one lives.</p>
-
-    <!-- ============ MENTAL MODEL ============ -->
-    <h2><span class="num">The mental model</span></h2>
-    <h3>Copilot in Outlook isn't ChatGPT with an email button.</h3>
-
-    <p>This is the single most important reframe. If you treat Copilot like ChatGPT — type a generic prompt, get a draft, copy-paste — you're using 10% of what you're paying for and you're getting generic, signature-block-filler outputs.</p>
-
-    <div class="callout">
-      <span class="lbl">The Reframe</span>
-      <p><strong>Copilot in Outlook is an inbox-aware AI.</strong> It can see your messages, your calendar, your contacts, your past replies, your meeting notes (with Teams integration), and your patterns. Every workflow that follows is built on top of that awareness. The moment you start writing prompts that take advantage of it, your output quality jumps 5x.</p>
-      <p>The wrong mental model: <em>"Please draft an email about X."</em><br>
-      The right mental model: <em>"You can see I had a meeting with Sarah yesterday. Draft a follow-up that references what we discussed about the Q3 budget timeline."</em></p>
-    </div>
-
-    <p>With that mental model installed, let's go through the five workflows in order of difficulty. Each one will save you real time. Together, they're the difference between "I have Copilot" and "I actually use Copilot."</p>
-
-    <!-- ============ WORKFLOW 1 ============ -->
-    <h2><span class="num">Workflow 01</span> Draft from a prompt</h2>
-
-    <div class="workflow">
-      <div class="workflow-head">
-        <div class="workflow-num">1</div>
-        <h3>Draft from a prompt</h3>
-        <span class="workflow-difficulty basic">Basic</span>
+    <!-- STEP 2 · mental model -->
+    <section id="step-2" class="step" style="display:none">
+      <h3>The reframe that unlocks everything</h3>
+      <p>If you treat Copilot like ChatGPT — generic prompt, generic draft, copy-paste — you're using 10% of what you pay for. <strong>Copilot in Outlook is inbox-aware:</strong> it can see your messages, calendar, contacts, and past replies. Every workflow below is built on that.</p>
+      <div class="promptbox bad"><span class="label">✕ The way most people prompt</span>Reply to Sarah's email about the budget.</div>
+      <div class="promptbox good"><span class="label">✓ The way that uses the awareness</span>Reply to Sarah: agree to her Q3 proposal in principle but push the timeline to Oct 15, and ask for a 30-min review call before sign-off. Friendly, under 80 words.</div>
+      <div class="eyebrow-do2">Your call</div>
+      <p style="margin-bottom:12px">Same goal. Which one gets the sendable, 5x-better draft?</p>
+      <div class="opts">
+        <button class="opt" data-c="0" onclick="pick(this,2)">The first — short and lets Copilot decide</button>
+        <button class="opt" data-c="1" onclick="pick(this,2)">The second — it names the decision, the ask, the tone, and a length</button>
       </div>
-      <div class="where"><strong>Where:</strong> New email window → click the <strong>"Draft with Copilot"</strong> button (looks like a small pen + sparkle icon, usually inline above the message body).</div>
+      <div class="fb" id="fb-2"></div>
+      <button class="btn" id="next-2" style="display:none;margin-top:16px" onclick="go(3)">Workflow 01 · Draft →</button>
+    </section>
 
-      <h4>What it does</h4>
-      <p>You give Copilot a short instruction; it writes the full email. Subject line, greeting, body, sign-off. If you're replying to an existing message, Copilot reads the thread automatically.</p>
-
-      <h4>The prompt that works</h4>
-      <p>Specificity matters more than length. Apply the "specific friction + constraint stack" pattern from the <a href="/lessons/sales-follow-up-emails">Foundations lesson</a>.</p>
-
-      <div class="prompt-example">
-        <span class="label">✓ Good prompt</span>
-        Reply to Sarah agreeing to her Q3 budget proposal in principle, but pushing the timeline to October 15 instead of September 30. Mention that I'd like a 30-minute review call before sign-off. Friendly but not overly enthusiastic. Under 80 words.
+    <!-- STEP 3 · WF1 Draft (build-it) -->
+    <section id="step-3" class="step" style="display:none">
+      <div class="wf-head"><h3 style="margin:0">01 · Draft from a prompt</h3><span class="wf-badge basic">Basic</span></div>
+      <div class="where"><b>Where:</b> New email → <b>"Draft with Copilot"</b> (pen + sparkle icon, above the message body). Replying? It reads the thread automatically.</div>
+      <p>The skill is the prompt. Start with the weak version and sharpen it — tap each piece Copilot needs:</p>
+      <div class="chips">
+        <button class="chip" data-k="decision" onclick="chip(this)">+ The actual decision</button>
+        <button class="chip" data-k="ask" onclick="chip(this)">+ The specific ask</button>
+        <button class="chip" data-k="tone" onclick="chip(this)">+ Tone</button>
+        <button class="chip" data-k="length" onclick="chip(this)">+ Word count</button>
       </div>
-
-      <p>Compare that to the prompt most people write:</p>
-
-      <div class="prompt-example">
-        <span class="label">✕ Generic prompt</span>
-        Reply to Sarah's email about the budget.
+      <div class="buildbox"><span class="lbl">Your prompt</span><span id="prompt-text">Reply to Sarah about the budget.</span></div>
+      <div class="meter"><span>Draft quality:</span><div class="meter-bar"><div class="meter-fill" id="meter-fill"></div></div><span id="score-n">generic template</span></div>
+      <div id="reveal-3" style="display:none;margin-top:16px">
+        <div class="resultcard"><span class="who">What Copilot hands back</span>Hi Sarah — I'm on board with the Q3 proposal in principle. One tweak: can we push sign-off to Oct 15 so I can pull final numbers? Before we lock it, I'd love a quick 30-minute review call — does Thursday work?</div>
+        <div class="gotcha"><b>Gotcha:</b> Copilot defaults to verbose corporate tone. Always add a word count <em>and</em> a voice note ("conversational, skip the throat-clearing") or you get email muzak.</div>
+        <div class="savings"><b>~5 min → ~30 sec</b> per draft · 30–60 min/day for heavy email</div>
       </div>
+      <br>
+      <button class="btn" id="next-3" style="display:none;margin-top:14px" onclick="go(4)">Workflow 02 · Summarize →</button>
+    </section>
 
-      <p>The first gives you a usable draft in 20 seconds. The second gives you a polite template you'll spend three minutes rewriting.</p>
-
-      <h4>Best use cases</h4>
-      <ul>
-        <li>Replies where you know what you want to say but don't want to type it</li>
-        <li>Cold outreach that needs a specific tone</li>
-        <li>Internal updates and status emails</li>
-        <li>Polite "no" responses that you've been putting off</li>
-      </ul>
-
-      <div class="gotcha">Copilot defaults to a verbose corporate tone. Always add a word count constraint and at least one specific instruction about voice ("conversational, not stiff" or "skip the throat-clearing"). Without those, you get the email equivalent of muzak.</div>
-
-      <div class="savings"><strong>Time savings:</strong> ~5 min → ~30 sec per draft. Saves ~30-60 min/day for heavy email users.</div>
-    </div>
-
-    <!-- ============ WORKFLOW 2 ============ -->
-    <h2><span class="num">Workflow 02</span> Summarize long threads</h2>
-
-    <div class="workflow">
-      <div class="workflow-head">
-        <div class="workflow-num">2</div>
-        <h3>Summarize a thread in one click</h3>
-        <span class="workflow-difficulty intermediate">Intermediate</span>
+    <!-- STEP 4 · WF2 Summarize (check) -->
+    <section id="step-4" class="step" style="display:none">
+      <div class="wf-head"><h3 style="margin:0">02 · Summarize a thread in one click</h3><span class="wf-badge inter">Intermediate</span></div>
+      <div class="where"><b>Where:</b> Open a thread → <b>"Summary by Copilot"</b> banner at the top of the reading pane (appears on multi-reply threads).</div>
+      <p>It reads the whole back-and-forth and returns decisions, open questions, action items, and who's waiting on what. Then you can ask follow-ups right in the summary pane:</p>
+      <div class="promptbox"><span class="label">Follow-ups that work</span>What's the most recent position from Finance?
+What action items are still open, and who owns them?
+Did anyone explicitly disagree — and why?</div>
+      <div class="eyebrow-do2">Quick check</div>
+      <p style="margin-bottom:12px">On which thread is a Copilot summary most likely to be <em>off</em>?</p>
+      <div class="opts">
+        <button class="opt" data-c="0" onclick="pick(this,4)">A 30-reply debate between 6 people about the roadmap</button>
+        <button class="opt" data-c="0" onclick="pick(this,4)">A 12-email back-and-forth with a client about pricing</button>
+        <button class="opt" data-c="1" onclick="pick(this,4)">A thread that's mostly forwarded newsletters and auto-replies</button>
       </div>
-      <div class="where"><strong>Where:</strong> Open any email thread → click <strong>"Summary by Copilot"</strong> banner at the top of the reading pane (only appears on threads with multiple replies).</div>
+      <div class="fb" id="fb-4"></div>
+      <button class="btn" id="next-4" style="display:none;margin-top:16px" onclick="go(5)">Workflow 03 · Context-aware →</button>
+    </section>
 
-      <h4>What it does</h4>
-      <p>Reads the entire back-and-forth and produces a structured summary: key decisions made, open questions, action items, and who's waiting on what. Particularly useful for threads with 5+ participants or 10+ replies.</p>
-
-      <h4>Best use cases</h4>
-      <ul>
-        <li><strong>Returning from PTO.</strong> A 47-email thread becomes a 30-second read.</li>
-        <li><strong>Catching up on a contentious debate.</strong> Get the actual positions without re-reading everyone's hedging.</li>
-        <li><strong>Pre-meeting prep.</strong> "Summarize this thread, then tell me what I should propose in tomorrow's meeting."</li>
-        <li><strong>Forwarding context.</strong> Need to loop in a new person? Send them the summary, not the 50-email mess.</li>
-      </ul>
-
-      <h4>Power move: ask follow-up questions</h4>
-      <p>After Copilot summarizes, you can ask follow-ups directly inside the summary pane. Try:</p>
-
-      <div class="prompt-example">
-        <span class="label">Follow-up prompts that work</span>
-        What's the most recent position from Finance?
-        ---
-        What action items are still open and who owns them?
-        ---
-        Did anyone explicitly disagree with the proposal? With what reasoning?
+    <!-- STEP 5 · WF3 Context (in-scope check) -->
+    <section id="step-5" class="step" style="display:none">
+      <div class="wf-head"><h3 style="margin:0">03 · Replies that pull from your other emails</h3><span class="wf-badge adv">Advanced</span></div>
+      <div class="where"><b>Where:</b> Draft with Copilot — but with a prompt that references info outside the current thread. This is what separates it from a generic chatbot.</div>
+      <p>A client asks, "what discount did you offer last quarter?" Instead of digging through Sent Items:</p>
+      <div class="promptbox good"><span class="label">The Copilot move</span>Reply to this client. Find the discount percentage I offered them last quarter from my sent emails and include it. Short — just the number plus a friendly note.</div>
+      <p>Copilot opens Draft mode, searches your sent items, finds the figure, and writes it into the reply. Five minutes → 30 seconds. But know its reach:</p>
+      <div class="eyebrow-do2">In scope, or not?</div>
+      <p style="margin-bottom:12px">Which of these can Copilot's draft pull <em>on its own</em>, by default?</p>
+      <div class="opts">
+        <button class="opt" data-c="1" onclick="pick(this,5)">The rate you quoted this client, from your Sent Items</button>
+        <button class="opt" data-c="0" onclick="pick(this,5)">A figure from a deck stored in SharePoint</button>
+        <button class="opt" data-c="0" onclick="pick(this,5)">A decision made in a Teams chat</button>
       </div>
+      <div class="fb" id="fb-5"></div>
+      <button class="btn" id="next-5" style="display:none;margin-top:16px" onclick="go(6)">Workflow 04 · Briefings →</button>
+    </section>
 
-      <div class="gotcha">Summaries are weakest on threads that are mostly forwards of newsletters or auto-replies. Copilot doesn't always recognize when an email is informational vs. conversational. If a summary feels off, look at what's in the thread — it's usually the input, not the AI.</div>
-
-      <div class="savings"><strong>Time savings:</strong> ~10 min reading → ~1 min summary. For someone catching up on a week of email, this alone is worth the Copilot license.</div>
-    </div>
-
-    <!-- ============ WORKFLOW 3 ============ -->
-    <h2><span class="num">Workflow 03</span> Context-aware replies</h2>
-
-    <div class="workflow">
-      <div class="workflow-head">
-        <div class="workflow-num">3</div>
-        <h3>Replies that pull from your other emails automatically</h3>
-        <span class="workflow-difficulty advanced">Advanced</span>
+    <!-- STEP 6 · WF4 Briefings (check) -->
+    <section id="step-6" class="step" style="display:none">
+      <div class="wf-head"><h3 style="margin:0">04 · Inbox-wide briefings</h3><span class="wf-badge power">Power user</span></div>
+      <div class="where"><b>Where:</b> Copilot <b>chat</b> panel (sidebar icon or the standalone M365 Copilot app) — the chat surface, not the drafting one.</div>
+      <p>This is the "wait, you can do that?" move: query your <em>whole</em> inbox across folders, senders, and time, and get a synthesized briefing. The Monday-morning prompt:</p>
+      <div class="promptbox good"><span class="label">Monday-morning briefing</span>Summarize emails from over the weekend. Group by: (1) needs my reply this week, (2) FYI only, (3) probably ignorable. For group 1, note what each is asking for.</div>
+      <p>Reading that takes 90 seconds; reading the 40 emails takes 25 minutes. Same info, 17× faster — this one workflow justifies the license.</p>
+      <div class="eyebrow-do2">Quick check</div>
+      <p style="margin-bottom:12px">Which prompt actually uses the inbox-wide briefing power?</p>
+      <div class="opts">
+        <button class="opt" data-c="0" onclick="pick(this,6)">"Summarize this thread."</button>
+        <button class="opt" data-c="0" onclick="pick(this,6)">"Draft a reply to this email."</button>
+        <button class="opt" data-c="1" onclick="pick(this,6)">"What threads across my inbox are waiting on me? Oldest first."</button>
       </div>
-      <div class="where"><strong>Where:</strong> Draft with Copilot pane — but with a prompt that references information from outside the current thread.</div>
+      <div class="fb" id="fb-6"></div>
+      <button class="btn" id="next-6" style="display:none;margin-top:16px" onclick="go(7)">Workflow 05 · Tone →</button>
+    </section>
 
-      <h4>What it does</h4>
-      <p>This is the workflow that separates Copilot from a generic AI chatbot. When you ask Copilot to draft a reply that needs context from your past emails, it actually searches your inbox to find it.</p>
-
-      <h4>An example that makes the difference visible</h4>
-
-      <p>Imagine a client emails you asking, "Hey, what was the discount percentage you offered last quarter? I need to share it with finance." Without Copilot, you'd spend 5 minutes searching your sent items.</p>
-
-      <div class="prompt-example">
-        <span class="label">The Copilot move</span>
-        Reply to this client. Find the discount percentage I offered them last quarter from my sent emails and include it in the reply. Keep it short — they just need the number plus a friendly note.
+    <!-- STEP 7 · WF5 Tone + limitations -->
+    <section id="step-7" class="step" style="display:none">
+      <div class="wf-head"><h3 style="margin:0">05 · Rewrite your own drafts</h3><span class="wf-badge basic">Underused</span></div>
+      <div class="where"><b>Where:</b> Highlight your text → <b>"Rewrite with Copilot"</b> (or <b>"Coaching"</b>) → pick the change: shorter, more direct, more diplomatic, etc.</div>
+      <p>Write the draft yourself, then have Copilot adjust tone or length. <em>Rewrite</em> changes it; <em>Coaching</em> just suggests what to change so you learn the patterns.</p>
+      <div class="eyebrow-do2">The gotcha</div>
+      <p style="margin-bottom:12px">You ask "make it shorter" and Copilot cuts 200 words to 80 — dropping your main ask. Best move?</p>
+      <div class="opts">
+        <button class="opt" data-c="0" onclick="pick(this,7)">Accept it — shorter is shorter</button>
+        <button class="opt" data-c="1" onclick="pick(this,7)">Be specific: "Cut to ~120 words while keeping the key ask."</button>
+        <button class="opt" data-c="0" onclick="pick(this,7)">Give up and rewrite the whole thing yourself</button>
       </div>
-
-      <p>Copilot will: open Draft mode, search your sent items, find the email where you offered the discount, extract the percentage, and write a reply that includes it correctly. What was a 5-minute task becomes 30 seconds.</p>
-
-      <h4>Best use cases</h4>
-      <ul>
-        <li><strong>Pricing questions.</strong> "What's the rate I quoted them?"</li>
-        <li><strong>Timeline questions.</strong> "What deadline did I commit to?"</li>
-        <li><strong>Status questions.</strong> "Have I already responded to this person about X?"</li>
-        <li><strong>Cross-thread context.</strong> "Reference what was decided in last week's meeting about Y."</li>
-      </ul>
-
-      <div class="gotcha">Copilot will only search your Outlook inbox by default — not SharePoint, Teams chat, or OneDrive. If the info lives outside email, you need to either paste it into the prompt or use one of the connectors (your IT admin sets those up). For most knowledge workers, the inbox alone covers 80% of the cases.</div>
-
-      <div class="savings"><strong>Time savings:</strong> ~5-15 min of searching → ~30 sec. Compounds heavily for client-facing roles.</div>
-    </div>
-
-    <!-- ============ WORKFLOW 4 ============ -->
-    <h2><span class="num">Workflow 04</span> Inbox-wide briefings</h2>
-
-    <div class="workflow">
-      <div class="workflow-head">
-        <div class="workflow-num">4</div>
-        <h3>Briefings that summarize across your whole inbox</h3>
-        <span class="workflow-difficulty power">Power user</span>
+      <div class="fb" id="fb-7"></div>
+      <div id="reveal-7" style="display:none">
+        <div class="eyebrow-do2" style="margin-top:20px">Stay honest — what it still can't do</div>
+        <ul class="edges">
+          <li>Occasionally hallucinates context, especially in summaries — sanity-check key details before sending.</li>
+          <li>Mobile is weaker than desktop/web; many features are desktop-only.</li>
+          <li>Won't search SharePoint, Teams chats, or OneDrive without connectors your admin enables.</li>
+          <li>Can't auto-send — every draft needs your click. (A feature, not a bug.)</li>
+          <li>Deep/archived-folder search is hit-or-miss; recent inbox is best.</li>
+        </ul>
       </div>
-      <div class="where"><strong>Where:</strong> Open Copilot chat (separate panel, accessed via the Copilot icon in Outlook's sidebar or the standalone Microsoft 365 Copilot app). Note: this is the chat surface, not the email-drafting surface.</div>
+      <button class="btn" id="next-7" style="display:none;margin-top:8px" onclick="go(8)">See your Monday routine →</button>
+    </section>
 
-      <h4>What it does</h4>
-      <p>This is the "wait, you can DO that?" moment. Copilot's chat surface lets you query your <em>entire</em> inbox — across folders, time ranges, senders, and topics — and get back synthesized briefings.</p>
-
-      <h4>The Monday morning briefing</h4>
-      <p>Try this prompt the first time you open Outlook on a Monday:</p>
-
-      <div class="prompt-example">
-        <span class="label">Monday-morning briefing prompt</span>
-        Summarize emails I received over the weekend. Group them by: (1) needs my reply this week, (2) FYI only, (3) probably ignorable. For the first group, briefly note what each one is asking for.
+    <!-- STEP 8 · complete -->
+    <section id="step-8" class="step" style="display:none">
+      <div class="done-top">
+        <div class="done-check">✓</div>
+        <h3>Lesson complete</h3>
       </div>
-
-      <p>You'll get back a structured briefing organized exactly how you asked. Reading that briefing takes 90 seconds. Manually reading the same 40 weekend emails takes 25 minutes. Same information; 17x faster.</p>
-
-      <h4>Other briefing prompts that earn their keep</h4>
-
-      <div class="prompt-example">
-        <span class="label">End-of-day "what did I miss" prompt</span>
-        Summarize emails I received in the last 8 hours that I haven't responded to. Highlight anything where someone is explicitly waiting on me.
+      <p style="text-align:center;max-width:480px;margin:0 auto 18px">Five workflows, one routine. Stack them and a 2-hour inbox becomes about 20 minutes.</p>
+      <div class="challenge-box">
+        <h4>Your Monday-morning experiment</h4>
+        <ol>
+          <li>Open Copilot <b>chat</b> first — run the Monday briefing (WF4) before opening your inbox.</li>
+          <li>For each long thread, <b>summarize</b> before reading (WF2).</li>
+          <li><b>Draft</b> replies with a specific, constrained prompt (WF1) — use cross-inbox context where needed (WF3).</li>
+          <li><b>Rewrite</b> the 2–3 most sensitive ones before sending (WF5).</li>
+          <li>Time it, and compare to a normal Monday. Most people see 50–70% off on the first try.</li>
+        </ol>
       </div>
-
-      <div class="prompt-example">
-        <span class="label">Customer account review</span>
-        Summarize all emails from people at [customer company] over the past two weeks. What's the current state of our relationship and what's outstanding?
+      <div class="recap">
+        <span class="lbl">What you can do now</span>
+        <p>Write constrained prompts that draft in 30 seconds, summarize before reading, pull cross-inbox context, generate full-inbox briefings, and refine tone — and you know where Copilot's edges are.</p>
       </div>
-
-      <div class="prompt-example">
-        <span class="label">Pre-1:1 prep</span>
-        What have I exchanged with [manager's name] in the past month that might come up in our 1:1? Include any commitments I made.
+      <div class="upnext">
+        <span class="lbl">Up next in Copilot Mastery</span>
+        <p>Lesson 02 · Copilot in Excel — build a real dashboard in 15 minutes</p>
       </div>
-
-      <div class="prompt-example">
-        <span class="label">Open loops audit</span>
-        What threads in my inbox are waiting on me? Show the oldest first so I can clear them out.
+      <div class="cta-row">
+        <a class="btn btn-block" href="/lessons/copilot/excel-mastery">Continue to Lesson 02 · Copilot in Excel →</a>
       </div>
-
-      <div class="gotcha">Briefings are the feature most likely to be limited by your tenant's data retention settings. If your IT admin has Copilot configured to only look at the last 30 days, longer queries will quietly return incomplete results. Worth asking your admin what the limit is.</div>
-
-      <div class="savings"><strong>Time savings:</strong> 25-90 min/week for anyone with a busy inbox. This is the workflow that justifies the entire $30/user/month license cost by itself.</div>
-    </div>
-
-    <!-- ============ WORKFLOW 5 ============ -->
-    <h2><span class="num">Workflow 05</span> Tone and length adjustments</h2>
-
-    <div class="workflow">
-      <div class="workflow-head">
-        <div class="workflow-num">5</div>
-        <h3>Rewrite your own drafts for tone and length</h3>
-        <span class="workflow-difficulty basic">Basic but underused</span>
+      <div class="cta-row">
+        <a class="btn btn-ghost" href="/pricing">See Pro membership</a>
+        <a class="btn btn-ghost" href="/lessons/copilot/">Back to Copilot Mastery</a>
       </div>
-      <div class="where"><strong>Where:</strong> Highlight any text in your draft → click <strong>"Coaching by Copilot"</strong> or <strong>"Rewrite with Copilot"</strong> → choose the adjustment.</div>
-
-      <h4>What it does</h4>
-      <p>You write a draft yourself, then ask Copilot to rewrite it with a specific change. Options include: more formal, more casual, shorter, longer, more direct, more enthusiastic, more diplomatic.</p>
-
-      <h4>Best use cases</h4>
-      <ul>
-        <li><strong>Sensitive emails</strong> where you've drafted something honest but want to make sure the tone won't cause a fire</li>
-        <li><strong>Long-winded drafts</strong> where you know it's too long but can't see what to cut</li>
-        <li><strong>Cold outreach</strong> where "more direct" or "more casual" changes the open rate</li>
-        <li><strong>Customer comms</strong> where you need to soften a "no"</li>
-      </ul>
-
-      <h4>The "Coaching" feature most people miss</h4>
-      <p>Different from "Rewrite" — Coaching reviews your draft and gives you suggestions on what to change without actually rewriting. Useful when you want to learn the patterns yourself rather than just accept Copilot's version.</p>
-
-      <div class="gotcha">"Make it shorter" tends to over-correct. If your draft is 200 words and you ask for shorter, you'll often get 80 words. Be specific: "Cut to 120 words while keeping the key ask."</div>
-
-      <div class="savings"><strong>Time savings:</strong> Modest in raw minutes, but high value for the emails that matter most.</div>
-    </div>
-
-    <!-- ============ LIMITATIONS ============ -->
-    <div class="limitations">
-      <h3>What Copilot in Outlook still can't do well</h3>
-      <p>Honest list of where it falls short or breaks. Knowing these saves you from wasting time on use cases that won't work yet:</p>
-      <ul>
-        <li><strong>It hallucinates context occasionally.</strong> Especially with summaries. Always sanity-check important details before sending.</li>
-        <li><strong>Mobile Outlook is weaker than desktop.</strong> Many features are desktop-only or web-only. Mobile is improving but lags.</li>
-        <li><strong>Doesn't search SharePoint, Teams chats, or OneDrive by default.</strong> Requires specific connectors your admin has to enable.</li>
-        <li><strong>Tone in non-English languages can be off.</strong> English drafts are noticeably stronger than other languages right now.</li>
-        <li><strong>Long PDFs and large attachments aren't always read.</strong> File size limits apply and aren't always transparent.</li>
-        <li><strong>It can't auto-send.</strong> Every draft requires your click to send. (This is a feature, not a bug — but worth knowing.)</li>
-        <li><strong>Search across archived folders is inconsistent.</strong> The recent inbox is best; deep archives are hit-or-miss.</li>
-      </ul>
-    </div>
-
-    <!-- ============ FINAL CHALLENGE ============ -->
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Final challenge: turn one Monday morning into a controlled experiment</h2>
-      <p>The only way to internalize these workflows is to actually use them on a real inbox. Pick a Monday when you'd normally spend 90+ minutes catching up on email. Do it differently this time:</p>
-      <ol>
-        <li><strong>Open Copilot chat first</strong> (before opening your inbox). Run the Monday-morning briefing prompt from Workflow 04.</li>
-        <li><strong>Skim the briefing.</strong> Note which emails need replies and which are FYI.</li>
-        <li><strong>For each long thread you need to engage with</strong>, use Workflow 02 to summarize before reading the full thread.</li>
-        <li><strong>For each reply you need to draft</strong>, use Workflow 01 with a specific, constrained prompt — and use Workflow 03 when the reply needs cross-thread context.</li>
-        <li><strong>Use Workflow 05 on the 2-3 most sensitive replies</strong> before sending.</li>
-        <li><strong>Track how long it took.</strong> Then compare to your previous Monday. Most people see a 50-70% time reduction on the first try.</li>
-      </ol>
-      <div class="btn-row">
-        <a href="/lessons/copilot/" class="btn">Back to Copilot Mastery →</a>
-        <a href="/#pricing" class="btn ghost">See Pro membership →</a>
-      </div>
-    </div>
-
-    <!-- ============ CHECKLIST ============ -->
-    <div class="checklist">
-      <h3>What you can do now</h3>
-      <ul>
-        <li>Write specific, constrained prompts that produce sendable drafts in 30 seconds</li>
-        <li>Summarize any email thread before reading it</li>
-        <li>Ask Copilot to pull context from across your inbox automatically</li>
-        <li>Generate full-inbox briefings for Monday-morning catch-up, end-of-day review, or pre-1:1 prep</li>
-        <li>Use Rewrite and Coaching to refine your own drafts for tone and length</li>
-        <li>Recognize what Copilot Outlook still can't do — and not waste time fighting those edges</li>
-      </ul>
-    </div>
-
-    <!-- ============ NEXT UP ============ -->
-    <div class="next-up">
-      <span class="pro-tag">Pro</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in Copilot Mastery</div>
-      <h3>Lesson 2 · Copilot in Excel: build a real dashboard in 15 minutes</h3>
-      <p>Formula generation, pivot tables on demand, chart creation from natural language, data cleaning, analyzing trends. The Excel workflow your CFO didn't know was possible. <a href="/#pricing">Become a Pro member →</a></p>
-    </div>
-
-  </div>
-</article>
+    </section>
+  </main>
+</div>
 
 <footer>
   <div class="footer-inner">
@@ -666,13 +339,11 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   </div>
 </footer>
 
-
 <!-- ── AI COACH FAB ── -->
 <button class="coach-fab" id="coachFab" title="Ask the AI Coach">
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -684,10 +355,10 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <button class="coach-close" id="coachClose">✕</button>
   </div>
   <div class="coach-messages" id="coachMessages">
-    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about Copilot in Outlook — the five workflows, writing a sharper prompt, the briefing move, or where it falls short. What's on your mind?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -695,15 +366,94 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   </div>
 </div>
 
+<!-- ── Interactive lesson logic ── -->
+<script>
+  var TOTAL = 8;
+  function go(n){
+    document.querySelectorAll('.step').forEach(function(s){ s.style.display='none'; });
+    document.getElementById('step-'+n).style.display='block';
+    document.getElementById('prog').style.width = Math.round(n/TOTAL*100)+'%';
+    document.getElementById('step-count').textContent = 'Step '+n+' of '+TOTAL+' · ~15 min';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  var pickMsg = {
+    2:{good:"Right — naming the decision, the ask, the tone, and a length gives a sendable draft in seconds. The vague one returns a template you'll rewrite.",
+       bad:"The short prompt returns generic 'circling back' filler. The strong one names the decision, the constraint, the tone, and a length."},
+    4:{good:"Right — Copilot can't always tell informational forwards from real conversation. If a summary feels off, check the input; it's usually the thread, not the AI.",
+       bad:"Real debates and back-and-forths are exactly where summaries shine. They're weakest on threads that are mostly newsletters and auto-replies."},
+    5:{good:"Right — by default Copilot searches your Outlook inbox and Sent Items. That covers most 'what did I say to them?' questions.",
+       bad:"By default Copilot only searches your Outlook email — not SharePoint, Teams chat, or OneDrive (those need connectors). The Sent-Items lookup is the one it does on its own."},
+    6:{good:"Right — that queries your entire inbox and synthesizes across it. That's the workflow that pays for the license by itself.",
+       bad:"Those act on a single message. The briefing power is querying your whole inbox across senders and time for a grouped synthesis."},
+    7:{good:"Right — 'make it shorter' over-corrects. Give it a target length and tell it what to protect.",
+       bad:"'Make it shorter' over-corrects and drops content. The fix is a specific target ('~120 words, keep the ask'), not abandoning the tool."}
+  };
+  function pick(btn, step){
+    var correct = btn.dataset.c === '1';
+    document.getElementById('step-'+step).querySelectorAll('.opt').forEach(function(b){ b.disabled=true; b.style.opacity='0.5'; });
+    btn.style.opacity='1';
+    var fb = document.getElementById('fb-'+step);
+    btn.style.borderColor = correct ? 'var(--accent)' : 'var(--danger)';
+    fb.className = 'fb ' + (correct ? 'good' : 'bad');
+    fb.textContent = pickMsg[step][correct ? 'good' : 'bad'];
+    fb.style.display='block';
+    var rev = document.getElementById('reveal-'+step);
+    if(rev){ rev.style.display='block'; }
+    document.getElementById('next-'+step).style.display='inline-flex';
+  }
+  // Workflow 1 prompt builder
+  var parts = { decision:false, ask:false, tone:false, length:false };
+  var frag = {
+    decision:'agree to the Q3 proposal in principle but push the timeline to Oct 15',
+    ask:'ask for a 30-minute review call before sign-off',
+    tone:'friendly but not over-eager',
+    length:'under 80 words'
+  };
+  var labels = ['generic template','getting there','specific','strong','sendable in one pass'];
+  function chip(btn){
+    var k = btn.dataset.k; parts[k] = !parts[k]; btn.classList.toggle('on');
+    var add = [];
+    ['decision','ask','tone','length'].forEach(function(key){ if(parts[key]) add.push(frag[key]); });
+    var txt = add.length ? 'Reply to Sarah — ' + add.join(', ') + '.' : 'Reply to Sarah about the budget.';
+    document.getElementById('prompt-text').textContent = txt;
+    var n = Object.values(parts).filter(Boolean).length;
+    document.getElementById('score-n').textContent = labels[n];
+    document.getElementById('meter-fill').style.width = Math.round(n/4*100)+'%';
+    var sn = document.getElementById('score-n');
+    sn.style.color = n>=4 ? 'var(--accent)' : n>=2 ? 'var(--brand-2)' : 'var(--text-dim)';
+    var ready = n>=3;
+    document.getElementById('next-3').style.display = ready ? 'inline-flex' : 'none';
+    document.getElementById('reveal-3').style.display = ready ? 'block' : 'none';
+  }
+</script>
 
+<!-- ── AI Coach logic ── -->
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Copilot in Outlook: write 10 emails in the time it takes you to write 1\nTRACK: Copilot Mastery\n\nLESSON CONTENT SUMMARY:\nCopilot in Outlook: write 10 emails in the time it takes you to write 1 \u2014 LearningGPT L LearningGPT \u2190 Copilot Mastery Lesson 1 \u00b7 Copilot Mastery Free ~15 min read 5 workflows Microsoft 365 Copilot license required Copilot in Outlook: write 10 emails in the time it takes you to write one. Email eats roughly a quarter of every knowledge worker's day. Most companies that bought Copilot are getting maybe 10% of its value because their teams only learned the demo move \u2014 \"draft a reply.\" This lesson walks you through the five workflows that actually save hours per week: drafting, summarizing, context-aware replies, inbox-wide briefings, and tone adjustments. By the end, you'll have a repeatable Monday-morning routine that turns a 2-hour inbox into 20 minutes. Two notes before we start. First: this lesson assumes you have a Microsoft 365 Copilot license (not just Copilot Pro for consumers \u2014 those are different products). Second: you'll see \"Copilot\" appear in different places depending on whether you use New Outlook, Classic Outlook, or Outlook on the web. The workflows are the same; the buttons move around. I'll point out where each one lives. The mental model Copilot in Outlook isn't ChatGPT with an email button. This is the single most important reframe. If you treat Copilot like ChatGPT \u2014 type a generic prompt, get a draft, copy-paste \u2014 you're using 10% of what you're paying for and you're getting generic, signature-block-filler outputs. The Reframe Copilot in Outlook is an inbox-aware AI. It can see your messages, your calendar, your contacts, your past replies, your meeting notes (with Teams integration), and your patterns. Every workflow that follows is built on top of that awareness. The moment you start writing prompts that take advantage of it, your output quality jumps 5x. The wrong mental model: \"Please draft an email about X.\" The right mental model: \"You can see I had a meeting with Sarah yesterday. Draft a follow-up that references what we discussed about the Q3 budget timeline.\" With that mental model installed, let's go through the five workflows in order of difficulty. Each one will save you real time. Together, they're the difference between \"I have Copilot\" and \"I actually use Copilot.\" Workflow 01 Draft from a prompt 1 Draft from a prompt Basic Where: New email window \u2192 click the \"Draft with Copilot\" button (looks like a small pen + sparkle icon, usually inline above the message body). What it does You give Copilot a short instruction; it writes the full email. Subject line, greeting, body, sign-off. If you're replying to an existing message, Copilot reads the thread automatically. The prompt that works Specificity matters more than length. Apply the \"specific friction + constraint stack\" pattern from the Foundations lesson . \u2713 Good prompt Reply to Sarah agreeing to her Q3 budget proposal in principle, but pushing the timeline to October 15 instead of September 30. Mention that I'd like a 30-minute review call before sign-off. Frien\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = `You are an AI learning coach embedded in a lesson on LearningGPT.ai.
+LESSON TITLE: Copilot in Outlook — write 10 emails in the time it takes to write 1
+TRACK: Copilot Mastery (free flagship lesson; requires a Microsoft 365 Copilot license, not consumer Copilot Pro)
+LESSON CONTENT SUMMARY:
+The reframe: Copilot in Outlook is an inbox-aware AI (it can see your messages, calendar, contacts, past replies), not "ChatGPT with an email button." Prompts that use that awareness produce far better output. Five workflows:
+1. Draft from a prompt (Basic) — "Draft with Copilot" in a new/reply email. Specific + constrained prompts win: name the decision, the ask, the tone, and a word count. Gotcha: it defaults to verbose corporate tone — always add a length and a voice note.
+2. Summarize a thread (Intermediate) — "Summary by Copilot" banner on multi-reply threads; returns decisions, open questions, action items, who's waiting; you can ask follow-ups in the summary pane. Weakest on threads that are mostly forwarded newsletters/auto-replies.
+3. Context-aware replies (Advanced) — Draft mode can search your Outlook inbox/Sent Items to pull facts (e.g. a discount % you quoted last quarter). By default it does NOT search SharePoint, Teams chat, or OneDrive (those need connectors an admin enables).
+4. Inbox-wide briefings (Power user) — the Copilot CHAT surface queries your whole inbox across folders/senders/time. The Monday-morning briefing (group weekend email by needs-reply / FYI / ignorable) is ~17x faster than reading them; this alone justifies the license. Limited by tenant data-retention settings.
+5. Rewrite your own drafts (Underused) — highlight text, "Rewrite with Copilot" (changes it) or "Coaching" (suggests changes). Gotcha: "make it shorter" over-corrects — give a target length and say what to keep.
+Limitations: occasional hallucinated context (sanity-check summaries); mobile weaker than desktop; no SharePoint/Teams/OneDrive without connectors; can't auto-send (every draft needs your click); deep/archived-folder search is hit-or-miss.
+Buttons move around between New Outlook, Classic Outlook, and Outlook on the web, but the workflows are the same.
+YOUR ROLE:
+- Answer questions specifically about this lesson content
+- Be concise, 2-4 sentences per answer unless the question genuinely needs more
+- Be practical, give real work examples when helpful
+- If asked about something not in this lesson, briefly answer and point to where they can learn more
+- Never make up features that don't exist
+- Plain conversational text only, no markdown symbols like ** or ##
+- Do not start responses with "Great question!" or similar filler phrases`;
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -711,27 +461,21 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
   if (!fab) return; // safety check
-
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -740,7 +484,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -749,7 +492,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

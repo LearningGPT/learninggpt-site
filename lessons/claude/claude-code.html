@@ -4,16 +4,16 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Claude Code: the CLI tool for serious development — LearningGPT</title>
-<meta name="description" content="Claude Code is Anthropic's command-line tool that gives Claude direct access to your codebase, terminal, and file system. It's the most powerful AI co" />
+<meta name="description" content="Claude Code gives Claude direct access to your codebase, terminal, and file system. Setup, the prompt patterns that ship code, MCP servers, and safe workflows." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#d97757" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/claude/claude-code" />
 <meta property="og:title" content="Claude Code: the CLI tool for serious development" />
-<meta property="og:description" content="Claude Code is Anthropic's command-line tool that gives Claude direct access to your codebase, terminal, and file system. It's the most powerful AI co" />
+<meta property="og:description" content="Claude Code gives Claude direct access to your codebase, terminal, and file system. Setup, prompt patterns, MCP servers, and safe workflows." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -30,89 +30,115 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
 .logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
 .nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
-.lesson { padding: 50px 0 100px; }
-.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+
+/* ── INTERACTIVE LESSON SHELL ── */
+.ilesson { padding: 46px 0 100px; }
+.lesson-meta { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
 .lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(217,119,87,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(217,119,87,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
 .lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
-.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #d97757 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
-.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
-.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(217,119,87,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(217,119,87,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #d97757, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(217,119,87,0.1); border: 1px solid rgba(217,119,87,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.ilesson h1 { font-size: clamp(31px, 4.5vw, 44px); font-weight: 800; line-height: 1.14; letter-spacing: -0.02em; margin: 0 0 18px; }
+.ilesson h1 .grad { background: linear-gradient(135deg, #d97757 0%, #c46343 50%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.ilesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.12em; }
+.deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 30px; padding-bottom: 26px; border-bottom: 1px solid var(--line); }
+
+.progwrap { position: sticky; top: 59px; z-index: 50; background: rgba(10,10,26,0.9); backdrop-filter: blur(8px); padding: 14px 0 12px; margin-bottom: 6px; }
+.progbar { height: 6px; background: rgba(255,255,255,0.07); border-radius: 999px; overflow: hidden; }
+.progfill { height: 100%; width: 0%; background: linear-gradient(90deg, #d97757, #7c5cff); border-radius: 999px; transition: width .4s cubic-bezier(.4,0,.2,1); }
+.progmeta { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--text-mute); margin-top: 7px; letter-spacing: 0.3px; }
+
+.step { display: none; animation: stepIn .4s ease; }
+.step.active { display: block; }
+@keyframes stepIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.step-k { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin: 26px 0 6px; }
+.step h2 { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; line-height: 1.25; }
+.step h3 { font-size: 18px; font-weight: 600; margin: 22px 0 9px; }
+.step p { font-size: 16.5px; color: var(--text); margin: 0 0 16px; }
+.step strong { font-weight: 700; } .step em { font-style: italic; }
+
+.card { background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 22px 26px; margin: 20px 0; }
+.card p:last-child { margin-bottom: 0; }
+.callout { margin: 18px 0; padding: 16px 18px; background: linear-gradient(135deg, rgba(217,119,87,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(217,119,87,0.25); border-radius: var(--radius); }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 6px; }
+.callout p { margin: 0; font-size: 14.5px; color: var(--text-dim); }
+.pcard { background: var(--bg-soft); border: 1px solid var(--line); border-left: 3px solid var(--track); border-radius: 0 var(--radius) var(--radius) 0; padding: 14px 16px; margin-bottom: 11px; }
+.pcard .pn { font-size: 15px; font-weight: 700; color: var(--text); }
+.pcard .pd { font-size: 13.5px; color: var(--text-dim); margin-top: 4px; line-height: 1.5; }
+.pcard .pp { font-size: 12.5px; color: var(--text-mute); margin-top: 7px; font-family: 'SFMono-Regular', Consolas, monospace; line-height: 1.5; }
+.cmd { background: rgba(0,0,0,0.32); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13px; color: var(--accent); margin: 8px 0 14px; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 13px 16px; margin: 16px 0; font-size: 14.5px; }
 .gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(217,119,87,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(217,119,87,0.25); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #d97757, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
-.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
-.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
-.checklist li:first-child { border-top: none; padding-top: 0; }
-.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+
+/* choices */
+.choices { display: flex; flex-direction: column; gap: 10px; margin: 16px 0 8px; }
+.choice { text-align: left; background: var(--surface); border: 1px solid var(--line-strong); color: var(--text); border-radius: 12px; padding: 14px 16px; font-size: 15px; font-family: inherit; cursor: pointer; transition: border-color .15s, background .15s, transform .1s; line-height: 1.5; }
+.choice:hover:not(:disabled) { border-color: var(--track); transform: translateX(2px); }
+.choice:disabled { cursor: default; }
+.choice.correct { border-color: var(--accent); background: rgba(68,224,164,0.1); }
+.choice.wrong { border-color: var(--danger); background: rgba(255,107,138,0.08); opacity: 0.75; }
+.fb { margin: 6px 0 0; padding: 14px 16px; border-radius: 12px; font-size: 14.5px; line-height: 1.6; display: none; }
+.fb.show { display: block; animation: stepIn .3s ease; }
+.fb.good { background: rgba(68,224,164,0.1); border: 1px solid rgba(68,224,164,0.3); }
+.fb.bad { background: rgba(255,181,71,0.08); border: 1px solid rgba(255,181,71,0.3); }
+.fb b { color: var(--text); }
+
+/* signature: plan-review console */
+.plan { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 22px 24px; margin: 18px 0; }
+.plan .ph { font-size: 11px; text-transform: uppercase; letter-spacing: 0.9px; color: var(--brand-2); font-weight: 700; margin-bottom: 10px; font-family: 'SFMono-Regular', Consolas, monospace; }
+.brief { background: rgba(0,0,0,0.28); border: 1px solid var(--line); border-radius: 10px; padding: 11px 14px; font-size: 12.5px; color: var(--text-dim); line-height: 1.5; margin-bottom: 16px; }
+.brief b { color: var(--text); }
+.pstep { background: var(--surface); border: 1px solid var(--line-strong); border-radius: 11px; padding: 12px 14px; margin-bottom: 10px; transition: border-color .2s; }
+.pstep.right { border-color: var(--accent); }
+.pstep.wrong { border-color: var(--danger); }
+.prow { display: flex; gap: 12px; align-items: flex-start; }
+.pt { flex: 1; font-size: 14px; color: var(--text); line-height: 1.45; }
+.pt .pnum { color: var(--text-mute); font-family: 'SFMono-Regular', Consolas, monospace; margin-right: 6px; }
+.pbtns { display: flex; gap: 6px; flex-shrink: 0; }
+.pb { border-radius: 8px; padding: 6px 11px; font-size: 12px; font-weight: 600; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.04); color: var(--text-dim); cursor: pointer; font-family: inherit; transition: all .14s; }
+.pb:hover:not(:disabled) { color: var(--text); }
+.pb.sel-approve { background: rgba(68,224,164,0.16); border-color: var(--accent); color: var(--text); }
+.pb.sel-flag { background: rgba(255,181,71,0.16); border-color: var(--warn); color: var(--text); }
+.pb:disabled { cursor: default; }
+.pwhy { display: none; font-size: 12.5px; margin-top: 9px; color: var(--text-dim); line-height: 1.5; }
+.pwhy.show { display: block; }
+.pwhy b { color: var(--text); }
+
+.step-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 30px; gap: 12px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #d97757, #7c5cff); color: white; padding: 13px 24px; border-radius: 11px; font-weight: 600; font-size: 15px; border: none; font-family: inherit; cursor: pointer; box-shadow: 0 6px 22px rgba(217,119,87,0.28); transition: transform .15s, opacity .15s; }
+.btn:hover:not(:disabled) { transform: translateY(-1px); color: white; }
+.btn:disabled { opacity: 0.4; cursor: default; box-shadow: none; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.btn-back { background: none; border: none; color: var(--text-mute); font-size: 14px; cursor: pointer; font-family: inherit; padding: 8px 4px; }
+.btn-back:hover { color: var(--text); } .btn-back:disabled { opacity: 0; cursor: default; }
+
+.complete { text-align: center; padding: 14px 0 0; }
+.complete .big { font-size: 48px; margin-bottom: 6px; }
+.checklist { margin: 26px 0; padding: 24px 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); text-align: left; }
+.checklist h3 { margin: 0 0 6px; font-size: 17px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 30px; position: relative; font-size: 15px; border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 13px; width: 18px; height: 18px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
-.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
-.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.challenge { margin: 24px 0; background: linear-gradient(135deg, rgba(217,119,87,0.18), rgba(124,92,255,0.1)); border: 1px solid rgba(217,119,87,0.3); border-radius: var(--radius-lg); padding: 28px; text-align: left; }
+.challenge h3 { margin: 0 0 8px; font-size: 19px; }
+.next-up { margin: 26px 0 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); text-align: left; }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 8px; }
 .next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
+.next-up h3 { margin: 12px 0 8px; font-size: 19px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+
 footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -141,7 +167,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -153,74 +178,138 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <a href="/lessons/claude/" class="nav-back">← Claude Mastery</a>
   </div>
 </nav>
-<article class="lesson">
-  <div class="container">
+
+<div class="container">
+  <div class="ilesson">
     <div class="lesson-meta">
       <span class="chip">Lesson 06 · Claude Mastery</span>
       <span class="chip chip-pro-plus">Pro+</span>
-      <span>~16 min read</span>
+      <span>~16 min</span>
       <span class="dot"></span>
-      <span>Setup + 3 workflows</span>
+      <span>Interactive · for developers</span>
     </div>
     <h1>Claude Code: <span class="grad serif">the CLI for real work.</span></h1>
-    <p class="deck">Claude Code is Anthropic's command-line tool that gives Claude direct access to your codebase, terminal, and file system. It's the most powerful AI coding tool available — and the most dangerous if misused. This lesson covers setup, the prompt patterns that ship code, MCP servers, and the workflows that justify the Pro+ tier.</p>
-    <h2><span class="num">The mental model</span></h2><h3>Claude Code isn't an IDE assistant. It's a junior engineer who can run commands.</h3><p>The mental model is delegating to a junior engineer who can read your code, write code, run tests, search the web, and make commits. You're the senior who reviews and approves. The difference between this and Copilot/Cursor is autonomy: Claude Code does multi-step work and then reports back.</p><h2><span class="num">Workflow 01</span> Setup and first task</h2><div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">1</div><h3>Install, authenticate, run your first task</h3></div>
-      <p>Install Claude Code (`npm install -g @anthropic-ai/claude-code` or via your platform's package manager). Run `claude` in any repo. Start with low-stakes tasks.</p>
-      <h4>The prompt that works</h4>
-      <div class="prompt-example"><span class="label">First-task pattern</span>claude
-> Add JSDoc comments to every public function in src/utils/. Run the existing tests after to make sure nothing broke. Show me a diff of what you changed before committing.</div>
-      <h4>Best use cases</h4>
-      <ul><li>Documentation generation</li><li>Test coverage additions</li><li>Repetitive refactors with low blast radius</li><li>Codebase Q&A ("how does authentication work in this repo?")</li></ul>
-      <div class="gotcha">Always start with `--dry-run` mode on unfamiliar codebases until you trust the patterns. Never let Claude Code commit and push in one shot; review the diff first.</div>
-      <div class="savings"><strong>Time savings:</strong> Setup takes 10 min. First useful task: immediately.</div>
-    </div><h2><span class="num">Workflow 02</span> The MCP server pattern</h2><div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">2</div><h3>Connect Claude Code to your real tools</h3></div>
-      <p>MCP (Model Context Protocol) servers let Claude Code access your tools — your Linear, your GitHub, your Slack, your database. Configured once, available forever.</p>
-      <h4>The prompt that works</h4>
-      <div class="prompt-example"><span class="label">Setup pattern</span>Install MCP servers for: GitHub (PR review), Linear (issue context), Postgres (database queries). Now Claude Code can reference issues, query databases, and read PR diffs as part of its work.</div>
-      <h4>Best use cases</h4>
-      <ul><li>Issue → code → PR workflow within Claude Code</li><li>Database-aware code (it can query the schema)</li><li>PR review with full context (it sees the description, comments, related issues)</li><li>Production-aware debugging (with logs/observability MCP servers)</li></ul>
-      <div class="gotcha">MCP server permissions matter. Don't connect a production database with write access; use read-only credentials. Same for any sensitive system.</div>
-      <div class="savings"><strong>Time savings:</strong> Context-switching between tools: massive reduction.</div>
-    </div><h2><span class="num">Workflow 03</span> Multi-step development sessions</h2><div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">3</div><h3>Real feature development end-to-end</h3></div>
-      <p>Give Claude Code a feature brief. It plans, codes, tests, and prepares the PR. You review at key checkpoints.</p>
-      <h4>The prompt that works</h4>
-      <div class="prompt-example"><span class="label">Feature brief example</span>Implement feature: API endpoint to soft-delete user accounts.
+    <p class="deck">Claude Code is Anthropic's command-line tool that gives Claude direct access to your codebase, terminal, and file system. It's the most capable AI coding tool there is — and the riskiest if you let it off the leash. This lesson covers setup, MCP servers, and the review discipline that makes it safe: the patterns that ship code instead of breaking things.</p>
 
-Requirements: PATCH /users/:id/delete sets deleted_at, returns 204. Update User model. Add migration. Write unit tests. Update API docs. Don't change existing endpoints.
-
-Plan first, show me, then execute step by step. Ask before destructive operations.</div>
-      <h4>Best use cases</h4>
-      <ul><li>New feature development with clear specs</li><li>Bug fixes with reproducible test cases</li><li>Refactors across multiple files</li><li>Documentation generation tied to code changes</li></ul>
-      <div class="gotcha">Always require the plan-first pattern. Letting Claude Code charge ahead on complex features without a plan checkpoint leads to scope drift and wrong solutions.</div>
-      <div class="savings"><strong>Time savings:</strong> Feature dev time: 30-50% reduction with proper supervision.</div>
+    <div class="progwrap">
+      <div class="progbar"><div class="progfill" id="prog"></div></div>
+      <div class="progmeta"><span id="progStep">Step 1 of 5</span><span id="progPct">0% complete</span></div>
     </div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Final challenge: ship something with Claude Code</h2>
-      <p>Pick a small feature or chore in your current project. Use Claude Code end-to-end: brief, plan, code, test, PR. Review carefully. Notice which parts saved time vs. which needed your full attention. That calibration is the actual skill.</p>
-      <div class="btn-row">
-        <a href="/lessons/claude/" class="btn">Back to Claude Mastery →</a>
-        <a href="/#pricing" class="btn ghost">See pricing →</a>
+
+    <!-- STEP 1 — mental model + predict -->
+    <section class="step active" data-step="1">
+      <span class="step-k">The mental model</span>
+      <h2>Not an autocomplete — a junior who runs commands</h2>
+      <p>Claude Code can read your code, write code, run tests, search the web, and make commits. The difference from Copilot or Cursor is autonomy: it does multi-step work and reports back. Which means the way you use it well looks less like coding and more like managing.</p>
+      <h3>Predict first</h3>
+      <p>What's the right way to think about Claude Code?</p>
+      <div class="choices" id="c1">
+        <button class="choice" onclick="pick(this,1,'a')">Same as IDE autocomplete, just in a terminal</button>
+        <button class="choice" onclick="pick(this,1,'b')">A junior engineer who does multi-step work and reports back — and you're the senior who reviews and approves</button>
+        <button class="choice" onclick="pick(this,1,'c')">A fully autonomous senior you can trust to ship unsupervised</button>
       </div>
-    </div>
-    <div class="checklist">
-      <h3>What you can do now</h3>
-      <ul><li>Install Claude Code and authenticate it for your accounts</li><li>Configure MCP servers for the tools you use daily</li><li>Use the plan-first pattern for any multi-step work</li><li>Recognize the boundaries (when to delegate vs. when to drive yourself)</li><li>Maintain safe-guard patterns (no auto-commit, read-only DB access, etc.)</li></ul>
-    </div>
-    <div class="next-up">
-      <span class="pro-tag">Pro</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in Claude Mastery</div>
-      <h3>Lesson 7 · Custom instructions: teach Claude your style once</h3>
-      <p>How to write custom instructions that genuinely change output. The 4 sections every good instruction set needs, and the anti-patterns that make Claude worse. <a href="/#pricing">See pricing →</a></p>
-    </div>
+      <div class="fb" id="fb1"></div>
+      <div class="step-nav">
+        <button class="btn-back" disabled>← Back</button>
+        <button class="btn" id="next1" disabled onclick="go(2)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- STEP 2 — setup + workflows (show) -->
+    <section class="step" data-step="2">
+      <span class="step-k">Setup &amp; what it does</span>
+      <h2>Install once, then delegate</h2>
+      <div class="cmd">npm install -g @anthropic-ai/claude-code &nbsp;→&nbsp; run <span style="color:var(--text)">claude</span> in any repo</div>
+      <div class="pcard"><div class="pn">① Start with low-stakes tasks</div><div class="pd">Docs, tests, small refactors, codebase Q&amp;A. Ask for a diff before it commits.</div><div class="pp">"Add JSDoc to every public function in src/utils, run the tests, show me the diff before committing."</div></div>
+      <div class="pcard"><div class="pn">② Connect your tools via MCP</div><div class="pd">GitHub, Linear, Postgres — so it can read issues, query schemas, and see PR context.</div><div class="pp">Use <b>read-only</b> credentials for any production system — never give it write access to prod.</div></div>
+      <div class="pcard"><div class="pn">③ Multi-step feature work</div><div class="pd">Hand it a brief; it plans, codes, tests, and preps the PR — with you reviewing at checkpoints.</div><div class="pp">"Plan first, show me, then execute step by step. Ask before destructive operations."</div></div>
+      <div class="gotcha">Two rules that prevent most disasters: require a <strong>plan first</strong> on anything multi-step, and never let it commit-and-push in one shot — review the diff yourself.</div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(1)">← Back</button>
+        <button class="btn" onclick="go(3)">Review its plan →</button>
+      </div>
+    </section>
+
+    <!-- STEP 3 — signature: plan-review console -->
+    <section class="step" data-step="3">
+      <span class="step-k">Do it · review the plan</span>
+      <h2>You're the senior. Approve or flag each step.</h2>
+      <p>You gave Claude Code a brief and asked it to plan first. Here's its plan. Approve the steps that fit the brief; flag the ones that don't or that need a human first.</p>
+      <div class="plan">
+        <div class="ph">claude &gt; here's my plan</div>
+        <div class="brief"><b>Brief:</b> Add <b>PATCH /users/:id/delete</b> (sets deleted_at, returns 204), update the User model, add a migration, write unit tests, update the API docs. <b>Don't change existing endpoints. Ask before destructive operations.</b></div>
+        <div id="planSteps"></div>
+        <button class="btn" id="reviewBtn" disabled onclick="submitPlan()" style="width:100%;justify-content:center;margin-top:6px">Submit review</button>
+      </div>
+      <div class="fb" id="fb3"></div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(2)">← Back</button>
+        <button class="btn" id="next3" disabled onclick="go(4)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- STEP 4 — review-the-diff pick -->
+    <section class="step" data-step="4">
+      <span class="step-k">The discipline</span>
+      <h2>The senior reads the diff</h2>
+      <p>Claude Code finishes the feature, tests pass, and it offers to commit and push to <code style="font-family:'SFMono-Regular',Consolas,monospace;font-size:13px;color:var(--accent)">main</code> in one step to save you time.</p>
+      <h3>The call</h3>
+      <p>What's the right move?</p>
+      <div class="choices" id="c4">
+        <button class="choice" onclick="pick(this,4,'a')">Let it commit and push — tests passed, that's good enough</button>
+        <button class="choice" onclick="pick(this,4,'b')">Read the diff yourself first, then commit and open a PR — never commit-and-push in one shot</button>
+        <button class="choice" onclick="pick(this,4,'c')">Trust it fully — reviewing defeats the point of automation</button>
+      </div>
+      <div class="fb" id="fb4"></div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(3)">← Back</button>
+        <button class="btn" id="next4" disabled onclick="go(5)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- STEP 5 — completion -->
+    <section class="step" data-step="5">
+      <div class="complete">
+        <div class="big">⌨️</div>
+        <span class="step-k">Lesson complete</span>
+        <h2>You can delegate to Claude Code — and stay the reviewer</h2>
+      </div>
+      <div class="checklist">
+        <h3>What you can do now</h3>
+        <ul>
+          <li>Install Claude Code and run your first low-stakes task</li>
+          <li>Connect your tools via MCP — with read-only creds on anything production</li>
+          <li>Require a plan first on any multi-step work</li>
+          <li>Review the plan and the diff like a senior reviewing a junior</li>
+          <li>Never commit-and-push in one shot; open a PR you can read</li>
+        </ul>
+      </div>
+      <div class="challenge">
+        <h3>Your move: ship one thing with Claude Code</h3>
+        <p>Pick a small feature or chore in your current project. Run it end-to-end — brief, plan, code, test, PR — and review carefully. Notice which parts saved time and which needed your full attention. That calibration is the real skill.</p>
+        <div class="btn-row">
+          <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+        </div>
+      </div>
+      <div class="next-up">
+        <span class="pro-tag">Pro</span>
+        <div class="lbl" style="margin-top:12px">Up next in Claude Mastery</div>
+        <h3>Custom instructions: teach Claude your style once</h3>
+        <p>How to write custom instructions that genuinely change the output — the four sections every good instruction set needs, and the anti-patterns that make Claude worse.</p>
+        <div class="btn-row">
+          <a href="/lessons/claude/custom-instructions" class="btn">Continue to Custom instructions →</a>
+          <a href="/lessons/claude/" class="btn ghost">Back to all lessons</a>
+        </div>
+      </div>
+    </section>
+
   </div>
-</article>
+</div>
+
 <footer>
   <div class="footer-inner">
-    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Anthropic.</div>
-    <a href="/lessons/claude/" style="color: var(--text-dim);">← All Claude lessons</a>
+    <div>© 2026 LearningGPT · Independent. Not affiliated with Anthropic.</div>
+    <a href="/lessons/claude/" style="color: var(--text-dim);">← All Claude Mastery lessons</a>
   </div>
 </footer>
 
@@ -229,7 +318,6 @@ Plan first, show me, then execute step by step. Ask before destructive operation
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -241,10 +329,10 @@ Plan first, show me, then execute step by step. Ask before destructive operation
     <button class="coach-close" id="coachClose">✕</button>
   </div>
   <div class="coach-messages" id="coachMessages">
-    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson on Claude Code. Ask me about setup, MCP servers, the plan-first pattern, or how to review what it produces. What are you building?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -252,15 +340,130 @@ Plan first, show me, then execute step by step. Ask before destructive operation
   </div>
 </div>
 
+<script id="lessonScript">
+/* ── stepper ── */
+var TOTAL = 5;
+var cur = 1;
+function go(n){
+  if(n<1||n>TOTAL) return;
+  document.querySelector('.step[data-step="'+cur+'"]').classList.remove('active');
+  cur = n;
+  document.querySelector('.step[data-step="'+cur+'"]').classList.add('active');
+  var pct = Math.round(((cur-1)/(TOTAL-1))*100);
+  document.getElementById('prog').style.width = pct+'%';
+  document.getElementById('progStep').textContent = 'Step '+cur+' of '+TOTAL;
+  document.getElementById('progPct').textContent = pct+'% complete';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
 
-<script id="coachScript">
+/* ── predict / pick ── */
+var pickMsg = {
+  '1': {
+    correct: 'b',
+    good: '<b>A junior who runs commands.</b> It does real multi-step work autonomously and reports back — so your job is the senior\'s: set the brief, review the plan, approve the diff. That review loop is exactly what separates a useful Claude Code session from a broken codebase.',
+    bad: '<b>In the middle.</b> It\'s more than autocomplete (it acts on its own across many steps) but not a senior you trust unsupervised. Treat it as a capable junior: it does the work, you review and approve.'
+  },
+  '4': {
+    correct: 'b',
+    good: '<b>Read the diff first.</b> Passing tests isn\'t the same as correct, intended, and safe. Review the changes yourself, then commit and open a PR. The rule of thumb: never let Claude Code commit-and-push in one shot — the diff is where you stay the senior.',
+    bad: '<b>Too trusting.</b> Green tests don\'t guarantee the change is right or safe, and skipping review is how bad code reaches main. Read the diff, then commit and open a PR — never commit-and-push in a single step.'
+  }
+};
+function pick(btn, step, val){
+  var box = document.getElementById('c'+step);
+  if(box.dataset.done) return;
+  box.dataset.done = '1';
+  var info = pickMsg[String(step)];
+  Array.prototype.forEach.call(box.querySelectorAll('.choice'), function(b){
+    b.disabled = true;
+    var v = b.getAttribute('onclick').match(/'([a-z])'\)/)[1];
+    if(v === info.correct) b.classList.add('correct');
+    else if(b === btn) b.classList.add('wrong');
+  });
+  var fb = document.getElementById('fb'+step);
+  var ok = val === info.correct;
+  fb.className = 'fb show ' + (ok ? 'good' : 'bad');
+  fb.innerHTML = ok ? info.good : info.bad;
+  document.getElementById('next'+step).disabled = false;
+}
+
+/* ── signature: plan-review console ── */
+var PLAN = [
+  { text:'Add PATCH /users/:id/delete that sets deleted_at and returns 204.', good:true,
+    why:'Exactly the brief — the core change. Approve.' },
+  { text:'Add a migration that introduces the deleted_at column.', good:true,
+    why:'A new migration file is the right way to make the schema change. Approve.' },
+  { text:'Delete the old GET /users endpoint to tidy things up.', good:false,
+    why:'The brief said don\'t change existing endpoints. Removing one is scope creep — flag it.' },
+  { text:'Write unit tests for the new endpoint and update the API docs.', good:true,
+    why:'Both are in the brief. Approve.' },
+  { text:'Apply the migration directly to the production database now.', good:false,
+    why:'Destructive, on prod, and the brief says ask first. Migrations run through CI/staging with review — flag it.' },
+  { text:'When everything passes, force-push the branch to main.', good:false,
+    why:'Never auto-push, never force-push to main. You read the diff and open a PR — flag it.' }
+];
+var pchoice = PLAN.map(function(){ return null; });
+var pgraded = false;
+function renderPlan(){
+  var wrap = document.getElementById('planSteps');
+  wrap.innerHTML = '';
+  PLAN.forEach(function(s, i){
+    var div = document.createElement('div');
+    div.className = 'pstep';
+    div.id = 'ps'+i;
+    div.innerHTML =
+      '<div class="prow"><div class="pt"><span class="pnum">'+(i+1)+'.</span>'+s.text+'</div>'+
+      '<div class="pbtns">'+
+      '<button class="pb" data-c="approve" onclick="pchoose('+i+',\'approve\',this)">Approve</button>'+
+      '<button class="pb" data-c="flag" onclick="pchoose('+i+',\'flag\',this)">Flag</button>'+
+      '</div></div>'+
+      '<div class="pwhy" id="pwhy'+i+'"></div>';
+    wrap.appendChild(div);
+  });
+}
+function pchoose(i, c, btn){
+  if(pgraded) return;
+  pchoice[i] = c;
+  var row = btn.closest('.pstep');
+  row.querySelectorAll('.pb').forEach(function(b){ b.classList.remove('sel-approve','sel-flag'); });
+  btn.classList.add(c === 'approve' ? 'sel-approve' : 'sel-flag');
+  var allSet = pchoice.every(function(x){ return x !== null; });
+  document.getElementById('reviewBtn').disabled = !allSet;
+}
+function submitPlan(){
+  if(pgraded) return;
+  pgraded = true;
+  var right = 0;
+  PLAN.forEach(function(s, i){
+    var want = s.good ? 'approve' : 'flag';
+    var ok = pchoice[i] === want;
+    if(ok) right++;
+    var row = document.getElementById('ps'+i);
+    row.classList.add(ok ? 'right' : 'wrong');
+    row.querySelectorAll('.pb').forEach(function(b){
+      b.disabled = true;
+      if(b.dataset.c === want) b.classList.add(want === 'approve' ? 'sel-approve' : 'sel-flag');
+    });
+    var why = document.getElementById('pwhy'+i);
+    why.className = 'pwhy show';
+    why.innerHTML = (ok ? '✓ ' : '→ ') + '<b>'+(s.good ? 'Approve.' : 'Flag.')+'</b> ' + s.why;
+  });
+  document.getElementById('reviewBtn').disabled = true;
+  document.getElementById('reviewBtn').textContent = 'Review submitted';
+  var fb = document.getElementById('fb3');
+  fb.className = 'fb show good';
+  fb.innerHTML = 'You caught <b>'+right+' of 6</b>. Three steps matched the brief; three were trouble — scope creep, a destructive prod migration, and a force-push to main. This is the whole job: the plan-first checkpoint is where you steer a junior before any code gets written.';
+  document.getElementById('next3').disabled = false;
+}
+renderPlan();
+
+/* ── AI COACH ── */
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Claude Code: the CLI tool for serious development\nTRACK: Claude Mastery\n\nLESSON CONTENT SUMMARY:\nClaude Code: the CLI tool for serious development \u2014 LearningGPT L LearningGPT \u2190 Claude Mastery Lesson 06 \u00b7 Claude Mastery Pro+ ~16 min read Setup + 3 workflows Claude Code: the CLI for real work. Claude Code is Anthropic's command-line tool that gives Claude direct access to your codebase, terminal, and file system. It's the most powerful AI coding tool available \u2014 and the most dangerous if misused. This lesson covers setup, the prompt patterns that ship code, MCP servers, and the workflows that justify the Pro+ tier. The mental model Claude Code isn't an IDE assistant. It's a junior engineer who can run commands. The mental model is delegating to a junior engineer who can read your code, write code, run tests, search the web, and make commits. You're the senior who reviews and approves. The difference between this and Copilot/Cursor is autonomy: Claude Code does multi-step work and then reports back. Workflow 01 Setup and first task 1 Install, authenticate, run your first task Install Claude Code (`npm install -g @anthropic-ai/claude-code` or via your platform's package manager). Run `claude` in any repo. Start with low-stakes tasks. The prompt that works First-task pattern claude > Add JSDoc comments to every public function in src/utils/. Run the existing tests after to make sure nothing broke. Show me a diff of what you changed before committing. Best use cases Documentation generation Test coverage additions Repetitive refactors with low blast radius Codebase Q&A (\"how does authentication work in this repo?\") Always start with `--dry-run` mode on unfamiliar codebases until you trust the patterns. Never let Claude Code commit and push in one shot; review the diff first. Time savings: Setup takes 10 min. First useful task: immediately. Workflow 02 The MCP server pattern 2 Connect Claude Code to your real tools MCP (Model Context Protocol) servers let Claude Code access your tools \u2014 your Linear, your GitHub, your Slack, your database. Configured once, available forever. The prompt that works Setup pattern Install MCP servers for: GitHub (PR review), Linear (issue context), Postgres (database queries). Now Claude Code can reference issues, query databases, and read PR diffs as part of its work. Best use cases Issue \u2192 code \u2192 PR workflow within Claude Code Database-aware code (it can query the schema) PR review with full context (it sees the description, comments, related issues) Production-aware debugging (with logs/observability MCP servers) MCP server permissions matter. Don't connect a production database with write access; use read-only credentials. Same for any sensitive system. Time savings: Context-switching between tools: massive reduction. Workflow 03 Multi-step development sessions 3 Real feature development end-to-end Give Claude Code a feature brief. It plans, codes, tests, and prepares the PR. You review at key checkpoints. The prompt that works Feature brief example Implement feature: API endpoint to soft-delete user accounts. Requi\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Claude Code: the CLI tool for serious development\nTRACK: Claude Mastery (Lesson 06, Pro+, for developers)\n\nLESSON CONTENT SUMMARY:\nClaude Code is Anthropic's command-line tool giving Claude direct access to your codebase, terminal, and file system. Most capable AI coding tool, riskiest if misused. MENTAL MODEL: it's not an IDE autocomplete (like Copilot/Cursor) — it's a junior engineer who reads code, writes code, runs tests, searches the web, and makes commits, doing multi-step work AUTONOMOUSLY and reporting back. You're the senior who reviews and approves.\n\nSETUP: install with npm install -g @anthropic-ai/claude-code (or a package manager); run 'claude' in any repo; start with low-stakes tasks.\n\nTHREE WORKFLOWS:\n1. First tasks (low-stakes): docs generation, test coverage, small/low-blast-radius refactors, codebase Q&A. Ask for a diff before it commits. Use --dry-run on unfamiliar codebases until you trust the patterns.\n2. MCP servers: connect GitHub (PR review), Linear (issue context), Postgres (DB queries), etc., so Claude Code works with real context. Permissions matter — use READ-ONLY credentials for any production database or sensitive system; never give write access to prod.\n3. Multi-step feature development: give it a clear brief; it plans, codes, tests, and preps the PR; you review at checkpoints.\n\nKEY DISCIPLINES:\n- PLAN FIRST: require a plan checkpoint on any multi-step work ('plan first, show me, then execute step by step; ask before destructive operations'). Charging ahead without a plan causes scope drift and wrong solutions.\n- REVIEW THE DIFF: never let Claude Code commit-and-push in one shot. Passing tests != correct/safe. Read the diff yourself, then commit and open a PR.\n- Watch for: scope creep beyond the brief (e.g., changing/deleting existing endpoints when told not to), destructive operations on production (e.g., running a migration directly on prod — should go through CI/staging with review), and force-pushing to main (never).\n\nValue: ~30-50% feature-dev time reduction WITH proper supervision. The real skill is calibration — knowing what to delegate vs drive yourself.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content.\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more.\n- Be practical — give real work examples and sample prompts when helpful.\n- If asked about something not in this lesson, briefly answer and point to where they can learn more.\n- Never make up Claude Code features that don't exist.\n- Plain conversational text only — no markdown symbols like ** or ##.\n- Do not start responses with \"Great question!\" or similar filler phrases.";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -268,27 +471,21 @@ Plan first, show me, then execute step by step. Ask before destructive operation
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -297,7 +494,6 @@ Plan first, show me, then execute step by step. Ask before destructive operation
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -306,7 +502,6 @@ Plan first, show me, then execute step by step. Ask before destructive operation
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

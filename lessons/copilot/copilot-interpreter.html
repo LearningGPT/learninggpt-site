@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#2c7be5" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/copilot/copilot-interpreter" />
 <meta property="og:title" content="Copilot Interpreter — real-time meeting translation" />
@@ -30,90 +30,110 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
 .logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
 .nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
-.lesson { padding: 50px 0 100px; }
-.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+
+/* ── INTERACTIVE LESSON SHELL ── */
+.ilesson { padding: 46px 0 100px; }
+.lesson-meta { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
 .lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(44,123,229,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(44,123,229,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
 .lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
-.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
-.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #2c7be5 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
-.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
-.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #2c7be5, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(44,123,229,0.1); border: 1px solid rgba(44,123,229,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.ilesson h1 { font-size: clamp(31px, 4.5vw, 44px); font-weight: 800; line-height: 1.14; letter-spacing: -0.02em; margin: 0 0 18px; }
+.ilesson h1 .grad { background: linear-gradient(135deg, #2c7be5 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.ilesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.12em; }
+.deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 30px; padding-bottom: 26px; border-bottom: 1px solid var(--line); }
+
+.progwrap { position: sticky; top: 59px; z-index: 50; background: rgba(10,10,26,0.9); backdrop-filter: blur(8px); padding: 14px 0 12px; margin-bottom: 6px; }
+.progbar { height: 6px; background: rgba(255,255,255,0.07); border-radius: 999px; overflow: hidden; }
+.progfill { height: 100%; width: 0%; background: linear-gradient(90deg, #2c7be5, #7c5cff); border-radius: 999px; transition: width .4s cubic-bezier(.4,0,.2,1); }
+.progmeta { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--text-mute); margin-top: 7px; letter-spacing: 0.3px; }
+
+.step { display: none; animation: stepIn .4s ease; }
+.step.active { display: block; }
+@keyframes stepIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.step-k { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin: 26px 0 6px; }
+.step h2 { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; line-height: 1.25; }
+.step h3 { font-size: 18px; font-weight: 600; margin: 22px 0 9px; }
+.step p { font-size: 16.5px; color: var(--text); margin: 0 0 16px; }
+.step strong { font-weight: 700; } .step em { font-style: italic; }
+
+.card { background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 22px 26px; margin: 20px 0; }
+.card p:last-child { margin-bottom: 0; }
+.steps-list { list-style: none; counter-reset: s; padding: 0; margin: 0; }
+.steps-list li { counter-increment: s; padding: 11px 0 11px 40px; position: relative; border-top: 1px solid var(--line); font-size: 14.5px; line-height: 1.5; }
+.steps-list li:first-child { border-top: none; }
+.steps-list li::before { content: counter(s); position: absolute; left: 0; top: 10px; width: 26px; height: 26px; border-radius: 7px; background: rgba(44,123,229,0.12); border: 1px solid rgba(44,123,229,0.3); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
+.langs { display: flex; flex-wrap: wrap; gap: 7px; margin: 14px 0 0; }
+.lang { font-size: 12.5px; padding: 5px 11px; border-radius: 999px; background: rgba(44,123,229,0.1); border: 1px solid rgba(44,123,229,0.3); color: var(--brand-2); }
+.pcard { background: var(--bg-soft); border: 1px solid var(--line); border-left: 3px solid var(--track); border-radius: 0 var(--radius) var(--radius) 0; padding: 14px 16px; margin-bottom: 11px; }
+.pcard .pn { font-size: 15px; font-weight: 700; color: var(--text); }
+.pcard .pd { font-size: 13.5px; color: var(--text-dim); margin-top: 4px; line-height: 1.5; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 13px 16px; margin: 16px 0; font-size: 14.5px; }
 .gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #2c7be5, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
-.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
-.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
-.checklist li:first-child { border-top: none; padding-top: 0; }
-.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+
+/* choices */
+.choices { display: flex; flex-direction: column; gap: 10px; margin: 16px 0 8px; }
+.choice { text-align: left; background: var(--surface); border: 1px solid var(--line-strong); color: var(--text); border-radius: 12px; padding: 14px 16px; font-size: 15px; font-family: inherit; cursor: pointer; transition: border-color .15s, background .15s, transform .1s; line-height: 1.5; }
+.choice:hover:not(:disabled) { border-color: var(--brand-2); transform: translateX(2px); }
+.choice:disabled { cursor: default; }
+.choice.correct { border-color: var(--accent); background: rgba(68,224,164,0.1); }
+.choice.wrong { border-color: var(--danger); background: rgba(255,107,138,0.08); opacity: 0.75; }
+.fb { margin: 6px 0 0; padding: 14px 16px; border-radius: 12px; font-size: 14.5px; line-height: 1.6; display: none; }
+.fb.show { display: block; animation: stepIn .3s ease; }
+.fb.good { background: rgba(68,224,164,0.1); border: 1px solid rgba(68,224,164,0.3); }
+.fb.bad { background: rgba(255,181,71,0.08); border: 1px solid rgba(255,181,71,0.3); }
+.fb b { color: var(--text); }
+
+/* signature: idiom fixer */
+.fixer { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 22px 24px; margin: 18px 0; }
+.utterance { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; font-size: 16px; line-height: 2.1; color: var(--text); }
+.utterance .uh { font-size: 11px; text-transform: uppercase; letter-spacing: 0.9px; color: var(--brand-2); font-weight: 700; margin-bottom: 8px; line-height: 1.4; }
+.idiom { font-weight: 700; color: var(--text); background: rgba(255,181,71,0.16); border: none; border-bottom: 1.5px dashed var(--warn); border-radius: 4px; padding: 1px 6px; cursor: pointer; font-size: inherit; font-family: inherit; transition: background .15s; }
+.idiom:hover:not(.done) { background: rgba(255,181,71,0.26); }
+.idiom.done { background: rgba(68,224,164,0.16); border-bottom: 1.5px solid var(--accent); cursor: default; }
+.fix-hint { font-size: 13px; color: var(--text-mute); margin: 14px 0 2px; }
+.fix-hint b { color: var(--text); }
+.why-list { list-style: none; padding: 0; margin: 12px 0 0; }
+.why-list li { font-size: 13.5px; color: var(--text-dim); padding: 9px 0 9px 24px; position: relative; border-top: 1px solid var(--line); line-height: 1.5; animation: stepIn .3s ease; }
+.why-list li:first-child { border-top: none; }
+.why-list li::before { content: '↺'; position: absolute; left: 0; top: 9px; color: var(--accent); font-weight: 700; }
+.why-list li b { color: var(--text); }
+
+.step-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 30px; gap: 12px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #7c5cff, #5b8def); color: white; padding: 13px 24px; border-radius: 11px; font-weight: 600; font-size: 15px; border: none; font-family: inherit; cursor: pointer; box-shadow: 0 6px 22px rgba(124,92,255,0.3); transition: transform .15s, opacity .15s; }
+.btn:hover:not(:disabled) { transform: translateY(-1px); color: white; }
+.btn:disabled { opacity: 0.4; cursor: default; box-shadow: none; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.btn-back { background: none; border: none; color: var(--text-mute); font-size: 14px; cursor: pointer; font-family: inherit; padding: 8px 4px; }
+.btn-back:hover { color: var(--text); } .btn-back:disabled { opacity: 0; cursor: default; }
+
+.complete { text-align: center; padding: 14px 0 0; }
+.complete .big { font-size: 48px; margin-bottom: 6px; }
+.checklist { margin: 26px 0; padding: 24px 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); text-align: left; }
+.checklist h3 { margin: 0 0 6px; font-size: 17px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 30px; position: relative; font-size: 15px; border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 13px; width: 18px; height: 18px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
-.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
-.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.challenge { margin: 24px 0; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); padding: 28px; text-align: left; }
+.challenge h3 { margin: 0 0 8px; font-size: 19px; }
+.next-up { margin: 26px 0 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); text-align: left; }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 8px; }
 .next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
-.next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
+.next-up h3 { margin: 12px 0 8px; font-size: 19px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+
 footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -142,7 +162,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -154,73 +173,145 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <a href="/lessons/copilot/" class="nav-back">← Copilot Mastery</a>
   </div>
 </nav>
-<article class="lesson">
-  <div class="container">
+
+<div class="container">
+  <div class="ilesson">
     <div class="lesson-meta">
       <span class="chip">Agents · Lesson 04</span>
       <span class="chip chip-pro">Pro</span>
-      <span>~9 min read</span>
+      <span>~9 min</span>
       <span class="dot"></span>
-      <span>9 languages, voice-matched</span>
+      <span>Interactive</span>
     </div>
     <h1>Interpreter: <span class="grad serif">meetings without translators.</span></h1>
-    <p class="deck">Interpreter is one of Microsoft's smaller but most impactful agents — real-time speech-to-speech translation in Teams meetings. Up to 9 languages currently. Each participant speaks their native language; everyone hears it translated to theirs. For global teams or international customer calls, this changes what's possible in a single meeting.</p>
-    <h2><span class="num">Workflow 01</span> Enable Interpreter for a meeting</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>Setup and language configuration</h3></div><p>Like Facilitator, Interpreter benefits from explicit setup. The defaults work but aren't optimal for many scenarios.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Interpreter setup</span>Setup steps:
+    <p class="deck">Interpreter is one of Microsoft's smaller but most impactful agents — real-time speech-to-speech translation in Teams meetings, up to nine languages. Everyone speaks their own language and hears everyone else's translated to theirs. The agent does the hard part; the skill you bring is speaking in a way the translation can carry cleanly.</p>
 
-1. When scheduling, add Interpreter from the Copilot meeting tools
-2. Configure your own language preference — Interpreter translates everything to this when others speak other languages
-3. Each attendee sets their own language preference (it&#x27;s per-person)
-4. Confirm in your invite that Interpreter will be on — set expectations
-5. Optional: enable voice-matching so the translated audio sounds like the original speaker (more natural feel)
+    <div class="progwrap">
+      <div class="progbar"><div class="progfill" id="prog"></div></div>
+      <div class="progmeta"><span id="progStep">Step 1 of 5</span><span id="progPct">0% complete</span></div>
+    </div>
 
-During the meeting:
-- You speak normally in your language
-- Others hear it translated to theirs
-- They speak in theirs; you hear yours
-- Live captions show in everyone&#x27;s chosen language</div><h4>Best use cases</h4><ul><li>Global team standups</li><li>International customer calls</li><li>Distributed sales calls (multi-country prospects)</li><li>Cross-border partner meetings</li></ul><div class="gotcha">Interpreter works on supported languages only — confirm yours is in the list before scheduling a critical meeting around it. Languages supported expand regularly; check the current list.</div><div class="savings"><strong>Time savings:</strong> Bilingual meetings: no more 'wait, let me translate that' interruptions.</div></div><h2><span class="num">Workflow 02</span> Multilingual customer calls</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>Sales and support meetings across language barriers</h3></div><p>The sales-and-support use case is where Interpreter changes the economics. You can now have meaningful customer conversations without hiring multilingual reps or scheduling around translators.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Customer call pattern</span>Customer call pattern with Interpreter:
-
-1. Schedule the call with Interpreter enabled
-2. In the invite, note that &#x27;Real-time translation will be available — you can speak [their language] and I&#x27;ll hear [my language].&#x27;
-3. Open the meeting in your language; let the customer speak in theirs
-4. Speak naturally, but a little slower than usual — translation lag is small but real
-5. Avoid heavy idioms and slang — they translate awkwardly
-6. Use Facilitator alongside Interpreter for notes — translated transcripts are sent to all attendees in their chosen language
-7. Post-meeting: the summary is generated in all participants&#x27; languages</div><h4>Best use cases</h4><ul><li>Sales discovery calls across regions</li><li>Customer success check-ins with international accounts</li><li>Support escalations for non-English speakers</li><li>Partner onboarding across regions</li></ul><div class="gotcha">Idioms and slang are translation kryptonite. 'Let's circle back' might translate literally, confusing the listener. Speak plainly.</div><div class="savings"><strong>Time savings:</strong> Multilingual customer relationship: enabled where it wasn't before.</div></div><h2><span class="num">Workflow 03</span> Combining Interpreter with Facilitator</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>Multilingual notes for all attendees</h3></div><p>The interesting combination: Facilitator generates notes; Interpreter translates them. Every attendee gets notes in their own language without manual translation.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Combined config</span>Combined setup:
-
-1. Enable both Facilitator and Interpreter for the meeting
-2. Each attendee sets their language preference
-3. During the meeting, Interpreter translates speech in real time
-4. After the meeting, Facilitator generates the summary and action items
-5. Interpreter translates the summary into each attendee&#x27;s language
-6. Each person receives notes in their own language automatically
-
-This turns &#x27;we need translated meeting notes&#x27; from a follow-up task into a default deliverable.</div><h4>Best use cases</h4><ul><li>Cross-region executive meetings with international stakeholders</li><li>Distributed team retros where everyone needs the recap</li><li>Customer kickoffs where notes go to international project teams</li><li>Partner onboarding with multilingual contract teams</li></ul><div class="gotcha">Translation quality on action items is critical. Spot-check your most important action items in their translated form — small ambiguities can become large confusions cross-language.</div><div class="savings"><strong>Time savings:</strong> Multilingual notes: a half-day translator task → automatic.</div></div><div class="callout"><span class="lbl">Languages currently supported</span><p>As of 2026, Interpreter supports approximately 9 languages including English, Spanish, French, German, Italian, Japanese, Mandarin, Portuguese, and Korean. Microsoft expands this list regularly — check the current language list in Teams admin settings.</p></div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Run one multilingual meeting this month</h2>
-      <p>If you have international customers, partners, or teammates whose primary language isn't yours — schedule a meeting with Interpreter on. Notice what conversations become possible that weren't before.</p>
-      <div class="btn-row">
-        <a href="/lessons/copilot/" class="btn">Back to Copilot Mastery →</a>
-        <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+    <!-- STEP 1 — mental model + predict -->
+    <section class="step active" data-step="1">
+      <span class="step-k">The mental model</span>
+      <h2>The agent translates — you make it translatable</h2>
+      <p>Interpreter handles the part that used to need a human translator: each person speaks their native language, everyone hears theirs, captions follow along. What it can't fix is <em>how</em> you talk — and that's where most of the quality comes from.</p>
+      <h3>Predict first</h3>
+      <p>Interpreter is on for a call with a customer in another language. Beyond switching it on, what most improves how well it goes?</p>
+      <div class="choices" id="c1">
+        <button class="choice" onclick="pick(this,1,'a')">Speak faster, so the lag doesn't slow the call down</button>
+        <button class="choice" onclick="pick(this,1,'b')">Speak a little slower and plainly — drop idioms and slang</button>
+        <button class="choice" onclick="pick(this,1,'c')">Use more idioms so you sound warm and friendly</button>
       </div>
-    </div>
-    <div class="checklist">
-      <h3>What you can do now</h3>
-      <ul>
-        <li>Confirm your needed language is supported before relying on Interpreter</li>
-        <li>Speak more plainly when Interpreter is active — avoid idioms</li>
-        <li>Combine Interpreter with Facilitator for translated notes</li>
-        <li>Spot-check translated action items for ambiguity</li>
-        <li>Use voice-matching for more natural feel in customer-facing calls</li>
-      </ul>
-    </div>
-    <div class="next-up">
-      <span class="pro-tag">Pro</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in Copilot Mastery</div>
-      <h3>Lesson 05 · Dynamics 365 Sales Agent — pipeline that works for you</h3>
-      <p>The Dynamics 365 Sales Agent is the next layer — pre-call research, lead prioritization, follow-up drafting, and pipeline hygiene. For revenue teams in Dynamics, this changes what one rep can cover. <a href="/lessons/copilot/">See the track →</a></p>
-    </div>
+      <div class="fb" id="fb1"></div>
+      <div class="step-nav">
+        <button class="btn-back" disabled>← Back</button>
+        <button class="btn" id="next1" disabled onclick="go(2)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- STEP 2 — setup (show) -->
+    <section class="step" data-step="2">
+      <span class="step-k">Setup</span>
+      <h2>Configure it before the call</h2>
+      <div class="card">
+        <ol class="steps-list">
+          <li>Add Interpreter from the Copilot meeting tools when scheduling.</li>
+          <li>Set <strong>your own</strong> language — everyone else's speech arrives translated to it. Language preference is per-person.</li>
+          <li>Note in the invite that translation will be on, so people know what to expect.</li>
+          <li>Optionally enable <strong>voice-matching</strong> so the translated audio sounds like the original speaker — it feels far more natural on customer calls.</li>
+        </ol>
+        <p style="margin:14px 0 0;font-size:14px;color:var(--text-dim)">Supported today (~9, and growing):</p>
+        <div class="langs">
+          <span class="lang">English</span><span class="lang">Spanish</span><span class="lang">French</span><span class="lang">German</span><span class="lang">Italian</span><span class="lang">Japanese</span><span class="lang">Mandarin</span><span class="lang">Portuguese</span><span class="lang">Korean</span>
+        </div>
+      </div>
+      <div class="gotcha">Interpreter only works on supported languages. Confirm yours is on the current list before you build a critical meeting around it — the list expands often, so check in Teams admin settings.</div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(1)">← Back</button>
+        <button class="btn" onclick="go(3)">Now make a sentence translatable →</button>
+      </div>
+    </section>
+
+    <!-- STEP 3 — signature: idiom fixer -->
+    <section class="step" data-step="3">
+      <span class="step-k">Do it · de-idiom it</span>
+      <h2>Idioms are translation kryptonite</h2>
+      <p>Interpreter translates what you literally say. Idioms get rendered word-for-word into something baffling — "circle back" becomes an image of going in circles. Here's an opener a rep might use. Tap each highlighted idiom to swap it for a version the translation can carry.</p>
+      <div class="fixer">
+        <div class="utterance" id="utterance">
+          <div class="uh">You, on a multilingual customer call</div>
+          "Let's <button class="idiom" data-k="tb" onclick="fix(this)">touch base</button> on the project, get a <button class="idiom" data-k="bp" onclick="fix(this)">ballpark</button> on the timeline, and <button class="idiom" data-k="cb" onclick="fix(this)">circle back</button> next week if anything's still <button class="idiom" data-k="ua" onclick="fix(this)">up in the air</button>."
+        </div>
+        <div class="fix-hint" id="fixHint"><b>0 of 4</b> idioms fixed — tap the highlighted ones.</div>
+        <ul class="why-list" id="whyList"></ul>
+      </div>
+      <div class="fb" id="fb3"></div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(2)">← Back</button>
+        <button class="btn" id="next3" disabled onclick="go(4)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- STEP 4 — combine with Facilitator + pick -->
+    <section class="step" data-step="4">
+      <span class="step-k">The combo + one check</span>
+      <h2>Pair it with Facilitator for notes in every language</h2>
+      <p>Run Interpreter and Facilitator together: Facilitator writes the summary and action items, Interpreter translates them, and each attendee gets the notes in their own language automatically. "We need translated meeting notes" stops being a follow-up task.</p>
+      <div class="pcard"><div class="pn">The payoff</div><div class="pd">Everyone leaves a cross-border meeting with a recap and their action items already in their language — no translator, no delay.</div></div>
+      <h3>One thing to check first</h3>
+      <p>Your combined setup auto-translates the action items into everyone's language. Before you rely on them, what's the right move?</p>
+      <div class="choices" id="c4">
+        <button class="choice" onclick="pick(this,4,'a')">Trust them — it's automated, so it's consistent</button>
+        <button class="choice" onclick="pick(this,4,'b')">Spot-check the most important translated action items for ambiguity</button>
+        <button class="choice" onclick="pick(this,4,'c')">Re-translate every line yourself by hand</button>
+      </div>
+      <div class="fb" id="fb4"></div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(3)">← Back</button>
+        <button class="btn" id="next4" disabled onclick="go(5)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- STEP 5 — completion -->
+    <section class="step" data-step="5">
+      <div class="complete">
+        <div class="big">🌐</div>
+        <span class="step-k">Lesson complete</span>
+        <h2>Language stops being the thing that blocks the meeting</h2>
+      </div>
+      <div class="checklist">
+        <h3>What you can do now</h3>
+        <ul>
+          <li>Confirm your language is supported before relying on Interpreter</li>
+          <li>Speak plainly and a touch slower — strip idioms and slang</li>
+          <li>Turn on voice-matching for a more natural customer-facing feel</li>
+          <li>Pair Interpreter with Facilitator for notes in every attendee's language</li>
+          <li>Spot-check translated action items — small ambiguities get big across languages</li>
+        </ul>
+      </div>
+      <div class="challenge">
+        <h3>Your move: run one multilingual meeting this month</h3>
+        <p>If you have international customers, partners, or teammates whose first language isn't yours, schedule a call with Interpreter on. Speak plainly, watch the idioms, and notice which conversations become possible that weren't before.</p>
+        <div class="btn-row">
+          <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+        </div>
+      </div>
+      <div class="next-up">
+        <span class="pro-tag">Pro</span>
+        <div class="lbl" style="margin-top:12px">Up next in Copilot Mastery</div>
+        <h3>Agents · Lesson 05 — Dynamics 365 Sales Agent: pipeline that works for you</h3>
+        <p>The Sales Agent is the next layer — pre-call research, lead prioritization, follow-up drafting, and pipeline hygiene. For revenue teams in Dynamics, it changes how much one rep can cover.</p>
+        <div class="btn-row">
+          <a href="/lessons/copilot/copilot-sales-agent" class="btn">Continue to Agents · Lesson 05 · Sales Agent →</a>
+          <a href="/lessons/copilot/" class="btn ghost">Back to all lessons</a>
+        </div>
+      </div>
+    </section>
+
   </div>
-</article>
+</div>
+
 <footer>
   <div class="footer-inner">
     <div>© 2026 LearningGPT · Independent. Not affiliated with Microsoft.</div>
@@ -233,7 +324,6 @@ This turns &#x27;we need translated meeting notes&#x27; from a follow-up task in
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -245,10 +335,10 @@ This turns &#x27;we need translated meeting notes&#x27; from a follow-up task in
     <button class="coach-close" id="coachClose">✕</button>
   </div>
   <div class="coach-messages" id="coachMessages">
-    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson on Copilot Interpreter. Ask me about setup, supported languages, speaking so translation stays clean, or pairing it with Facilitator. Planning a multilingual call?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -256,15 +346,86 @@ This turns &#x27;we need translated meeting notes&#x27; from a follow-up task in
   </div>
 </div>
 
+<script id="lessonScript">
+/* ── stepper ── */
+var TOTAL = 5;
+var cur = 1;
+function go(n){
+  if(n<1||n>TOTAL) return;
+  document.querySelector('.step[data-step="'+cur+'"]').classList.remove('active');
+  cur = n;
+  document.querySelector('.step[data-step="'+cur+'"]').classList.add('active');
+  var pct = Math.round(((cur-1)/(TOTAL-1))*100);
+  document.getElementById('prog').style.width = pct+'%';
+  document.getElementById('progStep').textContent = 'Step '+cur+' of '+TOTAL;
+  document.getElementById('progPct').textContent = pct+'% complete';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
 
-<script id="coachScript">
+/* ── predict / pick ── */
+var pickMsg = {
+  '1': {
+    correct: 'b',
+    good: '<b>Right — slow and plain.</b> Translation has a small but real lag, and idioms get rendered literally into nonsense. Speaking a touch slower and dropping slang gives Interpreter clean input — which is most of the quality.',
+    bad: '<b>The opposite, actually.</b> Speaking faster fights the translation lag, and idioms are exactly what breaks. The win is to slow down a little and speak plainly — clean input is what makes the output good.'
+  },
+  '4': {
+    correct: 'b',
+    good: '<b>Spot-check the key ones.</b> Auto-translation is consistent, not infallible — a small ambiguity in an action item becomes a big cross-language misunderstanding. Eyeball your most important items; re-doing every line by hand defeats the point.',
+    bad: '<b>Not quite.</b> Don\'t blindly trust it, but don\'t re-translate everything either. Spot-check the action items that matter most — that\'s where a tiny ambiguity turns into a real cross-language problem.'
+  }
+};
+function pick(btn, step, val){
+  var box = document.getElementById('c'+step);
+  if(box.dataset.done) return;
+  box.dataset.done = '1';
+  var info = pickMsg[String(step)];
+  Array.prototype.forEach.call(box.querySelectorAll('.choice'), function(b){
+    b.disabled = true;
+    var v = b.getAttribute('onclick').match(/'([a-z])'\)/)[1];
+    if(v === info.correct) b.classList.add('correct');
+    else if(b === btn) b.classList.add('wrong');
+  });
+  var fb = document.getElementById('fb'+step);
+  var ok = val === info.correct;
+  fb.className = 'fb show ' + (ok ? 'good' : 'bad');
+  fb.innerHTML = ok ? info.good : info.bad;
+  document.getElementById('next'+step).disabled = false;
+}
+
+/* ── signature: idiom fixer ── */
+var FIX = {
+  tb: { plain: 'review the project together', why: '<b>"Touch base"</b> can translate into something about literal bases. Say "review together" or "check in."' },
+  bp: { plain: 'rough estimate', why: '<b>"Ballpark"</b> is baseball slang — many languages render it literally. Say "rough estimate."' },
+  cb: { plain: 'follow up', why: '<b>"Circle back"</b> becomes a confusing image of going in circles. Say "follow up."' },
+  ua: { plain: 'still undecided', why: '<b>"Up in the air"</b> sounds literal once translated. Say "still undecided."' }
+};
+var fixCount = 0;
+function fix(btn){
+  if(btn.classList.contains('done')) return;
+  var k = btn.dataset.k;
+  btn.textContent = FIX[k].plain;
+  btn.classList.add('done');
+  fixCount++;
+  document.getElementById('fixHint').innerHTML = '<b>'+fixCount+' of 4</b> idioms fixed' + (fixCount<4 ? ' — keep going.' : ' — all clear.');
+  var li = document.createElement('li');
+  li.innerHTML = FIX[k].why;
+  document.getElementById('whyList').appendChild(li);
+  if(fixCount === 4){
+    var fb = document.getElementById('fb3');
+    fb.className = 'fb show good';
+    fb.innerHTML = '<b>Now it survives translation.</b> Same message, but every phrase maps to a real meaning in another language instead of a literal puzzle. Plain speech isn\'t less professional — across a language barrier, it\'s what makes you understood.';
+    document.getElementById('next3').disabled = false;
+  }
+}
+
+/* ── AI COACH ── */
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Copilot Interpreter \u2014 real-time meeting translation\nTRACK: Copilot Mastery\n\nLESSON CONTENT SUMMARY:\nCopilot Interpreter \u2014 real-time meeting translation \u2014 LearningGPT L LearningGPT \u2190 Copilot Mastery Agents \u00b7 Lesson 04 Pro ~9 min read 9 languages, voice-matched Interpreter: meetings without translators. Interpreter is one of Microsoft's smaller but most impactful agents \u2014 real-time speech-to-speech translation in Teams meetings. Up to 9 languages currently. Each participant speaks their native language; everyone hears it translated to theirs. For global teams or international customer calls, this changes what's possible in a single meeting. Workflow 01 Enable Interpreter for a meeting 1 Setup and language configuration Like Facilitator, Interpreter benefits from explicit setup. The defaults work but aren't optimal for many scenarios. The prompt that works Interpreter setup Setup steps: 1. When scheduling, add Interpreter from the Copilot meeting tools 2. Configure your own language preference \u2014 Interpreter translates everything to this when others speak other languages 3. Each attendee sets their own language preference (it&#x27;s per-person) 4. Confirm in your invite that Interpreter will be on \u2014 set expectations 5. Optional: enable voice-matching so the translated audio sounds like the original speaker (more natural feel) During the meeting: - You speak normally in your language - Others hear it translated to theirs - They speak in theirs; you hear yours - Live captions show in everyone&#x27;s chosen language Best use cases Global team standups International customer calls Distributed sales calls (multi-country prospects) Cross-border partner meetings Interpreter works on supported languages only \u2014 confirm yours is in the list before scheduling a critical meeting around it. Languages supported expand regularly; check the current list. Time savings: Bilingual meetings: no more 'wait, let me translate that' interruptions. Workflow 02 Multilingual customer calls 2 Sales and support meetings across language barriers The sales-and-support use case is where Interpreter changes the economics. You can now have meaningful customer conversations without hiring multilingual reps or scheduling around translators. The prompt that works Customer call pattern Customer call pattern with Interpreter: 1. Schedule the call with Interpreter enabled 2. In the invite, note that &#x27;Real-time translation will be available \u2014 you can speak [their language] and I&#x27;ll hear [my language].&#x27; 3. Open the meeting in your language; let the customer speak in theirs 4. Speak naturally, but a little slower than usual \u2014 translation lag is small but real 5. Avoid heavy idioms and slang \u2014 they translate awkwardly 6. Use Facilitator alongside Interpreter for notes \u2014 translated transcripts are sent to all attendees in their chosen language 7. Post-meeting: the summary is generated in all participants&#x27; languages Best use cases Sales discovery calls across regions Customer success check-ins with international accounts Support escalations for non-English speakers Partner \n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Copilot Interpreter — real-time meeting translation\nTRACK: Copilot Mastery (Agents block, Lesson 04)\n\nLESSON CONTENT SUMMARY:\nInterpreter is a Microsoft 365 Copilot agent that does real-time speech-to-speech translation in Teams meetings, in roughly 9 languages (English, Spanish, French, German, Italian, Japanese, Mandarin, Portuguese, Korean; list expands). Everyone speaks their own language and hears others translated to theirs; live captions follow in each person's chosen language. It makes global team meetings and international customer calls work without human translators.\n\nSETUP: add Interpreter from the Copilot meeting tools when scheduling; each person sets their OWN language preference (per-person); note in the invite that translation will be on; optionally enable voice-matching so translated audio sounds like the original speaker (more natural, especially customer-facing). Confirm your language is supported before building a critical meeting around it.\n\nTHE KEY HUMAN SKILL — SPEAK TRANSLATABLY:\n- Speak a little slower than usual; translation lag is small but real.\n- Drop idioms and slang — they're 'translation kryptonite' and get rendered literally into nonsense. Examples and plain swaps: 'touch base' -> 'review together / check in'; 'ballpark' -> 'rough estimate'; 'circle back' -> 'follow up'; 'up in the air' -> 'still undecided'. Plain speech across a language barrier is what makes you understood, not less professional.\n\nCOMBINE WITH FACILITATOR: run both together — Facilitator generates the summary and action items, Interpreter translates them, and each attendee automatically receives notes in their own language. Turns 'we need translated notes' into a default deliverable.\n\nDISCIPLINE: spot-check the most important translated action items. Auto-translation is consistent but not infallible; a small ambiguity in an action item can become a big cross-language misunderstanding. Don't blindly trust, but don't re-translate everything by hand either.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content.\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more.\n- Be practical — give real work examples when helpful.\n- If asked about something not in this lesson, briefly answer and point to where they can learn more.\n- Never make up Copilot features that don't exist.\n- Plain conversational text only — no markdown symbols like ** or ##.\n- Do not start responses with \"Great question!\" or similar filler phrases.";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -272,27 +433,21 @@ This turns &#x27;we need translated meeting notes&#x27; from a follow-up task in
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -301,7 +456,6 @@ This turns &#x27;we need translated meeting notes&#x27; from a follow-up task in
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -310,7 +464,6 @@ This turns &#x27;we need translated meeting notes&#x27; from a follow-up task in
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

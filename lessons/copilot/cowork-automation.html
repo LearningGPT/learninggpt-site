@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#2c7be5" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/copilot/cowork-automation" />
 <meta property="og:title" content="Cowork automation — scheduled tasks and live artifacts" />
@@ -30,90 +30,116 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
 .logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
 .nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
-.lesson { padding: 50px 0 100px; }
-.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+
+/* ── INTERACTIVE LESSON SHELL ── */
+.ilesson { padding: 46px 0 100px; }
+.lesson-meta { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
 .lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(44,123,229,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(44,123,229,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
 .lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
-.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #2c7be5 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
-.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
-.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #2c7be5, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(44,123,229,0.1); border: 1px solid rgba(44,123,229,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
+.ilesson h1 { font-size: clamp(31px, 4.5vw, 44px); font-weight: 800; line-height: 1.14; letter-spacing: -0.02em; margin: 0 0 18px; }
+.ilesson h1 .grad { background: linear-gradient(135deg, #2c7be5 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.ilesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.12em; }
+.deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 30px; padding-bottom: 26px; border-bottom: 1px solid var(--line); }
+
+.progwrap { position: sticky; top: 59px; z-index: 50; background: rgba(10,10,26,0.9); backdrop-filter: blur(8px); padding: 14px 0 12px; margin-bottom: 6px; }
+.progbar { height: 6px; background: rgba(255,255,255,0.07); border-radius: 999px; overflow: hidden; }
+.progfill { height: 100%; width: 0%; background: linear-gradient(90deg, #2c7be5, #7c5cff); border-radius: 999px; transition: width .4s cubic-bezier(.4,0,.2,1); }
+.progmeta { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--text-mute); margin-top: 7px; letter-spacing: 0.3px; }
+
+.step { display: none; animation: stepIn .4s ease; }
+.step.active { display: block; }
+@keyframes stepIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.step-k { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin: 26px 0 6px; }
+.step h2 { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; line-height: 1.25; }
+.step h3 { font-size: 18px; font-weight: 600; margin: 22px 0 9px; }
+.step p { font-size: 16.5px; color: var(--text); margin: 0 0 16px; }
+.step strong { font-weight: 700; } .step em { font-style: italic; }
+
+.card { background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 22px 26px; margin: 20px 0; }
+.card p:last-child { margin-bottom: 0; }
+.subhead { font-size: 12px; text-transform: uppercase; letter-spacing: 1.1px; color: var(--text-mute); font-weight: 600; margin: 0 0 8px; }
+
+.pcard { background: var(--bg-soft); border: 1px solid var(--line); border-left: 3px solid var(--track); border-radius: 0 var(--radius) var(--radius) 0; padding: 14px 16px; margin-bottom: 11px; }
+.pcard .pn { font-size: 15px; font-weight: 700; color: var(--text); }
+.pcard .pd { font-size: 13.5px; color: var(--text-dim); margin-top: 4px; line-height: 1.5; }
+
+.prompt-example { background: rgba(0,0,0,0.32); border: 1px solid var(--line); border-radius: 10px; padding: 13px 15px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
 .prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 13px 16px; margin: 16px 0; font-size: 14.5px; }
 .gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #2c7be5, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
-.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
-.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
-.checklist li:first-child { border-top: none; padding-top: 0; }
-.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+
+/* choices (predict / pick) */
+.choices { display: flex; flex-direction: column; gap: 10px; margin: 16px 0 8px; }
+.choice { text-align: left; background: var(--surface); border: 1px solid var(--line-strong); color: var(--text); border-radius: 12px; padding: 14px 16px; font-size: 15px; font-family: inherit; cursor: pointer; transition: border-color .15s, background .15s, transform .1s; line-height: 1.5; }
+.choice:hover:not(:disabled) { border-color: var(--brand-2); transform: translateX(2px); }
+.choice:disabled { cursor: default; }
+.choice.correct { border-color: var(--accent); background: rgba(68,224,164,0.1); }
+.choice.wrong { border-color: var(--danger); background: rgba(255,107,138,0.08); opacity: 0.75; }
+.fb { margin: 6px 0 0; padding: 14px 16px; border-radius: 12px; font-size: 14.5px; line-height: 1.6; display: none; }
+.fb.show { display: block; animation: stepIn .3s ease; }
+.fb.good { background: rgba(68,224,164,0.1); border: 1px solid rgba(68,224,164,0.3); }
+.fb.bad { background: rgba(255,181,71,0.08); border: 1px solid rgba(255,181,71,0.3); }
+.fb b { color: var(--text); }
+
+/* signature: conditional-alert simulator */
+.sim { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px; margin: 18px 0; }
+.sim-rule { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13px; color: var(--text); line-height: 1.55; margin-bottom: 18px; }
+.sim-rule .rl { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; margin-bottom: 6px; }
+.sim-score { font-size: 13px; color: var(--text-mute); margin-bottom: 12px; }
+.sim-score b { color: var(--accent); }
+.sim-day { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.sim-sub { font-size: 13px; color: var(--text-mute); margin-bottom: 10px; }
+.tickets { margin-bottom: 16px; }
+.tk { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 6px; margin: 3px 4px 3px 0; }
+.tk.P0 { background: rgba(255,107,138,0.18); color: #ff6b8a; border: 1px solid rgba(255,107,138,0.45); }
+.tk.P1 { background: rgba(255,181,71,0.16); color: #ffb547; border: 1px solid rgba(255,181,71,0.4); }
+.tk.P2 { background: rgba(44,123,229,0.14); color: #5b8def; border: 1px solid rgba(44,123,229,0.35); }
+.tk.P3 { background: rgba(255,255,255,0.05); color: var(--text-mute); border: 1px solid var(--line-strong); }
+.sbtns { display: flex; gap: 12px; }
+.sbtn { flex: 1; padding: 13px; border-radius: 11px; border: 1px solid var(--line-strong); background: var(--surface); color: var(--text); font-family: inherit; font-size: 14.5px; font-weight: 600; cursor: pointer; transition: all .14s; }
+.sbtn.fire:hover:not(:disabled) { border-color: var(--danger); }
+.sbtn.silent:hover:not(:disabled) { border-color: var(--accent); }
+.sbtn:disabled { cursor: default; }
+.sbtn.right { border-color: var(--accent); background: rgba(68,224,164,0.16); }
+.sbtn.wrongpick { border-color: var(--danger); background: rgba(255,107,138,0.12); }
+
+.step-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 30px; gap: 12px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #7c5cff, #5b8def); color: white; padding: 13px 24px; border-radius: 11px; font-weight: 600; font-size: 15px; border: none; font-family: inherit; cursor: pointer; box-shadow: 0 6px 22px rgba(124,92,255,0.3); transition: transform .15s, opacity .15s; }
+.btn:hover:not(:disabled) { transform: translateY(-1px); color: white; }
+.btn:disabled { opacity: 0.4; cursor: default; box-shadow: none; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.btn-back { background: none; border: none; color: var(--text-mute); font-size: 14px; cursor: pointer; font-family: inherit; padding: 8px 4px; }
+.btn-back:hover { color: var(--text); } .btn-back:disabled { opacity: 0; cursor: default; }
+
+.complete { text-align: center; padding: 14px 0 0; }
+.complete .big { font-size: 48px; margin-bottom: 6px; }
+.checklist { margin: 26px 0; padding: 24px 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); text-align: left; }
+.checklist h3 { margin: 0 0 6px; font-size: 17px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 30px; position: relative; font-size: 15px; border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 13px; width: 18px; height: 18px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
-.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
-.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
-.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
+.challenge { margin: 24px 0; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); padding: 28px; text-align: left; }
+.challenge h3 { margin: 0 0 8px; font-size: 19px; }
+.next-up { margin: 26px 0 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); text-align: left; }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 8px; }
 .next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
+.next-up h3 { margin: 12px 0 8px; font-size: 19px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+
 footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -142,7 +168,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -154,95 +179,154 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <a href="/lessons/copilot/" class="nav-back">← Copilot Mastery</a>
   </div>
 </nav>
-<article class="lesson">
-  <div class="container">
+
+<div class="container">
+  <div class="ilesson">
     <div class="lesson-meta">
       <span class="chip">Cowork · Lesson 06</span>
       <span class="chip chip-pro-plus">Pro+</span>
-      <span>~15 min read</span>
+      <span>~15 min</span>
       <span class="dot"></span>
-      <span>Scheduled tasks + artifacts</span>
+      <span>Interactive</span>
     </div>
     <h1>Automation: <span class="grad serif">where Cowork stops being a tool.</span></h1>
-    <p class="deck">The last Cowork capability is the one that changes the relationship: scheduled tasks and live artifacts. Scheduled tasks run on cron-like schedules — every morning at 7am, every Monday, every hour. Live artifacts are persistent dashboards that pull fresh data from your connectors each time you open them. Together they turn Cowork from 'a thing I open' into 'a thing that delivers value while I sleep.'</p>
-    <h2><span class="num">Workflow 01</span> Set up your first scheduled task</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>A daily 7am briefing in your inbox</h3></div><p>Scheduled tasks are recurring Cowork sessions that fire on a schedule. The classic first one is a morning briefing — by the time you open your laptop, the report is waiting.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Daily briefing</span>Create a scheduled task with these settings:
+    <p class="deck">The last Cowork capability changes the whole relationship. Scheduled tasks run on their own — every morning at 7, every Friday at 4. Live artifacts are dashboards that pull fresh data each time you open them. Together they turn Cowork from "a thing I open" into "a thing that delivers value while I sleep." The skill isn't setting them up — it's setting them up so they help instead of becoming noise.</p>
 
-Name: Morning briefing
-Schedule: Every weekday at 7:00am Central
+    <div class="progwrap">
+      <div class="progbar"><div class="progfill" id="prog"></div></div>
+      <div class="progmeta"><span id="progStep">Step 1 of 6</span><span id="progPct">0% complete</span></div>
+    </div>
 
-Task: Look at:
-• My unread email from the last 24 hours
-• My calendar for today
-• Any new messages in the #leadership Slack channel
-• The 3 KPI dashboards I track
-
-Produce a single email to me at 7:05am with sections:
-• Today&#x27;s calendar (with travel-time gaps flagged)
-• Inbox priorities (top 3 things needing attention)
-• Notable Slack activity (only flags, not summaries)
-• KPI status (green/yellow/red for each metric vs. target)
-
-Keep it under 300 words total. No fluff.</div><h4>Best use cases</h4><ul><li>Morning briefing for your day</li><li>Friday afternoon weekly retrospective</li><li>Sunday-night week-ahead prep</li><li>End-of-day inbox triage</li></ul><div class="gotcha">Don't schedule tasks more often than they're useful. A daily briefing is great; an hourly one becomes noise you ignore. Match cadence to actual decision points.</div><div class="savings"><strong>Time savings:</strong> Morning prep: 30 min reactive → 5 min reading the briefing.</div></div><h2><span class="num">Workflow 02</span> Recurring weekly reports</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>Friday afternoon weekly recap that writes itself</h3></div><p>Anyone in a role that requires regular status reports knows how much time they consume. A weekly Cowork report aggregates your sources (email, CRM, project tool, etc.) and produces the recap automatically.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Weekly status</span>Create a scheduled task:
-
-Name: Weekly status report
-Schedule: Every Friday at 4:00pm
-
-Task: Compile a weekly status report covering:
-• Major customer interactions this week (pulled from Salesforce/HubSpot)
-• PRs merged or features shipped (from GitHub)
-• Significant decisions or escalations (from Slack #leadership)
-• Calendar review — meetings worth flagging
-• Asks for next week (one ask per major stakeholder)
-
-Output format: Markdown file saved to my &#x27;weekly-reports&#x27; folder, named &#x27;YYYY-MM-DD-status.md&#x27;. Also send me a Slack DM with the link.</div><h4>Best use cases</h4><ul><li>Status reports to your manager</li><li>Project updates to stakeholders</li><li>Weekly customer-success summary</li><li>Sales pipeline review automation</li></ul><div class="gotcha">Treat the auto-generated report as a draft. Read it, refine, then send. Reviewers can tell when something was auto-sent without human review — and they remember.</div><div class="savings"><strong>Time savings:</strong> Weekly report: 90 min → 15 min including your review.</div></div><h2><span class="num">Workflow 03</span> Live artifacts — dashboards that refresh</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>Build a persistent view that updates every time you open it</h3></div><p>Live artifacts are saved HTML views Cowork can persist and update. Unlike a one-time report, the artifact pulls fresh data from connectors each time it opens — making it a real dashboard, not a snapshot.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Live artifact dashboard</span>Build a live artifact called &#x27;team-pulse-dashboard&#x27; with these sections:
-
-• Open PRs awaiting my review (from GitHub MCP)
-• Tickets assigned to my team (from Linear or Jira MCP)
-• Sales pipeline by stage (from CRM MCP)
-• Recent customer feedback (from a Slack channel or NPS tool)
-• System status (from monitoring MCP)
-
-Design:
-• Dark mode matching my Cowork theme
-• Each section is a card with metric + small data table
-• Reload button at the top to refresh
-• Mobile-friendly (I&#x27;ll check it on my phone too)
-
-Save it as a persistent artifact I can open daily without rebuilding.</div><h4>Best use cases</h4><ul><li>Personal command-center dashboard</li><li>Sales pipeline at-a-glance</li><li>Team-lead pulse view</li><li>Executive 'state of the company' view</li></ul><div class="gotcha">Live artifacts only refresh what their connectors can see. If you reorganize a CRM or change a Slack channel, you'll need to update the artifact. They're not magically self-healing.</div><div class="savings"><strong>Time savings:</strong> A daily dashboard: replaces 10-15 min of clicking through tools.</div></div><h2><span class="num">Workflow 04</span> Chain tasks for sophisticated automation</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">4</div><h3>Multi-step workflows that run on schedules</h3></div><p>Once you have the basics, the real power is chaining: one scheduled task produces output that another task processes. Or a task watches for a condition and only acts when triggered.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Task chain with conditions</span>Build this chained workflow:
-
-Task 1 — Daily at 7am: Pull all customer support tickets opened in the last 24 hours. Categorize each by severity (P0/P1/P2/P3) using ticket content. Save as a CSV.
-
-Task 2 — Daily at 7:15am (15 min after task 1): Read the CSV. If there are any P0 tickets, send me an urgent Slack DM with the top 3. Otherwise, do nothing.
-
-Task 3 — Weekly on Friday: Aggregate the daily CSVs from the past week. Compute trends: ticket volume by severity, average time to resolve, top 5 customers by ticket count. Save a weekly summary report.
-
-With conditional logic: Task 2 only fires Slack if there&#x27;s a P0. Don&#x27;t spam me with &#x27;no P0 today&#x27; messages.</div><h4>Best use cases</h4><ul><li>On-call escalation workflows</li><li>Pipeline / lead-routing automation</li><li>Multi-stage report generation</li><li>Threshold alerting (only ping when condition met)</li></ul><div class="gotcha">Chained tasks compound complexity. Start with one task working perfectly, then add the second. Don't build a 5-step chain on day one — debugging it is painful.</div><div class="savings"><strong>Time savings:</strong> Sophisticated workflows: 30+ min daily → fully automated.</div></div><div class="callout"><span class="lbl">Run before you schedule</span><p>Always run a task manually once or twice before scheduling it. If the output is wrong, you want to know now — not in a week when six bad reports have been sent. The 'preview before scheduling' habit prevents 80% of automation regrets.</p></div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Build one scheduled task that runs tomorrow</h2>
-      <p>Pick the recurring task that costs you the most time each week — a status report, a daily briefing, a Friday recap. Configure it as a scheduled task. Run it manually once tonight to verify the output. Schedule it. Tomorrow morning, see what arrives without you doing anything.</p>
-      <div class="btn-row">
-        <a href="/lessons/copilot/" class="btn">Back to Copilot Mastery →</a>
-        <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+    <!-- STEP 1 — intro + predict -->
+    <section class="step active" data-step="1">
+      <span class="step-k">The shift</span>
+      <h2>From "a thing I open" to "a thing that runs"</h2>
+      <p>Every other Cowork skill so far has been something you trigger. Automation is different: you set it up once and it works without you. That's powerful — and it's exactly why the failure mode is so easy to hit.</p>
+      <h3>Predict first</h3>
+      <p>Excited about your new 7am briefing, you think: "If a daily summary is good, an <strong>hourly</strong> one must be better." What actually happens?</p>
+      <div class="choices" id="c1">
+        <button class="choice" onclick="pick(this,1,'a')">You stay perfectly on top of everything, all day</button>
+        <button class="choice" onclick="pick(this,1,'b')">After a day, you start ignoring the briefings — they've become background noise</button>
+        <button class="choice" onclick="pick(this,1,'c')">Cowork refuses to run a task more than once a day</button>
       </div>
-    </div>
-    <div class="checklist">
-      <h3>What you can do now</h3>
-      <ul>
-        <li>Configure your first scheduled task</li>
-        <li>Run any new task manually before scheduling it</li>
-        <li>Use conditional logic to avoid notification fatigue</li>
-        <li>Save the artifact-dashboard pattern for daily check-ins</li>
-        <li>Audit scheduled tasks monthly — kill the ones you no longer read</li>
-      </ul>
-    </div>
-    <div class="next-up">
-      <span class="pro-plus-tag">Pro+</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in Copilot Mastery</div>
-      <h3>The agent ecosystem</h3>
-      <p>Now that you've mastered Cowork, the broader agent ecosystem is the next horizon — each AI has its own agents. Claude Code for development, Computer Use for desktop control, plus the agent SDKs that let you build your own. <a href="/lessons/copilot/">See the track →</a></p>
-    </div>
+      <div class="fb" id="fb1"></div>
+      <div class="step-nav">
+        <button class="btn-back" disabled>← Back</button>
+        <button class="btn" id="next1" disabled onclick="go(2)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- STEP 2 — scheduled tasks (show) -->
+    <section class="step" data-step="2">
+      <span class="step-k">Scheduled tasks</span>
+      <h2>Work that's done before you sit down</h2>
+      <p>A scheduled task is a recurring Cowork session that fires on a cron-like schedule. You describe what to gather and how to deliver it; it runs on time, every time.</p>
+      <div class="prompt-example"><span class="label">Daily briefing · weekdays 7:00am</span>Each weekday at 7am, look at my unread email (last 24h), today's calendar, new #leadership Slack messages, and my 3 KPI dashboards. Email me one briefing by 7:05 with: today's calendar (flag travel-time gaps), top 3 inbox priorities, notable Slack flags, and KPI status (green/yellow/red vs target). Under 300 words. No fluff.</div>
+      <p>The same shape works for a Friday-afternoon weekly recap that pulls from your CRM, GitHub, and Slack and saves a Markdown report to a folder.</p>
+      <div class="pcard"><div class="pn">Good cadences</div><div class="pd">Daily morning briefing · Friday weekly recap · Sunday-night week-ahead prep · end-of-day triage.</div></div>
+      <div class="gotcha">Match cadence to real decision points. A daily briefing earns its place; an hourly one becomes noise you train yourself to ignore — which is exactly what you predicted a moment ago.</div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(1)">← Back</button>
+        <button class="btn" onclick="go(3)">See conditional logic in action →</button>
+      </div>
+    </section>
+
+    <!-- STEP 3 — signature: conditional-alert simulator -->
+    <section class="step" data-step="3">
+      <span class="step-k">Do it · run the simulation</span>
+      <h2>Alert on the exception, not the routine</h2>
+      <p>The move that keeps automation from becoming spam is <strong>conditional logic</strong> — only act when a condition is met. Here's a real support-ticket task. Play four days: each morning, will it DM you, or stay silent?</p>
+      <div class="sim">
+        <div class="sim-rule"><span class="rl">The scheduled task</span>Daily 7:15am — read the ticket list. <strong>If there's any P0, DM me the top 3.</strong> Otherwise, do nothing.</div>
+        <div class="sim-score" id="sScore">Day <b id="sNum">1</b> of 4 &nbsp;·&nbsp; <span id="sFired">0</span> alerts fired</div>
+        <div class="sim-day" id="sDay"></div>
+        <div class="sim-sub" id="sSub"></div>
+        <div class="tickets" id="sTickets"></div>
+        <div class="sbtns">
+          <button class="sbtn fire" id="sFire" onclick="sAnswer(true,this)">📨 It DMs you</button>
+          <button class="sbtn silent" id="sSilent" onclick="sAnswer(false,this)">🤫 Stays silent</button>
+        </div>
+        <div class="fb" id="fb3"></div>
+        <button class="btn" id="sNext" style="margin-top:16px;display:none" onclick="sNextDay()">Next day →</button>
+      </div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(2)">← Back</button>
+        <button class="btn" id="next3" disabled onclick="go(4)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- STEP 4 — live artifacts (show) -->
+    <section class="step" data-step="4">
+      <span class="step-k">Live artifacts</span>
+      <h2>A dashboard that refreshes itself</h2>
+      <p>A scheduled task pushes you a report. A <strong>live artifact</strong> is the opposite: a saved view you pull up, and it fetches fresh data from your connectors every time it opens. Not a snapshot — a real dashboard you keep coming back to.</p>
+      <div class="prompt-example"><span class="label">Live artifact · personal command center</span>Build a live artifact "team-pulse" with cards for: open PRs awaiting my review (GitHub), tickets assigned to my team (Linear), pipeline by stage (CRM), recent customer feedback (Slack). Dark mode, each card a metric + small table, a reload button up top, mobile-friendly. Save it so I can open it daily without rebuilding.</div>
+      <div class="pcard"><div class="pn">When to reach for an artifact</div><div class="pd">Anything you'd otherwise check by clicking through 3–4 tools every morning: a pipeline view, a team pulse, an exec "state of things."</div></div>
+      <div class="gotcha">An artifact only refreshes what its connectors can see. Reorganize a CRM or rename a Slack channel and you'll need to update the artifact — they don't self-heal.</div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(3)">← Back</button>
+        <button class="btn" onclick="go(5)">The one discipline →</button>
+      </div>
+    </section>
+
+    <!-- STEP 5 — run-before-you-schedule pick -->
+    <section class="step" data-step="5">
+      <span class="step-k">The discipline</span>
+      <h2>Preview before you let it loose</h2>
+      <p>Automation's risk is that mistakes repeat silently. A task that produces one bad report produces six before you notice. One habit prevents most of that grief.</p>
+      <h3>The call</h3>
+      <p>You've just built a weekly status-report task. Before you let it run every Friday on its own, what's the right move?</p>
+      <div class="choices" id="c5">
+        <button class="choice" onclick="pick(this,5,'a')">Schedule it now — you'll find out next Friday whether it's any good</button>
+        <button class="choice" onclick="pick(this,5,'b')">Run it manually once or twice tonight, check the output, then schedule it</button>
+        <button class="choice" onclick="pick(this,5,'c')">Schedule it and auto-send straight to your manager to save the step</button>
+      </div>
+      <div class="fb" id="fb5"></div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(4)">← Back</button>
+        <button class="btn" id="next5" disabled onclick="go(6)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- STEP 6 — completion -->
+    <section class="step" data-step="6">
+      <div class="complete">
+        <div class="big">🤖</div>
+        <span class="step-k">Cowork track complete</span>
+        <h2>Cowork now works while you sleep</h2>
+      </div>
+      <div class="checklist">
+        <h3>What you can do now</h3>
+        <ul>
+          <li>Configure scheduled tasks for briefings, recaps, and triage</li>
+          <li>Match cadence to decision points instead of over-scheduling</li>
+          <li>Use conditional logic so you're alerted on exceptions, not routine</li>
+          <li>Build live artifacts for the views you check every day</li>
+          <li>Run any task manually before scheduling — and keep auto-reports as drafts</li>
+        </ul>
+      </div>
+      <div class="challenge">
+        <h3>Your move: schedule one task that runs tomorrow</h3>
+        <p>Pick the recurring task that costs you the most each week — a status report, a morning briefing, a Friday recap. Build it, run it manually tonight to check the output, then schedule it. Tomorrow, see what arrives while you do nothing.</p>
+        <div class="btn-row">
+          <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+        </div>
+      </div>
+      <div class="next-up">
+        <span class="pro-plus-tag">Pro+</span>
+        <div class="lbl" style="margin-top:12px">Where this goes next</div>
+        <h3>The broader agent ecosystem</h3>
+        <p>You've finished the Cowork track. The next horizon is the wider world of agents — each AI has its own: Claude Code for development, Computer Use for desktop control, plus the SDKs that let you build your own. Head back to the track to keep going.</p>
+        <div class="btn-row">
+          <a href="/lessons/copilot/" class="btn">Back to Copilot Mastery →</a>
+          <a href="/lessons/" class="btn ghost">All tracks</a>
+        </div>
+      </div>
+    </section>
+
   </div>
-</article>
+</div>
+
 <footer>
   <div class="footer-inner">
     <div>© 2026 LearningGPT · Independent. Not affiliated with Microsoft.</div>
@@ -255,7 +339,6 @@ With conditional logic: Task 2 only fires Slack if there&#x27;s a P0. Don&#x27;t
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -267,10 +350,10 @@ With conditional logic: Task 2 only fires Slack if there&#x27;s a P0. Don&#x27;t
     <button class="coach-close" id="coachClose">✕</button>
   </div>
   <div class="coach-messages" id="coachMessages">
-    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson on Cowork automation. Ask me about scheduled tasks, conditional alerts, live artifacts, or how to set a cadence that helps instead of spams. What do you want to automate?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -278,15 +361,124 @@ With conditional logic: Task 2 only fires Slack if there&#x27;s a P0. Don&#x27;t
   </div>
 </div>
 
+<script id="lessonScript">
+/* ── stepper ── */
+var TOTAL = 6;
+var cur = 1;
+function go(n){
+  if(n<1||n>TOTAL) return;
+  document.querySelector('.step[data-step="'+cur+'"]').classList.remove('active');
+  cur = n;
+  document.querySelector('.step[data-step="'+cur+'"]').classList.add('active');
+  var pct = Math.round(((cur-1)/(TOTAL-1))*100);
+  document.getElementById('prog').style.width = pct+'%';
+  document.getElementById('progStep').textContent = 'Step '+cur+' of '+TOTAL;
+  document.getElementById('progPct').textContent = pct+'% complete';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
 
-<script id="coachScript">
+/* ── predict / pick ── */
+var pickMsg = {
+  '1': {
+    correct: 'b',
+    good: '<b>Right — it becomes noise.</b> A briefing only works if it lands at a moment you can act on it. Fire it hourly and your brain learns to ignore it, which kills the one daily one that was actually useful. Cadence is a feature.',
+    bad: '<b>Not quite.</b> More frequent isn\'t more useful. An hourly briefing arrives faster than you make decisions, so you start tuning it out — and lose the value of the daily one too. Match cadence to real decision points.'
+  },
+  '5': {
+    correct: 'b',
+    good: '<b>Run before you schedule.</b> Preview the output once or twice by hand — if it\'s wrong, you find out now, not after six bad reports have gone out. And keep auto-generated reports as drafts you review, never auto-sent to your manager.',
+    bad: '<b>Risky.</b> Scheduling unseen means a mistake repeats silently, and auto-sending to your manager removes the one review that catches it. Run it manually first, confirm the output, then schedule — and still review before anything goes out.'
+  }
+};
+function pick(btn, step, val){
+  var box = document.getElementById('c'+step);
+  if(box.dataset.done) return;
+  box.dataset.done = '1';
+  var info = pickMsg[String(step)];
+  Array.prototype.forEach.call(box.querySelectorAll('.choice'), function(b){
+    b.disabled = true;
+    var v = b.getAttribute('onclick').match(/'([a-z])'\)/)[1];
+    if(v === info.correct) b.classList.add('correct');
+    else if(b === btn) b.classList.add('wrong');
+  });
+  var fb = document.getElementById('fb'+step);
+  var ok = val === info.correct;
+  fb.className = 'fb show ' + (ok ? 'good' : 'bad');
+  fb.innerHTML = ok ? info.good : info.bad;
+  document.getElementById('next'+step).disabled = false;
+}
+
+/* ── signature: conditional-alert simulator ── */
+var SIM = [
+  { day:'Monday', sub:'5 tickets opened overnight', tickets:['P2','P3','P2','P1','P3'], fires:false,
+    note:'No P0 in the batch, so the condition isn\'t met — Cowork stays quiet. No "all clear" message cluttering your morning.' },
+  { day:'Tuesday', sub:'8 tickets opened overnight', tickets:['P1','P0','P3','P2','P2','P3','P1','P2'], fires:true,
+    note:'One P0 trips the condition — you get a DM with the top 3. This is exactly the interruption you want.' },
+  { day:'Wednesday', sub:'3 tickets opened overnight', tickets:['P1','P2','P1'], fires:false,
+    note:'A quiet day, no P0 — silence. And that silence is information: nothing is on fire.' },
+  { day:'Thursday', sub:'6 tickets opened overnight', tickets:['P0','P2','P0','P1','P3','P2'], fires:true,
+    note:'Two P0s — it fires and surfaces the worst 3. The same rule scales to the size of the problem.' }
+];
+var si = 0, sFired = 0, sDone = false;
+function sRender(){
+  var d = SIM[si];
+  document.getElementById('sNum').textContent = si+1;
+  document.getElementById('sFired').textContent = sFired;
+  document.getElementById('sDay').textContent = d.day;
+  document.getElementById('sSub').textContent = d.sub;
+  document.getElementById('sTickets').innerHTML = d.tickets.map(function(t){ return '<span class="tk '+t+'">'+t+'</span>'; }).join('');
+  ['sFire','sSilent'].forEach(function(id){
+    var b = document.getElementById(id);
+    b.disabled = false;
+    b.classList.remove('right','wrongpick');
+  });
+  document.getElementById('fb3').className = 'fb';
+  document.getElementById('fb3').innerHTML = '';
+  document.getElementById('sNext').style.display = 'none';
+}
+function sAnswer(choseFire, btn){
+  if(sDone) return;
+  sDone = true;
+  var d = SIM[si];
+  var ok = choseFire === d.fires;
+  if(d.fires) sFired++;
+  document.getElementById('sFired').textContent = sFired;
+  document.getElementById('sFire').disabled = true;
+  document.getElementById('sSilent').disabled = true;
+  var correctBtn = d.fires ? document.getElementById('sFire') : document.getElementById('sSilent');
+  correctBtn.classList.add('right');
+  if(!ok) btn.classList.add('wrongpick');
+  var fb = document.getElementById('fb3');
+  fb.className = 'fb show ' + (ok ? 'good' : 'bad');
+  fb.innerHTML = (ok ? '✓ ' : '✗ ') + '<b>' + (d.fires ? 'It fires.' : 'Stays silent.') + '</b> ' + d.note;
+  var nb = document.getElementById('sNext');
+  if(si < SIM.length-1){ nb.style.display = 'inline-flex'; nb.textContent = 'Next day →'; }
+  else {
+    nb.style.display = 'inline-flex';
+    nb.textContent = 'See the takeaway →';
+    nb.onclick = sFinish;
+  }
+}
+function sNextDay(){
+  if(si < SIM.length-1){ si++; sDone = false; sRender(); }
+}
+function sFinish(){
+  var fb = document.getElementById('fb3');
+  fb.className = 'fb show good';
+  fb.innerHTML = '<b>That\'s conditional logic doing its job.</b> Across four days it pinged you on the 2 that mattered and stayed quiet on the 2 that didn\'t. A task that messaged you every day — including "no P0 today" — would train you to ignore it. Alert on the exception; stay silent on the routine.';
+  document.getElementById('sNext').style.display = 'none';
+  document.getElementById('next3').disabled = false;
+  window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
+}
+sRender();
+
+/* ── AI COACH ── */
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Cowork automation \u2014 scheduled tasks and live artifacts\nTRACK: Copilot Mastery\n\nLESSON CONTENT SUMMARY:\nCowork automation \u2014 scheduled tasks and live artifacts \u2014 LearningGPT L LearningGPT \u2190 Copilot Mastery Cowork \u00b7 Lesson 06 Pro+ ~15 min read Scheduled tasks + artifacts Automation: where Cowork stops being a tool. The last Cowork capability is the one that changes the relationship: scheduled tasks and live artifacts. Scheduled tasks run on cron-like schedules \u2014 every morning at 7am, every Monday, every hour. Live artifacts are persistent dashboards that pull fresh data from your connectors each time you open them. Together they turn Cowork from 'a thing I open' into 'a thing that delivers value while I sleep.' Workflow 01 Set up your first scheduled task 1 A daily 7am briefing in your inbox Scheduled tasks are recurring Cowork sessions that fire on a schedule. The classic first one is a morning briefing \u2014 by the time you open your laptop, the report is waiting. The prompt that works Daily briefing Create a scheduled task with these settings: Name: Morning briefing Schedule: Every weekday at 7:00am Central Task: Look at: \u2022 My unread email from the last 24 hours \u2022 My calendar for today \u2022 Any new messages in the #leadership Slack channel \u2022 The 3 KPI dashboards I track Produce a single email to me at 7:05am with sections: \u2022 Today&#x27;s calendar (with travel-time gaps flagged) \u2022 Inbox priorities (top 3 things needing attention) \u2022 Notable Slack activity (only flags, not summaries) \u2022 KPI status (green/yellow/red for each metric vs. target) Keep it under 300 words total. No fluff. Best use cases Morning briefing for your day Friday afternoon weekly retrospective Sunday-night week-ahead prep End-of-day inbox triage Don't schedule tasks more often than they're useful. A daily briefing is great; an hourly one becomes noise you ignore. Match cadence to actual decision points. Time savings: Morning prep: 30 min reactive \u2192 5 min reading the briefing. Workflow 02 Recurring weekly reports 2 Friday afternoon weekly recap that writes itself Anyone in a role that requires regular status reports knows how much time they consume. A weekly Cowork report aggregates your sources (email, CRM, project tool, etc.) and produces the recap automatically. The prompt that works Weekly status Create a scheduled task: Name: Weekly status report Schedule: Every Friday at 4:00pm Task: Compile a weekly status report covering: \u2022 Major customer interactions this week (pulled from Salesforce/HubSpot) \u2022 PRs merged or features shipped (from GitHub) \u2022 Significant decisions or escalations (from Slack #leadership) \u2022 Calendar review \u2014 meetings worth flagging \u2022 Asks for next week (one ask per major stakeholder) Output format: Markdown file saved to my &#x27;weekly-reports&#x27; folder, named &#x27;YYYY-MM-DD-status.md&#x27;. Also send me a Slack DM with the link. Best use cases Status reports to your manager Project updates to stakeholders Weekly customer-success summary Sales pipeline review automation Treat the auto-generated report as a draft. Read it, refine, then send. Reviewers can tell w\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Cowork automation — scheduled tasks and live artifacts\nTRACK: Copilot Mastery (Cowork, Lesson 06 — final Cowork lesson)\n\nLESSON CONTENT SUMMARY:\nThis lesson is about Cowork's automation layer: scheduled tasks and live artifacts. The skill is setting them up so they help instead of becoming noise.\n\nSCHEDULED TASKS: recurring Cowork sessions that fire on a cron-like schedule (e.g. weekdays 7am, Fridays 4pm). Classic uses: a daily morning briefing (email/calendar/Slack/KPIs into one short report), a Friday weekly recap pulling from CRM/GitHub/Slack saved as Markdown. Rule: match cadence to real decision points — a daily briefing is useful, an hourly one becomes noise you ignore (over-scheduling kills the value of the good one).\n\nCONDITIONAL LOGIC: the move that keeps automation from becoming spam — only act when a condition is met. Example: 'read the ticket list daily; IF there's any P0, DM me the top 3, otherwise do nothing.' This alerts you on exceptions and stays silent on routine days, so you don't get trained to ignore it. Don't send 'no P0 today' messages.\n\nLIVE ARTIFACTS: saved HTML dashboard views that pull FRESH data from connectors every time you open them (not a snapshot). Good for views you'd otherwise check by clicking through 3-4 tools each morning (pipeline, team pulse, exec overview). Gotcha: an artifact only refreshes what its connectors can see; if you reorganize a CRM or rename a Slack channel, you must update the artifact — they don't self-heal.\n\nCHAINING: advanced tasks where one task's output feeds another, or a task watches for a condition. Start with one task working perfectly, then add the second — don't build a 5-step chain on day one.\n\nTHE CARDINAL DISCIPLINE: run any new task manually once or twice BEFORE scheduling it, so you catch bad output now instead of after six bad reports have gone out. Treat auto-generated reports as drafts to review, never auto-sent (e.g. to your manager). Audit scheduled tasks periodically and kill ones you no longer read.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content.\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more.\n- Be practical — give real work examples and sample prompts when helpful.\n- If asked about something not in this lesson, briefly answer and point to where they can learn more.\n- Never make up Cowork features that don't exist.\n- Plain conversational text only — no markdown symbols like ** or ##.\n- Do not start responses with \"Great question!\" or similar filler phrases.";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -294,27 +486,21 @@ With conditional logic: Task 2 only fires Slack if there&#x27;s a P0. Don&#x27;t
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -323,7 +509,6 @@ With conditional logic: Task 2 only fires Slack if there&#x27;s a P0. Don&#x27;t
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -332,7 +517,6 @@ With conditional logic: Task 2 only fires Slack if there&#x27;s a P0. Don&#x27;t
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

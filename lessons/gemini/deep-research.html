@@ -4,16 +4,16 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Gemini Deep Research — multi-step analyst work — LearningGPT</title>
-<meta name="description" content="Gemini Deep Research generates multi-step plans and refines analysis through iterative searches. Citation-heavy reports from natural-language prompts." />
+<meta name="description" content="Gemini Deep Research generates a multi-step plan, runs iterative searches, and produces a cited report. Review the plan before it runs — that's the whole skill." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#4285f4" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/gemini/deep-research" />
 <meta property="og:title" content="Gemini Deep Research — multi-step analyst work" />
-<meta property="og:description" content="Gemini Deep Research generates multi-step plans and refines analysis through iterative searches. Citation-heavy reports from natural-language prompts." />
+<meta property="og:description" content="It generates a plan, runs iterative searches, and produces a cited report. Review the plan before it runs." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -23,7 +23,7 @@ body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; bac
 a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
 .bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
 .bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #4285f4; }
-.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #d96570; opacity: 0.2; }
 .container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
 nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
@@ -34,86 +34,89 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
 .lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(66,133,244,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(66,133,244,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
 .lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
-.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
 .lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #4285f4 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .grad { background: linear-gradient(135deg, #4285f4 0%, #9b72cb 50%, #d96570 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 24px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.sec { margin: 46px 0 0; }
+.sec-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.lesson h2 { font-size: 27px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; }
 .lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
 .lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(66,133,244,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(66,133,244,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #4285f4, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(66,133,244,0.1); border: 1px solid rgba(66,133,244,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(66,133,244,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(66,133,244,0.25); border-radius: var(--radius-lg); padding: 36px; }
+
+/* ── PLAN EDITOR ── */
+.plan { margin: 22px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden; background: #0d0d20; }
+.plan-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--line); background: linear-gradient(90deg, rgba(66,133,244,0.07), rgba(217,101,112,0.05)); }
+.plan-bar .t { font-size: 12.5px; font-weight: 600; color: var(--text-dim); }
+.plan-bar .ct { font-size: 11.5px; font-weight: 700; color: var(--track); }
+.plan-brief { padding: 12px 16px; font-size: 13px; color: var(--text-dim); border-bottom: 1px solid var(--line); background: rgba(124,92,255,0.06); }
+.plan-brief b { color: #c9aef0; }
+.pstep { display: flex; align-items: flex-start; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--line); transition: opacity .3s; }
+.pstep:last-of-type { border-bottom: none; }
+.pstep.cut { opacity: 0.5; }
+.pstep-t { flex: 1; font-size: 14px; }
+.pstep-t .added { color: var(--accent); font-weight: 600; }
+.pstep-t.struck { text-decoration: line-through; color: var(--text-mute); }
+.pstep-acts { display: flex; gap: 6px; flex-shrink: 0; }
+.pbtn { font-size: 11.5px; font-weight: 700; font-family: inherit; padding: 6px 11px; border-radius: 7px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); color: var(--text-dim); cursor: pointer; transition: all .15s; white-space: nowrap; }
+.pbtn[data-a="keep"]:hover:not(:disabled) { border-color: var(--accent); }
+.pbtn[data-a="cut"]:hover:not(:disabled) { border-color: var(--danger); }
+.pbtn[data-a="add"]:hover:not(:disabled) { border-color: var(--accent); }
+.pbtn:disabled { cursor: default; opacity: 0.7; }
+.pbtn.right { background: rgba(68,224,164,0.16); border-color: var(--accent); color: #b6f4dc; }
+.pbtn.wrong { background: rgba(255,107,138,0.12); border-color: var(--danger); color: #ffb0c1; }
+.pstep.gap { background: rgba(255,181,71,0.06); }
+.pstep.gap .pstep-t { color: #ffd9a0; }
+.plan-run { padding: 14px 16px; border-top: 1px solid var(--line); display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.runbtn { background: linear-gradient(135deg,#4285f4,#9b72cb); color: #fff; border: none; border-radius: 10px; padding: 10px 18px; font-size: 13.5px; font-weight: 700; font-family: inherit; cursor: pointer; transition: transform .15s, opacity .15s; }
+.runbtn:hover:not(:disabled) { transform: translateY(-1px); }
+.runbtn:disabled { opacity: 0.4; cursor: default; }
+.run-hint { font-size: 12.5px; color: var(--text-mute); }
+.plan-done { padding: 0 16px 16px; font-size: 13.5px; color: var(--text-dim); display: none; }
+.plan-done.show { display: block; }
+.plan-done b { color: var(--track); }
+
+/* ── REFERENCE ── */
+.refs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 18px 0; }
+@media (max-width: 600px){ .refs { grid-template-columns: 1fr; } }
+.ref { padding: 16px 18px; border-radius: var(--radius-lg); background: linear-gradient(180deg, var(--surface), var(--bg-soft)); border: 1px solid var(--line); }
+.ref h3 { margin: 0 0 4px; font-size: 16px; }
+.ref p { font-size: 13.5px; margin: 0 0 6px; color: var(--text-dim); }
+.ref .g { font-size: 12.5px; color: var(--text-mute); border-left: 2px solid rgba(255,181,71,0.4); padding-left: 9px; }
+.callout { margin: 18px 0; padding: 18px 22px; background: linear-gradient(135deg, rgba(255,181,71,0.08), rgba(124,92,255,0.05)); border: 1px solid rgba(255,181,71,0.22); border-radius: var(--radius-lg); }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--warn); margin-bottom: 8px; }
+.callout p { margin: 0; font-size: 14.5px; color: var(--text-dim); }
+.callout b { color: var(--text); }
+
+.challenge { margin: 46px 0 30px; background: linear-gradient(135deg, rgba(66,133,244,0.16), rgba(155,114,203,0.1)); border: 1px solid rgba(66,133,244,0.3); border-radius: var(--radius-lg); padding: 32px; }
 .challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #4285f4, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
 .challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #4285f4, #9b72cb); color: white; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: inherit; box-shadow: 0 6px 24px rgba(66,133,244,0.28); transition: transform .15s; text-decoration: none; }
+.btn:hover { transform: translateY(-1px); color: white; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.checklist { margin: 30px 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
 .checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
 .checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
 .checklist li:first-child { border-top: none; padding-top: 0; }
 .checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up { margin: 40px 0 0; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
 .next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
 .next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
 .next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
-.next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
-footer { border-top: 1px solid var(--line); padding: 30px 0; }
+footer { border-top: 1px solid var(--line); padding: 30px 0; margin-top: 40px; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -142,7 +145,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -154,74 +156,89 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <a href="/lessons/gemini/" class="nav-back">← Gemini Mastery</a>
   </div>
 </nav>
+
 <article class="lesson">
   <div class="container">
     <div class="lesson-meta">
-      <span class="chip">Agents · Lesson 03</span>
+      <span class="chip">Lesson 07 · Gemini Mastery</span>
       <span class="chip chip-pro">Pro</span>
-      <span>~11 min read</span>
+      <span>~11 min</span>
       <span class="dot"></span>
       <span>Iterative research</span>
     </div>
     <h1>Deep Research: <span class="grad serif">analyst work, delegated.</span></h1>
-    <p class="deck">Gemini Deep Research is Google's answer to ChatGPT's Deep Research — and it's where Gemini's long-context strength shines. Give it a research question; it generates a multi-step plan, runs iterative searches, refines its analysis, and produces a cited report. Different from Gemini Agent's action-oriented mode — this is pure analysis.</p>
-    <h2><span class="num">Workflow 01</span> Research with explicit plan review</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>Approve the plan before the work runs</h3></div><p>Deep Research's key feature: it generates a plan first, shows it to you, then executes. This is the right time to redirect — saves 30 minutes of wrong-direction work.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Plan-first research</span>Research question: &#x27;What are the leading approaches to AI agent observability in 2026? Compare LangSmith, Arize, Helicone, and 3-5 newer entrants.&#x27;
+    <p class="deck">Gemini Deep Research is Google's answer to ChatGPT's Deep Research — and where Gemini's long context shines. Give it a question; it generates a multi-step plan, runs iterative searches, and produces a cited report. The one move that decides whether the output is useful: reviewing the plan <em>before</em> it runs.</p>
 
-Before running: show me the research plan.
+    <!-- mental model -->
+    <div class="sec">
+      <span class="sec-eyebrow">The mental model</span>
+      <h2>Plan first, then the work.</h2>
+      <p>Deep Research doesn't just go — it shows you its plan and waits. That pause is your one cheap chance to steer. Approve a flawed plan and you'll get a report that's 80% right but misses the angle you actually needed. Catch it at the plan, and you've redirected a half-hour of work in thirty seconds.</p>
+    </div>
 
-I&#x27;ll review and either approve, refine, or add specific sub-questions before you start the actual research. For each entrant, I want to know: what they do, who funds them, pricing model, key customers, and recent product moves.
+    <!-- SIGNATURE: plan editor -->
+    <div class="sec">
+      <span class="sec-eyebrow">Do it · review the plan</span>
+      <h2>Fix the plan before it runs.</h2>
+      <p>You asked for a vendor comparison. Here's Deep Research's proposed plan. Cut what's off-brief, keep what fits — and add the thing it forgot.</p>
 
-Once I approve, run for 20-30 min, produce a report. Cite sources for every claim.</div><h4>Best use cases</h4><ul><li>Market landscape reports</li><li>Vendor evaluation research</li><li>Industry analysis briefs</li><li>Pre-board / pre-investor research</li></ul><div class="gotcha">If you skip the plan review, you'll often get research that's 80% right but misses the angle you actually care about. The plan review costs 30 seconds and saves 30 minutes.</div><div class="savings"><strong>Time savings:</strong> A real research report: days of analyst time → 30 min + plan review.</div></div><h2><span class="num">Workflow 02</span> Long-context advantage</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>Where Gemini Deep Research beats competitors</h3></div><p>Gemini's long context window (millions of tokens) makes Deep Research strong for tasks that need to hold a lot of source material in mind simultaneously.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Long-source synthesis</span>Research task: synthesize the following sources into a single analysis. Sources are below — there are ~30 documents totaling roughly 200,000 words.
-
-[Paste/upload large source corpus]
-
-Question to answer from these sources: &#x27;What&#x27;s the consistent thesis across these analyst reports about the next 18 months in enterprise AI adoption?&#x27;
-
-Produce:
-- The consensus view (with evidence count: X of 30 sources agree)
-- Notable dissenting views (and which sources hold them)
-- The single most surprising finding
-- Three predictions that have the most cross-source support</div><h4>Best use cases</h4><ul><li>Multi-report consolidation (analyst, research, internal)</li><li>Long-document synthesis (full books, transcripts, archives)</li><li>Cross-source pattern detection</li><li>Compliance review across regulation documents</li></ul><div class="gotcha">Long context isn't infinite context. Even with Gemini's window, very dense corpus can lose detail. Sample-check that key facts from random sources made it into the output.</div><div class="savings"><strong>Time savings:</strong> 30-report synthesis: weeks of work → an hour.</div></div><h2><span class="num">Workflow 03</span> Connected to Workspace</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>Research that includes your internal documents</h3></div><p>Like Gemini Agent, Deep Research can pull from your Drive and Gmail when you allow it. This makes hybrid research (internal + external) possible.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Internal + external research</span>Research question: &#x27;How should we position our product against [Competitor] in the upcoming launch?&#x27;
-
-Use both:
-
-External sources:
-- [Competitor]&#x27;s public website and blog (last 12 months)
-- Analyst reports about our category
-- G2 / Capterra reviews of both us and them
-
-Internal sources (via Workspace):
-- Our positioning Doc in Drive (most recent version)
-- Lost-deal notes from sales (Gmail, last 6 months, mentioning competitor)
-- Customer survey responses (Drive)
-
-Produce a positioning analysis with: their narrative, our differentiation, recommended messaging adjustments, three concrete claims we can make that they can&#x27;t.</div><h4>Best use cases</h4><ul><li>Competitive positioning informed by your data</li><li>Pricing decisions with internal context</li><li>Product strategy with customer-evidence support</li><li>Market entry analysis combining your data + the market</li></ul><div class="gotcha">Mixing internal + external context can leak internal language into outputs. Review for any internal-only terms or names that shouldn't appear in shared docs.</div><div class="savings"><strong>Time savings:</strong> Hybrid research: replaces a small consulting engagement.</div></div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Run one Deep Research task this week</h2>
-      <p>Identify a question you've been putting off because it'd require real research. Frame it for Deep Research. Review the plan, approve, walk away. Compare what you get back to what your manual research would have produced.</p>
-      <div class="btn-row">
-        <a href="/lessons/gemini/" class="btn">Back to Gemini Mastery →</a>
-        <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+      <div class="plan">
+        <div class="plan-bar"><span class="t">🔎 Deep Research · proposed plan</span><span class="ct" id="planCt">0 / 6 resolved</span></div>
+        <div class="plan-brief">Your brief: for each vendor — <b>what they do, who funds them, pricing model, key customers, recent product moves.</b></div>
+        <div id="steps"></div>
+        <div class="plan-run">
+          <button class="runbtn" id="runBtn" disabled>🔒 Approve &amp; run</button>
+          <span class="run-hint" id="runHint">Resolve every line to unlock.</span>
+        </div>
+        <div class="plan-done" id="planDone">
+          <strong>That's the 30-second save.</strong> You cut two off-brief steps (company history, website-design ranking) and added the pricing line the plan dropped — exactly what the brief asked for. Approving the original would've produced a polished report that quietly skipped pricing.
+        </div>
       </div>
     </div>
+
+    <!-- reference -->
+    <div class="sec">
+      <span class="sec-eyebrow">Two more strengths</span>
+      <h2>Where Gemini Deep Research pulls ahead.</h2>
+      <div class="refs">
+        <div class="ref"><h3>🗂️ Long-source synthesis</h3><p>Its big context window holds dozens of reports at once: "consensus view (X of 30 sources agree), dissents, the most surprising finding, predictions with the most cross-source support."</p><div class="g">Long ≠ infinite — sample-check that facts from random sources made the output.</div></div>
+        <div class="ref"><h3>🔗 Workspace-hybrid research</h3><p>Pull internal + external together: a competitor's public moves and analyst reports, plus your Drive positioning doc and lost-deal notes from Gmail.</p><div class="g">Watch for internal-only terms leaking into a doc you'll share.</div></div>
+      </div>
+      <div class="callout">
+        <span class="lbl">It's a draft, not a verdict</span>
+        <p><b>Treat the report as a strong first draft</b> that needs your judgment. Spot-check cited facts, and never ship internal-flavored language outward without a read-through.</p>
+      </div>
+    </div>
+
+    <div class="challenge">
+      <h2 style="margin-top:0;">Run one Deep Research task this week</h2>
+      <p>Pick a question you've been putting off because it needs real research. Frame it, <em>review the plan and redirect it</em>, then approve and walk away. Compare what comes back to what your own manual research would have produced.</p>
+      <div class="btn-row">
+        <a href="/playground" class="btn">Try a prompt in the playground →</a>
+        <a href="/lessons/gemini/" class="btn ghost">Back to Gemini Mastery</a>
+      </div>
+    </div>
+
     <div class="checklist">
       <h3>What you can do now</h3>
       <ul>
-        <li>Use plan-first review to redirect before the work runs</li>
+        <li>Use plan-first review to cut off-brief steps and add what's missing before the work runs</li>
         <li>Lean on Gemini's long context for multi-source synthesis</li>
-        <li>Combine internal Workspace data with external research when relevant</li>
+        <li>Combine internal Workspace data with external research when it helps</li>
         <li>Spot-check facts in long-source synthesis</li>
-        <li>Treat output as a draft that needs your judgment, not a final document</li>
+        <li>Treat the report as a draft that needs your judgment, not a finished document</li>
       </ul>
     </div>
+
     <div class="next-up">
       <span class="pro-tag">Pro</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in Gemini Mastery</div>
-      <h3>Lesson 04 · NotebookLM — research workspace at scale</h3>
-      <p>NotebookLM is Google's research-workspace product — give it documents, ask questions, generate notes and even audio briefings. The right tool for working with large source sets repeatedly. <a href="/lessons/gemini/">See the track →</a></p>
+      <div class="lbl" style="margin-top:14px;">Up next in Gemini Mastery</div>
+      <h3>Lesson 8 · Gemini's 2026 upgrade — Daily Brief, Spark &amp; the 3.5 models</h3>
+      <p>The I/O 2026 wave: the Daily Brief morning digest, the Gemini Spark personal agent, and the 3.5 Flash/Pro split — what each does and when to use it. <a href="/lessons/gemini/gemini-2026-upgrade">Start lesson 8 →</a></p>
     </div>
   </div>
 </article>
+
 <footer>
   <div class="footer-inner">
     <div>© 2026 LearningGPT · Independent. Not affiliated with Google.</div>
@@ -234,7 +251,6 @@ Produce a positioning analysis with: their narrative, our differentiation, recom
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -249,7 +265,7 @@ Produce a positioning analysis with: their narrative, our differentiation, recom
     <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -257,15 +273,77 @@ Produce a positioning analysis with: their narrative, our differentiation, recom
   </div>
 </div>
 
+<script id="lessonScript">
+(function () {
+  // ── PLAN REVIEW EDITOR ──
+  var STEPS = [
+    { t: 'Define what each tool does, in one line.', action: 'keep', why: 'On brief — "what they do" was asked for.' },
+    { t: 'Map each vendor\'s funding and investors.', action: 'keep', why: 'On brief — "who funds them."' },
+    { t: 'Write each company\'s full founding history.', action: 'cut', why: 'Off brief — the brief never asked for history; this burns time.' },
+    { t: 'List key customers and recent product moves.', action: 'keep', why: 'On brief — covers two of your requested items at once.' },
+    { t: 'Rank the vendors by website design quality.', action: 'cut', why: 'Off brief and irrelevant to the comparison — cut it.' },
+    { t: 'Missing from the plan: each vendor\'s pricing model.', action: 'add', why: 'Your brief asked for pricing and the plan dropped it — add it back.' }
+  ];
+  var stepsEl = document.getElementById('steps');
+  var planCt = document.getElementById('planCt');
+  var runBtn = document.getElementById('runBtn');
+  var runHint = document.getElementById('runHint');
+  var planDone = document.getElementById('planDone');
+  var resolved = 0, correctCount = 0;
+
+  STEPS.forEach(function (s) {
+    var row = document.createElement('div');
+    row.className = 'pstep' + (s.action === 'add' ? ' gap' : '');
+    var acts;
+    if (s.action === 'add') {
+      acts = '<button class="pbtn" data-a="add">+ Add to plan</button>';
+    } else {
+      acts = '<button class="pbtn" data-a="keep">✓ Keep</button><button class="pbtn" data-a="cut">✕ Cut</button>';
+    }
+    row.innerHTML = '<div class="pstep-t">' + (s.action === 'add' ? '⚠ ' : '') + s.t + '</div><div class="pstep-acts">' + acts + '</div>';
+    stepsEl.appendChild(row);
+    var t = row.querySelector('.pstep-t');
+    var btns = row.querySelectorAll('.pbtn');
+    var done = false;
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (done) return;
+        done = true;
+        var ok = b.dataset.a === s.action;
+        btns.forEach(function (x) { x.disabled = true; if (x.dataset.a === s.action) x.classList.add('right'); });
+        if (!ok) b.classList.add('wrong');
+        if (s.action === 'cut') { row.classList.add('cut'); t.classList.add('struck'); }
+        if (s.action === 'add') { row.classList.remove('gap'); t.innerHTML = '<span class="added">+ ' + s.t.replace('Missing from the plan: ', '') + '</span>'; }
+        resolved++;
+        if (ok) correctCount++;
+        planCt.textContent = resolved + ' / ' + STEPS.length + ' resolved';
+        if (resolved === STEPS.length) {
+          runBtn.disabled = false;
+          runBtn.textContent = '▶ Approve & run';
+          runHint.textContent = correctCount === STEPS.length ? 'Plan looks tight — approve it.' : 'Plan resolved — review the flags, then approve.';
+        }
+      });
+    });
+  });
+
+  runBtn.addEventListener('click', function () {
+    if (runBtn.disabled) return;
+    runBtn.disabled = true;
+    runBtn.textContent = '● Researching…';
+    runHint.textContent = '';
+    planDone.classList.add('show');
+    planDone.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  });
+})();
+</script>
 
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Gemini Deep Research \u2014 multi-step analyst work\nTRACK: Gemini Mastery\n\nLESSON CONTENT SUMMARY:\nGemini Deep Research \u2014 multi-step analyst work \u2014 LearningGPT L LearningGPT \u2190 Gemini Mastery Agents \u00b7 Lesson 03 Pro ~11 min read Iterative research Deep Research: analyst work, delegated. Gemini Deep Research is Google's answer to ChatGPT's Deep Research \u2014 and it's where Gemini's long-context strength shines. Give it a research question; it generates a multi-step plan, runs iterative searches, refines its analysis, and produces a cited report. Different from Gemini Agent's action-oriented mode \u2014 this is pure analysis. Workflow 01 Research with explicit plan review 1 Approve the plan before the work runs Deep Research's key feature: it generates a plan first, shows it to you, then executes. This is the right time to redirect \u2014 saves 30 minutes of wrong-direction work. The prompt that works Plan-first research Research question: &#x27;What are the leading approaches to AI agent observability in 2026? Compare LangSmith, Arize, Helicone, and 3-5 newer entrants.&#x27; Before running: show me the research plan. I&#x27;ll review and either approve, refine, or add specific sub-questions before you start the actual research. For each entrant, I want to know: what they do, who funds them, pricing model, key customers, and recent product moves. Once I approve, run for 20-30 min, produce a report. Cite sources for every claim. Best use cases Market landscape reports Vendor evaluation research Industry analysis briefs Pre-board / pre-investor research If you skip the plan review, you'll often get research that's 80% right but misses the angle you actually care about. The plan review costs 30 seconds and saves 30 minutes. Time savings: A real research report: days of analyst time \u2192 30 min + plan review. Workflow 02 Long-context advantage 2 Where Gemini Deep Research beats competitors Gemini's long context window (millions of tokens) makes Deep Research strong for tasks that need to hold a lot of source material in mind simultaneously. The prompt that works Long-source synthesis Research task: synthesize the following sources into a single analysis. Sources are below \u2014 there are ~30 documents totaling roughly 200,000 words. [Paste/upload large source corpus] Question to answer from these sources: &#x27;What&#x27;s the consistent thesis across these analyst reports about the next 18 months in enterprise AI adoption?&#x27; Produce: - The consensus view (with evidence count: X of 30 sources agree) - Notable dissenting views (and which sources hold them) - The single most surprising finding - Three predictions that have the most cross-source support Best use cases Multi-report consolidation (analyst, research, internal) Long-document synthesis (full books, transcripts, archives) Cross-source pattern detection Compliance review across regulation documents Long context isn't infinite context. Even with Gemini's window, very dense corpus can lose detail. Sample-check that key facts from random sources made it into the output. Time savings: 30-report synthesis: weeks of\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Gemini Deep Research — multi-step analyst work\nTRACK: Gemini Mastery (Lesson 7, Pro)\n\nLESSON CONTENT SUMMARY:\nGemini Deep Research is Google's answer to ChatGPT's Deep Research, and where Gemini's long context shines. You give it a research question; it generates a multi-step PLAN, runs iterative searches, refines its analysis, and produces a cited report. It's pure analysis (different from Gemini Agent's action-oriented mode).\n\nThe signature move — plan-first review: Deep Research shows you its plan and waits before executing. This is your cheap chance to steer. If you skip the review you often get a report that's 80% right but misses the angle you actually cared about; reviewing the plan costs ~30 seconds and saves ~30 minutes. Cut off-brief steps, keep the on-brief ones, and ADD anything the plan dropped (e.g., the brief asked for pricing but the plan forgot it).\n\nThree workflows: (1) Research with explicit plan review — state the question, ask it to show the plan first, approve/refine/add sub-questions, then run. (2) Long-context advantage — its big window holds a large corpus (e.g., ~30 reports / 200k words) for multi-source synthesis: consensus view with evidence counts, dissents, the most surprising finding, predictions with the most cross-source support. Caveat: long context isn't infinite — sample-check that facts from random sources made the output. (3) Workspace-hybrid research — combine external sources (competitor sites, analyst reports, G2/Capterra) with internal Workspace data (Drive positioning docs, lost-deal notes in Gmail); caveat: watch for internal-only language leaking into shareable outputs.\n\nThroughline: review the plan before it runs; treat the report as a strong draft that needs your judgment, not a final document; spot-check cited facts.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more\n- Be practical — give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only — no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -273,27 +351,21 @@ Produce a positioning analysis with: their narrative, our differentiation, recom
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -302,7 +374,6 @@ Produce a positioning analysis with: their narrative, our differentiation, recom
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -311,7 +382,6 @@ Produce a positioning analysis with: their narrative, our differentiation, recom
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

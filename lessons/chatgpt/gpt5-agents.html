@@ -4,16 +4,16 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>GPT-5 agents: workflows that run themselves — LearningGPT</title>
-<meta name="description" content="GPT-5's agent capabilities let ChatGPT run multi-step workflows autonomously — visit websites, fill forms, take actions. It's the most powerful agenti" />
+<meta name="description" content="GPT-5 agents run multi-step workflows autonomously. The real skill is supervising them: the safety patterns, the cost-control playbook, and when a script beats an agent." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#10a37f" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/chatgpt/gpt5-agents" />
 <meta property="og:title" content="GPT-5 agents: workflows that run themselves" />
-<meta property="og:description" content="GPT-5's agent capabilities let ChatGPT run multi-step workflows autonomously — visit websites, fill forms, take actions. It's the most powerful agenti" />
+<meta property="og:description" content="GPT-5 agents run multi-step workflows autonomously — the supervision patterns, cost-control playbook, and when a script beats an agent." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -33,86 +33,108 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .lesson { padding: 50px 0 100px; }
 .lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
 .lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(16,163,127,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(16,163,127,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
 .lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
 .lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #10a37f 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .grad { background: linear-gradient(135deg, #10a37f 0%, #44e0a4 50%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 24px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.sec { margin: 46px 0 0; }
+.sec-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.lesson h2 { font-size: 27px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; }
 .lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
 .lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(16,163,127,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(16,163,127,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #10a37f, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(16,163,127,0.1); border: 1px solid rgba(16,163,127,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(16,163,127,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(16,163,127,0.25); border-radius: var(--radius-lg); padding: 36px; }
+
+.callout { margin: 22px 0; padding: 20px 24px; background: linear-gradient(135deg, rgba(255,107,138,0.10), rgba(124,92,255,0.05)); border: 1px solid rgba(255,107,138,0.28); border-radius: var(--radius-lg); }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--danger); margin-bottom: 8px; }
+.callout p { margin: 0; font-size: 15.5px; }
+.callout strong { color: var(--text); }
+
+/* ── GUARDRAIL PANEL ── */
+.preflight { margin: 22px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden; background: #0d0d20; }
+.pf-task { padding: 14px 18px; border-bottom: 1px solid var(--line); background: rgba(16,163,127,0.06); }
+.pf-task .lbl { font-size: 10.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--track); }
+.pf-task .t { font-size: 14.5px; margin-top: 3px; }
+.pf-body { padding: 14px 18px; }
+.pf-hint { font-size: 12.5px; color: var(--text-mute); margin-bottom: 12px; }
+.guard { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
+.guard:last-of-type { border-bottom: none; }
+.gtoggle { width: 40px; height: 23px; border-radius: 999px; background: rgba(255,255,255,0.1); border: 1px solid var(--line-strong); position: relative; flex-shrink: 0; transition: background .18s; }
+.gtoggle::after { content: ''; position: absolute; top: 2px; left: 2px; width: 17px; height: 17px; border-radius: 50%; background: #8a8aa5; transition: transform .18s, background .18s; }
+.guard.on .gtoggle { background: rgba(68,224,164,0.4); border-color: var(--accent); }
+.guard.on .gtoggle::after { transform: translateX(17px); background: #d6fff0; }
+.guard.bad.on .gtoggle { background: rgba(255,107,138,0.4); border-color: var(--danger); }
+.guard.bad.on .gtoggle::after { background: #ffd0da; }
+.guard-label { font-size: 14px; color: var(--text-dim); }
+.guard.on .guard-label { color: var(--text); }
+.guard.bad .guard-label .warn-tag { display: none; }
+.guard.bad.on .guard-label .warn-tag { display: inline; color: var(--danger); font-weight: 700; }
+.pf-meter { margin: 16px 0 4px; display: flex; align-items: center; gap: 12px; }
+.pf-bar { flex: 1; height: 8px; background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden; }
+.pf-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #ffb547, #44e0a4); border-radius: 999px; transition: width .4s ease, background .3s; }
+.pf-bar-fill.danger { background: linear-gradient(90deg, #ff6b8a, #ff6b8a); }
+.pf-bar-label { font-size: 12px; font-weight: 700; color: var(--text-mute); white-space: nowrap; }
+.pf-danger { font-size: 13px; color: #ffb0c1; margin-top: 8px; display: none; }
+.pf-danger.show { display: block; }
+.launch { margin-top: 14px; }
+.launch-btn { background: linear-gradient(135deg,#10a37f,#44e0a4); color: #042; border: none; border-radius: 10px; padding: 11px 22px; font-size: 14px; font-weight: 700; font-family: inherit; cursor: pointer; transition: transform .15s, opacity .15s; }
+.launch-btn:hover:not(:disabled) { transform: translateY(-1px); }
+.launch-btn:disabled { opacity: 0.4; cursor: default; }
+.launch-fb { margin-top: 12px; font-size: 13.5px; color: #b6f4dc; display: none; }
+.launch-fb.show { display: block; animation: fadeIn .35s ease; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(6px);} to{opacity:1;transform:none;} }
+
+/* ── ROUTER ── */
+.router { margin: 18px 0; }
+.rrow { padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); margin-bottom: 10px; }
+.rrow-scn { font-size: 14.5px; margin-bottom: 10px; }
+.rrow-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.rbtn { font-size: 12.5px; font-weight: 700; font-family: inherit; padding: 8px 16px; border-radius: 8px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); color: var(--text-dim); cursor: pointer; transition: all .15s; }
+.rbtn:hover:not(:disabled) { border-color: var(--track); color: var(--text); }
+.rbtn:disabled { cursor: default; }
+.rbtn.right { background: rgba(68,224,164,0.16); border-color: var(--accent); color: #b6f4dc; }
+.rbtn.wrong { background: rgba(255,107,138,0.12); border-color: var(--danger); color: #ffb0c1; }
+.rrow-fb { margin-top: 10px; font-size: 13px; color: var(--text-dim); display: none; }
+.rrow-fb.show { display: block; }
+.rrow-fb b { color: var(--track); }
+
+/* ── REFERENCE ── */
+.refs { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 18px 0; }
+.ref { padding: 16px 18px; border-radius: var(--radius-lg); background: linear-gradient(180deg, var(--surface), var(--bg-soft)); border: 1px solid var(--line); }
+.ref .h { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.ref .n { width: 26px; height: 26px; border-radius: 7px; background: rgba(16,163,127,0.15); border: 1px solid rgba(16,163,127,0.35); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); flex-shrink: 0; }
+.ref .h h3 { margin: 0; font-size: 16px; }
+.ref p { font-size: 14px; margin: 0 0 6px; color: var(--text-dim); }
+.ref .g { font-size: 12.5px; color: var(--text-mute); border-left: 2px solid rgba(255,181,71,0.4); padding-left: 10px; }
+
+.challenge { margin: 46px 0 30px; background: linear-gradient(135deg, rgba(16,163,127,0.14), rgba(124,92,255,0.1)); border: 1px solid rgba(16,163,127,0.3); border-radius: var(--radius-lg); padding: 32px; }
 .challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #10a37f, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
 .challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #10a37f, #7c5cff); color: white; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: inherit; box-shadow: 0 6px 24px rgba(16,163,127,0.28); transition: transform .15s; text-decoration: none; }
+.btn:hover { transform: translateY(-1px); color: white; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.checklist { margin: 30px 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
 .checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
 .checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
 .checklist li:first-child { border-top: none; padding-top: 0; }
 .checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up { margin: 40px 0 0; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
 .next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
 .next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
-.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
-footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; margin-top: 40px; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -141,7 +163,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -153,41 +174,110 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <a href="/lessons/chatgpt/" class="nav-back">← ChatGPT Mastery</a>
   </div>
 </nav>
+
 <article class="lesson">
   <div class="container">
     <div class="lesson-meta">
-      <span class="chip">Lesson 06 · ChatGPT Mastery</span>
+      <span class="chip">Lesson 10 · ChatGPT Mastery</span>
       <span class="chip chip-pro-plus">Pro+</span>
-      <span>~14 min read</span>
+      <span>~14 min</span>
       <span class="dot"></span>
-      <span>3 workflows + safety patterns</span>
+      <span>Supervision + cost control</span>
     </div>
     <h1>GPT-5 agents: <span class="grad serif">workflows that run themselves.</span></h1>
-    <p class="deck">GPT-5's agent capabilities let ChatGPT run multi-step workflows autonomously — visit websites, fill forms, take actions. It's the most powerful agentic AI in consumer software today, and the most risky if misused. This lesson covers what agents do well, the supervision patterns that prevent disaster, and the cost-control playbook.</p>
-    <h2><span class="num">The mental model</span></h2><h3>Agents are interns with internet access. Treat them accordingly.</h3><p>GPT-5 agent mode can do remarkable multi-step work autonomously. It can also confidently complete the wrong task, spend tokens fast, and make irreversible changes. The skill isn't using agents — it's supervising them well.</p><div class="callout"><span class="lbl">Safety first</span><p><strong>Never give an agent access to anything you wouldn't give to a brand-new intern.</strong> No banking. No production systems. No accounts where one wrong action matters. Use throwaway browsers, throwaway accounts, public data. The capability is real; the trust required is still being earned.</p></div><h2><span class="num">Workflow 01</span> Research and synthesis at scale</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>The 30-source research session</h3></div><p>Give the agent a research question. It visits 20-30 sources, synthesizes, and reports back.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Research prompt</span>Research the current state of the AI training market for enterprise B2B. Visit at least 20 sources. Synthesize: market size, top players, pricing models, recent funding. Cite all sources.</div><h4>Best use cases</h4><ul><li>Pre-meeting prep with depth</li><li>Industry analyses</li><li>Competitive intelligence</li><li>Trend reports</li></ul><div class="gotcha">Agents can spend a lot of tokens on long research. Set a budget. Spot-check sources for credibility — agents will sometimes cite SEO-spam.</div><div class="savings"><strong>Time savings:</strong> Hours of manual research → 10-15 min of agent run + your review.</div></div><h2><span class="num">Workflow 02</span> Multi-step web tasks</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>Find, compare, recommend</h3></div><p>Tasks that require visiting many pages, comparing options, and recommending one.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Multi-step prompt</span>Find the best business credit card for a small SaaS company with $50k/mo spend, lots of software subscriptions, and a need for travel rewards. Compare at least 8 options. Rank top 3 with reasoning.</div><h4>Best use cases</h4><ul><li>Vendor comparison and selection</li><li>Product research with specific criteria</li><li>Travel planning with constraints</li><li>Anywhere you'd otherwise compare 10+ options manually</li></ul><div class="gotcha">Agent recommendations are inputs to your decision, not the decision. Always verify the agent's claims against current source data before acting.</div><div class="savings"><strong>Time savings:</strong> Comparison-research hours: minutes.</div></div><h2><span class="num">Workflow 03</span> Periodic monitoring</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>Set-and-monitor weekly tasks</h3></div><p>Schedule an agent to perform a weekly task: check 5 specific URLs for changes, summarize industry news, audit accounts.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Monitoring pattern</span>Every Monday at 8am: visit our top 5 competitor blogs. Summarize any new posts. Flag anything strategically relevant.</div><h4>Best use cases</h4><ul><li>Competitor monitoring</li><li>Industry news roundups</li><li>Inventory or pricing tracking</li><li>Periodic compliance/audit checks</li></ul><div class="gotcha">Sites change layout; agents break silently. Audit your monitoring setups monthly to catch silent failures.</div><div class="savings"><strong>Time savings:</strong> Weekly manual monitoring: automated.</div></div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Final challenge: one supervised agent task</h2>
-      <p>Identify one research-or-monitoring task you do manually that takes 30+ min. Use GPT-5 agents for it. Watch it carefully the first time. Verify every claim. Iterate on the prompt. If it works, schedule it. If it doesn't, learn why and try a different task type.</p>
-      <div class="btn-row">
-        <a href="/lessons/chatgpt/" class="btn">Back to ChatGPT Mastery →</a>
-        <a href="/#pricing" class="btn ghost">See pricing →</a>
+    <p class="deck">GPT-5 agents run multi-step workflows on their own — visiting sites, filling forms, taking actions. Powerful, and risky if misused. The skill was never "using an agent." It's <em>supervising</em> one: the safety guardrails, the cost-control playbook, and knowing when a plain script would do the job better.</p>
+
+    <!-- mental model -->
+    <div class="sec">
+      <span class="sec-eyebrow">The mental model</span>
+      <h2>An agent is an intern with internet access.</h2>
+      <p>It does impressive multi-step work autonomously — and it can also confidently complete the <em>wrong</em> task, burn tokens fast, and make changes you can't undo. So you treat it exactly like a brand-new intern: clear scope, limited access, and a check on anything that matters.</p>
+      <div class="callout">
+        <span class="lbl">The one rule</span>
+        <p><strong>Never give an agent access to anything you wouldn't give a brand-new intern.</strong> No banking, no production systems, no account where one wrong action is irreversible. Throwaway browsers, throwaway accounts, public data. The capability is real; the trust is still being earned.</p>
       </div>
     </div>
+
+    <!-- SIGNATURE: guardrail panel -->
+    <div class="sec">
+      <span class="sec-eyebrow">Do it · arm the guardrails</span>
+      <h2>Set up an agent run you can trust.</h2>
+      <p>You're about to launch a real agent task. Switch on the guardrails that make it safe and cost-controlled. The launch button stays locked until the run is properly guarded — and one of these toggles is a trap.</p>
+
+      <div class="preflight">
+        <div class="pf-task">
+          <div class="lbl">Agent task</div>
+          <div class="t">"Compare 8 business credit cards for a SaaS company and rank the top 3."</div>
+        </div>
+        <div class="pf-body">
+          <div class="pf-hint">Arm the guardrails before you launch.</div>
+          <div id="guards"></div>
+
+          <div class="pf-meter">
+            <div class="pf-bar"><div class="pf-bar-fill" id="pfBar"></div></div>
+            <div class="pf-bar-label" id="pfBarLabel">Not ready</div>
+          </div>
+          <div class="pf-danger" id="pfDanger"></div>
+
+          <div class="launch">
+            <button class="launch-btn" id="launchBtn" disabled>🔒 Launch safely</button>
+            <div class="launch-fb" id="launchFb"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROUTER -->
+    <div class="sec">
+      <span class="sec-eyebrow">Your call · agent or script?</span>
+      <h2>Sometimes a script is the better tool.</h2>
+      <p>Agents shine on fuzzy, judgment-heavy work. For deterministic, repetitive tasks, a plain script (Python, Zapier) is faster and far more reliable. Make the call.</p>
+      <div class="router" id="router"></div>
+    </div>
+
+    <!-- reference -->
+    <div class="sec">
+      <span class="sec-eyebrow">Where agents earn their keep</span>
+      <h2>Three workflows worth supervising.</h2>
+      <div class="refs">
+        <div class="ref"><div class="h"><div class="n">1</div><h3>Research &amp; synthesis at scale</h3></div><p>A research question → 20–30 sources visited, synthesized, cited.</p><div class="g">Set a token budget; spot-check sources — agents sometimes cite SEO-spam.</div></div>
+        <div class="ref"><div class="h"><div class="n">2</div><h3>Multi-step web tasks</h3></div><p>Find, compare, and rank across many pages against your criteria.</p><div class="g">Recommendations are inputs to your decision, not the decision — verify before acting.</div></div>
+        <div class="ref"><div class="h"><div class="n">3</div><h3>Periodic monitoring</h3></div><p>A scheduled weekly run: check competitor blogs, summarize, flag what matters.</p><div class="g">Sites change layout and agents break silently — audit monitoring setups monthly.</div></div>
+      </div>
+    </div>
+
+    <div class="challenge">
+      <h2 style="margin-top:0;">Run one supervised agent task</h2>
+      <p>Pick a research-or-monitoring task you do manually that takes 30+ minutes. Run it through a GPT-5 agent — watch it closely the first time, verify every claim, iterate on the prompt. If it works, schedule it. If it doesn't, learn why and try a different task type.</p>
+      <div class="btn-row">
+        <a href="/playground" class="btn">Try a prompt in the playground →</a>
+        <a href="/lessons/chatgpt/" class="btn ghost">Back to ChatGPT Mastery</a>
+      </div>
+    </div>
+
     <div class="checklist">
       <h3>What you can do now</h3>
-      <ul><li>Understand what agents do well vs. poorly</li><li>Apply safety patterns (throwaway accounts, supervised first runs, no irreversible actions)</li><li>Use agents for research, comparison, and periodic monitoring</li><li>Set cost budgets and verify before acting on agent output</li><li>Recognize when scripting (Python/zapier) would be more reliable than agents</li></ul>
+      <ul>
+        <li>Treat an agent like an intern — clear scope, limited access, no irreversible power</li>
+        <li>Arm guardrails before launch: cost budget, throwaway account, confirm-before-act, verify, public-data-only</li>
+        <li>Use agents for research, comparison, and periodic monitoring</li>
+        <li>Verify agent output against source data before you act on it</li>
+        <li>Reach for a script when the task is deterministic and repetitive</li>
+      </ul>
     </div>
+
     <div class="next-up">
-      <span class="pro-tag">Pro</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in ChatGPT Mastery</div>
-      <h3>Lesson 7 · Search, image, & DALL-E: the multimodal features most users underuse</h3>
-      <p>Web search inside ChatGPT, image analysis, DALL-E for real work (not just art). The workflows that turn ChatGPT into a Swiss army knife. <a href="/#pricing">See pricing →</a></p>
+      <span class="pro-plus-tag">Pro+</span>
+      <div class="lbl" style="margin-top:14px;">Up next in ChatGPT Mastery</div>
+      <h3>Lesson 11 · ChatGPT API, projects, and advanced prompting</h3>
+      <p>When to use the API instead of the app, project organization for power users, evaluation patterns, and advanced reasoning prompts — the advanced curriculum. <a href="/lessons/chatgpt/api-and-advanced">Start lesson 11 →</a></p>
     </div>
   </div>
 </article>
+
 <footer>
   <div class="footer-inner">
-    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with OpenAI.</div>
+    <div>© 2026 LearningGPT · Independent. Not affiliated with OpenAI.</div>
     <a href="/lessons/chatgpt/" style="color: var(--text-dim);">← All ChatGPT lessons</a>
   </div>
 </footer>
@@ -197,7 +287,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -212,7 +301,7 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -220,15 +309,114 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   </div>
 </div>
 
+<script id="lessonScript">
+(function () {
+  // ── GUARDRAIL PANEL ──
+  var GUARDS = [
+    { id: 'budget', type: 'good', label: 'Set a token / cost budget' },
+    { id: 'throwaway', type: 'good', label: 'Use a throwaway browser + account (no real logins)' },
+    { id: 'confirm', type: 'good', label: 'Require confirmation before any irreversible action' },
+    { id: 'verify', type: 'good', label: 'Verify the agent\'s claims before acting on them' },
+    { id: 'public', type: 'good', label: 'Scope it to public data only' },
+    { id: 'bank', type: 'bad', label: 'Hand it your primary bank login for faster checkout <span class="warn-tag">— never do this</span>' }
+  ];
+  var GOOD_TOTAL = GUARDS.filter(function (g) { return g.type === 'good'; }).length;
+  var guardsEl = document.getElementById('guards');
+  var pfBar = document.getElementById('pfBar');
+  var pfBarLabel = document.getElementById('pfBarLabel');
+  var pfDanger = document.getElementById('pfDanger');
+  var launchBtn = document.getElementById('launchBtn');
+  var launchFb = document.getElementById('launchFb');
+  var state = {};
+
+  GUARDS.forEach(function (g) {
+    state[g.id] = false;
+    var row = document.createElement('div');
+    row.className = 'guard' + (g.type === 'bad' ? ' bad' : '');
+    row.innerHTML = '<div class="gtoggle"></div><div class="guard-label">' + g.label + '</div>';
+    guardsEl.appendChild(row);
+    row.addEventListener('click', function () {
+      state[g.id] = !state[g.id];
+      row.classList.toggle('on', state[g.id]);
+      update();
+    });
+  });
+
+  function update() {
+    var goodOn = GUARDS.filter(function (g) { return g.type === 'good' && state[g.id]; }).length;
+    var badOn = state.bank;
+    var pct = Math.round((goodOn / GOOD_TOTAL) * 100);
+    pfBar.style.width = pct + '%';
+    if (badOn) {
+      pfBar.classList.add('danger');
+      pfBar.style.width = '100%';
+      pfBarLabel.textContent = 'Unsafe';
+      pfDanger.textContent = '⚠ That hands an intern the keys to your bank. Turn it off — no agent gets credentials where one wrong move is irreversible.';
+      pfDanger.classList.add('show');
+    } else {
+      pfBar.classList.remove('danger');
+      pfDanger.classList.remove('show');
+      pfBarLabel.textContent = goodOn === GOOD_TOTAL ? 'Ready' : (goodOn + ' / ' + GOOD_TOTAL + ' armed');
+    }
+    var ready = goodOn === GOOD_TOTAL && !badOn;
+    launchBtn.disabled = !ready;
+    launchBtn.textContent = ready ? '▶ Launch safely' : '🔒 Launch safely';
+  }
+
+  launchBtn.addEventListener('click', function () {
+    if (launchBtn.disabled) return;
+    launchBtn.disabled = true;
+    launchBtn.textContent = '✓ Running — supervised';
+    launchFb.textContent = 'That\'s the playbook: a budget caps the cost, a throwaway account caps the blast radius, confirmation and verification keep you in control, and nothing irreversible is on the table. Now you can walk away.';
+    launchFb.classList.add('show');
+    launchFb.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  });
+  update();
+
+  // ── ROUTER: agent or script ──
+  var OPTS = ['GPT-5 agent', 'Just script it'];
+  var ITEMS = [
+    { scn: 'Summarize 5 competitor blogs each week and flag anything strategic.', correct: 'GPT-5 agent',
+      why: 'Reading, judging relevance, and summarizing is fuzzy work — that\'s an agent\'s strength.' },
+    { scn: 'Copy the same 200 rows from one sheet to another every morning.', correct: 'Just script it',
+      why: 'Deterministic and repetitive — a script does it perfectly every time; an agent is slower and can drift.' },
+    { scn: 'Research a fuzzy market question across 20+ sources and synthesize it.', correct: 'GPT-5 agent',
+      why: 'Open-ended synthesis across many sources is exactly what agents are for (with a budget + source check).' },
+    { scn: 'Rename 500 files by a fixed naming rule.', correct: 'Just script it',
+      why: 'A fixed rule applied at scale is a one-line script — reliable, instant, and free of agent risk.' }
+  ];
+  var router = document.getElementById('router');
+  ITEMS.forEach(function (it) {
+    var row = document.createElement('div');
+    row.className = 'rrow';
+    var btns = OPTS.map(function (o) { return '<button class="rbtn" data-o="' + o + '">' + o + '</button>'; }).join('');
+    row.innerHTML = '<div class="rrow-scn">' + it.scn + '</div><div class="rrow-btns">' + btns + '</div><div class="rrow-fb"></div>';
+    router.appendChild(row);
+    var fb = row.querySelector('.rrow-fb');
+    var rbtns = row.querySelectorAll('.rbtn');
+    var done = false;
+    rbtns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (done) return;
+        done = true;
+        var ok = b.dataset.o === it.correct;
+        rbtns.forEach(function (x) { x.disabled = true; if (x.dataset.o === it.correct) x.classList.add('right'); });
+        if (!ok) b.classList.add('wrong');
+        fb.innerHTML = (ok ? '' : '<b>' + it.correct + '.</b> ') + it.why;
+        fb.classList.add('show');
+      });
+    });
+  });
+})();
+</script>
 
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: GPT-5 agents: workflows that run themselves\nTRACK: Chatgpt Mastery\n\nLESSON CONTENT SUMMARY:\nGPT-5 agents: workflows that run themselves \u2014 LearningGPT L LearningGPT \u2190 ChatGPT Mastery Lesson 06 \u00b7 ChatGPT Mastery Pro+ ~14 min read 3 workflows + safety patterns GPT-5 agents: workflows that run themselves. GPT-5's agent capabilities let ChatGPT run multi-step workflows autonomously \u2014 visit websites, fill forms, take actions. It's the most powerful agentic AI in consumer software today, and the most risky if misused. This lesson covers what agents do well, the supervision patterns that prevent disaster, and the cost-control playbook. The mental model Agents are interns with internet access. Treat them accordingly. GPT-5 agent mode can do remarkable multi-step work autonomously. It can also confidently complete the wrong task, spend tokens fast, and make irreversible changes. The skill isn't using agents \u2014 it's supervising them well. Safety first Never give an agent access to anything you wouldn't give to a brand-new intern. No banking. No production systems. No accounts where one wrong action matters. Use throwaway browsers, throwaway accounts, public data. The capability is real; the trust required is still being earned. Workflow 01 Research and synthesis at scale 1 The 30-source research session Give the agent a research question. It visits 20-30 sources, synthesizes, and reports back. The prompt that works Research prompt Research the current state of the AI training market for enterprise B2B. Visit at least 20 sources. Synthesize: market size, top players, pricing models, recent funding. Cite all sources. Best use cases Pre-meeting prep with depth Industry analyses Competitive intelligence Trend reports Agents can spend a lot of tokens on long research. Set a budget. Spot-check sources for credibility \u2014 agents will sometimes cite SEO-spam. Time savings: Hours of manual research \u2192 10-15 min of agent run + your review. Workflow 02 Multi-step web tasks 2 Find, compare, recommend Tasks that require visiting many pages, comparing options, and recommending one. The prompt that works Multi-step prompt Find the best business credit card for a small SaaS company with $50k/mo spend, lots of software subscriptions, and a need for travel rewards. Compare at least 8 options. Rank top 3 with reasoning. Best use cases Vendor comparison and selection Product research with specific criteria Travel planning with constraints Anywhere you'd otherwise compare 10+ options manually Agent recommendations are inputs to your decision, not the decision. Always verify the agent's claims against current source data before acting. Time savings: Comparison-research hours: minutes. Workflow 03 Periodic monitoring 3 Set-and-monitor weekly tasks Schedule an agent to perform a weekly task: check 5 specific URLs for changes, summarize industry news, audit accounts. The prompt that works Monitoring pattern Every Monday at 8am: visit our top 5 competitor blogs. Summarize any new posts. Flag anything strategically relevant. Best use cases Competitor monitoring Industry news ro\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: GPT-5 agents: workflows that run themselves\nTRACK: ChatGPT Mastery (Lesson 10, Pro+)\n\nLESSON CONTENT SUMMARY:\nGPT-5 agents run multi-step workflows autonomously — visiting sites, filling forms, taking actions. The mental model: an agent is an intern with internet access. It does impressive autonomous work but can also confidently complete the WRONG task, spend tokens fast, and make irreversible changes. The skill is supervising it well, not just using it.\n\nThe one safety rule: never give an agent access to anything you wouldn't give a brand-new intern — no banking, no production systems, no account where one wrong action is irreversible. Use throwaway browsers, throwaway accounts, and public data.\n\nPre-flight guardrails to arm before a run: (1) set a token/cost budget; (2) use a throwaway browser + account (no real logins); (3) require confirmation before any irreversible action; (4) verify the agent's claims before acting on them; (5) scope to public data only. Never hand it real credentials for 'convenience.'\n\nThree workflows worth supervising: (1) Research & synthesis at scale — 20–30 sources visited and synthesized with citations; set a budget and spot-check sources (agents sometimes cite SEO-spam). (2) Multi-step web tasks — find/compare/rank against criteria; treat recommendations as inputs to your decision, not the decision, and verify before acting. (3) Periodic monitoring — a scheduled weekly run (e.g., competitor blogs); sites change layout and agents break silently, so audit setups monthly.\n\nKey Pro+ judgment: agents shine on fuzzy, judgment-heavy work (reading, comparing, synthesizing). For deterministic, repetitive tasks (copying rows, renaming files by a fixed rule), a plain script (Python/Zapier) is faster and far more reliable than an agent. Cost control: agents can spend many tokens on long runs — always set a budget.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more\n- Be practical — give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only — no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -236,27 +424,21 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -265,7 +447,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -274,7 +455,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

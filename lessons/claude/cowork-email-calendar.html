@@ -10,7 +10,7 @@
 <meta name="theme-color" content="#d97757" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/claude/cowork-email-calendar" />
 <meta property="og:title" content="Cowork for email + calendar — Outlook, M365, scheduling" />
@@ -34,87 +34,126 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .lesson { padding: 50px 0 100px; }
 .lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
 .lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(217,119,87,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(217,119,87,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
 .lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
 .lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #d97757 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .grad { background: linear-gradient(135deg, #d97757 0%, #c46343 50%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
 .lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+
+/* ── STEPPER ── */
+.stepper { position: sticky; top: 57px; z-index: 50; background: rgba(10,10,26,0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); margin: 0 0 8px; padding: 12px 0; }
+.stepper-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; align-items: center; gap: 14px; }
+.prog-track { flex: 1; height: 6px; background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden; }
+.prog-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #d97757, #7c5cff); border-radius: 999px; transition: width .4s cubic-bezier(.4,0,.2,1); }
+.prog-label { font-size: 12px; color: var(--text-mute); font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+.step { display: none; animation: stepIn .45s cubic-bezier(.2,.7,.2,1); }
+.step.active { display: block; }
+@keyframes stepIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+.step-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin: 8px 0 6px; }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 6px 0 16px; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 26px 0 10px; }
 .lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
 .lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(217,119,87,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(217,119,87,0.25); border-radius: var(--radius-lg); position: relative; }
+.lesson ul { padding-left: 22px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; }
+
+.callout { margin: 26px 0; padding: 20px 24px; background: linear-gradient(135deg, rgba(217,119,87,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(217,119,87,0.25); border-radius: var(--radius-lg); position: relative; }
 .callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #d97757, #7c5cff); border-radius: 2px 0 0 2px; }
 .callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
 .callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(217,119,87,0.1); border: 1px solid rgba(217,119,87,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
+
+/* ── PREDICT ── */
+.predict { margin: 26px 0; padding: 22px 24px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+.predict .q { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
+.opt { display: block; width: 100%; text-align: left; padding: 14px 16px; margin: 8px 0; background: rgba(255,255,255,0.03); border: 1px solid var(--line-strong); border-radius: 12px; color: var(--text); font-size: 14.5px; font-family: inherit; cursor: pointer; transition: all .18s; }
+.opt:hover:not(:disabled) { border-color: var(--track); background: rgba(217,119,87,0.07); }
+.opt:disabled { cursor: default; }
+.opt.correct { border-color: var(--accent); background: rgba(68,224,164,0.12); }
+.opt.wrong { border-color: var(--danger); background: rgba(255,107,138,0.10); opacity: 0.85; }
+.opt .tick { float: right; font-weight: 700; }
+.reveal { margin-top: 14px; padding: 16px 18px; border-radius: 12px; background: rgba(68,224,164,0.07); border: 1px solid rgba(68,224,164,0.25); font-size: 14.5px; display: none; }
+.reveal.show { display: block; animation: stepIn .4s ease; }
+.reveal.miss { background: rgba(255,181,71,0.07); border-color: rgba(255,181,71,0.25); }
+
+/* ── TRIAGE SIM ── */
+.triage { margin: 26px 0; background: linear-gradient(180deg, var(--surface), var(--bg-soft)); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 22px; }
+.tri-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px; flex-wrap: wrap; }
+.tri-head .tt { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-mute); font-weight: 700; }
+.tri-count { font-size: 12px; font-weight: 700; color: var(--track); font-variant-numeric: tabular-nums; }
+.tri-bar { height: 7px; background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden; margin: 10px 0 18px; }
+.tri-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #d97757, #44e0a4); border-radius: 999px; transition: width .45s cubic-bezier(.4,0,.2,1); }
+.mail { padding: 14px 16px; border-radius: 12px; background: rgba(0,0,0,0.25); border: 1px solid var(--line); margin-bottom: 12px; transition: opacity .3s, transform .3s; }
+.mail.done { opacity: 0.5; }
+.mail-top { display: flex; justify-content: space-between; gap: 10px; font-size: 12px; color: var(--text-mute); margin-bottom: 3px; }
+.mail-subj { font-size: 14.5px; font-weight: 600; margin-bottom: 3px; }
+.mail-prev { font-size: 13px; color: var(--text-dim); margin-bottom: 12px; }
+.tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.tag { padding: 6px 12px; border-radius: 8px; font-size: 12.5px; font-weight: 700; font-family: inherit; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); color: var(--text-dim); cursor: pointer; transition: all .15s; }
+.tag:hover:not(:disabled) { border-color: var(--track); color: var(--text); }
+.tag:disabled { cursor: default; }
+.tag.picked-right { background: rgba(68,224,164,0.16); border-color: var(--accent); color: #b6f4dc; }
+.tag.picked-wrong { background: rgba(255,107,138,0.12); border-color: var(--danger); color: #ffb0c1; }
+.tag.reveal-right { border-color: var(--accent); color: #b6f4dc; }
+.mail-fb { margin-top: 10px; font-size: 13px; color: var(--text-dim); display: none; }
+.mail-fb.show { display: block; }
+.mail-fb b { color: var(--track); }
+.tri-done { margin-top: 8px; padding: 16px 18px; border-radius: 12px; background: rgba(217,119,87,0.1); border: 1px solid rgba(217,119,87,0.3); font-size: 14.5px; display: none; }
+.tri-done.show { display: block; animation: stepIn .4s ease; }
+
+/* ── PROMPT BLOCK ── */
 .prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
 .prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
 .gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
 .gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(217,119,87,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(217,119,87,0.25); border-radius: var(--radius-lg); padding: 36px; }
+
+/* ── GYM ── */
+.gym { margin: 26px 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px; }
+.gym-count { font-size: 12px; color: var(--text-mute); font-weight: 600; margin-bottom: 12px; }
+.gym-prompt { font-size: 16.5px; font-weight: 600; margin-bottom: 16px; line-height: 1.5; }
+.gym-fb { margin-top: 14px; padding: 14px 16px; border-radius: 12px; font-size: 14px; display: none; }
+.gym-fb.show { display: block; animation: stepIn .35s ease; }
+.gym-fb.ok { background: rgba(68,224,164,0.1); border: 1px solid rgba(68,224,164,0.3); }
+.gym-fb.no { background: rgba(255,181,71,0.08); border: 1px solid rgba(255,181,71,0.28); }
+.gym-next { margin-top: 16px; text-align: right; display: none; }
+.gym-next.show { display: block; }
+.gym-score { text-align: center; padding: 20px; font-size: 17px; font-weight: 700; }
+.mini-btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #d97757, #7c5cff); color: white; padding: 11px 20px; border-radius: 10px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; font-family: inherit; transition: transform .15s; }
+.mini-btn:hover { transform: translateY(-1px); }
+
+/* ── NAV / CHALLENGE / NEXT ── */
+.step-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 36px; gap: 12px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #d97757, #7c5cff); color: white; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: inherit; box-shadow: 0 6px 24px rgba(124,92,255,0.25); transition: transform .15s, opacity .15s; }
+.btn:hover { transform: translateY(-1px); color: white; }
+.btn:disabled { opacity: 0.4; cursor: default; transform: none; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+
+.challenge { margin: 10px 0 30px; background: linear-gradient(135deg, rgba(217,119,87,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(217,119,87,0.25); border-radius: var(--radius-lg); padding: 32px; }
 .challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #d97757, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge a.btn { text-decoration: none; }
 .challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist { margin: 30px 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
 .checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
 .checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
 .checklist li:first-child { border-top: none; padding-top: 0; }
 .checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up { margin: 20px 0 0; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
 .next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
 .next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
-.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
 .next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
 footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -143,7 +182,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -155,82 +193,155 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <a href="/lessons/claude/" class="nav-back">← Claude Mastery</a>
   </div>
 </nav>
+
+<!-- ── STEPPER ── -->
+<div class="stepper">
+  <div class="stepper-inner">
+    <div class="prog-track"><div class="prog-fill" id="prog"></div></div>
+    <div class="prog-label" id="progLabel">Step 1 / 5</div>
+  </div>
+</div>
+
 <article class="lesson">
   <div class="container">
     <div class="lesson-meta">
       <span class="chip">Cowork · Lesson 04</span>
       <span class="chip chip-pro-plus">Pro+</span>
-      <span>~14 min read</span>
+      <span>~14 min</span>
       <span class="dot"></span>
       <span>MCP + Outlook + calendar</span>
     </div>
     <h1>Email + calendar: <span class="grad serif">the 15-minute morning ritual.</span></h1>
-    <p class="deck">Email is where most knowledge workers lose 1-2 hours a day. With Cowork connected to Outlook (or Microsoft 365), the morning triage that used to take 90 minutes becomes a structured 15-minute review of what actually needs your attention. This lesson covers the MCP connector setup, search patterns, draft workflows, and the calendar integration that makes scheduling almost frictionless.</p>
-    <h2><span class="num">Workflow 01</span> Connect Outlook to Cowork</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>Set up the Microsoft 365 MCP connector</h3></div><p>Cowork talks to Outlook through Model Context Protocol (MCP) — a standard for AI tools to connect to services. Setting up the M365 connector is a one-time step. Once it's wired in, Cowork can search your email, read messages you point it at, and (with permission) draft replies.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Connector setup</span>Setup sequence:
+    <p class="deck">Email is where most knowledge workers lose one to two hours a day. With Cowork connected to Outlook via MCP, the morning triage that used to take 90 minutes becomes a 15-minute review of what actually needs you. Let's build the instinct for triage, voice-matched drafts, and the one safety line you never cross.</p>
 
-1. In Cowork, go to Connectors/Plugins
-2. Search for &#x27;Microsoft 365&#x27; (or &#x27;Outlook&#x27;)
-3. Click Connect — it opens a Microsoft sign-in page
-4. Sign in with your work or personal Microsoft account
-5. Approve the requested permissions (read mail, read calendar; send/draft are separate prompts)
-6. Return to Cowork — you should see &#x27;M365 connected&#x27; in the connector list
-7. Test: ask &#x27;how many unread emails do I have&#x27;
+    <!-- ════ STEP 1 ════ -->
+    <section class="step active" data-step="1">
+      <span class="step-eyebrow">The shift</span>
+      <h2>Stop opening the inbox. Triage it.</h2>
+      <p>The trap with email is reactive mode: you open Outlook, the newest thing grabs you, and 90 minutes vanish before you've touched the email that actually mattered. Cowork connects to Outlook through <strong>MCP</strong> (Model Context Protocol — the standard that lets AI tools talk to services), so instead of opening the inbox you ask it to sort the inbox <em>for</em> you.</p>
+      <p>The morning-triage prompt classifies every message into four buckets — <strong>Action, Reply, Read, Skip</strong> — and hands you a table sorted by urgency. You read the report, not the inbox.</p>
 
-Note: requires MFA enabled on your Microsoft account.</div><h4>Best use cases</h4><ul><li>First-time setup on a new machine</li><li>Switching Microsoft accounts</li><li>Refreshing after a token expiration</li><li>Verifying connector after a security policy change</li></ul><div class="gotcha">If the connector won't authenticate, you likely need to enable MFA on your Microsoft account first. Go to aka.ms/mfasetup, complete the enrollment, then retry.</div><div class="savings"><strong>Time savings:</strong> Setup: 10 min one-time. Then every email session is faster.</div></div><h2><span class="num">Workflow 02</span> Morning triage</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>The 15-minute structured email review</h3></div><p>Instead of opening Outlook and getting sucked into reactive mode, ask Cowork to triage your inbox for you. The prompt below produces a structured morning summary with the only emails you actually need to read.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Morning triage</span>Look at every email in my inbox from the last 24 hours. For each one, classify it as:
-• [Action] — requires me to do something
-• [Reply] — requires a response, no action otherwise
-• [Read] — informational, no response needed
-• [Skip] — newsletters, automated notifications, can be archived
-
-Produce a table with the columns: Time, From, Subject, Category, One-line summary. Sort by Category (Action first, Skip last). At the bottom, give me a 3-bullet summary of the day&#x27;s themes.
-
-Don&#x27;t archive or reply to anything yet — just give me the report.</div><h4>Best use cases</h4><ul><li>Daily 15-minute morning review</li><li>Catching up after vacation or a long meeting</li><li>Weekly inbox-zero ritual</li><li>Pre-meeting context check (any urgent messages?)</li></ul><div class="gotcha">Cowork's classification isn't perfect — it'll occasionally mark a [Skip] as [Action] or vice versa. The point isn't perfect categorization, it's getting all 47 emails sorted in 30 seconds so you can focus on the 8 that matter.</div><div class="savings"><strong>Time savings:</strong> Morning email: 90 min reactive → 15 min focused review.</div></div><h2><span class="num">Workflow 03</span> Draft replies in your voice</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>Generate reply drafts that don't sound like AI</h3></div><p>The 'sounds like AI' problem in email is real — over-polite, over-long, sycophantic. The fix is giving Cowork enough of your prior emails as voice samples that it can match your tone. Once you've done the setup once, every reply matches you.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Voice-matched drafting</span>I need to reply to this email: [paste or reference]
-
-My intent: [one sentence — what you want the reply to accomplish]
-
-Match the tone of these reference emails I&#x27;ve sent before:
-[Reference 1: paste 2-3 sentences from a previous email of yours that hit the right tone]
-[Reference 2: paste another short example]
-
-Draft a reply. Rules:
-• Length: same general length as my references
-• No &#x27;I hope this finds you well&#x27; or other AI tells
-• No bullet lists unless I usually use them
-• End the way I usually end emails
-
-Generate three variations — concise, friendly, and direct — and let me pick.</div><h4>Best use cases</h4><ul><li>Replies to customers (consistent voice matters)</li><li>Internal team emails (don't sound like an outsider)</li><li>Sales follow-ups (specific tone for your stage of conversation)</li><li>Any email where you'd rewrite the AI version anyway</li></ul><div class="gotcha">Don't let Cowork actually send emails on your behalf. Always have it draft, then review and send manually. This is one of those places where automation risk outweighs the time savings.</div><div class="savings"><strong>Time savings:</strong> 5-10 email replies: typically 30 min → 8 min with drafts.</div></div><h2><span class="num">Workflow 04</span> Find meeting times across calendars</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">4</div><h3>Scheduling without the back-and-forth</h3></div><p>Calendar scheduling burns hours per week if you're coordinating with multiple people. Cowork can read your calendar (and others if connected) and propose times that work — and even draft the scheduling email.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Scheduling</span>I need to schedule a 30-minute meeting next week with [Person A] and [Person B].
-
-• My availability: 9am-5pm CT, but I prefer 10am-2pm
-• Avoid Mondays before 11am (I have a recurring meeting)
-• Avoid Fridays after 3pm
-
-Look at my calendar. Propose 3 specific time slots next week that work for me. Then draft a short email I can send asking them to pick one. Don&#x27;t send the email yet.</div><h4>Best use cases</h4><ul><li>External meetings where you can't see others' calendars</li><li>Internal coordination across multiple people</li><li>Recurring 1:1 setup</li><li>Travel coordination (meetings in another time zone)</li></ul><div class="gotcha">Cowork can only see calendars it's been connected to. For external people, you still need the back-and-forth or a Calendly link.</div><div class="savings"><strong>Time savings:</strong> 5-meeting scheduling session: 45 min → 10 min.</div></div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Build the 15-minute morning ritual</h2>
-      <p>Tomorrow morning, instead of opening Outlook, open Cowork. Run the triage prompt. Spend 10 minutes reading the categorized output. Use Cowork to draft replies to the [Reply] items. By 9:15am you're done with email and starting your actual work — see if it changes how the rest of the day feels.</p>
-      <div class="btn-row">
-        <a href="/lessons/claude/" class="btn">Back to Claude Mastery →</a>
-        <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+      <div class="predict">
+        <div class="q">Why does triaging the inbox beat just opening it and working top-down?</div>
+        <button class="opt" data-correct="false">Cowork classifies every email perfectly, so you never have to read them</button>
+        <button class="opt" data-correct="true">It sorts all 47 in seconds so you spend your attention on the 8 that matter</button>
+        <button class="opt" data-correct="false">It replies to everything automatically and clears the inbox for you</button>
+        <div class="reveal" id="r1">
+          <strong>Exactly.</strong> Triage isn't about perfect categorization — Cowork will occasionally mis-tag one. It's about getting the whole pile sorted in 30 seconds so your real attention goes to the handful that need a human. You're about to run that triage yourself.
+        </div>
       </div>
-    </div>
-    <div class="checklist">
-      <h3>What you can do now</h3>
-      <ul>
-        <li>Connect the Microsoft 365 MCP connector (one-time setup)</li>
-        <li>Use morning triage instead of reactive inbox opening</li>
-        <li>Train Cowork on your voice with 2-3 reference emails</li>
-        <li>Always draft, never auto-send, especially with external recipients</li>
-        <li>Connect your calendar for scheduling shortcuts</li>
-      </ul>
-    </div>
-    <div class="next-up">
-      <span class="pro-plus-tag">Pro+</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in Claude Mastery</div>
-      <h3>Lesson 05 · Plugins, Skills, and MCP — extending what Cowork can do</h3>
-      <p>The Cowork platform is extensible. Plugins, Skills, and MCP servers each add capabilities. This lesson covers what each one is, the marketplace, and when to build your own. <a href="/lessons/claude/">See the track →</a></p>
-    </div>
+      <div class="step-nav">
+        <span></span>
+        <button class="btn" id="next1" disabled>Continue →</button>
+      </div>
+    </section>
+
+    <!-- ════ STEP 2 ════ -->
+    <section class="step" data-step="2">
+      <span class="step-eyebrow">Signature move · run the triage</span>
+      <h2>Sort the morning inbox.</h2>
+      <p>Here's a real morning's worth of email. Tag each one the way Cowork would — <strong>Action</strong> (you must do something), <strong>Reply</strong> (a response, no task), <strong>Read</strong> (FYI), <strong>Skip</strong> (archive it). Clear all five to hit inbox zero.</p>
+
+      <div class="triage">
+        <div class="tri-head">
+          <span class="tt">Inbox · last 24h</span>
+          <span class="tri-count" id="triCount">0 / 5 sorted</span>
+        </div>
+        <div class="tri-bar"><div class="tri-bar-fill" id="triBar"></div></div>
+        <div id="mailList"></div>
+        <div class="tri-done" id="triDone">
+          <strong>Inbox zero in under a minute.</strong> That's the ritual: Cowork hands you this exact table every morning, you skim it, and you spend your energy on the Action and Reply rows. The Skips archive themselves once you confirm.
+        </div>
+      </div>
+      <div class="step-nav">
+        <button class="btn ghost" data-back="1">← Back</button>
+        <button class="btn" id="next2" disabled>Now the drafts →</button>
+      </div>
+    </section>
+
+    <!-- ════ STEP 3 ════ -->
+    <section class="step" data-step="3">
+      <span class="step-eyebrow">Drafts in your voice</span>
+      <h2>Replies that don't sound like AI.</h2>
+      <p>The "sounds like AI" problem is real — over-polite, over-long, "I hope this finds you well." The fix is feeding Cowork two or three of your own past emails as voice samples, so every draft matches your tone. Do it once; reuse it forever.</p>
+
+      <div class="prompt-example"><span class="label">Voice-matched drafting</span>I need to reply to this email: [paste or reference]
+My intent: [one sentence — what the reply should accomplish]
+Match the tone of these emails I've sent before:
+[Reference 1: 2-3 sentences from a past email that hit the right tone]
+[Reference 2: another short example]
+Rules: same length as my references · no "I hope this finds you well" · no bullet lists unless I use them · end the way I usually end emails.
+Give me three variations — concise, friendly, direct — and let me pick.</div>
+
+      <div class="callout">
+        <span class="lbl">The one safety line</span>
+        <p>Have Cowork <strong>draft</strong>, then you review and send. Don't let it send on your behalf — especially to external recipients. This is the one place where automation risk outweighs the few seconds you'd save. You'll test exactly where that line sits on the next step.</p>
+      </div>
+      <div class="step-nav">
+        <button class="btn ghost" data-back="2">← Back</button>
+        <button class="btn" id="next3">Test the judgment →</button>
+      </div>
+    </section>
+
+    <!-- ════ STEP 4 ════ -->
+    <section class="step" data-step="4">
+      <span class="step-eyebrow">Your turn · draft or send?</span>
+      <h2>Where's the auto-send line?</h2>
+      <p>Four situations. For each, decide what Cowork should be allowed to do.</p>
+
+      <div class="gym" id="gym">
+        <div class="gym-count" id="gymCount">Question 1 of 4</div>
+        <div class="gym-prompt" id="gymPrompt"></div>
+        <div id="gymOpts"></div>
+        <div class="gym-fb" id="gymFb"></div>
+        <div class="gym-next" id="gymNext"><button class="mini-btn" id="gymNextBtn">Next →</button></div>
+      </div>
+      <div class="step-nav">
+        <button class="btn ghost" data-back="3">← Back</button>
+        <button class="btn" id="next4" disabled>Finish →</button>
+      </div>
+    </section>
+
+    <!-- ════ STEP 5 ════ -->
+    <section class="step" data-step="5">
+      <span class="step-eyebrow">You've got it</span>
+      <h2>Email as a 15-minute ritual.</h2>
+
+      <div class="challenge">
+        <h2 style="margin-top:0;">Build the morning ritual</h2>
+        <p>Tomorrow, don't open Outlook — open Cowork. Run the triage prompt. Spend 10 minutes on the categorized output, have Cowork draft the Reply items, review and send them yourself. By 9:15 you're done with email and into real work. Notice how the rest of the day feels.</p>
+        <div class="btn-row">
+          <a href="/playground" class="btn">Try a prompt in the playground →</a>
+          <a href="/lessons/claude/" class="btn ghost">Back to Claude Mastery</a>
+        </div>
+      </div>
+
+      <div class="checklist">
+        <h3>What you can do now</h3>
+        <ul>
+          <li>Connect the Microsoft 365 MCP connector (one-time; needs MFA enabled)</li>
+          <li>Run morning triage instead of opening the inbox reactively</li>
+          <li>Train Cowork on your voice with 2-3 reference emails</li>
+          <li>Always draft, never auto-send — especially to external recipients</li>
+          <li>Connect your calendar so Cowork can propose meeting times and draft the invite</li>
+        </ul>
+      </div>
+
+      <div class="next-up">
+        <span class="pro-plus-tag">Pro+</span>
+        <div class="lbl" style="margin-top:14px;">Up next in Claude Mastery</div>
+        <h3>Lesson 05 · Plugins, Skills, and MCP — extending what Cowork can do</h3>
+        <p>Cowork is extensible. Plugins, Skills, and MCP servers each add capabilities in a different way. What each one is, where the marketplace fits, and when it's worth building your own. <a href="/lessons/claude/cowork-plugins-skills-mcp">Start lesson 05 →</a></p>
+      </div>
+      <div class="step-nav">
+        <button class="btn ghost" data-back="4">← Back</button>
+        <a href="/lessons/claude/cowork-plugins-skills-mcp" class="btn">Next lesson →</a>
+      </div>
+    </section>
+
   </div>
 </article>
+
 <footer>
   <div class="footer-inner">
     <div>© 2026 LearningGPT · Independent. Not affiliated with Anthropic.</div>
@@ -243,7 +354,6 @@ Look at my calendar. Propose 3 specific time slots next week that work for me. T
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -258,7 +368,7 @@ Look at my calendar. Propose 3 specific time slots next week that work for me. T
     <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -266,15 +376,194 @@ Look at my calendar. Propose 3 specific time slots next week that work for me. T
   </div>
 </div>
 
+<script id="lessonScript">
+(function () {
+  var TOTAL = 5;
+  var cur = 1;
+  var prog = document.getElementById('prog');
+  var progLabel = document.getElementById('progLabel');
+
+  function go(n) {
+    n = Math.max(1, Math.min(TOTAL, n));
+    document.querySelectorAll('.step').forEach(function (s) {
+      s.classList.toggle('active', +s.dataset.step === n);
+    });
+    cur = n;
+    prog.style.width = (n / TOTAL * 100) + '%';
+    progLabel.textContent = 'Step ' + n + ' / ' + TOTAL;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  document.querySelectorAll('[data-back]').forEach(function (b) {
+    b.addEventListener('click', function () { go(+b.dataset.back); });
+  });
+  function nextBtn(id, to) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('click', function () { go(to); });
+  }
+  nextBtn('next1', 2); nextBtn('next2', 3); nextBtn('next3', 4); nextBtn('next4', 5);
+
+  // ── STEP 1 predict ──
+  var p1 = document.querySelectorAll('[data-step="1"] .opt');
+  var answered1 = false;
+  p1.forEach(function (o) {
+    o.addEventListener('click', function () {
+      if (answered1) return;
+      answered1 = true;
+      var correct = o.dataset.correct === 'true';
+      p1.forEach(function (x) {
+        x.disabled = true;
+        if (x.dataset.correct === 'true') { x.classList.add('correct'); x.innerHTML += '<span class="tick">✓</span>'; }
+      });
+      if (!correct) { o.classList.add('wrong'); o.innerHTML += '<span class="tick">✕</span>'; }
+      var r = document.getElementById('r1');
+      r.classList.add('show'); if (!correct) r.classList.add('miss');
+      document.getElementById('next1').disabled = false;
+    });
+  });
+
+  // ── STEP 2 triage simulator ──
+  var MAILS = [
+    { from: 'Dana (VP Sales)', time: '7:42a', subj: 'Need the Q1 numbers before the 10am board call', prev: 'Can you send the channel breakdown? Presenting in 2 hours.', cat: 'Action', note: 'A clear task with a deadline — this is the email your morning exists for.' },
+    { from: 'Priya, design', time: '8:05a', subj: 'Re: logo options — which do you prefer?', prev: 'Attached three directions. Just need your pick, no rush.', cat: 'Reply', note: 'Wants a response but no task beyond it. A two-line answer closes it.' },
+    { from: 'Eng weekly digest', time: '6:30a', subj: 'This week in Platform: 3 ships, 1 incident', prev: 'Summary of merged PRs and the Tuesday outage post-mortem...', cat: 'Read', note: 'Useful context, nothing owed. Skim it, move on.' },
+    { from: 'LinkedIn', time: '5:12a', subj: 'You appeared in 14 searches this week', prev: 'See who\'s viewing your profile. Upgrade to Premium...', cat: 'Skip', note: 'Automated notification. Archive without opening.' },
+    { from: 'Marcus (client)', time: '8:20a', subj: 'Contract redline — can we talk today?', prev: 'A couple of clauses we need to revise before signing Friday.', cat: 'Action', note: 'A deadline plus a decision you must drive. Action, top of the pile.' }
+  ];
+  var CATS = ['Action', 'Reply', 'Read', 'Skip'];
+  var mailList = document.getElementById('mailList');
+  var triCount = document.getElementById('triCount');
+  var triBar = document.getElementById('triBar');
+  var triDone = document.getElementById('triDone');
+  var sorted = 0;
+
+  MAILS.forEach(function (m, idx) {
+    var card = document.createElement('div');
+    card.className = 'mail';
+    var tagsHtml = CATS.map(function (c) {
+      return '<button class="tag" data-cat="' + c + '">' + c + '</button>';
+    }).join('');
+    card.innerHTML =
+      '<div class="mail-top"><span>' + m.from + '</span><span>' + m.time + '</span></div>' +
+      '<div class="mail-subj">' + m.subj + '</div>' +
+      '<div class="mail-prev">' + m.prev + '</div>' +
+      '<div class="tags">' + tagsHtml + '</div>' +
+      '<div class="mail-fb"></div>';
+    mailList.appendChild(card);
+
+    var done = false;
+    var tags = card.querySelectorAll('.tag');
+    var fb = card.querySelector('.mail-fb');
+    tags.forEach(function (t) {
+      t.addEventListener('click', function () {
+        if (done) return;
+        done = true;
+        var ok = t.dataset.cat === m.cat;
+        tags.forEach(function (x) {
+          x.disabled = true;
+          if (x.dataset.cat === m.cat && !ok) x.classList.add('reveal-right');
+        });
+        t.classList.add(ok ? 'picked-right' : 'picked-wrong');
+        fb.innerHTML = (ok ? '' : '<b>' + m.cat + '.</b> ') + m.note;
+        fb.classList.add('show');
+        card.classList.add('done');
+        sorted++;
+        triCount.textContent = sorted + ' / ' + MAILS.length + ' sorted';
+        triBar.style.width = (sorted / MAILS.length * 100) + '%';
+        if (sorted === MAILS.length) {
+          triDone.classList.add('show');
+          document.getElementById('next2').disabled = false;
+        }
+      });
+    });
+  });
+
+  // ── STEP 4 gym ──
+  var G = [
+    {
+      prm: 'Cowork drafted a reply to a customer about a contract change. What should it do next?',
+      opts: ['Send it automatically — it\'s a good draft', 'Show you the draft to review, then you send', 'Send it and CC your manager so it\'s logged'],
+      correct: 1,
+      why: 'External + contractual is exactly the case where you draft and send yourself. The few seconds saved aren\'t worth a wrong word going out under your name.'
+    },
+    {
+      prm: 'You ask Cowork to clear 12 newsletter notifications out of your inbox.',
+      opts: ['Let it archive the Skip-category items after you confirm', 'It can\'t touch your inbox at all', 'It should reply "unsubscribe" to each sender'],
+      correct: 0,
+      why: 'Archiving clearly-Skip items after a confirm is low-risk housekeeping — very different from sending mail as you. Confirm the batch, let it file them.'
+    },
+    {
+      prm: 'Cowork proposes three meeting times and drafts the scheduling email to two colleagues.',
+      opts: ['Let it send the invite — it\'s just scheduling', 'Review the times and the wording, then you send', 'Auto-book all three slots to be safe'],
+      correct: 1,
+      why: 'Same rule: drafting the times and the note is the win; you do the actual send. And Cowork can only see calendars it\'s connected to — for external folks the back-and-forth still happens.'
+    },
+    {
+      prm: 'Cowork\'s triage tagged a vendor invoice as [Skip]. You glance and it actually needs paying.',
+      opts: ['Trust the tag — Cowork is rarely wrong', 'Re-tag it yourself; triage is a draft, not a verdict', 'Delete the email so it stops nagging you'],
+      correct: 1,
+      why: 'Triage gets you 90% sorted, not 100% right. The 15-minute skim exists precisely so you catch the mis-tag before it costs you.'
+    }
+  ];
+  var gi = 0, gScore = 0, gymAnswered = false;
+  var gymCount = document.getElementById('gymCount');
+  var gymPrompt = document.getElementById('gymPrompt');
+  var gymOpts = document.getElementById('gymOpts');
+  var gymFb = document.getElementById('gymFb');
+  var gymNext = document.getElementById('gymNext');
+  var gymNextBtn = document.getElementById('gymNextBtn');
+
+  function renderGym() {
+    var q = G[gi];
+    gymAnswered = false;
+    gymCount.textContent = 'Question ' + (gi + 1) + ' of ' + G.length;
+    gymPrompt.textContent = q.prm;
+    gymOpts.innerHTML = '';
+    gymFb.className = 'gym-fb'; gymFb.textContent = '';
+    gymNext.classList.remove('show');
+    q.opts.forEach(function (txt, i) {
+      var b = document.createElement('button');
+      b.className = 'opt'; b.textContent = txt;
+      b.addEventListener('click', function () {
+        if (gymAnswered) return;
+        gymAnswered = true;
+        var ok = i === q.correct;
+        if (ok) gScore++;
+        Array.prototype.forEach.call(gymOpts.children, function (c, ci) {
+          c.disabled = true;
+          if (ci === q.correct) { c.classList.add('correct'); c.innerHTML += '<span class="tick">✓</span>'; }
+        });
+        if (!ok) { b.classList.add('wrong'); b.innerHTML += '<span class="tick">✕</span>'; }
+        gymFb.classList.add('show', ok ? 'ok' : 'no');
+        gymFb.innerHTML = (ok ? '<strong>Right.</strong> ' : '<strong>Not quite.</strong> ') + q.why;
+        gymNext.classList.add('show');
+      });
+      gymOpts.appendChild(b);
+    });
+  }
+  gymNextBtn.addEventListener('click', function () {
+    gi++;
+    if (gi < G.length) {
+      renderGym();
+    } else {
+      document.getElementById('gym').innerHTML =
+        '<div class="gym-score">You called ' + gScore + ' / ' + G.length +
+        ' right.<br><span style="font-weight:400;font-size:14px;color:var(--text-dim)">' +
+        (gScore === G.length ? 'You\'ve got the line: draft freely, send yourself, trust triage but verify.' : 'The pattern: Cowork drafts and proposes; you do the sending.') +
+        '</span></div>';
+      document.getElementById('next4').disabled = false;
+    }
+  });
+  renderGym();
+})();
+</script>
 
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Cowork for email + calendar \u2014 Outlook, M365, scheduling\nTRACK: Claude Mastery\n\nLESSON CONTENT SUMMARY:\nCowork for email + calendar \u2014 Outlook, M365, scheduling \u2014 LearningGPT L LearningGPT \u2190 Claude Mastery Cowork \u00b7 Lesson 04 Pro+ ~14 min read MCP + Outlook + calendar Email + calendar: the 15-minute morning ritual. Email is where most knowledge workers lose 1-2 hours a day. With Cowork connected to Outlook (or Microsoft 365), the morning triage that used to take 90 minutes becomes a structured 15-minute review of what actually needs your attention. This lesson covers the MCP connector setup, search patterns, draft workflows, and the calendar integration that makes scheduling almost frictionless. Workflow 01 Connect Outlook to Cowork 1 Set up the Microsoft 365 MCP connector Cowork talks to Outlook through Model Context Protocol (MCP) \u2014 a standard for AI tools to connect to services. Setting up the M365 connector is a one-time step. Once it's wired in, Cowork can search your email, read messages you point it at, and (with permission) draft replies. The prompt that works Connector setup Setup sequence: 1. In Cowork, go to Connectors/Plugins 2. Search for &#x27;Microsoft 365&#x27; (or &#x27;Outlook&#x27;) 3. Click Connect \u2014 it opens a Microsoft sign-in page 4. Sign in with your work or personal Microsoft account 5. Approve the requested permissions (read mail, read calendar; send/draft are separate prompts) 6. Return to Cowork \u2014 you should see &#x27;M365 connected&#x27; in the connector list 7. Test: ask &#x27;how many unread emails do I have&#x27; Note: requires MFA enabled on your Microsoft account. Best use cases First-time setup on a new machine Switching Microsoft accounts Refreshing after a token expiration Verifying connector after a security policy change If the connector won't authenticate, you likely need to enable MFA on your Microsoft account first. Go to aka.ms/mfasetup, complete the enrollment, then retry. Time savings: Setup: 10 min one-time. Then every email session is faster. Workflow 02 Morning triage 2 The 15-minute structured email review Instead of opening Outlook and getting sucked into reactive mode, ask Cowork to triage your inbox for you. The prompt below produces a structured morning summary with the only emails you actually need to read. The prompt that works Morning triage Look at every email in my inbox from the last 24 hours. For each one, classify it as: \u2022 [Action] \u2014 requires me to do something \u2022 [Reply] \u2014 requires a response, no action otherwise \u2022 [Read] \u2014 informational, no response needed \u2022 [Skip] \u2014 newsletters, automated notifications, can be archived Produce a table with the columns: Time, From, Subject, Category, One-line summary. Sort by Category (Action first, Skip last). At the bottom, give me a 3-bullet summary of the day&#x27;s themes. Don&#x27;t archive or reply to anything yet \u2014 just give me the report. Best use cases Daily 15-minute morning review Catching up after vacation or a long meeting Weekly inbox-zero ritual Pre-meeting context check (any urgent messages?) Cowork's classification isn't perfect \u2014 it'll o\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Cowork for email + calendar — Outlook, M365, scheduling\nTRACK: Claude Mastery (Cowork, Lesson 04)\n\nLESSON CONTENT SUMMARY:\nCowork connects to Outlook and your calendar through MCP (Model Context Protocol — the standard that lets AI tools talk to services). The M365 connector is a one-time setup: in Cowork open Connectors/Plugins, search Microsoft 365, click Connect, sign in, approve read permissions. It requires MFA enabled on your Microsoft account (aka.ms/mfasetup if it won't authenticate).\n\nThe core habit is morning triage instead of reactive inbox opening. Ask Cowork to classify every email from the last 24 hours into four buckets — Action (you must do something), Reply (needs a response, no task), Read (informational), Skip (newsletters/automated, archive) — and produce a table sorted by category. The point isn't perfect classification (it occasionally mis-tags one); it's getting all ~47 emails sorted in seconds so your attention goes to the 8 that matter. The 15-minute skim is also where you catch any mis-tag.\n\nVoice-matched drafting: feed Cowork 2-3 of your past emails as tone samples plus your one-sentence intent, and ask for three variations (concise, friendly, direct). Rules that kill the 'sounds like AI' tells: match your usual length, no 'I hope this finds you well', no bullet lists unless you use them, end the way you normally end emails.\n\nThe one safety line: Cowork should DRAFT and PROPOSE; you review and SEND — especially for external or contractual email. Low-risk housekeeping like archiving clearly-Skip items after you confirm is fine. Scheduling: Cowork reads your calendar, proposes specific time slots, and drafts the invite, but you send it; it can only see calendars it's connected to, so external scheduling still needs the back-and-forth or a Calendly link.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more\n- Be practical — give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only — no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -282,27 +571,21 @@ Look at my calendar. Propose 3 specific time slots next week that work for me. T
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -311,7 +594,6 @@ Look at my calendar. Propose 3 specific time slots next week that work for me. T
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -320,7 +602,6 @@ Look at my calendar. Propose 3 specific time slots next week that work for me. T
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

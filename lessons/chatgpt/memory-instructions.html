@@ -4,16 +4,16 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Memory & custom instructions: teach ChatGPT to know you — LearningGPT</title>
-<meta name="description" content="ChatGPT has two systems for remembering things about you: Custom Instructions (you write them) and Memory (it learns automatically). Used well, they m" />
+<meta name="description" content="ChatGPT has two systems for remembering you: Custom Instructions (you write them) and Memory (it learns automatically). What belongs where, the anti-patterns, and how to prune Memory when it goes wrong." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#10a37f" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/chatgpt/memory-instructions" />
 <meta property="og:title" content="Memory & custom instructions: teach ChatGPT to know you" />
-<meta property="og:description" content="ChatGPT has two systems for remembering things about you: Custom Instructions (you write them) and Memory (it learns automatically). Used well, they m" />
+<meta property="og:description" content="Custom Instructions vs Memory — what belongs where, the anti-patterns, and how to prune Memory when it goes wrong." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -34,85 +34,110 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
 .lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(16,163,127,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(16,163,127,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
 .lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
-.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
 .lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #10a37f 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .grad { background: linear-gradient(135deg, #10a37f 0%, #44e0a4 50%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 24px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.sec { margin: 46px 0 0; }
+.sec-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.lesson h2 { font-size: 27px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; }
 .lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
 .lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(16,163,127,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(16,163,127,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #10a37f, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(16,163,127,0.1); border: 1px solid rgba(16,163,127,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; }
+
+/* ── COMPARE PANELS ── */
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 22px 0; }
+@media (max-width: 640px) { .compare { grid-template-columns: 1fr; } }
+.panel { border-radius: var(--radius-lg); padding: 20px 22px; border: 1px solid var(--line); background: linear-gradient(180deg, var(--surface), var(--bg-soft)); }
+.panel.contract { border-color: rgba(16,163,127,0.35); }
+.panel.log { border-color: rgba(124,92,255,0.35); }
+.panel .pt { display: flex; align-items: center; gap: 9px; font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.panel .pt .ic { width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center; font-size: 14px; }
+.panel.contract .pt .ic { background: rgba(16,163,127,0.16); }
+.panel.log .pt .ic { background: rgba(124,92,255,0.16); }
+.panel .sub { font-size: 12px; color: var(--text-mute); margin-bottom: 12px; }
+.panel p { font-size: 14px; margin: 0 0 8px; color: var(--text-dim); }
+.panel .tagline { font-size: 13px; font-weight: 600; color: var(--text); margin-top: 10px; }
+.panel.contract .tagline { color: #b8f0e0; }
+.panel.log .tagline { color: #cdbcff; }
+
+/* ── MEMORY CONSOLE ── */
+.console { margin: 22px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden; background: #0d0d20; }
+.console-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 13px 16px; background: rgba(124,92,255,0.07); border-bottom: 1px solid var(--line); }
+.console-title { font-size: 13px; font-weight: 600; color: var(--text-dim); display: flex; align-items: center; gap: 8px; }
+.console-title .ic { width: 18px; height: 18px; border-radius: 5px; background: linear-gradient(135deg,#7c5cff,#5b8def); display: grid; place-items: center; font-size: 11px; }
+.console-score { font-size: 11.5px; font-weight: 700; color: var(--track); font-variant-numeric: tabular-nums; }
+.mem { padding: 14px 16px; border-bottom: 1px solid var(--line); transition: opacity .3s; }
+.mem:last-of-type { border-bottom: none; }
+.mem.done { opacity: 0.62; }
+.mem-line { font-size: 14.5px; margin-bottom: 10px; display: flex; gap: 9px; align-items: flex-start; }
+.mem-line .q { color: var(--text-mute); flex-shrink: 0; }
+.mem-acts { display: flex; gap: 8px; }
+.mact { font-size: 12.5px; font-weight: 700; font-family: inherit; padding: 6px 16px; border-radius: 8px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); color: var(--text-dim); cursor: pointer; transition: all .15s; }
+.mact:hover:not(:disabled) { color: var(--text); }
+.mact[data-a="keep"]:hover:not(:disabled) { border-color: var(--accent); }
+.mact[data-a="delete"]:hover:not(:disabled) { border-color: var(--danger); }
+.mact:disabled { cursor: default; }
+.mact.right { background: rgba(68,224,164,0.16); border-color: var(--accent); color: #b6f4dc; }
+.mact.wrong { background: rgba(255,107,138,0.12); border-color: var(--danger); color: #ffb0c1; }
+.mem-fb { margin-top: 10px; font-size: 13px; color: var(--text-dim); display: none; }
+.mem-fb.show { display: block; }
+.mem-fb b { color: var(--track); }
+.console-done { padding: 16px; font-size: 14px; background: rgba(16,163,127,0.08); border-top: 1px solid var(--line); display: none; }
+.console-done.show { display: block; animation: fadeIn .4s ease; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(6px);} to{opacity:1;transform:none;} }
+
+/* ── PLACEMENT SORTER ── */
+.place { margin: 18px 0; }
+.prow { padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); margin-bottom: 10px; }
+.prow-scn { font-size: 14.5px; margin-bottom: 10px; }
+.prow-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.pbtn { font-size: 12px; font-weight: 600; font-family: inherit; padding: 7px 13px; border-radius: 8px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); color: var(--text-dim); cursor: pointer; transition: all .15s; }
+.pbtn:hover:not(:disabled) { border-color: var(--track); color: var(--text); }
+.pbtn:disabled { cursor: default; }
+.pbtn.right { background: rgba(68,224,164,0.16); border-color: var(--accent); color: #b6f4dc; }
+.pbtn.wrong { background: rgba(255,107,138,0.12); border-color: var(--danger); color: #ffb0c1; }
+.prow-fb { margin-top: 10px; font-size: 13px; color: var(--text-dim); display: none; }
+.prow-fb.show { display: block; }
+.prow-fb b { color: var(--track); }
+
+/* ── TEMPLATE / CALLOUT ── */
+.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
 .prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(16,163,127,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(16,163,127,0.25); border-radius: var(--radius-lg); padding: 36px; }
+.callout { margin: 22px 0; padding: 20px 24px; background: linear-gradient(135deg, rgba(255,181,71,0.08), rgba(124,92,255,0.05)); border: 1px solid rgba(255,181,71,0.22); border-radius: var(--radius-lg); }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--warn); margin-bottom: 8px; }
+.callout p { margin: 0 0 8px; font-size: 15px; }
+.callout ul { margin: 8px 0 0; padding-left: 20px; font-size: 14.5px; color: var(--text-dim); }
+.callout li { margin-bottom: 5px; }
+
+.challenge { margin: 46px 0 30px; background: linear-gradient(135deg, rgba(16,163,127,0.14), rgba(124,92,255,0.1)); border: 1px solid rgba(16,163,127,0.3); border-radius: var(--radius-lg); padding: 32px; }
 .challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #10a37f, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
 .challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #10a37f, #7c5cff); color: white; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: inherit; box-shadow: 0 6px 24px rgba(16,163,127,0.28); transition: transform .15s; text-decoration: none; }
+.btn:hover { transform: translateY(-1px); color: white; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.checklist { margin: 30px 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
 .checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
 .checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
 .checklist li:first-child { border-top: none; padding-top: 0; }
 .checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up { margin: 40px 0 0; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
 .next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
 .next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
-.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
-footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; margin-top: 40px; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -141,7 +166,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -153,57 +177,123 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <a href="/lessons/chatgpt/" class="nav-back">← ChatGPT Mastery</a>
   </div>
 </nav>
+
 <article class="lesson">
   <div class="container">
     <div class="lesson-meta">
       <span class="chip">Lesson 05 · ChatGPT Mastery</span>
       <span class="chip chip-pro">Pro</span>
-      <span>~10 min read</span>
+      <span>~10 min</span>
       <span class="dot"></span>
       <span>Instructions + Memory + pruning</span>
     </div>
-    <h1>Memory & instructions: <span class="grad serif">teach ChatGPT to know you.</span></h1>
-    <p class="deck">ChatGPT has two systems for remembering things about you: Custom Instructions (you write them) and Memory (it learns automatically). Used well, they make ChatGPT feel like it knows you. Used badly, they make it worse. This lesson covers what belongs where, the anti-patterns to avoid, and how to prune Memory when it goes wrong.</p>
-    <h2><span class="num">The mental model</span></h2><h3>Custom Instructions are the contract. Memory is the observation log.</h3><p>Custom Instructions are what you tell ChatGPT explicitly about you and your preferences. Memory is what ChatGPT learns from your conversations and stores automatically. Both shape future responses — but they work differently and need different management.</p><h2><span class="num">Workflow 01</span> Write Custom Instructions that actually work</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>The 4-section template</h3></div><p>Custom Instructions live in Settings → Personalization. They have two boxes: 'What would you like ChatGPT to know about you' and 'How would you like ChatGPT to respond.' Fill both.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Template</span>BOX 1 (about you):
-Role: [your job]. Industry: [your field]. Main use: [what you do with ChatGPT].
+    <h1>Memory &amp; instructions: <span class="grad serif">teach ChatGPT to know you.</span></h1>
+    <p class="deck">ChatGPT has two ways of remembering you: <strong>Custom Instructions</strong>, which you write, and <strong>Memory</strong>, which it learns on its own. Used well, they make it feel like it knows you. Used badly, they quietly make every answer worse. Here's what belongs where — and how to clean up Memory when it drifts.</p>
 
-BOX 2 (how to respond):
-- Concise unless I ask for depth
-- Conversational, not stiff
-- No 'as an AI' disclaimers
-- When uncertain, say so
-- Never invent statistics
-- Use contractions</div><h4>Best use cases</h4><ul><li>Anyone using ChatGPT weekly+</li><li>Power users with consistent style preferences</li><li>Professional users where consistency matters</li></ul><div class="gotcha">Don't put confidential info (real customer names, financial details, secrets) in Custom Instructions — they're stored.</div><div class="savings"><strong>Time savings:</strong> Every conversation starts pre-tuned to your voice.</div></div><h2><span class="num">Workflow 02</span> Add to Memory deliberately</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>Tell ChatGPT to remember things explicitly</h3></div><p>ChatGPT learns some things automatically (your name, work style). You can also tell it explicitly: 'Remember that...'</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Adding-to-memory prompts</span>Remember that I'm a sales rep selling to mid-market healthcare companies.
-
-Remember that I prefer code examples in TypeScript, not JavaScript.
-
-Remember that I write a weekly newsletter, so when I brainstorm topics, they should be 800-1200 word essays.</div><h4>Best use cases</h4><ul><li>Recurring context you'd otherwise re-explain</li><li>Specific preferences (tools, formats, conventions)</li><li>Long-term goals that should shape recommendations</li></ul><div class="gotcha">Memory has a soft limit — when it fills up, old items get forgotten. Don't rely on it for critical context. Use Custom Instructions for that.</div><div class="savings"><strong>Time savings:</strong> Re-explaining recurring context: gone.</div></div><h2><span class="num">Workflow 03</span> Prune memory when it goes wrong</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>Check, edit, delete what's stored</h3></div><p>Sometimes ChatGPT remembers things you didn't intend, or its summaries of you are wrong. Audit periodically.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Pruning pattern</span>Settings → Personalization → Memory → review all entries → delete anything wrong, outdated, or you don't want stored. Do this monthly.</div><h4>Best use cases</h4><ul><li>When ChatGPT's responses feel off-target</li><li>After a major life or job change</li><li>If you notice it making assumptions about you that aren't true</li><li>Privacy hygiene (regularly check what's stored)</li></ul><div class="gotcha">Don't delete useful Memory items just because they feel personal — that's the point of Memory. Delete what's WRONG or OUTDATED, not just what's personal.</div><div class="savings"><strong>Time savings:</strong> Stale-Memory problems: prevented.</div></div><h2><span class="num">Workflow 04</span> When Memory should be OFF</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">4</div><h3>The cases where you don't want it on</h3></div><p>Memory is on by default. There are real cases where you should turn it off.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">When to disable</span>1. Sharing your account (family, team) — memories get tangled.
-2. Highly sensitive sessions (anything PHI, confidential financial, NDA-covered).
-3. Testing prompts where you want a clean baseline.
-4. If you find yourself spending more time pruning than benefiting.</div><h4>Best use cases</h4><ul><li>Shared accounts</li><li>Sensitive work sessions</li><li>Prompt engineering tests</li><li>Anyone with privacy concerns</li></ul><div class="gotcha">Memory off doesn't disable Custom Instructions. Those still apply. Memory only refers to the auto-learned items.</div><div class="savings"><strong>Time savings:</strong> Privacy and clarity when it matters.</div></div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Final challenge: audit and write tonight</h2>
-      <p>Two tasks, 15 min total. (1) Open Settings → Personalization → Memory. Read everything stored about you. Delete what's wrong, redundant, or shouldn't be there. (2) Rewrite your Custom Instructions using the 4-section template above. Save. Test the difference on your next 3 prompts.</p>
-      <div class="btn-row">
-        <a href="/lessons/chatgpt/" class="btn">Back to ChatGPT Mastery →</a>
-        <a href="/#pricing" class="btn ghost">See pricing →</a>
+    <!-- mental model: compare -->
+    <div class="sec">
+      <span class="sec-eyebrow">The mental model</span>
+      <h2>One is a contract. One is an observation log.</h2>
+      <p>They both shape future responses, but they work differently and need different upkeep.</p>
+      <div class="compare">
+        <div class="panel contract">
+          <div class="pt"><span class="ic">📝</span> Custom Instructions</div>
+          <div class="sub">You write them · permanent</div>
+          <p>What you explicitly tell ChatGPT about you and how to respond. Lives in Settings → Personalization, in two boxes.</p>
+          <div class="tagline">The contract — always applied, never forgotten.</div>
+        </div>
+        <div class="panel log">
+          <div class="pt"><span class="ic">🧠</span> Memory</div>
+          <div class="sub">It learns automatically · has a soft limit</div>
+          <p>What ChatGPT picks up from your chats and stores on its own. Helpful, but it can save things that are wrong, stale, or that you never meant it to keep.</p>
+          <div class="tagline">The observation log — useful, but needs auditing.</div>
+        </div>
       </div>
     </div>
+
+    <!-- SIGNATURE: memory audit console -->
+    <div class="sec">
+      <span class="sec-eyebrow">Do it · run the audit</span>
+      <h2>Clean up what ChatGPT saved about you.</h2>
+      <p>Here's your Memory panel. For context: you write in <strong>TypeScript</strong> these days, you run a weekly newsletter, and you often <em>do</em> want depth — not just quick answers. Review each item and decide: <strong>Keep</strong> the accurate, useful ones; <strong>Delete</strong> what's wrong, outdated, or sensitive.</p>
+
+      <div class="console">
+        <div class="console-bar">
+          <div class="console-title"><span class="ic">🧠</span> Saved memories</div>
+          <div class="console-score" id="memScore">0 / 6 reviewed</div>
+        </div>
+        <div id="memList"></div>
+        <div class="console-done" id="consoleDone">
+          <strong>That's the audit.</strong> Notice the rule: you didn't delete things just for being personal — you kept the accurate, useful ones and removed what was <em>wrong, outdated, or sensitive</em>. Do this monthly and Memory stays an asset instead of quietly steering you wrong.
+        </div>
+      </div>
+    </div>
+
+    <!-- placement sorter -->
+    <div class="sec">
+      <span class="sec-eyebrow">Quick check · what goes where</span>
+      <h2>Instructions, Memory, or neither?</h2>
+      <p>Three pieces of context. Put each in the right home.</p>
+      <div class="place" id="place"></div>
+    </div>
+
+    <!-- CI template -->
+    <div class="sec">
+      <span class="sec-eyebrow">Reference · the two boxes</span>
+      <h2>Write Custom Instructions that work.</h2>
+      <p>Settings → Personalization gives you two boxes — "what to know about you" and "how to respond." Fill both with process and style, never secrets.</p>
+      <div class="prompt-example"><span class="label">Template</span>BOX 1 — about you:
+Role: [your job] · Industry: [your field] · Main use: [what you do with ChatGPT]
+
+BOX 2 — how to respond:
+· Concise unless I ask for depth
+· Conversational, not stiff · use contractions
+· No "as an AI" disclaimers
+· When uncertain, say so · never invent statistics</div>
+      <div class="callout">
+        <span class="lbl">Turn Memory off when…</span>
+        <p>Memory is on by default. Switch it off for:</p>
+        <ul>
+          <li><strong>Shared accounts</strong> (family/team) — memories get tangled.</li>
+          <li><strong>Sensitive sessions</strong> — PHI, confidential financials, NDA-covered work.</li>
+          <li><strong>Prompt tests</strong> where you want a clean baseline.</li>
+        </ul>
+        <p style="margin-top:10px;">Turning Memory off doesn't disable Custom Instructions — the contract still applies.</p>
+      </div>
+    </div>
+
+    <div class="challenge">
+      <h2 style="margin-top:0;">Audit and rewrite tonight</h2>
+      <p>Two tasks, 15 minutes. (1) Open Settings → Personalization → Memory and read everything stored about you — delete what's wrong, redundant, or shouldn't be there. (2) Rewrite your Custom Instructions with the two-box template above. Save, then test the difference on your next three prompts.</p>
+      <div class="btn-row">
+        <a href="/playground" class="btn">Try a prompt in the playground →</a>
+        <a href="/lessons/chatgpt/" class="btn ghost">Back to ChatGPT Mastery</a>
+      </div>
+    </div>
+
     <div class="checklist">
       <h3>What you can do now</h3>
-      <ul><li>Write Custom Instructions using the structured 2-box template</li><li>Add to Memory deliberately with 'Remember that...' prompts</li><li>Audit and prune Memory monthly to keep it accurate</li><li>Know when to turn Memory off (shared accounts, sensitive work)</li><li>Recognize when ChatGPT's responses feel off — and fix it via these systems</li></ul>
+      <ul>
+        <li>Tell Custom Instructions (the contract) from Memory (the observation log)</li>
+        <li>Write Custom Instructions with the two-box template</li>
+        <li>Add to Memory deliberately with "Remember that…" — but keep critical context in Instructions</li>
+        <li>Audit Memory monthly: delete what's wrong, outdated, or sensitive; keep accurate-useful</li>
+        <li>Know when to turn Memory off entirely</li>
+      </ul>
     </div>
+
     <div class="next-up">
-      <span class="pro-tag">Pro+</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in ChatGPT Mastery</div>
+      <span class="pro-plus-tag">Pro+</span>
+      <div class="lbl" style="margin-top:14px;">Up next in ChatGPT Mastery</div>
       <h3>Lesson 6 · GPT-5 agents: workflows that run themselves</h3>
-      <p>Setting up agents to handle multi-step tasks. The use cases worth automating, the oversight patterns that prevent disasters, the cost-control playbook. <a href="/#pricing">See pricing →</a></p>
+      <p>Setting up agents to handle multi-step tasks — the use cases worth automating, the oversight patterns that prevent disasters, and the cost-control playbook. <a href="/lessons/chatgpt/gpt5-agents">Start lesson 6 →</a></p>
     </div>
   </div>
 </article>
+
 <footer>
   <div class="footer-inner">
-    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with OpenAI.</div>
+    <div>© 2026 LearningGPT · Independent. Not affiliated with OpenAI.</div>
     <a href="/lessons/chatgpt/" style="color: var(--text-dim);">← All ChatGPT lessons</a>
   </div>
 </footer>
@@ -213,7 +303,6 @@ Remember that I write a weekly newsletter, so when I brainstorm topics, they sho
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -228,7 +317,7 @@ Remember that I write a weekly newsletter, so when I brainstorm topics, they sho
     <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -236,15 +325,108 @@ Remember that I write a weekly newsletter, so when I brainstorm topics, they sho
   </div>
 </div>
 
+<script id="lessonScript">
+(function () {
+  // ── MEMORY AUDIT CONSOLE ──
+  var MEMS = [
+    { line: "You sell to mid-market healthcare companies.", correct: 'keep',
+      why: "Keep — accurate, recurring context that saves you re-explaining. Personal, but exactly what Memory is for." },
+    { line: "You prefer JavaScript code examples.", correct: 'delete',
+      why: "Delete — outdated. You moved to TypeScript, and a stale preference quietly steers every code answer the wrong way." },
+    { line: "The Henderson contract is $240k and they're unhappy about onboarding.", correct: 'delete',
+      why: "Delete — a sensitive deal detail shouldn't live in saved Memory. That belongs in the conversation, not your settings." },
+    { line: "Your name is Dan.", correct: 'keep',
+      why: "Keep — accurate and harmless; it just helps personalize. Don't delete useful items only because they feel personal." },
+    { line: "You don't like detailed explanations.", correct: 'delete',
+      why: "Delete — a wrong inference from one terse chat. Left in, it makes every answer too thin when you actually want depth." },
+    { line: "You run a weekly newsletter; brainstorm topics as 800–1200 word essays.", correct: 'keep',
+      why: "Keep — specific, accurate, and genuinely useful. This is Memory doing its job." }
+  ];
+  var memList = document.getElementById('memList');
+  var memScore = document.getElementById('memScore');
+  var consoleDone = document.getElementById('consoleDone');
+  var reviewed = 0, memRight = 0;
+
+  MEMS.forEach(function (m) {
+    var row = document.createElement('div');
+    row.className = 'mem';
+    row.innerHTML =
+      '<div class="mem-line"><span class="q">🧠</span><span>"' + m.line + '"</span></div>' +
+      '<div class="mem-acts">' +
+        '<button class="mact" data-a="keep">✓ Keep</button>' +
+        '<button class="mact" data-a="delete">✕ Delete</button>' +
+      '</div>' +
+      '<div class="mem-fb"></div>';
+    memList.appendChild(row);
+    var fb = row.querySelector('.mem-fb');
+    var acts = row.querySelectorAll('.mact');
+    var done = false;
+    acts.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (done) return;
+        done = true;
+        var ok = btn.dataset.a === m.correct;
+        if (ok) memRight++;
+        acts.forEach(function (x) {
+          x.disabled = true;
+          if (x.dataset.a === m.correct) x.classList.add('right');
+        });
+        if (!ok) btn.classList.add('wrong');
+        fb.innerHTML = (ok ? '' : '<b>' + (m.correct === 'keep' ? 'Keep it.' : 'Delete it.') + '</b> ') + m.why;
+        fb.classList.add('show');
+        row.classList.add('done');
+        reviewed++;
+        memScore.textContent = reviewed + ' / ' + MEMS.length + ' reviewed';
+        if (reviewed === MEMS.length) consoleDone.classList.add('show');
+      });
+    });
+  });
+
+  // ── PLACEMENT SORTER ──
+  var HOMES = ['Custom Instructions', 'Memory', "Don't store"];
+  var ITEMS = [
+    { scn: 'A must-always-apply rule: be concise, use contractions, no disclaimers.', correct: 'Custom Instructions',
+      why: "Critical rules go in Custom Instructions — Memory has a soft limit and can forget. The contract is permanent." },
+    { scn: "A handy recurring fact you'd otherwise retype every chat.", correct: 'Memory',
+      why: "Recurring context is exactly Memory's job — say it once and it's applied going forward." },
+    { scn: "This quarter's confidential deal numbers.", correct: "Don't store",
+      why: "Keep sensitive specifics in the live conversation — never in saved Instructions or Memory." }
+  ];
+  var place = document.getElementById('place');
+  ITEMS.forEach(function (it) {
+    var row = document.createElement('div');
+    row.className = 'prow';
+    var btns = HOMES.map(function (h) { return '<button class="pbtn" data-h="' + h + '">' + h + '</button>'; }).join('');
+    row.innerHTML = '<div class="prow-scn">' + it.scn + '</div><div class="prow-btns">' + btns + '</div><div class="prow-fb"></div>';
+    place.appendChild(row);
+    var fb = row.querySelector('.prow-fb');
+    var pbtns = row.querySelectorAll('.pbtn');
+    var done = false;
+    pbtns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (done) return;
+        done = true;
+        var ok = b.dataset.h === it.correct;
+        pbtns.forEach(function (x) {
+          x.disabled = true;
+          if (x.dataset.h === it.correct) x.classList.add('right');
+        });
+        if (!ok) b.classList.add('wrong');
+        fb.innerHTML = (ok ? '' : '<b>' + it.correct + '.</b> ') + it.why;
+        fb.classList.add('show');
+      });
+    });
+  });
+})();
+</script>
 
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Memory & custom instructions: teach ChatGPT to know you\nTRACK: Chatgpt Mastery\n\nLESSON CONTENT SUMMARY:\nMemory & custom instructions: teach ChatGPT to know you \u2014 LearningGPT L LearningGPT \u2190 ChatGPT Mastery Lesson 05 \u00b7 ChatGPT Mastery Pro ~10 min read Instructions + Memory + pruning Memory & instructions: teach ChatGPT to know you. ChatGPT has two systems for remembering things about you: Custom Instructions (you write them) and Memory (it learns automatically). Used well, they make ChatGPT feel like it knows you. Used badly, they make it worse. This lesson covers what belongs where, the anti-patterns to avoid, and how to prune Memory when it goes wrong. The mental model Custom Instructions are the contract. Memory is the observation log. Custom Instructions are what you tell ChatGPT explicitly about you and your preferences. Memory is what ChatGPT learns from your conversations and stores automatically. Both shape future responses \u2014 but they work differently and need different management. Workflow 01 Write Custom Instructions that actually work 1 The 4-section template Custom Instructions live in Settings \u2192 Personalization. They have two boxes: 'What would you like ChatGPT to know about you' and 'How would you like ChatGPT to respond.' Fill both. The prompt that works Template BOX 1 (about you): Role: [your job]. Industry: [your field]. Main use: [what you do with ChatGPT]. BOX 2 (how to respond): - Concise unless I ask for depth - Conversational, not stiff - No 'as an AI' disclaimers - When uncertain, say so - Never invent statistics - Use contractions Best use cases Anyone using ChatGPT weekly+ Power users with consistent style preferences Professional users where consistency matters Don't put confidential info (real customer names, financial details, secrets) in Custom Instructions \u2014 they're stored. Time savings: Every conversation starts pre-tuned to your voice. Workflow 02 Add to Memory deliberately 2 Tell ChatGPT to remember things explicitly ChatGPT learns some things automatically (your name, work style). You can also tell it explicitly: 'Remember that...' The prompt that works Adding-to-memory prompts Remember that I'm a sales rep selling to mid-market healthcare companies. Remember that I prefer code examples in TypeScript, not JavaScript. Remember that I write a weekly newsletter, so when I brainstorm topics, they should be 800-1200 word essays. Best use cases Recurring context you'd otherwise re-explain Specific preferences (tools, formats, conventions) Long-term goals that should shape recommendations Memory has a soft limit \u2014 when it fills up, old items get forgotten. Don't rely on it for critical context. Use Custom Instructions for that. Time savings: Re-explaining recurring context: gone. Workflow 03 Prune memory when it goes wrong 3 Check, edit, delete what's stored Sometimes ChatGPT remembers things you didn't intend, or its summaries of you are wrong. Audit periodically. The prompt that works Pruning pattern Settings \u2192 Personalization \u2192 Memory \u2192 review all entries \u2192 delete anything wrong, outdated, or you don't want stored. Do t\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Memory & custom instructions: teach ChatGPT to know you\nTRACK: ChatGPT Mastery (Lesson 5, Pro)\n\nLESSON CONTENT SUMMARY:\nChatGPT has two systems for remembering you. Custom Instructions = the contract: what you explicitly write in Settings > Personalization (two boxes — 'what to know about you' and 'how to respond'); permanent and always applied. Memory = the observation log: what ChatGPT learns from your chats and stores automatically; useful but has a soft limit and can save things that are wrong, stale, or that you never meant it to keep.\n\nWriting Custom Instructions: Box 1 = role, industry, main use; Box 2 = response style (concise unless I ask for depth, conversational, use contractions, no 'as an AI' disclaimers, say so when uncertain, never invent statistics). Keep them about process and style — never put confidential info (real customer names, financials, secrets), because they're stored.\n\nAdding to Memory deliberately: say 'Remember that…' for recurring context (your industry, a format preference, a long-term goal). But keep CRITICAL context in Custom Instructions, because Memory's soft limit means old items get forgotten when it fills up.\n\nPruning Memory (the key skill): audit monthly in Settings > Personalization > Memory. Delete what's WRONG, OUTDATED, or sensitive/unintended — but DON'T delete useful items just because they feel personal; accurate-and-useful is the whole point. Wrong inferences (e.g., 'you don't like detailed explanations' from one terse chat) and stale prefs (e.g., a language you no longer use) quietly degrade answers, so remove them.\n\nWhen to turn Memory OFF: shared accounts (memories tangle), sensitive sessions (PHI, confidential financials, NDA), and clean-baseline prompt testing. Turning Memory off does NOT disable Custom Instructions — those still apply.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more\n- Be practical — give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only — no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -252,27 +434,21 @@ Remember that I write a weekly newsletter, so when I brainstorm topics, they sho
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -281,7 +457,6 @@ Remember that I write a weekly newsletter, so when I brainstorm topics, they sho
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -290,7 +465,6 @@ Remember that I write a weekly newsletter, so when I brainstorm topics, they sho
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

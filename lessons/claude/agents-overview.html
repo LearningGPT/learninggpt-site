@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#d97757" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/claude/agents-overview" />
 <meta property="og:title" content="Claude agents — what you can have Claude do, not just say" />
@@ -30,90 +30,109 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
 .logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
 .nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
-.lesson { padding: 50px 0 100px; }
-.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+
+/* ── INTERACTIVE LESSON SHELL ── */
+.ilesson { padding: 46px 0 100px; }
+.lesson-meta { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
 .lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(217,119,87,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(217,119,87,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
-.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
+.lesson-meta .chip-free { border-color: rgba(68,224,164,0.4); color: var(--accent); background: rgba(68,224,164,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
-.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #d97757 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
-.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
-.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(217,119,87,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(217,119,87,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #d97757, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(217,119,87,0.1); border: 1px solid rgba(217,119,87,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(217,119,87,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(217,119,87,0.25); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #d97757, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
-.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
-.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
-.checklist li:first-child { border-top: none; padding-top: 0; }
-.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.ilesson h1 { font-size: clamp(31px, 4.5vw, 44px); font-weight: 800; line-height: 1.14; letter-spacing: -0.02em; margin: 0 0 18px; }
+.ilesson h1 .grad { background: linear-gradient(135deg, #d97757 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.ilesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.12em; }
+.deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 30px; padding-bottom: 26px; border-bottom: 1px solid var(--line); }
+
+.progwrap { position: sticky; top: 59px; z-index: 50; background: rgba(10,10,26,0.9); backdrop-filter: blur(8px); padding: 14px 0 12px; margin-bottom: 6px; }
+.progbar { height: 6px; background: rgba(255,255,255,0.07); border-radius: 999px; overflow: hidden; }
+.progfill { height: 100%; width: 0%; background: linear-gradient(90deg, #d97757, #7c5cff); border-radius: 999px; transition: width .4s cubic-bezier(.4,0,.2,1); }
+.progmeta { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--text-mute); margin-top: 7px; letter-spacing: 0.3px; }
+
+.step { display: none; animation: stepIn .4s ease; }
+.step.active { display: block; }
+@keyframes stepIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.step-k { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin: 26px 0 6px; }
+.step h2 { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; line-height: 1.25; }
+.step h3 { font-size: 18px; font-weight: 600; margin: 22px 0 9px; }
+.step p { font-size: 16.5px; color: var(--text); margin: 0 0 16px; }
+.step strong { font-weight: 700; } .step em { font-style: italic; }
+
+.card { background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 22px 26px; margin: 20px 0; }
+.card p:last-child { margin-bottom: 0; }
+.callout { margin: 18px 0; padding: 16px 18px; background: linear-gradient(135deg, rgba(217,119,87,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(217,119,87,0.25); border-radius: var(--radius); }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 6px; }
+.callout p { margin: 0; font-size: 14.5px; color: var(--text-dim); }
+
+.acard { background: var(--bg-soft); border: 1px solid var(--line); border-left: 3px solid var(--track); border-radius: 0 var(--radius) var(--radius) 0; padding: 15px 17px; margin-bottom: 12px; }
+.acard .an { font-size: 15.5px; font-weight: 700; color: var(--text); }
+.acard .an .tag { font-size: 11.5px; font-weight: 600; color: var(--track); margin-left: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+.acard .ad { font-size: 13.5px; color: var(--text-dim); margin-top: 4px; line-height: 1.5; }
+.acard .ax { font-size: 12.5px; color: var(--text-mute); margin-top: 7px; font-style: italic; }
+.acard .ax b { color: var(--brand-2); font-style: normal; }
+
+/* choices */
+.choices { display: flex; flex-direction: column; gap: 10px; margin: 16px 0 8px; }
+.choice { text-align: left; background: var(--surface); border: 1px solid var(--line-strong); color: var(--text); border-radius: 12px; padding: 14px 16px; font-size: 15px; font-family: inherit; cursor: pointer; transition: border-color .15s, background .15s, transform .1s; line-height: 1.5; }
+.choice:hover:not(:disabled) { border-color: var(--track); transform: translateX(2px); }
+.choice:disabled { cursor: default; }
+.choice.correct { border-color: var(--accent); background: rgba(68,224,164,0.1); }
+.choice.wrong { border-color: var(--danger); background: rgba(255,107,138,0.08); opacity: 0.75; }
+.fb { margin: 6px 0 0; padding: 14px 16px; border-radius: 12px; font-size: 14.5px; line-height: 1.6; display: none; }
+.fb.show { display: block; animation: stepIn .3s ease; }
+.fb.good { background: rgba(68,224,164,0.1); border: 1px solid rgba(68,224,164,0.3); }
+.fb.bad { background: rgba(255,181,71,0.08); border: 1px solid rgba(255,181,71,0.3); }
+.fb b { color: var(--text); }
+
+/* matcher gym */
+.gym { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px; margin: 18px 0; }
+.gym-score { font-size: 13px; color: var(--text-mute); margin-bottom: 12px; }
+.gym-score b { color: var(--accent); }
+.gym-scen { font-size: 16px; line-height: 1.55; margin: 0 0 16px; min-height: 54px; }
+.gym-scen .qn { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.gym-scen .task { display: block; margin-top: 4px; }
+.gym-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 540px) { .gym-opts { grid-template-columns: 1fr; } }
+.gym-opt { text-align: left; background: var(--surface); border: 1px solid var(--line-strong); color: var(--text); border-radius: 11px; padding: 12px 15px; font-size: 14.5px; font-family: inherit; cursor: pointer; transition: all .14s; }
+.gym-opt:hover:not(:disabled) { border-color: var(--track); }
+.gym-opt:disabled { cursor: default; }
+.gym-opt.correct { border-color: var(--accent); background: rgba(68,224,164,0.12); }
+.gym-opt.wrong { border-color: var(--danger); background: rgba(255,107,138,0.08); opacity: 0.8; }
+
+.step-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 30px; gap: 12px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #d97757, #7c5cff); color: white; padding: 13px 24px; border-radius: 11px; font-weight: 600; font-size: 15px; border: none; font-family: inherit; cursor: pointer; box-shadow: 0 6px 22px rgba(217,119,87,0.28); transition: transform .15s, opacity .15s; }
+.btn:hover:not(:disabled) { transform: translateY(-1px); color: white; }
+.btn:disabled { opacity: 0.4; cursor: default; box-shadow: none; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.btn-back { background: none; border: none; color: var(--text-mute); font-size: 14px; cursor: pointer; font-family: inherit; padding: 8px 4px; }
+.btn-back:hover { color: var(--text); } .btn-back:disabled { opacity: 0; cursor: default; }
+
+.complete { text-align: center; padding: 14px 0 0; }
+.complete .big { font-size: 48px; margin-bottom: 6px; }
+.checklist { margin: 26px 0; padding: 24px 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); text-align: left; }
+.checklist h3 { margin: 0 0 6px; font-size: 17px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 30px; position: relative; font-size: 15px; border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 13px; width: 18px; height: 18px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
-.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
-.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.challenge { margin: 24px 0; background: linear-gradient(135deg, rgba(217,119,87,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(217,119,87,0.25); border-radius: var(--radius-lg); padding: 28px; text-align: left; }
+.challenge h3 { margin: 0 0 8px; font-size: 19px; }
+.next-up { margin: 26px 0 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); text-align: left; }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 8px; }
 .next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
-.next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
+.next-up h3 { margin: 12px 0 8px; font-size: 19px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+
 footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -142,7 +161,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -154,59 +172,129 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <a href="/lessons/claude/" class="nav-back">← Claude Mastery</a>
   </div>
 </nav>
-<article class="lesson">
-  <div class="container">
+
+<div class="container">
+  <div class="ilesson">
     <div class="lesson-meta">
       <span class="chip">Start here · Agents</span>
-      <span>~9 min read</span>
+      <span class="chip chip-free">Free</span>
+      <span>~9 min</span>
       <span class="dot"></span>
-      <span>Free survey</span>
+      <span>Interactive survey</span>
     </div>
     <h1>Claude agents: <span class="grad serif">from answering to doing.</span></h1>
-    <p class="deck">Most people use Claude like a chatbot — ask question, get answer. That's about 10% of what Claude can actually do. The other 90% is the agent layer: Cowork, Claude Code, Computer Use, MCP. This free lesson is the map. By the end you'll know which agent does what, what becomes possible with each one, and where to go to learn them in depth.</p>
-    <h2><span class="num">The mental model</span></h2><h3>Chat is the front door. Agents are where work happens.</h3><p>Imagine the difference between calling a consultant on the phone and hiring them as a coworker with a desk in your office. Same intelligence, dramatically different leverage.</p><p>Claude's chat is the phone call. Claude's agents are the desk. Cowork lets Claude work in your files and apps. Claude Code lets it work in your codebase. Computer Use lets it click around your screen. MCP lets it talk to your other tools.</p><p>Each agent is a different way to let Claude do work instead of just describe it. The lessons in this track cover how to use each one. This overview is the map of what's possible.</p><h2><span class="num">Workflow 01</span> Cowork</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>Cowork — your knowledge-work coworker</h3></div><p>Cowork is the agent that turns Claude into a desktop coworker. Read your files. Build documents. Search your email. Run code on your data. The morning that used to take 90 minutes of clicking around becomes 15 minutes of asking and reviewing.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">What Cowork does</span>A real Cowork session might look like this:
+    <p class="deck">Most people use Claude like a chatbot — ask a question, get an answer. That's maybe 10% of what it can do. The other 90% is the agent layer: Cowork, Claude Code, Computer Use, and MCP. This free lesson is the map. By the end you'll know which agent does what, and which one to learn first for your work.</p>
 
-&quot;Look through my Downloads folder. Find all meeting notes from the last 30 days. For each one, summarize what was discussed and pull out any action items that haven&#x27;t been done yet. Put the action items into a Word doc grouped by owner.&quot;
+    <div class="progwrap">
+      <div class="progbar"><div class="progfill" id="prog"></div></div>
+      <div class="progmeta"><span id="progStep">Step 1 of 5</span><span id="progPct">0% complete</span></div>
+    </div>
 
-Claude reads the files, finds the relevant ones, extracts the content, builds the document, and saves it. You came back to a finished deliverable.</div><h4>Best use cases</h4><ul><li>Cleaning up folders that got messy over years</li><li>Building Word docs, Excel sheets, PowerPoint from scattered data</li><li>Morning email triage in 15 minutes instead of 90</li><li>Automating recurring work with scheduled tasks</li></ul><div class="savings"><strong>Time savings:</strong> A focused Cowork user reports 5-10 hours/week saved on what used to be file/email/document churn.</div></div><h2><span class="num">Workflow 02</span> Claude Code</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>Claude Code — your engineering coworker</h3></div><p>Claude Code is the agent for software development. CLI-based, lives in your terminal, can read your codebase, write code, run tests, and make commits. Different category from chat-based coding assistants.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">What Claude Code does</span>A Claude Code session might look like this:
-
-&quot;Add JSDoc comments to every public function in src/utils/. Run the existing tests after. Show me the diff before committing.&quot;
-
-Claude Code reads the files, writes the documentation, runs the tests, and presents a diff. You review and approve. This pattern handles real engineering work that was previously slow.</div><h4>Best use cases</h4><ul><li>Documentation generation across a codebase</li><li>Test coverage additions</li><li>Refactoring with low blast radius</li><li>Real feature development with you supervising key decisions</li></ul><div class="savings"><strong>Time savings:</strong> Engineering teams report 30-50% feature development time reduction with proper supervision.</div></div><h2><span class="num">Workflow 03</span> Computer Use</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>Computer Use — Claude clicks, types, and navigates</h3></div><p>Computer Use is the most ambitious Claude agent: Claude controls your desktop. It can open apps, fill forms, click buttons, navigate websites. Useful for tasks that would otherwise require you to click around tools that don't have APIs.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">What Computer Use does</span>A Computer Use example:
-
-&quot;Open the legacy timesheet application. Enter my hours for last week (here are the rows). Submit. Take a screenshot of the confirmation page so I have it for my records.&quot;
-
-Claude opens the app, enters the data, submits the form, and saves the proof. The kind of work nobody enjoys, now delegable.</div><h4>Best use cases</h4><ul><li>Legacy systems without APIs (the things that haunt enterprise)</li><li>Multi-step form filling across applications</li><li>Web research with site interactions</li><li>Repetitive desktop chores</li></ul><div class="savings"><strong>Time savings:</strong> Tasks that were 'manual or impossible' become 'delegated.' Hour-long workflows compressed to minutes.</div></div><h2><span class="num">Workflow 04</span> MCP connectors</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">4</div><h3>MCP — Claude talks to your other tools</h3></div><p>MCP (Model Context Protocol) is the standard that lets Claude connect to services. Outlook, Slack, Linear, GitHub, your database, your CRM. Once connected, Claude can read from and act on those tools without you copy-pasting context.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">What MCP does</span>An MCP-enabled workflow:
-
-&quot;Look at my Linear ticket queue. For each P0 ticket open more than 3 days, draft a status update in our team Slack channel. Don&#x27;t post them yet — let me review the drafts first.&quot;
-
-Claude pulls real ticket data, applies context, generates relevant drafts, and waits for you. Cross-tool work that used to require switching between 4 apps now happens in one conversation.</div><h4>Best use cases</h4><ul><li>Cross-tool work without copy-paste</li><li>Email + CRM workflows in one conversation</li><li>Engineering + ticketing + Slack in one prompt</li><li>Database-aware questions and actions</li></ul><div class="savings"><strong>Time savings:</strong> Context-switching cost: 23 minutes per switch in studies. MCP collapses many of these into zero.</div></div><div class="callout"><span class="lbl">Why this matters</span><p>Most AI tools are chat windows. Claude agents are the layer beyond chat — the layer where Claude actually does work in your real environment. The shift from 'AI gives me text I have to paste' to 'AI delivers a finished result' is the practical revolution most people haven't yet noticed.</p></div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Want to learn these in depth?</h2>
-      <p>Pro members get 14 hands-on lessons covering each agent — Cowork basics, file workflows, document creation, Outlook integration, Claude Code, Computer Use, MCP setup, agent SDK. Real prompts, real workflows, real time savings. Founding members lock in $9/mo forever (vs. $19 standard) and get every new lesson as it ships.</p>
-      <div class="btn-row">
-        <a href="/lessons/claude/" class="btn">Back to Claude Mastery →</a>
-        <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+    <!-- STEP 1 — mental model + predict -->
+    <section class="step active" data-step="1">
+      <span class="step-k">The mental model</span>
+      <h2>Chat is the front door. Agents are the desk.</h2>
+      <p>Picture the difference between phoning a consultant for advice and hiring them as a coworker with a desk in your office. Same intelligence — wildly different leverage. Claude's chat is the phone call. Claude's agents are the desk.</p>
+      <h3>Predict first</h3>
+      <p>You ask Claude to "write me a report." In a chat window you get text to copy out. What does the agent layer change?</p>
+      <div class="choices" id="c1">
+        <button class="choice" onclick="pick(this,1,'a')">Nothing — agents are just chat with a fancier name</button>
+        <button class="choice" onclick="pick(this,1,'b')">Claude does the work in your real environment — reads your files, builds the doc, acts in your tools — and hands back a finished result</button>
+        <button class="choice" onclick="pick(this,1,'c')">Claude becomes smarter and gives better answers</button>
       </div>
-    </div>
-    <div class="checklist">
-      <h3>What you can do now</h3>
-      <ul>
-        <li>You now know the four Claude agent surfaces: Cowork, Claude Code, Computer Use, MCP</li>
-        <li>You understand the shift from 'AI gives me text' to 'AI does work'</li>
-        <li>You've seen concrete examples of what each agent makes possible</li>
-        <li>You're ready to pick which agent to learn first based on your work</li>
-        <li>Next step: Pro tier hands-on lessons walk you through each one</li>
-      </ul>
-    </div>
-    <div class="next-up">
-      <span class="pro-tag">Pro</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in Claude Mastery</div>
-      <h3>Lesson 02 · Connect Claude to your Outlook inbox</h3>
-      <p>The first hands-on Pro lesson: set up Claude's Outlook MCP connector and start using it for email triage, drafts, and meeting prep. <a href="/lessons/claude/">See the track →</a></p>
-    </div>
+      <div class="fb" id="fb1"></div>
+      <div class="step-nav">
+        <button class="btn-back" disabled>← Back</button>
+        <button class="btn" id="next1" disabled onclick="go(2)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- STEP 2 — four surfaces (show) -->
+    <section class="step" data-step="2">
+      <span class="step-k">The four surfaces</span>
+      <h2>Four ways to let Claude do the work</h2>
+      <p>Each agent is a different place Claude can roll up its sleeves. Here's the whole map:</p>
+      <div class="acard"><div class="an">Cowork<span class="tag">your files &amp; apps</span></div><div class="ad">A desktop coworker — reads your files, builds documents, searches your email, runs code on your data.</div><div class="ax"><b>e.g.</b> "Pull the open action items from 30 days of meeting notes into a Word doc grouped by owner."</div></div>
+      <div class="acard"><div class="an">Claude Code<span class="tag">your codebase</span></div><div class="ad">An engineering coworker in your terminal — reads the repo, writes code, runs tests, makes commits.</div><div class="ax"><b>e.g.</b> "Add JSDoc to every function in src/utils, run the tests, show me the diff before committing."</div></div>
+      <div class="acard"><div class="an">Computer Use<span class="tag">your screen</span></div><div class="ad">Claude clicks, types, and navigates your desktop — for apps and legacy systems that have no API.</div><div class="ax"><b>e.g.</b> "Open the old timesheet app, enter last week's hours, submit, and screenshot the confirmation."</div></div>
+      <div class="acard"><div class="an">MCP<span class="tag">your other tools</span></div><div class="ad">A standard that connects Claude to services — Outlook, Slack, Linear, GitHub, your database — to read and act without copy-paste.</div><div class="ax"><b>e.g.</b> "Pull my stale Linear P0s and draft Slack status updates — don't post, let me review."</div></div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(1)">← Back</button>
+        <button class="btn" onclick="go(3)">Test yourself →</button>
+      </div>
+    </section>
+
+    <!-- STEP 3 — signature: which agent matcher -->
+    <section class="step" data-step="3">
+      <span class="step-k">Do it · match the agent</span>
+      <h2>Which agent would you reach for?</h2>
+      <p>Four real jobs. For each, pick the Claude agent that fits. This is the call the whole track teaches you to make fast.</p>
+      <div class="gym">
+        <div class="gym-score" id="mScore">Job <b id="mNum">1</b> of 4 &nbsp;·&nbsp; <span id="mRight">0</span> right</div>
+        <div class="gym-scen" id="mScen"></div>
+        <div class="gym-opts" id="mOpts"></div>
+        <div class="fb" id="fb3"></div>
+        <button class="btn" id="mNext" style="margin-top:16px;display:none" onclick="mNextQ()">Next →</button>
+      </div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(2)">← Back</button>
+        <button class="btn" id="next3" disabled onclick="go(4)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- STEP 4 — why it matters (show) -->
+    <section class="step" data-step="4">
+      <span class="step-k">Why it matters</span>
+      <h2>The shift most people haven't noticed yet</h2>
+      <p>Most AI tools are chat windows: they hand you text, and you do the work of pasting it where it belongs. The agent layer flips that — Claude does the work in your real environment and hands back a finished result.</p>
+      <div class="callout"><span class="lbl">The practical revolution</span><p>"AI gives me text I have to paste" → "AI delivers a finished result." That's the whole shift. Everything else in this track is learning to use it well — and to keep a hand on the wheel where it counts.</p></div>
+      <p>You don't have to learn all four at once. Pick the one that maps to where your time goes — files and docs (Cowork), code (Claude Code), no-API apps (Computer Use), or connected tools (MCP) — and start there.</p>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(3)">← Back</button>
+        <button class="btn" onclick="go(5)">Finish →</button>
+      </div>
+    </section>
+
+    <!-- STEP 5 — completion -->
+    <section class="step" data-step="5">
+      <div class="complete">
+        <div class="big">🗺️</div>
+        <span class="step-k">Overview complete</span>
+        <h2>You've got the map of what Claude can do</h2>
+      </div>
+      <div class="checklist">
+        <h3>What you can do now</h3>
+        <ul>
+          <li>Name the four agent surfaces: Cowork, Claude Code, Computer Use, MCP</li>
+          <li>Tell which one fits a given job</li>
+          <li>Understand the shift from "AI gives me text" to "AI does the work"</li>
+          <li>Pick the agent that matches where your time actually goes</li>
+          <li>Move into the hands-on lessons that teach each one</li>
+        </ul>
+      </div>
+      <div class="challenge">
+        <h3>Go deeper — the hands-on track</h3>
+        <p>Pro members get the full set of hands-on lessons on each agent: Cowork basics, file workflows, document creation, Outlook, Claude Code, Computer Use, MCP — real prompts, real workflows, real time saved. Founding members lock in $9/mo forever (vs $19 standard) and get every new lesson as it ships.</p>
+        <div class="btn-row">
+          <a href="/pricing" class="btn">See Pro &amp; founding-member pricing →</a>
+          <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+        </div>
+      </div>
+      <div class="next-up">
+        <span class="pro-tag">Pro</span>
+        <div class="lbl" style="margin-top:12px">Up next in Claude Mastery</div>
+        <h3>Connect Claude to your Outlook inbox</h3>
+        <p>The first hands-on lesson: set up Claude's Outlook connector via MCP, then put it to work on triage, drafts, and meeting prep.</p>
+        <div class="btn-row">
+          <a href="/lessons/claude/connect-to-outlook" class="btn">Continue to Connect Claude to Outlook →</a>
+          <a href="/lessons/claude/" class="btn ghost">Back to all lessons</a>
+        </div>
+      </div>
+    </section>
+
   </div>
-</article>
+</div>
+
 <footer>
   <div class="footer-inner">
     <div>© 2026 LearningGPT · Independent. Not affiliated with Anthropic.</div>
@@ -219,7 +307,6 @@ Claude pulls real ticket data, applies context, generates relevant drafts, and w
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -231,10 +318,10 @@ Claude pulls real ticket data, applies context, generates relevant drafts, and w
     <button class="coach-close" id="coachClose">✕</button>
   </div>
   <div class="coach-messages" id="coachMessages">
-    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this overview of Claude's agents. Ask me what Cowork, Claude Code, Computer Use, or MCP can do — or which one fits the kind of work you want to offload. What do you spend the most time on?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -242,15 +329,111 @@ Claude pulls real ticket data, applies context, generates relevant drafts, and w
   </div>
 </div>
 
+<script id="lessonScript">
+/* ── stepper ── */
+var TOTAL = 5;
+var cur = 1;
+function go(n){
+  if(n<1||n>TOTAL) return;
+  document.querySelector('.step[data-step="'+cur+'"]').classList.remove('active');
+  cur = n;
+  document.querySelector('.step[data-step="'+cur+'"]').classList.add('active');
+  var pct = Math.round(((cur-1)/(TOTAL-1))*100);
+  document.getElementById('prog').style.width = pct+'%';
+  document.getElementById('progStep').textContent = 'Step '+cur+' of '+TOTAL;
+  document.getElementById('progPct').textContent = pct+'% complete';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
 
-<script id="coachScript">
+/* ── predict ── */
+var pickMsg = {
+  '1': {
+    correct: 'b',
+    good: '<b>That\'s the leap.</b> Same Claude, but instead of handing you text to paste, the agent layer lets it act in your real environment and return a finished result. Same intelligence, far more leverage — the desk, not the phone call.',
+    bad: '<b>Bigger than that — and it\'s not about being smarter.</b> The model is the same. What changes is that agents let Claude <b>do the work in your real files and tools</b> and hand back a finished result, instead of just giving you text to copy.'
+  }
+};
+function pick(btn, step, val){
+  var box = document.getElementById('c'+step);
+  if(box.dataset.done) return;
+  box.dataset.done = '1';
+  var info = pickMsg[String(step)];
+  Array.prototype.forEach.call(box.querySelectorAll('.choice'), function(b){
+    b.disabled = true;
+    var v = b.getAttribute('onclick').match(/'([a-z])'\)/)[1];
+    if(v === info.correct) b.classList.add('correct');
+    else if(b === btn) b.classList.add('wrong');
+  });
+  var fb = document.getElementById('fb'+step);
+  var ok = val === info.correct;
+  fb.className = 'fb show ' + (ok ? 'good' : 'bad');
+  fb.innerHTML = ok ? info.good : info.bad;
+  document.getElementById('next'+step).disabled = false;
+}
+
+/* ── signature: which-agent matcher ── */
+var AGENTS = ['Cowork','Claude Code','Computer Use','MCP'];
+var M = [
+  { task:'"Go through my Downloads folder, pull the unfinished action items from the last month of meeting notes, and build me a Word doc grouped by owner."', correct:0,
+    why:'Files on your machine → documents. That\'s Cowork\'s home turf.' },
+  { task:'"Add JSDoc comments to every public function in src/utils, run the existing tests, and show me the diff before committing."', correct:1,
+    why:'Reading the repo, writing code, running tests, committing — Claude Code in the terminal.' },
+  { task:'"Log into our old timesheet web app that has no API, enter last week\'s hours, and submit the form."', correct:2,
+    why:'No API, just a screen to click through — that\'s exactly what Computer Use is for.' },
+  { task:'"Read my Linear ticket queue and draft Slack updates for the P0s that have gone stale — let me review before posting."', correct:3,
+    why:'Pulling from Linear and acting in Slack without copy-paste — that\'s MCP connecting Claude to your tools.' }
+];
+var mi = 0, mRight = 0, mDone = false;
+function mRender(){
+  var q = M[mi];
+  document.getElementById('mNum').textContent = mi+1;
+  document.getElementById('mRight').textContent = mRight;
+  document.getElementById('mScen').innerHTML = '<span class="qn">Job '+(mi+1)+'</span><span class="task">'+q.task+'</span>';
+  var opts = document.getElementById('mOpts');
+  opts.innerHTML = '';
+  AGENTS.forEach(function(label, idx){
+    var b = document.createElement('button');
+    b.className = 'gym-opt';
+    b.textContent = label;
+    b.onclick = function(){ mAnswer(idx, b); };
+    opts.appendChild(b);
+  });
+  document.getElementById('fb3').className = 'fb';
+  document.getElementById('fb3').innerHTML = '';
+  document.getElementById('mNext').style.display = 'none';
+}
+function mAnswer(idx, btn){
+  if(mDone) return;
+  mDone = true;
+  var q = M[mi];
+  var opts = document.getElementById('mOpts').querySelectorAll('.gym-opt');
+  opts.forEach(function(b, i){
+    b.disabled = true;
+    if(i === q.correct) b.classList.add('correct');
+    else if(b === btn) b.classList.add('wrong');
+  });
+  var ok = idx === q.correct;
+  if(ok) mRight++;
+  document.getElementById('mRight').textContent = mRight;
+  var fb = document.getElementById('fb3');
+  fb.className = 'fb show ' + (ok ? 'good' : 'bad');
+  fb.innerHTML = (ok ? '✓ ' : '✗ ') + '<b>'+AGENTS[q.correct]+'.</b> ' + q.why;
+  var nb = document.getElementById('mNext');
+  if(mi < M.length-1){ nb.style.display = 'inline-flex'; nb.textContent = 'Next job →'; }
+  else { document.getElementById('next3').disabled = false; }
+}
+function mNextQ(){
+  if(mi < M.length-1){ mi++; mDone = false; mRender(); }
+}
+mRender();
+
+/* ── AI COACH ── */
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Claude agents \u2014 what you can have Claude do, not just say\nTRACK: Claude Mastery\n\nLESSON CONTENT SUMMARY:\nClaude agents \u2014 what you can have Claude do, not just say \u2014 LearningGPT L LearningGPT \u2190 Claude Mastery Start here \u00b7 Agents Pro ~9 min read Free survey Claude agents: from answering to doing. Most people use Claude like a chatbot \u2014 ask question, get answer. That's about 10% of what Claude can actually do. The other 90% is the agent layer: Cowork, Claude Code, Computer Use, MCP. This free lesson is the map. By the end you'll know which agent does what, what becomes possible with each one, and where to go to learn them in depth. The mental model Chat is the front door. Agents are where work happens. Imagine the difference between calling a consultant on the phone and hiring them as a coworker with a desk in your office. Same intelligence, dramatically different leverage. Claude's chat is the phone call. Claude's agents are the desk. Cowork lets Claude work in your files and apps. Claude Code lets it work in your codebase. Computer Use lets it click around your screen. MCP lets it talk to your other tools. Each agent is a different way to let Claude do work instead of just describe it. The lessons in this track cover how to use each one. This overview is the map of what's possible. Workflow 01 Cowork 1 Cowork \u2014 your knowledge-work coworker Cowork is the agent that turns Claude into a desktop coworker. Read your files. Build documents. Search your email. Run code on your data. The morning that used to take 90 minutes of clicking around becomes 15 minutes of asking and reviewing. The prompt that works What Cowork does A real Cowork session might look like this: &quot;Look through my Downloads folder. Find all meeting notes from the last 30 days. For each one, summarize what was discussed and pull out any action items that haven&#x27;t been done yet. Put the action items into a Word doc grouped by owner.&quot; Claude reads the files, finds the relevant ones, extracts the content, builds the document, and saves it. You came back to a finished deliverable. Best use cases Cleaning up folders that got messy over years Building Word docs, Excel sheets, PowerPoint from scattered data Morning email triage in 15 minutes instead of 90 Automating recurring work with scheduled tasks Time savings: A focused Cowork user reports 5-10 hours/week saved on what used to be file/email/document churn. Workflow 02 Claude Code 2 Claude Code \u2014 your engineering coworker Claude Code is the agent for software development. CLI-based, lives in your terminal, can read your codebase, write code, run tests, and make commits. Different category from chat-based coding assistants. The prompt that works What Claude Code does A Claude Code session might look like this: &quot;Add JSDoc comments to every public function in src/utils/. Run the existing tests after. Show me the diff before committing.&quot; Claude Code reads the files, writes the documentation, runs the tests, and presents a diff. You review and approve. This pattern handles real engineering work that was previously slow. Bes\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Claude agents — what you can have Claude do, not just say\nTRACK: Claude Mastery (free START HERE overview)\n\nLESSON CONTENT SUMMARY:\nMost people use Claude like a chatbot (ask, get an answer) — about 10% of what it can do. The other 90% is the agent layer, which lets Claude DO work in your real environment instead of just describing it. Mental model: chat is the phone call, agents are the coworker with a desk — same intelligence, far more leverage.\n\nTHE FOUR AGENT SURFACES:\n1. COWORK — a desktop knowledge-work coworker: reads your files, builds documents (Word/Excel/PowerPoint/PDF), searches your email, runs code on your data, automates recurring work with scheduled tasks. Example: pull unfinished action items from 30 days of meeting notes into a Word doc grouped by owner. Reported ~5-10 hrs/week saved on file/email/document churn.\n2. CLAUDE CODE — an engineering coworker in your terminal (CLI): reads the codebase, writes code, runs tests, makes commits, supports MCP servers and hooks. Example: add JSDoc to functions in src/utils, run tests, show the diff before committing. Teams report 30-50% feature-dev time reduction with supervision.\n3. COMPUTER USE — Claude controls your desktop: opens apps, fills forms, clicks, navigates websites. Best for legacy systems and apps with no API, multi-step form filling, repetitive desktop chores. Example: open a legacy timesheet app, enter hours, submit, screenshot the confirmation.\n4. MCP (Model Context Protocol) — the open standard that connects Claude to services (Outlook, Slack, Linear, GitHub, databases, CRMs) so it can read from and act on them without copy-paste. Example: pull stale Linear P0 tickets and draft Slack updates for review.\n\nWHY IT MATTERS: the shift is from 'AI gives me text I have to paste' to 'AI delivers a finished result.' You don't need to learn all four at once — pick the one that maps to where your time goes (files/docs = Cowork, code = Claude Code, no-API apps = Computer Use, connected tools = MCP). A human stays in the loop on important actions.\n\nThis is a free overview; the track's hands-on lessons teach each agent in depth.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content.\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more.\n- Be practical — give real work examples when helpful.\n- If asked about something not in this lesson, briefly answer and point to where they can learn more.\n- Never make up Claude features that don't exist.\n- Plain conversational text only — no markdown symbols like ** or ##.\n- Do not start responses with \"Great question!\" or similar filler phrases.";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -258,27 +441,21 @@ Claude pulls real ticket data, applies context, generates relevant drafts, and w
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -287,7 +464,6 @@ Claude pulls real ticket data, applies context, generates relevant drafts, and w
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -296,7 +472,6 @@ Claude pulls real ticket data, applies context, generates relevant drafts, and w
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

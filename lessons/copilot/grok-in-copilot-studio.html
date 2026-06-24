@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#2c7be5" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/copilot/grok-in-copilot-studio" />
 <meta property="og:title" content="Using Grok in Copilot Studio" />
@@ -30,61 +30,143 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
 .logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
 .nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
-.lesson { padding: 50px 0 100px; }
-.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+
+/* ── INTERACTIVE LESSON SHELL ── */
+.ilesson { padding: 46px 0 100px; }
+.lesson-meta { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
 .lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(44,123,229,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(44,123,229,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
 .lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
-.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #2c7be5 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
-.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
-.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #2c7be5, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(44,123,229,0.1); border: 1px solid rgba(44,123,229,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.ilesson h1 { font-size: clamp(31px, 4.5vw, 44px); font-weight: 800; line-height: 1.14; letter-spacing: -0.02em; margin: 0 0 18px; }
+.ilesson h1 .grad { background: linear-gradient(135deg, #2c7be5 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.ilesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.12em; }
+.deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 30px; padding-bottom: 26px; border-bottom: 1px solid var(--line); }
+
+.progwrap { position: sticky; top: 59px; z-index: 50; background: rgba(10,10,26,0.9); backdrop-filter: blur(8px); padding: 14px 0 12px; margin-bottom: 6px; }
+.progbar { height: 6px; background: rgba(255,255,255,0.07); border-radius: 999px; overflow: hidden; }
+.progfill { height: 100%; width: 0%; background: linear-gradient(90deg, #2c7be5, #7c5cff); border-radius: 999px; transition: width .4s cubic-bezier(.4,0,.2,1); }
+.progmeta { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--text-mute); margin-top: 7px; letter-spacing: 0.3px; }
+
+.step { display: none; animation: stepIn .4s ease; }
+.step.active { display: block; }
+@keyframes stepIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.step-k { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin: 26px 0 6px; }
+.step h2 { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; line-height: 1.25; }
+.step h3 { font-size: 18px; font-weight: 600; margin: 22px 0 9px; }
+.step p { font-size: 16.5px; color: var(--text); margin: 0 0 16px; }
+.step strong { font-weight: 700; } .step em { font-style: italic; }
+
+.card { background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 22px 26px; margin: 20px 0; }
+.card p:last-child { margin-bottom: 0; }
+.callout { margin: 18px 0; padding: 16px 18px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius); }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 6px; }
+.callout p { margin: 0; font-size: 14.5px; color: var(--text-dim); }
+.callout p + p { margin-top: 8px; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 13px 16px; margin: 16px 0; font-size: 14.5px; }
 .gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.tier-table { width: 100%; border-collapse: collapse; margin: 20px 0 28px; font-size: 14px; }
-.tier-table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--line-strong); color: var(--text-dim); font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.8px; }
-.tier-table td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
-.tier-table td:first-child { font-weight: 600; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #2c7be5, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
-.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
-.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
-.checklist li:first-child { border-top: none; padding-top: 0; }
-.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.tier-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+.tier-table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--line-strong); color: var(--text-dim); font-size: 11px; text-transform: uppercase; letter-spacing: 0.7px; }
+.tier-table td { padding: 11px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.tier-table td:first-child { font-weight: 600; width: 42%; }
+.clist { list-style: none; padding: 0; margin: 8px 0 0; }
+.clist li { padding: 9px 0 9px 26px; position: relative; border-top: 1px solid var(--line); font-size: 14.5px; line-height: 1.5; color: var(--text-dim); }
+.clist li:first-child { border-top: none; }
+.clist li::before { content: '!'; position: absolute; left: 0; top: 9px; width: 18px; height: 18px; border-radius: 50%; background: rgba(255,181,71,0.16); color: var(--warn); font-weight: 700; font-size: 12px; display: grid; place-items: center; }
+.clist li b { color: var(--text); }
+
+/* choices */
+.choices { display: flex; flex-direction: column; gap: 10px; margin: 16px 0 8px; }
+.choice { text-align: left; background: var(--surface); border: 1px solid var(--line-strong); color: var(--text); border-radius: 12px; padding: 14px 16px; font-size: 15px; font-family: inherit; cursor: pointer; transition: border-color .15s, background .15s, transform .1s; line-height: 1.5; }
+.choice:hover:not(:disabled) { border-color: var(--brand-2); transform: translateX(2px); }
+.choice:disabled { cursor: default; }
+.choice.correct { border-color: var(--accent); background: rgba(68,224,164,0.1); }
+.choice.wrong { border-color: var(--danger); background: rgba(255,107,138,0.08); opacity: 0.75; }
+.fb { margin: 6px 0 0; padding: 14px 16px; border-radius: 12px; font-size: 14.5px; line-height: 1.6; display: none; }
+.fb.show { display: block; animation: stepIn .3s ease; }
+.fb.good { background: rgba(68,224,164,0.1); border: 1px solid rgba(68,224,164,0.3); }
+.fb.bad { background: rgba(255,181,71,0.08); border: 1px solid rgba(255,181,71,0.3); }
+.fb b { color: var(--text); }
+
+/* signature: model picker gym */
+.gym { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px; margin: 18px 0; }
+.gym-score { font-size: 13px; color: var(--text-mute); margin-bottom: 12px; }
+.gym-score b { color: var(--accent); }
+.gym-scen { font-size: 16.5px; line-height: 1.55; margin: 0 0 16px; min-height: 52px; }
+.gym-scen .qn { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.gym-scen .ag { display: block; margin-top: 4px; }
+.jbtns { display: flex; gap: 12px; }
+@media (max-width: 480px){ .jbtns { flex-direction: column; } }
+.jbtn { flex: 1; padding: 13px; border-radius: 11px; border: 1px solid var(--line-strong); background: var(--surface); color: var(--text); font-family: inherit; font-size: 14.5px; font-weight: 600; cursor: pointer; transition: all .14s; line-height: 1.3; }
+.jbtn.grok:hover:not(:disabled) { border-color: var(--brand); }
+.jbtn.other:hover:not(:disabled) { border-color: var(--brand-2); }
+.jbtn:disabled { cursor: default; }
+.jbtn.right { border-color: var(--accent); background: rgba(68,224,164,0.16); }
+.jbtn.wrongpick { border-color: var(--danger); background: rgba(255,107,138,0.12); }
+
+.step-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 30px; gap: 12px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #7c5cff, #5b8def); color: white; padding: 13px 24px; border-radius: 11px; font-weight: 600; font-size: 15px; border: none; font-family: inherit; cursor: pointer; box-shadow: 0 6px 22px rgba(124,92,255,0.3); transition: transform .15s, opacity .15s; }
+.btn:hover:not(:disabled) { transform: translateY(-1px); color: white; }
+.btn:disabled { opacity: 0.4; cursor: default; box-shadow: none; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.btn-back { background: none; border: none; color: var(--text-mute); font-size: 14px; cursor: pointer; font-family: inherit; padding: 8px 4px; }
+.btn-back:hover { color: var(--text); } .btn-back:disabled { opacity: 0; cursor: default; }
+
+.complete { text-align: center; padding: 14px 0 0; }
+.complete .big { font-size: 48px; margin-bottom: 6px; }
+.checklist { margin: 26px 0; padding: 24px 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); text-align: left; }
+.checklist h3 { margin: 0 0 6px; font-size: 17px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 30px; position: relative; font-size: 15px; border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 13px; width: 18px; height: 18px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
-.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
-.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.challenge { margin: 24px 0; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); padding: 28px; text-align: left; }
+.challenge h3 { margin: 0 0 8px; font-size: 19px; }
+.next-up { margin: 26px 0 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); text-align: left; }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 8px; }
 .next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
+.next-up h3 { margin: 12px 0 8px; font-size: 19px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+
 footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+
+/* ── AI COACH WIDGET ── */
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
+.coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
+.coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
+.coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
+.coach-head-info { flex: 1; }
+.coach-head-name { font-weight: 700; font-size: 14px; }
+.coach-head-sub { font-size: 11px; color: #44e0a4; }
+.coach-close { background: none; border: none; color: #6b6b85; font-size: 18px; padding: 4px; line-height: 1; cursor: pointer; }
+.coach-close:hover { color: #f5f5fa; }
+.coach-messages { flex: 1; overflow-y: auto; padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth; }
+.coach-messages::-webkit-scrollbar { width: 4px; }
+.coach-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.14); border-radius: 4px; }
+.msg { max-width: 88%; font-size: 13.5px; line-height: 1.6; }
+.msg-coach { align-self: flex-start; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px 14px 14px 4px; padding: 10px 14px; color: #f5f5fa; }
+.msg-user { align-self: flex-end; background: linear-gradient(135deg, rgba(124,92,255,0.25), rgba(91,141,239,0.25)); border: 1px solid rgba(124,92,255,0.3); border-radius: 14px 14px 4px 14px; padding: 10px 14px; color: #f5f5fa; }
+.msg-thinking { align-self: flex-start; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px 14px 14px 4px; padding: 10px 14px; display: flex; align-items: center; gap: 6px; color: #6b6b85; font-size: 13px; }
+.thinking-dot { width: 6px; height: 6px; border-radius: 50%; background: #44e0a4; animation: coachPulse 1.2s ease-in-out infinite; }
+.thinking-dot:nth-child(2) { animation-delay: .2s; }
+.thinking-dot:nth-child(3) { animation-delay: .4s; }
+@keyframes coachPulse { 0%,100%{opacity:.3;transform:scale(.8)} 50%{opacity:1;transform:scale(1)} }
+.coach-limit { padding: 10px 18px; font-size: 11px; color: #6b6b85; text-align: center; border-top: 1px solid rgba(255,255,255,0.08); display: none; }
+.coach-limit.visible { display: block; }
+.coach-limit a { color: #5b8def; }
+.coach-input-row { padding: 12px 18px 16px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; gap: 8px; align-items: flex-end; }
+.coach-input { flex: 1; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); color: #f5f5fa; border-radius: 10px; padding: 9px 12px; font-size: 13px; font-family: inherit; resize: none; max-height: 100px; line-height: 1.5; }
+.coach-input:focus { outline: none; border-color: #44e0a4; }
+.coach-input::placeholder { color: #6b6b85; }
+.coach-send { width: 34px; height: 34px; border-radius: 9px; border: none; flex-shrink: 0; background: linear-gradient(135deg, #44e0a4, #7c5cff); color: white; font-size: 15px; display: grid; place-items: center; cursor: pointer; transition: opacity .15s; }
+.coach-send:hover { opacity: 0.85; }
+.coach-send:disabled { opacity: 0.4; cursor: default; }
+@media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
 </style>
 </head>
 <body>
@@ -96,96 +178,362 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <a href="/lessons/copilot/" class="nav-back">← Copilot Mastery</a>
   </div>
 </nav>
-<article class="lesson">
-  <div class="container">
+
+<div class="container">
+  <div class="ilesson">
     <div class="lesson-meta">
       <span class="chip">Multi-model · Copilot Mastery</span>
       <span class="chip chip-pro-plus">Pro+</span>
-      <span>~10 min read</span>
+      <span>~10 min</span>
       <span class="dot"></span>
-      <span>Choose your engine</span>
+      <span>Interactive</span>
     </div>
     <h1>Using Grok in <span class="grad serif">Copilot Studio.</span></h1>
-    <p class="deck">Copilot Studio isn't locked to one AI brain anymore. Alongside OpenAI and Anthropic models, you can now build your agents on xAI's <strong>Grok 4.1 Fast</strong> — Microsoft announced it in early 2026 as part of its multi-model strategy. The headline isn't "Grok is here"; it's that <em>choosing the model is now part of designing the agent</em>. Here's how to make that choice well.</p>
+    <p class="deck">Copilot Studio isn't locked to one AI brain anymore. Alongside OpenAI and Anthropic models, you can now build agents on xAI's <strong>Grok 4.1 Fast</strong>, added in preview as part of Microsoft's multi-model strategy. The headline isn't "Grok is here" — it's that <em>choosing the model is now part of designing the agent</em>. This lesson is about making that choice well.</p>
 
-    <h2><span class="num">01</span> What actually changed</h2>
-    <p>If you did the <a href="/lessons/copilot/copilot-studio">Copilot Studio lesson</a>, you know an agent has a trigger, topics, knowledge sources, and actions. Microsoft has added one more design decision: <strong>which model powers it</strong>. Grok 4.1 Fast joined the available models in preview — a model known for fast, low-cost inference — and it runs <em>inside</em> Copilot Studio's governance, not as a separate tool.</p>
-    <div class="callout">
-      <span class="lbl">The mental shift</span>
-      <p>This is the "AI architect" move. A buyer picks the agent Microsoft ships. An architect picks the right <em>model</em> for each agent they build — fast-and-cheap for high-volume routing, deeper reasoning for complex judgment — the same way an engineer picks the right database for a job.</p>
+    <div class="progwrap">
+      <div class="progbar"><div class="progfill" id="prog"></div></div>
+      <div class="progmeta"><span id="progStep">Step 1 of 5</span><span id="progPct">0% complete</span></div>
     </div>
 
-    <h2><span class="num">02</span> The part that makes this safe to use: governance stays</h2>
-    <p>Here's the crucial difference from the consumer Grok add-in (covered in the <a href="/lessons/grok/grok-in-office">Grok-in-Office lesson</a>). When you select Grok inside Copilot Studio, you're using it <em>through Microsoft's platform</em> — under the data protection, admin controls, and governance you've already set up. It's not the same as bolting a third-party tool onto your tenant.</p>
-    <div class="gotcha">"Grok in Copilot Studio" and "the Grok add-in in Word" are different things with different data paths. The first runs under Microsoft governance; the second sends content to xAI directly. Don't let the shared name blur that line when you explain it to your security team.</div>
-    <table class="tier-table">
-      <tr><th>Two different "Grok + Microsoft" things</th><th>What it is</th></tr>
-      <tr><td>Grok in <strong>Copilot Studio</strong> (this lesson)</td><td>A model choice for agents you build, under Microsoft governance</td></tr>
-      <tr><td>Grok <strong>Office add-in</strong> (Word/Excel/PPT)</td><td>A third-party xAI add-in; content goes to xAI</td></tr>
-    </table>
-
-    <h2><span class="num">03</span> When to pick Grok for an agent</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">1</div><h3>Match the model to the agent's job</h3></div>
-      <p>Don't pick a model by brand loyalty. Pick by the workload:</p>
-      <h4>Lean toward Grok 4.1 Fast when…</h4>
-      <ul>
-        <li><strong>Volume and speed matter.</strong> A high-traffic triage or routing agent that handles thousands of short interactions benefits from fast, low-cost inference.</li>
-        <li>You want to <strong>A/B different models</strong> on the same agent and compare quality, latency, and cost honestly.</li>
-      </ul>
-      <h4>Lean toward another model when…</h4>
-      <ul>
-        <li>The agent does <strong>heavy reasoning or careful writing</strong> — test the Anthropic/OpenAI options head-to-head; they may edge it for your case.</li>
-        <li>You have a <strong>standardization or compliance</strong> reason to keep all agents on one approved model.</li>
-      </ul>
-      <div class="savings"><strong>Method:</strong> build the agent once, swap the model, run your real test prompts through each, decide on evidence — not vibes.</div>
-    </div>
-
-    <h2><span class="num">04</span> The honest caveats (say these to stakeholders)</h2>
-    <ul>
-      <li><strong>It's preview.</strong> Preview features can change, gain limits, or move on Microsoft's and xAI's timeline. Don't build a mission-critical, can't-fail agent on a preview model without a fallback plan.</li>
-      <li><strong>Availability varies.</strong> Model options in Copilot Studio differ by region and tenant — Grok availability has been US-first. Confirm it's enabled for <em>your</em> tenant before promising it.</li>
-      <li><strong>Models get retired.</strong> As the <a href="/lessons/grok/grok-github-here-and-gone">GitHub Copilot lesson</a> shows, a model in the picker today can be deprecated within months. Design agents so the model is swappable.</li>
-    </ul>
-    <div class="callout">
-      <span class="lbl">The architect's rule</span>
-      <p>Choose the model per agent on evidence, keep governance non-negotiable, and never let a single preview model become a single point of failure. Multi-model is a strength only if you treat every model as replaceable.</p>
-    </div>
-
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Model-test one real agent</h2>
-      <p>Take a simple Copilot Studio agent — an FAQ or routing bot. Build it, then run your ten most common real prompts through it on Grok 4.1 Fast and on one other available model. Score each on accuracy, speed, and tone. You'll leave with a defensible model choice and the habit that makes you the architect, not the buyer.</p>
-      <div class="btn-row">
-        <a href="/lessons/copilot/copilot-studio" class="btn">Revisit: Copilot Studio basics →</a>
-        <a href="/lessons/copilot/" class="btn ghost">All Copilot lessons →</a>
+    <!-- STEP 1 — mental model + predict -->
+    <section class="step active" data-step="1">
+      <span class="step-k">The mental shift</span>
+      <h2>From buyer to architect</h2>
+      <p>An agent in Copilot Studio already has a trigger, topics, knowledge, and actions. Microsoft just added one more design decision: <strong>which model powers it</strong>. That's a bigger deal than a new logo in a menu.</p>
+      <h3>Predict first</h3>
+      <p>Grok 4.1 Fast shows up as an option in Copilot Studio. What's the real significance for you as a builder?</p>
+      <div class="choices" id="c1">
+        <button class="choice" onclick="pick(this,1,'a')">Grok is now the best model — switch your agents to it</button>
+        <button class="choice" onclick="pick(this,1,'b')">Choosing the model is now part of designing each agent — the architect's move</button>
+        <button class="choice" onclick="pick(this,1,'c')">Nothing real changes; it's just another option in a dropdown</button>
       </div>
-    </div>
+      <div class="fb" id="fb1"></div>
+      <div class="step-nav">
+        <button class="btn-back" disabled>← Back</button>
+        <button class="btn" id="next1" disabled onclick="go(2)">Continue →</button>
+      </div>
+    </section>
 
-    <div class="checklist">
-      <h3>What you can do now</h3>
-      <ul>
-        <li>Treat model selection as a design decision for every agent you build</li>
-        <li>Reach for Grok 4.1 Fast on high-volume, speed-sensitive agents; test rivals on heavy reasoning</li>
-        <li>Remember Copilot Studio's Grok runs under Microsoft governance — unlike the Office add-in</li>
-        <li>Confirm regional/tenant availability before promising it to stakeholders</li>
-        <li>Design every agent so the model can be swapped — never a single point of failure</li>
+    <!-- STEP 2 — governance distinction + pick -->
+    <section class="step" data-step="2">
+      <span class="step-k">The safety crux</span>
+      <h2>Two different "Grok + Microsoft" things</h2>
+      <p>The shared name hides a real difference in where your data goes. Don't let it blur when you explain this to security.</p>
+      <table class="tier-table">
+        <tr><th>The two</th><th>What it is</th></tr>
+        <tr><td>Grok in <strong>Copilot Studio</strong> (this lesson)</td><td>A model choice for agents you build — runs <em>under Microsoft's governance</em></td></tr>
+        <tr><td>Grok <strong>Office add-in</strong> (Word/Excel/PPT)</td><td>A third-party xAI add-in — content goes <em>to xAI directly</em></td></tr>
+      </table>
+      <h3>The call</h3>
+      <p>Your security team asks: when you select Grok to power an agent <em>in Copilot Studio</em>, where does the data go?</p>
+      <div class="choices" id="c2">
+        <button class="choice" onclick="pick(this,2,'a')">Straight to xAI, outside your Microsoft controls</button>
+        <button class="choice" onclick="pick(this,2,'b')">Through Microsoft's platform, under the data protection and admin controls you've already set</button>
+        <button class="choice" onclick="pick(this,2,'c')">Nowhere — it runs fully offline on your own servers</button>
+      </div>
+      <div class="fb" id="fb2"></div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(1)">← Back</button>
+        <button class="btn" id="next2" disabled onclick="go(3)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- STEP 3 — signature: model picker -->
+    <section class="step" data-step="3">
+      <span class="step-k">Do it · pick the engine</span>
+      <h2>Match the model to the agent's job</h2>
+      <p>Don't pick by brand. Pick by workload: Grok 4.1 Fast leans fast-and-cheap for high volume; deeper models earn their place on hard reasoning or when compliance says standardize. For each agent, which way do you lean?</p>
+      <div class="gym">
+        <div class="gym-score" id="mScore">Agent <b id="mNum">1</b> of 4 &nbsp;·&nbsp; <span id="mRight">0</span> right</div>
+        <div class="gym-scen" id="mScen"></div>
+        <div class="jbtns">
+          <button class="jbtn grok" id="mGrok" onclick="mAnswer('grok',this)">⚡ Grok 4.1 Fast</button>
+          <button class="jbtn other" id="mOther" onclick="mAnswer('other',this)">🧠 Test a deeper model</button>
+        </div>
+        <div class="fb" id="fb3"></div>
+        <button class="btn" id="mNext" style="margin-top:16px;display:none" onclick="mNextQ()">Next →</button>
+      </div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(2)">← Back</button>
+        <button class="btn" id="next3" disabled onclick="go(4)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- STEP 4 — caveats + architect's rule (show) -->
+    <section class="step" data-step="4">
+      <span class="step-k">The honest caveats</span>
+      <h2>Say these to stakeholders</h2>
+      <ul class="clist">
+        <li><b>It's preview.</b> Preview features can change, gain limits, or move on Microsoft's and xAI's timeline. Don't build a can't-fail agent on it without a fallback.</li>
+        <li><b>Availability varies.</b> Model options differ by region and tenant — Grok has been US-first. Confirm it's enabled for <em>your</em> tenant before promising it.</li>
+        <li><b>Models get retired.</b> A model in the picker today can be deprecated within months. Design every agent so the model is swappable.</li>
       </ul>
-    </div>
+      <div class="callout">
+        <span class="lbl">The architect's rule</span>
+        <p>Choose the model per agent on evidence, keep governance non-negotiable, and never let a single preview model become a single point of failure.</p>
+        <p>Multi-model is a strength only if you treat every model as replaceable.</p>
+      </div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(3)">← Back</button>
+        <button class="btn" onclick="go(5)">Finish →</button>
+      </div>
+    </section>
 
-    <div class="next-up">
-      <span class="pro-plus-tag">Pro+</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in Copilot Mastery</div>
-      <h3>Governing a multi-model agent estate</h3>
-      <p>Once agents can run on different models, model policy, inventory, and the AI architect's role become the real work. <a href="/lessons/copilot/">See the track →</a></p>
-    </div>
+    <!-- STEP 5 — completion -->
+    <section class="step" data-step="5">
+      <div class="complete">
+        <div class="big">⚙️</div>
+        <span class="step-k">Lesson complete</span>
+        <h2>You choose the engine — and stay the architect</h2>
+      </div>
+      <div class="checklist">
+        <h3>What you can do now</h3>
+        <ul>
+          <li>Treat model selection as a design decision for every agent you build</li>
+          <li>Reach for Grok 4.1 Fast on high-volume, speed-sensitive agents; test rivals on heavy reasoning</li>
+          <li>Remember Copilot Studio's Grok runs under Microsoft governance — unlike the Office add-in</li>
+          <li>Confirm regional/tenant availability before promising it to stakeholders</li>
+          <li>Design every agent so the model can be swapped — never a single point of failure</li>
+        </ul>
+      </div>
+      <div class="challenge">
+        <h3>Your move: model-test one real agent</h3>
+        <p>Take a simple Copilot Studio agent — an FAQ or routing bot. Run your ten most common real prompts through it on Grok 4.1 Fast and on one other model. Score each on accuracy, speed, and tone. You'll leave with a defensible choice — and the habit that makes you the architect, not the buyer.</p>
+        <div class="btn-row">
+          <a href="/lessons/copilot/copilot-studio" class="btn ghost">Revisit: Copilot Studio basics →</a>
+        </div>
+      </div>
+      <div class="next-up">
+        <span class="pro-plus-tag">Pro+</span>
+        <div class="lbl" style="margin-top:12px">You've reached the frontier of the track</div>
+        <h3>Governing a multi-model agent estate</h3>
+        <p>Once agents can run on different models, model policy, agent inventory, and the AI architect's role become the real work. That's the edge the field is figuring out now — and where Copilot Mastery keeps growing.</p>
+        <div class="btn-row">
+          <a href="/lessons/copilot/" class="btn">Back to Copilot Mastery →</a>
+          <a href="/lessons/" class="btn ghost">All tracks</a>
+        </div>
+      </div>
+    </section>
+
   </div>
-</article>
+</div>
+
 <footer>
   <div class="footer-inner">
-    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Microsoft or xAI.</div>
+    <div>© 2026 LearningGPT · Independent. Not affiliated with Microsoft or xAI.</div>
     <a href="/lessons/copilot/" style="color: var(--text-dim);">← All Copilot Mastery lessons</a>
   </div>
 </footer>
+
+<!-- ── AI COACH FAB ── -->
+<button class="coach-fab" id="coachFab" title="Ask the AI Coach">
+  🎓
+  <span class="coach-fab-badge">AI</span>
+</button>
+<!-- ── AI COACH DRAWER ── -->
+<div class="coach-drawer" id="coachDrawer">
+  <div class="coach-drawer-head">
+    <div class="coach-avatar">🎓</div>
+    <div class="coach-head-info">
+      <div class="coach-head-name">AI Coach</div>
+      <div class="coach-head-sub">Ask anything about this lesson</div>
+    </div>
+    <button class="coach-close" id="coachClose">✕</button>
+  </div>
+  <div class="coach-messages" id="coachMessages">
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson on running Grok inside Copilot Studio. Ask me when to pick Grok vs another model, how the governance differs from the Office add-in, or how to model-test an agent. What are you building?</div>
+  </div>
+  <div class="coach-limit" id="coachLimit">
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
+  </div>
+  <div class="coach-input-row">
+    <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
+    <button class="coach-send" id="coachSend">➤</button>
+  </div>
+</div>
+
+<script id="lessonScript">
+/* ── stepper ── */
+var TOTAL = 5;
+var cur = 1;
+function go(n){
+  if(n<1||n>TOTAL) return;
+  document.querySelector('.step[data-step="'+cur+'"]').classList.remove('active');
+  cur = n;
+  document.querySelector('.step[data-step="'+cur+'"]').classList.add('active');
+  var pct = Math.round(((cur-1)/(TOTAL-1))*100);
+  document.getElementById('prog').style.width = pct+'%';
+  document.getElementById('progStep').textContent = 'Step '+cur+' of '+TOTAL;
+  document.getElementById('progPct').textContent = pct+'% complete';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ── predict / pick ── */
+var pickMsg = {
+  '1': {
+    correct: 'b',
+    good: '<b>That\'s the shift.</b> Model selection becomes a per-agent design decision — fast and cheap for high-volume routing, deeper reasoning for complex judgment, like an engineer choosing the right database. Not "Grok wins," but "I choose the engine."',
+    bad: '<b>Bigger than that — and not that.</b> Grok isn\'t automatically best, and it\'s not just cosmetic. The real change is that <b>picking the model is now part of designing each agent</b>. That\'s the architect\'s move.'
+  },
+  '2': {
+    correct: 'b',
+    good: '<b>Under Microsoft governance.</b> Selecting Grok inside Copilot Studio runs it through Microsoft\'s platform — your existing data protection and admin controls still apply. That\'s the key difference from the Grok Office add-in, which sends content to xAI directly. Same name, different data path.',
+    bad: '<b>That\'s the other one.</b> Sending data to xAI describes the Grok <em>Office add-in</em>. In <b>Copilot Studio</b>, Grok runs under Microsoft\'s governance and your existing controls — it\'s not offline, but it is governed.'
+  }
+};
+function pick(btn, step, val){
+  var box = document.getElementById('c'+step);
+  if(box.dataset.done) return;
+  box.dataset.done = '1';
+  var info = pickMsg[String(step)];
+  Array.prototype.forEach.call(box.querySelectorAll('.choice'), function(b){
+    b.disabled = true;
+    var v = b.getAttribute('onclick').match(/'([a-z])'\)/)[1];
+    if(v === info.correct) b.classList.add('correct');
+    else if(b === btn) b.classList.add('wrong');
+  });
+  var fb = document.getElementById('fb'+step);
+  var ok = val === info.correct;
+  fb.className = 'fb show ' + (ok ? 'good' : 'bad');
+  fb.innerHTML = ok ? info.good : info.bad;
+  document.getElementById('next'+step).disabled = false;
+}
+
+/* ── signature: model picker gym ── */
+var M = [
+  { ag:'A high-traffic support-routing bot handling thousands of short "which queue?" classifications a day.', answer:'grok',
+    why:'High volume, short interactions, speed and cost matter — exactly where Grok 4.1 Fast shines.' },
+  { ag:'An agent that drafts nuanced legal-risk summaries from dense contracts for the GC.', answer:'other',
+    why:'Heavy reasoning and careful writing — test the deeper Anthropic/OpenAI options head-to-head; they may edge it here.' },
+  { ag:'An internal FAQ deflection bot answering simple, repetitive questions at scale.', answer:'grok',
+    why:'Simple, repetitive, high-volume — fast-and-cheap inference is the right trade.' },
+  { ag:'Compliance mandates that every production agent run on one approved, standardized model.', answer:'other',
+    why:'This is a standardization/compliance reason to stay on the approved model — pick the model policy requires, not Grok by default.' }
+];
+var mi = 0, mRight = 0, mDone = false;
+function mRender(){
+  var q = M[mi];
+  document.getElementById('mNum').textContent = mi+1;
+  document.getElementById('mRight').textContent = mRight;
+  document.getElementById('mScen').innerHTML = '<span class="qn">Agent '+(mi+1)+'</span><span class="ag">'+q.ag+'</span>';
+  ['mGrok','mOther'].forEach(function(id){
+    var b = document.getElementById(id);
+    b.disabled = false;
+    b.classList.remove('right','wrongpick');
+  });
+  document.getElementById('fb3').className = 'fb';
+  document.getElementById('fb3').innerHTML = '';
+  document.getElementById('mNext').style.display = 'none';
+}
+function mAnswer(choice, btn){
+  if(mDone) return;
+  mDone = true;
+  var q = M[mi];
+  var ok = choice === q.answer;
+  if(ok) mRight++;
+  document.getElementById('mRight').textContent = mRight;
+  document.getElementById('mGrok').disabled = true;
+  document.getElementById('mOther').disabled = true;
+  var correctBtn = q.answer === 'grok' ? document.getElementById('mGrok') : document.getElementById('mOther');
+  correctBtn.classList.add('right');
+  if(!ok) btn.classList.add('wrongpick');
+  var fb = document.getElementById('fb3');
+  fb.className = 'fb show ' + (ok ? 'good' : 'bad');
+  fb.innerHTML = (ok ? '✓ ' : '✗ ') + '<b>' + (q.answer === 'grok' ? 'Grok 4.1 Fast.' : 'Test a deeper model.') + '</b> ' + q.why;
+  var nb = document.getElementById('mNext');
+  if(mi < M.length-1){ nb.style.display = 'inline-flex'; nb.textContent = 'Next agent →'; }
+  else { document.getElementById('next3').disabled = false; }
+}
+function mNextQ(){
+  if(mi < M.length-1){ mi++; mDone = false; mRender(); }
+}
+mRender();
+
+/* ── AI COACH ── */
+(function() {
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Using Grok in Copilot Studio — multi-model agents\nTRACK: Copilot Mastery (Advanced / Pro+, multi-model)\n\nLESSON CONTENT SUMMARY:\nMicrosoft Copilot Studio is now multi-model: alongside OpenAI and Anthropic models, you can build agents on xAI's Grok 4.1 Fast (added in preview as part of Microsoft's multi-model strategy). The real significance isn't 'Grok is here' or 'Grok is best' — it's that choosing the model is now part of designing each agent (the 'AI architect' move: pick the right model per agent the way an engineer picks the right database).\n\nTHE GOVERNANCE DISTINCTION (most important point): 'Grok in Copilot Studio' and 'the Grok Office add-in' are different things with different data paths.\n- Grok in Copilot Studio: a model choice for agents you build; runs THROUGH Microsoft's platform, under the data protection, admin controls, and governance you've already configured.\n- Grok Office add-in (Word/Excel/PowerPoint): a third-party xAI add-in; content goes to xAI directly.\nSame name, different data path — be precise when explaining to a security team.\n\nWHEN TO PICK GROK 4.1 FAST: lean toward it when volume and speed matter (high-traffic triage/routing/FAQ-deflection agents handling many short interactions), and when you want to A/B models on the same agent to compare quality, latency, and cost. Lean toward another model (Anthropic/OpenAI) when the agent does heavy reasoning or careful writing (test head-to-head), or when a standardization/compliance requirement says keep all agents on one approved model. Method: build the agent once, swap the model, run your real test prompts through each, decide on evidence not vibes.\n\nHONEST CAVEATS for stakeholders: (1) It's preview — features can change/limit/move; don't build a can't-fail agent on it without a fallback. (2) Availability varies by region and tenant — Grok has been US-first; confirm it's enabled for your tenant before promising it. (3) Models get retired — a model in the picker today can be deprecated within months, so design every agent so the model is swappable. The architect's rule: choose the model per agent on evidence, keep governance non-negotiable, and never let a single preview model become a single point of failure.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content.\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more.\n- Be practical — give real work examples when helpful.\n- If asked about something not in this lesson, briefly answer and point to where they can learn more.\n- Never make up Copilot Studio or Grok features that don't exist.\n- Plain conversational text only — no markdown symbols like ** or ##.\n- Do not start responses with \"Great question!\" or similar filler phrases.";
+  var MAX_FREE = 3;
+  var count = 0;
+  var isThinking = false;
+  var history = [];
+  var fab = document.getElementById('coachFab');
+  var drawer = document.getElementById('coachDrawer');
+  var closeBtn = document.getElementById('coachClose');
+  var msgs = document.getElementById('coachMessages');
+  var input = document.getElementById('coachInput');
+  var sendBtn = document.getElementById('coachSend');
+  var limitBar = document.getElementById('coachLimit');
+  if (!fab) return;
+  fab.addEventListener('click', function() { toggle(true); });
+  closeBtn.addEventListener('click', function() { toggle(false); });
+  function toggle(open) {
+    drawer.classList.toggle('open', open);
+    if (open) setTimeout(function() { input.focus(); }, 300);
+  }
+  input.addEventListener('input', function() {
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 100) + 'px';
+  });
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+  });
+  sendBtn.addEventListener('click', send);
+  function addMsg(text, type) {
+    var d = document.createElement('div');
+    d.className = 'msg msg-' + type;
+    d.textContent = text;
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+    return d;
+  }
+  function addThinking() {
+    var d = document.createElement('div');
+    d.className = 'msg-thinking';
+    d.innerHTML = '<div class="thinking-dot"></div><div class="thinking-dot"></div><div class="thinking-dot"></div>';
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+    return d;
+  }
+  async function send() {
+    var text = input.value.trim();
+    if (!text || isThinking) return;
+    if (count >= MAX_FREE) {
+      limitBar.classList.add('visible');
+      input.disabled = true;
+      sendBtn.disabled = true;
+      return;
+    }
+    count++;
+    if (count >= MAX_FREE) limitBar.classList.add('visible');
+    addMsg(text, 'user');
+    history.push({ role: 'user', content: text });
+    input.value = '';
+    input.style.height = 'auto';
+    isThinking = true;
+    sendBtn.disabled = true;
+    var thinking = addThinking();
+    try {
+      var res = await fetch('/api/playground', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ coach: true, lessonCoach: true, lessonContext: LESSON_CONTEXT, history: history })
+      });
+      thinking.remove();
+      var data = await res.json();
+      var reply = (data && data.coach) ? data.coach : "Sorry, something went wrong. Try again in a moment.";
+      addMsg(reply, 'coach');
+      history.push({ role: 'assistant', content: reply });
+    } catch(err) {
+      thinking.remove();
+      addMsg("Something went wrong — try again in a moment.", 'coach');
+    } finally {
+      isThinking = false;
+      sendBtn.disabled = count >= MAX_FREE;
+    }
+  }
+})();
+</script>
 <script src="/gate.js"></script>
 </body>
 </html>

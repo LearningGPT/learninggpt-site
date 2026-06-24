@@ -4,16 +4,16 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Custom GPTs — build agents that match your work — LearningGPT</title>
-<meta name="description" content="Build Custom GPTs with system prompts, knowledge files, and actions. The 4-step pattern that produces actually useful GPTs." />
+<meta name="description" content="Build Custom GPTs with a 4-section system prompt, knowledge files, and actions. The pattern that produces GPTs you actually use — not ChatGPT in a costume." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#10a37f" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/chatgpt/custom-gpts-build" />
 <meta property="og:title" content="Custom GPTs — build agents that match your work" />
-<meta property="og:description" content="Build Custom GPTs with system prompts, knowledge files, and actions. The 4-step pattern that produces actually useful GPTs." />
+<meta property="og:description" content="The 4-section system prompt, knowledge files vs prompt, and actions — the pattern that produces GPTs you actually use." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -33,87 +33,89 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .lesson { padding: 50px 0 100px; }
 .lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
 .lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(16,163,127,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(16,163,127,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
 .lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
 .lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #10a37f 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .grad { background: linear-gradient(135deg, #10a37f 0%, #44e0a4 50%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 24px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.sec { margin: 46px 0 0; }
+.sec-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.lesson h2 { font-size: 27px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; }
 .lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
 .lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(16,163,127,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(16,163,127,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #10a37f, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(16,163,127,0.1); border: 1px solid rgba(16,163,127,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(16,163,127,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(16,163,127,0.25); border-radius: var(--radius-lg); padding: 36px; }
+
+/* ── ASSEMBLER ── */
+.asm { margin: 22px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 680px){ .asm { grid-template-columns: 1fr; } }
+.asm-pool { border: 1px solid var(--line-strong); border-radius: var(--radius-lg); background: #0d0d20; padding: 16px; }
+.asm-pool .ph { font-size: 11px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: var(--text-mute); margin-bottom: 10px; }
+.snip { padding: 11px 12px; border-radius: 10px; background: rgba(255,255,255,0.03); border: 1px solid var(--line-strong); margin-bottom: 10px; transition: opacity .3s; }
+.snip.placed { opacity: 0.35; }
+.snip-t { font-size: 13px; color: var(--text); margin-bottom: 8px; }
+.snip-btns { display: flex; gap: 5px; flex-wrap: wrap; }
+.sbtn { font-size: 10.5px; font-weight: 700; font-family: inherit; padding: 5px 8px; border-radius: 7px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); color: var(--text-dim); cursor: pointer; transition: all .12s; }
+.sbtn:hover:not(:disabled) { border-color: var(--track); color: var(--text); }
+.sbtn:disabled { cursor: default; opacity: 0.5; }
+.sbtn.bad { border-color: var(--danger); color: #ffb0c1; animation: shake .3s; }
+@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-3px)} 75%{transform:translateX(3px)} }
+.asm-doc { border: 1px solid rgba(16,163,127,0.3); border-radius: var(--radius-lg); background: rgba(16,163,127,0.04); padding: 16px; font-family: 'SFMono-Regular', Consolas, monospace; }
+.asm-doc .dh { font-size: 11px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; color: var(--track); margin-bottom: 10px; font-family: 'Inter', sans-serif; }
+.docsec { margin-bottom: 12px; }
+.docsec h4 { font-size: 13px; color: #b8f0e0; margin: 0 0 4px; }
+.docsec .empty { font-size: 12px; color: var(--text-mute); font-style: italic; }
+.docline { font-size: 12px; color: var(--text-dim); padding: 3px 0 3px 12px; border-left: 2px solid rgba(68,224,164,0.4); margin-bottom: 4px; animation: fadeIn .3s ease; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(4px);} to{opacity:1;transform:none;} }
+.asm-done { grid-column: 1 / -1; padding: 14px 18px; border-radius: 12px; background: rgba(16,163,127,0.1); border: 1px solid rgba(16,163,127,0.3); font-size: 14px; display: none; }
+.asm-done.show { display: block; animation: fadeIn .4s ease; }
+
+/* ── ROUTER ── */
+.router { margin: 16px 0; }
+.rrow { padding: 13px 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); margin-bottom: 10px; }
+.rrow-scn { font-size: 14.5px; margin-bottom: 10px; }
+.rrow-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.rbtn { font-size: 12.5px; font-weight: 700; font-family: inherit; padding: 8px 15px; border-radius: 8px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); color: var(--text-dim); cursor: pointer; transition: all .15s; }
+.rbtn:hover:not(:disabled) { border-color: var(--track); color: var(--text); }
+.rbtn:disabled { cursor: default; }
+.rbtn.right { background: rgba(68,224,164,0.16); border-color: var(--accent); color: #b6f4dc; }
+.rbtn.wrong { background: rgba(255,107,138,0.12); border-color: var(--danger); color: #ffb0c1; }
+.rrow-fb { margin-top: 10px; font-size: 13px; color: var(--text-dim); display: none; }
+.rrow-fb.show { display: block; }
+.rrow-fb b { color: var(--track); }
+
+.callout { margin: 18px 0; padding: 18px 22px; background: linear-gradient(135deg, rgba(255,107,138,0.10), rgba(124,92,255,0.05)); border: 1px solid rgba(255,107,138,0.26); border-radius: var(--radius-lg); }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--danger); margin-bottom: 8px; }
+.callout p { margin: 0; font-size: 14.5px; }
+.callout strong { color: var(--text); }
+
+.challenge { margin: 46px 0 30px; background: linear-gradient(135deg, rgba(16,163,127,0.14), rgba(124,92,255,0.1)); border: 1px solid rgba(16,163,127,0.3); border-radius: var(--radius-lg); padding: 32px; }
 .challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #10a37f, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
 .challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #10a37f, #7c5cff); color: white; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: inherit; box-shadow: 0 6px 24px rgba(16,163,127,0.28); transition: transform .15s; text-decoration: none; }
+.btn:hover { transform: translateY(-1px); color: white; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.checklist { margin: 30px 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
 .checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
 .checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
 .checklist li:first-child { border-top: none; padding-top: 0; }
 .checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up { margin: 40px 0 0; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
 .next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
 .next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
-.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
 .next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
-footer { border-top: 1px solid var(--line); padding: 30px 0; }
+footer { border-top: 1px solid var(--line); padding: 30px 0; margin-top: 40px; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -142,7 +144,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -154,91 +155,99 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <a href="/lessons/chatgpt/" class="nav-back">← ChatGPT Mastery</a>
   </div>
 </nav>
+
 <article class="lesson">
   <div class="container">
     <div class="lesson-meta">
-      <span class="chip">Agents · Lesson 03</span>
+      <span class="chip">Lesson 12 · ChatGPT Mastery</span>
       <span class="chip chip-pro-plus">Pro+</span>
-      <span>~14 min read</span>
+      <span>~14 min</span>
       <span class="dot"></span>
       <span>Build + publish</span>
     </div>
     <h1>Custom GPTs: <span class="grad serif">agents in your voice.</span></h1>
-    <p class="deck">Custom GPTs let you package a system prompt, knowledge files, and tool actions into a reusable agent. Done well, they save hours per week. Done badly, they're just ChatGPT with a costume. This lesson is the build pattern that produces GPTs you actually use.</p>
-    <h2><span class="num">Workflow 01</span> The 4-section system prompt</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>Write a system prompt that actually changes behavior</h3></div><p>Most Custom GPTs fail because their system prompts are too short and too vague. The 4-section pattern below produces dramatically better results.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">System prompt structure</span>System prompt for a Custom GPT called &#x27;Email Drafter&#x27;:
+    <p class="deck">A Custom GPT packages a system prompt, knowledge files, and tool actions into a reusable agent. Done well, it saves hours a week. Done badly, it's just ChatGPT in a costume. This is the build pattern that produces GPTs you actually keep using — starting with the part that makes or breaks them: the system prompt.</p>
 
-## Identity
-You are an assistant that drafts emails for [user&#x27;s role]. Your one job is to produce email drafts the user can send with minor edits.
+    <!-- mental model -->
+    <div class="sec">
+      <span class="sec-eyebrow">The mental model</span>
+      <h2>Most GPTs fail at the system prompt.</h2>
+      <p>The usual flop is a two-line prompt — "You're a helpful email assistant" — that doesn't actually change behavior. The fix is structure. A strong system prompt has four sections, each doing a distinct job: <strong>Identity</strong> (who it is and its one job), <strong>Voice</strong> (how it writes), <strong>Process</strong> (the steps it follows), and <strong>Don'ts</strong> (the hard boundaries). Build one now.</p>
+    </div>
 
-## Voice
-Write in this voice:
-- Short sentences. Direct.
-- No &#x27;I hope this finds you well&#x27; or filler.
-- One specific call to action per email.
-- End with a concrete next step, not a question.
-- Length: 3-5 sentences unless asked for more.
-[Paste 2-3 example emails of yours here for reference]
+    <!-- SIGNATURE: assembler -->
+    <div class="sec">
+      <span class="sec-eyebrow">Do it · assemble the system prompt</span>
+      <h2>Drop each line into its section.</h2>
+      <p>Here are eight lines for an "Email Drafter" GPT. Send each one to the section it belongs in and watch the prompt come together.</p>
 
-## Process
-When the user gives you a recipient and a goal:
-1. Ask any clarifying questions if the goal is ambiguous (max 1 question).
-2. Draft three variations: concise, friendly, direct.
-3. After the user picks one, refine if requested.
-
-## What you don&#x27;t do
-- You don&#x27;t send emails. You only draft them.
-- You don&#x27;t claim to know the recipient unless told.
-- You don&#x27;t insert emoji or AI-clichés like &#x27;circling back.&#x27;</div><h4>Best use cases</h4><ul><li>Email or message drafting in your voice</li><li>Code reviewer that uses your team's style</li><li>Customer support drafter for your product</li><li>Sales follow-up generator for your industry</li></ul><div class="gotcha">Test with examples that should fail (off-topic prompts, requests outside the GPT's scope). A good system prompt has the GPT politely decline or redirect — not improvise.</div><div class="savings"><strong>Time savings:</strong> A focused GPT: 5 min/use savings × 20 uses/week = 100 min/week per GPT.</div></div><h2><span class="num">Workflow 02</span> Knowledge files vs. system prompt</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>When to upload files vs. when to paste content</h3></div><p>Custom GPTs let you attach knowledge files (up to 20). They're searchable but the GPT doesn't 'memorize' them. Knowing the difference saves you from misusing the feature.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">When to use what</span>Knowledge files are best for:
-• Reference data the GPT searches when relevant (product catalogs, policies, specs)
-• Long documents (50+ pages) that wouldn&#x27;t fit in a system prompt
-• Data that updates periodically — you swap the file, prompt stays the same
-
-System prompt is best for:
-• Behavior and voice (always loaded)
-• Process and rules (always applied)
-• Examples of good output (always referenced)
-
-Don&#x27;t put behavior rules in a knowledge file — they won&#x27;t be consistently applied. Don&#x27;t put 200-page product manuals in the system prompt — they get truncated.</div><h4>Best use cases</h4><ul><li>Product-specific assistants with catalogs as knowledge</li><li>Support GPTs that reference up-to-date docs</li><li>Legal GPTs with case-law references</li><li>Internal GPTs that need company-specific data</li></ul><div class="gotcha">Knowledge files are not 'memory.' The GPT searches them on each query — it doesn't reliably recall facts you'd expect it to from a file uploaded weeks ago. Verify behavior with test prompts.</div><div class="savings"><strong>Time savings:</strong> Right placement: avoids hours of 'why isn't it following the rule' debugging.</div></div><h2><span class="num">Workflow 03</span> Actions — wire up real APIs</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>When you need the GPT to do, not just say</h3></div><p>Actions let your Custom GPT call external APIs. This is where they go from 'smart text generator' to 'agent that does something.'</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Actions setup</span>Add an Action to your GPT:
-
-1. Configure the API endpoint (OpenAPI spec required)
-2. Set up authentication (OAuth, API key, or none)
-3. Describe what the action does in plain English (the GPT uses this to decide when to call it)
-4. Test extensively with edge cases
-
-Examples of useful actions:
-• Lookup company info via Crunchbase API
-• Fetch current stock price via Polygon API
-• Create a Linear ticket from the GPT
-• Query a read-only database via your custom API endpoint
-• Send a Slack message to a specific channel
-
-For any action that creates, modifies, or sends — require user confirmation in the prompt. &#x27;Show the user what you&#x27;d do, then wait for them to say &#x27;go.&#x27;</div><h4>Best use cases</h4><ul><li>Lookup-only actions (CRM lookups, stock prices, weather)</li><li>Create-with-confirmation actions (file tickets, draft slack)</li><li>Query-only DB actions (read your data without modification)</li><li>Integration with your team's internal tools</li></ul><div class="gotcha">Never wire up an action with write/delete permissions to production without user confirmation in the prompt. GPTs occasionally call actions you didn't expect.</div><div class="savings"><strong>Time savings:</strong> Action-enabled GPT: replaces an entire tool for specific workflows.</div></div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Build a Custom GPT you'll actually use weekly</h2>
-      <p>Pick one repetitive task you do 5+ times a week. Use the 4-section pattern to write the system prompt. Add 2-3 knowledge files if needed. Test it. Iterate. By end of week, you should be using it daily without thinking.</p>
-      <div class="btn-row">
-        <a href="/lessons/chatgpt/" class="btn">Back to ChatGPT Mastery →</a>
-        <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+      <div class="asm">
+        <div class="asm-pool">
+          <div class="ph">Lines to place</div>
+          <div id="snipList"></div>
+        </div>
+        <div class="asm-doc">
+          <div class="dh">System prompt · Email Drafter</div>
+          <div class="docsec" data-sec="Identity"><h4>## Identity</h4><div class="empty">— empty —</div></div>
+          <div class="docsec" data-sec="Voice"><h4>## Voice</h4><div class="empty">— empty —</div></div>
+          <div class="docsec" data-sec="Process"><h4>## Process</h4><div class="empty">— empty —</div></div>
+          <div class="docsec" data-sec="Don'ts"><h4>## What you don't do</h4><div class="empty">— empty —</div></div>
+        </div>
+        <div class="asm-done" id="asmDone">
+          <strong>That's a system prompt that changes behavior.</strong> Identity gives it one job, Voice makes it sound like you, Process gives it steps to follow, and Don'ts draws the hard lines. Vague two-liners can't do any of that.
+        </div>
       </div>
     </div>
+
+    <!-- file vs prompt -->
+    <div class="sec">
+      <span class="sec-eyebrow">Your call · file or prompt?</span>
+      <h2>Knowledge file, or system prompt?</h2>
+      <p>Custom GPTs take up to 20 knowledge files — searchable, but not "memorized." Behavior belongs in the prompt; reference data belongs in files. Place each one.</p>
+      <div class="router" id="routerA"></div>
+    </div>
+
+    <!-- actions -->
+    <div class="sec">
+      <span class="sec-eyebrow">Actions · do, don't just say</span>
+      <h2>Auto-run, or require confirmation?</h2>
+      <p>Actions let a GPT call real APIs. Read-only lookups can run freely; anything that creates, sends, or changes data needs you to confirm first.</p>
+      <div class="router" id="routerB"></div>
+      <div class="callout">
+        <span class="lbl">Hard rule</span>
+        <p><strong>Never wire an action with write or delete permissions to a production system without confirmation in the prompt.</strong> GPTs occasionally call actions you didn't expect — "show me what you'd do, then wait for 'go'" is the safeguard.</p>
+      </div>
+    </div>
+
+    <div class="challenge">
+      <h2 style="margin-top:0;">Build a GPT you'll use weekly</h2>
+      <p>Pick one task you do 5+ times a week. Write its system prompt with the four sections, add 2–3 knowledge files if it needs reference data, and wire an action only if it truly needs to <em>do</em> something. Test the edge cases — off-topic prompts, ambiguous requests — then use it daily for a week.</p>
+      <div class="btn-row">
+        <a href="/playground" class="btn">Try a prompt in the playground →</a>
+        <a href="/lessons/chatgpt/" class="btn ghost">Back to ChatGPT Mastery</a>
+      </div>
+    </div>
+
     <div class="checklist">
       <h3>What you can do now</h3>
       <ul>
-        <li>Use the 4-section system prompt structure (Identity, Voice, Process, Don'ts)</li>
-        <li>Choose knowledge files for reference data, system prompt for behavior</li>
+        <li>Write a system prompt with all four sections: Identity, Voice, Process, Don'ts</li>
+        <li>Put behavior in the prompt and reference data in knowledge files</li>
+        <li>Remember knowledge files are searched, not memorized — verify with test prompts</li>
         <li>Add actions only when the GPT needs to do, not just say</li>
-        <li>Always require confirmation for actions that create or modify</li>
-        <li>Test edge cases — off-topic prompts, ambiguous requests, hostile users</li>
+        <li>Require confirmation for any action that creates, sends, or modifies</li>
       </ul>
     </div>
+
     <div class="next-up">
-      <span class="pro-tag">Pro</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in ChatGPT Mastery</div>
-      <h3>Lesson 04 · Code Interpreter — data analysis and chart generation</h3>
-      <p>Code Interpreter (Advanced Data Analysis) is the GPT-built-in agent for crunching data, generating charts, and producing analysis from CSV or Excel files. <a href="/lessons/chatgpt/">See the track →</a></p>
+      <span class="pro-plus-tag">Pro+</span>
+      <div class="lbl" style="margin-top:14px;">Up next in ChatGPT Mastery</div>
+      <h3>Lesson 13 · Code Interpreter — data analysis without writing Python</h3>
+      <p>Upload a CSV or Excel file and let ChatGPT run real Python on it — cleaning, analysis, and charts, no code required. The final lesson in the track. <a href="/lessons/chatgpt/code-interpreter">Start lesson 13 →</a></p>
     </div>
   </div>
 </article>
+
 <footer>
   <div class="footer-inner">
     <div>© 2026 LearningGPT · Independent. Not affiliated with OpenAI.</div>
@@ -251,7 +260,6 @@ For any action that creates, modifies, or sends — require user confirmation in
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -266,7 +274,7 @@ For any action that creates, modifies, or sends — require user confirmation in
     <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -274,15 +282,115 @@ For any action that creates, modifies, or sends — require user confirmation in
   </div>
 </div>
 
+<script id="lessonScript">
+(function () {
+  // ── SYSTEM-PROMPT ASSEMBLER ──
+  var SNIPS = [
+    { t: 'You draft emails for a sales rep; your one job is sendable drafts.', sec: 'Identity' },
+    { t: 'You are focused only on email — nothing else.', sec: 'Identity' },
+    { t: 'Short, direct sentences; no "I hope this finds you well."', sec: 'Voice' },
+    { t: 'End with a concrete next step, not a question.', sec: 'Voice' },
+    { t: 'Ask one clarifying question only if the goal is ambiguous.', sec: 'Process' },
+    { t: 'Draft three variations: concise, friendly, direct.', sec: 'Process' },
+    { t: 'You never actually send emails — only draft them.', sec: "Don'ts" },
+    { t: 'No emoji, no "circling back" clichés.', sec: "Don'ts" }
+  ];
+  var SECS = ['Identity', 'Voice', 'Process', "Don'ts"];
+  var SEC_LABEL = { Identity: 'Identity', Voice: 'Voice', Process: 'Process', "Don'ts": "Don't" };
+  var snipList = document.getElementById('snipList');
+  var asmDone = document.getElementById('asmDone');
+  var placed = 0;
+
+  SNIPS.forEach(function (s, i) {
+    var row = document.createElement('div');
+    row.className = 'snip';
+    var btns = SECS.map(function (sec) {
+      return '<button class="sbtn" data-sec="' + sec.replace(/'/g, '&#39;') + '">' + SEC_LABEL[sec] + '</button>';
+    }).join('');
+    row.innerHTML = '<div class="snip-t">' + s.t + '</div><div class="snip-btns">' + btns + '</div>';
+    snipList.appendChild(row);
+    var done = false;
+    var btnEls = row.querySelectorAll('.sbtn');
+    btnEls.forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (done) return;
+        var pick = b.dataset.sec;
+        if (pick === s.sec) {
+          done = true;
+          row.classList.add('placed');
+          btnEls.forEach(function (x) { x.disabled = true; });
+          var target = document.querySelector('.docsec[data-sec="' + s.sec.replace(/"/g, '&quot;') + '"]');
+          if (target) {
+            var emp = target.querySelector('.empty');
+            if (emp) emp.remove();
+            var line = document.createElement('div');
+            line.className = 'docline';
+            line.textContent = '• ' + s.t;
+            target.appendChild(line);
+          }
+          placed++;
+          if (placed === SNIPS.length) asmDone.classList.add('show');
+        } else {
+          b.classList.add('bad');
+          setTimeout(function () { b.classList.remove('bad'); }, 320);
+        }
+      });
+    });
+  });
+
+  // ── ROUTER FACTORY ──
+  function buildRouter(elId, opts, items) {
+    var host = document.getElementById(elId);
+    items.forEach(function (it) {
+      var row = document.createElement('div');
+      row.className = 'rrow';
+      var btns = opts.map(function (o) { return '<button class="rbtn" data-o="' + o + '">' + o + '</button>'; }).join('');
+      row.innerHTML = '<div class="rrow-scn">' + it.scn + '</div><div class="rrow-btns">' + btns + '</div><div class="rrow-fb"></div>';
+      host.appendChild(row);
+      var fb = row.querySelector('.rrow-fb');
+      var rbtns = row.querySelectorAll('.rbtn');
+      var done = false;
+      rbtns.forEach(function (b) {
+        b.addEventListener('click', function () {
+          if (done) return;
+          done = true;
+          var ok = b.dataset.o === it.correct;
+          rbtns.forEach(function (x) { x.disabled = true; if (x.dataset.o === it.correct) x.classList.add('right'); });
+          if (!ok) b.classList.add('wrong');
+          fb.innerHTML = (ok ? '' : '<b>' + it.correct + '.</b> ') + it.why;
+          fb.classList.add('show');
+        });
+      });
+    });
+  }
+
+  buildRouter('routerA', ['Knowledge file', 'System prompt'], [
+    { scn: 'A product catalog of 4,000 SKUs the GPT looks up when relevant.', correct: 'Knowledge file',
+      why: 'Reference data it searches on demand — too big for the prompt, perfect for a file.' },
+    { scn: 'The rule: never use emoji or "circling back" clichés.', correct: 'System prompt',
+      why: 'Behavior must be always applied — that only happens in the system prompt, not a searched file.' },
+    { scn: 'A 200-page policy manual that gets updated every quarter.', correct: 'Knowledge file',
+      why: 'Long and changing — keep it a file you swap out; the prompt stays the same.' }
+  ]);
+
+  buildRouter('routerB', ['Auto-run', 'Require confirmation'], [
+    { scn: 'Look up a company\'s current stock price via an API.', correct: 'Auto-run',
+      why: 'Read-only lookups are safe to run automatically — nothing is created or changed.' },
+    { scn: 'Create a Linear ticket from the conversation.', correct: 'Require confirmation',
+      why: 'It creates something. Show the user the ticket and wait for "go" before filing it.' },
+    { scn: 'Send a Slack message to a channel.', correct: 'Require confirmation',
+      why: 'Sending is irreversible and public — always confirm before the message goes out.' }
+  ]);
+})();
+</script>
 
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Custom GPTs \u2014 build agents that match your work\nTRACK: Chatgpt Mastery\n\nLESSON CONTENT SUMMARY:\nCustom GPTs \u2014 build agents that match your work \u2014 LearningGPT L LearningGPT \u2190 ChatGPT Mastery Agents \u00b7 Lesson 03 Pro+ ~14 min read Build + publish Custom GPTs: agents in your voice. Custom GPTs let you package a system prompt, knowledge files, and tool actions into a reusable agent. Done well, they save hours per week. Done badly, they're just ChatGPT with a costume. This lesson is the build pattern that produces GPTs you actually use. Workflow 01 The 4-section system prompt 1 Write a system prompt that actually changes behavior Most Custom GPTs fail because their system prompts are too short and too vague. The 4-section pattern below produces dramatically better results. The prompt that works System prompt structure System prompt for a Custom GPT called &#x27;Email Drafter&#x27;: ## Identity You are an assistant that drafts emails for [user&#x27;s role]. Your one job is to produce email drafts the user can send with minor edits. ## Voice Write in this voice: - Short sentences. Direct. - No &#x27;I hope this finds you well&#x27; or filler. - One specific call to action per email. - End with a concrete next step, not a question. - Length: 3-5 sentences unless asked for more. [Paste 2-3 example emails of yours here for reference] ## Process When the user gives you a recipient and a goal: 1. Ask any clarifying questions if the goal is ambiguous (max 1 question). 2. Draft three variations: concise, friendly, direct. 3. After the user picks one, refine if requested. ## What you don&#x27;t do - You don&#x27;t send emails. You only draft them. - You don&#x27;t claim to know the recipient unless told. - You don&#x27;t insert emoji or AI-clich\u00e9s like &#x27;circling back.&#x27; Best use cases Email or message drafting in your voice Code reviewer that uses your team's style Customer support drafter for your product Sales follow-up generator for your industry Test with examples that should fail (off-topic prompts, requests outside the GPT's scope). A good system prompt has the GPT politely decline or redirect \u2014 not improvise. Time savings: A focused GPT: 5 min/use savings \u00d7 20 uses/week = 100 min/week per GPT. Workflow 02 Knowledge files vs. system prompt 2 When to upload files vs. when to paste content Custom GPTs let you attach knowledge files (up to 20). They're searchable but the GPT doesn't 'memorize' them. Knowing the difference saves you from misusing the feature. The prompt that works When to use what Knowledge files are best for: \u2022 Reference data the GPT searches when relevant (product catalogs, policies, specs) \u2022 Long documents (50+ pages) that wouldn&#x27;t fit in a system prompt \u2022 Data that updates periodically \u2014 you swap the file, prompt stays the same System prompt is best for: \u2022 Behavior and voice (always loaded) \u2022 Process and rules (always applied) \u2022 Examples of good output (always referenced) Don&#x27;t put behavior rules in a knowledge file \u2014 they won&#x27;t be consistently applied. Don&#x27;t put 200-page product manuals in the system prom\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Custom GPTs — build agents that match your work\nTRACK: ChatGPT Mastery (Lesson 12, Pro+)\n\nLESSON CONTENT SUMMARY:\nA Custom GPT packages a system prompt, knowledge files, and tool actions into a reusable agent. Done well it saves hours a week; done badly it's just ChatGPT in a costume. Most GPTs fail because the system prompt is a vague two-liner.\n\nThe fix is the 4-section system prompt, each section with a distinct job: (1) Identity — who it is and its ONE job (e.g., 'drafts emails for a sales rep; produces sendable drafts'); (2) Voice — how it writes (short/direct, no 'I hope this finds you well', end with a concrete next step; paste 2-3 of your own example emails); (3) Process — the steps it follows (ask one clarifying question only if ambiguous; draft three variations: concise/friendly/direct); (4) What you don't do — hard boundaries (never send emails, no emoji, no 'circling back' clichés). Test with prompts that SHOULD fail (off-topic, out of scope) — a good prompt makes the GPT politely decline, not improvise.\n\nKnowledge files vs system prompt: files (up to 20) are searchable but NOT memorized — the GPT searches them per query, so it won't reliably recall a fact from a file uploaded weeks ago. Use files for reference data (catalogs, policies, specs), long docs (50+ pages), and data that updates (swap the file, keep the prompt). Use the system prompt for behavior, voice, process, rules, and examples (always loaded/applied). Don't put behavior rules in a file (inconsistently applied); don't put 200-page manuals in the prompt (truncated).\n\nActions let a GPT call external APIs (OpenAPI spec + auth). Read-only lookups (stock price, CRM lookup, weather, query a read-only DB) can auto-run. Anything that creates, sends, or modifies (file a ticket, send Slack) must REQUIRE CONFIRMATION in the prompt ('show what you'd do, then wait for go'). Hard rule: never wire a write/delete action to production without confirmation — GPTs occasionally call actions you didn't expect.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more\n- Be practical — give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only — no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -290,27 +398,21 @@ For any action that creates, modifies, or sends — require user confirmation in
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -319,7 +421,6 @@ For any action that creates, modifies, or sends — require user confirmation in
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -328,7 +429,6 @@ For any action that creates, modifies, or sends — require user confirmation in
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

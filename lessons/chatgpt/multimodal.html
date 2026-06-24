@@ -4,16 +4,16 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Search, image, & DALL-E: the multimodal features most users underuse — LearningGPT</title>
-<meta name="description" content="ChatGPT isn't just a text AI anymore. It searches the web, analyzes images you upload, and generates images via DALL-E. Most users still treat it like" />
+<meta name="description" content="ChatGPT isn't just a text AI. It reads images you upload, searches the web, and generates visuals. The three multimodal workflows where it genuinely changes the work — and where each one fails." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#10a37f" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/chatgpt/multimodal" />
 <meta property="og:title" content="Search, image, & DALL-E: the multimodal features most users underuse" />
-<meta property="og:description" content="ChatGPT isn't just a text AI anymore. It searches the web, analyzes images you upload, and generates images via DALL-E. Most users still treat it like" />
+<meta property="og:description" content="The three multimodal ChatGPT workflows where the integration genuinely changes the work — and where each one fails." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -34,85 +34,89 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
 .lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(16,163,127,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(16,163,127,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
 .lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
-.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
 .lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #10a37f 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .grad { background: linear-gradient(135deg, #10a37f 0%, #44e0a4 50%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 24px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.sec { margin: 46px 0 0; }
+.sec-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.lesson h2 { font-size: 27px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; }
 .lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
 .lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(16,163,127,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(16,163,127,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #10a37f, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(16,163,127,0.1); border: 1px solid rgba(16,163,127,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(16,163,127,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(16,163,127,0.25); border-radius: var(--radius-lg); padding: 36px; }
+
+/* ── CAPABILITY TILES ── */
+.caps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 22px 0; }
+@media (max-width: 620px) { .caps { grid-template-columns: 1fr; } }
+.cap { padding: 16px 14px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); }
+.cap .ic { font-size: 22px; }
+.cap .t { font-size: 14px; font-weight: 700; margin-top: 4px; }
+.cap .s { font-size: 12.5px; color: var(--text-mute); }
+
+/* ── COMPOSER MOCK ── */
+.composer { margin: 22px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); background: #0d0d20; overflow: hidden; }
+.comp-bar { display: flex; align-items: center; gap: 8px; padding: 12px 14px; }
+.tool { display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600; font-family: inherit; padding: 9px 14px; border-radius: 10px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); color: var(--text-dim); cursor: pointer; transition: all .15s; }
+.tool:hover { color: var(--text); border-color: var(--track); }
+.tool.on { background: rgba(16,163,127,0.14); border-color: rgba(16,163,127,0.5); color: #b8f0e0; }
+.tool .dotmark { width: 7px; height: 7px; border-radius: 50%; background: var(--track); opacity: 0; }
+.tool.seen .dotmark { opacity: 1; }
+.comp-fake { flex: 1; min-width: 80px; text-align: right; font-size: 12px; color: var(--text-mute); padding-right: 4px; }
+.comp-stage { border-top: 1px solid var(--line); padding: 18px; min-height: 150px; }
+.comp-empty { color: var(--text-mute); font-size: 14px; text-align: center; padding: 24px 0; }
+.demo-prompt { font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13px; color: var(--text); background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 11px 13px; margin-bottom: 12px; }
+.demo-prompt .tag { display: inline-block; font-family: 'Inter',sans-serif; font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--track); margin-right: 8px; }
+.demo-result { font-size: 14px; color: var(--text-dim); background: rgba(16,163,127,0.06); border: 1px solid rgba(16,163,127,0.25); border-radius: 10px; padding: 12px 14px; margin-bottom: 12px; }
+.demo-result b { color: #b8f0e0; }
+.demo-svg { display: block; margin: 0 auto 12px; }
+.demo-limit { font-size: 13px; color: var(--text-dim); border-left: 3px solid var(--warn); padding: 4px 0 4px 12px; }
+.demo-limit b { color: var(--warn); }
+.comp-progress { font-size: 12px; color: var(--text-mute); padding: 0 18px 16px; }
+.comp-progress.allseen { color: var(--track); font-weight: 600; }
+
+/* ── ROUTER QUIZ ── */
+.router { margin: 18px 0; }
+.rrow { padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); margin-bottom: 10px; }
+.rrow-scn { font-size: 14.5px; margin-bottom: 10px; }
+.rrow-btns { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+@media (max-width: 520px){ .rrow-btns { grid-template-columns: 1fr; } }
+.rbtn { font-size: 12.5px; font-weight: 600; font-family: inherit; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); color: var(--text-dim); cursor: pointer; transition: all .15s; text-align: left; }
+.rbtn:hover:not(:disabled) { border-color: var(--track); color: var(--text); }
+.rbtn:disabled { cursor: default; }
+.rbtn.right { background: rgba(68,224,164,0.16); border-color: var(--accent); color: #b6f4dc; }
+.rbtn.wrong { background: rgba(255,107,138,0.12); border-color: var(--danger); color: #ffb0c1; }
+.rrow-fb { margin-top: 10px; font-size: 13px; color: var(--text-dim); display: none; }
+.rrow-fb.show { display: block; }
+.rrow-fb b { color: var(--track); }
+
+.challenge { margin: 46px 0 30px; background: linear-gradient(135deg, rgba(16,163,127,0.14), rgba(124,92,255,0.1)); border: 1px solid rgba(16,163,127,0.3); border-radius: var(--radius-lg); padding: 32px; }
 .challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #10a37f, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
 .challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #10a37f, #7c5cff); color: white; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: inherit; box-shadow: 0 6px 24px rgba(16,163,127,0.28); transition: transform .15s; text-decoration: none; }
+.btn:hover { transform: translateY(-1px); color: white; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.checklist { margin: 30px 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
 .checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
 .checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
 .checklist li:first-child { border-top: none; padding-top: 0; }
 .checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up { margin: 40px 0 0; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
 .next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
 .next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
 .next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
-footer { border-top: 1px solid var(--line); padding: 30px 0; }
+footer { border-top: 1px solid var(--line); padding: 30px 0; margin-top: 40px; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -141,7 +145,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -153,49 +156,91 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <a href="/lessons/chatgpt/" class="nav-back">← ChatGPT Mastery</a>
   </div>
 </nav>
+
 <article class="lesson">
   <div class="container">
     <div class="lesson-meta">
-      <span class="chip">Lesson 07 · ChatGPT Mastery</span>
+      <span class="chip">Lesson 06 · ChatGPT Mastery</span>
       <span class="chip chip-pro">Pro</span>
-      <span>~11 min read</span>
+      <span>~11 min</span>
       <span class="dot"></span>
-      <span>3 workflows</span>
+      <span>3 modalities</span>
     </div>
     <h1>Multimodal ChatGPT: <span class="grad serif">the Swiss army knife.</span></h1>
-    <p class="deck">ChatGPT isn't just a text AI anymore. It searches the web, analyzes images you upload, and generates images via DALL-E. Most users still treat it like text-only. This lesson covers the three multimodal workflows where the integration genuinely changes the work.</p>
-    <h2><span class="num">The mental model</span></h2><h3>Multimodal isn't a feature — it's a capability you forget exists.</h3><p>ChatGPT can now see what you see, read what you point at, and generate images for what you describe. Most users default to typing as if it's still 2023. The workflows below are the ones where breaking out of text saves real time.</p><h2><span class="num">Workflow 01</span> Image input: photo, screenshot, document</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>Upload an image, ask anything</h3></div><p>ChatGPT can read text in images, describe what's in them, extract structured data, and answer questions about them.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Image use cases</span>(Upload screenshot of error message) What's causing this and how do I fix it?
-(Upload photo of a whiteboard) Transcribe everything written here.
-(Upload an Excel chart) What's the headline finding and what's misleading?</div><h4>Best use cases</h4><ul><li>Error message debugging</li><li>Whiteboard photo transcription</li><li>Receipt and invoice processing</li><li>Reading documents you don't want to retype</li><li>Analyzing charts or data visualizations</li></ul><div class="gotcha">Image processing is generally accurate but can misread handwriting, low-quality photos, and dense charts. Verify the transcription against the original.</div><div class="savings"><strong>Time savings:</strong> Manual transcription/data entry: gone for many use cases.</div></div><h2><span class="num">Workflow 02</span> Web search: stop guessing, start finding</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>Trigger search when freshness matters</h3></div><p>ChatGPT searches the web automatically for time-sensitive questions, or you can force it.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Search-forcing prompts</span>Search the web for the current [stat/fact/news] on [topic].
+    <p class="deck">ChatGPT isn't a text-only tool anymore — it has eyes, a browser, and a sketchpad. It reads images you upload, searches the live web, and generates visuals. Most people still type at it like it's 2023. Here are the three places breaking out of text saves real time — and exactly where each one falls short.</p>
 
-With current information from the web, answer: [question that needs fresh data].</div><h4>Best use cases</h4><ul><li>Current events and breaking news</li><li>Recent product updates and prices</li><li>Verifying time-sensitive claims</li><li>Research that needs sources</li></ul><div class="gotcha">Web search adds latency and cost. For evergreen questions (concepts, definitions, fundamentals), don't force search — it's slower with no benefit.</div><div class="savings"><strong>Time savings:</strong> Out-of-date answers: avoided when it matters.</div></div><h2><span class="num">Workflow 03</span> DALL-E for work, not just art</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>Generate visual assets for real work</h3></div><p>DALL-E can produce diagrams, mockups, illustrations, social images. Not perfect, but often good enough for internal use or starting points.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Work prompts</span>Generate a simple flowchart showing 4 stages: input, processing, review, output. Clean, minimal, blue accent.
-
-Create a social media graphic: 'AI Mastery for Knowledge Workers' as the headline, modern dark theme, abstract geometric background.
-
-Generate a hero image for a blog post about productivity — calm, focused, person at a desk.</div><h4>Best use cases</h4><ul><li>Internal slide deck visuals</li><li>Blog post hero images</li><li>Social media graphics</li><li>Concept diagrams and flowcharts</li><li>Mock UI elements</li></ul><div class="gotcha">DALL-E is bad at text in images (tends to misspell), specific facial features (don't use for real people), and exact brand colors (give it hex codes but expect approximation).</div><div class="savings"><strong>Time savings:</strong> Hours hunting stock images: minutes generating fit-for-purpose visuals.</div></div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Final challenge: one multimodal day</h2>
-      <p>For one workday, deliberately use a non-text capability every time the opportunity arises. Photo of a whiteboard → upload it. Need a current stat → force web search. Need a visual for a deck → generate it. Count how often these capabilities helped vs. didn't.</p>
-      <div class="btn-row">
-        <a href="/lessons/chatgpt/" class="btn">Back to ChatGPT Mastery →</a>
-        <a href="/#pricing" class="btn ghost">See pricing →</a>
+    <!-- mental model -->
+    <div class="sec">
+      <span class="sec-eyebrow">The mental model</span>
+      <h2>Three inputs you keep forgetting it has.</h2>
+      <p>It's not that the capabilities are hard — it's that text is the default, so the others never cross your mind. Keep these three on the tip of your tongue:</p>
+      <div class="caps">
+        <div class="cap"><span class="ic">📎</span><div class="t">It can see</div><div class="s">read any image you upload</div></div>
+        <div class="cap"><span class="ic">🌐</span><div class="t">It can browse</div><div class="s">pull live info from the web</div></div>
+        <div class="cap"><span class="ic">🎨</span><div class="t">It can draw</div><div class="s">generate visuals from a description</div></div>
       </div>
     </div>
+
+    <!-- SIGNATURE: composer -->
+    <div class="sec">
+      <span class="sec-eyebrow">Try it · the input bar you ignore</span>
+      <h2>Tap each tool. See what it unlocks.</h2>
+      <p>This is the ChatGPT composer. Those buttons left of the text box are the multimodal tools most people never touch. Tap each one to see what it does — and where it trips up.</p>
+
+      <div class="composer">
+        <div class="comp-bar">
+          <button class="tool" data-m="img"><span class="dotmark"></span>📎 Upload</button>
+          <button class="tool" data-m="web"><span class="dotmark"></span>🌐 Search</button>
+          <button class="tool" data-m="img-gen"><span class="dotmark"></span>🎨 Image</button>
+          <div class="comp-fake">Message ChatGPT…</div>
+        </div>
+        <div class="comp-stage" id="compStage">
+          <div class="comp-empty">↑ Tap a tool to see it work.</div>
+        </div>
+        <div class="comp-progress" id="compProgress">0 of 3 tools explored</div>
+      </div>
+    </div>
+
+    <!-- ROUTER QUIZ -->
+    <div class="sec">
+      <span class="sec-eyebrow">Your call · which input?</span>
+      <h2>Pick the right tool for the job.</h2>
+      <p>Four tasks. Reach for the capability that actually fits — sometimes that's still just typing.</p>
+      <div class="router" id="router"></div>
+    </div>
+
+    <div class="challenge">
+      <h2 style="margin-top:0;">Run one multimodal day</h2>
+      <p>For a single workday, deliberately use a non-text capability every time the chance comes up. Whiteboard after a meeting → photograph and upload it. Need a current number → force web search. Need a visual for a deck → generate it. Count how often it actually helped — that's how the habit forms.</p>
+      <div class="btn-row">
+        <a href="/playground" class="btn">Try a prompt in the playground →</a>
+        <a href="/lessons/chatgpt/" class="btn ghost">Back to ChatGPT Mastery</a>
+      </div>
+    </div>
+
     <div class="checklist">
       <h3>What you can do now</h3>
-      <ul><li>Upload images and ask ChatGPT to read, transcribe, or analyze them</li><li>Force web search when freshness matters</li><li>Generate work-appropriate visuals with DALL-E</li><li>Recognize the limits of each multimodal feature</li><li>Stop defaulting to text-only when other inputs would be faster</li></ul>
+      <ul>
+        <li>Upload images and ask ChatGPT to read, transcribe, or analyze them</li>
+        <li>Force web search when freshness matters — and skip it for evergreen questions</li>
+        <li>Generate work-appropriate visuals with DALL-E</li>
+        <li>Know each feature's blind spots: handwriting, latency, text-in-images and faces</li>
+        <li>Stop defaulting to text when another input would be faster</li>
+      </ul>
     </div>
+
     <div class="next-up">
-      <span class="pro-tag">Pro+</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in ChatGPT Mastery</div>
-      <h3>Lesson 8+ · Plus: API basics, projects, advanced prompting, and more</h3>
-      <p>When to use the API instead of the app, project organization for power users, evaluation patterns, advanced reasoning prompts. The advanced curriculum. <a href="/#pricing">See pricing →</a></p>
+      <span class="pro-tag">Pro</span>
+      <div class="lbl" style="margin-top:14px;">Up next in ChatGPT Mastery</div>
+      <h3>Lesson 7 · ChatGPT Agent — autonomous task execution</h3>
+      <p>The agentic mode that absorbed Operator and Deep Research into one system — what it can do on its own, and the oversight that keeps it safe. <a href="/lessons/chatgpt/chatgpt-agent">Start lesson 7 →</a></p>
     </div>
   </div>
 </article>
+
 <footer>
   <div class="footer-inner">
-    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with OpenAI.</div>
+    <div>© 2026 LearningGPT · Independent. Not affiliated with OpenAI.</div>
     <a href="/lessons/chatgpt/" style="color: var(--text-dim);">← All ChatGPT lessons</a>
   </div>
 </footer>
@@ -205,7 +250,6 @@ Generate a hero image for a blog post about productivity — calm, focused, pers
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -220,7 +264,7 @@ Generate a hero image for a blog post about productivity — calm, focused, pers
     <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -228,15 +272,115 @@ Generate a hero image for a blog post about productivity — calm, focused, pers
   </div>
 </div>
 
+<script id="lessonScript">
+(function () {
+  // ── COMPOSER ──
+  var DEMOS = {
+    img: {
+      prompt: '<span class="tag">📎 Image attached</span>(screenshot of an error) "What\'s causing this and how do I fix it?"',
+      result: '<b>Reads the stack trace</b>, spots the null reference on the failing line, and explains the one-line fix — no retyping the error.',
+      svg: '',
+      limit: '<b>Where it trips:</b> messy handwriting, low-quality photos, and dense charts. Always check the transcription against the original.'
+    },
+    web: {
+      prompt: '<span class="tag">🌐 Search on</span>"What\'s the current price and reviews for [product]?"',
+      result: '<b>Pulls live results with sources</b> instead of guessing from stale training data — and shows you the links.',
+      svg: '',
+      limit: '<b>Where it trips:</b> it adds latency and cost. For evergreen questions (definitions, concepts), don\'t force search — it\'s slower with no benefit.'
+    },
+    'img-gen': {
+      prompt: '<span class="tag">🎨 Generate</span>"A clean 4-stage flowchart: input → process → review → output. Minimal, teal accent."',
+      result: '<b>Returns a usable draft visual</b> in seconds — fine for an internal deck or a starting point:',
+      svg: '<svg class="demo-svg" width="340" height="58" viewBox="0 0 340 58" xmlns="http://www.w3.org/2000/svg">'
+        + '<defs><marker id="ah" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#10a37f"/></marker></defs>'
+        + '<g font-family="Inter, sans-serif" font-size="10" fill="#b8f0e0" text-anchor="middle">'
+        + '<rect x="2" y="16" width="70" height="26" rx="6" fill="rgba(16,163,127,0.14)" stroke="#10a37f"/><text x="37" y="33">Input</text>'
+        + '<rect x="92" y="16" width="74" height="26" rx="6" fill="rgba(16,163,127,0.14)" stroke="#10a37f"/><text x="129" y="33">Process</text>'
+        + '<rect x="186" y="16" width="70" height="26" rx="6" fill="rgba(16,163,127,0.14)" stroke="#10a37f"/><text x="221" y="33">Review</text>'
+        + '<rect x="276" y="16" width="62" height="26" rx="6" fill="rgba(16,163,127,0.14)" stroke="#10a37f"/><text x="307" y="33">Output</text>'
+        + '<line x1="74" y1="29" x2="90" y2="29" stroke="#10a37f" stroke-width="1.5" marker-end="url(#ah)"/>'
+        + '<line x1="168" y1="29" x2="184" y2="29" stroke="#10a37f" stroke-width="1.5" marker-end="url(#ah)"/>'
+        + '<line x1="258" y1="29" x2="274" y2="29" stroke="#10a37f" stroke-width="1.5" marker-end="url(#ah)"/>'
+        + '</g></svg>',
+      limit: '<b>Where it trips:</b> text inside images (it misspells), real faces, and exact brand hex codes — give it the hex but expect an approximation.'
+    }
+  };
+  var ORDER = ['img', 'web', 'img-gen'];
+  var seen = {};
+  var stage = document.getElementById('compStage');
+  var progress = document.getElementById('compProgress');
+  var tools = document.querySelectorAll('.tool');
+
+  tools.forEach(function (t) {
+    t.addEventListener('click', function () {
+      var m = t.dataset.m;
+      tools.forEach(function (x) { x.classList.remove('on'); });
+      t.classList.add('on');
+      t.classList.add('seen');
+      seen[m] = true;
+      var d = DEMOS[m];
+      stage.innerHTML =
+        '<div class="demo-prompt">' + d.prompt + '</div>' +
+        '<div class="demo-result">' + d.result + '</div>' +
+        (d.svg || '') +
+        '<div class="demo-limit">' + d.limit + '</div>';
+      var n = Object.keys(seen).length;
+      if (n === ORDER.length) {
+        progress.textContent = 'All three explored — you\'ve toured the multimodal toolbar.';
+        progress.classList.add('allseen');
+      } else {
+        progress.textContent = n + ' of 3 tools explored';
+      }
+    });
+  });
+
+  // ── ROUTER QUIZ ──
+  var OPTS = ['Type it', 'Upload an image', 'Web search', 'Generate with DALL-E'];
+  var ITEMS = [
+    { scn: 'A photo of a whiteboard full of notes after a meeting.', correct: 'Upload an image',
+      why: 'Upload it and ask for a transcription — far faster than retyping, and it keeps the structure.' },
+    { scn: "Today's euro-to-dollar exchange rate for an invoice.", correct: 'Web search',
+      why: 'A number that changes by the minute needs live web search, not the model\'s training data.' },
+    { scn: 'A plain-English definition of "opportunity cost" for a blog intro.', correct: 'Type it',
+      why: "Evergreen concept — just ask. Forcing web search here only adds latency with no benefit." },
+    { scn: 'A hero image for that same blog post.', correct: 'Generate with DALL-E',
+      why: 'DALL-E gives you a fit-for-purpose visual in minutes instead of hunting stock photos.' }
+  ];
+  var router = document.getElementById('router');
+  ITEMS.forEach(function (it) {
+    var row = document.createElement('div');
+    row.className = 'rrow';
+    var btns = OPTS.map(function (o) { return '<button class="rbtn" data-o="' + o + '">' + o + '</button>'; }).join('');
+    row.innerHTML = '<div class="rrow-scn">' + it.scn + '</div><div class="rrow-btns">' + btns + '</div><div class="rrow-fb"></div>';
+    router.appendChild(row);
+    var fb = row.querySelector('.rrow-fb');
+    var rbtns = row.querySelectorAll('.rbtn');
+    var done = false;
+    rbtns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (done) return;
+        done = true;
+        var ok = b.dataset.o === it.correct;
+        rbtns.forEach(function (x) {
+          x.disabled = true;
+          if (x.dataset.o === it.correct) x.classList.add('right');
+        });
+        if (!ok) b.classList.add('wrong');
+        fb.innerHTML = (ok ? '' : '<b>' + it.correct + '.</b> ') + it.why;
+        fb.classList.add('show');
+      });
+    });
+  });
+})();
+</script>
 
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Search, image, & DALL-E: the multimodal features most users underuse\nTRACK: Chatgpt Mastery\n\nLESSON CONTENT SUMMARY:\nSearch, image, & DALL-E: the multimodal features most users underuse \u2014 LearningGPT L LearningGPT \u2190 ChatGPT Mastery Lesson 07 \u00b7 ChatGPT Mastery Pro ~11 min read 3 workflows Multimodal ChatGPT: the Swiss army knife. ChatGPT isn't just a text AI anymore. It searches the web, analyzes images you upload, and generates images via DALL-E. Most users still treat it like text-only. This lesson covers the three multimodal workflows where the integration genuinely changes the work. The mental model Multimodal isn't a feature \u2014 it's a capability you forget exists. ChatGPT can now see what you see, read what you point at, and generate images for what you describe. Most users default to typing as if it's still 2023. The workflows below are the ones where breaking out of text saves real time. Workflow 01 Image input: photo, screenshot, document 1 Upload an image, ask anything ChatGPT can read text in images, describe what's in them, extract structured data, and answer questions about them. The prompt that works Image use cases (Upload screenshot of error message) What's causing this and how do I fix it? (Upload photo of a whiteboard) Transcribe everything written here. (Upload an Excel chart) What's the headline finding and what's misleading? Best use cases Error message debugging Whiteboard photo transcription Receipt and invoice processing Reading documents you don't want to retype Analyzing charts or data visualizations Image processing is generally accurate but can misread handwriting, low-quality photos, and dense charts. Verify the transcription against the original. Time savings: Manual transcription/data entry: gone for many use cases. Workflow 02 Web search: stop guessing, start finding 2 Trigger search when freshness matters ChatGPT searches the web automatically for time-sensitive questions, or you can force it. The prompt that works Search-forcing prompts Search the web for the current [stat/fact/news] on [topic]. With current information from the web, answer: [question that needs fresh data]. Best use cases Current events and breaking news Recent product updates and prices Verifying time-sensitive claims Research that needs sources Web search adds latency and cost. For evergreen questions (concepts, definitions, fundamentals), don't force search \u2014 it's slower with no benefit. Time savings: Out-of-date answers: avoided when it matters. Workflow 03 DALL-E for work, not just art 3 Generate visual assets for real work DALL-E can produce diagrams, mockups, illustrations, social images. Not perfect, but often good enough for internal use or starting points. The prompt that works Work prompts Generate a simple flowchart showing 4 stages: input, processing, review, output. Clean, minimal, blue accent. Create a social media graphic: 'AI Mastery for Knowledge Workers' as the headline, modern dark theme, abstract geometric background. Generate a hero image for a blog post about productivity \u2014 calm, focused, person at a desk. Best use cases Internal slide deck\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Search, image, & DALL-E: the multimodal features most users underuse\nTRACK: ChatGPT Mastery (Lesson 6, Pro)\n\nLESSON CONTENT SUMMARY:\nChatGPT is multimodal — it can read images you upload, search the live web, and generate images (DALL-E). Most users default to text and forget the rest. Three workflows:\n\n(1) Image input — upload a screenshot, photo, whiteboard, receipt, or chart and ask anything: debug an error message, transcribe a whiteboard, extract data from a receipt, or critique a chart ('what's the headline finding and what's misleading?'). Limit: it can misread handwriting, low-quality photos, and dense charts — verify the transcription against the original.\n\n(2) Web search — ChatGPT searches automatically for time-sensitive questions, or you force it ('search the web for the current X'). Best for current events, recent prices/products, verifying time-sensitive claims, research needing sources. Limit: search adds latency and cost — for evergreen questions (concepts, definitions, fundamentals) don't force it; it's slower with no benefit.\n\n(3) DALL-E for work, not just art — diagrams, flowcharts, mockups, blog hero images, social graphics, mock UI. Good enough for internal use or a starting point. Limits: it's bad at text inside images (misspells), real faces (don't use for real people), and exact brand colors (give hex codes but expect approximation).\n\nThe throughline: pick the input that fits the task — and sometimes that's still just typing. The habit: for one workday, deliberately use a non-text capability whenever the chance arises.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more\n- Be practical — give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only — no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -244,27 +388,21 @@ Generate a hero image for a blog post about productivity — calm, focused, pers
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -273,7 +411,6 @@ Generate a hero image for a blog post about productivity — calm, focused, pers
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -282,7 +419,6 @@ Generate a hero image for a blog post about productivity — calm, focused, pers
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

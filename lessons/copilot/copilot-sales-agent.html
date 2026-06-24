@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#2c7be5" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/copilot/copilot-sales-agent" />
 <meta property="og:title" content="Dynamics 365 Sales Agent — pipeline operations on autopilot" />
@@ -30,90 +30,116 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
 .logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
 .nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
-.lesson { padding: 50px 0 100px; }
-.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+
+/* ── INTERACTIVE LESSON SHELL ── */
+.ilesson { padding: 46px 0 100px; }
+.lesson-meta { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
 .lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(44,123,229,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(44,123,229,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
 .lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
-.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
-.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #2c7be5 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
-.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
-.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #2c7be5, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(44,123,229,0.1); border: 1px solid rgba(44,123,229,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
+.ilesson h1 { font-size: clamp(31px, 4.5vw, 44px); font-weight: 800; line-height: 1.14; letter-spacing: -0.02em; margin: 0 0 18px; }
+.ilesson h1 .grad { background: linear-gradient(135deg, #2c7be5 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.ilesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.12em; }
+.deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 30px; padding-bottom: 26px; border-bottom: 1px solid var(--line); }
+
+.progwrap { position: sticky; top: 59px; z-index: 50; background: rgba(10,10,26,0.9); backdrop-filter: blur(8px); padding: 14px 0 12px; margin-bottom: 6px; }
+.progbar { height: 6px; background: rgba(255,255,255,0.07); border-radius: 999px; overflow: hidden; }
+.progfill { height: 100%; width: 0%; background: linear-gradient(90deg, #2c7be5, #7c5cff); border-radius: 999px; transition: width .4s cubic-bezier(.4,0,.2,1); }
+.progmeta { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--text-mute); margin-top: 7px; letter-spacing: 0.3px; }
+
+.step { display: none; animation: stepIn .4s ease; }
+.step.active { display: block; }
+@keyframes stepIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.step-k { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin: 26px 0 6px; }
+.step h2 { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; line-height: 1.25; }
+.step h3 { font-size: 18px; font-weight: 600; margin: 22px 0 9px; }
+.step p { font-size: 16.5px; color: var(--text); margin: 0 0 16px; }
+.step strong { font-weight: 700; } .step em { font-style: italic; }
+
+.card { background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 22px 26px; margin: 20px 0; }
+.card p:last-child { margin-bottom: 0; }
+.pcard { background: var(--bg-soft); border: 1px solid var(--line); border-left: 3px solid var(--track); border-radius: 0 var(--radius) var(--radius) 0; padding: 14px 16px; margin-bottom: 11px; }
+.pcard .pn { font-size: 15px; font-weight: 700; color: var(--text); }
+.pcard .pd { font-size: 13.5px; color: var(--text-dim); margin-top: 4px; line-height: 1.5; }
+.prompt-example { background: rgba(0,0,0,0.32); border: 1px solid var(--line); border-radius: 10px; padding: 13px 15px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
 .prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 13px 16px; margin: 16px 0; font-size: 14.5px; }
 .gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #2c7be5, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
-.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
-.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
-.checklist li:first-child { border-top: none; padding-top: 0; }
-.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+
+/* choices */
+.choices { display: flex; flex-direction: column; gap: 10px; margin: 16px 0 8px; }
+.choice { text-align: left; background: var(--surface); border: 1px solid var(--line-strong); color: var(--text); border-radius: 12px; padding: 14px 16px; font-size: 15px; font-family: inherit; cursor: pointer; transition: border-color .15s, background .15s, transform .1s; line-height: 1.5; }
+.choice:hover:not(:disabled) { border-color: var(--brand-2); transform: translateX(2px); }
+.choice:disabled { cursor: default; }
+.choice.correct { border-color: var(--accent); background: rgba(68,224,164,0.1); }
+.choice.wrong { border-color: var(--danger); background: rgba(255,107,138,0.08); opacity: 0.75; }
+.fb { margin: 6px 0 0; padding: 14px 16px; border-radius: 12px; font-size: 14.5px; line-height: 1.6; display: none; }
+.fb.show { display: block; animation: stepIn .3s ease; }
+.fb.good { background: rgba(68,224,164,0.1); border: 1px solid rgba(68,224,164,0.3); }
+.fb.bad { background: rgba(255,181,71,0.08); border: 1px solid rgba(255,181,71,0.3); }
+.fb b { color: var(--text); }
+
+/* signature: lead router */
+.icp { background: rgba(44,123,229,0.08); border: 1px solid rgba(44,123,229,0.28); border-radius: 12px; padding: 14px 16px; margin: 16px 0; }
+.icp .ih { font-size: 11px; text-transform: uppercase; letter-spacing: 0.9px; color: var(--track); font-weight: 700; margin-bottom: 8px; }
+.icp ul { list-style: none; padding: 0; margin: 0; }
+.icp li { font-size: 13.5px; color: var(--text-dim); padding: 4px 0 4px 16px; position: relative; line-height: 1.45; }
+.icp li::before { content: '▸'; position: absolute; left: 0; color: var(--brand-2); }
+.icp li b { color: var(--text); }
+.lead { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; transition: border-color .2s; }
+.lead.ok { border-color: rgba(68,224,164,0.45); }
+.lead.bad { border-color: rgba(255,181,71,0.45); }
+.lead-role { font-weight: 700; font-size: 14.5px; color: var(--text); }
+.lead-meta { font-size: 13px; color: var(--text-dim); margin-top: 3px; line-height: 1.45; }
+.lead-action { font-size: 12.5px; color: var(--brand-2); margin-top: 6px; }
+.rbtns { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; margin-top: 11px; }
+@media (max-width: 540px){ .rbtns { grid-template-columns: 1fr 1fr; } }
+.rb { background: rgba(255,255,255,0.04); border: 1px solid var(--line-strong); color: var(--text-dim); border-radius: 8px; padding: 7px 6px; font-size: 12.5px; font-weight: 600; font-family: inherit; cursor: pointer; transition: all .14s; }
+.rb:hover:not(:disabled) { border-color: var(--brand-2); color: var(--text); }
+.rb.sel { background: rgba(124,92,255,0.2); border-color: var(--brand); color: var(--text); }
+.rb.correct { background: rgba(68,224,164,0.18); border-color: var(--accent); color: var(--text); }
+.rb.wrong { background: rgba(255,107,138,0.14); border-color: var(--danger); color: var(--text); }
+.rb:disabled { cursor: default; }
+.lead-verdict { font-size: 12.5px; margin-top: 9px; color: var(--text-dim); display: none; line-height: 1.45; }
+.lead-verdict.show { display: block; }
+.lead-verdict b { color: var(--text); }
+
+.step-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 30px; gap: 12px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #7c5cff, #5b8def); color: white; padding: 13px 24px; border-radius: 11px; font-weight: 600; font-size: 15px; border: none; font-family: inherit; cursor: pointer; box-shadow: 0 6px 22px rgba(124,92,255,0.3); transition: transform .15s, opacity .15s; }
+.btn:hover:not(:disabled) { transform: translateY(-1px); color: white; }
+.btn:disabled { opacity: 0.4; cursor: default; box-shadow: none; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.btn-back { background: none; border: none; color: var(--text-mute); font-size: 14px; cursor: pointer; font-family: inherit; padding: 8px 4px; }
+.btn-back:hover { color: var(--text); } .btn-back:disabled { opacity: 0; cursor: default; }
+
+.complete { text-align: center; padding: 14px 0 0; }
+.complete .big { font-size: 48px; margin-bottom: 6px; }
+.checklist { margin: 26px 0; padding: 24px 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); text-align: left; }
+.checklist h3 { margin: 0 0 6px; font-size: 17px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 30px; position: relative; font-size: 15px; border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 13px; width: 18px; height: 18px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
-.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
-.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.challenge { margin: 24px 0; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); padding: 28px; text-align: left; }
+.challenge h3 { margin: 0 0 8px; font-size: 19px; }
+.next-up { margin: 26px 0 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); text-align: left; }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 8px; }
 .next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
-.next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
+.next-up h3 { margin: 12px 0 8px; font-size: 19px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+
 footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -142,7 +168,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -154,82 +179,139 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <a href="/lessons/copilot/" class="nav-back">← Copilot Mastery</a>
   </div>
 </nav>
-<article class="lesson">
-  <div class="container">
+
+<div class="container">
+  <div class="ilesson">
     <div class="lesson-meta">
       <span class="chip">Agents · Lesson 05</span>
       <span class="chip chip-pro">Pro</span>
-      <span>~12 min read</span>
+      <span>~12 min</span>
       <span class="dot"></span>
-      <span>Sales ops automation</span>
+      <span>Interactive</span>
     </div>
     <h1>Sales Agent: <span class="grad serif">pipeline that works while you sell.</span></h1>
-    <p class="deck">Microsoft has a family of sales-focused agents inside Dynamics 365 and Copilot: the Sales Agent (lead research and outreach), Sales Qualification Agent (lead scoring and qualifying), and Sales Development Agent (autonomous pipeline building). For revenue teams, they handle the operational work that used to consume half a rep's day.</p>
-    <h2><span class="num">Workflow 01</span> Pre-call research automation</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>Sales Agent prepares your next call</h3></div><p>The Sales Agent's first job is making you walk into every meeting prepared. Before each call, it produces a structured brief without you asking.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Auto-brief</span>Configure Sales Agent to auto-brief 2 hours before each meeting in your Dynamics CRM:
+    <p class="deck">Microsoft has a family of sales agents inside Dynamics 365 and Copilot — the Sales Agent (research and outreach), the Sales Qualification Agent (lead scoring), and the Sales Development Agent (autonomous outbound). They handle the operational grind that eats half a rep's day. The skill is steering them: feeding good criteria, checking what they surface, and keeping a human on anything that touches a customer.</p>
 
-For each scheduled customer meeting, produce:
-1. **Account summary** — what they do, size, industry
-2. **Relationship history** — how many touchpoints, last interaction summary
-3. **Open opportunities** — stage, value, expected close
-4. **Recent news** — funding, leadership changes, product launches in last 60 days
-5. **Three smart questions to ask** based on stage and recent context
-6. **One risk to flag** — any gut-check concerns from past interactions
+    <div class="progwrap">
+      <div class="progbar"><div class="progfill" id="prog"></div></div>
+      <div class="progmeta"><span id="progStep">Step 1 of 5</span><span id="progPct">0% complete</span></div>
+    </div>
 
-Delivery: as a Teams message 2 hours before the meeting, with link to the full CRM record.</div><h4>Best use cases</h4><ul><li>Daily call prep for SDRs/AEs</li><li>Pre-QBR research for account executives</li><li>Renewal call prep for customer success</li><li>Cold call prep for prospecting outbound</li></ul><div class="gotcha">Trust but verify. Sales Agent's 'recent news' relies on web sources — sometimes outdated, sometimes confused between similarly-named companies. Always sanity-check before relying on it in conversation.</div><div class="savings"><strong>Time savings:</strong> Per-meeting prep: 15-30 min → 0 (already prepared).</div></div><h2><span class="num">Workflow 02</span> Lead qualification at scale</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>Sales Qualification Agent for inbound triage</h3></div><p>Most inbound leads aren't worth your top reps' time. Sales Qualification Agent scores leads, runs basic enrichment, and routes only the qualified ones to humans.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Lead qualification</span>Configure Sales Qualification Agent to handle inbound leads:
-
-1. Run enrichment on each new lead: company size, industry, technographic data, funding stage
-2. Score against ICP criteria (your ideal customer profile):
-   - Company size: [your range]
-   - Industry: [your target industries]
-   - Tech stack: [yours/your competitors]
-   - Decision-maker level: [your buyer persona]
-3. Auto-classify:
-   - **Hot** — meets ICP, high intent → route to AE within 1 hour
-   - **Warm** — meets some ICP criteria → SDR follow-up within 1 day
-   - **Nurture** — doesn&#x27;t match now → marketing nurture sequence
-   - **Disqualify** — competitors, students, etc. → polite decline email
-4. Generate the first-touch email draft for Hot/Warm leads</div><h4>Best use cases</h4><ul><li>Inbound lead triage at scale</li><li>Outbound lead enrichment before outreach</li><li>Event lead processing post-conference</li><li>MQL → SQL routing automation</li></ul><div class="gotcha">Test the disqualification logic carefully — falsely disqualifying a real opportunity is expensive. Start with conservative thresholds and tune them based on results.</div><div class="savings"><strong>Time savings:</strong> Lead triage: hours per week → minutes of human oversight.</div></div><h2><span class="num">Workflow 03</span> Pipeline hygiene and follow-up drafting</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>Sales Agent keeps your pipeline current</h3></div><p>The chore that kills reps' Friday afternoons — updating CRM, drafting follow-ups, flagging stuck deals. Sales Agent automates the operational layer.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Pipeline review</span>Have Sales Agent run a weekly pipeline review every Friday at 2pm:
-
-1. For each active opportunity:
-   - Days since last meaningful activity (email, call, meeting)
-   - Whether stage is updated to current reality
-   - Whether next-step field is current
-   - Whether close date is realistic given stage
-
-2. Flag for action:
-   - Stale deals (&gt;14 days since activity) — propose a follow-up email draft
-   - Stuck deals (in same stage &gt;30 days) — propose a deal review meeting
-   - Close dates in the past — escalate to your manager for triage
-
-3. Produce a Friday summary: deals needing your action, drafts ready to send, deals to consider closing/losing
-
-Don&#x27;t auto-send anything — produce drafts and proposals.</div><h4>Best use cases</h4><ul><li>Weekly pipeline hygiene routine</li><li>End-of-quarter close-out prep</li><li>Deal review prep for sales meetings</li><li>Forecast accuracy improvement</li></ul><div class="gotcha">Never auto-send follow-up emails. Sales Agent's drafts are good but generic; your real voice and account-specific context matter for relationships.</div><div class="savings"><strong>Time savings:</strong> Friday pipeline hygiene: 90 min → 20 min reviewing proposed actions.</div></div><div class="callout"><span class="lbl">Sales agent variants</span><p>Microsoft offers several variants: Dynamics 365 Sales Agent (full pipeline), Sales Qualification Agent (lead scoring), and Sales Development Agent (autonomous outbound — Frontier Program). Pick based on your team's needs and Dynamics 365 license tier.</p></div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Pick one sales chore and automate it</h2>
-      <p>Identify the most repetitive sales task you (or your team) do each week — call prep, pipeline updates, lead enrichment. Configure the relevant Sales agent to handle it. Track time saved over 4 weeks. Real number is usually 5-10 hours/rep/week.</p>
-      <div class="btn-row">
-        <a href="/lessons/copilot/" class="btn">Back to Copilot Mastery →</a>
-        <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+    <!-- STEP 1 — predict -->
+    <section class="step active" data-step="1">
+      <span class="step-k">The mental model</span>
+      <h2>It does the ops work — you own the judgment</h2>
+      <p>These agents prep your calls, score your leads, and keep your pipeline current. They're fast and tireless. They also pull from web sources that can be stale or confused between similarly-named companies — so the moment that matters is what you do with what they hand you.</p>
+      <h3>Predict first</h3>
+      <p>Your pre-call brief says the prospect "just closed a $40M funding round." You're about to open the call congratulating them. What should you do first?</p>
+      <div class="choices" id="c1">
+        <button class="choice" onclick="pick(this,1,'a')">Lead with the congratulations — the brief is detailed, so it's reliable</button>
+        <button class="choice" onclick="pick(this,1,'b')">Quickly verify it — agent "recent news" can be stale or about a same-named company</button>
+        <button class="choice" onclick="pick(this,1,'c')">Skip the brief entirely and wing the call</button>
       </div>
-    </div>
-    <div class="checklist">
-      <h3>What you can do now</h3>
-      <ul>
-        <li>Configure pre-call briefs to auto-fire 2 hours before meetings</li>
-        <li>Sanity-check Sales Agent's 'recent news' before using in calls</li>
-        <li>Tune lead qualification thresholds based on actual results</li>
-        <li>Never auto-send follow-up emails — drafts only</li>
-        <li>Use the Friday pipeline review pattern to catch stuck deals</li>
-      </ul>
-    </div>
-    <div class="next-up">
-      <span class="pro-tag">Pro</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in Copilot Mastery</div>
-      <h3>Lesson 06 · Customer Service Agent — case management on autopilot</h3>
-      <p>Dynamics 365 Customer Service Agent handles case triage, response drafting, and SLA management. The agent that lets a 5-person support team handle the volume of a 15-person one. <a href="/lessons/copilot/">See the track →</a></p>
-    </div>
+      <div class="fb" id="fb1"></div>
+      <div class="step-nav">
+        <button class="btn-back" disabled>← Back</button>
+        <button class="btn" id="next1" disabled onclick="go(2)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- STEP 2 — three agents (show) -->
+    <section class="step" data-step="2">
+      <span class="step-k">The family</span>
+      <h2>Three agents, three jobs</h2>
+      <div class="pcard"><div class="pn">Sales Agent</div><div class="pd">Pre-call briefs (account, history, open deals, recent news, smart questions) and weekly pipeline hygiene — flagging stale and stuck deals and drafting the follow-ups.</div></div>
+      <div class="pcard"><div class="pn">Sales Qualification Agent</div><div class="pd">Enriches and scores inbound leads against your ICP, then routes them — hot leads to an AE fast, the rest to nurture or a polite decline.</div></div>
+      <div class="pcard"><div class="pn">Sales Development Agent</div><div class="pd">Autonomous outbound — builds pipeline by researching and reaching out at scale (Frontier Program). The most hands-off, so the most worth supervising.</div></div>
+      <div class="prompt-example"><span class="label">Auto-brief · 2 hours before each meeting</span>For each scheduled meeting: account summary, relationship history, open opportunities, recent news (last 60 days), three smart questions for this stage, and one risk to flag. Deliver as a Teams message with a link to the CRM record.</div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(1)">← Back</button>
+        <button class="btn" onclick="go(3)">Route some leads →</button>
+      </div>
+    </section>
+
+    <!-- STEP 3 — signature: lead router -->
+    <section class="step" data-step="3">
+      <span class="step-k">Do it · route the leads</span>
+      <h2>Score four inbound leads against the ICP</h2>
+      <p>This is the Qualification Agent's core job — and the criteria you set are what make it good. Here's the profile. Route each lead the way you'd want the agent to.</p>
+      <div class="icp">
+        <div class="ih">Your ideal customer profile</div>
+        <ul>
+          <li><b>Size:</b> 200–5,000 employees</li>
+          <li><b>Industry:</b> SaaS or fintech</li>
+          <li><b>Buyer:</b> Director level or above, in IT or Operations</li>
+          <li><b>Exclude:</b> competitors, students/researchers</li>
+        </ul>
+      </div>
+      <div id="leads"></div>
+      <button class="btn" id="scoreBtn" disabled onclick="scoreLeads()" style="width:100%;justify-content:center">Score my routing</button>
+      <div class="fb" id="fb3"></div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(2)">← Back</button>
+        <button class="btn" id="next3" disabled onclick="go(4)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- STEP 4 — discipline + pick -->
+    <section class="step" data-step="4">
+      <span class="step-k">The guardrails</span>
+      <h2>Where a human stays in the loop</h2>
+      <p>The Sales Agent will gladly run your Friday pipeline review — flag stale deals, propose deal reviews for stuck ones, and draft follow-ups for everything that's gone quiet.</p>
+      <div class="gotcha">Tune disqualification thresholds conservatively. Falsely disqualifying a real opportunity is far more expensive than letting a weak lead through — start strict on "disqualify," loose elsewhere, and tune from results.</div>
+      <h3>The call</h3>
+      <p>Sales Agent drafted twelve follow-up emails for your stale deals. What's the right move?</p>
+      <div class="choices" id="c4">
+        <button class="choice" onclick="pick(this,4,'a')">Let it auto-send them — that's the whole point of automation</button>
+        <button class="choice" onclick="pick(this,4,'b')">Review and personalize each, then send yourself — drafts only, never auto-send</button>
+        <button class="choice" onclick="pick(this,4,'c')">Delete them and write all twelve from scratch</button>
+      </div>
+      <div class="fb" id="fb4"></div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(3)">← Back</button>
+        <button class="btn" id="next4" disabled onclick="go(5)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- STEP 5 — completion -->
+    <section class="step" data-step="5">
+      <div class="complete">
+        <div class="big">📈</div>
+        <span class="step-k">Lesson complete</span>
+        <h2>The ops grind runs itself — you stay on the relationships</h2>
+      </div>
+      <div class="checklist">
+        <h3>What you can do now</h3>
+        <ul>
+          <li>Auto-fire pre-call briefs a couple of hours before each meeting</li>
+          <li>Sanity-check agent "recent news" before you say it on a call</li>
+          <li>Feed the Qualification Agent a sharp ICP and tune thresholds from results</li>
+          <li>Keep "disqualify" strict — a false disqualify is the expensive mistake</li>
+          <li>Treat follow-up drafts as drafts — review, personalize, then send</li>
+        </ul>
+      </div>
+      <div class="challenge">
+        <h3>Your move: automate one sales chore</h3>
+        <p>Pick the most repetitive weekly task you or your team do — call prep, pipeline updates, lead enrichment. Configure the right Sales agent to handle it, keep yourself on the review step, and track the hours saved over four weeks.</p>
+        <div class="btn-row">
+          <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+        </div>
+      </div>
+      <div class="next-up">
+        <span class="pro-tag">Pro</span>
+        <div class="lbl" style="margin-top:12px">Up next in Copilot Mastery</div>
+        <h3>Agents · Lesson 06 — Customer Service Agent: case management on autopilot</h3>
+        <p>The Dynamics 365 Customer Service Agent handles case triage, response drafting from your knowledge base, and SLA management — letting a small support team carry the volume of a much larger one.</p>
+        <div class="btn-row">
+          <a href="/lessons/copilot/copilot-service-agent" class="btn">Continue to Agents · Lesson 06 · Service Agent →</a>
+          <a href="/lessons/copilot/" class="btn ghost">Back to all lessons</a>
+        </div>
+      </div>
+    </section>
+
   </div>
-</article>
+</div>
+
 <footer>
   <div class="footer-inner">
     <div>© 2026 LearningGPT · Independent. Not affiliated with Microsoft.</div>
@@ -242,7 +324,6 @@ Don&#x27;t auto-send anything — produce drafts and proposals.</div><h4>Best us
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -254,10 +335,10 @@ Don&#x27;t auto-send anything — produce drafts and proposals.</div><h4>Best us
     <button class="coach-close" id="coachClose">✕</button>
   </div>
   <div class="coach-messages" id="coachMessages">
-    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson on the Dynamics Sales agents. Ask me how to set up pre-call briefs, build an ICP for lead scoring, or where to keep a human in the loop. What's your sales workflow?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -265,15 +346,127 @@ Don&#x27;t auto-send anything — produce drafts and proposals.</div><h4>Best us
   </div>
 </div>
 
+<script id="lessonScript">
+/* ── stepper ── */
+var TOTAL = 5;
+var cur = 1;
+function go(n){
+  if(n<1||n>TOTAL) return;
+  document.querySelector('.step[data-step="'+cur+'"]').classList.remove('active');
+  cur = n;
+  document.querySelector('.step[data-step="'+cur+'"]').classList.add('active');
+  var pct = Math.round(((cur-1)/(TOTAL-1))*100);
+  document.getElementById('prog').style.width = pct+'%';
+  document.getElementById('progStep').textContent = 'Step '+cur+' of '+TOTAL;
+  document.getElementById('progPct').textContent = pct+'% complete';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
 
-<script id="coachScript">
+/* ── predict / pick ── */
+var pickMsg = {
+  '1': {
+    correct: 'b',
+    good: '<b>Verify first.</b> Agent "recent news" comes from web sources that can be months stale or about a different company with the same name. Opening with congratulations on funding that didn\'t happen — or happened to someone else — is a credibility hit. A 20-second check protects you.',
+    bad: '<b>Careful.</b> The brief is a helpful starting point, not a fact-checked record. "Recent news" can be stale or confused between same-named companies. Verify the headline fact before you build your opener on it — and don\'t throw the brief out either.'
+  },
+  '4': {
+    correct: 'b',
+    good: '<b>Drafts only.</b> The drafts are a fast first pass, but they\'re generic — your voice and account-specific context are what keep the relationship. Review and personalize each, then send yourself. Never let it auto-send to customers.',
+    bad: '<b>Not quite.</b> Don\'t auto-send (the drafts are generic and customer-facing), but don\'t toss them either. Review and personalize each one, then send — the agent saves you the blank page, you add the relationship.'
+  }
+};
+function pick(btn, step, val){
+  var box = document.getElementById('c'+step);
+  if(box.dataset.done) return;
+  box.dataset.done = '1';
+  var info = pickMsg[String(step)];
+  Array.prototype.forEach.call(box.querySelectorAll('.choice'), function(b){
+    b.disabled = true;
+    var v = b.getAttribute('onclick').match(/'([a-z])'\)/)[1];
+    if(v === info.correct) b.classList.add('correct');
+    else if(b === btn) b.classList.add('wrong');
+  });
+  var fb = document.getElementById('fb'+step);
+  var ok = val === info.correct;
+  fb.className = 'fb show ' + (ok ? 'good' : 'bad');
+  fb.innerHTML = ok ? info.good : info.bad;
+  document.getElementById('next'+step).disabled = false;
+}
+
+/* ── signature: lead router ── */
+var ROUTES = ['Hot','Warm','Nurture','Disqualify'];
+var LEADS = [
+  { role:'VP of IT · 1,200-person fintech', meta:'Director+ buyer, right size, target industry.', action:'Requested a demo yesterday', correct:'Hot',
+    why:'Squarely in ICP with high intent — get it to an AE fast.' },
+  { role:'Operations Manager · 800-person SaaS', meta:'Right size and industry, but a more junior contact.', action:'Downloaded a whitepaper', correct:'Warm',
+    why:'Fits the profile but the contact is below buyer level and the action is low-intent — SDR follow-up.' },
+  { role:'Founder · 6-person startup', meta:'Far below the size range; could grow into it later.', action:'Joined the newsletter', correct:'Nurture',
+    why:'Out of ICP today and low intent — keep them warm in nurture, not on a rep\'s desk.' },
+  { role:'Head of Sales · a direct competitor', meta:'A competitor, explicitly excluded by the ICP.', action:'Booked a demo', correct:'Disqualify',
+    why:'A competitor fishing for intel — polite decline, no demo.' }
+];
+var rpick = {};
+var rgraded = false;
+function renderLeads(){
+  var wrap = document.getElementById('leads');
+  wrap.innerHTML = '';
+  LEADS.forEach(function(l, i){
+    var div = document.createElement('div');
+    div.className = 'lead';
+    div.id = 'lead'+i;
+    var btns = ROUTES.map(function(r){
+      return '<button class="rb" data-r="'+r+'" onclick="rroute('+i+',\''+r+'\',this)">'+r+'</button>';
+    }).join('');
+    div.innerHTML =
+      '<div class="lead-role">'+l.role+'</div>'+
+      '<div class="lead-meta">'+l.meta+'</div>'+
+      '<div class="lead-action">⤷ '+l.action+'</div>'+
+      '<div class="rbtns">'+btns+'</div>'+
+      '<div class="lead-verdict" id="lv'+i+'"></div>';
+    wrap.appendChild(div);
+  });
+}
+function rroute(i, r, btn){
+  if(rgraded) return;
+  rpick[i] = r;
+  btn.parentNode.querySelectorAll('.rb').forEach(function(b){ b.classList.remove('sel'); });
+  btn.classList.add('sel');
+  document.getElementById('scoreBtn').disabled = (Object.keys(rpick).length < LEADS.length);
+}
+function scoreLeads(){
+  if(rgraded) return;
+  rgraded = true;
+  var right = 0;
+  LEADS.forEach(function(l, i){
+    var ok = rpick[i] === l.correct;
+    if(ok) right++;
+    var row = document.getElementById('lead'+i);
+    row.classList.add(ok ? 'ok' : 'bad');
+    row.querySelectorAll('.rb').forEach(function(b){
+      b.disabled = true;
+      if(b.dataset.r === l.correct) b.classList.add('correct');
+      else if(b.dataset.r === rpick[i]) b.classList.add('wrong');
+    });
+    var lv = document.getElementById('lv'+i);
+    lv.className = 'lead-verdict show';
+    lv.innerHTML = (ok ? '✓ ' : '→ ') + '<b>'+l.correct+'.</b> ' + l.why;
+  });
+  document.getElementById('scoreBtn').disabled = true;
+  document.getElementById('scoreBtn').textContent = 'Scored';
+  var fb = document.getElementById('fb3');
+  fb.className = 'fb show good';
+  fb.innerHTML = 'You routed <b>'+right+' of 4</b> the way the ICP implies. The agent does this across thousands of leads in seconds — but only as well as the criteria you give it. A sharp ICP and a strict "disqualify" rule are what make it trustworthy.';
+  document.getElementById('next3').disabled = false;
+}
+renderLeads();
+
+/* ── AI COACH ── */
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Dynamics 365 Sales Agent \u2014 pipeline operations on autopilot\nTRACK: Copilot Mastery\n\nLESSON CONTENT SUMMARY:\nDynamics 365 Sales Agent \u2014 pipeline operations on autopilot \u2014 LearningGPT L LearningGPT \u2190 Copilot Mastery Agents \u00b7 Lesson 05 Pro ~12 min read Sales ops automation Sales Agent: pipeline that works while you sell. Microsoft has a family of sales-focused agents inside Dynamics 365 and Copilot: the Sales Agent (lead research and outreach), Sales Qualification Agent (lead scoring and qualifying), and Sales Development Agent (autonomous pipeline building). For revenue teams, they handle the operational work that used to consume half a rep's day. Workflow 01 Pre-call research automation 1 Sales Agent prepares your next call The Sales Agent's first job is making you walk into every meeting prepared. Before each call, it produces a structured brief without you asking. The prompt that works Auto-brief Configure Sales Agent to auto-brief 2 hours before each meeting in your Dynamics CRM: For each scheduled customer meeting, produce: 1. **Account summary** \u2014 what they do, size, industry 2. **Relationship history** \u2014 how many touchpoints, last interaction summary 3. **Open opportunities** \u2014 stage, value, expected close 4. **Recent news** \u2014 funding, leadership changes, product launches in last 60 days 5. **Three smart questions to ask** based on stage and recent context 6. **One risk to flag** \u2014 any gut-check concerns from past interactions Delivery: as a Teams message 2 hours before the meeting, with link to the full CRM record. Best use cases Daily call prep for SDRs/AEs Pre-QBR research for account executives Renewal call prep for customer success Cold call prep for prospecting outbound Trust but verify. Sales Agent's 'recent news' relies on web sources \u2014 sometimes outdated, sometimes confused between similarly-named companies. Always sanity-check before relying on it in conversation. Time savings: Per-meeting prep: 15-30 min \u2192 0 (already prepared). Workflow 02 Lead qualification at scale 2 Sales Qualification Agent for inbound triage Most inbound leads aren't worth your top reps' time. Sales Qualification Agent scores leads, runs basic enrichment, and routes only the qualified ones to humans. The prompt that works Lead qualification Configure Sales Qualification Agent to handle inbound leads: 1. Run enrichment on each new lead: company size, industry, technographic data, funding stage 2. Score against ICP criteria (your ideal customer profile): - Company size: [your range] - Industry: [your target industries] - Tech stack: [yours/your competitors] - Decision-maker level: [your buyer persona] 3. Auto-classify: - **Hot** \u2014 meets ICP, high intent \u2192 route to AE within 1 hour - **Warm** \u2014 meets some ICP criteria \u2192 SDR follow-up within 1 day - **Nurture** \u2014 doesn&#x27;t match now \u2192 marketing nurture sequence - **Disqualify** \u2014 competitors, students, etc. \u2192 polite decline email 4. Generate the first-touch email draft for Hot/Warm leads Best use cases Inbound lead triage at scale Outbound lead enrichment before outreach Event lead processing post-conference MQL \u2192 S\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Dynamics 365 Sales Agent — pipeline operations on autopilot\nTRACK: Copilot Mastery (Agents block, Lesson 05)\n\nLESSON CONTENT SUMMARY:\nMicrosoft offers a family of sales agents in Dynamics 365 and Copilot. The skill is steering them with good criteria, verifying what they surface, and keeping a human on anything customer-facing.\n\nTHE THREE AGENTS:\n1. Sales Agent — pre-call research/briefs (account summary, relationship history, open opportunities, recent news, smart questions, a risk to flag) auto-delivered before meetings; plus weekly pipeline hygiene (flag stale deals >14 days, stuck deals >30 days in a stage, past-due close dates; draft follow-ups; propose deal reviews).\n2. Sales Qualification Agent — enriches and scores inbound leads against your ICP, then routes: Hot (meets ICP + high intent -> AE fast), Warm (partial fit -> SDR follow-up), Nurture (doesn't match now -> marketing nurture), Disqualify (competitors, students -> polite decline). Generates first-touch drafts for Hot/Warm.\n3. Sales Development Agent — autonomous outbound pipeline building at scale (Frontier Program); most hands-off, so most worth supervising.\n\nKEY DISCIPLINES:\n- Trust but verify 'recent news': it relies on web sources that can be stale or confused between similarly-named companies. Sanity-check a headline fact before using it on a call.\n- Never auto-send follow-up emails: the drafts are good but generic; your voice and account-specific context matter for the relationship. Review, personalize, then send.\n- Tune disqualification thresholds conservatively: falsely disqualifying a real opportunity is expensive. Keep 'disqualify' strict, be looser elsewhere, and tune from results.\n- The agent is only as good as the ICP/criteria you give it.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content.\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more.\n- Be practical — give real work examples when helpful.\n- If asked about something not in this lesson, briefly answer and point to where they can learn more.\n- Never make up Copilot/Dynamics features that don't exist.\n- Plain conversational text only — no markdown symbols like ** or ##.\n- Do not start responses with \"Great question!\" or similar filler phrases.";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -281,27 +474,21 @@ Don&#x27;t auto-send anything — produce drafts and proposals.</div><h4>Best us
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -310,7 +497,6 @@ Don&#x27;t auto-send anything — produce drafts and proposals.</div><h4>Best us
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -319,7 +505,6 @@ Don&#x27;t auto-send anything — produce drafts and proposals.</div><h4>Best us
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

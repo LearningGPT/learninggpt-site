@@ -4,16 +4,16 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ChatGPT Agent — autonomous task execution — LearningGPT</title>
-<meta name="description" content="ChatGPT Agent is the merged successor to Operator + Deep Research. Browse, click, type, research, deliver. Real autonomous work in your browser session." />
+<meta name="description" content="ChatGPT Agent is the merged successor to Operator + Deep Research. Browse, click, type, research, deliver — real autonomous work, with you in the loop on the high-stakes steps." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#10a37f" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/chatgpt/chatgpt-agent" />
 <meta property="og:title" content="ChatGPT Agent — autonomous task execution" />
-<meta property="og:description" content="ChatGPT Agent is the merged successor to Operator + Deep Research. Browse, click, type, research, deliver. Real autonomous work in your browser session." />
+<meta property="og:description" content="The agentic mode that merged Operator + Deep Research. Browse, click, research, deliver — with you in control of the high-stakes steps." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -34,86 +34,115 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
 .lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(16,163,127,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(16,163,127,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
 .lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
-.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
 .lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #10a37f 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .grad { background: linear-gradient(135deg, #10a37f 0%, #44e0a4 50%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 24px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.sec { margin: 46px 0 0; }
+.sec-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.lesson h2 { font-size: 27px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; }
 .lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
 .lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(16,163,127,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(16,163,127,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #10a37f, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(16,163,127,0.1); border: 1px solid rgba(16,163,127,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(16,163,127,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(16,163,127,0.25); border-radius: var(--radius-lg); padding: 36px; }
+
+/* ── COMPARE STRIP ── */
+.vs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: stretch; margin: 22px 0; }
+@media (max-width: 600px){ .vs { grid-template-columns: 1fr; } .vs .vs-mid { display:none; } }
+.vs-card { border-radius: var(--radius-lg); padding: 18px 20px; border: 1px solid var(--line); background: linear-gradient(180deg, var(--surface), var(--bg-soft)); }
+.vs-card.chat { border-color: rgba(124,92,255,0.3); }
+.vs-card.agent { border-color: rgba(16,163,127,0.35); }
+.vs-card .h { font-size: 15px; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+.vs-card .sub { font-size: 12px; color: var(--text-mute); margin-bottom: 10px; }
+.vs-card p { font-size: 14px; margin: 0; color: var(--text-dim); }
+.vs-mid { display: grid; place-items: center; font-size: 13px; font-weight: 800; color: var(--text-mute); }
+
+/* ── AGENT SIM ── */
+.agent { margin: 22px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden; background: #0d0d20; }
+.agent-task { padding: 16px 18px; border-bottom: 1px solid var(--line); background: rgba(16,163,127,0.06); }
+.agent-task .lbl { font-size: 10.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--track); }
+.agent-task .t { font-size: 15px; margin-top: 3px; }
+.agent-run { padding: 16px 18px; }
+.runbtn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg,#10a37f,#44e0a4); color: #042; border: none; border-radius: 10px; padding: 11px 20px; font-size: 14px; font-weight: 700; font-family: inherit; cursor: pointer; transition: transform .15s, opacity .15s; }
+.runbtn:hover:not(:disabled) { transform: translateY(-1px); }
+.runbtn:disabled { opacity: 0.5; cursor: default; }
+.activity { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; }
+.act { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--text-dim); opacity: 0; transform: translateY(6px); animation: actIn .3s ease forwards; }
+@keyframes actIn { to { opacity: 1; transform: none; } }
+.act .mk { width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0; display: grid; place-items: center; font-size: 11px; margin-top: 1px; }
+.act .mk.spin { border: 2px solid rgba(16,163,127,0.3); border-top-color: #10a37f; animation: spin .7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.act .mk.done { background: rgba(68,224,164,0.18); color: var(--accent); }
+.act.is-done { color: var(--text); }
+.gate { margin-top: 14px; padding: 16px; border-radius: 12px; background: rgba(255,181,71,0.08); border: 1px solid rgba(255,181,71,0.3); display: none; }
+.gate.show { display: block; animation: actIn .35s ease forwards; }
+.gate .g-h { font-size: 14.5px; font-weight: 700; color: var(--warn); margin-bottom: 4px; }
+.gate .g-b { font-size: 14px; color: var(--text-dim); margin-bottom: 12px; }
+.gate-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+.gbtn { font-size: 13px; font-weight: 700; font-family: inherit; padding: 9px 16px; border-radius: 9px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.04); color: var(--text-dim); cursor: pointer; transition: all .15s; }
+.gbtn.safe:hover { border-color: var(--accent); color: #b6f4dc; }
+.gbtn.risk:hover { border-color: var(--danger); color: #ffb0c1; }
+.gate-fb { margin-top: 12px; font-size: 13.5px; display: none; }
+.gate-fb.show { display: block; }
+.gate-fb.ok { color: #b6f4dc; }
+.gate-fb.warn { color: #ffd9a0; }
+.deliver { margin-top: 14px; padding: 14px 16px; border-radius: 12px; background: rgba(16,163,127,0.07); border: 1px solid rgba(16,163,127,0.28); font-size: 13.5px; display: none; }
+.deliver.show { display: block; animation: actIn .35s ease forwards; }
+.deliver .d-h { font-size: 11px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.deliver table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.deliver th, .deliver td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+.deliver th { color: var(--text-mute); font-weight: 600; }
+.deliver td.rank { color: var(--track); font-weight: 700; }
+
+/* ── QUIZ ── */
+.router { margin: 18px 0; }
+.rrow { padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); margin-bottom: 10px; }
+.rrow-scn { font-size: 14.5px; margin-bottom: 10px; }
+.rrow-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.rbtn { font-size: 12.5px; font-weight: 700; font-family: inherit; padding: 8px 16px; border-radius: 8px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); color: var(--text-dim); cursor: pointer; transition: all .15s; }
+.rbtn:hover:not(:disabled) { border-color: var(--track); color: var(--text); }
+.rbtn:disabled { cursor: default; }
+.rbtn.right { background: rgba(68,224,164,0.16); border-color: var(--accent); color: #b6f4dc; }
+.rbtn.wrong { background: rgba(255,107,138,0.12); border-color: var(--danger); color: #ffb0c1; }
+.rrow-fb { margin-top: 10px; font-size: 13px; color: var(--text-dim); display: none; }
+.rrow-fb.show { display: block; }
+.rrow-fb b { color: var(--track); }
+
+.callout { margin: 22px 0; padding: 20px 24px; background: linear-gradient(135deg, rgba(255,181,71,0.08), rgba(124,92,255,0.05)); border: 1px solid rgba(255,181,71,0.22); border-radius: var(--radius-lg); }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--warn); margin-bottom: 8px; }
+.callout p { margin: 0 0 8px; font-size: 15px; }
+.callout ul { margin: 8px 0 0; padding-left: 20px; font-size: 14.5px; color: var(--text-dim); }
+.callout li { margin-bottom: 5px; }
+.factbox { margin: 18px 0; padding: 16px 20px; border-radius: var(--radius-lg); background: var(--surface); border: 1px solid var(--line); font-size: 14px; color: var(--text-dim); }
+.factbox b { color: var(--text); }
+
+.challenge { margin: 46px 0 30px; background: linear-gradient(135deg, rgba(16,163,127,0.14), rgba(124,92,255,0.1)); border: 1px solid rgba(16,163,127,0.3); border-radius: var(--radius-lg); padding: 32px; }
 .challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #10a37f, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
 .challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #10a37f, #7c5cff); color: white; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: inherit; box-shadow: 0 6px 24px rgba(16,163,127,0.28); transition: transform .15s; text-decoration: none; }
+.btn:hover { transform: translateY(-1px); color: white; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.checklist { margin: 30px 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
 .checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
 .checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
 .checklist li:first-child { border-top: none; padding-top: 0; }
 .checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up { margin: 40px 0 0; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
 .next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
 .next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
 .next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
-.next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
-footer { border-top: 1px solid var(--line); padding: 30px 0; }
+footer { border-top: 1px solid var(--line); padding: 30px 0; margin-top: 40px; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -142,7 +171,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -154,71 +182,128 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <a href="/lessons/chatgpt/" class="nav-back">← ChatGPT Mastery</a>
   </div>
 </nav>
+
 <article class="lesson">
   <div class="container">
     <div class="lesson-meta">
-      <span class="chip">Agents · Lesson 01</span>
+      <span class="chip">Lesson 07 · ChatGPT Mastery</span>
       <span class="chip chip-pro">Pro</span>
-      <span>~12 min read</span>
+      <span>~12 min</span>
       <span class="dot"></span>
       <span>Browser + actions</span>
     </div>
     <h1>ChatGPT Agent: <span class="grad serif">real autonomy in your browser.</span></h1>
-    <p class="deck">ChatGPT Agent is the agentic mode that absorbed Operator and Deep Research into one unified system. It controls a virtual browser, fills forms, navigates websites, runs research, and delivers finished work. Different category from chatting with ChatGPT — you delegate a task, then come back to a result.</p>
-    <h2><span class="num">The mental model</span></h2><h3>Agent ≠ Chat. You're delegating a task, not having a conversation.</h3><p>Regular ChatGPT works in turns — you ask, it answers, you refine. ChatGPT Agent works in tasks — you describe an outcome, it works on it (sometimes for 5-30 minutes), and reports back when done. You can interrupt to redirect, but you're not chatting through every decision.</p><p>The agent has a real virtual browser. It can log into websites you authorize, fill in shopping carts, comparison-shop across multiple sites, book reservations, scrape data into spreadsheets. It's basically a remote worker with internet access.</p><p>What it can't do: anything you haven't authorized, payments without confirmation, account creation on your behalf, anything illegal, and it asks before high-stakes actions like 'place this $400 order.'</p><h2><span class="num">Workflow 01</span> Multi-site research with synthesis</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>Comparison shopping or vendor research</h3></div><p>The original Operator pattern — give the agent a task that spans multiple sites, then come back to a synthesized result.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Multi-site comparison</span>I need to find the best wireless conference-room speakerphone for under $500. Compare options across:
+    <p class="deck">ChatGPT Agent is the agentic mode that merged Operator and Deep Research into one system. It drives a virtual browser — navigating sites, filling forms, running research, and delivering finished work. This isn't chatting. You hand off a task, it works for minutes, and it comes back with a result — pausing for you at the moments that matter.</p>
 
-• Best Buy
-• Amazon
-• B&amp;H Photo
-• Manufacturer sites for Jabra, Logitech, Poly, and Yealink
+    <!-- mental model -->
+    <div class="sec">
+      <span class="sec-eyebrow">The mental model</span>
+      <h2>Agent ≠ Chat. You're delegating, not conversing.</h2>
+      <div class="vs">
+        <div class="vs-card chat">
+          <div class="h">💬 Chat</div>
+          <div class="sub">works in turns</div>
+          <p>You ask, it answers, you refine. You're present for every step of the thinking.</p>
+        </div>
+        <div class="vs-mid">vs</div>
+        <div class="vs-card agent">
+          <div class="h">🤖 Agent</div>
+          <div class="sub">works in tasks</div>
+          <p>You describe an outcome; it works on it for 5–30 minutes in a real browser and reports back. Like a remote worker with internet access.</p>
+        </div>
+      </div>
+      <p>It can log into sites you authorize, comparison-shop, scrape data into spreadsheets, book things. What it won't do: act without authorization, pay without confirming, or push through a high-stakes step on its own. Watch exactly where it stops for you below.</p>
+    </div>
 
-For each top option, give me:
-• Model name and current price across all sources
-• Pros from professional reviews (cite the review source)
-• Common complaints from user reviews
-• Battery life and connection type (Bluetooth/USB-C/dongle)
+    <!-- SIGNATURE: agent run -->
+    <div class="sec">
+      <span class="sec-eyebrow">Watch it work · then decide</span>
+      <h2>Run an agent task end to end.</h2>
+      <p>Here's a real delegation. Hit run and watch the agent work autonomously — until it reaches the one step it won't take without you.</p>
 
-Present a final ranked recommendation table with one-sentence rationale. Don&#x27;t buy anything — just produce the comparison.</div><h4>Best use cases</h4><ul><li>B2B vendor evaluation</li><li>Personal purchase research</li><li>Competitive analysis (your competitors' websites, pricing pages)</li><li>Travel comparison across booking sites</li></ul><div class="gotcha">Always tell the agent NOT to purchase. The default behavior is to ask before buying, but explicit instruction is safer.</div><div class="savings"><strong>Time savings:</strong> An afternoon of comparison shopping → 15-30 min of agent time.</div></div><h2><span class="num">Workflow 02</span> Form-filling and data entry at scale</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>When you have repetitive web forms to complete</h3></div><p>Government forms, vendor onboarding pages, registration flows — anything where 'fill in the same info 30 times' is the task. The agent can plow through it.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Batch form-filling</span>I have a list of 25 vendors that need to be added to our supplier portal (vendor-list.csv attached). For each vendor:
-
-1. Open the portal at supplier-portal.example.com
-2. Click &#x27;Add New Vendor&#x27;
-3. Fill in fields: Company name, contact email, tax ID, address — all from the CSV
-4. Upload their W-9 form from the linked Google Drive
-5. Submit and capture the confirmation number
-
-Produce a results CSV with: vendor name, status (success/failed), confirmation number, any errors. Stop and ask if you hit a CAPTCHA or weird form behavior.</div><h4>Best use cases</h4><ul><li>Supplier or contact data entry at scale</li><li>Account creation across multiple SaaS tools (your tools, not on behalf of others)</li><li>Government compliance form batch submissions</li><li>Survey or registration form completion</li></ul><div class="gotcha">CAPTCHAs are deliberately designed to block agents. The agent will stop and ask you to solve them. Plan for this if your target site has them.</div><div class="savings"><strong>Time savings:</strong> 25 forms × 5 min each = 2 hours manual → ~25 min agent supervised.</div></div><h2><span class="num">Workflow 03</span> Research → write → publish workflow</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>End-to-end content production from a brief</h3></div><p>The Deep Research + Operator combo lets you go from prompt to published draft in one task. Research a topic, write the content, optionally schedule it.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Research → draft pipeline</span>Write a 1,500-word blog post on &#x27;How AI is changing customer support in B2B SaaS.&#x27;
-
-Research phase: Find 10-15 current sources (last 6 months). Mix of analyst reports, vendor case studies, and reporter coverage. Cite sources inline as you write.
-
-Writing phase: Hook with a specific anecdote (not abstract intro). Three main sections: what&#x27;s changing, who&#x27;s doing it well, what to avoid. End with concrete advice for someone running B2B support today.
-
-Output: deliver as a markdown file. Don&#x27;t publish anywhere — just produce the draft. Add a &#x27;Sources&#x27; section at the bottom with all 15 references.</div><h4>Best use cases</h4><ul><li>Blog drafts with real sources</li><li>Whitepaper or report production</li><li>Newsletter content from current events</li><li>Investor or board memo drafting</li></ul><div class="gotcha">ChatGPT Agent can still produce confident-but-wrong claims — fact-check anything before publishing. Treat the output as a strong first draft, not a finished product.</div><div class="savings"><strong>Time savings:</strong> A well-researched blog post: 6+ hours manually → 30-45 min agent + your review.</div></div><div class="callout"><span class="lbl">About ChatGPT Agent</span><p>Released in July 2025 by OpenAI as the successor that merged Operator (browser-action agent) and Deep Research (long-running research agent). Available to ChatGPT Plus, Pro, and Team users. Free-tier users get limited access.</p></div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Pick a multi-hour task and delegate it</h2>
-      <p>Think of a task that would take you 3+ hours manually — research, comparison shopping, data entry, drafting. Hand it to ChatGPT Agent. Don't multitask while it works; just check back every 10 minutes to see if it needs you. Notice the difference between 'I'm doing this' and 'I'm reviewing this.'</p>
-      <div class="btn-row">
-        <a href="/lessons/chatgpt/" class="btn">Back to ChatGPT Mastery →</a>
-        <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+      <div class="agent">
+        <div class="agent-task">
+          <div class="lbl">Delegated task</div>
+          <div class="t">"Find the best conference-room speakerphone under $500. Compare Best Buy, Amazon, B&amp;H, and the maker sites, then give me a ranked table."</div>
+        </div>
+        <div class="agent-run">
+          <button class="runbtn" id="runBtn">▶ Run agent</button>
+          <div class="activity" id="activity"></div>
+          <div class="gate" id="gate">
+            <div class="g-h">⏸ Agent paused — needs your call</div>
+            <div class="g-b">Top pick found: <strong>Jabra Speak2 75 — $412</strong>, in stock at Best Buy. The agent can place the order, but it won't spend money without you.</div>
+            <div class="gate-btns">
+              <button class="gbtn safe" id="gSafe">Don't buy — just deliver the table</button>
+              <button class="gbtn risk" id="gRisk">Approve the $412 purchase</button>
+            </div>
+            <div class="gate-fb" id="gateFb"></div>
+          </div>
+          <div class="deliver" id="deliver">
+            <div class="d-h">Delivered · comparison.csv</div>
+            <table>
+              <tr><th>#</th><th>Model</th><th>Price</th><th>Why</th></tr>
+              <tr><td class="rank">1</td><td>Jabra Speak2 75</td><td>$412</td><td>Best mics + battery; top pro reviews</td></tr>
+              <tr><td class="rank">2</td><td>Poly Sync 40</td><td>$329</td><td>Cheaper, great range, fewer features</td></tr>
+              <tr><td class="rank">3</td><td>Logitech P710e</td><td>$289</td><td>Budget pick; dated but reliable</td></tr>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- QUIZ -->
+    <div class="sec">
+      <span class="sec-eyebrow">Your call · delegate or just chat?</span>
+      <h2>When is it worth handing off?</h2>
+      <p>Agent runs take minutes and need supervision. Some tasks earn that; some are faster in plain chat.</p>
+      <div class="router" id="router"></div>
+    </div>
+
+    <!-- safety -->
+    <div class="sec">
+      <div class="callout">
+        <span class="lbl">Keep yourself in the loop</span>
+        <p>The agent is powerful, not infallible. Build these into every run:</p>
+        <ul>
+          <li><strong>Say "don't purchase / don't submit"</strong> explicitly when you only want research — it asks by default, but be explicit.</li>
+          <li><strong>Expect CAPTCHA pauses</strong> — they're designed to stop agents; it'll hand those back to you.</li>
+          <li><strong>Fact-check the output</strong> — it can still be confidently wrong. Treat results as a strong first draft, not finished work.</li>
+        </ul>
+      </div>
+      <div class="factbox">
+        <b>About ChatGPT Agent:</b> released July 2025 by OpenAI as the successor that merged Operator (browser-action agent) and Deep Research (long-running research agent). Available to Plus, Pro, and Team users; free-tier access is limited.
+      </div>
+    </div>
+
+    <div class="challenge">
+      <h2 style="margin-top:0;">Delegate a multi-hour task</h2>
+      <p>Pick something that would take you 3+ hours by hand — comparison research, data entry, a researched draft — and hand it to ChatGPT Agent. Don't multitask; check back every 10 minutes in case it needs you. Pay attention to the shift from "I'm doing this" to "I'm reviewing this."</p>
+      <div class="btn-row">
+        <a href="/playground" class="btn">Try a prompt in the playground →</a>
+        <a href="/lessons/chatgpt/" class="btn ghost">Back to ChatGPT Mastery</a>
+      </div>
+    </div>
+
     <div class="checklist">
       <h3>What you can do now</h3>
       <ul>
-        <li>Understand when to reach for Agent vs. regular ChatGPT</li>
-        <li>Specify NOT to make purchases or commitments without explicit approval</li>
+        <li>Tell when to reach for Agent vs. regular ChatGPT</li>
+        <li>Specify "don't purchase or commit" when you only want research</li>
         <li>Use Agent for tasks that span multiple sites or sources</li>
-        <li>Always review the output — it's a strong draft, not finished work</li>
-        <li>Know that CAPTCHAs will pause the agent, by design</li>
+        <li>Stay in the loop on high-stakes steps — and always review the output</li>
+        <li>Expect CAPTCHAs to pause the run, by design</li>
       </ul>
     </div>
+
     <div class="next-up">
       <span class="pro-tag">Pro</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in ChatGPT Mastery</div>
-      <h3>Lesson 02 · Deep Research — long-running multi-source research</h3>
-      <p>When you need depth more than breadth, Deep Research is the better tool. Multi-source synthesis, citation-heavy output, and now connected via MCP to your own tools and data. <a href="/lessons/chatgpt/">See the track →</a></p>
+      <div class="lbl" style="margin-top:14px;">Up next in ChatGPT Mastery</div>
+      <h3>Lesson 8 · Deep Research — long-running multi-source synthesis</h3>
+      <p>When you need depth over breadth: multi-source synthesis with citations, output that reads like an analyst's report, now connectable to your own tools and data via MCP. <a href="/lessons/chatgpt/deep-research">Start lesson 8 →</a></p>
     </div>
   </div>
 </article>
+
 <footer>
   <div class="footer-inner">
     <div>© 2026 LearningGPT · Independent. Not affiliated with OpenAI.</div>
@@ -231,7 +316,6 @@ Output: deliver as a markdown file. Don&#x27;t publish anywhere — just produce
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -246,7 +330,7 @@ Output: deliver as a markdown file. Don&#x27;t publish anywhere — just produce
     <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -254,15 +338,111 @@ Output: deliver as a markdown file. Don&#x27;t publish anywhere — just produce
   </div>
 </div>
 
+<script id="lessonScript">
+(function () {
+  // ── AGENT RUN SIM ──
+  var STEPS = [
+    'Spun up a virtual browser session',
+    'Best Buy — pulled 3 speakerphones under $500',
+    'Amazon — cross-checked prices and 1,200+ reviews',
+    'B&H + Jabra / Logitech / Poly / Yealink sites',
+    'Compiled a ranked comparison table'
+  ];
+  var runBtn = document.getElementById('runBtn');
+  var activity = document.getElementById('activity');
+  var gate = document.getElementById('gate');
+  var gateFb = document.getElementById('gateFb');
+  var deliver = document.getElementById('deliver');
+  var gSafe = document.getElementById('gSafe');
+  var gRisk = document.getElementById('gRisk');
+  var started = false;
+
+  function runStep(i) {
+    if (i >= STEPS.length) { showGate(); return; }
+    var row = document.createElement('div');
+    row.className = 'act';
+    row.innerHTML = '<span class="mk spin"></span><span>' + STEPS[i] + '…</span>';
+    activity.appendChild(row);
+    row.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    setTimeout(function () {
+      row.classList.add('is-done');
+      row.querySelector('.mk').className = 'mk done';
+      row.querySelector('.mk').textContent = '✓';
+      runStep(i + 1);
+    }, 850);
+  }
+  function showGate() {
+    gate.classList.add('show');
+    gate.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+  runBtn.addEventListener('click', function () {
+    if (started) return;
+    started = true;
+    runBtn.disabled = true;
+    runBtn.textContent = '● Agent working…';
+    runStep(0);
+  });
+
+  function resolveGate(safe) {
+    gSafe.disabled = true; gRisk.disabled = true;
+    gateFb.className = 'gate-fb show ' + (safe ? 'ok' : 'warn');
+    gateFb.innerHTML = safe
+      ? '<strong>Exactly right.</strong> It paused at the spend and waited for you — that\'s the whole oversight model. Delivering the comparison instead of buying.'
+      : '<strong>It still paused for you — that\'s the point.</strong> In this lesson the safe default is to not authorize spend on a single run. Delivering the table instead so you stay in control.';
+    runBtn.textContent = '✓ Task complete';
+    deliver.classList.add('show');
+    deliver.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+  gSafe.addEventListener('click', function () { resolveGate(true); });
+  gRisk.addEventListener('click', function () { resolveGate(false); });
+
+  // ── QUIZ ──
+  var ITEMS = [
+    { scn: 'Get a one-line definition of EBITDA.', correct: 'Just chat',
+      why: 'Instant and trivial — plain chat answers before an agent could even open a browser.' },
+    { scn: 'Compare 5 vendor sites on price and reviews, then build a ranked table.', correct: 'Delegate to Agent',
+      why: 'Multi-site research with synthesis is the classic agent task — let it browse and compile while you do other work.' },
+    { scn: 'Add the same 25 vendors into a supplier portal, one form each.', correct: 'Delegate to Agent',
+      why: 'Repetitive web forms at scale is exactly what the agent\'s browser is for — supervise for CAPTCHAs.' },
+    { scn: 'Brainstorm five taglines for a landing page.', correct: 'Just chat',
+      why: 'Pure idea generation needs no browser or actions — chat is faster and more iterative.' }
+  ];
+  var OPTS = ['Just chat', 'Delegate to Agent'];
+  var router = document.getElementById('router');
+  ITEMS.forEach(function (it) {
+    var row = document.createElement('div');
+    row.className = 'rrow';
+    var btns = OPTS.map(function (o) { return '<button class="rbtn" data-o="' + o + '">' + o + '</button>'; }).join('');
+    row.innerHTML = '<div class="rrow-scn">' + it.scn + '</div><div class="rrow-btns">' + btns + '</div><div class="rrow-fb"></div>';
+    router.appendChild(row);
+    var fb = row.querySelector('.rrow-fb');
+    var rbtns = row.querySelectorAll('.rbtn');
+    var done = false;
+    rbtns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (done) return;
+        done = true;
+        var ok = b.dataset.o === it.correct;
+        rbtns.forEach(function (x) {
+          x.disabled = true;
+          if (x.dataset.o === it.correct) x.classList.add('right');
+        });
+        if (!ok) b.classList.add('wrong');
+        fb.innerHTML = (ok ? '' : '<b>' + it.correct + '.</b> ') + it.why;
+        fb.classList.add('show');
+      });
+    });
+  });
+})();
+</script>
 
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: ChatGPT Agent \u2014 autonomous task execution\nTRACK: Chatgpt Mastery\n\nLESSON CONTENT SUMMARY:\nChatGPT Agent \u2014 autonomous task execution \u2014 LearningGPT L LearningGPT \u2190 ChatGPT Mastery Agents \u00b7 Lesson 01 Pro ~12 min read Browser + actions ChatGPT Agent: real autonomy in your browser. ChatGPT Agent is the agentic mode that absorbed Operator and Deep Research into one unified system. It controls a virtual browser, fills forms, navigates websites, runs research, and delivers finished work. Different category from chatting with ChatGPT \u2014 you delegate a task, then come back to a result. The mental model Agent \u2260 Chat. You're delegating a task, not having a conversation. Regular ChatGPT works in turns \u2014 you ask, it answers, you refine. ChatGPT Agent works in tasks \u2014 you describe an outcome, it works on it (sometimes for 5-30 minutes), and reports back when done. You can interrupt to redirect, but you're not chatting through every decision. The agent has a real virtual browser. It can log into websites you authorize, fill in shopping carts, comparison-shop across multiple sites, book reservations, scrape data into spreadsheets. It's basically a remote worker with internet access. What it can't do: anything you haven't authorized, payments without confirmation, account creation on your behalf, anything illegal, and it asks before high-stakes actions like 'place this $400 order.' Workflow 01 Multi-site research with synthesis 1 Comparison shopping or vendor research The original Operator pattern \u2014 give the agent a task that spans multiple sites, then come back to a synthesized result. The prompt that works Multi-site comparison I need to find the best wireless conference-room speakerphone for under $500. Compare options across: \u2022 Best Buy \u2022 Amazon \u2022 B&amp;H Photo \u2022 Manufacturer sites for Jabra, Logitech, Poly, and Yealink For each top option, give me: \u2022 Model name and current price across all sources \u2022 Pros from professional reviews (cite the review source) \u2022 Common complaints from user reviews \u2022 Battery life and connection type (Bluetooth/USB-C/dongle) Present a final ranked recommendation table with one-sentence rationale. Don&#x27;t buy anything \u2014 just produce the comparison. Best use cases B2B vendor evaluation Personal purchase research Competitive analysis (your competitors' websites, pricing pages) Travel comparison across booking sites Always tell the agent NOT to purchase. The default behavior is to ask before buying, but explicit instruction is safer. Time savings: An afternoon of comparison shopping \u2192 15-30 min of agent time. Workflow 02 Form-filling and data entry at scale 2 When you have repetitive web forms to complete Government forms, vendor onboarding pages, registration flows \u2014 anything where 'fill in the same info 30 times' is the task. The agent can plow through it. The prompt that works Batch form-filling I have a list of 25 vendors that need to be added to our supplier portal (vendor-list.csv attached). For each vendor: 1. Open the portal at supplier-portal.example.com 2. Click &#x27;Add New Vendor&#x27; 3. Fill in fields: Compan\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: ChatGPT Agent — autonomous task execution\nTRACK: ChatGPT Mastery (Lesson 7, Pro)\n\nLESSON CONTENT SUMMARY:\nChatGPT Agent is the agentic mode that merged Operator (browser-action agent) and Deep Research (long-running research agent) into one system, released July 2025. It drives a real virtual browser — navigating sites, filling forms, logging into sites you authorize, scraping data into spreadsheets, booking things — and delivers finished work.\n\nThe mental model: Agent ≠ Chat. Chat works in turns (you ask, it answers, you refine, you're present for every step). Agent works in tasks (you describe an outcome; it works 5–30 minutes and reports back, like a remote worker with internet access). You can interrupt to redirect but you're not chatting through every decision.\n\nWhat it won't do: act without authorization, make payments without confirmation, create accounts on your behalf, or anything illegal — and it pauses before high-stakes actions (e.g., 'place this $412 order'). Keep yourself in the loop: (1) explicitly say 'don't purchase / don't submit' when you only want research; (2) expect CAPTCHA pauses — they're designed to stop agents and it hands them back to you; (3) fact-check output — it can be confidently wrong; treat results as a strong first draft.\n\nThree workflows: (1) Multi-site research with synthesis — comparison shopping or vendor research across several sites into one ranked table (the Operator pattern); (2) Form-filling / data entry at scale — repetitive web forms, e.g. adding 25 vendors to a portal from a CSV, capturing confirmation numbers, stopping on CAPTCHAs; (3) Research → write → publish — go from a brief to a researched, cited draft (the Deep Research + Operator combo), delivered as a file, not auto-published.\n\nWhen to use Agent vs Chat: delegate multi-step, multi-site, or repetitive browser tasks; just chat for instant answers and idea generation.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more\n- Be practical — give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only — no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -270,27 +450,21 @@ Output: deliver as a markdown file. Don&#x27;t publish anywhere — just produce
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -299,7 +473,6 @@ Output: deliver as a markdown file. Don&#x27;t publish anywhere — just produce
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -308,7 +481,6 @@ Output: deliver as a markdown file. Don&#x27;t publish anywhere — just produce
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

@@ -4,16 +4,16 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>GitHub Copilot: the developer side most people miss — LearningGPT</title>
-<meta name="description" content="Microsoft 365 Copilot and GitHub Copilot share the name but are different products. If you write code — even occasionally — GitHub Copilot dramaticall" />
+<meta name="description" content="GitHub Copilot dramatically changes how you write code. The four modes that matter — code completion, IDE chat, agent mode, and pull request summaries — and how to use each without shipping bugs." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#2c7be5" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/copilot/github-copilot" />
 <meta property="og:title" content="GitHub Copilot: the developer side most people miss" />
-<meta property="og:description" content="Microsoft 365 Copilot and GitHub Copilot share the name but are different products. If you write code — even occasionally — GitHub Copilot dramaticall" />
+<meta property="og:description" content="The four GitHub Copilot modes that matter — code completion, IDE chat, agent mode, and PR summaries — and how to use each safely." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -21,6 +21,7 @@
 * { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
 body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+button { font-family: inherit; cursor: pointer; }
 .bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
 .bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #2c7be5; }
 .bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
@@ -30,89 +31,79 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
 .logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
 .nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
-.lesson { padding: 50px 0 100px; }
-.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
-.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(44,123,229,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(44,123,229,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
-.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
-.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
-.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #2c7be5 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
-.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
-.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #2c7be5, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(44,123,229,0.1); border: 1px solid rgba(44,123,229,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #2c7be5, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
-.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
-.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
-.checklist li:first-child { border-top: none; padding-top: 0; }
-.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
-.checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
-.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
-.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
-.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
 footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
+/* ===== Interactive lesson component (shared kit) ===== */
+.sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
+.serif { font-family:'Instrument Serif', serif; font-style:italic; font-weight:400; }
+.ilesson { max-width:720px; margin:0 auto; padding:44px 0 90px; }
+.l-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; font-size:12.5px; }
+.l-tag { font-weight:600; color:var(--track); }
+.l-count { color:var(--text-mute); }
+.prog-track { height:6px; background:var(--surface); border-radius:99px; overflow:hidden; margin-bottom:30px; }
+#prog { height:100%; width:12.5%; background:linear-gradient(90deg,var(--track),var(--brand)); border-radius:99px; transition:width .45s ease; }
+.step h1 { font-size:32px; line-height:1.12; letter-spacing:-.02em; margin:0 0 14px; font-weight:800; color:var(--text); }
+.step h3 { font-size:21px; line-height:1.2; margin:0 0 10px; font-weight:700; color:var(--text); }
+.step p { color:var(--text-dim); margin:0 0 16px; font-size:16px; line-height:1.65; }
+.step p strong { color:var(--text); font-weight:600; }
+.step em { color:var(--text); font-style:italic; }
+.wf-head { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+.wf-badge { margin-left:auto; font-size:10px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; padding:3px 9px; border-radius:999px; }
+.wf-badge.basic { background:rgba(68,224,164,.15); color:var(--accent); border:1px solid rgba(68,224,164,.35); }
+.wf-badge.inter { background:rgba(91,141,239,.15); color:var(--brand-2); border:1px solid rgba(91,141,239,.35); }
+.wf-badge.adv { background:rgba(255,181,71,.15); color:var(--warn); border:1px solid rgba(255,181,71,.35); }
+.btn { font-family:inherit; font-weight:600; font-size:14.5px; border-radius:10px; padding:11px 18px; cursor:pointer; border:1px solid transparent; display:inline-flex; align-items:center; gap:8px; transition:.15s; color:#fff; background:linear-gradient(135deg,#7c5cff,#5b8def); box-shadow:0 8px 22px -10px rgba(124,92,255,.8); }
+.btn:hover { transform:translateY(-1px); color:#fff; }
+.btn-ghost { background:transparent; border-color:var(--line-strong); color:var(--text); box-shadow:none; }
+.btn-ghost:hover { background:rgba(255,255,255,.05); color:var(--text); }
+.btn-block { width:100%; justify-content:center; }
+.callout { background:rgba(44,123,229,.1); border:1px solid rgba(44,123,229,.28); border-radius:var(--radius); padding:14px 16px; margin-bottom:18px; font-size:14.5px; color:var(--text-dim); line-height:1.65; }
+.callout b { color:var(--text); }
+.codebox { background:rgba(0,0,0,0.35); border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin-bottom:12px; font-family:'SFMono-Regular',Consolas,monospace; font-size:12.5px; line-height:1.65; white-space:pre-wrap; }
+.codebox .label { display:block; font-family:'Inter',sans-serif; font-size:10.5px; color:var(--text-mute); margin-bottom:6px; text-transform:uppercase; letter-spacing:.8px; font-weight:600; }
+.codebox .cm { color:var(--text-mute); }
+.codebox .sg { color:var(--accent); }
+.gotcha { background:rgba(255,181,71,.06); border:1px solid rgba(255,181,71,.22); border-radius:var(--radius); padding:12px 14px; margin-bottom:14px; font-size:13.5px; color:var(--text-dim); line-height:1.55; }
+.gotcha b { color:var(--warn); }
+.savings { display:inline-flex; align-items:center; gap:7px; background:rgba(68,224,164,.1); border:1px solid rgba(68,224,164,.3); padding:6px 12px; border-radius:8px; font-size:13px; color:var(--text); margin-bottom:6px; }
+.savings b { color:var(--accent); font-weight:700; }
+.eyebrow-do2 { font-size:12px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--track); margin:6px 0 8px; }
+.opts { display:flex; flex-direction:column; gap:10px; margin-bottom:6px; }
+.opt { text-align:left; padding:13px 15px; line-height:1.5; font-size:14.5px; font-family:inherit; color:var(--text); background:var(--surface); border:1px solid var(--line-strong); border-radius:var(--radius); cursor:pointer; transition:.15s; }
+.opt:hover:not(:disabled) { border-color:var(--brand); background:#20204a; }
+.opt:disabled { cursor:default; }
+.fb { display:none; margin-top:14px; padding:12px 14px; border-radius:var(--radius); font-size:14px; line-height:1.6; }
+.fb.good { background:rgba(68,224,164,.1); border:1px solid rgba(68,224,164,.35); color:#a7efd2; }
+.fb.bad { background:rgba(124,92,255,.1); border:1px solid rgba(124,92,255,.3); color:#cfc4ff; }
+.gymbar { display:flex; justify-content:space-between; font-size:12.5px; font-weight:600; color:var(--text-mute); margin-bottom:8px; }
+#m-score { color:var(--accent); }
+.gym-prog { height:5px; background:var(--surface); border-radius:99px; overflow:hidden; margin-bottom:18px; }
+#m-fill { height:100%; width:0; background:linear-gradient(90deg,var(--track),var(--brand)); border-radius:99px; transition:width .35s ease; }
+.scenario { background:var(--bg-soft); border:1px solid var(--line); border-left:3px solid var(--track); border-radius:0 var(--radius) var(--radius) 0; padding:15px 16px; margin-bottom:16px; font-size:15.5px; color:var(--text); line-height:1.5; min-height:48px; }
+.cta-row { display:flex; gap:12px; flex-wrap:wrap; margin-top:22px; }
+.done-top { text-align:center; padding:6px 0 8px; }
+.done-check { width:52px; height:52px; border-radius:50%; background:rgba(44,123,229,.16); color:var(--track); display:flex; align-items:center; justify-content:center; margin:0 auto 14px; font-size:26px; border:1px solid rgba(44,123,229,.4); }
+.recap { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:16px 18px; margin-bottom:14px; }
+.recap .lbl { font-size:12px; color:var(--text-mute); }
+.recap p { margin:4px 0 0; color:var(--text); font-weight:500; font-size:15px; }
+.challenge-box { background:linear-gradient(135deg, rgba(44,123,229,.14), rgba(124,92,255,.1)); border:1px solid rgba(44,123,229,.3); border-radius:var(--radius); padding:16px 18px; margin-bottom:14px; }
+.challenge-box h4 { margin:0 0 8px; font-size:15px; color:var(--text); }
+.challenge-box ol { margin:0; padding-left:18px; }
+.challenge-box li { font-size:13.5px; color:var(--text-dim); margin-bottom:6px; line-height:1.5; }
+.upnext { background:var(--bg-soft); border:1px solid var(--line); border-radius:var(--radius); padding:14px 16px; margin-bottom:14px; }
+.upnext .lbl { font-size:12px; color:var(--text-mute); }
+.upnext p { margin:3px 0 0; font-weight:600; color:var(--text); }
+@media(max-width:560px){ .step h1{ font-size:26px; } }
+
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -141,7 +132,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -153,81 +143,143 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <a href="/lessons/copilot/" class="nav-back">← Copilot Mastery</a>
   </div>
 </nav>
-<article class="lesson">
-  <div class="container">
-    <div class="lesson-meta">
-      <span class="chip">Lesson 07 · Copilot Mastery</span>
-      <span class="chip chip-pro">Pro</span>
-      <span>~14 min read</span>
-      <span class="dot"></span>
-      <span>4 use modes</span>
+
+<div class="container">
+  <div class="sr-only">An interactive hands-on Copilot lesson on GitHub Copilot for developers: it walks the four modes (code completion, IDE chat, agent mode, PR summaries), has the learner judge the discipline and verify gotchas, and ends with a 'which mode for the task' matching round.</div>
+
+  <main class="ilesson">
+    <div class="l-top">
+      <span class="l-tag">Copilot Mastery · Lesson 07 · Pro</span>
+      <span class="l-count" id="step-count">Step 1 of 8 · ~14 min</span>
     </div>
-    <h1>GitHub Copilot: <span class="grad serif">the developer side.</span></h1>
-    <p class="deck">Microsoft 365 Copilot and GitHub Copilot share the name but are different products. If you write code — even occasionally — GitHub Copilot dramatically changes your workflow. This lesson covers the four use modes that matter: code completion, chat in your IDE, agent mode, and pull request summaries.</p>
-    <h2><span class="num">The mental model</span></h2>
-    <h3>GitHub Copilot is a pair programmer, not a replacement.</h3>
-    <p>The trap most developers fall into: accepting suggestions blindly, ending up with code they didn't write and don't understand. The pattern that works: drive deliberately, accept selectively, always read what you accept.</p><h2><span class="num">Workflow 01</span> Code completion: the inline workflow</h2><div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">1</div><h3>Tab-to-accept, with judgment</h3></div>
-      <p>Type a comment or function signature; Copilot suggests the next lines as you type. Tab to accept. The win is sustained: 30-40% fewer keystrokes on routine code.</p>
-      <h4>The prompt that works</h4>
-      <div class="prompt-example"><span class="label">The pattern</span>Write a clear function name and a comment describing what it should do. Wait for Copilot's suggestion. Read it before tabbing. If wrong, ignore and type your version. Iterate.</div>
-      <h4>Best use cases</h4>
-      <ul><li>Boilerplate (CRUD endpoints, validation, error handling)</li><li>Routine algorithms (sorting, parsing, formatting)</li><li>Tests for code you just wrote</li><li>Repetitive patterns within a file</li></ul>
-      <div class="gotcha">Copilot will confidently generate plausible-looking code that doesn't actually compile or has subtle bugs. Especially in newer language features and libraries. Always run before committing.</div>
-      <div class="savings"><strong>Time savings:</strong> 30-50% reduction in keystrokes on routine code. Compound effect over a career: enormous.</div>
-    </div><h2><span class="num">Workflow 02</span> Chat in the IDE: ask, don't search</h2><div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">2</div><h3>Replace Stack Overflow with inline chat</h3></div>
-      <p>Highlight code → ask Copilot Chat anything: "why doesn't this compile?" / "refactor this to use async/await" / "explain what this does."</p>
-      <h4>The prompt that works</h4>
-      <div class="prompt-example"><span class="label">Common chat prompts</span>Explain what this function does line by line.
-This is throwing [error]. What's the cause?
-Refactor this to be more readable without changing behavior.
-Write tests for this function covering the edge cases.</div>
-      <h4>Best use cases</h4>
-      <ul><li>Debugging unfamiliar code</li><li>Learning a new codebase</li><li>Refactoring without breaking behavior</li><li>Writing tests you'd otherwise skip</li></ul>
-      <div class="gotcha">Chat doesn't know your full codebase context unless you give it. Paste in or @-reference the relevant files. Otherwise you get plausible-but-wrong answers.</div>
-      <div class="savings"><strong>Time savings:</strong> 10 min of Stack Overflow + Googling → 60 sec of chat.</div>
-    </div><h2><span class="num">Workflow 03</span> Agent mode: let it do the multi-step work</h2><div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">3</div><h3>Hand off the boring multi-step tasks</h3></div>
-      <p>Agent mode (in VS Code, Visual Studio, JetBrains) takes a goal and works across multiple files autonomously — proposing changes you review before accepting.</p>
-      <h4>The prompt that works</h4>
-      <div class="prompt-example"><span class="label">Good agent tasks</span>Add a new feature flag and wire it through the affected services.
-Upgrade this codebase from React 18 to 19, fixing breaking changes.
-Find all places where we still use the deprecated API and migrate to the new one.</div>
-      <h4>Best use cases</h4>
-      <ul><li>Repetitive multi-file changes</li><li>Library upgrades with known breaking changes</li><li>Adding observability or logging across modules</li><li>Codebase migrations and refactors</li></ul>
-      <div class="gotcha">Always review every change before accepting. Agent mode will sometimes make changes that pass local tests but break in production. Run full test suite + manual sanity check.</div>
-      <div class="savings"><strong>Time savings:</strong> Multi-file refactors: hours → minutes (with review).</div>
-    </div><h2><span class="num">Workflow 04</span> Pull request summaries: ship cleaner PRs</h2><div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">4</div><h3>Generate the PR description you should have written</h3></div>
-      <p>When you open a PR, Copilot drafts the description, summarizing changes, files affected, and rationale.</p>
-      <h4>The prompt that works</h4>
-      <div class="prompt-example"><span class="label">Use pattern</span>Open PR → click 'Copilot: Generate description' → review and edit → submit. Skip the lazy 'fixes #123' descriptions; ship PRs reviewers actually understand.</div>
-      <h4>Best use cases</h4>
-      <ul><li>Open-source contributions</li><li>Internal PRs that need to onboard reviewers fast</li><li>PRs spanning many files where context is hard to skim</li><li>Documentation PRs where the writing is the artifact</li></ul>
-      <div class="gotcha">Copilot's PR summary is decent but generic. Always add: <em>why</em> you made this change, <em>how</em> you tested it, and any reviewer notes that aren't in the diff.</div>
-      <div class="savings"><strong>Time savings:</strong> PR description quality: huge improvement. Review cycle time: cut measurably.</div>
-    </div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Final challenge: refactor something with Copilot in the loop</h2>
-      <p>Pick a small refactor you've been meaning to do — extract a duplicated function, modernize an old class, migrate to a newer API. Use all four modes:</p><ol><li>Chat: explain the current code to Copilot, ask for refactor suggestions</li><li>Agent mode: propose the change across the affected files</li><li>Code completion: write the new function manually, accepting Copilot suggestions selectively</li><li>PR summary: generate, then heavily edit before submitting</li></ol><p>Track: where did Copilot save real time? Where did it cost time (wrong suggestions, debugging hallucinated code)? Calibrate your trust accordingly.</p>
-      <div class="btn-row">
-        <a href="/lessons/copilot/" class="btn">Back to Copilot Mastery →</a>
-        <a href="/#pricing" class="btn ghost">See pricing →</a>
+    <div class="prog-track"><div id="prog"></div></div>
+
+    <!-- STEP 1 · intro -->
+    <section id="step-1" class="step">
+      <h1>GitHub Copilot: <span class="serif">the developer side.</span></h1>
+      <p>Microsoft 365 Copilot and GitHub Copilot share a name but are different products. If you write code — even occasionally — GitHub Copilot changes your workflow. Four modes matter: <strong>code completion, IDE chat, agent mode, and pull-request summaries.</strong></p>
+      <p>You'll learn the discipline that keeps it a help not a hazard, then call the right mode for each task. About 14 minutes.</p>
+      <button class="btn" onclick="go(2)">Start the lesson →</button>
+    </section>
+
+    <!-- STEP 2 · reframe -->
+    <section id="step-2" class="step" style="display:none">
+      <h3>A pair programmer, not a replacement</h3>
+      <p>The trap most developers fall into: accepting suggestions blindly and ending up owning code they didn't write and don't understand. The whole skill is staying in the driver's seat.</p>
+      <div class="eyebrow-do2">Your call</div>
+      <p style="margin-bottom:12px">What pattern keeps GitHub Copilot a help, not a hazard?</p>
+      <div class="opts">
+        <button class="opt" data-c="0" onclick="pick(this,2)">Accept every suggestion to move fast</button>
+        <button class="opt" data-c="1" onclick="pick(this,2)">Drive deliberately, accept selectively, and read every line you accept</button>
+        <button class="opt" data-c="0" onclick="pick(this,2)">Let it write the whole feature, then test at the end</button>
       </div>
-    </div>
-    <div class="checklist">
-      <h3>What you can do now</h3>
-      <ul><li>Use code completion with judgment (read every suggestion before accepting)</li><li>Replace Stack Overflow trips with inline IDE chat for most questions</li><li>Use agent mode for multi-file refactors and migrations (always reviewed)</li><li>Generate PR descriptions that actually onboard reviewers</li><li>Recognize hallucinated code patterns specific to your language/framework</li></ul>
-    </div>
-    <div class="next-up">
-      <span class="pro-tag">Pro+</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in Copilot Mastery</div>
-      <h3>Lesson 8+ · Plus: rollout, governance, prompt libraries, and more</h3>
-      <p>Adoption playbooks for IT admins, prompt-library templates by department, security & compliance settings, measuring real ROI — the advanced curriculum for people deploying Copilot at scale. <a href="/#pricing">See pricing →</a></p>
-    </div>
-  </div>
-</article>
+      <div class="fb" id="fb-2"></div>
+      <button class="btn" id="next-2" style="display:none;margin-top:16px" onclick="go(3)">Mode 01 · Completion →</button>
+    </section>
+
+    <!-- STEP 3 · WF1 completion (show) -->
+    <section id="step-3" class="step" style="display:none">
+      <div class="wf-head"><h3 style="margin:0">01 · Code completion</h3><span class="wf-badge basic">Inline</span></div>
+      <p>Write a clear function name and a comment; Copilot suggests the next lines as you type. Tab to accept — after you read it. ~30–50% fewer keystrokes on routine code.</p>
+      <div class="codebox"><span class="label">The pattern</span><span class="cm">// return the running 30-day total for a salesperson</span>
+function rolling30(rows, person) {
+  <span class="sg">⌶ Copilot suggests the body — read it, then Tab (or ignore and type yours)</span>
+}</div>
+      <div class="gotcha"><b>Gotcha:</b> Copilot confidently writes plausible code that doesn't compile or hides subtle bugs — especially in newer language features and libraries. Always run it before committing.</div>
+      <div class="savings"><b>~30–50% fewer keystrokes</b> on routine code · compounds over a career</div>
+      <br>
+      <button class="btn" style="margin-top:8px" onclick="go(4)">Mode 02 · IDE chat →</button>
+    </section>
+
+    <!-- STEP 4 · WF2 chat (context check) -->
+    <section id="step-4" class="step" style="display:none">
+      <div class="wf-head"><h3 style="margin:0">02 · Chat in the IDE</h3><span class="wf-badge inter">Ask, don't search</span></div>
+      <p>Highlight code and ask: "why doesn't this compile?", "refactor to async/await," "explain this line by line," "write tests for the edge cases." It replaces most Stack Overflow trips.</p>
+      <div class="eyebrow-do2">Quick check</div>
+      <p style="margin-bottom:12px">You ask Chat to refactor a function and it returns a confident but wrong answer. Likely fix?</p>
+      <div class="opts">
+        <button class="opt" data-c="0" onclick="pick(this,4)">Switch to a different IDE</button>
+        <button class="opt" data-c="1" onclick="pick(this,4)">Give it context — @-reference or paste the relevant files</button>
+        <button class="opt" data-c="0" onclick="pick(this,4)">Trust it; chat is usually right</button>
+      </div>
+      <div class="fb" id="fb-4"></div>
+      <button class="btn" id="next-4" style="display:none;margin-top:16px" onclick="go(5)">Mode 03 · Agent mode →</button>
+    </section>
+
+    <!-- STEP 5 · WF3 agent mode (review check) -->
+    <section id="step-5" class="step" style="display:none">
+      <div class="wf-head"><h3 style="margin:0">03 · Agent mode</h3><span class="wf-badge adv">Multi-file</span></div>
+      <p>Agent mode (VS Code, Visual Studio, JetBrains) takes a goal and works across many files autonomously, proposing changes you review. Good for migrations, library upgrades, and repetitive multi-file edits.</p>
+      <div class="codebox"><span class="label">Good agent tasks</span>Add a feature flag and wire it through the affected services.
+Upgrade this codebase from React 18 to 19, fixing breaking changes.
+Migrate every call from the deprecated API to the new one.</div>
+      <div class="eyebrow-do2">Judgment call</div>
+      <p style="margin-bottom:12px">Agent mode finished a 15-file refactor and local tests pass. Before you merge:</p>
+      <div class="opts">
+        <button class="opt" data-c="0" onclick="pick(this,5)">Merge — passing tests means it's correct</button>
+        <button class="opt" data-c="1" onclick="pick(this,5)">Review every change, run the full suite, and do a manual sanity check</button>
+        <button class="opt" data-c="0" onclick="pick(this,5)">Revert it — agent mode can't be trusted</button>
+      </div>
+      <div class="fb" id="fb-5"></div>
+      <button class="btn" id="next-5" style="display:none;margin-top:16px" onclick="go(6)">Mode 04 · PR summaries →</button>
+    </section>
+
+    <!-- STEP 6 · WF4 PR summaries (show) -->
+    <section id="step-6" class="step" style="display:none">
+      <div class="wf-head"><h3 style="margin:0">04 · Pull-request summaries</h3><span class="wf-badge basic">Ship cleaner PRs</span></div>
+      <p>Open a PR → <b>"Copilot: Generate description"</b> → it drafts a summary of the changes, files, and rationale. Beats the lazy "fixes #123" — reviewers actually understand what they're looking at.</p>
+      <div class="gotcha"><b>Gotcha:</b> the generated summary is decent but generic. Always add the three things the diff can't show: <em>why</em> you made the change, <em>how</em> you tested it, and any reviewer notes.</div>
+      <button class="btn" style="margin-top:8px" onclick="startMatch()">Last thing — which mode for the job? →</button>
+    </section>
+
+    <!-- STEP 7 · which mode matching -->
+    <section id="step-7" class="step" style="display:none">
+      <h3>Which mode reaches for this?</h3>
+      <p style="margin-bottom:18px">Four tasks. Pick the GitHub Copilot mode you'd use for each.</p>
+      <div class="gymbar"><span id="m-count">Question 1 of 4</span><span id="m-score">Score 0</span></div>
+      <div class="gym-prog"><div id="m-fill"></div></div>
+      <div class="scenario" id="m-scenario">—</div>
+      <div class="opts" id="m-opts"></div>
+      <div class="fb" id="m-fb"></div>
+      <button class="btn" id="m-next" style="display:none;margin-top:16px" onclick="mNext()">Next →</button>
+    </section>
+
+    <!-- STEP 8 · complete -->
+    <section id="step-8" class="step" style="display:none">
+      <div class="done-top">
+        <div class="done-check">✓</div>
+        <h3>Lesson complete</h3>
+      </div>
+      <p style="text-align:center;max-width:480px;margin:0 auto 18px">Four modes, one discipline: let Copilot do the typing, but stay the engineer who reads, runs, and reviews.</p>
+      <div class="challenge-box">
+        <h4>Refactor something with Copilot in the loop</h4>
+        <ol>
+          <li>Pick a small refactor you've been putting off.</li>
+          <li>Chat: explain the code, ask for an approach.</li>
+          <li>Agent mode: propose the change across files.</li>
+          <li>Completion: write the new bits, accepting selectively.</li>
+          <li>PR summary: generate, then heavily edit before submitting. Note where Copilot saved time vs cost it — and calibrate your trust.</li>
+        </ol>
+      </div>
+      <div class="recap">
+        <span class="lbl">What you can do now</span>
+        <p>Use completion with judgment, replace most Stack Overflow trips with IDE chat, run multi-file refactors with agent mode (always reviewed), generate real PR descriptions, and spot hallucinated code in your stack.</p>
+      </div>
+      <div class="upnext">
+        <span class="lbl">Up next in Copilot Mastery</span>
+        <p>Lesson 08 · Cowork basics — what it is and how to start</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-block" href="/lessons/copilot/cowork-basics">Continue to Lesson 08 · Cowork basics →</a>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-ghost" href="/playground" target="_blank" rel="noopener">Open the Playground</a>
+        <a class="btn btn-ghost" href="/lessons/copilot/">Back to Copilot Mastery</a>
+      </div>
+    </section>
+  </main>
+</div>
+
 <footer>
   <div class="footer-inner">
     <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Microsoft.</div>
@@ -240,7 +292,6 @@ Find all places where we still use the deprecated API and migrate to the new one
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -252,10 +303,10 @@ Find all places where we still use the deprecated API and migrate to the new one
     <button class="coach-close" id="coachClose">✕</button>
   </div>
   <div class="coach-messages" id="coachMessages">
-    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about GitHub Copilot — code completion, IDE chat, agent mode, PR summaries, or how to keep from shipping hallucinated code. What's on your mind?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -263,15 +314,105 @@ Find all places where we still use the deprecated API and migrate to the new one
   </div>
 </div>
 
+<!-- ── Interactive lesson logic ── -->
+<script>
+  var TOTAL = 8;
+  function go(n){
+    document.querySelectorAll('.step').forEach(function(s){ s.style.display='none'; });
+    document.getElementById('step-'+n).style.display='block';
+    document.getElementById('prog').style.width = Math.round(n/TOTAL*100)+'%';
+    document.getElementById('step-count').textContent = 'Step '+n+' of '+TOTAL+' · ~14 min';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  var pickMsg = {
+    2:{good:"Right — it's a pair programmer, not a replacement. Blind-accepting leaves you owning code you don't understand.",
+       bad:"Blind-accepting is the trap, and testing only at the end hides the bugs. Drive deliberately, accept selectively, and read what you accept."},
+    4:{good:"Right — chat only knows the context you give it. @-reference or paste the relevant files and the answer sharpens.",
+       bad:"It's not the IDE, and don't blind-trust it. Chat can't see your whole codebase unless you give it — @-reference or paste the relevant files."},
+    5:{good:"Right — agent changes can pass local tests and still break in production. Review every diff, run the full suite, sanity-check by hand.",
+       bad:"Passing local tests isn't proof, and agent mode is genuinely useful. Review every change, run the full suite, and sanity-check before merging."}
+  };
+  function pick(btn, step){
+    var correct = btn.dataset.c === '1';
+    document.getElementById('step-'+step).querySelectorAll('.opt').forEach(function(b){ b.disabled=true; b.style.opacity='0.5'; });
+    btn.style.opacity='1';
+    var fb = document.getElementById('fb-'+step);
+    btn.style.borderColor = correct ? 'var(--accent)' : 'var(--danger)';
+    fb.className = 'fb ' + (correct ? 'good' : 'bad');
+    fb.textContent = pickMsg[step][correct ? 'good' : 'bad'];
+    fb.style.display='block';
+    document.getElementById('next-'+step).style.display='inline-flex';
+  }
+  // Which mode? matching round
+  var M = [
+    { t:"Tab-complete the next lines as you type routine boilerplate.", opts:["Code completion","IDE chat","Agent mode","PR summary"], c:0, why:"Code completion — inline, as you type." },
+    { t:"\"Why is this function throwing a null error?\" on code you're staring at.", opts:["Agent mode","IDE chat","Code completion","PR summary"], c:1, why:"IDE chat — ask about the highlighted code instead of searching." },
+    { t:"Migrate every call from a deprecated API to the new one across 20 files.", opts:["Code completion","Agent mode","IDE chat","PR summary"], c:1, why:"Agent mode — autonomous multi-file work you review." },
+    { t:"Draft the description for the change you just pushed so reviewers get it fast.", opts:["PR summary","IDE chat","Agent mode","Code completion"], c:0, why:"PR summary — then add the why, how-tested, and reviewer notes." }
+  ];
+  var mi = 0, mScore = 0;
+  function startMatch(){ mi = 0; mScore = 0; go(7); mRender(); }
+  function mRender(){
+    var q = M[mi];
+    document.getElementById('m-count').textContent = 'Question '+(mi+1)+' of '+M.length;
+    document.getElementById('m-score').textContent = 'Score '+mScore;
+    document.getElementById('m-fill').style.width = Math.round(mi/M.length*100)+'%';
+    document.getElementById('m-scenario').textContent = q.t;
+    var box = document.getElementById('m-opts'); box.innerHTML = '';
+    q.opts.forEach(function(label, i){
+      var b = document.createElement('button'); b.className = 'opt'; b.textContent = label;
+      b.onclick = function(){ mAnswer(i); };
+      box.appendChild(b);
+    });
+    document.getElementById('m-fb').style.display = 'none';
+    document.getElementById('m-next').style.display = 'none';
+  }
+  function mAnswer(i){
+    var q = M[mi]; var correct = (i === q.c);
+    if(correct) mScore++;
+    document.getElementById('m-score').textContent = 'Score '+mScore;
+    var btns = document.getElementById('m-opts').querySelectorAll('.opt');
+    btns.forEach(function(b, idx){
+      b.disabled = true; b.style.opacity = (idx === i || idx === q.c) ? '1' : '0.5';
+      if(idx === q.c) b.style.borderColor = 'var(--accent)';
+    });
+    if(!correct) btns[i].style.borderColor = 'var(--danger)';
+    var fb = document.getElementById('m-fb');
+    fb.className = 'fb ' + (correct ? 'good' : 'bad');
+    fb.textContent = (correct ? '✓ ' : '✗ ') + q.opts[q.c] + '. ' + q.why;
+    fb.style.display = 'block';
+    var nx = document.getElementById('m-next');
+    nx.textContent = (mi === M.length-1) ? 'Finish →' : 'Next →';
+    nx.style.display = 'inline-flex';
+  }
+  function mNext(){ mi++; if(mi >= M.length){ go(8); } else { mRender(); window.scrollTo({top:0,behavior:'smooth'}); } }
+</script>
 
+<!-- ── AI Coach logic ── -->
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: GitHub Copilot: the developer side most people miss\nTRACK: Copilot Mastery\n\nLESSON CONTENT SUMMARY:\nGitHub Copilot: the developer side most people miss \u2014 LearningGPT L LearningGPT \u2190 Copilot Mastery Lesson 07 \u00b7 Copilot Mastery Pro ~14 min read 4 use modes GitHub Copilot: the developer side. Microsoft 365 Copilot and GitHub Copilot share the name but are different products. If you write code \u2014 even occasionally \u2014 GitHub Copilot dramatically changes your workflow. This lesson covers the four use modes that matter: code completion, chat in your IDE, agent mode, and pull request summaries. The mental model GitHub Copilot is a pair programmer, not a replacement. The trap most developers fall into: accepting suggestions blindly, ending up with code they didn't write and don't understand. The pattern that works: drive deliberately, accept selectively, always read what you accept. Workflow 01 Code completion: the inline workflow 1 Tab-to-accept, with judgment Type a comment or function signature; Copilot suggests the next lines as you type. Tab to accept. The win is sustained: 30-40% fewer keystrokes on routine code. The prompt that works The pattern Write a clear function name and a comment describing what it should do. Wait for Copilot's suggestion. Read it before tabbing. If wrong, ignore and type your version. Iterate. Best use cases Boilerplate (CRUD endpoints, validation, error handling) Routine algorithms (sorting, parsing, formatting) Tests for code you just wrote Repetitive patterns within a file Copilot will confidently generate plausible-looking code that doesn't actually compile or has subtle bugs. Especially in newer language features and libraries. Always run before committing. Time savings: 30-50% reduction in keystrokes on routine code. Compound effect over a career: enormous. Workflow 02 Chat in the IDE: ask, don't search 2 Replace Stack Overflow with inline chat Highlight code \u2192 ask Copilot Chat anything: \"why doesn't this compile?\" / \"refactor this to use async/await\" / \"explain what this does.\" The prompt that works Common chat prompts Explain what this function does line by line. This is throwing [error]. What's the cause? Refactor this to be more readable without changing behavior. Write tests for this function covering the edge cases. Best use cases Debugging unfamiliar code Learning a new codebase Refactoring without breaking behavior Writing tests you'd otherwise skip Chat doesn't know your full codebase context unless you give it. Paste in or @-reference the relevant files. Otherwise you get plausible-but-wrong answers. Time savings: 10 min of Stack Overflow + Googling \u2192 60 sec of chat. Workflow 03 Agent mode: let it do the multi-step work 3 Hand off the boring multi-step tasks Agent mode (in VS Code, Visual Studio, JetBrains) takes a goal and works across multiple files autonomously \u2014 proposing changes you review before accepting. The prompt that works Good agent tasks Add a new feature flag and wire it through the affected services. Upgrade this codebase from React 18 to 19, fixing breaking changes. Find all places where we s\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = `You are an AI learning coach embedded in a lesson on LearningGPT.ai.
+LESSON TITLE: GitHub Copilot — the developer side most people miss
+TRACK: Copilot Mastery (Pro)
+LESSON CONTENT SUMMARY:
+Microsoft 365 Copilot and GitHub Copilot share a name but are different products; this is the developer one. Mental model: it's a pair programmer, not a replacement — the trap is accepting suggestions blindly and owning code you don't understand. The discipline: drive deliberately, accept selectively, read every line you accept. Four modes:
+1. Code completion (inline) — write a clear function name + comment; it suggests the next lines; Tab to accept after reading. ~30-50% fewer keystrokes on routine code. Gotcha: it confidently writes plausible code that doesn't compile or has subtle bugs (esp. newer language features/libraries) — always run before committing.
+2. IDE chat — highlight code and ask ("why doesn't this compile?", "refactor to async/await", "explain line by line", "write edge-case tests"); replaces most Stack Overflow trips. Gotcha: chat only knows the context you give it — @-reference or paste the relevant files or you get plausible-but-wrong answers.
+3. Agent mode (VS Code, Visual Studio, JetBrains) — give a goal; it works across many files autonomously, proposing changes you review. Good for migrations, library upgrades, repetitive multi-file edits. Gotcha: review every change — agent edits can pass local tests but break in production; run the full suite and a manual sanity check before merging.
+4. Pull-request summaries — "Copilot: Generate description" drafts the PR summary (changes, files, rationale). Gotcha: it's generic; always add why you made the change, how you tested it, and reviewer notes the diff can't show.
+Which mode for what: completion for inline boilerplate as you type; chat for questions about code you're looking at; agent mode for multi-file refactors/migrations; PR summary for the description after you push.
+YOUR ROLE:
+- Answer questions specifically about this lesson content
+- Be concise, 2-4 sentences per answer unless the question genuinely needs more
+- Be practical, give real examples when helpful
+- If asked about something not in this lesson, briefly answer and point to where they can learn more
+- Never make up features that don't exist
+- Plain conversational text only, no markdown symbols like ** or ##
+- Do not start responses with "Great question!" or similar filler phrases`;
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -279,27 +420,21 @@ Find all places where we still use the deprecated API and migrate to the new one
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
   if (!fab) return; // safety check
-
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -308,7 +443,6 @@ Find all places where we still use the deprecated API and migrate to the new one
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -317,7 +451,6 @@ Find all places where we still use the deprecated API and migrate to the new one
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

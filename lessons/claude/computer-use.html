@@ -4,16 +4,16 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Computer use: have Claude do tedious browser tasks — LearningGPT</title>
-<meta name="description" content="Claude's computer-use feature lets it actually click, type, and navigate web pages on your behalf. It's the closest thing to an autonomous agent that " />
+<meta name="description" content="Claude's computer-use feature can click, type, and navigate web pages for you. What it does well, what it does poorly, and the safety patterns that prevent disaster." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#d97757" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/claude/computer-use" />
 <meta property="og:title" content="Computer use: have Claude do tedious browser tasks" />
-<meta property="og:description" content="Claude's computer-use feature lets it actually click, type, and navigate web pages on your behalf. It's the closest thing to an autonomous agent that " />
+<meta property="og:description" content="Claude's computer-use feature can click, type, and navigate web pages for you. What it does well, what it does poorly, and the safety patterns." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -30,89 +30,112 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
 .logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
 .nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
-.lesson { padding: 50px 0 100px; }
-.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+
+/* ── INTERACTIVE LESSON SHELL ── */
+.ilesson { padding: 46px 0 100px; }
+.lesson-meta { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
 .lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(217,119,87,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(217,119,87,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
 .lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
-.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
-.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #d97757 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
-.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
-.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(217,119,87,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(217,119,87,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #d97757, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(217,119,87,0.1); border: 1px solid rgba(217,119,87,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.ilesson h1 { font-size: clamp(31px, 4.5vw, 44px); font-weight: 800; line-height: 1.14; letter-spacing: -0.02em; margin: 0 0 18px; }
+.ilesson h1 .grad { background: linear-gradient(135deg, #d97757 0%, #c46343 50%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.ilesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.12em; }
+.deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 30px; padding-bottom: 26px; border-bottom: 1px solid var(--line); }
+
+.progwrap { position: sticky; top: 59px; z-index: 50; background: rgba(10,10,26,0.9); backdrop-filter: blur(8px); padding: 14px 0 12px; margin-bottom: 6px; }
+.progbar { height: 6px; background: rgba(255,255,255,0.07); border-radius: 999px; overflow: hidden; }
+.progfill { height: 100%; width: 0%; background: linear-gradient(90deg, #d97757, #7c5cff); border-radius: 999px; transition: width .4s cubic-bezier(.4,0,.2,1); }
+.progmeta { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--text-mute); margin-top: 7px; letter-spacing: 0.3px; }
+
+.step { display: none; animation: stepIn .4s ease; }
+.step.active { display: block; }
+@keyframes stepIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.step-k { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin: 26px 0 6px; }
+.step h2 { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; line-height: 1.25; }
+.step h3 { font-size: 18px; font-weight: 600; margin: 22px 0 9px; }
+.step p { font-size: 16.5px; color: var(--text); margin: 0 0 16px; }
+.step strong { font-weight: 700; } .step em { font-style: italic; }
+
+.card { background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 22px 26px; margin: 20px 0; }
+.card p:last-child { margin-bottom: 0; }
+.callout { margin: 18px 0; padding: 16px 18px; background: linear-gradient(135deg, rgba(217,119,87,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(217,119,87,0.25); border-radius: var(--radius); }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 6px; }
+.callout p { margin: 0; font-size: 14.5px; color: var(--text-dim); }
+.callout p b { color: var(--text); }
+.pcard { background: var(--bg-soft); border: 1px solid var(--line); border-left: 3px solid var(--track); border-radius: 0 var(--radius) var(--radius) 0; padding: 14px 16px; margin-bottom: 11px; }
+.pcard .pn { font-size: 15px; font-weight: 700; color: var(--text); }
+.pcard .pd { font-size: 13.5px; color: var(--text-dim); margin-top: 4px; line-height: 1.5; }
+.pcard .pp { font-size: 12.5px; color: var(--text-mute); margin-top: 7px; font-family: 'SFMono-Regular', Consolas, monospace; line-height: 1.5; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 13px 16px; margin: 16px 0; font-size: 14.5px; }
 .gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(217,119,87,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(217,119,87,0.25); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #d97757, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
-.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
-.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
-.checklist li:first-child { border-top: none; padding-top: 0; }
-.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+
+/* choices */
+.choices { display: flex; flex-direction: column; gap: 10px; margin: 16px 0 8px; }
+.choice { text-align: left; background: var(--surface); border: 1px solid var(--line-strong); color: var(--text); border-radius: 12px; padding: 14px 16px; font-size: 15px; font-family: inherit; cursor: pointer; transition: border-color .15s, background .15s, transform .1s; line-height: 1.5; }
+.choice:hover:not(:disabled) { border-color: var(--track); transform: translateX(2px); }
+.choice:disabled { cursor: default; }
+.choice.correct { border-color: var(--accent); background: rgba(68,224,164,0.1); }
+.choice.wrong { border-color: var(--danger); background: rgba(255,107,138,0.08); opacity: 0.75; }
+.fb { margin: 6px 0 0; padding: 14px 16px; border-radius: 12px; font-size: 14.5px; line-height: 1.6; display: none; }
+.fb.show { display: block; animation: stepIn .3s ease; }
+.fb.good { background: rgba(68,224,164,0.1); border: 1px solid rgba(68,224,164,0.3); }
+.fb.bad { background: rgba(255,181,71,0.08); border: 1px solid rgba(255,181,71,0.3); }
+.fb b { color: var(--text); }
+
+/* signature: intern-test gym */
+.gym { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px; margin: 18px 0; }
+.gym-rule { font-size: 13.5px; color: var(--text-dim); background: rgba(217,119,87,0.08); border: 1px solid rgba(217,119,87,0.22); border-radius: 10px; padding: 11px 14px; margin-bottom: 16px; line-height: 1.5; }
+.gym-rule b { color: var(--text); }
+.gym-score { font-size: 13px; color: var(--text-mute); margin-bottom: 12px; }
+.gym-score b { color: var(--accent); }
+.gym-scen { font-size: 16.5px; line-height: 1.55; margin: 0 0 16px; min-height: 52px; }
+.gym-scen .qn { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.gym-scen .task { display: block; margin-top: 4px; font-style: italic; }
+.jbtns { display: flex; gap: 12px; }
+@media (max-width: 480px){ .jbtns { flex-direction: column; } }
+.jbtn { flex: 1; padding: 13px; border-radius: 11px; border: 1px solid var(--line-strong); background: var(--surface); color: var(--text); font-family: inherit; font-size: 14.5px; font-weight: 600; cursor: pointer; transition: all .14s; }
+.jbtn.fine:hover:not(:disabled) { border-color: var(--accent); }
+.jbtn.away:hover:not(:disabled) { border-color: var(--danger); }
+.jbtn:disabled { cursor: default; }
+.jbtn.right { border-color: var(--accent); background: rgba(68,224,164,0.16); }
+.jbtn.wrongpick { border-color: var(--danger); background: rgba(255,107,138,0.12); }
+
+.step-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 30px; gap: 12px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #d97757, #7c5cff); color: white; padding: 13px 24px; border-radius: 11px; font-weight: 600; font-size: 15px; border: none; font-family: inherit; cursor: pointer; box-shadow: 0 6px 22px rgba(217,119,87,0.28); transition: transform .15s, opacity .15s; }
+.btn:hover:not(:disabled) { transform: translateY(-1px); color: white; }
+.btn:disabled { opacity: 0.4; cursor: default; box-shadow: none; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.btn-back { background: none; border: none; color: var(--text-mute); font-size: 14px; cursor: pointer; font-family: inherit; padding: 8px 4px; }
+.btn-back:hover { color: var(--text); } .btn-back:disabled { opacity: 0; cursor: default; }
+
+.complete { text-align: center; padding: 14px 0 0; }
+.complete .big { font-size: 48px; margin-bottom: 6px; }
+.checklist { margin: 26px 0; padding: 24px 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); text-align: left; }
+.checklist h3 { margin: 0 0 6px; font-size: 17px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 30px; position: relative; font-size: 15px; border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 13px; width: 18px; height: 18px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
-.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
-.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
-.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
+.challenge { margin: 24px 0; background: linear-gradient(135deg, rgba(217,119,87,0.18), rgba(124,92,255,0.1)); border: 1px solid rgba(217,119,87,0.3); border-radius: var(--radius-lg); padding: 28px; text-align: left; }
+.challenge h3 { margin: 0 0 8px; font-size: 19px; }
+.next-up { margin: 26px 0 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); text-align: left; }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 8px; }
+.next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
+.next-up h3 { margin: 12px 0 8px; font-size: 19px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+
 footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -141,7 +164,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
- 
 </style>
 </head>
 <body>
@@ -153,73 +175,141 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <a href="/lessons/claude/" class="nav-back">← Claude Mastery</a>
   </div>
 </nav>
-<article class="lesson">
-  <div class="container">
+
+<div class="container">
+  <div class="ilesson">
     <div class="lesson-meta">
       <span class="chip">Lesson 05 · Claude Mastery</span>
       <span class="chip chip-pro">Pro</span>
-      <span>~13 min read</span>
+      <span>~13 min</span>
       <span class="dot"></span>
-      <span>3 workflows + safety patterns</span>
+      <span>Interactive · safety patterns</span>
     </div>
     <h1>Computer use: <span class="grad serif">Claude takes the wheel.</span></h1>
-    <p class="deck">Claude's computer-use feature lets it actually click, type, and navigate web pages on your behalf. It's the closest thing to an autonomous agent that ships in a consumer product today. This lesson covers what it does well, what it does poorly, and the safety patterns that prevent disaster.</p>
-    <h2><span class="num">The mental model</span></h2><h3>Computer use is powerful and dangerous. Use it for boring, repeatable, low-stakes work.</h3><p>Claude can navigate websites, fill out forms, click buttons, extract data. It's NOT yet good at: anything requiring login to sensitive accounts, financial transactions, or tasks where one wrong click matters. Stay in the safe zone until the capability matures.</p><div class="callout"><span class="lbl">Safety first</span><p><strong>Never give computer use access to anything you wouldn't let a curious intern use.</strong> Banking, healthcare logins, anything with PII. Use it on throwaway browsers, throwaway accounts, public data. The capability is real; the trust required is still being earned.</p></div><h2><span class="num">Workflow 01</span> Data extraction from many web pages</h2><div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">1</div><h3>The web-scraper that doesn't require you to code</h3></div>
-      <p>Tell Claude to visit a list of URLs and extract structured data.</p>
-      <h4>The prompt that works</h4>
-      <div class="prompt-example"><span class="label">Extraction prompt</span>Visit each of these 20 company About pages. Extract: founding year, HQ city, employee count if listed. Return as a CSV.</div>
-      <h4>Best use cases</h4>
-      <ul><li>Competitive intelligence (visiting many competitor sites)</li><li>Building target lists from directories</li><li>Extracting data from sites without APIs</li><li>Periodic monitoring of pages you care about</li></ul>
-      <div class="gotcha">Sites with anti-bot protection will block Claude. Sites with logins behind them won't work. CAPTCHAs will stop it. Use public, no-login data.</div>
-      <div class="savings"><strong>Time savings:</strong> Hours of manual copy-paste → minutes of supervised automation.</div>
-    </div><h2><span class="num">Workflow 02</span> Form filling at scale</h2><div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">2</div><h3>Fill 50 forms without breaking your hand</h3></div>
-      <p>Give Claude a CSV and a form URL. It fills the form, submits, moves to the next row.</p>
-      <h4>The prompt that works</h4>
-      <div class="prompt-example"><span class="label">Bulk form prompt</span>For each row in this CSV, navigate to [form URL], fill in the fields with the matching data, submit, and report success or failure.</div>
-      <h4>Best use cases</h4>
-      <ul><li>Bulk submissions to directories or marketplaces</li><li>Onboarding tasks that require many similar form fills</li><li>Survey or research data entry</li><li>Migrating data from spreadsheets to legacy systems</li></ul>
-      <div class="gotcha">Always test on 2-3 entries before letting it run on hundreds. Always have a stop button. Always check what gets submitted.</div>
-      <div class="savings"><strong>Time savings:</strong> Manual form filling for hours → automated for the boring parts.</div>
-    </div><h2><span class="num">Workflow 03</span> Browser-based workflows you can't easily script</h2><div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">3</div><h3>Automate the things that only exist in a browser</h3></div>
-      <p>Some workflows have no API, no automation, no shortcut — only a web UI. Computer use is the answer for those.</p>
-      <h4>The prompt that works</h4>
-      <div class="prompt-example"><span class="label">Workflow examples</span>Daily: check 5 specific dashboard URLs for changes, summarize anything new.
+    <p class="deck">Computer use lets Claude actually click, type, and navigate web pages on your behalf — the closest thing to an autonomous agent shipping in a consumer product today. It's genuinely powerful and genuinely risky. This lesson is about staying in the zone where it helps and out of the zone where it hurts.</p>
 
-Weekly: visit our 3 vendor portals, download the latest invoices, save to a folder.
-
-Monthly: audit our 30 SaaS subscriptions by visiting each settings page.</div>
-      <h4>Best use cases</h4>
-      <ul><li>Vendor portal automation (downloading invoices, etc.)</li><li>Internal dashboard monitoring</li><li>Periodic audits of accounts/subscriptions</li><li>Anywhere you click the same buttons in the same order routinely</li></ul>
-      <div class="gotcha">These workflows often break when sites update their UI. Build them, test them, but expect periodic maintenance. Not 'set and forget' yet.</div>
-      <div class="savings"><strong>Time savings:</strong> Boring weekly routines: automated.</div>
+    <div class="progwrap">
+      <div class="progbar"><div class="progfill" id="prog"></div></div>
+      <div class="progmeta"><span id="progStep">Step 1 of 5</span><span id="progPct">0% complete</span></div>
     </div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Final challenge: find one task to delegate</h2>
-      <p>Identify one boring web task you do routinely. Test computer use on it. Start with one run; supervise; verify; then automate the routine. Most users find at least one 30-min/week task they can delegate.</p>
-      <div class="btn-row">
-        <a href="/lessons/claude/" class="btn">Back to Claude Mastery →</a>
-        <a href="/#pricing" class="btn ghost">See pricing →</a>
+
+    <!-- STEP 1 — mental model + predict -->
+    <section class="step active" data-step="1">
+      <span class="step-k">The mental model</span>
+      <h2>Powerful, and not yet fully trustworthy</h2>
+      <p>Claude can navigate sites, fill forms, click buttons, and pull data. What it's <em>not</em> good for yet: anything behind a sensitive login, anything financial, anything where one wrong click is expensive. The capability is real; the trust is still being earned.</p>
+      <h3>Predict first</h3>
+      <p>Computer use can drive a browser for you. What kind of work is it actually right for <em>today</em>?</p>
+      <div class="choices" id="c1">
+        <button class="choice" onclick="pick(this,1,'a')">Anything you'd do in a browser — log in, pay bills, the lot</button>
+        <button class="choice" onclick="pick(this,1,'b')">Boring, repeatable, low-stakes tasks on public or throwaway accounts</button>
+        <button class="choice" onclick="pick(this,1,'c')">Nothing — it's too risky to use at all</button>
       </div>
-    </div>
-    <div class="checklist">
-      <h3>What you can do now</h3>
-      <ul><li>Understand what computer use does well vs. poorly today</li><li>Apply safety patterns (throwaway accounts, supervised first runs)</li><li>Use computer use for data extraction and form filling at scale</li><li>Recognize when an API would be better than browser automation</li><li>Maintain automated workflows when sites change</li></ul>
-    </div>
-    <div class="next-up">
-      <span class="pro-tag">Pro+</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in Claude Mastery</div>
-      <h3>Lesson 6 · Claude Code: the CLI tool for serious development</h3>
-      <p>Setting up Claude Code, prompt patterns that actually ship code, MCP servers, hooks. The tool that turned vibe-coding into a real workflow. <a href="/#pricing">See pricing →</a></p>
-    </div>
+      <div class="fb" id="fb1"></div>
+      <div class="step-nav">
+        <button class="btn-back" disabled>← Back</button>
+        <button class="btn" id="next1" disabled onclick="go(2)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- STEP 2 — three workflows (show) -->
+    <section class="step" data-step="2">
+      <span class="step-k">What it's good at</span>
+      <h2>Three workflows in the safe zone</h2>
+      <div class="pcard"><div class="pn">① Data extraction across pages</div><div class="pd">A no-code web scraper for public pages — visit a list of URLs and pull structured data.</div><div class="pp">"Visit these 20 About pages. Pull founding year, HQ city, employee count. Return a CSV."</div></div>
+      <div class="pcard"><div class="pn">② Form filling at scale</div><div class="pd">Hand it a CSV and a form URL; it fills, submits, and moves to the next row.</div><div class="pp">"For each CSV row, go to [form URL], fill the fields, submit, report success/failure."</div></div>
+      <div class="pcard"><div class="pn">③ Browser-only routines</div><div class="pd">For workflows with no API — monitor dashboards, download invoices from vendor portals, audit account settings.</div><div class="pp">"Weekly: visit our 3 vendor portals, download the latest invoices, save to a folder."</div></div>
+      <div class="gotcha">It stops at the edges: anti-bot protection, CAPTCHAs, and anything behind a login will block it. Stick to public, no-login pages — and expect to maintain these when sites change their UI.</div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(1)">← Back</button>
+        <button class="btn" onclick="go(3)">Run the intern test →</button>
+      </div>
+    </section>
+
+    <!-- STEP 3 — signature: intern-test gym -->
+    <section class="step" data-step="3">
+      <span class="step-k">Do it · the intern test</span>
+      <h2>Fine for computer use, or keep it away?</h2>
+      <p>For each task, ask the simple question that keeps you safe — then call it.</p>
+      <div class="gym">
+        <div class="gym-rule">The test: <b>would you hand this to a curious intern on a throwaway laptop?</b> Public, boring, low-stakes → fine. Logins, money, personal data, irreversible clicks → keep it away.</div>
+        <div class="gym-score" id="jScore">Task <b id="jNum">1</b> of 6 &nbsp;·&nbsp; <span id="jRight">0</span> right</div>
+        <div class="gym-scen" id="jScen"></div>
+        <div class="jbtns">
+          <button class="jbtn fine" id="jFine" onclick="jAnswer('fine',this)">✅ Fine for computer use</button>
+          <button class="jbtn away" id="jAway" onclick="jAnswer('away',this)">🚫 Keep it away</button>
+        </div>
+        <div class="fb" id="fb3"></div>
+        <button class="btn" id="jNext" style="margin-top:16px;display:none" onclick="jNextQ()">Next →</button>
+      </div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(2)">← Back</button>
+        <button class="btn" id="next3" disabled onclick="go(4)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- STEP 4 — supervised rollout pick -->
+    <section class="step" data-step="4">
+      <span class="step-k">The discipline</span>
+      <h2>Start small, watch closely</h2>
+      <p>Even a safe-zone task can go sideways — a misread field, a site that changed overnight. The way you start it matters as much as whether it's safe.</p>
+      <h3>The call</h3>
+      <p>You've got a computer-use job to fill 200 forms from a CSV. How do you kick it off?</p>
+      <div class="choices" id="c4">
+        <button class="choice" onclick="pick(this,4,'a')">Let it run all 200 — automation is the whole point</button>
+        <button class="choice" onclick="pick(this,4,'b')">Run 2–3 rows first, check exactly what got submitted, then let it finish with a stop button ready</button>
+        <button class="choice" onclick="pick(this,4,'c')">Give it your admin login so it never gets blocked</button>
+      </div>
+      <div class="fb" id="fb4"></div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(3)">← Back</button>
+        <button class="btn" id="next4" disabled onclick="go(5)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- STEP 5 — completion -->
+    <section class="step" data-step="5">
+      <div class="complete">
+        <div class="big">🖱️</div>
+        <span class="step-k">Lesson complete</span>
+        <h2>You can let Claude drive — within the lines</h2>
+      </div>
+      <div class="checklist">
+        <h3>What you can do now</h3>
+        <ul>
+          <li>Use computer use for data extraction and bulk form filling on public data</li>
+          <li>Apply the intern test before handing it any task</li>
+          <li>Start every job on 2–3 items, supervise, verify, keep a stop button</li>
+          <li>Keep it away from logins, money, and personal data</li>
+          <li>Expect to maintain browser routines when sites change their UI</li>
+        </ul>
+      </div>
+      <div class="challenge">
+        <h3>Your move: delegate one boring task</h3>
+        <p>Pick one tedious web task you do routinely on public, no-login pages. Test computer use on a single run, supervise it, verify the output — then let it handle the routine. Most people find at least one 30-minute-a-week chore to hand off.</p>
+        <div class="btn-row">
+          <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+        </div>
+      </div>
+      <div class="next-up">
+        <span class="pro-plus-tag">Pro+</span>
+        <div class="lbl" style="margin-top:12px">Up next in Claude Mastery</div>
+        <h3>Claude Code: the CLI tool for serious development</h3>
+        <p>Setting up Claude Code, the prompt patterns that actually ship code, MCP servers, and hooks — the tool that turned vibe-coding into a real workflow.</p>
+        <div class="btn-row">
+          <a href="/lessons/claude/claude-code" class="btn">Continue to Claude Code →</a>
+          <a href="/lessons/claude/" class="btn ghost">Back to all lessons</a>
+        </div>
+      </div>
+    </section>
+
   </div>
-</article>
+</div>
+
 <footer>
   <div class="footer-inner">
-    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Anthropic.</div>
-    <a href="/lessons/claude/" style="color: var(--text-dim);">← All Claude lessons</a>
+    <div>© 2026 LearningGPT · Independent. Not affiliated with Anthropic.</div>
+    <a href="/lessons/claude/" style="color: var(--text-dim);">← All Claude Mastery lessons</a>
   </div>
 </footer>
 
@@ -228,7 +318,6 @@ Monthly: audit our 30 SaaS subscriptions by visiting each settings page.</div>
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -240,10 +329,10 @@ Monthly: audit our 30 SaaS subscriptions by visiting each settings page.</div>
     <button class="coach-close" id="coachClose">✕</button>
   </div>
   <div class="coach-messages" id="coachMessages">
-    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson on Claude's computer use. Ask me what it's good at, how to keep it in the safe zone, or how to roll out a task without getting burned. What were you hoping to automate?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -251,15 +340,114 @@ Monthly: audit our 30 SaaS subscriptions by visiting each settings page.</div>
   </div>
 </div>
 
+<script id="lessonScript">
+/* ── stepper ── */
+var TOTAL = 5;
+var cur = 1;
+function go(n){
+  if(n<1||n>TOTAL) return;
+  document.querySelector('.step[data-step="'+cur+'"]').classList.remove('active');
+  cur = n;
+  document.querySelector('.step[data-step="'+cur+'"]').classList.add('active');
+  var pct = Math.round(((cur-1)/(TOTAL-1))*100);
+  document.getElementById('prog').style.width = pct+'%';
+  document.getElementById('progStep').textContent = 'Step '+cur+' of '+TOTAL;
+  document.getElementById('progPct').textContent = pct+'% complete';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
 
-<script id="coachScript">
+/* ── predict / pick ── */
+var pickMsg = {
+  '1': {
+    correct: 'b',
+    good: '<b>The safe zone.</b> Computer use shines on boring, repeatable, low-stakes work — public pages, throwaway accounts, no sensitive logins. It\'s not "anything in a browser" (logins and money are off-limits for now) and it\'s not "nothing" either. Powerful, but kept on a leash.',
+    bad: '<b>Somewhere in between.</b> It\'s not for everything — keep it away from logins, money, and personal data. But it\'s not useless either. The right zone is boring, repeatable, low-stakes tasks on public or throwaway accounts.'
+  },
+  '4': {
+    correct: 'b',
+    good: '<b>Start small and watch.</b> Run a couple of rows, check exactly what got submitted, then let it finish with a stop button within reach. Computer use isn\'t set-and-forget yet — and handing it your admin login is precisely what the intern test says not to do.',
+    bad: '<b>Too far, too fast.</b> Don\'t unleash it on 200 rows blind, and never hand it an admin login. Test on 2–3, verify the submissions, then let it run with a stop button ready. Supervision is the safeguard.'
+  }
+};
+function pick(btn, step, val){
+  var box = document.getElementById('c'+step);
+  if(box.dataset.done) return;
+  box.dataset.done = '1';
+  var info = pickMsg[String(step)];
+  Array.prototype.forEach.call(box.querySelectorAll('.choice'), function(b){
+    b.disabled = true;
+    var v = b.getAttribute('onclick').match(/'([a-z])'\)/)[1];
+    if(v === info.correct) b.classList.add('correct');
+    else if(b === btn) b.classList.add('wrong');
+  });
+  var fb = document.getElementById('fb'+step);
+  var ok = val === info.correct;
+  fb.className = 'fb show ' + (ok ? 'good' : 'bad');
+  fb.innerHTML = ok ? info.good : info.bad;
+  document.getElementById('next'+step).disabled = false;
+}
+
+/* ── signature: intern-test gym ── */
+var J = [
+  { task:'"Visit 20 public company About pages and pull founding year + HQ city into a CSV."', answer:'fine',
+    why:'Public pages, no login, low-stakes, read-only — textbook safe zone.' },
+  { task:'"Log into our bank and pay this month\'s vendor invoices."', answer:'away',
+    why:'A sensitive financial login and irreversible money movement. Never — this fails the intern test outright.' },
+  { task:'"Fill 50 rows from a CSV into a public submission form."', answer:'fine',
+    why:'Boring and repeatable on a no-login form — fine, as long as you test on a few rows first.' },
+  { task:'"Sign into a patient\'s healthcare portal and download their records."', answer:'away',
+    why:'Protected health data behind a sensitive login. Keep computer use far away from PHI.' },
+  { task:'"Each morning, check 5 internal dashboard URLs and summarize what changed."', answer:'fine',
+    why:'Low-stakes monitoring and read-only — a great recurring job for computer use.' },
+  { task:'"Use my saved passwords to update billing details across my SaaS accounts."', answer:'away',
+    why:'Stored credentials plus account/billing changes where one wrong click matters. Off-limits.' }
+];
+var ji = 0, jRight = 0, jDone = false;
+function jRender(){
+  var q = J[ji];
+  document.getElementById('jNum').textContent = ji+1;
+  document.getElementById('jRight').textContent = jRight;
+  document.getElementById('jScen').innerHTML = '<span class="qn">Task '+(ji+1)+'</span><span class="task">'+q.task+'</span>';
+  ['jFine','jAway'].forEach(function(id){
+    var b = document.getElementById(id);
+    b.disabled = false;
+    b.classList.remove('right','wrongpick');
+  });
+  document.getElementById('fb3').className = 'fb';
+  document.getElementById('fb3').innerHTML = '';
+  document.getElementById('jNext').style.display = 'none';
+}
+function jAnswer(choice, btn){
+  if(jDone) return;
+  jDone = true;
+  var q = J[ji];
+  var ok = choice === q.answer;
+  if(ok) jRight++;
+  document.getElementById('jRight').textContent = jRight;
+  document.getElementById('jFine').disabled = true;
+  document.getElementById('jAway').disabled = true;
+  var correctBtn = q.answer === 'fine' ? document.getElementById('jFine') : document.getElementById('jAway');
+  correctBtn.classList.add('right');
+  if(!ok) btn.classList.add('wrongpick');
+  var fb = document.getElementById('fb3');
+  fb.className = 'fb show ' + (ok ? 'good' : 'bad');
+  fb.innerHTML = (ok ? '✓ ' : '✗ ') + '<b>' + (q.answer === 'fine' ? 'Fine.' : 'Keep it away.') + '</b> ' + q.why;
+  var nb = document.getElementById('jNext');
+  if(ji < J.length-1){ nb.style.display = 'inline-flex'; nb.textContent = 'Next task →'; }
+  else { document.getElementById('next3').disabled = false; }
+}
+function jNextQ(){
+  if(ji < J.length-1){ ji++; jDone = false; jRender(); }
+}
+jRender();
+
+/* ── AI COACH ── */
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Computer use: have Claude do tedious browser tasks\nTRACK: Claude Mastery\n\nLESSON CONTENT SUMMARY:\nComputer use: have Claude do tedious browser tasks \u2014 LearningGPT L LearningGPT \u2190 Claude Mastery Lesson 05 \u00b7 Claude Mastery Pro ~13 min read 3 workflows + safety patterns Computer use: Claude takes the wheel. Claude's computer-use feature lets it actually click, type, and navigate web pages on your behalf. It's the closest thing to an autonomous agent that ships in a consumer product today. This lesson covers what it does well, what it does poorly, and the safety patterns that prevent disaster. The mental model Computer use is powerful and dangerous. Use it for boring, repeatable, low-stakes work. Claude can navigate websites, fill out forms, click buttons, extract data. It's NOT yet good at: anything requiring login to sensitive accounts, financial transactions, or tasks where one wrong click matters. Stay in the safe zone until the capability matures. Safety first Never give computer use access to anything you wouldn't let a curious intern use. Banking, healthcare logins, anything with PII. Use it on throwaway browsers, throwaway accounts, public data. The capability is real; the trust required is still being earned. Workflow 01 Data extraction from many web pages 1 The web-scraper that doesn't require you to code Tell Claude to visit a list of URLs and extract structured data. The prompt that works Extraction prompt Visit each of these 20 company About pages. Extract: founding year, HQ city, employee count if listed. Return as a CSV. Best use cases Competitive intelligence (visiting many competitor sites) Building target lists from directories Extracting data from sites without APIs Periodic monitoring of pages you care about Sites with anti-bot protection will block Claude. Sites with logins behind them won't work. CAPTCHAs will stop it. Use public, no-login data. Time savings: Hours of manual copy-paste \u2192 minutes of supervised automation. Workflow 02 Form filling at scale 2 Fill 50 forms without breaking your hand Give Claude a CSV and a form URL. It fills the form, submits, moves to the next row. The prompt that works Bulk form prompt For each row in this CSV, navigate to [form URL], fill in the fields with the matching data, submit, and report success or failure. Best use cases Bulk submissions to directories or marketplaces Onboarding tasks that require many similar form fills Survey or research data entry Migrating data from spreadsheets to legacy systems Always test on 2-3 entries before letting it run on hundreds. Always have a stop button. Always check what gets submitted. Time savings: Manual form filling for hours \u2192 automated for the boring parts. Workflow 03 Browser-based workflows you can't easily script 3 Automate the things that only exist in a browser Some workflows have no API, no automation, no shortcut \u2014 only a web UI. Computer use is the answer for those. The prompt that works Workflow examples Daily: check 5 specific dashboard URLs for changes, summarize anything new. Weekly: visit our 3 vendor portals, download the latest \n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Computer use: have Claude do tedious browser tasks\nTRACK: Claude Mastery (Lesson 05, Pro)\n\nLESSON CONTENT SUMMARY:\nComputer use lets Claude actually click, type, and navigate web pages on your behalf — the closest thing to an autonomous agent in a consumer product today. It's powerful AND risky. Mental model: use it for boring, repeatable, LOW-STAKES work. It is NOT yet good for anything behind a sensitive login, anything financial, or tasks where one wrong click is expensive.\n\nSAFETY HEURISTIC — THE INTERN TEST: never give computer use access to anything you wouldn't let a curious intern use on a throwaway laptop. Public, boring, low-stakes, read-only → fine. Logins, money, personal data (PII/PHI), irreversible clicks → keep it away. Use throwaway browsers/accounts and public data.\n\nTHREE SAFE-ZONE WORKFLOWS:\n1. Data extraction across pages — a no-code scraper for public pages (visit a list of URLs, pull structured data into a CSV).\n2. Form filling at scale — give it a CSV + a form URL; it fills, submits, moves to the next row.\n3. Browser-only routines — workflows with no API: monitor dashboards, download invoices from vendor portals, audit account settings.\n\nWHAT BLOCKS IT: anti-bot protection, CAPTCHAs, and anything behind a login. Stick to public, no-login pages. Browser routines also break when sites change their UI — expect periodic maintenance; it's not 'set and forget' yet.\n\nROLLOUT DISCIPLINE: test on 2-3 items first, watch exactly what gets submitted, keep a stop button ready, then let it run the rest. Don't unleash it blind on hundreds of rows, and never hand it an admin/sensitive login. Where a real API exists, that's usually better than browser automation.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content.\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more.\n- Be practical — give real work examples when helpful.\n- If asked about something not in this lesson, briefly answer and point to where they can learn more.\n- Never make up Claude features that don't exist.\n- Plain conversational text only — no markdown symbols like ** or ##.\n- Do not start responses with \"Great question!\" or similar filler phrases.";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -267,27 +455,21 @@ Monthly: audit our 30 SaaS subscriptions by visiting each settings page.</div>
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -296,7 +478,6 @@ Monthly: audit our 30 SaaS subscriptions by visiting each settings page.</div>
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -305,7 +486,6 @@ Monthly: audit our 30 SaaS subscriptions by visiting each settings page.</div>
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

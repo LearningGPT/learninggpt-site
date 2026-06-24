@@ -4,16 +4,16 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Code Interpreter — data analysis without writing Python — LearningGPT</title>
-<meta name="description" content="ChatGPT's Code Interpreter runs Python on your data. Charts, statistical analysis, data cleaning, format conversion. The agent that handles 'I have a CSV' problems." />
+<meta name="description" content="ChatGPT's Code Interpreter runs real Python on your data — clean a CSV, run statistics, build charts, convert formats. The tool that lets you self-serve analysis." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#10a37f" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/chatgpt/code-interpreter" />
 <meta property="og:title" content="Code Interpreter — data analysis without writing Python" />
-<meta property="og:description" content="ChatGPT's Code Interpreter runs Python on your data. Charts, statistical analysis, data cleaning, format conversion. The agent that handles 'I have a CSV' problems." />
+<meta property="og:description" content="Run real Python on your data — clean a CSV, run statistics, build charts, convert formats. Self-serve analysis." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -33,87 +33,101 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .lesson { padding: 50px 0 100px; }
 .lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
 .lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(16,163,127,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(16,163,127,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
 .lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
 .lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #10a37f 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .grad { background: linear-gradient(135deg, #10a37f 0%, #44e0a4 50%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 24px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.sec { margin: 46px 0 0; }
+.sec-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.lesson h2 { font-size: 27px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; }
 .lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
 .lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(16,163,127,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(16,163,127,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #10a37f, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(16,163,127,0.1); border: 1px solid rgba(16,163,127,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(16,163,127,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(16,163,127,0.25); border-radius: var(--radius-lg); padding: 36px; }
+
+/* ── CI RUN ── */
+.cirun { margin: 22px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden; background: #0d0d20; }
+.ci-file { padding: 14px 16px; border-bottom: 1px solid var(--line); background: rgba(16,163,127,0.06); }
+.ci-file .fn { font-size: 12.5px; font-weight: 600; color: var(--text-dim); display: flex; align-items: center; gap: 8px; }
+.csvprev { margin-top: 10px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 11.5px; color: var(--text-mute); background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; overflow-x: auto; white-space: pre; line-height: 1.7; }
+.csvprev .bad { color: #ffb0c1; }
+.ci-run { padding: 16px; }
+.runbtn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg,#10a37f,#44e0a4); color: #042; border: none; border-radius: 10px; padding: 11px 20px; font-size: 14px; font-weight: 700; font-family: inherit; cursor: pointer; transition: transform .15s, opacity .15s; }
+.runbtn:hover:not(:disabled) { transform: translateY(-1px); }
+.runbtn:disabled { opacity: 0.5; cursor: default; }
+.activity { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; }
+.act { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; color: var(--text-dim); opacity: 0; transform: translateY(6px); animation: actIn .3s ease forwards; }
+@keyframes actIn { to { opacity: 1; transform: none; } }
+.act .mk { width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0; display: grid; place-items: center; font-size: 11px; margin-top: 1px; }
+.act .mk.spin { border: 2px solid rgba(16,163,127,0.3); border-top-color: #10a37f; animation: spin .7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.act .mk.done { background: rgba(68,224,164,0.18); color: var(--accent); }
+.act.is-done { color: var(--text); }
+.ci-out { margin-top: 16px; display: none; }
+.ci-out.show { display: block; animation: actIn .4s ease forwards; }
+.ci-out .oh { font-size: 11px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; color: var(--track); margin-bottom: 10px; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
+@media (max-width: 560px){ .stats { grid-template-columns: 1fr; } }
+.stat { padding: 12px 14px; border-radius: 10px; background: rgba(16,163,127,0.06); border: 1px solid rgba(16,163,127,0.25); }
+.stat .v { font-size: 18px; font-weight: 800; color: #b8f0e0; }
+.stat .l { font-size: 11.5px; color: var(--text-mute); }
+.chartwrap { background: rgba(0,0,0,0.25); border: 1px solid var(--line); border-radius: 10px; padding: 12px; }
+.chart-title { font-size: 12px; color: var(--text-dim); margin-bottom: 6px; }
+.ci-note { margin-top: 12px; font-size: 13px; color: #ffd9a0; border-left: 3px solid var(--warn); padding-left: 12px; }
+
+/* ── ROUTER ── */
+.router { margin: 16px 0; }
+.rrow { padding: 13px 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); margin-bottom: 10px; }
+.rrow-scn { font-size: 14.5px; margin-bottom: 10px; }
+.rrow-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.rbtn { font-size: 12.5px; font-weight: 700; font-family: inherit; padding: 8px 15px; border-radius: 8px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); color: var(--text-dim); cursor: pointer; transition: all .15s; }
+.rbtn:hover:not(:disabled) { border-color: var(--track); color: var(--text); }
+.rbtn:disabled { cursor: default; }
+.rbtn.right { background: rgba(68,224,164,0.16); border-color: var(--accent); color: #b6f4dc; }
+.rbtn.wrong { background: rgba(255,107,138,0.12); border-color: var(--danger); color: #ffb0c1; }
+.rrow-fb { margin-top: 10px; font-size: 13px; color: var(--text-dim); display: none; }
+.rrow-fb.show { display: block; }
+.rrow-fb b { color: var(--track); }
+
+/* ── REFERENCE / CALLOUT ── */
+.refs { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 18px 0; }
+.ref { padding: 16px 18px; border-radius: var(--radius-lg); background: linear-gradient(180deg, var(--surface), var(--bg-soft)); border: 1px solid var(--line); }
+.ref .h { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.ref .n { width: 26px; height: 26px; border-radius: 7px; background: rgba(16,163,127,0.15); border: 1px solid rgba(16,163,127,0.35); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); flex-shrink: 0; }
+.ref .h h3 { margin: 0; font-size: 16px; }
+.ref p { font-size: 14px; margin: 0; color: var(--text-dim); }
+.callout { margin: 18px 0; padding: 18px 22px; background: linear-gradient(135deg, rgba(255,181,71,0.08), rgba(124,92,255,0.05)); border: 1px solid rgba(255,181,71,0.22); border-radius: var(--radius-lg); }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--warn); margin-bottom: 8px; }
+.callout p { margin: 0; font-size: 14.5px; color: var(--text-dim); }
+.callout b { color: var(--text); }
+
+.challenge { margin: 46px 0 30px; background: linear-gradient(135deg, rgba(16,163,127,0.14), rgba(124,92,255,0.1)); border: 1px solid rgba(16,163,127,0.3); border-radius: var(--radius-lg); padding: 32px; }
 .challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #10a37f, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
 .challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #10a37f, #7c5cff); color: white; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: inherit; box-shadow: 0 6px 24px rgba(16,163,127,0.28); transition: transform .15s; text-decoration: none; }
+.btn:hover { transform: translateY(-1px); color: white; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.checklist { margin: 30px 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
 .checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
 .checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
 .checklist li:first-child { border-top: none; padding-top: 0; }
 .checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
-.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
+.next-up { margin: 40px 0 0; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: linear-gradient(135deg, rgba(16,163,127,0.10), rgba(124,92,255,0.08)); }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); font-weight: 700; margin-bottom: 10px; }
 .next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
-.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
-.next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
-footer { border-top: 1px solid var(--line); padding: 30px 0; }
+footer { border-top: 1px solid var(--line); padding: 30px 0; margin-top: 40px; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -142,7 +156,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -154,75 +167,124 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <a href="/lessons/chatgpt/" class="nav-back">← ChatGPT Mastery</a>
   </div>
 </nav>
+
 <article class="lesson">
   <div class="container">
     <div class="lesson-meta">
-      <span class="chip">Agents · Lesson 04</span>
+      <span class="chip">Lesson 13 · ChatGPT Mastery</span>
       <span class="chip chip-pro-plus">Pro+</span>
-      <span>~11 min read</span>
+      <span>~11 min</span>
       <span class="dot"></span>
-      <span>Charts + analysis</span>
+      <span>Charts + analysis · finale</span>
     </div>
     <h1>Code Interpreter: <span class="grad serif">Python without typing Python.</span></h1>
-    <p class="deck">Code Interpreter (sometimes called Advanced Data Analysis) is the ChatGPT mode that runs Python on data you upload. CSV files, Excel sheets, images, even PDFs — it can read, analyze, transform, and chart. For anyone who used to ask their data team for one-off analysis, this is the tool that lets you self-serve.</p>
-    <h2><span class="num">Workflow 01</span> CSV → cleaned, analyzed, charted</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>The classic data file workflow</h3></div><p>You have a messy CSV. You want clean data, summary stats, and a chart. Code Interpreter does all three in one prompt.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">CSV pipeline</span>Here&#x27;s our Q1 sales CSV. Please:
+    <p class="deck">Code Interpreter (a.k.a. Advanced Data Analysis) runs real Python on data you upload — CSVs, Excel, images, even PDFs. It cleans, analyzes, converts, and charts. If you ever waited on a data team for a one-off "quick look," this is the tool that lets you self-serve it.</p>
 
-1. Clean it: fix any obvious data quality issues (inconsistent date formats, trailing whitespace, currency strings that should be numbers, etc.). Show me what you fixed.
+    <!-- mental model -->
+    <div class="sec">
+      <span class="sec-eyebrow">The mental model</span>
+      <h2>You bring the data. It writes the code.</h2>
+      <p>You don't write Python — you describe the outcome, and Code Interpreter writes and runs the code in a sandbox, then hands you the files and charts. The catch, and the whole skill of this lesson, is knowing what to verify. Run one and watch.</p>
+    </div>
 
-2. Analyze:
-   - Total revenue, broken out by month
-   - Top 5 customers by revenue
-   - Average deal size and median deal size
-   - Any outliers (very large or very small deals)
+    <!-- SIGNATURE: CI run -->
+    <div class="sec">
+      <span class="sec-eyebrow">Do it · run an analysis</span>
+      <h2>Messy CSV in, clean answers out.</h2>
+      <p>Here's a raw Q1 sales export — note the inconsistent dates, currency strings, and stray whitespace. Hit run and watch Code Interpreter clean, analyze, and chart it.</p>
 
-3. Chart:
-   - Bar chart: revenue by month
-   - Pie chart: revenue share by top 5 customers + &#x27;Other&#x27;
-   - Histogram: distribution of deal sizes
-
-4. Save the cleaned file as &#x27;q1-sales-cleaned.csv&#x27; and the charts as separate PNGs.</div><h4>Best use cases</h4><ul><li>Sales or revenue data analysis</li><li>Survey response analysis</li><li>Marketing campaign performance</li><li>Customer churn or retention analysis</li></ul><div class="gotcha">Code Interpreter sometimes hallucinates column names — always upload the actual file rather than describing it. And spot-check the cleaned output before trusting downstream analysis.</div><div class="savings"><strong>Time savings:</strong> A typical 'CSV → cleaned data + charts' task: 1-2 hours manual → 5 min.</div></div><h2><span class="num">Workflow 02</span> Format conversion at scale</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>PDF → CSV, Excel → JSON, anything weird → anything useful</h3></div><p>Code Interpreter is good at format wrangling because it can write whatever Python it needs. Tables in PDFs, weird Excel layouts, JSON that should be tabular — all solvable.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Format extraction</span>I have a PDF (attached) with about 20 tables of pricing data — one table per page. Each table has the same column structure: SKU, Description, Price, Available regions.
-
-Extract every row from every table into a single CSV. Use OCR if needed. Skip pages without tables.
-
-Clean the data: normalize regions to a consistent list (US, EU, APAC, LATAM, OTHER). Convert prices to numbers (strip $, commas). Flag any rows where extraction looked uncertain so I can verify.
-
-Output: cleaned CSV + a &#x27;low-confidence-rows.csv&#x27; for review.</div><h4>Best use cases</h4><ul><li>PDF table extraction at scale</li><li>Excel reformatting (pivot, unpivot, transpose)</li><li>JSON ↔ CSV conversion</li><li>Legacy file format migration</li></ul><div class="gotcha">PDF extraction quality depends on PDF source. Scanned PDFs need OCR which is imperfect — verify a sample of the output, not just trust 'it ran successfully.'</div><div class="savings"><strong>Time savings:</strong> Manual table extraction from PDFs: hours → minutes.</div></div><h2><span class="num">Workflow 03</span> Statistical analysis without statistician</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>A/B test analysis, regression, significance testing</h3></div><p>When you have data and a hypothesis, Code Interpreter can run real statistics — not just summary tables.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">A/B test analysis</span>I ran an A/B test on our checkout page. Data file attached: &#x27;ab-test-results.csv&#x27; with columns user_id, variant (A/B), converted (0/1), order_value.
-
-Run a proper analysis:
-1. Conversion rate by variant (with confidence intervals)
-2. Statistical significance test (with p-value and explanation of what it means)
-3. Lift in conversion rate (% and absolute)
-4. Average order value by variant (for converted users only) with significance test
-5. Sample size — is this enough data to draw conclusions? If not, how much more do we need?
-6. Plain-English summary: should we ship variant B or not, and why?
-
-Use standard A/B testing methodology (frequentist or Bayesian — pick one and explain). Show your work.</div><h4>Best use cases</h4><ul><li>Experimentation result analysis</li><li>Customer cohort comparison</li><li>Pre/post intervention measurement</li><li>Power analysis for planning experiments</li></ul><div class="gotcha">Code Interpreter can do real statistics — but it can also do wrong statistics with the same confidence. Ask it to show the test it chose and why. If you're in a high-stakes decision, get a statistician to verify.</div><div class="savings"><strong>Time savings:</strong> A/B test analysis: half a day of work → 10 min with proper checks.</div></div><div class="callout"><span class="lbl">Limits to know</span><p>Code Interpreter runs in a sandboxed Python environment with no internet access. It can't fetch new data mid-task. File size limit is around 512MB per file (varies). Sessions reset, so don't expect it to remember work from yesterday's session.</p></div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Replace one data request to your team</h2>
-      <p>Think of the last time you asked an analyst or data person for a 'quick analysis.' Take the underlying data, upload it to Code Interpreter, and run the analysis yourself. Notice what works and where you'd still want a human in the loop — that calibration is the skill.</p>
-      <div class="btn-row">
-        <a href="/lessons/chatgpt/" class="btn">Back to ChatGPT Mastery →</a>
-        <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+      <div class="cirun">
+        <div class="ci-file">
+          <div class="fn">📄 q1-sales.csv · 412 rows</div>
+          <div class="csvprev">Date,Customer,Amount,Region
+<span class="bad">03/14/2026</span>, Acme Inc , <span class="bad">$12,400</span>,us
+<span class="bad">2026-03-15</span>,Globex,<span class="bad"> 8200 </span>,US
+<span class="bad">Mar 16 2026</span>,Initech,<span class="bad">$4,150 </span>,U.S.</div>
+        </div>
+        <div class="ci-run">
+          <button class="runbtn" id="runBtn">▶ Run analysis</button>
+          <div class="activity" id="activity"></div>
+          <div class="ci-out" id="ciOut">
+            <div class="oh">Output</div>
+            <div class="stats">
+              <div class="stat"><div class="v">$1.28M</div><div class="l">Total revenue (Q1)</div></div>
+              <div class="stat"><div class="v">$4,210</div><div class="l">Median deal size</div></div>
+              <div class="stat"><div class="v">3</div><div class="l">Outliers flagged</div></div>
+            </div>
+            <div class="chartwrap">
+              <div class="chart-title">Revenue by month</div>
+              <svg width="100%" height="150" viewBox="0 0 320 150" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+                <g font-family="Inter, sans-serif" font-size="10" fill="#8a8aa5">
+                  <line x1="40" y1="120" x2="312" y2="120" stroke="rgba(255,255,255,0.12)"/>
+                  <rect x="64" y="72" width="46" height="48" rx="3" fill="#10a37f"/>
+                  <rect x="148" y="46" width="46" height="74" rx="3" fill="#1bb98c"/>
+                  <rect x="232" y="30" width="46" height="90" rx="3" fill="#44e0a4"/>
+                  <text x="87" y="135" text-anchor="middle">Jan</text>
+                  <text x="171" y="135" text-anchor="middle">Feb</text>
+                  <text x="255" y="135" text-anchor="middle">Mar</text>
+                  <text x="87" y="64" text-anchor="middle" fill="#b8f0e0">$0.34M</text>
+                  <text x="171" y="38" text-anchor="middle" fill="#b8f0e0">$0.45M</text>
+                  <text x="255" y="22" text-anchor="middle" fill="#b8f0e0">$0.49M</text>
+                </g>
+              </svg>
+            </div>
+            <div class="ci-note">Before you trust it: spot-check the cleaned rows against the original. A clean run isn't the same as correct output.</div>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- calibration quiz -->
+    <div class="sec">
+      <span class="sec-eyebrow">Your call · trust or verify?</span>
+      <h2>The skill is knowing what to double-check.</h2>
+      <p>Code Interpreter can do real statistics — and wrong statistics, with the same confidence. For each output, decide.</p>
+      <div class="router" id="router"></div>
+    </div>
+
+    <!-- limits + reference -->
+    <div class="sec">
+      <span class="sec-eyebrow">Good to know</span>
+      <h2>Limits and where it shines.</h2>
+      <div class="callout">
+        <span class="lbl">Sandbox limits</span>
+        <p>It runs in a <b>sandboxed Python environment with no internet</b> — it can't fetch new data mid-task. File size caps around <b>512MB</b> (varies), and <b>sessions reset</b>, so it won't remember yesterday's work. And always <b>upload the actual file</b> rather than describing it — it hallucinates column names otherwise.</p>
+      </div>
+      <div class="refs">
+        <div class="ref"><div class="h"><div class="n">1</div><h3>CSV → cleaned, analyzed, charted</h3></div><p>One prompt: fix data-quality issues, compute the stats you name, and output charts as PNGs plus a cleaned CSV.</p></div>
+        <div class="ref"><div class="h"><div class="n">2</div><h3>Format conversion at scale</h3></div><p>PDF tables → CSV, Excel → JSON, weird layouts → tidy data — with a "low-confidence rows" file to review.</p></div>
+        <div class="ref"><div class="h"><div class="n">3</div><h3>Statistics without a statistician</h3></div><p>A/B tests, significance, regression, power analysis — ask it to show the test it chose and why.</p></div>
+      </div>
+    </div>
+
+    <div class="challenge">
+      <h2 style="margin-top:0;">Replace one data request to your team</h2>
+      <p>Think of the last time you asked an analyst for a "quick analysis." Take the underlying data, upload it to Code Interpreter, and run it yourself. Notice what works and where you'd still want a human in the loop — that calibration is the whole skill.</p>
+      <div class="btn-row">
+        <a href="/playground" class="btn">Try a prompt in the playground →</a>
+        <a href="/lessons/chatgpt/" class="btn ghost">Back to ChatGPT Mastery</a>
+      </div>
+    </div>
+
     <div class="checklist">
       <h3>What you can do now</h3>
       <ul>
-        <li>Upload actual files; don't describe what's in them</li>
+        <li>Upload actual files — don't describe what's in them</li>
         <li>Spot-check cleaned data before trusting downstream analysis</li>
-        <li>Ask Code Interpreter to show its work for statistical tests</li>
-        <li>Know the sandbox limits (no internet, file size cap)</li>
-        <li>Use this for self-service analysis — escalate complex stats to experts</li>
+        <li>Ask Code Interpreter to show its work on statistical tests</li>
+        <li>Know the sandbox limits: no internet, ~512MB cap, sessions reset</li>
+        <li>Self-serve everyday analysis; escalate high-stakes stats to an expert</li>
       </ul>
     </div>
+
     <div class="next-up">
-      <span class="pro-tag">Pro</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in ChatGPT Mastery</div>
-      <h3>Lesson 05 · GPT Store — the third-party GPTs worth knowing</h3>
-      <p>The GPT Store has millions of GPTs. 99% are noise. This lesson covers the categories that consistently produce useful GPTs and the ones you should know by name. <a href="/lessons/chatgpt/">See the track →</a></p>
+      <span class="lbl">🎓 Track complete</span>
+      <h3>You've finished ChatGPT Mastery.</h3>
+      <p>That's the full track — from email and Custom GPTs through agents, Deep Research, the API, and Code Interpreter. Keep your toolkit sharp as OpenAI ships new features, and if you want breadth, the Copilot and Claude Mastery tracks cover the same depth for other tools. <a href="/lessons/">Explore all tracks →</a></p>
     </div>
   </div>
 </article>
+
 <footer>
   <div class="footer-inner">
     <div>© 2026 LearningGPT · Independent. Not affiliated with OpenAI.</div>
@@ -235,7 +297,6 @@ Use standard A/B testing methodology (frequentist or Bayesian — pick one and e
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -250,7 +311,7 @@ Use standard A/B testing methodology (frequentist or Bayesian — pick one and e
     <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -258,15 +319,91 @@ Use standard A/B testing methodology (frequentist or Bayesian — pick one and e
   </div>
 </div>
 
+<script id="lessonScript">
+(function () {
+  // ── CI RUN SIM ──
+  var STEPS = [
+    'Reading q1-sales.csv — 412 rows',
+    'Cleaning: normalized 3 date formats, stripped $ and commas, trimmed whitespace, unified regions',
+    'Computing: revenue by month, top customers, deal-size stats, outliers',
+    'Rendering charts'
+  ];
+  var runBtn = document.getElementById('runBtn');
+  var activity = document.getElementById('activity');
+  var ciOut = document.getElementById('ciOut');
+  var started = false;
+
+  function runStep(i) {
+    if (i >= STEPS.length) { finish(); return; }
+    var row = document.createElement('div');
+    row.className = 'act';
+    row.innerHTML = '<span class="mk spin"></span><span>' + STEPS[i] + '…</span>';
+    activity.appendChild(row);
+    row.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    setTimeout(function () {
+      row.classList.add('is-done');
+      row.querySelector('.mk').className = 'mk done';
+      row.querySelector('.mk').textContent = '✓';
+      runStep(i + 1);
+    }, 800);
+  }
+  function finish() {
+    ciOut.classList.add('show');
+    runBtn.textContent = '✓ Analysis complete';
+    ciOut.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+  runBtn.addEventListener('click', function () {
+    if (started) return;
+    started = true;
+    runBtn.disabled = true;
+    runBtn.textContent = '● Running Python…';
+    runStep(0);
+  });
+
+  // ── CALIBRATION QUIZ ──
+  var OPTS = ['Trust as-is', 'Verify first'];
+  var ITEMS = [
+    { scn: 'It reports the file cleaned successfully and ran with no errors.', correct: 'Verify first',
+      why: 'A clean run isn\'t correct output — spot-check the cleaned rows before anything downstream depends on them.' },
+    { scn: 'A quick bar chart of revenue by month, just to eyeball the trend internally.', correct: 'Trust as-is',
+      why: 'Low-stakes glance — fine to trust. Calibration means not over-verifying the trivial stuff.' },
+    { scn: 'A p-value that will decide whether you ship the new checkout flow.', correct: 'Verify first',
+      why: 'High-stakes: ask it to show the test it chose and why, and have a statistician confirm before you ship.' },
+    { scn: 'It OCR\'d a stack of scanned PDFs into a CSV.', correct: 'Verify first',
+      why: 'OCR is imperfect — check a sample of rows against the originals rather than trusting "it ran."' }
+  ];
+  var router = document.getElementById('router');
+  ITEMS.forEach(function (it) {
+    var row = document.createElement('div');
+    row.className = 'rrow';
+    var btns = OPTS.map(function (o) { return '<button class="rbtn" data-o="' + o + '">' + o + '</button>'; }).join('');
+    row.innerHTML = '<div class="rrow-scn">' + it.scn + '</div><div class="rrow-btns">' + btns + '</div><div class="rrow-fb"></div>';
+    router.appendChild(row);
+    var fb = row.querySelector('.rrow-fb');
+    var rbtns = row.querySelectorAll('.rbtn');
+    var done = false;
+    rbtns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (done) return;
+        done = true;
+        var ok = b.dataset.o === it.correct;
+        rbtns.forEach(function (x) { x.disabled = true; if (x.dataset.o === it.correct) x.classList.add('right'); });
+        if (!ok) b.classList.add('wrong');
+        fb.innerHTML = (ok ? '' : '<b>' + it.correct + '.</b> ') + it.why;
+        fb.classList.add('show');
+      });
+    });
+  });
+})();
+</script>
 
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Code Interpreter \u2014 data analysis without writing Python\nTRACK: Chatgpt Mastery\n\nLESSON CONTENT SUMMARY:\nCode Interpreter \u2014 data analysis without writing Python \u2014 LearningGPT L LearningGPT \u2190 ChatGPT Mastery Agents \u00b7 Lesson 04 Pro ~11 min read Charts + analysis Code Interpreter: Python without typing Python. Code Interpreter (sometimes called Advanced Data Analysis) is the ChatGPT mode that runs Python on data you upload. CSV files, Excel sheets, images, even PDFs \u2014 it can read, analyze, transform, and chart. For anyone who used to ask their data team for one-off analysis, this is the tool that lets you self-serve. Workflow 01 CSV \u2192 cleaned, analyzed, charted 1 The classic data file workflow You have a messy CSV. You want clean data, summary stats, and a chart. Code Interpreter does all three in one prompt. The prompt that works CSV pipeline Here&#x27;s our Q1 sales CSV. Please: 1. Clean it: fix any obvious data quality issues (inconsistent date formats, trailing whitespace, currency strings that should be numbers, etc.). Show me what you fixed. 2. Analyze: - Total revenue, broken out by month - Top 5 customers by revenue - Average deal size and median deal size - Any outliers (very large or very small deals) 3. Chart: - Bar chart: revenue by month - Pie chart: revenue share by top 5 customers + &#x27;Other&#x27; - Histogram: distribution of deal sizes 4. Save the cleaned file as &#x27;q1-sales-cleaned.csv&#x27; and the charts as separate PNGs. Best use cases Sales or revenue data analysis Survey response analysis Marketing campaign performance Customer churn or retention analysis Code Interpreter sometimes hallucinates column names \u2014 always upload the actual file rather than describing it. And spot-check the cleaned output before trusting downstream analysis. Time savings: A typical 'CSV \u2192 cleaned data + charts' task: 1-2 hours manual \u2192 5 min. Workflow 02 Format conversion at scale 2 PDF \u2192 CSV, Excel \u2192 JSON, anything weird \u2192 anything useful Code Interpreter is good at format wrangling because it can write whatever Python it needs. Tables in PDFs, weird Excel layouts, JSON that should be tabular \u2014 all solvable. The prompt that works Format extraction I have a PDF (attached) with about 20 tables of pricing data \u2014 one table per page. Each table has the same column structure: SKU, Description, Price, Available regions. Extract every row from every table into a single CSV. Use OCR if needed. Skip pages without tables. Clean the data: normalize regions to a consistent list (US, EU, APAC, LATAM, OTHER). Convert prices to numbers (strip $, commas). Flag any rows where extraction looked uncertain so I can verify. Output: cleaned CSV + a &#x27;low-confidence-rows.csv&#x27; for review. Best use cases PDF table extraction at scale Excel reformatting (pivot, unpivot, transpose) JSON \u2194 CSV conversion Legacy file format migration PDF extraction quality depends on PDF source. Scanned PDFs need OCR which is imperfect \u2014 verify a sample of the output, not just trust 'it ran successfully.' Time savings: Manual table extraction from PDFs: hours \u2192 minutes. Workflow 03 St\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Code Interpreter — data analysis without writing Python\nTRACK: ChatGPT Mastery (Lesson 13, Pro+ — track finale)\n\nLESSON CONTENT SUMMARY:\nCode Interpreter (a.k.a. Advanced Data Analysis) runs real Python in a sandbox on data you upload — CSV, Excel, images, PDFs. You describe the outcome; it writes and runs the code and hands back files and charts. It's the tool that lets you self-serve the 'quick analysis' you used to ask a data team for.\n\nThree workflows: (1) CSV → cleaned, analyzed, charted — in one prompt, fix data-quality issues (date formats, whitespace, currency strings → numbers), compute the stats you name (revenue by month, top customers, mean/median deal, outliers), and output charts as PNGs plus a cleaned CSV. (2) Format conversion at scale — PDF tables → CSV (with OCR if needed), Excel → JSON, weird layouts → tidy data; have it flag low-confidence rows into a separate file. (3) Statistics without a statistician — A/B test analysis, significance/p-values, regression, power analysis; ask it to show the test it chose and explain it.\n\nThe core skill is VERIFICATION CALIBRATION: Code Interpreter can do real statistics and wrong statistics with the same confidence. Always upload the ACTUAL file (it hallucinates column names if you only describe it). Spot-check cleaned data before trusting downstream analysis. For statistical tests, ask it to show its work. Verify a sample of OCR output rather than trusting 'it ran successfully.' Self-serve everyday analysis, but escalate high-stakes decisions (e.g., a p-value that decides a launch, or medical/financial/legal stakes) to a human expert. Low-stakes internal glances are fine to trust without heavy verification.\n\nLimits: sandboxed Python with NO internet (can't fetch new data mid-task); file size cap around 512MB (varies); sessions reset, so it won't remember yesterday's work.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more\n- Be practical — give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only — no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -274,27 +411,21 @@ Use standard A/B testing methodology (frequentist or Bayesian — pick one and e
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -303,7 +434,6 @@ Use standard A/B testing methodology (frequentist or Bayesian — pick one and e
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -312,7 +442,6 @@ Use standard A/B testing methodology (frequentist or Bayesian — pick one and e
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

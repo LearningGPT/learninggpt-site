@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Claude Projects: set up your personal research assistant — LearningGPT</title>
-<meta name="description" content="Claude Projects is a persistent workspace where Claude knows your context, your knowledge base, and your style. Set up a research assistant, writing partner, and code reviewer." />
+<title>Artifacts: the side panel most Claude users ignore — LearningGPT</title>
+<meta name="description" content="Artifacts turns Claude from a chat AI into a workshop. Code, documents, HTML pages, diagrams in a side panel you iterate, refine, and ship." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#d97757" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://learninggpt.ai/lessons/claude/projects-setup" />
-<meta property="og:title" content="Claude Projects: set up your personal research assistant" />
-<meta property="og:description" content="Claude Projects is a persistent workspace where Claude knows your context, your knowledge base, and your style. A research assistant, a writing partner, and a code reviewer." />
+<meta property="og:url" content="https://learninggpt.ai/lessons/claude/artifacts-mastery" />
+<meta property="og:title" content="Artifacts: the side panel most Claude users ignore" />
+<meta property="og:description" content="Artifacts turns Claude from a chat AI into a workshop. When it wins, when it gets in the way, and the iterative-refinement loop." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -56,16 +56,13 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .step p { font-size: 16.5px; color: var(--text); margin: 0 0 16px; }
 .step strong { font-weight: 700; } .step em { font-style: italic; }
 
-.callout { margin: 18px 0; padding: 16px 18px; background: linear-gradient(135deg, rgba(217,119,87,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(217,119,87,0.25); border-radius: var(--radius); }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 6px; }
-.callout p { margin: 0; font-size: 14.5px; color: var(--text-dim); }
-.callout p b { color: var(--text); }
-.pcard { background: var(--bg-soft); border: 1px solid var(--line); border-left: 3px solid var(--track); border-radius: 0 var(--radius) var(--radius) 0; padding: 15px 17px; margin-bottom: 12px; }
-.pcard .pn { font-size: 15.5px; font-weight: 700; color: var(--text); }
+.card { background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 22px 26px; margin: 20px 0; }
+.card p:last-child { margin-bottom: 0; }
+.pcard { background: var(--bg-soft); border: 1px solid var(--line); border-left: 3px solid var(--track); border-radius: 0 var(--radius) var(--radius) 0; padding: 14px 16px; margin-bottom: 11px; }
+.pcard .pn { font-size: 15px; font-weight: 700; color: var(--text); }
 .pcard .pd { font-size: 13.5px; color: var(--text-dim); margin-top: 4px; line-height: 1.5; }
-.pcard .pset { font-size: 12.5px; color: var(--text-mute); margin-top: 7px; font-family: 'SFMono-Regular', Consolas, monospace; line-height: 1.5; }
-.pcard .pg { font-size: 12.5px; color: var(--warn); margin-top: 8px; }
-.pcard .pg b { color: var(--text); }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 13px 16px; margin: 16px 0; font-size: 14.5px; }
+.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
 
 /* choices */
 .choices { display: flex; flex-direction: column; gap: 10px; margin: 16px 0 8px; }
@@ -80,20 +77,25 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .fb.bad { background: rgba(255,181,71,0.08); border: 1px solid rgba(255,181,71,0.3); }
 .fb b { color: var(--text); }
 
-/* signature: anti-pattern hunt */
-.hunt { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 22px 24px; margin: 18px 0; }
-.hunt .hh { font-size: 11px; text-transform: uppercase; letter-spacing: 0.9px; color: var(--brand-2); font-weight: 700; margin-bottom: 12px; }
-.clause { display: block; width: 100%; text-align: left; background: var(--surface); border: 1px solid var(--line-strong); border-radius: 10px; padding: 12px 15px; margin-bottom: 9px; font-size: 14px; color: var(--text); cursor: pointer; font-family: inherit; line-height: 1.5; transition: all .15s; }
-.clause:hover:not(.done) { border-color: var(--brand-2); }
-.clause.ok { border-color: rgba(68,224,164,0.4); background: rgba(68,224,164,0.06); cursor: default; }
-.clause.caught { border-color: var(--danger); background: rgba(255,107,138,0.12); text-decoration: line-through; color: var(--text-mute); cursor: default; }
-.hunt-hint { font-size: 13px; color: var(--text-mute); margin: 14px 0 2px; }
-.hunt-hint b { color: var(--text); }
-.why-list { list-style: none; padding: 0; margin: 12px 0 0; }
-.why-list li { font-size: 13.5px; color: var(--text-dim); padding: 9px 0 9px 24px; position: relative; border-top: 1px solid var(--line); line-height: 1.5; animation: stepIn .3s ease; }
-.why-list li:first-child { border-top: none; }
-.why-list li::before { content: '✕'; position: absolute; left: 0; top: 9px; color: var(--danger); font-weight: 700; }
-.why-list li b { color: var(--text); }
+/* signature: live artifact iteration */
+.stage { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 16px 0; }
+.artframe { border: 1px solid var(--line-strong); border-radius: 14px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+.artbar { display: flex; justify-content: space-between; align-items: center; padding: 9px 14px; background: var(--surface); border-bottom: 1px solid var(--line); font-size: 12px; color: var(--text-mute); font-family: 'SFMono-Regular', Consolas, monospace; }
+.artbar .arttools { letter-spacing: 3px; }
+.artpreview { background: #f4f4f7; color: #1a1a2e; padding: 30px 22px; text-align: center; transition: background .4s, color .4s; }
+.artpreview.dark { background: #15151f; color: #f0f0f6; }
+.ap-h { font-size: 23px; font-weight: 800; margin-bottom: 6px; letter-spacing: -0.01em; transition: color .3s; line-height: 1.2; }
+.artpreview.accent .ap-h { color: #d97757; }
+.ap-s { font-size: 13px; opacity: 0.65; margin-bottom: 16px; }
+.ap-cta { background: #7c5cff; color: #fff; border: none; border-radius: 9px; padding: 10px 20px; font-weight: 600; font-size: 13.5px; cursor: default; font-family: inherit; transition: background .3s, transform .2s; }
+.artpreview.accent .ap-cta { background: #d97757; }
+.cmds { display: flex; flex-wrap: wrap; gap: 9px; }
+.cmd { background: var(--surface); border: 1px solid var(--line-strong); color: var(--text); border-radius: 999px; padding: 9px 15px; font-size: 13px; cursor: pointer; font-family: inherit; transition: all .15s; }
+.cmd:hover:not(.applied) { border-color: var(--track); }
+.cmd.applied { background: rgba(68,224,164,0.14); border-color: var(--accent); color: var(--text); cursor: default; }
+.cmd.applied::before { content: '✓ '; color: var(--accent); }
+.iter-hint { font-size: 13px; color: var(--text-mute); }
+.iter-hint b { color: var(--text); }
 
 .step-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 30px; gap: 12px; }
 .btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #d97757, #7c5cff); color: white; padding: 13px 24px; border-radius: 11px; font-weight: 600; font-size: 15px; border: none; font-family: inherit; cursor: pointer; box-shadow: 0 6px 22px rgba(217,119,87,0.28); transition: transform .15s, opacity .15s; }
@@ -174,14 +176,14 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 <div class="container">
   <div class="ilesson">
     <div class="lesson-meta">
-      <span class="chip">Lesson 02 · Claude Mastery</span>
+      <span class="chip">Lesson 03 · Claude Mastery</span>
       <span class="chip chip-pro">Pro</span>
-      <span>~14 min</span>
+      <span>~10 min</span>
       <span class="dot"></span>
-      <span>Interactive · 3 builds</span>
+      <span>Interactive</span>
     </div>
-    <h1>Claude Projects: <span class="grad serif">your personal research assistant.</span></h1>
-    <p class="deck">Projects is the Claude feature most people have never opened — and it changes everything. A Project is a persistent workspace where Claude carries your context, your knowledge base, and your style into every conversation. This lesson sets up three: a research assistant, a writing partner, and a code reviewer — and the instruction traps that quietly make a Project worse.</p>
+    <h1>Artifacts: <span class="grad serif">the side panel most ignore.</span></h1>
+    <p class="deck">Artifacts turns Claude from a chat AI into a workshop. Code, documents, HTML pages, diagrams — they live in a side panel where you iterate, refine, and ship. Most people never realize when to invoke it, or what the real win is. This lesson shows it in action: when Artifacts wins, when it gets in the way, and the iterate-in-place loop that makes Claude a building partner.</p>
 
     <div class="progwrap">
       <div class="progbar"><div class="progfill" id="prog"></div></div>
@@ -191,14 +193,14 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <!-- STEP 1 — mental model + predict -->
     <section class="step active" data-step="1">
       <span class="step-k">The mental model</span>
-      <h2>Chat is amnesiac. A Project remembers.</h2>
-      <p>A normal Claude chat starts fresh every time. A Project keeps your custom instructions, your uploaded knowledge base (docs, PDFs, transcripts), and the style you've set — so every new conversation inside it starts with all of that already loaded.</p>
+      <h2>Chatting about a thing vs building the thing</h2>
+      <p>Claude auto-invokes Artifacts for substantial outputs — code, long docs, HTML, SVG — and you can force one explicitly. It pops your work into a side panel next to the chat.</p>
       <h3>Predict first</h3>
-      <p>You start every Claude chat by pasting the same three paragraphs about your industry and goals. What should you do instead?</p>
+      <p>Beyond looking nicer in a panel, what's the <em>real</em> win of an Artifact?</p>
       <div class="choices" id="c1">
-        <button class="choice" onclick="pick(this,1,'a')">Keep pasting — it's only a minute each time</button>
-        <button class="choice" onclick="pick(this,1,'b')">Build a Project — put that context in once, and every chat inside it starts with it</button>
-        <button class="choice" onclick="pick(this,1,'c')">Switch to a different AI that remembers</button>
+        <button class="choice" onclick="pick(this,1,'a')">It looks more professional than inline text</button>
+        <button class="choice" onclick="pick(this,1,'b')">You can iterate on it across messages — refine in place, no re-pasting, no losing the thread</button>
+        <button class="choice" onclick="pick(this,1,'c')">It makes Claude's answers more accurate</button>
       </div>
       <div class="fb" id="fb1"></div>
       <div class="step-nav">
@@ -207,36 +209,50 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
       </div>
     </section>
 
-    <!-- STEP 2 — three builds (show) -->
+    <!-- STEP 2 — signature: live iteration -->
     <section class="step" data-step="2">
-      <span class="step-k">Three Projects worth building</span>
-      <h2>Same setup, three jobs</h2>
-      <p>Every Project is the same recipe — a name, custom instructions, and a knowledge base. Here are three high-leverage ones, with the one trap each:</p>
-      <div class="pcard"><div class="pn">① Research Assistant</div><div class="pd">Knows your field and your past notes; every chat opens with that context.</div><div class="pset">Instructions: "Bias toward evidence, flag your confidence, link sources, never invent stats." · Upload: background docs, papers, notes.</div><div class="pg"><b>Trap:</b> don't upload sensitive data (customer info, contracts) without an enterprise data agreement.</div></div>
-      <div class="pcard"><div class="pn">② Writing Coach</div><div class="pd">Knows your voice from real samples; gives feedback that keeps you sounding like you.</div><div class="pset">Instructions: "Feedback on clarity, voice, structure; never rewrite without permission." · Upload: 3–5 of your own writing samples.</div><div class="pg"><b>Trap:</b> don't have it write FOR you in your voice — that flattens you. Use it for feedback on your writing.</div></div>
-      <div class="pcard"><div class="pn">③ Code Reviewer</div><div class="pd">Knows your conventions, style guide, and review priorities.</div><div class="pset">Instructions: "Review for correctness, readability, testability, performance; cite lines; suggest, don't rewrite." · Upload: style guide, exemplar PRs, test patterns.</div><div class="pg"><b>Trap:</b> not a substitute for human review on critical code — a faster first pass, not the final word.</div></div>
-      <div class="callout"><span class="lbl">The rule of thumb</span><p>If you find yourself re-explaining the same context more than twice, <b>that topic should be a Project.</b> Setup is one-time; the payoff is every future conversation on it.</p></div>
+      <span class="step-k">Do it · iterate in place</span>
+      <h2>Refine an Artifact without re-pasting</h2>
+      <p>Claude built you a landing page in an Artifact. Now just <em>talk</em> to it — each follow-up updates the same panel in place. Tap each refinement and watch it change.</p>
+      <div class="stage">
+        <div class="artframe">
+          <div class="artbar"><span>landing-page.html</span><span class="arttools">⧉ ⤓</span></div>
+          <div class="artpreview" id="artPrev">
+            <div class="ap-h" id="apH">Your Product</div>
+            <div class="ap-s">The thing that does the thing.</div>
+            <button class="ap-cta" id="apCta" style="display:none">Get started</button>
+          </div>
+        </div>
+        <div>
+          <div class="cmds" id="cmds">
+            <button class="cmd" data-k="dark" onclick="applyCmd(this)">"Switch it to dark mode"</button>
+            <button class="cmd" data-k="cta" onclick="applyCmd(this)">"Add a call-to-action button"</button>
+            <button class="cmd" data-k="head" onclick="applyCmd(this)">"Make the headline punchier"</button>
+            <button class="cmd" data-k="accent" onclick="applyCmd(this)">"Add an accent color"</button>
+          </div>
+          <div class="iter-hint" id="iterHint" style="margin-top:12px"><b>0 of 4</b> refinements applied — tap one.</div>
+        </div>
+      </div>
+      <div class="fb" id="fb2"></div>
       <div class="step-nav">
         <button class="btn-back" onclick="go(1)">← Back</button>
-        <button class="btn" onclick="go(3)">Audit a Project →</button>
+        <button class="btn" id="next2" disabled onclick="go(3)">Continue →</button>
       </div>
     </section>
 
-    <!-- STEP 3 — signature: anti-pattern hunt -->
+    <!-- STEP 3 — when it wins vs friction + pick -->
     <section class="step" data-step="3">
-      <span class="step-k">Do it · catch the traps</span>
-      <h2>Three of these instructions will backfire</h2>
-      <p>Here's a Project someone set up in a hurry. Six instruction lines, three of them mistakes. Tap the three that will make the Project <em>worse</em>.</p>
-      <div class="hunt">
-        <div class="hh">Project · custom instructions</div>
-        <button class="clause" data-k="a" onclick="clauseTap(this)">Bias toward evidence and flag your confidence level on claims.</button>
-        <button class="clause" data-k="b" data-bad="1" onclick="clauseTap(this)">Ghostwrite all my blog posts in my voice — I'll publish them as-is.</button>
-        <button class="clause" data-k="c" onclick="clauseTap(this)">When I share a draft, give specific feedback on clarity and structure.</button>
-        <button class="clause" data-k="d" data-bad="1" onclick="clauseTap(this)">I've uploaded our full customer contract database — use it for context.</button>
-        <button class="clause" data-k="e" data-bad="1" onclick="clauseTap(this)">Treat your code review as final so we can skip human review and ship faster.</button>
-        <button class="clause" data-k="f" onclick="clauseTap(this)">When reviewing code, cite specific line numbers and suggest, don't rewrite.</button>
-        <div class="hunt-hint" id="huntHint"><b>0 of 3</b> traps found — tap the instructions that will backfire.</div>
-        <ul class="why-list" id="whyList"></ul>
+      <span class="step-k">When to reach for it</span>
+      <h2>Artifacts can also get in the way</h2>
+      <p>The skill isn't forcing Artifacts on everything — it's knowing when they earn the panel.</p>
+      <div class="pcard"><div class="pn">Reach for an Artifact</div><div class="pd">Substantial work you'll iterate on or ship: code, long docs, an HTML mockup, an SVG, a React component. Force it with "make this an Artifact I can iterate on."</div></div>
+      <div class="pcard"><div class="pn">Skip it</div><div class="pd">One-paragraph answers, quick facts, a single calculation. An Artifact there is just friction.</div></div>
+      <h3>The call</h3>
+      <p>Which of these is worth forcing into an Artifact?</p>
+      <div class="choices" id="c3">
+        <button class="choice" onclick="pick(this,3,'a')">"What's 15% of 240?"</button>
+        <button class="choice" onclick="pick(this,3,'b')">A landing page you'll refine over several messages and then deploy</button>
+        <button class="choice" onclick="pick(this,3,'c')">A one-sentence answer to a factual question</button>
       </div>
       <div class="fb" id="fb3"></div>
       <div class="step-nav">
@@ -245,45 +261,39 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
       </div>
     </section>
 
-    <!-- STEP 4 — Project or one-off pick -->
+    <!-- STEP 4 — ship + limits (show) -->
     <section class="step" data-step="4">
-      <span class="step-k">When it's worth it</span>
-      <h2>Project, or just a one-off chat?</h2>
-      <p>Not everything deserves a Project. The test is whether the context compounds — whether you'll keep coming back to it.</p>
-      <h3>The call</h3>
-      <p>Which of these is worth a dedicated Project rather than a one-off chat?</p>
-      <div class="choices" id="c4">
-        <button class="choice" onclick="pick(this,4,'a')">A single quick question: "what's the capital of France?"</button>
-        <button class="choice" onclick="pick(this,4,'b')">Ongoing competitive research on your industry you'll return to for months</button>
-        <button class="choice" onclick="pick(this,4,'c')">A one-time rewrite of a single sentence</button>
-      </div>
-      <div class="fb" id="fb4"></div>
+      <span class="step-k">Ship it</span>
+      <h2>Copy, download, deploy</h2>
+      <p>Every Artifact has copy and download buttons. When you're done iterating, take the file straight out — HTML to a browser, code to your editor, Markdown to your CMS, SVG to your site. No re-formatting, no copy-paste-translate.</p>
+      <div class="gotcha">The preview is sandboxed — it can't make network calls or touch your data. For real app testing, take the code out and run it locally.</div>
+      <div class="gotcha">On very long Artifacts, Claude can lose track of state. If iteration starts breaking down past ~10–15 turns, paste the current Artifact back in fresh and keep going.</div>
       <div class="step-nav">
         <button class="btn-back" onclick="go(3)">← Back</button>
-        <button class="btn" id="next4" disabled onclick="go(5)">Continue →</button>
+        <button class="btn" onclick="go(5)">Finish →</button>
       </div>
     </section>
 
     <!-- STEP 5 — completion -->
     <section class="step" data-step="5">
       <div class="complete">
-        <div class="big">📂</div>
+        <div class="big">🛠️</div>
         <span class="step-k">Lesson complete</span>
-        <h2>Stop re-explaining yourself to Claude</h2>
+        <h2>Claude is a workshop, not just a chat box</h2>
       </div>
       <div class="checklist">
         <h3>What you can do now</h3>
         <ul>
-          <li>Set up a Project with custom instructions and a knowledge base in minutes</li>
-          <li>Decide what belongs in a Project vs a one-off chat</li>
-          <li>Build domain Projects — research, writing, code — for recurring work</li>
-          <li>Write instructions that help, and spot the ones that backfire</li>
-          <li>Keep sensitive data out unless you're on an enterprise agreement</li>
+          <li>Force an Artifact when Claude doesn't auto-invoke one</li>
+          <li>Iterate across messages without re-pasting — refine in place</li>
+          <li>Tell when an Artifact helps vs when it just adds friction</li>
+          <li>Reset a runaway Artifact by pasting the current version back fresh</li>
+          <li>Ship Artifacts straight to file, code, or blog</li>
         </ul>
       </div>
       <div class="challenge">
-        <h3>Your move: build one Project that pays off</h3>
-        <p>Pick the topic you talk to Claude about most. Build a Project for it tonight — fifteen minutes on instructions and uploads. Use it for a week and notice how much faster every conversation starts.</p>
+        <h3>Your move: build something small but real</h3>
+        <p>Use Artifacts to build one small useful thing in a single session — a personal landing page, a recipe-saving script, an SVG icon set, a Markdown template. Iterate on it five or more times. Then copy it out and ship it.</p>
         <div class="btn-row">
           <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
         </div>
@@ -291,10 +301,10 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
       <div class="next-up">
         <span class="pro-tag">Pro</span>
         <div class="lbl" style="margin-top:12px">Up next in Claude Mastery</div>
-        <h3>Artifacts: the side panel most Claude users ignore</h3>
-        <p>When to invoke Artifacts, when to skip them, and the iterative-refinement loop that turns Claude into a coding and writing partner instead of just an answer machine.</p>
+        <h3>Claude's long-context superpower: 200 pages, one prompt</h3>
+        <p>Loading entire documents, comparing several at once, synthesizing research — the cases where Claude's context window genuinely changes what's possible.</p>
         <div class="btn-row">
-          <a href="/lessons/claude/artifacts-mastery" class="btn">Continue to Artifacts →</a>
+          <a href="/lessons/claude/long-context" class="btn">Continue to Long context →</a>
           <a href="/lessons/claude/" class="btn ghost">Back to all lessons</a>
         </div>
       </div>
@@ -326,7 +336,7 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <button class="coach-close" id="coachClose">✕</button>
   </div>
   <div class="coach-messages" id="coachMessages">
-    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson on Claude Projects. Ask me how to structure a Project's instructions, what to upload (and what not to), or whether something is worth a Project at all. What do you talk to Claude about most?</div>
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson on Artifacts. Ask me how to force one, how to iterate without re-pasting, when an Artifact helps vs hurts, or how to ship what you build. What are you trying to make?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
     Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
@@ -357,13 +367,13 @@ function go(n){
 var pickMsg = {
   '1': {
     correct: 'b',
-    good: '<b>Build a Project.</b> Put that industry-and-goals context in the instructions once, and every chat inside the Project opens with it. The rule: if you\'re re-explaining the same context more than twice, it belongs in a Project. Setup is one-time; the payoff repeats forever.',
-    bad: '<b>There\'s a better way.</b> Re-pasting works but it\'s the exact problem Projects solve — load that context once into a Project, and every conversation inside it starts with it. No switching tools required.'
+    good: '<b>The iterate-in-place loop.</b> The panel is nice, but the real win is that every follow-up message refines the same Artifact — no re-pasting, no losing the thread across a long chat. That\'s what turns Claude from answer machine into building partner.',
+    bad: '<b>Not the point.</b> Looks and accuracy aren\'t it. The win is that you can <b>iterate on the Artifact across messages</b> — refine it in place without re-pasting or scrolling back through the chat to find the latest version.'
   },
-  '4': {
+  '3': {
     correct: 'b',
-    good: '<b>The competitive research.</b> It\'s ongoing, the context compounds, and you\'ll return to it for months — a Project saves you re-explaining every time. The capital of France and a one-line rewrite are one-offs; a plain chat is fine for those.',
-    bad: '<b>Not that one.</b> Quick facts and one-line rewrites are one-offs — a Project would be overkill. The win is the <b>ongoing research</b>, where context builds up and you keep coming back. That\'s exactly what a Project is for.'
+    good: '<b>The landing page.</b> It\'s substantial, you\'ll refine it over several messages, and you\'ll ship the file — exactly what Artifacts are for. A quick calc or a one-line answer in an Artifact is just friction.',
+    bad: '<b>That\'s friction, not a fit.</b> A single calculation or one-sentence answer doesn\'t need a panel. Artifacts earn their place on substantial work you iterate on and ship — like the landing page.'
   }
 };
 function pick(btn, step, val){
@@ -384,39 +394,30 @@ function pick(btn, step, val){
   document.getElementById('next'+step).disabled = false;
 }
 
-/* ── signature: anti-pattern hunt ── */
-var TRAPS = {
-  b: '<b>Ghostwriting your posts</b> flattens your voice and removes you as the author. Use the Project for feedback on your writing, not to write and publish for you.',
-  d: '<b>Uploading the customer contract database</b> puts sensitive client data into the Project. Don\'t — not without an enterprise plan and proper data agreements.',
-  e: '<b>Skipping human review</b> treats a fast first pass as the final word. Claude\'s review catches a lot, but it doesn\'t replace a human on critical code.'
-};
-var caught = 0;
-function clauseTap(btn){
-  if(btn.classList.contains('done') || btn.classList.contains('ok')) return;
-  if(btn.dataset.bad){
-    btn.classList.add('caught','done');
-    caught++;
-    document.getElementById('huntHint').innerHTML = '<b>'+caught+' of 3</b> traps found' + (caught<3 ? ' — keep looking.' : ' — all of them.');
-    var li = document.createElement('li');
-    li.innerHTML = TRAPS[btn.dataset.k];
-    document.getElementById('whyList').appendChild(li);
-    if(caught === 3){
-      var fb = document.getElementById('fb3');
-      fb.className = 'fb show good';
-      fb.innerHTML = '<b>Caught all three.</b> The good instructions stay specific and keep you in control — flag confidence, give feedback, cite lines. The traps each hand too much away: your authorship, your data, or your judgment. A great Project sharpens Claude\'s help without replacing you.';
-      document.getElementById('next3').disabled = false;
-    }
-  } else {
-    btn.classList.add('ok','done');
-    document.getElementById('huntHint').innerHTML = caught > 0
-      ? '<b>'+caught+' of 3</b> traps found — that one\'s a solid instruction, keep looking.'
-      : 'That one\'s a solid instruction — keep looking for the traps.';
+/* ── signature: live artifact iteration ── */
+var applied = 0;
+function applyCmd(btn){
+  if(btn.classList.contains('applied')) return;
+  var prev = document.getElementById('artPrev');
+  var k = btn.dataset.k;
+  if(k === 'dark') prev.classList.add('dark');
+  else if(k === 'cta') document.getElementById('apCta').style.display = 'inline-block';
+  else if(k === 'head') document.getElementById('apH').textContent = 'Ship faster. Stress less.';
+  else if(k === 'accent') prev.classList.add('accent');
+  btn.classList.add('applied');
+  applied++;
+  document.getElementById('iterHint').innerHTML = '<b>'+applied+' of 4</b> refinements applied' + (applied<4 ? ' — keep going.' : ' — looking sharp.');
+  if(applied === 4){
+    var fb = document.getElementById('fb2');
+    fb.className = 'fb show good';
+    fb.innerHTML = '<b>Notice what you never did:</b> re-paste, re-explain, or scroll back for the latest version. Four messages, four changes, one Artifact updating in place. When you\'re happy, hit copy or download — that\'s the whole loop.';
+    document.getElementById('next2').disabled = false;
   }
 }
 
 /* ── AI COACH ── */
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Claude Projects: set up your personal research assistant\nTRACK: Claude Mastery (Lesson 02, Pro)\n\nLESSON CONTENT SUMMARY:\nClaude Projects is a persistent workspace where Claude carries your custom instructions, uploaded knowledge base (docs/PDFs/transcripts), and established style into EVERY conversation inside it. A normal chat is amnesiac (starts fresh); a Project remembers. Rule of thumb: if you re-explain the same context more than twice, that topic should be a Project — setup is one-time, the payoff repeats.\n\nEVERY PROJECT = name + custom instructions + knowledge base. THREE EXAMPLE BUILDS:\n1. Research Assistant — knows your field and notes. Instructions like: bias toward evidence, flag confidence, link sources, never invent stats. Upload background docs/papers/notes. Trap: don't upload sensitive data (customer info, contracts) without an enterprise data agreement.\n2. Writing Coach — knows your voice from 3-5 real samples; gives feedback on clarity/voice/structure; never rewrites without permission. Trap: don't have it write FOR you in your voice — that flattens you and removes your authorship. Use it for feedback on YOUR writing.\n3. Code Reviewer — knows your conventions/style guide; reviews for correctness, readability, testability, performance; cites specific lines; suggests rather than rewrites. Trap: not a substitute for human review on critical code — it's a faster first pass, not the final word.\n\nGOOD INSTRUCTIONS are specific and keep you in control (flag confidence, give feedback, cite lines, suggest don't rewrite). ANTI-PATTERNS hand too much away: ghostwriting-and-publishing (your authorship), uploading a customer contract database (your data), or 'treat review as final, skip human review' (your judgment).\n\nPROJECT vs ONE-OFF CHAT: build a Project when context compounds and you'll return to it (e.g. months of competitive research). One-off facts and single-sentence rewrites are fine in a plain chat.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content.\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more.\n- Be practical — give real work examples and sample instructions when helpful.\n- If asked about something not in this lesson, briefly answer and point to where they can learn more.\n- Never make up Claude features that don't exist.\n- Plain conversational text only — no markdown symbols like ** or ##.\n- Do not start responses with \"Great question!\" or similar filler phrases.";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Artifacts: the side panel most Claude users ignore\nTRACK: Claude Mastery (Lesson 03, Pro)\n\nLESSON CONTENT SUMMARY:\nArtifacts turns Claude from a chat AI into a workshop: code, documents, HTML pages, SVG, diagrams live in a side panel where you iterate, refine, and ship. Claude AUTO-invokes Artifacts for substantial outputs (code, long docs, HTML, SVG); you can also FORCE one with explicit language ('Make this an Artifact I can iterate on', 'Put this in a Markdown Artifact', 'Generate this as a single-file HTML page in an Artifact').\n\nTHE REAL WIN (mental model): not the visual — it's that you can ITERATE on the Artifact across messages, refining it in place without re-pasting or losing the thread. 'Make section 2 more concise', 'Add error handling', 'Rename handleClick to onSubmit', 'Match a dark-mode aesthetic' — each follow-up updates the same Artifact.\n\nWHEN IT WINS vs FRICTION: reach for an Artifact on substantial work you'll iterate on or ship (long docs, code, HTML mockups, SVG, React components). SKIP it for one-paragraph answers, quick facts, single calculations — there it just adds friction.\n\nSHIP: every Artifact has copy + download buttons. HTML -> save .html / open / deploy; code -> editor; Markdown -> blog/CMS; SVG -> site. No re-formatting.\n\nGOTCHAS: (1) the preview is SANDBOXED — it can't make network calls or access your data; for real app testing, take the code out and run locally. (2) On very long Artifacts Claude can lose track of state; if iteration breaks down past ~10-15 turns, paste the current Artifact back in fresh and continue.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content.\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more.\n- Be practical — give real work examples and sample prompts when helpful.\n- If asked about something not in this lesson, briefly answer and point to where they can learn more.\n- Never make up Claude features that don't exist.\n- Plain conversational text only — no markdown symbols like ** or ##.\n- Do not start responses with \"Great question!\" or similar filler phrases.";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;

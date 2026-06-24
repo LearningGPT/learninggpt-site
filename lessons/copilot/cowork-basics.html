@@ -4,16 +4,16 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Cowork basics — what it is and how to start — LearningGPT</title>
-<meta name="description" content="Cowork is the agentic desktop product that lets AI do real work on your computer. Install, security model, your first session." />
+<meta name="description" content="Cowork is the agentic desktop product that lets AI do real work on your computer. What it is, how to install it, the permission model, and your first useful session." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#2c7be5" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/copilot/cowork-basics" />
 <meta property="og:title" content="Cowork basics — what it is and how to start" />
-<meta property="og:description" content="Cowork is the agentic desktop product that lets AI do real work on your computer. Install, security model, your first session." />
+<meta property="og:description" content="Cowork lets AI do real work on your files. Install, the permission model, and your first useful session." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -21,6 +21,7 @@
 * { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
 body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+button { font-family: inherit; cursor: pointer; }
 .bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
 .bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #2c7be5; }
 .bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
@@ -30,90 +31,80 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
 .logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
 .nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
-.lesson { padding: 50px 0 100px; }
-.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
-.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(44,123,229,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(44,123,229,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
-.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
-.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
-.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #2c7be5 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
-.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
-.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #2c7be5, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(44,123,229,0.1); border: 1px solid rgba(44,123,229,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #2c7be5, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
-.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
-.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
-.checklist li:first-child { border-top: none; padding-top: 0; }
-.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
-.checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
-.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
-.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
-.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
-.next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
 footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
+/* ===== Interactive lesson component (shared kit) ===== */
+.sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
+.serif { font-family:'Instrument Serif', serif; font-style:italic; font-weight:400; }
+.ilesson { max-width:720px; margin:0 auto; padding:44px 0 90px; }
+.l-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; font-size:12.5px; }
+.l-tag { font-weight:600; color:var(--track); }
+.l-count { color:var(--text-mute); }
+.prog-track { height:6px; background:var(--surface); border-radius:99px; overflow:hidden; margin-bottom:30px; }
+#prog { height:100%; width:16.6%; background:linear-gradient(90deg,var(--track),var(--brand)); border-radius:99px; transition:width .45s ease; }
+.step h1 { font-size:32px; line-height:1.12; letter-spacing:-.02em; margin:0 0 14px; font-weight:800; color:var(--text); }
+.step h3 { font-size:21px; line-height:1.2; margin:0 0 10px; font-weight:700; color:var(--text); }
+.step p { color:var(--text-dim); margin:0 0 16px; font-size:16px; line-height:1.65; }
+.step p strong { color:var(--text); font-weight:600; }
+.step em { color:var(--text); font-style:italic; }
+.wf-head { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+.wf-badge { margin-left:auto; font-size:10px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; padding:3px 9px; border-radius:999px; }
+.wf-badge.basic { background:rgba(68,224,164,.15); color:var(--accent); border:1px solid rgba(68,224,164,.35); }
+.wf-badge.inter { background:rgba(91,141,239,.15); color:var(--brand-2); border:1px solid rgba(91,141,239,.35); }
+.wf-badge.adv { background:rgba(255,181,71,.15); color:var(--warn); border:1px solid rgba(255,181,71,.35); }
+.btn { font-family:inherit; font-weight:600; font-size:14.5px; border-radius:10px; padding:11px 18px; cursor:pointer; border:1px solid transparent; display:inline-flex; align-items:center; gap:8px; transition:.15s; color:#fff; background:linear-gradient(135deg,#7c5cff,#5b8def); box-shadow:0 8px 22px -10px rgba(124,92,255,.8); }
+.btn:hover { transform:translateY(-1px); color:#fff; }
+.btn:disabled { opacity:.5; cursor:default; transform:none; }
+.btn-ghost { background:transparent; border-color:var(--line-strong); color:var(--text); box-shadow:none; }
+.btn-ghost:hover { background:rgba(255,255,255,.05); color:var(--text); }
+.btn-block { width:100%; justify-content:center; }
+.callout { background:rgba(44,123,229,.1); border:1px solid rgba(44,123,229,.28); border-radius:var(--radius); padding:14px 16px; margin-bottom:18px; font-size:14.5px; color:var(--text-dim); line-height:1.65; }
+.callout b { color:var(--text); }
+.promptbox { background:rgba(0,0,0,0.3); border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin-bottom:12px; font-family:'SFMono-Regular',Consolas,monospace; font-size:12.5px; color:var(--text); line-height:1.6; white-space:pre-wrap; }
+.promptbox .label { display:block; font-family:'Inter',sans-serif; font-size:10.5px; color:var(--text-mute); margin-bottom:6px; text-transform:uppercase; letter-spacing:.8px; font-weight:600; }
+.gotcha { background:rgba(255,181,71,.06); border:1px solid rgba(255,181,71,.22); border-radius:var(--radius); padding:12px 14px; margin-bottom:14px; font-size:13.5px; color:var(--text-dim); line-height:1.55; }
+.gotcha b { color:var(--warn); }
+.savings { display:inline-flex; align-items:center; gap:7px; background:rgba(68,224,164,.1); border:1px solid rgba(68,224,164,.3); padding:6px 12px; border-radius:8px; font-size:13px; color:var(--text); margin-bottom:6px; }
+.savings b { color:var(--accent); font-weight:700; }
+.eyebrow-do2 { font-size:12px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--track); margin:6px 0 8px; }
+.opts { display:flex; flex-direction:column; gap:10px; margin-bottom:6px; }
+.opt { text-align:left; padding:13px 15px; line-height:1.5; font-size:14.5px; font-family:inherit; color:var(--text); background:var(--surface); border:1px solid var(--line-strong); border-radius:var(--radius); cursor:pointer; transition:.15s; }
+.opt:hover:not(:disabled) { border-color:var(--brand); background:#20204a; }
+.opt:disabled { cursor:default; }
+.fb { display:none; margin-top:14px; padding:12px 14px; border-radius:var(--radius); font-size:14px; line-height:1.6; }
+.fb.good { background:rgba(68,224,164,.1); border:1px solid rgba(68,224,164,.35); color:#a7efd2; }
+.fb.bad { background:rgba(124,92,255,.1); border:1px solid rgba(124,92,255,.3); color:#cfc4ff; }
+/* permission classifier */
+.prow { background:var(--bg-soft); border:1px solid var(--line); border-radius:var(--radius); padding:11px 13px; margin-bottom:10px; }
+.prow .pa { font-size:13.5px; color:var(--text); margin-bottom:9px; line-height:1.4; }
+.pbtns { display:flex; gap:8px; }
+.pb { flex:1; font-family:inherit; font-size:12px; font-weight:600; padding:8px 4px; border-radius:8px; border:1px solid var(--line-strong); background:var(--surface); color:var(--text-dim); cursor:pointer; transition:.12s; }
+.pb:hover:not(:disabled) { border-color:var(--brand); color:var(--text); }
+.pb.sel { background:rgba(44,123,229,.2); border-color:var(--track); color:#bcd6f7; }
+.pb:disabled { cursor:default; }
+.cta-row { display:flex; gap:12px; flex-wrap:wrap; margin-top:22px; }
+.done-top { text-align:center; padding:6px 0 8px; }
+.done-check { width:52px; height:52px; border-radius:50%; background:rgba(44,123,229,.16); color:var(--track); display:flex; align-items:center; justify-content:center; margin:0 auto 14px; font-size:26px; border:1px solid rgba(44,123,229,.4); }
+.recap { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:16px 18px; margin-bottom:14px; }
+.recap .lbl { font-size:12px; color:var(--text-mute); }
+.recap p { margin:4px 0 0; color:var(--text); font-weight:500; font-size:15px; }
+.challenge-box { background:linear-gradient(135deg, rgba(44,123,229,.14), rgba(124,92,255,.1)); border:1px solid rgba(44,123,229,.3); border-radius:var(--radius); padding:16px 18px; margin-bottom:14px; }
+.challenge-box h4 { margin:0 0 8px; font-size:15px; color:var(--text); }
+.challenge-box p { margin:0; font-size:13.5px; color:var(--text-dim); line-height:1.55; }
+.upnext { background:var(--bg-soft); border:1px solid var(--line); border-radius:var(--radius); padding:14px 16px; margin-bottom:14px; }
+.upnext .lbl { font-size:12px; color:var(--text-mute); }
+.upnext p { margin:3px 0 0; font-weight:600; color:var(--text); }
+@media(max-width:560px){ .step h1{ font-size:26px; } }
+
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -142,7 +133,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -154,72 +144,127 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <a href="/lessons/copilot/" class="nav-back">← Copilot Mastery</a>
   </div>
 </nav>
-<article class="lesson">
-  <div class="container">
-    <div class="lesson-meta">
-      <span class="chip">Cowork · Lesson 01</span>
-      <span class="chip chip-pro">Pro</span>
-      <span>~11 min read</span>
-      <span class="dot"></span>
-      <span>Install + first session</span>
-    </div>
-    <h1>Cowork: <span class="grad serif">a real coworker on your desk.</span></h1>
-    <p class="deck">Cowork turns the Microsoft 365 Copilot Frontier Firm tenant into a real working environment — Claude (or Copilot, when GA) reads your files, runs scripts, drafts documents, automates the boring stuff. It's not a chat upgrade; it's a different category. This lesson covers what Cowork actually is, how to install it, the security model that keeps your data safe, and your first useful session.</p>
-    <h2><span class="num">The mental model</span></h2><h3>Cowork isn't a smarter chatbot. It's a coworker with desk access.</h3><p>The difference between Cowork and regular AI chat is the difference between asking a consultant for advice over the phone vs. handing them a laptop with access to your files. Same intelligence, dramatically different leverage.</p><p>Cowork can read files in folders you've connected, edit them, run code in a sandboxed Linux environment, call connected services like Outlook or SharePoint, and present finished work back to you. You stay in the chat window — but the work happens on your actual machine, with your actual data.</p><p>This means your prompts change. Instead of 'how do I summarize this report,' you say 'read the report in my Downloads folder and produce a 5-slide deck of the key findings.' You're delegating outcomes, not requesting answers.</p><h2><span class="num">Workflow 01</span> Install and set up Cowork</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>Get Cowork running with your folder connected</h3></div><p>Cowork lives inside the Microsoft 365 Copilot Frontier Firm tenant. Installation is straightforward but the folder-connection step is the one most people miss — without it, Cowork has nothing to work on.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Setup steps</span>Setup sequence:
 
-1. Confirm your tenant is in the Frontier Firm program (your IT admin enables this)
+<div class="container">
+  <div class="sr-only">An interactive hands-on Copilot lesson on Cowork basics: it reframes Cowork as a coworker with desk access, walks install and folder connection, has the learner classify actions by permission level (automatic, asks first, never), and pick a good first task.</div>
+
+  <main class="ilesson">
+    <div class="l-top">
+      <span class="l-tag">Copilot Mastery · Cowork · Lesson 01 · Pro</span>
+      <span class="l-count" id="step-count">Step 1 of 6 · ~11 min</span>
+    </div>
+    <div class="prog-track"><div id="prog"></div></div>
+
+    <!-- STEP 1 · intro -->
+    <section id="step-1" class="step">
+      <h1>A real coworker <span class="serif">on your desk.</span></h1>
+      <p>Cowork turns the Microsoft 365 Copilot Frontier Firm tenant into a real working environment — AI that reads your files, runs scripts, drafts documents, and automates the tedious stuff. It's not a chat upgrade; it's a different category.</p>
+      <p>You'll learn what it is, how to connect a folder, the permission model that keeps you in control, and your first useful task. About 11 minutes.</p>
+      <button class="btn" onclick="go(2)">Start the lesson →</button>
+    </section>
+
+    <!-- STEP 2 · mental model -->
+    <section id="step-2" class="step" style="display:none">
+      <h3>A coworker with desk access — not a smarter chatbot</h3>
+      <p>The difference between Cowork and regular AI chat is asking a consultant for advice over the phone vs. handing them a laptop with your files on it. Same intelligence, completely different leverage. Cowork reads and edits files in folders you connect, runs code in a sandbox, and calls connected apps — so your prompts change: you <strong>delegate outcomes, not request answers.</strong></p>
+      <div class="eyebrow-do2">Your call</div>
+      <p style="margin-bottom:12px">You want a report in your folder summarized. Which is the <em>Cowork</em> way to ask?</p>
+      <div class="opts">
+        <button class="opt" data-c="0" onclick="pick(this,2)">"How do I summarize a long report?"</button>
+        <button class="opt" data-c="1" onclick="pick(this,2)">"Read the Q3 report in my connected folder and produce a 5-slide deck of the key findings."</button>
+        <button class="opt" data-c="0" onclick="pick(this,2)">"Explain what a good summary looks like."</button>
+      </div>
+      <div class="fb" id="fb-2"></div>
+      <button class="btn" id="next-2" style="display:none;margin-top:16px" onclick="go(3)">Workflow 01 · Set it up →</button>
+    </section>
+
+    <!-- STEP 3 · WF1 install + check -->
+    <section id="step-3" class="step" style="display:none">
+      <div class="wf-head"><h3 style="margin:0">01 · Install and connect a folder</h3><span class="wf-badge basic">Setup</span></div>
+      <p>The step most people miss is connecting a folder — without it, Cowork has nothing to work on.</p>
+      <div class="promptbox"><span class="label">Setup sequence</span>1. Confirm your tenant is in the Frontier Firm program (IT enables it)
 2. Open Microsoft 365 Copilot Chat
 3. Toggle on the Cowork capability when prompted
-4. Connect a OneDrive or SharePoint folder — pick a specific working folder, not the root
-5. Test it: ask &#x27;list the files in my connected folder&#x27;
-6. If you see your real file names, you&#x27;re set up correctly</div><h4>Best use cases</h4><ul><li>First-time setup on a new computer</li><li>Switching to a new working folder for a different project</li><li>Connecting an additional folder (you can have multiple connected)</li><li>Verifying after a major software update</li></ul><div class="gotcha">Don't connect your entire user folder or 'C:\' — that gives Cowork access to too much. Connect specific working folders only. You can always add more later.</div><div class="savings"><strong>Time savings:</strong> Setup time: ~10 min. After that, every session is faster than starting from scratch in chat.</div></div><h2><span class="num">Workflow 02</span> Understand the permission model</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>What Cowork can and can't do without asking</h3></div><p>Cowork has a security model designed to keep you in control. Some actions are automatic (reading files in your connected folder); others require explicit permission (writing files outside the folder, running code that touches the network, deleting things).</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">The permission map</span>What Cowork can do automatically:
-• Read any file in your connected folder(s)
-• Create new files in your connected folder(s)
-• Edit existing files in your connected folder(s)
-• Run code in its sandbox (the Linux environment, not your real machine)
-
-What requires your permission:
-• Delete files (always asks)
-• Write to folders you haven&#x27;t connected
-• Take actions in connected apps (sending email, etc.)
-• Access browser cookies or saved passwords (never, even with permission)</div><h4>Best use cases</h4><ul><li>Understanding why Cowork asks before deleting</li><li>Knowing what's safe to delegate without oversight</li><li>Setting up a project where you want stricter limits</li><li>Onboarding a teammate who's worried about access</li></ul><div class="gotcha">Cowork never reads files outside your connected folders. If you ask it to 'find all my tax documents,' it can only search what you've connected — by design.</div><div class="savings"><strong>Time savings:</strong> Trust calibration: 20 min of reading this once = years of confident delegation.</div></div><h2><span class="num">Workflow 03</span> Run your first useful session</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>A real first task that proves the value</h3></div><p>The fastest way to internalize Cowork is to give it a real task that would take you 30+ minutes manually. Don't start with 'hello.' Start with something you've been putting off.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">First useful task</span>Try this exact prompt (modify for your situation):
-
-&quot;Look through my connected folder. Find any documents from the last 90 days that look like meeting notes, call transcripts, or interview write-ups. For each one, give me:
-- The date (from the filename or content)
-- A 2-sentence summary of the main topic
-- Any action items mentioned that don&#x27;t seem to have been done yet
-
-Present it as a single markdown table I can copy.&quot;</div><h4>Best use cases</h4><ul><li>Triaging a backlog of meeting notes</li><li>Finding orphaned action items across documents</li><li>Building a quick index of recent work</li><li>Catching up after a vacation or absence</li></ul><div class="gotcha">Resist the urge to use Cowork for things you'd be faster at directly. The win comes from tasks where the manual version would be 30+ minutes — file synthesis, batch operations, anything tedious.</div><div class="savings"><strong>Time savings:</strong> First real task: typically saves 30-60 min vs. doing it manually.</div></div><div class="callout"><span class="lbl">About Cowork (in Copilot Frontier Firm)</span><p>Cowork is currently a research preview from Anthropic. The Microsoft Copilot version is rolling out through the Frontier Firm program and will be generally available in M365 Copilot over time. The capability and concepts in this lesson apply to both — the entry point differs, the work pattern is identical.</p></div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Your first 60 minutes with Cowork</h2>
-      <p>Install Cowork. Connect one specific folder. Run the 'find recent meeting notes' prompt above. The first time the table appears with real summaries from your real files, you'll get why this is a different category from chat.</p>
-      <div class="btn-row">
-        <a href="/lessons/copilot/" class="btn">Back to Copilot Mastery →</a>
-        <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+4. Connect a OneDrive/SharePoint folder — a specific working folder, not the root
+5. Test: "list the files in my connected folder"
+6. See your real file names? You're set up.</div>
+      <div class="eyebrow-do2">Quick check</div>
+      <p style="margin-bottom:12px">Which folder do you connect?</p>
+      <div class="opts">
+        <button class="opt" data-c="0" onclick="pick(this,3)">Your whole C:\ drive, so it can find anything</button>
+        <button class="opt" data-c="1" onclick="pick(this,3)">One specific working folder — add more later if needed</button>
+        <button class="opt" data-c="0" onclick="pick(this,3)">Skip the folder step and just chat</button>
       </div>
-    </div>
-    <div class="checklist">
-      <h3>What you can do now</h3>
-      <ul>
-        <li>Install and authenticate Cowork in the Microsoft 365 Copilot Frontier Firm tenant</li>
-        <li>Connect a specific working folder (not your whole drive)</li>
-        <li>Run a real task that would have taken you 30+ minutes manually</li>
-        <li>Understand which actions require permission and which don't</li>
-        <li>Know how to disconnect a folder if you want to stop access</li>
-      </ul>
-    </div>
-    <div class="next-up">
-      <span class="pro-tag">Pro</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in Copilot Mastery</div>
-      <h3>Lesson 02 · File workflows: batch operations, transformations, cleanups</h3>
-      <p>Once Cowork is connected, the biggest immediate win is anything involving multiple files at once. Renaming, reorganizing, converting formats, extracting data — the patterns that save you hours. <a href="/lessons/copilot/">See the track →</a></p>
-    </div>
-  </div>
-</article>
+      <div class="fb" id="fb-3"></div>
+      <button class="btn" id="next-3" style="display:none;margin-top:16px" onclick="go(4)">Workflow 02 · Permissions →</button>
+    </section>
+
+    <!-- STEP 4 · WF2 permission classifier -->
+    <section id="step-4" class="step" style="display:none">
+      <div class="wf-head"><h3 style="margin:0">02 · The permission model</h3><span class="wf-badge inter">Stay in control</span></div>
+      <p>Cowork keeps you in control: some actions are automatic, some always ask first, and a couple are off-limits entirely. Set the permission you'd expect for each — then check.</p>
+      <div id="p-rows">
+        <div class="prow" data-correct="auto"><div class="pa">Read a file in your connected folder</div><div class="pbtns"><button class="pb" data-v="auto" onclick="pPick(this)">Automatic</button><button class="pb" data-v="ask" onclick="pPick(this)">Asks first</button><button class="pb" data-v="never" onclick="pPick(this)">Never</button></div></div>
+        <div class="prow" data-correct="auto"><div class="pa">Run code in its Linux sandbox</div><div class="pbtns"><button class="pb" data-v="auto" onclick="pPick(this)">Automatic</button><button class="pb" data-v="ask" onclick="pPick(this)">Asks first</button><button class="pb" data-v="never" onclick="pPick(this)">Never</button></div></div>
+        <div class="prow" data-correct="ask"><div class="pa">Delete a file</div><div class="pbtns"><button class="pb" data-v="auto" onclick="pPick(this)">Automatic</button><button class="pb" data-v="ask" onclick="pPick(this)">Asks first</button><button class="pb" data-v="never" onclick="pPick(this)">Never</button></div></div>
+        <div class="prow" data-correct="ask"><div class="pa">Send an email through a connected app (Outlook)</div><div class="pbtns"><button class="pb" data-v="auto" onclick="pPick(this)">Automatic</button><button class="pb" data-v="ask" onclick="pPick(this)">Asks first</button><button class="pb" data-v="never" onclick="pPick(this)">Never</button></div></div>
+        <div class="prow" data-correct="never"><div class="pa">Read your saved passwords or browser cookies</div><div class="pbtns"><button class="pb" data-v="auto" onclick="pPick(this)">Automatic</button><button class="pb" data-v="ask" onclick="pPick(this)">Asks first</button><button class="pb" data-v="never" onclick="pPick(this)">Never</button></div></div>
+      </div>
+      <div class="fb" id="p-fb"></div>
+      <button class="btn" id="p-check" style="margin-top:8px" disabled onclick="pCheck()">Check my answers</button>
+      <button class="btn" id="next-4" style="display:none;margin-top:14px" onclick="go(5)">Workflow 03 · First session →</button>
+    </section>
+
+    <!-- STEP 5 · WF3 first session + check -->
+    <section id="step-5" class="step" style="display:none">
+      <div class="wf-head"><h3 style="margin:0">03 · Your first useful session</h3><span class="wf-badge adv">Do real work</span></div>
+      <p>The fastest way to get it: hand Cowork a real task that would take you 30+ minutes by hand. Don't start with "hello."</p>
+      <div class="promptbox"><span class="label">A strong first task</span>Look through my connected folder. Find documents from the last 90 days that look like meeting notes or call transcripts. For each, give me the date, a 2-sentence summary, and any action items that don't seem done yet. Present it as one markdown table I can copy.</div>
+      <div class="eyebrow-do2">Quick check</div>
+      <p style="margin-bottom:12px">The best first Cowork task is:</p>
+      <div class="opts">
+        <button class="opt" data-c="0" onclick="pick(this,5)">Say hello and ask what it can do</button>
+        <button class="opt" data-c="1" onclick="pick(this,5)">Something tedious that'd take you 30+ minutes by hand — like triaging a folder of notes</button>
+        <button class="opt" data-c="0" onclick="pick(this,5)">A quick thing you'd actually do faster yourself</button>
+      </div>
+      <div class="fb" id="fb-5"></div>
+      <button class="btn" id="next-5" style="display:none;margin-top:16px" onclick="go(6)">See what you learned →</button>
+    </section>
+
+    <!-- STEP 6 · complete -->
+    <section id="step-6" class="step" style="display:none">
+      <div class="done-top">
+        <div class="done-check">✓</div>
+        <h3>Lesson complete</h3>
+      </div>
+      <p style="text-align:center;max-width:480px;margin:0 auto 18px">You've got the mental model, the setup, the permission model, and a first task — everything to start delegating real work.</p>
+      <div class="challenge-box">
+        <h4>Your first 60 minutes</h4>
+        <p>Install Cowork, connect one specific folder, and run the "find recent meeting notes" task. The first time a table appears with real summaries from your real files, you'll feel why this is a different category from chat.</p>
+      </div>
+      <div class="recap">
+        <span class="lbl">What you can do now</span>
+        <p>Set up Cowork, connect a specific working folder, delegate outcomes instead of asking questions, know which actions need permission, and pick a first task that proves the value.</p>
+      </div>
+      <div class="upnext">
+        <span class="lbl">Up next in Copilot Mastery</span>
+        <p>Cowork · Lesson 02 · File workflows — batch operations &amp; transformations</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-block" href="/lessons/copilot/cowork-file-workflows">Continue to Cowork · Lesson 02 · File workflows →</a>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-ghost" href="/playground" target="_blank" rel="noopener">Open the Playground</a>
+        <a class="btn btn-ghost" href="/lessons/copilot/">Back to Copilot Mastery</a>
+      </div>
+    </section>
+  </main>
+</div>
+
 <footer>
   <div class="footer-inner">
-    <div>© 2026 LearningGPT · Independent. Not affiliated with Microsoft.</div>
-    <a href="/lessons/copilot/" style="color: var(--text-dim);">← All Copilot Mastery lessons</a>
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Microsoft.</div>
+    <a href="/lessons/copilot/" style="color: var(--text-dim);">← All Copilot lessons</a>
   </div>
 </footer>
 
@@ -228,7 +273,6 @@ Present it as a single markdown table I can copy.&quot;</div><h4>Best use cases<
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -240,10 +284,10 @@ Present it as a single markdown table I can copy.&quot;</div><h4>Best use cases<
     <button class="coach-close" id="coachClose">✕</button>
   </div>
   <div class="coach-messages" id="coachMessages">
-    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about Cowork — what it is, connecting a folder, the permission model, or a good first task for your situation. What's on your mind?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -251,15 +295,97 @@ Present it as a single markdown table I can copy.&quot;</div><h4>Best use cases<
   </div>
 </div>
 
+<!-- ── Interactive lesson logic ── -->
+<script>
+  var TOTAL = 6;
+  function go(n){
+    document.querySelectorAll('.step').forEach(function(s){ s.style.display='none'; });
+    document.getElementById('step-'+n).style.display='block';
+    document.getElementById('prog').style.width = Math.round(n/TOTAL*100)+'%';
+    document.getElementById('step-count').textContent = 'Step '+n+' of '+TOTAL+' · ~11 min';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  var pickMsg = {
+    2:{good:"Right — you delegate the outcome and point it at your real files. Chat answers questions; Cowork does the work.",
+       bad:"Those ask for advice. Cowork is a coworker with desk access — name the outcome and point it at your real files."},
+    3:{good:"Right — connect specific working folders, never the root. Cowork only sees what you connect, by design; keep that surface small.",
+       bad:"Don't connect C:\\ or your whole user folder, and don't skip it (then it has nothing to work on). Connect a specific folder; add more later."},
+    5:{good:"Right — the payoff is the tedious, 30+ minute, multi-file jobs. Don't use Cowork for things you'd do faster yourself.",
+       bad:"Skip 'hello' and skip quick stuff you'd do faster by hand. The win is the tedious 30+ minute work — file synthesis and batch jobs."}
+  };
+  function pick(btn, step){
+    var correct = btn.dataset.c === '1';
+    document.getElementById('step-'+step).querySelectorAll('.opt').forEach(function(b){ b.disabled=true; b.style.opacity='0.5'; });
+    btn.style.opacity='1';
+    var fb = document.getElementById('fb-'+step);
+    btn.style.borderColor = correct ? 'var(--accent)' : 'var(--danger)';
+    fb.className = 'fb ' + (correct ? 'good' : 'bad');
+    fb.textContent = pickMsg[step][correct ? 'good' : 'bad'];
+    fb.style.display='block';
+    document.getElementById('next-'+step).style.display='inline-flex';
+  }
+  // Workflow 2 — permission classifier
+  var pDone = false;
+  function pPick(btn){
+    if(pDone) return;
+    var row = btn.closest('.prow');
+    row.querySelectorAll('.pb').forEach(function(b){ b.classList.remove('sel'); });
+    btn.classList.add('sel');
+    var rows = document.querySelectorAll('#p-rows .prow');
+    var allChosen = Array.prototype.every.call(rows, function(r){ return r.querySelector('.pb.sel'); });
+    document.getElementById('p-check').disabled = !allChosen;
+  }
+  function pCheck(){
+    if(pDone) return; pDone = true;
+    var rows = document.querySelectorAll('#p-rows .prow');
+    var allCorrect = true;
+    rows.forEach(function(r){
+      var correct = r.dataset.correct;
+      var chosen = r.querySelector('.pb.sel');
+      r.querySelectorAll('.pb').forEach(function(b){ b.disabled = true; });
+      if(chosen && chosen.dataset.v === correct){
+        chosen.style.borderColor = 'var(--accent)'; chosen.style.background = 'rgba(68,224,164,.16)'; chosen.style.color = '#a7efd2';
+      } else {
+        if(chosen){ chosen.style.borderColor = 'var(--danger)'; chosen.classList.remove('sel'); }
+        var right = r.querySelector('.pb[data-v="'+correct+'"]');
+        right.style.borderColor = 'var(--accent)'; right.style.color = '#a7efd2';
+        allCorrect = false;
+      }
+    });
+    var fb = document.getElementById('p-fb');
+    fb.className = 'fb ' + (allCorrect ? 'good' : 'bad');
+    fb.textContent = (allCorrect ? '✓ Exactly. ' : 'Check the highlights. ') + 'Reading and creating in your connected folder, and running sandbox code, are automatic. Deleting and acting in apps always ask first. Passwords and cookies are off-limits — never, even with permission.';
+    fb.style.display = 'block';
+    document.getElementById('p-check').style.display = 'none';
+    document.getElementById('next-4').style.display = 'inline-flex';
+  }
+</script>
 
+<!-- ── AI Coach logic ── -->
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Cowork basics \u2014 what it is and how to start\nTRACK: Copilot Mastery\n\nLESSON CONTENT SUMMARY:\nCowork basics \u2014 what it is and how to start \u2014 LearningGPT L LearningGPT \u2190 Copilot Mastery Cowork \u00b7 Lesson 01 Pro ~11 min read Install + first session Cowork: a real coworker on your desk. Cowork turns the Microsoft 365 Copilot Frontier Firm tenant into a real working environment \u2014 Claude (or Copilot, when GA) reads your files, runs scripts, drafts documents, automates the boring stuff. It's not a chat upgrade; it's a different category. This lesson covers what Cowork actually is, how to install it, the security model that keeps your data safe, and your first useful session. The mental model Cowork isn't a smarter chatbot. It's a coworker with desk access. The difference between Cowork and regular AI chat is the difference between asking a consultant for advice over the phone vs. handing them a laptop with access to your files. Same intelligence, dramatically different leverage. Cowork can read files in folders you've connected, edit them, run code in a sandboxed Linux environment, call connected services like Outlook or SharePoint, and present finished work back to you. You stay in the chat window \u2014 but the work happens on your actual machine, with your actual data. This means your prompts change. Instead of 'how do I summarize this report,' you say 'read the report in my Downloads folder and produce a 5-slide deck of the key findings.' You're delegating outcomes, not requesting answers. Workflow 01 Install and set up Cowork 1 Get Cowork running with your folder connected Cowork lives inside the Microsoft 365 Copilot Frontier Firm tenant. Installation is straightforward but the folder-connection step is the one most people miss \u2014 without it, Cowork has nothing to work on. The prompt that works Setup steps Setup sequence: 1. Confirm your tenant is in the Frontier Firm program (your IT admin enables this) 2. Open Microsoft 365 Copilot Chat 3. Toggle on the Cowork capability when prompted 4. Connect a OneDrive or SharePoint folder \u2014 pick a specific working folder, not the root 5. Test it: ask &#x27;list the files in my connected folder&#x27; 6. If you see your real file names, you&#x27;re set up correctly Best use cases First-time setup on a new computer Switching to a new working folder for a different project Connecting an additional folder (you can have multiple connected) Verifying after a major software update Don't connect your entire user folder or 'C:\\' \u2014 that gives Cowork access to too much. Connect specific working folders only. You can always add more later. Time savings: Setup time: ~10 min. After that, every session is faster than starting from scratch in chat. Workflow 02 Understand the permission model 2 What Cowork can and can't do without asking Cowork has a security model designed to keep you in control. Some actions are automatic (reading files in your connected folder); others require explicit permission (writing files outside the folder, running code that touches the network, deleting things). The prompt that works The permissio\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = `You are an AI learning coach embedded in a lesson on LearningGPT.ai.
+LESSON TITLE: Cowork basics — what it is and how to start
+TRACK: Copilot Mastery (Pro)
+LESSON CONTENT SUMMARY:
+Cowork turns the Microsoft 365 Copilot Frontier Firm tenant into a real working environment — AI that reads your files, edits them, runs code in a sandboxed Linux environment, calls connected apps (Outlook, SharePoint), and presents finished work. Mental model: it's a coworker with desk access, not a smarter chatbot — like handing a consultant a laptop with your files vs asking for advice on the phone. So your prompts change: delegate OUTCOMES ("read the report in my connected folder and make a 5-slide deck") rather than request answers ("how do I summarize a report").
+Three workflows:
+1. Install & connect a folder — confirm the tenant is in the Frontier Firm program (IT enables), open M365 Copilot Chat, toggle on Cowork, connect a OneDrive/SharePoint folder, test with "list the files in my connected folder." Gotcha: connect a SPECIFIC working folder, never your whole C:\ or user root — it only sees what you connect; add more folders later.
+2. The permission model — automatic: read/create/edit files in connected folders, run sandbox code. Asks first: delete files, write outside connected folders, take actions in connected apps (sending email). Never (even with permission): read browser cookies or saved passwords. It never reads files outside your connected folders.
+3. First useful session — give it a real 30+ minute task, not "hello." Example: scan the connected folder for recent meeting notes and return a markdown table of date, 2-sentence summary, and undone action items. Gotcha: don't use Cowork for things you'd do faster by hand; the win is tedious, multi-file, 30+ minute jobs.
+Cowork is currently a research preview from Anthropic; the Microsoft Copilot version rolls out through the Frontier Firm program and will be generally available in M365 Copilot over time. The work pattern is identical regardless of entry point.
+YOUR ROLE:
+- Answer questions specifically about this lesson content
+- Be concise, 2-4 sentences per answer unless the question genuinely needs more
+- Be practical, give real work examples when helpful
+- If asked about something not in this lesson, briefly answer and point to where they can learn more
+- Never make up features that don't exist
+- Plain conversational text only, no markdown symbols like ** or ##
+- Do not start responses with "Great question!" or similar filler phrases`;
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -267,27 +393,21 @@ Present it as a single markdown table I can copy.&quot;</div><h4>Best use cases<
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
   if (!fab) return; // safety check
-
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -296,7 +416,6 @@ Present it as a single markdown table I can copy.&quot;</div><h4>Best use cases<
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -305,7 +424,6 @@ Present it as a single markdown table I can copy.&quot;</div><h4>Best use cases<
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

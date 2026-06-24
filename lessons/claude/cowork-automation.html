@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="canonical" href="https://learninggpt.ai/lessons/copilot/cowork-automation" />
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Claude agents, MCP, and advanced patterns — LearningGPT</title>
-<meta name="description" content="The Pro+ deep dive: multi-turn agent workflows, MCP servers, prompt chaining, and evaluation patterns. Build Claude integrations that go far beyond chat." />
+<title>Cowork automation — scheduled tasks and live artifacts — LearningGPT</title>
+<meta name="description" content="Schedule recurring Cowork tasks (daily briefings, weekly reports) and build live artifacts that refresh from connectors. The automation layer." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#d97757" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://learninggpt.ai/lessons/claude/agents-and-mcp" />
-<meta property="og:title" content="Claude agents, MCP, and advanced patterns" />
-<meta property="og:description" content="The Pro+ deep dive: multi-turn agent workflows, MCP servers, prompt chaining, and evaluation patterns." />
+<meta property="og:url" content="https://learninggpt.ai/lessons/claude/cowork-automation" />
+<meta property="og:title" content="Cowork automation — scheduled tasks and live artifacts" />
+<meta property="og:description" content="Schedule recurring Cowork tasks (daily briefings, weekly reports) and build live artifacts that refresh from connectors. The automation layer." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -58,20 +59,12 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 
 .card { background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 22px 26px; margin: 20px 0; }
 .card p:last-child { margin-bottom: 0; }
-.callout { margin: 18px 0; padding: 16px 18px; background: linear-gradient(135deg, rgba(217,119,87,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(217,119,87,0.25); border-radius: var(--radius); }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 6px; }
-.callout p { margin: 0; font-size: 14.5px; color: var(--text-dim); }
-.callout p b { color: var(--text); }
+.subhead { font-size: 12px; text-transform: uppercase; letter-spacing: 1.1px; color: var(--text-mute); font-weight: 600; margin: 0 0 8px; }
 .pcard { background: var(--bg-soft); border: 1px solid var(--line); border-left: 3px solid var(--track); border-radius: 0 var(--radius) var(--radius) 0; padding: 14px 16px; margin-bottom: 11px; }
 .pcard .pn { font-size: 15px; font-weight: 700; color: var(--text); }
 .pcard .pd { font-size: 13.5px; color: var(--text-dim); margin-top: 4px; line-height: 1.5; }
-.loop { list-style: none; counter-reset: l; padding: 0; margin: 6px 0 0; }
-.loop li { counter-increment: l; padding: 10px 0 10px 38px; position: relative; border-top: 1px solid var(--line); font-size: 14.5px; line-height: 1.5; }
-.loop li:first-child { border-top: none; }
-.loop li::before { content: counter(l); position: absolute; left: 0; top: 9px; width: 25px; height: 25px; border-radius: 7px; background: rgba(217,119,87,0.14); border: 1px solid rgba(217,119,87,0.32); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.loop li b { color: var(--text); }
-.loop li.gate { background: rgba(68,224,164,0.05); }
-.loop li.gate::before { background: rgba(68,224,164,0.16); border-color: var(--accent); color: var(--accent); }
+.prompt-example { background: rgba(0,0,0,0.32); border: 1px solid var(--line); border-radius: 10px; padding: 13px 15px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
+.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
 .gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 13px 16px; margin: 16px 0; font-size: 14.5px; }
 .gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
 
@@ -88,20 +81,27 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .fb.bad { background: rgba(255,181,71,0.08); border: 1px solid rgba(255,181,71,0.3); }
 .fb b { color: var(--text); }
 
-/* signature: chain-accuracy calculator */
-.calc { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px; margin: 18px 0; }
-.calc-row { margin-bottom: 18px; }
-.calc-row .cl { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-dim); margin-bottom: 8px; }
-.calc-row .cl b { color: var(--text); font-size: 15px; }
-.calc input[type=range] { width: 100%; accent-color: var(--track); height: 6px; cursor: pointer; }
-.calc-out { text-align: center; padding: 8px 0 4px; }
-.calc-out .num { font-size: 44px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; transition: color .3s; }
-.calc-out .lbl2 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.9px; color: var(--text-mute); margin-top: 4px; }
-.calc-bar { height: 12px; background: rgba(255,255,255,0.07); border-radius: 999px; overflow: hidden; margin: 14px 0 8px; }
-.calc-fill { height: 100%; width: 100%; border-radius: 999px; transition: width .3s ease, background .3s; }
-.calc-verdict { font-size: 13.5px; text-align: center; color: var(--text-dim); }
-.calc-verdict b { color: var(--text); }
-.calc-eq { font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13px; color: var(--text-mute); text-align: center; margin-top: 6px; }
+/* signature: conditional-alert simulator */
+.sim { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px; margin: 18px 0; }
+.sim-rule { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13px; color: var(--text); line-height: 1.55; margin-bottom: 18px; }
+.sim-rule .rl { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; margin-bottom: 6px; }
+.sim-score { font-size: 13px; color: var(--text-mute); margin-bottom: 12px; }
+.sim-score b { color: var(--accent); }
+.sim-day { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.sim-sub { font-size: 13px; color: var(--text-mute); margin-bottom: 10px; }
+.tickets { margin-bottom: 16px; }
+.tk { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 6px; margin: 3px 4px 3px 0; }
+.tk.P0 { background: rgba(255,107,138,0.18); color: #ff6b8a; border: 1px solid rgba(255,107,138,0.45); }
+.tk.P1 { background: rgba(255,181,71,0.16); color: #ffb547; border: 1px solid rgba(255,181,71,0.4); }
+.tk.P2 { background: rgba(91,141,239,0.14); color: #5b8def; border: 1px solid rgba(91,141,239,0.35); }
+.tk.P3 { background: rgba(255,255,255,0.05); color: var(--text-mute); border: 1px solid var(--line-strong); }
+.sbtns { display: flex; gap: 12px; }
+.sbtn { flex: 1; padding: 13px; border-radius: 11px; border: 1px solid var(--line-strong); background: var(--surface); color: var(--text); font-family: inherit; font-size: 14.5px; font-weight: 600; cursor: pointer; transition: all .14s; }
+.sbtn.fire:hover:not(:disabled) { border-color: var(--danger); }
+.sbtn.silent:hover:not(:disabled) { border-color: var(--accent); }
+.sbtn:disabled { cursor: default; }
+.sbtn.right { border-color: var(--accent); background: rgba(68,224,164,0.16); }
+.sbtn.wrongpick { border-color: var(--danger); background: rgba(255,107,138,0.12); }
 
 .step-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 30px; gap: 12px; }
 .btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #d97757, #7c5cff); color: white; padding: 13px 24px; border-radius: 11px; font-weight: 600; font-size: 15px; border: none; font-family: inherit; cursor: pointer; box-shadow: 0 6px 22px rgba(217,119,87,0.28); transition: transform .15s, opacity .15s; }
@@ -182,31 +182,31 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 <div class="container">
   <div class="ilesson">
     <div class="lesson-meta">
-      <span class="chip">Lesson 08 · Claude Mastery</span>
+      <span class="chip">Cowork · Lesson 06</span>
       <span class="chip chip-pro-plus">Pro+</span>
-      <span>~17 min</span>
+      <span>~15 min</span>
       <span class="dot"></span>
-      <span>Interactive · advanced</span>
+      <span>Interactive</span>
     </div>
-    <h1>Agents, MCP, advanced patterns: <span class="grad serif">the deep end.</span></h1>
-    <p class="deck">The Pro+ deep dive for technical power users. Multi-turn agent workflows, MCP servers, prompt chaining, and evaluation. By the end you'll know how to build Claude integrations that go far beyond chat — connecting to your real tools, automating multi-step work, and actually measuring whether your prompts hold up.</p>
+    <h1>Automation: <span class="grad serif">where Cowork stops being a tool.</span></h1>
+    <p class="deck">The last Cowork capability changes the whole relationship. Scheduled tasks run on their own — every morning at 7, every Friday at 4. Live artifacts are dashboards that pull fresh data each time you open them. Together they turn Cowork from "a thing I open" into "a thing that delivers value while I sleep." The skill isn't setting them up — it's setting them up so they help instead of becoming noise.</p>
 
     <div class="progwrap">
       <div class="progbar"><div class="progfill" id="prog"></div></div>
       <div class="progmeta"><span id="progStep">Step 1 of 6</span><span id="progPct">0% complete</span></div>
     </div>
 
-    <!-- STEP 1 — mental model + predict -->
+    <!-- STEP 1 — intro + predict -->
     <section class="step active" data-step="1">
-      <span class="step-k">The mental model</span>
-      <h2>Advanced Claude is architecture, not prompting</h2>
-      <p>Chat-level Claude is about writing better prompts. At this level the unit of work changes: Claude calls tools, calls other Claude instances, and runs inside larger pipelines. The skill is system design.</p>
+      <span class="step-k">The shift</span>
+      <h2>From "a thing I open" to "a thing that runs"</h2>
+      <p>Every other Cowork skill so far has been something you trigger. Automation is different: you set it up once and it works without you. That's powerful — and it's exactly why the failure mode is so easy to hit.</p>
       <h3>Predict first</h3>
-      <p>You've mastered prompting. What's the core skill at the <em>advanced</em> level — agents, MCP, chains?</p>
+      <p>Excited about your new 7am briefing, you think: "If a daily summary is good, an <strong>hourly</strong> one must be better." What actually happens?</p>
       <div class="choices" id="c1">
-        <button class="choice" onclick="pick(this,1,'a')">Writing even cleverer prompts</button>
-        <button class="choice" onclick="pick(this,1,'b')">System design — Claude calling tools, chaining calls, running inside pipelines</button>
-        <button class="choice" onclick="pick(this,1,'c')">Just using a bigger model</button>
+        <button class="choice" onclick="pick(this,1,'a')">You stay perfectly on top of everything, all day</button>
+        <button class="choice" onclick="pick(this,1,'b')">After a day, you start ignoring the briefings — they've become background noise</button>
+        <button class="choice" onclick="pick(this,1,'c')">Cowork refuses to run a task more than once a day</button>
       </div>
       <div class="fb" id="fb1"></div>
       <div class="step-nav">
@@ -215,92 +215,72 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
       </div>
     </section>
 
-    <!-- STEP 2 — four patterns (show) -->
+    <!-- STEP 2 — scheduled tasks (show) -->
     <section class="step" data-step="2">
-      <span class="step-k">Four advanced patterns</span>
-      <h2>The toolkit beyond chat</h2>
-      <div class="pcard"><div class="pn">① Multi-turn agent workflows</div><div class="pd">A series of Claude calls where each output feeds the next, with human checkpoints. Supervised autonomy, not full autonomy.</div></div>
-      <div class="pcard"><div class="pn">② MCP servers</div><div class="pd">The open standard for connecting AI to your tools — GitHub, Linear, Postgres, custom internal services. Hours of config instead of weeks of API code.</div></div>
-      <div class="pcard"><div class="pn">③ Prompt chaining</div><div class="pd">Decompose a task too big for one prompt into focused calls — extract, then analyze, then format. Powerful, but errors compound (you'll see how).</div></div>
-      <div class="pcard"><div class="pn">④ Evaluation</div><div class="pd">Stop iterating on vibes — define "good," build a test set, score outputs, and compare prompt variants quantitatively.</div></div>
+      <span class="step-k">Scheduled tasks</span>
+      <h2>Work that's done before you sit down</h2>
+      <p>A scheduled task is a recurring Cowork session that fires on a cron-like schedule. You describe what to gather and how to deliver it; it runs on time, every time.</p>
+      <div class="prompt-example"><span class="label">Daily briefing · weekdays 7:00am</span>Each weekday at 7am, look at my unread email (last 24h), today's calendar, new #leadership Slack messages, and my 3 KPI dashboards. Email me one briefing by 7:05 with: today's calendar (flag travel-time gaps), top 3 inbox priorities, notable Slack flags, and KPI status (green/yellow/red vs target). Under 300 words. No fluff.</div>
+      <p>The same shape works for a Friday-afternoon weekly recap that pulls from your CRM, GitHub, and Slack and saves a Markdown report to a folder.</p>
+      <div class="pcard"><div class="pn">Good cadences</div><div class="pd">Daily morning briefing · Friday weekly recap · Sunday-night week-ahead prep · end-of-day triage.</div></div>
+      <div class="gotcha">Match cadence to real decision points. A daily briefing earns its place; an hourly one becomes noise you train yourself to ignore — which is exactly what you predicted a moment ago.</div>
       <div class="step-nav">
         <button class="btn-back" onclick="go(1)">← Back</button>
-        <button class="btn" onclick="go(3)">Why chains break →</button>
+        <button class="btn" onclick="go(3)">See conditional logic in action →</button>
       </div>
     </section>
 
-    <!-- STEP 3 — signature: chain-accuracy calculator -->
+    <!-- STEP 3 — signature: conditional-alert simulator -->
     <section class="step" data-step="3">
-      <span class="step-k">Do it · the chain calculator</span>
-      <h2>Errors compound. Watch how fast.</h2>
-      <p>Each step in a chain is only so reliable, and the accuracies multiply. Drag the sliders — try a 5-step chain at 90% per step and see where it lands.</p>
-      <div class="calc">
-        <div class="calc-row">
-          <div class="cl"><span>Accuracy per step</span><b id="accVal">90%</b></div>
-          <input type="range" id="accIn" min="70" max="99" value="90" oninput="calc()">
+      <span class="step-k">Do it · run the simulation</span>
+      <h2>Alert on the exception, not the routine</h2>
+      <p>The move that keeps automation from becoming spam is <strong>conditional logic</strong> — only act when a condition is met. Here's a real support-ticket task. Play four days: each morning, will it DM you, or stay silent?</p>
+      <div class="sim">
+        <div class="sim-rule"><span class="rl">The scheduled task</span>Daily 7:15am — read the ticket list. <strong>If there's any P0, DM me the top 3.</strong> Otherwise, do nothing.</div>
+        <div class="sim-score" id="sScore">Day <b id="sNum">1</b> of 4 &nbsp;·&nbsp; <span id="sFired">0</span> alerts fired</div>
+        <div class="sim-day" id="sDay"></div>
+        <div class="sim-sub" id="sSub"></div>
+        <div class="tickets" id="sTickets"></div>
+        <div class="sbtns">
+          <button class="sbtn fire" id="sFire" onclick="sAnswer(true,this)">📨 It DMs you</button>
+          <button class="sbtn silent" id="sSilent" onclick="sAnswer(false,this)">🤫 Stays silent</button>
         </div>
-        <div class="calc-row">
-          <div class="cl"><span>Steps in the chain</span><b id="stepVal">5</b></div>
-          <input type="range" id="stepIn" min="1" max="8" value="5" oninput="calc()">
-        </div>
-        <div class="calc-out">
-          <div class="num" id="calcNum">59%</div>
-          <div class="lbl2">end-to-end reliability</div>
-        </div>
-        <div class="calc-bar"><div class="calc-fill" id="calcFill"></div></div>
-        <div class="calc-verdict" id="calcVerdict"></div>
-        <div class="calc-eq" id="calcEq"></div>
+        <div class="fb" id="fb3"></div>
+        <button class="btn" id="sNext" style="margin-top:16px;display:none" onclick="sNextDay()">Next day →</button>
       </div>
-      <div class="callout"><span class="lbl">The takeaway</span><p>A chain of "pretty good" steps becomes unreliable fast. That's why you don't just chain blindly — <b>add validation between steps</b> and build evaluation into each one, so a bad output gets caught before it poisons the rest.</p></div>
       <div class="step-nav">
         <button class="btn-back" onclick="go(2)">← Back</button>
         <button class="btn" id="next3" disabled onclick="go(4)">Continue →</button>
       </div>
     </section>
 
-    <!-- STEP 4 — supervised autonomy + pick -->
+    <!-- STEP 4 — live artifacts (show) -->
     <section class="step" data-step="4">
-      <span class="step-k">Agent design</span>
-      <h2>Supervised autonomy, not full autonomy</h2>
-      <p>A good agent workflow isn't "let it loose." It's a loop with human gates built in:</p>
-      <div class="card">
-        <ol class="loop">
-          <li><b>Plan</b> — Claude proposes the steps it will take.</li>
-          <li class="gate"><b>Approval gate</b> — you review the plan.</li>
-          <li><b>Execute</b> step-by-step — each output feeds the next, with optional pause-and-confirm.</li>
-          <li><b>Synthesize</b> — Claude produces the final deliverable.</li>
-          <li class="gate"><b>Verify</b> — you review it against the plan.</li>
-        </ol>
-      </div>
-      <h3>The call</h3>
-      <p>You're building an agent to process customer <strong>refunds</strong> — it touches money. Which autonomy pattern?</p>
-      <div class="choices" id="c4">
-        <button class="choice" onclick="pick(this,4,'a')">Full autonomy — let it plan and execute end to end, that's the power</button>
-        <button class="choice" onclick="pick(this,4,'b')">Supervised autonomy — it plans, you approve, it executes, you verify</button>
-        <button class="choice" onclick="pick(this,4,'c')">No agent at all — do every refund by hand forever</button>
-      </div>
-      <div class="fb" id="fb4"></div>
+      <span class="step-k">Live artifacts</span>
+      <h2>A dashboard that refreshes itself</h2>
+      <p>A scheduled task pushes you a report. A <strong>live artifact</strong> is the opposite: a saved view you pull up, and it fetches fresh data from your connectors every time it opens. Not a snapshot — a real dashboard you keep coming back to.</p>
+      <div class="prompt-example"><span class="label">Live artifact · personal command center</span>Build a live artifact "team-pulse" with cards for: open PRs awaiting my review (GitHub), tickets assigned to my team (Linear), pipeline by stage (CRM), recent customer feedback (Slack). Dark mode, each card a metric + small table, a reload button up top, mobile-friendly. Save it so I can open it daily without rebuilding.</div>
+      <div class="pcard"><div class="pn">When to reach for an artifact</div><div class="pd">Anything you'd otherwise check by clicking through 3–4 tools every morning: a pipeline view, a team pulse, an exec "state of things."</div></div>
+      <div class="gotcha">An artifact only refreshes what its connectors can see. Reorganize a CRM or rename a Slack channel and you'll need to update the artifact — they don't self-heal.</div>
       <div class="step-nav">
         <button class="btn-back" onclick="go(3)">← Back</button>
-        <button class="btn" id="next4" disabled onclick="go(5)">Continue →</button>
+        <button class="btn" onclick="go(5)">The one discipline →</button>
       </div>
     </section>
 
-    <!-- STEP 5 — evaluation + pick -->
+    <!-- STEP 5 — run-before-you-schedule pick -->
     <section class="step" data-step="5">
-      <span class="step-k">Measure, don't vibe</span>
-      <h2>Know whether the new prompt is actually better</h2>
-      <p>Real prompt engineering is measured: define what "good" means, build a test set of 20–50 representative inputs, score every output against your criteria, and compare variants statistically — instead of trusting a gut feeling.</p>
-      <p>Auto-grading with a second Claude call makes this fast. It also introduces a problem.</p>
+      <span class="step-k">The discipline</span>
+      <h2>Preview before you let it loose</h2>
+      <p>Automation's risk is that mistakes repeat silently. A task that produces one bad report produces six before you notice. One habit prevents most of that grief.</p>
       <h3>The call</h3>
-      <p>You auto-grade outputs with a second Claude call to compare two prompts. Before you trust the scores, what do you do?</p>
+      <p>You've just built a weekly status-report task. Before you let it run every Friday on its own, what's the right move?</p>
       <div class="choices" id="c5">
-        <button class="choice" onclick="pick(this,5,'a')">Trust them — automated scoring is objective</button>
-        <button class="choice" onclick="pick(this,5,'b')">Sample-check at least 10% of the auto-grades by hand to calibrate first</button>
-        <button class="choice" onclick="pick(this,5,'c')">Drop auto-grading entirely — only manual grading ever counts</button>
+        <button class="choice" onclick="pick(this,5,'a')">Schedule it now — you'll find out next Friday whether it's any good</button>
+        <button class="choice" onclick="pick(this,5,'b')">Run it manually once or twice tonight, check the output, then schedule it</button>
+        <button class="choice" onclick="pick(this,5,'c')">Schedule it and auto-send straight to your manager to save the step</button>
       </div>
       <div class="fb" id="fb5"></div>
-      <div class="gotcha">Same principle on MCP: connect production systems read-only first, write access only after you've tested extensively.</div>
       <div class="step-nav">
         <button class="btn-back" onclick="go(4)">← Back</button>
         <button class="btn" id="next5" disabled onclick="go(6)">Continue →</button>
@@ -310,32 +290,32 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <!-- STEP 6 — completion -->
     <section class="step" data-step="6">
       <div class="complete">
-        <div class="big">🧠</div>
-        <span class="step-k">Claude track complete</span>
-        <h2>You can build Claude systems, not just chat with it</h2>
+        <div class="big">🤖</div>
+        <span class="step-k">Cowork track complete</span>
+        <h2>Cowork now works while you sleep</h2>
       </div>
       <div class="checklist">
         <h3>What you can do now</h3>
         <ul>
-          <li>Design multi-turn agent workflows with plan/approve/execute/verify gates</li>
-          <li>Configure MCP servers — read-only on production first</li>
-          <li>Decompose complex tasks into chains, with validation between steps</li>
-          <li>See why chains compound errors and where to add checks</li>
-          <li>Build evaluation harnesses, and calibrate auto-grading before trusting it</li>
+          <li>Configure scheduled tasks for briefings, recaps, and triage</li>
+          <li>Match cadence to decision points instead of over-scheduling</li>
+          <li>Use conditional logic so you're alerted on exceptions, not routine</li>
+          <li>Build live artifacts for the views you check every day</li>
+          <li>Run any task manually before scheduling — and keep auto-reports as drafts</li>
         </ul>
       </div>
       <div class="challenge">
-        <h3>Your move: build one real integration</h3>
-        <p>Pick one work task that's currently manual or spread across tools. Build it as a Claude agent backed by an MCP server. Start simple, add a validation step or two, layer in evaluation, and refine it over a week.</p>
+        <h3>Your move: schedule one task that runs tomorrow</h3>
+        <p>Pick the recurring task that costs you the most each week — a status report, a morning briefing, a Friday recap. Build it, run it manually tonight to check the output, then schedule it. Tomorrow, see what arrives while you do nothing.</p>
         <div class="btn-row">
           <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
         </div>
       </div>
       <div class="next-up">
         <span class="pro-plus-tag">Pro+</span>
-        <div class="lbl" style="margin-top:12px">You've finished the Claude track</div>
-        <h3>Where to go from here</h3>
-        <p>That's the full Claude Mastery track, end to end. Watch for new lessons as Anthropic ships features — or branch into the Copilot or ChatGPT tracks for breadth across the tools you use.</p>
+        <div class="lbl" style="margin-top:12px">Where this goes next</div>
+        <h3>The broader agent ecosystem</h3>
+        <p>You've finished the Cowork lessons. The next horizon is the wider world of agents — Claude Code for development, Computer Use for desktop control, plus the SDKs that let you build your own. Head back to the track to keep going.</p>
         <div class="btn-row">
           <a href="/lessons/claude/" class="btn">Back to Claude Mastery →</a>
           <a href="/lessons/" class="btn ghost">All tracks</a>
@@ -369,7 +349,7 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <button class="coach-close" id="coachClose">✕</button>
   </div>
   <div class="coach-messages" id="coachMessages">
-    <div class="msg msg-coach">Hey! I'm your AI Coach for this advanced lesson on Claude agents, MCP, chaining, and evaluation. Ask me how to design an agent loop, set up an MCP server, decompose a chain, or build an eval harness. What are you trying to build?</div>
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson on Cowork automation. Ask me about scheduled tasks, conditional alerts, live artifacts, or how to set a cadence that helps instead of spams. What do you want to automate?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
     Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
@@ -400,18 +380,13 @@ function go(n){
 var pickMsg = {
   '1': {
     correct: 'b',
-    good: '<b>System design.</b> Past a certain point, more cleverness in a single prompt stops paying off. The leverage is in architecture — Claude calling tools, chaining calls, running inside a pipeline with checkpoints. You\'re building systems, not wording prompts.',
-    bad: '<b>Not the core of it.</b> Cleverer prompts and bigger models help a little; the real advanced skill is <b>system design</b> — orchestrating tool calls, chains, and pipelines with human checkpoints.'
-  },
-  '4': {
-    correct: 'b',
-    good: '<b>Supervised autonomy.</b> Money is consequential, so the human gates are the design — it plans, you approve, it executes, you verify. Full autonomy is for low-stakes work; doing every refund by hand throws away the leverage entirely.',
-    bad: '<b>Not for money.</b> Full autonomy on consequential work is how an agent quietly issues a wrong refund; doing it all by hand defeats the purpose. The pattern is supervised autonomy — plan, approve, execute, verify.'
+    good: '<b>Right — it becomes noise.</b> A briefing only works if it lands at a moment you can act on it. Fire it hourly and your brain learns to ignore it, which kills the one daily one that was actually useful. Cadence is a feature.',
+    bad: '<b>Not quite.</b> More frequent isn\'t more useful. An hourly briefing arrives faster than you make decisions, so you start tuning it out — and lose the value of the daily one too. Match cadence to real decision points.'
   },
   '5': {
     correct: 'b',
-    good: '<b>Calibrate first.</b> Auto-grading with another Claude call is fast but carries its own biases. Hand-check at least ~10% of the grades to confirm it agrees with you, then lean on it. It\'s a force multiplier, not ground truth.',
-    bad: '<b>Not quite.</b> Auto-grades aren\'t automatically objective, but scrapping them loses the speed. Sample-check ~10% by hand to calibrate the auto-grader, then trust it for the bulk.'
+    good: '<b>Run before you schedule.</b> Preview the output once or twice by hand — if it\'s wrong, you find out now, not after six bad reports have gone out. And keep auto-generated reports as drafts you review, never auto-sent to your manager.',
+    bad: '<b>Risky.</b> Scheduling unseen means a mistake repeats silently, and auto-sending to your manager removes the one review that catches it. Run it manually first, confirm the output, then schedule — and still review before anything goes out.'
   }
 };
 function pick(btn, step, val){
@@ -432,32 +407,73 @@ function pick(btn, step, val){
   document.getElementById('next'+step).disabled = false;
 }
 
-/* ── signature: chain-accuracy calculator ── */
-var calcTouched = false;
-function calc(){
-  var acc = parseInt(document.getElementById('accIn').value, 10);
-  var steps = parseInt(document.getElementById('stepIn').value, 10);
-  document.getElementById('accVal').textContent = acc + '%';
-  document.getElementById('stepVal').textContent = steps;
-  var r = Math.pow(acc/100, steps);
-  var pct = Math.round(r*100);
-  var color = pct >= 85 ? '#44e0a4' : (pct >= 70 ? '#ffb547' : '#ff6b8a');
-  var num = document.getElementById('calcNum');
-  num.textContent = pct + '%';
-  num.style.color = color;
-  var fill = document.getElementById('calcFill');
-  fill.style.width = pct + '%';
-  fill.style.background = color;
-  var verdict = pct >= 85 ? 'solid — a chain you can mostly trust' : (pct >= 70 ? 'shaky — add checks between steps' : 'unreliable — nearly a coin-flip by the end');
-  document.getElementById('calcVerdict').innerHTML = '<b>' + verdict + '</b>';
-  document.getElementById('calcEq').textContent = '(' + (acc/100).toFixed(2) + ')^' + steps + ' = ' + r.toFixed(3);
-  if(!calcTouched){ calcTouched = true; document.getElementById('next3').disabled = false; }
+/* ── signature: conditional-alert simulator ── */
+var SIM = [
+  { day:'Monday', sub:'5 tickets opened overnight', tickets:['P2','P3','P2','P1','P3'], fires:false,
+    note:'No P0 in the batch, so the condition isn\'t met — Cowork stays quiet. No "all clear" message cluttering your morning.' },
+  { day:'Tuesday', sub:'8 tickets opened overnight', tickets:['P1','P0','P3','P2','P2','P3','P1','P2'], fires:true,
+    note:'One P0 trips the condition — you get a DM with the top 3. This is exactly the interruption you want.' },
+  { day:'Wednesday', sub:'3 tickets opened overnight', tickets:['P1','P2','P1'], fires:false,
+    note:'A quiet day, no P0 — silence. And that silence is information: nothing is on fire.' },
+  { day:'Thursday', sub:'6 tickets opened overnight', tickets:['P0','P2','P0','P1','P3','P2'], fires:true,
+    note:'Two P0s — it fires and surfaces the worst 3. The same rule scales to the size of the problem.' }
+];
+var si = 0, sFired = 0, sDone = false;
+function sRender(){
+  var d = SIM[si];
+  document.getElementById('sNum').textContent = si+1;
+  document.getElementById('sFired').textContent = sFired;
+  document.getElementById('sDay').textContent = d.day;
+  document.getElementById('sSub').textContent = d.sub;
+  document.getElementById('sTickets').innerHTML = d.tickets.map(function(t){ return '<span class="tk '+t+'">'+t+'</span>'; }).join('');
+  ['sFire','sSilent'].forEach(function(id){
+    var b = document.getElementById(id);
+    b.disabled = false;
+    b.classList.remove('right','wrongpick');
+  });
+  document.getElementById('fb3').className = 'fb';
+  document.getElementById('fb3').innerHTML = '';
+  document.getElementById('sNext').style.display = 'none';
 }
-calc();
+function sAnswer(choseFire, btn){
+  if(sDone) return;
+  sDone = true;
+  var d = SIM[si];
+  var ok = choseFire === d.fires;
+  if(d.fires) sFired++;
+  document.getElementById('sFired').textContent = sFired;
+  document.getElementById('sFire').disabled = true;
+  document.getElementById('sSilent').disabled = true;
+  var correctBtn = d.fires ? document.getElementById('sFire') : document.getElementById('sSilent');
+  correctBtn.classList.add('right');
+  if(!ok) btn.classList.add('wrongpick');
+  var fb = document.getElementById('fb3');
+  fb.className = 'fb show ' + (ok ? 'good' : 'bad');
+  fb.innerHTML = (ok ? '✓ ' : '✗ ') + '<b>' + (d.fires ? 'It fires.' : 'Stays silent.') + '</b> ' + d.note;
+  var nb = document.getElementById('sNext');
+  if(si < SIM.length-1){ nb.style.display = 'inline-flex'; nb.textContent = 'Next day →'; }
+  else {
+    nb.style.display = 'inline-flex';
+    nb.textContent = 'See the takeaway →';
+    nb.onclick = sFinish;
+  }
+}
+function sNextDay(){
+  if(si < SIM.length-1){ si++; sDone = false; sRender(); }
+}
+function sFinish(){
+  var fb = document.getElementById('fb3');
+  fb.className = 'fb show good';
+  fb.innerHTML = '<b>That\'s conditional logic doing its job.</b> Across four days it pinged you on the 2 that mattered and stayed quiet on the 2 that didn\'t. A task that messaged you every day — including "no P0 today" — would train you to ignore it. Alert on the exception; stay silent on the routine.';
+  document.getElementById('sNext').style.display = 'none';
+  document.getElementById('next3').disabled = false;
+  window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
+}
+sRender();
 
 /* ── AI COACH ── */
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Claude agents, MCP, and advanced patterns\nTRACK: Claude Mastery (Lesson 08, Pro+, advanced/technical)\n\nLESSON CONTENT SUMMARY:\nThe Pro+ deep dive for technical power users. MENTAL MODEL: advanced Claude isn't more prompting, it's more architecture — Claude calls tools, calls other Claude instances, and runs inside larger pipelines. The skill is system design, not prompt craft.\n\nFOUR PATTERNS:\n1. MULTI-TURN AGENT WORKFLOWS — a series of Claude calls where each output feeds the next, with HUMAN CHECKPOINTS. The right pattern is SUPERVISED AUTONOMY, not full autonomy: Plan (Claude proposes steps) -> Approval gate (human reviews plan) -> Execute step-by-step (with optional pause-and-confirm) -> Synthesize -> Verify (human reviews against the plan). Avoid full-autonomy agents on consequential work (e.g. anything touching money).\n2. MCP (Model Context Protocol) SERVERS — the open standard for connecting AI to external tools (GitHub, Linear, Postgres, custom internal tools). Install servers in Claude Desktop/Claude Code config; each exposes capabilities Claude uses as tools. Permissions are critical: connect production systems READ-ONLY first, write access only after extensive testing. Turns weeks of API client code into hours of config.\n3. PROMPT CHAINING — decompose a task too big for one prompt into focused calls (e.g. categorize -> extract sentiment -> synthesize themes -> exec summary). KEY GOTCHA: chains COMPOUND ERRORS. If each step is 90% accurate, a 5-step chain is 0.9^5 = ~59% accurate. Build evaluation into each step and add VALIDATION BETWEEN STEPS so a bad output is caught before it poisons the rest.\n4. EVALUATION — stop iterating on vibes. Define what 'good' means (format, accuracy, tone), build a test set of 20-50 representative inputs, score every output against criteria, and compare prompt variants statistically. Auto-grading with a second Claude call is fast but has its OWN biases — sample-check at least ~10% of auto-grades by hand to calibrate before trusting it.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content.\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more.\n- Be practical — give real work examples when helpful.\n- If asked about something not in this lesson, briefly answer and point to where they can learn more.\n- Never make up Claude features that don't exist.\n- Plain conversational text only — no markdown symbols like ** or ##.\n- Do not start responses with \"Great question!\" or similar filler phrases.";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Cowork automation — scheduled tasks and live artifacts\nTRACK: Claude Mastery (Cowork, Lesson 06 — final Cowork lesson)\n\nLESSON CONTENT SUMMARY:\nThis lesson is about Cowork's automation layer: scheduled tasks and live artifacts. The skill is setting them up so they help instead of becoming noise.\n\nSCHEDULED TASKS: recurring Cowork sessions that fire on a cron-like schedule (e.g. weekdays 7am, Fridays 4pm). Classic uses: a daily morning briefing (email/calendar/Slack/KPIs into one short report), a Friday weekly recap pulling from CRM/GitHub/Slack saved as Markdown. Rule: match cadence to real decision points — a daily briefing is useful, an hourly one becomes noise you ignore (over-scheduling kills the value of the good one).\n\nCONDITIONAL LOGIC: the move that keeps automation from becoming spam — only act when a condition is met. Example: 'read the ticket list daily; IF there's any P0, DM me the top 3, otherwise do nothing.' This alerts you on exceptions and stays silent on routine days, so you don't get trained to ignore it. Don't send 'no P0 today' messages.\n\nLIVE ARTIFACTS: saved HTML dashboard views that pull FRESH data from connectors every time you open them (not a snapshot). Good for views you'd otherwise check by clicking through 3-4 tools each morning (pipeline, team pulse, exec overview). Gotcha: an artifact only refreshes what its connectors can see; if you reorganize a CRM or rename a Slack channel, you must update the artifact — they don't self-heal.\n\nCHAINING: advanced tasks where one task's output feeds another, or a task watches for a condition. Start with one task working perfectly, then add the second — don't build a 5-step chain on day one.\n\nTHE CARDINAL DISCIPLINE: run any new task manually once or twice BEFORE scheduling it, so you catch bad output now instead of after six bad reports have gone out. Treat auto-generated reports as drafts to review, never auto-sent (e.g. to your manager). Audit scheduled tasks periodically and kill ones you no longer read.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content.\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more.\n- Be practical — give real work examples and sample prompts when helpful.\n- If asked about something not in this lesson, briefly answer and point to where they can learn more.\n- Never make up Cowork features that don't exist.\n- Plain conversational text only — no markdown symbols like ** or ##.\n- Do not start responses with \"Great question!\" or similar filler phrases.";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;

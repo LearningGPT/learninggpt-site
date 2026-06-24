@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>  
+<head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Cowork document creation — Word, Excel, PowerPoint, PDF — LearningGPT</title>
@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#2c7be5" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/copilot/cowork-document-creation" />
 <meta property="og:title" content="Cowork document creation — Word, Excel, PowerPoint, PDF" />
@@ -30,90 +30,123 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
 .logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
 .nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
-.lesson { padding: 50px 0 100px; }
-.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+
+/* ── INTERACTIVE LESSON SHELL ── */
+.ilesson { padding: 46px 0 100px; }
+.lesson-meta { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
 .lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(44,123,229,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(44,123,229,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
 .lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
-.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
-.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #2c7be5 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
-.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
-.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #2c7be5, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(44,123,229,0.1); border: 1px solid rgba(44,123,229,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
+.ilesson h1 { font-size: clamp(31px, 4.5vw, 44px); font-weight: 800; line-height: 1.14; letter-spacing: -0.02em; margin: 0 0 18px; }
+.ilesson h1 .grad { background: linear-gradient(135deg, #2c7be5 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.ilesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.12em; }
+.deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 30px; padding-bottom: 26px; border-bottom: 1px solid var(--line); }
+
+.progwrap { position: sticky; top: 59px; z-index: 50; background: rgba(10,10,26,0.9); backdrop-filter: blur(8px); padding: 14px 0 12px; margin-bottom: 6px; }
+.progbar { height: 6px; background: rgba(255,255,255,0.07); border-radius: 999px; overflow: hidden; }
+.progfill { height: 100%; width: 0%; background: linear-gradient(90deg, #2c7be5, #7c5cff); border-radius: 999px; transition: width .4s cubic-bezier(.4,0,.2,1); }
+.progmeta { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--text-mute); margin-top: 7px; letter-spacing: 0.3px; }
+
+.step { display: none; animation: stepIn .4s ease; }
+.step.active { display: block; }
+@keyframes stepIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.step-k { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin: 26px 0 6px; }
+.step h2 { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; line-height: 1.25; }
+.step h3 { font-size: 18px; font-weight: 600; margin: 22px 0 9px; }
+.step p { font-size: 16.5px; color: var(--text); margin: 0 0 16px; }
+.step strong { font-weight: 700; } .step em { font-style: italic; }
+
+.card { background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 22px 26px; margin: 20px 0; }
+.card p:last-child { margin-bottom: 0; }
+
+.prompt-example { background: rgba(0,0,0,0.32); border: 1px solid var(--line); border-radius: 10px; padding: 13px 15px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
 .prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #2c7be5, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
-.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
-.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
-.checklist li:first-child { border-top: none; padding-top: 0; }
-.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+
+/* format reference cards */
+.pcard { background: var(--bg-soft); border: 1px solid var(--line); border-left: 3px solid var(--track); border-radius: 0 var(--radius) var(--radius) 0; padding: 14px 16px; margin-bottom: 12px; }
+.pcard .pn { font-size: 15px; font-weight: 700; color: var(--text); }
+.pcard .pn .ext { font-family: 'SFMono-Regular', Consolas, monospace; font-size: 12px; color: var(--brand-2); margin-left: 6px; }
+.pcard .pd { font-size: 13.5px; color: var(--text-dim); margin-top: 4px; line-height: 1.5; }
+.pcard .spec { font-size: 13px; color: var(--text); margin-top: 8px; padding: 8px 11px; background: rgba(68,224,164,0.08); border: 1px solid rgba(68,224,164,0.22); border-radius: 8px; }
+.pcard .spec b { color: var(--accent); }
+
+/* choice buttons (predict) */
+.choices { display: flex; flex-direction: column; gap: 10px; margin: 16px 0 8px; }
+.choice { text-align: left; background: var(--surface); border: 1px solid var(--line-strong); color: var(--text); border-radius: 12px; padding: 14px 16px; font-size: 15px; font-family: inherit; cursor: pointer; transition: border-color .15s, background .15s, transform .1s; line-height: 1.5; }
+.choice:hover:not(:disabled) { border-color: var(--brand-2); transform: translateX(2px); }
+.choice:disabled { cursor: default; }
+.choice.correct { border-color: var(--accent); background: rgba(68,224,164,0.1); }
+.choice.wrong { border-color: var(--danger); background: rgba(255,107,138,0.08); opacity: 0.75; }
+.fb { margin: 6px 0 0; padding: 14px 16px; border-radius: 12px; font-size: 14.5px; line-height: 1.6; display: none; }
+.fb.show { display: block; animation: stepIn .3s ease; }
+.fb.good { background: rgba(68,224,164,0.1); border: 1px solid rgba(68,224,164,0.3); }
+.fb.bad { background: rgba(255,181,71,0.08); border: 1px solid rgba(255,181,71,0.3); }
+.fb b { color: var(--text); }
+
+/* prompt-upgrade (signature) */
+.upgrade { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 22px 24px; margin: 18px 0; }
+.uprompt { background: rgba(0,0,0,0.32); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 14px; line-height: 2.1; color: var(--text); }
+.weak { font-family: inherit; font-size: inherit; color: var(--text); background: rgba(255,107,138,0.16); border: none; border-bottom: 1.5px dashed var(--danger); border-radius: 4px; padding: 2px 6px; cursor: pointer; transition: background .15s; }
+.weak:hover:not(.done) { background: rgba(255,107,138,0.26); }
+.weak.done { background: rgba(68,224,164,0.16); border-bottom: 1.5px solid var(--accent); cursor: default; }
+.up-hint { font-size: 13px; color: var(--text-mute); margin: 14px 0 2px; }
+.up-hint b { color: var(--text); }
+.why-list { list-style: none; padding: 0; margin: 12px 0 0; }
+.why-list li { font-size: 13.5px; color: var(--text-dim); padding: 9px 0 9px 24px; position: relative; border-top: 1px solid var(--line); line-height: 1.5; animation: stepIn .3s ease; }
+.why-list li:first-child { border-top: none; }
+.why-list li::before { content: '↑'; position: absolute; left: 0; top: 9px; color: var(--accent); font-weight: 700; }
+.why-list li b { color: var(--text); }
+
+/* gym */
+.gym { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px; margin: 18px 0; }
+.gym-scen { font-size: 16px; line-height: 1.55; margin: 0 0 16px; min-height: 54px; }
+.gym-scen .qn { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.gym-scen .prm { font-family: 'SFMono-Regular', Consolas, monospace; font-size: 14px; color: var(--text); background: rgba(0,0,0,0.28); border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; display: block; margin: 0 0 10px; }
+.gym-opts { display: flex; flex-direction: column; gap: 10px; }
+.gym-opt { text-align: left; background: var(--surface); border: 1px solid var(--line-strong); color: var(--text); border-radius: 11px; padding: 13px 15px; font-size: 14.5px; font-family: inherit; cursor: pointer; transition: all .14s; }
+.gym-opt:hover:not(:disabled) { border-color: var(--brand-2); }
+.gym-opt:disabled { cursor: default; }
+.gym-opt.correct { border-color: var(--accent); background: rgba(68,224,164,0.12); }
+.gym-opt.wrong { border-color: var(--danger); background: rgba(255,107,138,0.08); opacity: 0.8; }
+.gym-score { font-size: 13px; color: var(--text-mute); margin-bottom: 12px; }
+.gym-score b { color: var(--accent); }
+
+.step-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 30px; gap: 12px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #7c5cff, #5b8def); color: white; padding: 13px 24px; border-radius: 11px; font-weight: 600; font-size: 15px; border: none; font-family: inherit; cursor: pointer; box-shadow: 0 6px 22px rgba(124,92,255,0.3); transition: transform .15s, opacity .15s; }
+.btn:hover:not(:disabled) { transform: translateY(-1px); color: white; }
+.btn:disabled { opacity: 0.4; cursor: default; box-shadow: none; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.btn-back { background: none; border: none; color: var(--text-mute); font-size: 14px; cursor: pointer; font-family: inherit; padding: 8px 4px; }
+.btn-back:hover { color: var(--text); } .btn-back:disabled { opacity: 0; cursor: default; }
+
+.complete { text-align: center; padding: 14px 0 0; }
+.complete .big { font-size: 48px; margin-bottom: 6px; }
+.checklist { margin: 26px 0; padding: 24px 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); text-align: left; }
+.checklist h3 { margin: 0 0 6px; font-size: 17px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 30px; position: relative; font-size: 15px; border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 13px; width: 18px; height: 18px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
-.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
-.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
-.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
+.challenge { margin: 24px 0; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); padding: 28px; text-align: left; }
+.challenge h3 { margin: 0 0 8px; font-size: 19px; }
+.next-up { margin: 26px 0 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); text-align: left; }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 8px; }
 .next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
+.next-up h3 { margin: 12px 0 8px; font-size: 19px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+
 footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -142,7 +175,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -154,79 +186,146 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <a href="/lessons/copilot/" class="nav-back">← Copilot Mastery</a>
   </div>
 </nav>
-<article class="lesson">
-  <div class="container">
+
+<div class="container">
+  <div class="ilesson">
     <div class="lesson-meta">
       <span class="chip">Cowork · Lesson 03</span>
       <span class="chip chip-pro">Pro</span>
-      <span>~13 min read</span>
+      <span>~13 min</span>
       <span class="dot"></span>
-      <span>docx, xlsx, pptx, pdf</span>
+      <span>Interactive</span>
     </div>
     <h1>Documents: <span class="grad serif">from prompt to .pptx in one step.</span></h1>
-    <p class="deck">Cowork's biggest practical win is creating Office-quality documents from scratch. Through a system called Skills, it can produce real .docx, .xlsx, .pptx, and .pdf files — not chat-and-copy-paste. This lesson covers the four formats, the prompts that produce professional output, and the things you need to specify upfront for the result to actually be useful.</p>
-    <h2><span class="num">The mental model</span></h2><h3>Cowork doesn't copy-paste. It builds real documents.</h3><p>When you ask ChatGPT to 'write a report,' you get text in the chat that you then copy into Word and reformat. When you ask Cowork to write a report, it produces an actual .docx file in your folder — with proper headings, a table of contents, page numbers, formatted tables, embedded images. Same for Excel: real formulas, multiple sheets, conditional formatting. PowerPoint: layouts, speaker notes, consistent design.</p><p>This is possible because Cowork has 'Skills' — bundled toolkits that know how to build each file format properly. You don't need to know they exist; you just ask for the output format and Cowork picks the right Skill.</p><p>The implication for your prompts: be specific about format choices upfront. 'Make a report' is vague; 'make a 6-page Word doc with a cover page, table of contents, three sections, and an appendix' produces dramatically better output.</p><h2><span class="num">Workflow 01</span> Word documents that look professional</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>Build a polished Word report from notes</h3></div><p>Most reports are written in Word. Cowork's docx Skill handles styles, headings, page numbers, and even table-of-contents generation. The pattern is to give it the raw content (notes, data, sources) and specify the structure.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Word report pattern</span>Build a Word document called &#x27;Q1-marketing-review.docx&#x27; with these sections:
+    <p class="deck">Cowork's biggest practical win is creating Office-quality documents from scratch — real .docx, .xlsx, .pptx and .pdf files, not chat-and-paste. The catch is that the quality of what you get depends almost entirely on how specifically you ask. This lesson teaches you to ask in a way that produces a finished document instead of a wall of text.</p>
 
-1. Cover page (title, my name, date)
-2. Executive summary (1 page max)
-3. Channel performance review (one section per channel: SEO, Email, Paid Social, Content)
-4. Wins and lessons (bulleted list)
-5. Q2 recommendations (numbered list)
-6. Appendix with the raw data tables
+    <div class="progwrap">
+      <div class="progbar"><div class="progfill" id="prog"></div></div>
+      <div class="progmeta"><span id="progStep">Step 1 of 5</span><span id="progPct">0% complete</span></div>
+    </div>
 
-My raw notes and the data are in &#x27;q1-data.xlsx&#x27; in this folder. Use proper Heading 1/Heading 2 styles, page numbers in footer, table of contents on page 2. Save as .docx with track changes off.</div><h4>Best use cases</h4><ul><li>Quarterly business reviews</li><li>Project post-mortems</li><li>Customer case studies</li><li>Internal training documents</li></ul><div class="gotcha">Always specify file extension (.docx) and explicit structure. 'Write a report' produces text in chat; '.docx with these sections' produces an actual file.</div><div class="savings"><strong>Time savings:</strong> 20-page report: 4-6 hours manually → 30 min with Cowork drafting + your review.</div></div><h2><span class="num">Workflow 02</span> Excel sheets with real formulas</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>Build spreadsheets that calculate, not just display</h3></div><p>Cowork's xlsx Skill builds real Excel files with working formulas, multiple sheets, formatted headers, and conditional formatting. The key prompt insight: be explicit about whether you want values (static) or formulas (live).</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Excel with live formulas</span>Build an Excel file called &#x27;budget-tracker.xlsx&#x27; with these sheets:
-
-1. &#x27;Income&#x27; — columns: Date, Source, Amount, Category. Pre-fill 12 rows for the last 12 months.
-2. &#x27;Expenses&#x27; — columns: Date, Vendor, Amount, Category. Pre-fill 50 rows.
-3. &#x27;Categories&#x27; — list of valid categories for both Income and Expenses (use data validation to enforce).
-4. &#x27;Summary&#x27; — pivot-style summary with SUMIF formulas (not pasted values): total income, total expenses by category, net by month.
-5. Conditional formatting on the Summary sheet: red if net is negative, green if positive.
-
-Use the Currency format ($X,XXX.XX) for all amount columns.</div><h4>Best use cases</h4><ul><li>Budget trackers and financial models</li><li>Project plans with Gantt-style status</li><li>Sales pipeline trackers</li><li>Inventory or asset tracking</li></ul><div class="gotcha">If you don't say 'use formulas, not pasted values,' Cowork sometimes pastes static numbers. The formula-first instruction matters.</div><div class="savings"><strong>Time savings:</strong> Complex spreadsheet from scratch: 2-3 hours → 15 min.</div></div><h2><span class="num">Workflow 03</span> PowerPoint decks with real layouts</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>From outline to finished slide deck</h3></div><p>PowerPoint is the slowest of the Office formats to build manually because each slide is a layout decision. Cowork's pptx Skill handles slide layouts, title hierarchy, bullet patterns, and even speaker notes. You provide the outline + key data; it builds the deck.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Slide deck from outline</span>Build a PowerPoint deck called &#x27;q1-review.pptx&#x27;, 12 slides, using these section headers and content. For each section, suggest the right slide layout (title, bullets, two-column, chart, image-heavy, etc.) and include 1-3 sentences of speaker notes per slide.
-
-1. Title slide: &#x27;Q1 2026 Marketing Review&#x27; + my name
-2. Agenda
-3. Channel mix (data in q1-data.xlsx — chart)
-4-7. One slide per channel (text-heavy, key results + commentary)
-8. Top wins (bullets)
-9. Top misses (bullets, more concise tone)
-10. Q2 plan (numbered list)
-11. Asks for the team (bulleted)
-12. Thank-you / Q&amp;A
-
-Use a clean theme: dark text on light background, sans-serif font, consistent color palette. Don&#x27;t add stock photos or clip art.</div><h4>Best use cases</h4><ul><li>All-hands or team-update decks</li><li>Customer presentations</li><li>Investor or stakeholder updates</li><li>Training material</li></ul><div class="gotcha">Slides are the format where iteration matters most. Plan to do one Cowork-generated draft, then refine specific slides by hand. The deck is 80% done, but the last 20% is your taste.</div><div class="savings"><strong>Time savings:</strong> 12-slide deck: 3-4 hours → 45 min including refinement.</div></div><h2><span class="num">Workflow 04</span> PDFs: extract, combine, generate</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">4</div><h3>PDF operations that aren't painful for once</h3></div><p>Cowork's pdf Skill handles the operations that PDF workflows usually struggle with: extracting text or tables from a scanned PDF, combining multiple PDFs into one, generating a new PDF from content, and filling form fields.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Multi-PDF workflow</span>I have a folder of 15 scanned contract PDFs. For each one:
-1. Run OCR if needed so the text is searchable
-2. Extract the parties&#x27; names, effective date, and contract value
-3. Save each extracted result as a row in a CSV called &#x27;contracts-summary.csv&#x27;
-4. Combine the original 15 PDFs into one master PDF called &#x27;all-contracts-2026.pdf&#x27; with bookmarks at the start of each individual contract
-
-If OCR fails on any PDF, flag it in a separate column.</div><h4>Best use cases</h4><ul><li>Legal contract summarization across many files</li><li>Combining receipts into one PDF for expense reports</li><li>Generating filled PDF forms from a CSV of data</li><li>Splitting a multi-page PDF into individual files by section</li></ul><div class="gotcha">OCR on bad scans is hit-or-miss. Cowork won't invent text it can't read — flagged 'unreadable' entries are honest, not lazy.</div><div class="savings"><strong>Time savings:</strong> 15-contract review: 4+ hours manual → 20 min.</div></div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Build the document you've been avoiding</h2>
-      <p>Think of the most tedious document you need to make this week — a report, a budget, a deck. Use the appropriate Cowork pattern above. Get the 80% draft in 15 minutes, then refine the last 20% by hand. Note the total time vs. what you'd estimate it would have taken manually.</p>
-      <div class="btn-row">
-        <a href="/lessons/copilot/" class="btn">Back to Copilot Mastery →</a>
-        <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+    <!-- STEP 1 — mental model + predict -->
+    <section class="step active" data-step="1">
+      <span class="step-k">The mental model</span>
+      <h2>Cowork builds real files — if you ask for real files</h2>
+      <p>Ask a normal chatbot to "write a report" and you get text in the chat that you then paste into Word and reformat yourself. Cowork can do something different: produce an actual <strong>.docx</strong> in your folder, with headings, a table of contents, page numbers, and formatted tables. Same idea for Excel (real formulas, multiple sheets) and PowerPoint (layouts, speaker notes).</p>
+      <p>It can do this because of <strong>Skills</strong> — bundled toolkits that know how to build each file format properly. You never have to think about them; you just name the output format and Cowork picks the right one.</p>
+      <div class="card">
+        <p style="margin:0"><strong>The one principle for this whole lesson:</strong> be specific upfront. "Make a report" is vague and gets you chat text. "Make a 6-page Word doc with a cover page, a table of contents, three sections, and an appendix" gets you a finished file. Same model, dramatically different output.</p>
       </div>
-    </div>
-    <div class="checklist">
-      <h3>What you can do now</h3>
-      <ul>
-        <li>Specify the exact file extension (.docx, .xlsx, .pptx, .pdf) in every prompt</li>
-        <li>Provide explicit structure — sections, sheets, slide count</li>
-        <li>For Excel, instruct 'use formulas, not static values' when you want live calculation</li>
-        <li>For PowerPoint, accept the deck as 80% done and refine the last 20% manually</li>
-        <li>Save outputs to new filenames, never overwrite the source data</li>
-      </ul>
-    </div>
-    <div class="next-up">
-      <span class="pro-plus-tag">Pro+</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in Copilot Mastery</div>
-      <h3>Lesson 04 · Email + calendar: Outlook, M365, scheduling automation</h3>
-      <p>Connect Cowork to Outlook and your calendar via MCP. Now Cowork can draft replies, search your inbox, surface meetings, and schedule things. The patterns that turn email from a time sink into a 15-minute morning ritual. <a href="/lessons/copilot/">See the track →</a></p>
-    </div>
+      <h3>Predict first</h3>
+      <p>You type into Cowork: <em>"Write me a Q1 marketing report."</em> What do you most likely get back?</p>
+      <div class="choices" id="c1">
+        <button class="choice" onclick="pick(this,1,'a')">A polished Q1-review.docx sitting in your folder</button>
+        <button class="choice" onclick="pick(this,1,'b')">A block of report text in the chat, to copy into Word yourself</button>
+        <button class="choice" onclick="pick(this,1,'c')">An error — Cowork can't write long reports</button>
+      </div>
+      <div class="fb" id="fb1"></div>
+      <div class="step-nav">
+        <button class="btn-back" disabled>← Back</button>
+        <button class="btn" id="next1" disabled onclick="go(2)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- STEP 2 — prompt upgrade (signature) -->
+    <section class="step" data-step="2">
+      <span class="step-k">Do it · upgrade the prompt</span>
+      <h2>Turn a lazy prompt into a real document</h2>
+      <p>Here's the kind of prompt most people type first. It <em>works</em> — but every vague phrase costs you quality, and the four highlighted in red are why you'll get chat text instead of a file. Tap each one to harden it and watch the prompt turn into something Cowork can actually build from.</p>
+      <div class="upgrade">
+        <div class="uprompt" id="uprompt">
+          Make <button class="weak" data-k="a" onclick="upg(this)">a report</button> about Q1 marketing <button class="weak" data-k="b" onclick="upg(this)">with some sections</button>, <button class="weak" data-k="c" onclick="upg(this)">include the numbers</button>, and <button class="weak" data-k="d" onclick="upg(this)">make it look nice</button>.
+        </div>
+        <div class="up-hint" id="upHint"><b>0 of 4</b> vague phrases upgraded — tap the red ones.</div>
+        <ul class="why-list" id="whyList"></ul>
+      </div>
+      <div class="fb" id="fb2"></div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(1)">← Back</button>
+        <button class="btn" id="next2" disabled onclick="go(3)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- STEP 3 — four formats tour (show) -->
+    <section class="step" data-step="3">
+      <span class="step-k">The four formats</span>
+      <h2>What each one is great at — and the one spec it needs</h2>
+      <p>Cowork builds all four Office formats. Each has a single instruction that separates a mediocre result from a great one. Learn the spec, not just the format.</p>
+
+      <div class="pcard"><div class="pn">① Word report<span class="ext">.docx</span></div><div class="pd">Polished reports from your notes — styles, headings, page numbers, auto table of contents.</div><div class="spec"><b>The spec:</b> name the .docx file <em>and</em> list the exact sections. "Write a report" → chat text; "Build Q1-review.docx with these 6 sections" → a real file.</div></div>
+
+      <div class="pcard"><div class="pn">② Excel sheet<span class="ext">.xlsx</span></div><div class="pd">Spreadsheets that calculate — multiple sheets, formatted headers, conditional formatting.</div><div class="spec"><b>The spec:</b> say "use formulas, not pasted values." Otherwise Cowork sometimes drops in static numbers that never recalculate.</div></div>
+
+      <div class="pcard"><div class="pn">③ PowerPoint deck<span class="ext">.pptx</span></div><div class="pd">Decks from an outline — layouts, title hierarchy, bullet patterns, speaker notes.</div><div class="spec"><b>The spec:</b> expect an 80% draft. Cowork nails structure and content; the last 20% — the specific slides — is your taste and refinement.</div></div>
+
+      <div class="pcard"><div class="pn">④ PDF operations<span class="ext">.pdf</span></div><div class="pd">Extract text/tables, OCR scans, combine many PDFs into one, generate or fill forms.</div><div class="spec"><b>The spec:</b> tell it to flag anything it can't OCR. On bad scans Cowork won't invent text — a flagged "unreadable" entry is honest, not lazy.</div></div>
+
+      <div class="prompt-example"><span class="label">Example · Excel with live formulas</span>Build budget.xlsx with Income, Expenses, Categories (data-validated), and a Summary sheet using SUMIF formulas — not pasted values. Currency format on all amounts; red/green conditional formatting on net.</div>
+
+      <p style="color:var(--text-dim)">Notice each prompt names the file, the structure, and the one format-specific instruction. That's the pattern for all four. Next, you'll spot the missing spec yourself.</p>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(2)">← Back</button>
+        <button class="btn" onclick="go(4)">Spot the missing spec →</button>
+      </div>
+    </section>
+
+    <!-- STEP 4 — gym: what one instruction fixes this? -->
+    <section class="step" data-step="4">
+      <span class="step-k">Do it · find the fix</span>
+      <h2>What one instruction would most improve this prompt?</h2>
+      <p>Four real prompts, each missing the spec that matters for its format. Pick the instruction you'd add.</p>
+      <div class="gym">
+        <div class="gym-score" id="mScore">Question <b id="mNum">1</b> of 4 &nbsp;·&nbsp; <span id="mRight">0</span> right</div>
+        <div class="gym-scen" id="mScen"></div>
+        <div class="gym-opts" id="mOpts"></div>
+        <div class="fb" id="fb4"></div>
+        <button class="btn" id="mNext" style="margin-top:16px;display:none" onclick="mNextQ()">Next →</button>
+      </div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(3)">← Back</button>
+        <button class="btn" id="next4" disabled onclick="go(5)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- STEP 5 — completion -->
+    <section class="step" data-step="5">
+      <div class="complete">
+        <div class="big">📄</div>
+        <span class="step-k">Lesson complete</span>
+        <h2>You can brief Cowork like a document pro</h2>
+      </div>
+      <div class="checklist">
+        <h3>What you can do now</h3>
+        <ul>
+          <li>Name the exact file extension (.docx, .xlsx, .pptx, .pdf) in every prompt</li>
+          <li>Give explicit structure — sections, sheets, slide count — not "some sections"</li>
+          <li>For Excel, say "use formulas, not pasted values" when you want live calculation</li>
+          <li>For PowerPoint, accept the 80% draft and refine the last 20% by taste</li>
+          <li>For PDFs, have Cowork flag what it can't read instead of guessing</li>
+        </ul>
+      </div>
+      <div class="challenge">
+        <h3>Your move: build the document you've been avoiding</h3>
+        <p>Pick the most tedious thing you owe this week — a report, a budget, a deck. Use the matching pattern above with a fully specific prompt. Get the 80% draft in fifteen minutes, refine the last 20% by hand, and clock the total against what it would've taken you manually.</p>
+        <div class="btn-row">
+          <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+        </div>
+      </div>
+      <div class="next-up">
+        <span class="pro-plus-tag">Pro+</span>
+        <div class="lbl" style="margin-top:12px">Up next in Copilot Mastery</div>
+        <h3>Cowork · Lesson 04 — Email &amp; calendar: Outlook, M365 and scheduling automation</h3>
+        <p>Connect Cowork to Outlook and your calendar through MCP. Now it can draft replies, search your inbox, surface meetings, and schedule things — the patterns that turn email from a time sink into a 15-minute morning ritual.</p>
+        <div class="btn-row">
+          <a href="/lessons/copilot/cowork-email-calendar" class="btn">Continue to Cowork · Lesson 04 · Email &amp; calendar →</a>
+          <a href="/lessons/copilot/" class="btn ghost">Back to all lessons</a>
+        </div>
+      </div>
+    </section>
+
   </div>
-</article>
+</div>
+
 <footer>
   <div class="footer-inner">
     <div>© 2026 LearningGPT · Independent. Not affiliated with Microsoft.</div>
@@ -239,7 +338,6 @@ If OCR fails on any PDF, flag it in a separate column.</div><h4>Best use cases</
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -251,10 +349,10 @@ If OCR fails on any PDF, flag it in a separate column.</div><h4>Best use cases</
     <button class="coach-close" id="coachClose">✕</button>
   </div>
   <div class="coach-messages" id="coachMessages">
-    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson on building documents with Cowork. Ask me how to phrase a prompt for a Word report, an Excel model, a deck, or a PDF job — or paste a prompt and I'll help you tighten it. What are you trying to make?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -262,15 +360,144 @@ If OCR fails on any PDF, flag it in a separate column.</div><h4>Best use cases</
   </div>
 </div>
 
+<script id="lessonScript">
+/* ── stepper ── */
+var TOTAL = 5;
+var cur = 1;
+function go(n){
+  if(n<1||n>TOTAL) return;
+  document.querySelector('.step[data-step="'+cur+'"]').classList.remove('active');
+  cur = n;
+  document.querySelector('.step[data-step="'+cur+'"]').classList.add('active');
+  var pct = Math.round(((cur-1)/(TOTAL-1))*100);
+  document.getElementById('prog').style.width = pct+'%';
+  document.getElementById('progStep').textContent = 'Step '+cur+' of '+TOTAL;
+  document.getElementById('progPct').textContent = pct+'% complete';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
 
-<script id="coachScript">
+/* ── predict ── */
+var pickMsg = {
+  '1': {
+    correct: 'b',
+    good: '<b>Right — chat text.</b> "Write a report" is too vague, so Cowork hands you text to copy into Word yourself. To get a real file, name the format and the structure: "Build Q1-review.docx with a cover page, an exec summary, one section per channel, and an appendix." That single change is the whole lesson.',
+    bad: '<b>Not quite.</b> Cowork can absolutely build the file — but only when you ask for it specifically. A bare "write a report" gives you text in the chat. Name the format (.docx) and the sections and you get an actual document instead.'
+  }
+};
+function pick(btn, step, val){
+  var box = document.getElementById('c'+step);
+  if(box.dataset.done) return;
+  box.dataset.done = '1';
+  var info = pickMsg[String(step)];
+  Array.prototype.forEach.call(box.querySelectorAll('.choice'), function(b){
+    b.disabled = true;
+    var v = b.getAttribute('onclick').match(/'([a-z])'\)/)[1];
+    if(v === info.correct) b.classList.add('correct');
+    else if(b === btn) b.classList.add('wrong');
+  });
+  var fb = document.getElementById('fb'+step);
+  var ok = val === info.correct;
+  fb.className = 'fb show ' + (ok ? 'good' : 'bad');
+  fb.innerHTML = ok ? info.good : info.bad;
+  document.getElementById('next'+step).disabled = false;
+}
+
+/* ── prompt upgrade (signature) ── */
+var UP = {
+  a: { strong: 'a Word doc named Q1-review.docx', why: '<b>Name the format + extension.</b> "a report" alone returns chat text; ".docx" tells Cowork to build a file.' },
+  b: { strong: 'with a cover page, an exec summary, one section per channel, and an appendix', why: '<b>Explicit structure beats "some sections."</b> Cowork builds exactly what you list.' },
+  c: { strong: 'pulling the data from q1-data.xlsx into formatted tables', why: '<b>Point it at the source.</b> Name the data file and say how to present it.' },
+  d: { strong: 'using Heading 1/2 styles, page numbers, and a table of contents on page 2', why: '<b>"Nice" is subjective.</b> Name the formatting you actually want.' }
+};
+var upCount = 0;
+function upg(btn){
+  if(btn.classList.contains('done')) return;
+  var k = btn.dataset.k;
+  btn.textContent = UP[k].strong;
+  btn.classList.add('done');
+  upCount++;
+  document.getElementById('upHint').innerHTML = '<b>'+upCount+' of 4</b> vague phrases upgraded' + (upCount<4 ? ' — tap the red ones.' : ' — done.');
+  var li = document.createElement('li');
+  li.innerHTML = UP[k].why;
+  document.getElementById('whyList').appendChild(li);
+  if(upCount === 4){
+    var fb = document.getElementById('fb2');
+    fb.className = 'fb show good';
+    fb.innerHTML = '<b>That\'s a prompt Cowork can build a real file from.</b> Same request, but now it names the format, the structure, the data source, and the formatting. Specificity is the entire difference between chat text and a finished document.';
+    document.getElementById('next2').disabled = false;
+  }
+}
+
+/* ── gym: what one instruction fixes this? ── */
+var M = [
+  { qn: 'Excel', prm: 'Build budget.xlsx with Income, Expenses, and a Summary tab.',
+    opts: ['Add a cover page to the spreadsheet','Use SUMIF formulas, not pasted values','Switch the output to a PDF','Use stock photos in the headers'],
+    correct: 1,
+    why: 'Without "use formulas," Cowork sometimes drops in static numbers — the Summary won\'t recalculate when the data changes. The formula-first instruction is the one that matters.' },
+  { qn: 'PowerPoint', prm: 'Build a 12-slide q1-review.pptx from my outline.',
+    opts: ['Expect a final, ship-ready deck','Ask for 60 slides to be thorough','Expect an 80% draft you\'ll refine by hand','Skip the outline and let it improvise'],
+    correct: 2,
+    why: 'Slides are where taste matters most. Cowork nails ~80% — structure, content, notes; plan to refine the last 20% (the specific slides) yourself.' },
+  { qn: 'Word', prm: 'Write me a project post-mortem.',
+    opts: ['Name it .docx and list the exact sections','Ask it to be more creative','Type the request in all caps','Demand at least 50 pages'],
+    correct: 0,
+    why: 'Vague request, no extension = text in the chat. Name the file (.docx) and the sections and you get a real, structured document.' },
+  { qn: 'PDF', prm: 'From these 15 scanned contract PDFs, extract the parties and dates into a CSV.',
+    opts: ['Tell it to guess any text it can\'t read','Convert the contracts to PowerPoint first','Tell it to flag any PDF it can\'t OCR','Delete the originals once it\'s done'],
+    correct: 2,
+    why: 'OCR on bad scans is hit-or-miss. Flagging unreadable files is honest; telling it to guess invents contract data you can\'t trust.' }
+];
+var mi = 0, mRight = 0, mDone = false;
+function mRender(){
+  var q = M[mi];
+  document.getElementById('mNum').textContent = mi+1;
+  document.getElementById('mRight').textContent = mRight;
+  document.getElementById('mScen').innerHTML = '<span class="qn">'+q.qn+'</span><span class="prm">'+q.prm+'</span>What one instruction would most improve this?';
+  var opts = document.getElementById('mOpts');
+  opts.innerHTML = '';
+  q.opts.forEach(function(label, idx){
+    var b = document.createElement('button');
+    b.className = 'gym-opt';
+    b.textContent = label;
+    b.onclick = function(){ mAnswer(idx, b); };
+    opts.appendChild(b);
+  });
+  document.getElementById('fb4').className = 'fb';
+  document.getElementById('fb4').innerHTML = '';
+  document.getElementById('mNext').style.display = 'none';
+}
+function mAnswer(idx, btn){
+  if(mDone) return;
+  mDone = true;
+  var q = M[mi];
+  var opts = document.getElementById('mOpts').querySelectorAll('.gym-opt');
+  opts.forEach(function(b, i){
+    b.disabled = true;
+    if(i === q.correct) b.classList.add('correct');
+    else if(b === btn) b.classList.add('wrong');
+  });
+  var ok = idx === q.correct;
+  if(ok) mRight++;
+  document.getElementById('mRight').textContent = mRight;
+  var fb = document.getElementById('fb4');
+  fb.className = 'fb show ' + (ok ? 'good' : 'bad');
+  fb.innerHTML = (ok ? '✓ ' : '✗ ') + q.why;
+  var nb = document.getElementById('mNext');
+  if(mi < M.length-1){ nb.style.display = 'inline-flex'; nb.textContent = 'Next question →'; }
+  else { document.getElementById('next4').disabled = false; }
+}
+function mNextQ(){
+  if(mi < M.length-1){ mi++; mDone = false; mRender(); }
+}
+mRender();
+
+/* ── AI COACH ── */
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Cowork document creation \u2014 Word, Excel, PowerPoint, PDF\nTRACK: Copilot Mastery\n\nLESSON CONTENT SUMMARY:\nCowork document creation \u2014 Word, Excel, PowerPoint, PDF \u2014 LearningGPT L LearningGPT \u2190 Copilot Mastery Cowork \u00b7 Lesson 03 Pro ~13 min read docx, xlsx, pptx, pdf Documents: from prompt to .pptx in one step. Cowork's biggest practical win is creating Office-quality documents from scratch. Through a system called Skills, it can produce real .docx, .xlsx, .pptx, and .pdf files \u2014 not chat-and-copy-paste. This lesson covers the four formats, the prompts that produce professional output, and the things you need to specify upfront for the result to actually be useful. The mental model Cowork doesn't copy-paste. It builds real documents. When you ask ChatGPT to 'write a report,' you get text in the chat that you then copy into Word and reformat. When you ask Cowork to write a report, it produces an actual .docx file in your folder \u2014 with proper headings, a table of contents, page numbers, formatted tables, embedded images. Same for Excel: real formulas, multiple sheets, conditional formatting. PowerPoint: layouts, speaker notes, consistent design. This is possible because Cowork has 'Skills' \u2014 bundled toolkits that know how to build each file format properly. You don't need to know they exist; you just ask for the output format and Cowork picks the right Skill. The implication for your prompts: be specific about format choices upfront. 'Make a report' is vague; 'make a 6-page Word doc with a cover page, table of contents, three sections, and an appendix' produces dramatically better output. Workflow 01 Word documents that look professional 1 Build a polished Word report from notes Most reports are written in Word. Cowork's docx Skill handles styles, headings, page numbers, and even table-of-contents generation. The pattern is to give it the raw content (notes, data, sources) and specify the structure. The prompt that works Word report pattern Build a Word document called &#x27;Q1-marketing-review.docx&#x27; with these sections: 1. Cover page (title, my name, date) 2. Executive summary (1 page max) 3. Channel performance review (one section per channel: SEO, Email, Paid Social, Content) 4. Wins and lessons (bulleted list) 5. Q2 recommendations (numbered list) 6. Appendix with the raw data tables My raw notes and the data are in &#x27;q1-data.xlsx&#x27; in this folder. Use proper Heading 1/Heading 2 styles, page numbers in footer, table of contents on page 2. Save as .docx with track changes off. Best use cases Quarterly business reviews Project post-mortems Customer case studies Internal training documents Always specify file extension (.docx) and explicit structure. 'Write a report' produces text in chat; '.docx with these sections' produces an actual file. Time savings: 20-page report: 4-6 hours manually \u2192 30 min with Cowork drafting + your review. Workflow 02 Excel sheets with real formulas 2 Build spreadsheets that calculate, not just display Cowork's xlsx Skill builds real Excel files with working formulas, multiple sheets, formatted headers, and condi\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Cowork document creation — Word, Excel, PowerPoint, PDF\nTRACK: Copilot Mastery (Cowork, Lesson 03)\n\nLESSON CONTENT SUMMARY:\nCowork builds real Office files (.docx, .xlsx, .pptx, .pdf) from scratch via a system called Skills — not chat-and-copy-paste. The quality of the output depends almost entirely on how specifically you ask.\n\nTHE CORE PRINCIPLE: Be specific upfront. 'Write a report' is vague and returns text in the chat. Naming the file format/extension AND the explicit structure ('Build Q1-review.docx with a cover page, exec summary, one section per channel, and an appendix') returns an actual finished file.\n\nTHE FOUR FORMATS AND THE ONE SPEC EACH NEEDS:\n1. WORD (.docx) — polished reports with styles, headings, page numbers, auto table of contents. Spec: name the .docx file and list the exact sections.\n2. EXCEL (.xlsx) — spreadsheets that calculate, multiple sheets, conditional formatting, data validation. Spec: say 'use formulas, not pasted values' or Cowork may insert static numbers that don't recalculate.\n3. POWERPOINT (.pptx) — decks from an outline, layouts, speaker notes. Spec: expect an 80% draft; refine the last 20% (specific slides) by hand because taste matters most there.\n4. PDF — extract text/tables, OCR scans, combine many PDFs into one, generate or fill forms. Spec: tell it to flag anything it can't OCR; it won't invent text from a bad scan, and a flagged 'unreadable' entry is honest, not a failure.\n\nKEY PROMPT UPGRADES (vague -> specific):\n- 'a report' -> 'a Word doc named Q1-review.docx'\n- 'with some sections' -> list the exact sections\n- 'include the numbers' -> 'pull the data from q1-data.xlsx into formatted tables'\n- 'make it look nice' -> 'use Heading 1/2 styles, page numbers, and a table of contents on page 2'\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content.\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more.\n- Be practical — give real work examples and sample prompts when helpful.\n- If asked about something not in this lesson, briefly answer and point to where they can learn more.\n- Never make up Cowork features that don't exist.\n- Plain conversational text only — no markdown symbols like ** or ##.\n- Do not start responses with \"Great question!\" or similar filler phrases.";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -278,27 +505,21 @@ If OCR fails on any PDF, flag it in a separate column.</div><h4>Best use cases</
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -307,7 +528,6 @@ If OCR fails on any PDF, flag it in a separate column.</div><h4>Best use cases</
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -316,7 +536,6 @@ If OCR fails on any PDF, flag it in a separate column.</div><h4>Best use cases</
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

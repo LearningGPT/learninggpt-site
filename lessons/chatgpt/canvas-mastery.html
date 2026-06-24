@@ -4,16 +4,16 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Canvas: the editing surface that changes how you write — LearningGPT</title>
-<meta name="description" content="Canvas is ChatGPT's side-panel editing surface — text or code in a persistent workspace where you can iterate, refine, and ship. Most users either ign" />
+<meta name="description" content="Canvas is ChatGPT's side-panel editing surface — text or code in a persistent workspace where you can iterate, refine, and ship. When it helps, when it gets in the way, and the patterns that turn it into a real writing partner." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#10a37f" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/chatgpt/canvas-mastery" />
 <meta property="og:title" content="Canvas: the editing surface that changes how you write" />
-<meta property="og:description" content="Canvas is ChatGPT's side-panel editing surface — text or code in a persistent workspace where you can iterate, refine, and ship. Most users either ign" />
+<meta property="og:description" content="Canvas is ChatGPT's side-panel editing surface — when it changes the work, when it gets in the way, and three iterative-writing patterns." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -34,47 +34,110 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
 .lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(16,163,127,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(16,163,127,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
 .lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
-.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
 .lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #10a37f 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .grad { background: linear-gradient(135deg, #10a37f 0%, #44e0a4 50%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
 .lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+
+/* ── STEPPER ── */
+.stepper { position: sticky; top: 57px; z-index: 50; background: rgba(10,10,26,0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); margin: 0 0 8px; padding: 12px 0; }
+.stepper-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; align-items: center; gap: 14px; }
+.prog-track { flex: 1; height: 6px; background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden; }
+.prog-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #10a37f, #7c5cff); border-radius: 999px; transition: width .4s cubic-bezier(.4,0,.2,1); }
+.prog-label { font-size: 12px; color: var(--text-mute); font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+.step { display: none; animation: stepIn .45s cubic-bezier(.2,.7,.2,1); }
+.step.active { display: block; }
+@keyframes stepIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+.step-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin: 8px 0 6px; }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 6px 0 16px; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 26px 0 10px; }
 .lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
 .lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(16,163,127,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(16,163,127,0.25); border-radius: var(--radius-lg); position: relative; }
+.lesson ol, .lesson ul { padding-left: 22px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; }
+
+.callout { margin: 26px 0; padding: 20px 24px; background: linear-gradient(135deg, rgba(16,163,127,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(16,163,127,0.25); border-radius: var(--radius-lg); position: relative; }
 .callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #10a37f, #7c5cff); border-radius: 2px 0 0 2px; }
 .callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
 .callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(16,163,127,0.1); border: 1px solid rgba(16,163,127,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; }
+
+/* ── PREDICT ── */
+.predict { margin: 26px 0; padding: 22px 24px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+.predict .q { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
+.opt { display: block; width: 100%; text-align: left; padding: 14px 16px; margin: 8px 0; background: rgba(255,255,255,0.03); border: 1px solid var(--line-strong); border-radius: 12px; color: var(--text); font-size: 14.5px; font-family: inherit; cursor: pointer; transition: all .18s; }
+.opt:hover:not(:disabled) { border-color: var(--track); background: rgba(16,163,127,0.07); }
+.opt:disabled { cursor: default; }
+.opt.correct { border-color: var(--accent); background: rgba(68,224,164,0.12); }
+.opt.wrong { border-color: var(--danger); background: rgba(255,107,138,0.10); opacity: 0.85; }
+.opt .tick { float: right; font-weight: 700; }
+.reveal { margin-top: 14px; padding: 16px 18px; border-radius: 12px; background: rgba(68,224,164,0.07); border: 1px solid rgba(68,224,164,0.25); font-size: 14.5px; display: none; }
+.reveal.show { display: block; animation: stepIn .4s ease; }
+.reveal.miss { background: rgba(255,181,71,0.07); border-color: rgba(255,181,71,0.25); }
+
+/* ── CANVAS EDITOR SIM ── */
+.editor { margin: 24px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden; background: #0e0e22; }
+.editor-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; background: rgba(16,163,127,0.08); border-bottom: 1px solid var(--line); }
+.editor-title { font-size: 13px; font-weight: 600; color: var(--text-dim); display: flex; align-items: center; gap: 8px; }
+.editor-title .ic { width: 18px; height: 18px; border-radius: 5px; background: linear-gradient(135deg,#10a37f,#44e0a4); display: grid; place-items: center; font-size: 11px; }
+.vpill { font-size: 11px; font-weight: 700; color: var(--track); background: rgba(16,163,127,0.12); border: 1px solid rgba(16,163,127,0.35); padding: 3px 10px; border-radius: 999px; font-variant-numeric: tabular-nums; transition: transform .25s; }
+.vpill.bump { transform: scale(1.18); }
+.editor-body { padding: 18px 20px; }
+.editor-hint { font-size: 12.5px; color: var(--text-mute); margin-bottom: 14px; }
+.para { position: relative; padding: 12px 14px; margin: 0 0 10px; border-radius: 10px; border: 1px solid transparent; font-size: 14.5px; line-height: 1.6; color: var(--text-dim); cursor: pointer; transition: all .18s; }
+.para:hover:not(.done) { background: rgba(255,255,255,0.03); border-color: var(--line-strong); }
+.para.sel { background: rgba(16,163,127,0.08); border-color: rgba(16,163,127,0.45); color: var(--text); }
+.para.done { background: rgba(68,224,164,0.06); border-color: rgba(68,224,164,0.3); color: #d6fff0; cursor: default; }
+.para .selhint { position: absolute; top: -9px; right: 10px; font-size: 9.5px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--track); background: #0e0e22; padding: 0 6px; display: none; }
+.para.sel .selhint { display: inline-block; }
+.editbar { margin: -2px 0 12px; padding: 10px 14px; border-radius: 10px; background: rgba(0,0,0,0.3); border: 1px solid var(--line); display: none; align-items: center; gap: 10px; flex-wrap: wrap; animation: stepIn .3s ease; }
+.editbar.show { display: flex; }
+.editbar .instr { font-family: 'SFMono-Regular', Consolas, monospace; font-size: 12.5px; color: var(--text-dim); flex: 1; min-width: 180px; }
+.editbar .instr b { color: var(--track); }
+.apply-btn { background: linear-gradient(135deg,#10a37f,#7c5cff); color: #fff; border: none; border-radius: 8px; padding: 8px 14px; font-size: 12.5px; font-weight: 600; font-family: inherit; cursor: pointer; transition: transform .15s; }
+.apply-btn:hover { transform: translateY(-1px); }
+.editor-done { margin-top: 4px; padding: 14px 18px; border-radius: 12px; background: rgba(16,163,127,0.1); border: 1px solid rgba(16,163,127,0.3); font-size: 14.5px; display: none; }
+.editor-done.show { display: block; animation: stepIn .4s ease; }
+
+/* ── PROMPT / GOTCHA ── */
+.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
 .prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 16px 0; font-size: 14.5px; }
 .gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(16,163,127,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(16,163,127,0.25); border-radius: var(--radius-lg); padding: 36px; }
+
+/* ── GYM ── */
+.gym { margin: 26px 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px; }
+.gym-count { font-size: 12px; color: var(--text-mute); font-weight: 600; margin-bottom: 12px; }
+.gym-prompt { font-size: 16.5px; font-weight: 600; margin-bottom: 16px; line-height: 1.5; }
+.gym-fb { margin-top: 14px; padding: 14px 16px; border-radius: 12px; font-size: 14px; display: none; }
+.gym-fb.show { display: block; animation: stepIn .35s ease; }
+.gym-fb.ok { background: rgba(68,224,164,0.1); border: 1px solid rgba(68,224,164,0.3); }
+.gym-fb.no { background: rgba(255,181,71,0.08); border: 1px solid rgba(255,181,71,0.28); }
+.gym-next { margin-top: 16px; text-align: right; display: none; }
+.gym-next.show { display: block; }
+.gym-score { text-align: center; padding: 20px; font-size: 17px; font-weight: 700; }
+.mini-btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #10a37f, #7c5cff); color: white; padding: 11px 20px; border-radius: 10px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; font-family: inherit; transition: transform .15s; }
+.mini-btn:hover { transform: translateY(-1px); }
+
+/* ── NAV / CHALLENGE / NEXT ── */
+.step-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 36px; gap: 12px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #10a37f, #7c5cff); color: white; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: inherit; box-shadow: 0 6px 24px rgba(16,163,127,0.28); transition: transform .15s, opacity .15s; }
+.btn:hover { transform: translateY(-1px); color: white; }
+.btn:disabled { opacity: 0.4; cursor: default; transform: none; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+
+.challenge { margin: 10px 0 30px; background: linear-gradient(135deg, rgba(16,163,127,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(16,163,127,0.25); border-radius: var(--radius-lg); padding: 32px; }
 .challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #10a37f, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge a.btn { text-decoration: none; }
 .challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist { margin: 30px 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
 .checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
 .checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
 .checklist li:first-child { border-top: none; padding-top: 0; }
 .checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up { margin: 20px 0 0; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
 .next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
 .next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
 .next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
@@ -83,36 +146,12 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -141,7 +180,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -153,43 +191,179 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <a href="/lessons/chatgpt/" class="nav-back">← ChatGPT Mastery</a>
   </div>
 </nav>
+
+<!-- ── STEPPER ── -->
+<div class="stepper">
+  <div class="stepper-inner">
+    <div class="prog-track"><div class="prog-fill" id="prog"></div></div>
+    <div class="prog-label" id="progLabel">Step 1 / 5</div>
+  </div>
+</div>
+
 <article class="lesson">
   <div class="container">
     <div class="lesson-meta">
       <span class="chip">Lesson 03 · ChatGPT Mastery</span>
       <span class="chip chip-pro">Pro</span>
-      <span>~10 min read</span>
+      <span>~10 min</span>
       <span class="dot"></span>
       <span>3 workflows</span>
     </div>
     <h1>Canvas: <span class="grad serif">the writing partner you didn't know you had.</span></h1>
-    <p class="deck">Canvas is ChatGPT's side-panel editing surface — text or code in a persistent workspace where you can iterate, refine, and ship. Most users either ignore it or invoke it for trivial outputs. This lesson covers when Canvas genuinely changes the work, when it gets in the way, and three iterative-writing patterns that turn ChatGPT into a real writing partner.</p>
-    <h2><span class="num">The mental model</span></h2><h3>Canvas is for work, not chat.</h3><p>When you're going to iterate on something across multiple turns — a draft, a script, a doc, a piece of code — Canvas lets you point at specific sections, edit inline, refine without re-pasting. It's the difference between chatting about a thing and building the thing.</p><h2><span class="num">Workflow 01</span> Force Canvas for substantial drafts</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>When ChatGPT doesn't auto-invoke</h3></div><p>ChatGPT opens Canvas automatically for some outputs but misses others. Force it.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Forcing prompt</span>Open this in Canvas so I can iterate on it. / Put this draft in Canvas. / Generate this as a Canvas document I can edit.</div><h4>Best use cases</h4><ul><li>Drafts longer than 200 words you'll refine</li><li>Code you want to iterate on</li><li>Anything you'd otherwise paste between ChatGPT and your editor</li><li>Outlines you'll expand section by section</li></ul><div class="gotcha">Forcing Canvas on a one-paragraph response is overkill. Use for actual work, not casual chat.</div><div class="savings"><strong>Time savings:</strong> Lost-context-from-scrolling: gone.</div></div><h2><span class="num">Workflow 02</span> Point-and-refine: target specific sections</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>Highlight + ask</h3></div><p>In Canvas, you can highlight specific text and ask ChatGPT to edit just that section. Massive precision upgrade vs. asking for whole-document changes.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Targeted edits</span>(Highlight paragraph 3) Make this more direct.
-(Highlight a sentence) Cut this and replace with a punchier transition.
-(Highlight a code function) Refactor for readability, same behavior.</div><h4>Best use cases</h4><ul><li>Editing long drafts where only sections need work</li><li>Refining code without rewriting the whole file</li><li>Polishing specific phrases or sentences</li><li>Iterative improvement of any structured content</li></ul><div class="gotcha">Don't get into a loop of micro-edits. After 5-10 targeted refinements, step back and read the whole thing — sometimes the cumulative changes need a holistic pass.</div><div class="savings"><strong>Time savings:</strong> Edit cycles measured in seconds, not minutes.</div></div><h2><span class="num">Workflow 03</span> Version-aware iteration</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>Roll back, branch, iterate</h3></div><p>Canvas tracks versions. You can go back to earlier drafts, branch from there, compare versions. This is the workflow that makes long sessions productive.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Version pattern</span>Draft → iterate 5 times → don't love it → roll back to version 2 → try a different direction → keep the winner.</div><h4>Best use cases</h4><ul><li>Long writing projects where you might want to branch</li><li>Code where one approach didn't work and you want to try another</li><li>Anywhere you'd otherwise lose work because you went down the wrong path</li></ul><div class="gotcha">Versions don't persist forever in some cases. For really important work, copy your favorite drafts out to a separate doc as you go.</div><div class="savings"><strong>Time savings:</strong> Lost-iterations-from-going-down-a-bad-path: gone.</div></div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Final challenge: write something real in Canvas</h2>
-      <p>Pick a real piece of writing you owe someone — a blog post, a memo, a long email. Do the whole thing in Canvas. Use targeted edits. Use versions. Ship it from Canvas. Notice the difference from your usual flow.</p>
-      <div class="btn-row">
-        <a href="/lessons/chatgpt/" class="btn">Back to ChatGPT Mastery →</a>
-        <a href="/#pricing" class="btn ghost">See pricing →</a>
+    <p class="deck">Canvas is ChatGPT's side-panel editing surface — a persistent workspace for text or code where you iterate, refine, and ship. Most people ignore it or trigger it for trivial things. Here's when it genuinely changes the work, when it gets in the way, and the patterns that make it a real writing partner.</p>
+
+    <!-- ════ STEP 1 ════ -->
+    <section class="step active" data-step="1">
+      <span class="step-eyebrow">The mental model</span>
+      <h2>Canvas is for work, not chat.</h2>
+      <p>Regular chat is a scroll: every revision re-pastes the whole thing and pushes the last version off-screen. Canvas pins the document in a side panel so you can point at a specific paragraph, edit it in place, and keep a version history. It's the difference between <em>chatting about</em> a thing and <em>building</em> the thing.</p>
+      <p>The catch is knowing when it earns its place. Force it on a one-line answer and it's just friction.</p>
+
+      <div class="predict">
+        <div class="q">Which of these actually benefits from Canvas?</div>
+        <button class="opt" data-correct="false">A one-sentence answer to "what time is the standup?"</button>
+        <button class="opt" data-correct="true">A 600-word memo you'll revise across several passes before sending</button>
+        <button class="opt" data-correct="false">Looking up a single fact you'll paste into a chat</button>
+        <div class="reveal" id="r1">
+          <strong>Right.</strong> Canvas pays off exactly when you're going to <em>iterate</em> — a draft, a doc, a script, a chunk of code you'll refine over multiple turns. For a quick answer it's overkill. Next you'll feel why: editing in place beats re-pasting every time.
+        </div>
       </div>
-    </div>
-    <div class="checklist">
-      <h3>What you can do now</h3>
-      <ul><li>Invoke Canvas for substantial writing or code work</li><li>Use highlight-and-edit for surgical refinements</li><li>Use version history to branch and recover from bad iterations</li><li>Recognize when Canvas helps vs. when chat is faster</li></ul>
-    </div>
-    <div class="next-up">
-      <span class="pro-tag">Pro</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in ChatGPT Mastery</div>
-      <h3>Lesson 4 · Voice mode: real-world use cases (and what it's actually for)</h3>
-      <p>Voice mode for commute prep, language practice, brainstorming, accessibility. The use cases that go beyond the demo videos. <a href="/#pricing">See pricing →</a></p>
-    </div>
+      <div class="step-nav">
+        <span></span>
+        <button class="btn" id="next1" disabled>Continue →</button>
+      </div>
+    </section>
+
+    <!-- ════ STEP 2 ════ -->
+    <section class="step" data-step="2">
+      <span class="step-eyebrow">Signature move · point and refine</span>
+      <h2>Edit one paragraph at a time.</h2>
+      <p>This is the move that makes Canvas worth it: highlight a specific section, ask for a targeted change, and only <em>that</em> part updates. <strong>Click each paragraph</strong> below to select it, then apply the edit. Watch the version count climb.</p>
+
+      <div class="editor">
+        <div class="editor-bar">
+          <div class="editor-title"><span class="ic">✎</span> Project update · Canvas</div>
+          <div class="vpill" id="vpill">v1</div>
+        </div>
+        <div class="editor-body">
+          <div class="editor-hint">Three flabby paragraphs. Tighten each one. <span id="editCount">0 of 3 refined</span></div>
+
+          <div class="para" data-i="0"
+               data-after="Here's where the project stands."
+               data-instr="Make this direct">
+            <span class="selhint">Selected</span>
+            I am writing to you today in order to provide you with a brief update regarding the current status of the project that we have been collaborating on together.
+          </div>
+          <div class="editbar" data-for="0"><span class="instr">Edit: <b>"Make this direct."</b></span><button class="apply-btn">Apply edit →</button></div>
+
+          <div class="para" data-i="1"
+               data-after="Two other things are worth flagging:"
+               data-instr="Punchier transition, cut filler">
+            <span class="selhint">Selected</span>
+            Additionally, it should also be noted that there are several other items which may potentially be of some interest to you going forward.
+          </div>
+          <div class="editbar" data-for="1"><span class="instr">Edit: <b>"Punchier transition, cut filler."</b></span><button class="apply-btn">Apply edit →</button></div>
+
+          <div class="para" data-i="2"
+               data-after="Questions? Just reply."
+               data-instr="Tighten to one line">
+            <span class="selhint">Selected</span>
+            Please do not hesitate to reach out to me at your earliest possible convenience should you happen to have any questions whatsoever about any of the above.
+          </div>
+          <div class="editbar" data-for="2"><span class="instr">Edit: <b>"Tighten to one line."</b></span><button class="apply-btn">Apply edit →</button></div>
+
+          <div class="editor-done" id="editorDone">
+            <strong>That's point-and-refine.</strong> Three surgical edits, no re-pasting, every version saved. In a real Canvas you'd do this across a whole doc — touching only what needs work and rolling back anything you don't like.
+          </div>
+        </div>
+      </div>
+      <div class="step-nav">
+        <button class="btn ghost" data-back="1">← Back</button>
+        <button class="btn" id="next2" disabled>The other two patterns →</button>
+      </div>
+    </section>
+
+    <!-- ════ STEP 3 ════ -->
+    <section class="step" data-step="3">
+      <span class="step-eyebrow">Two more patterns</span>
+      <h2>Force it, and use the version history.</h2>
+      <p>ChatGPT opens Canvas automatically for some outputs and misses others. When it doesn't, just ask:</p>
+      <div class="prompt-example"><span class="label">Force Canvas</span>Open this in Canvas so I can iterate on it.
+Put this draft in Canvas.
+Generate this as a Canvas document I can edit.</div>
+
+      <p>And Canvas tracks <strong>versions</strong>. You can roll back to an earlier draft, branch a new direction from there, and keep the winner — which is what makes a long session productive instead of a one-way street you can't undo.</p>
+      <div class="prompt-example"><span class="label">Version-aware iteration</span>Draft → iterate 5 times → don't love it → roll back to version 2 → try a different direction → keep the winner.</div>
+
+      <div class="gotcha">Don't spiral into micro-edits. After 5–10 targeted refinements, step back and read the whole thing — the cumulative changes sometimes need one holistic pass. And for important work, copy your favorite draft out to a separate doc; Canvas versions don't always persist forever.</div>
+      <div class="step-nav">
+        <button class="btn ghost" data-back="2">← Back</button>
+        <button class="btn" id="next3">Test the judgment →</button>
+      </div>
+    </section>
+
+    <!-- ════ STEP 4 ════ -->
+    <section class="step" data-step="4">
+      <span class="step-eyebrow">Your turn · Canvas or not?</span>
+      <h2>Make the call.</h2>
+      <p>Four situations. Pick the right move for each.</p>
+
+      <div class="gym" id="gym">
+        <div class="gym-count" id="gymCount">Question 1 of 4</div>
+        <div class="gym-prompt" id="gymPrompt"></div>
+        <div id="gymOpts"></div>
+        <div class="gym-fb" id="gymFb"></div>
+        <div class="gym-next" id="gymNext"><button class="mini-btn" id="gymNextBtn">Next →</button></div>
+      </div>
+      <div class="step-nav">
+        <button class="btn ghost" data-back="3">← Back</button>
+        <button class="btn" id="next4" disabled>Finish →</button>
+      </div>
+    </section>
+
+    <!-- ════ STEP 5 ════ -->
+    <section class="step" data-step="5">
+      <span class="step-eyebrow">You've got it</span>
+      <h2>Build the next thing in Canvas.</h2>
+
+      <div class="challenge">
+        <h2 style="margin-top:0;">Write something real in Canvas</h2>
+        <p>Pick a real piece of writing you owe someone — a blog post, a memo, a long email. Do the whole thing in Canvas: force it open, use point-and-refine on specific paragraphs, lean on version history when a direction doesn't work, and ship it from there. Notice how different it feels from scrolling chat.</p>
+        <div class="btn-row">
+          <a href="/playground" class="btn">Try a prompt in the playground →</a>
+          <a href="/lessons/chatgpt/" class="btn ghost">Back to ChatGPT Mastery</a>
+        </div>
+      </div>
+
+      <div class="checklist">
+        <h3>What you can do now</h3>
+        <ul>
+          <li>Invoke Canvas for substantial writing or code — and skip it for quick chat</li>
+          <li>Use highlight-and-edit for surgical, one-section-at-a-time refinements</li>
+          <li>Use version history to branch and recover from a bad direction</li>
+          <li>Step back for a holistic pass after a run of micro-edits</li>
+          <li>Copy important drafts out as you go, since versions don't always persist</li>
+        </ul>
+      </div>
+
+      <div class="next-up">
+        <span class="pro-tag">Pro</span>
+        <div class="lbl" style="margin-top:14px;">Up next in ChatGPT Mastery</div>
+        <h3>Lesson 4 · Voice mode: real-world use cases (and what it's actually for)</h3>
+        <p>Voice mode for commute prep, language practice, brainstorming, and accessibility — the use cases that go beyond the demo videos. <a href="/lessons/chatgpt/voice-mode">Start lesson 4 →</a></p>
+      </div>
+      <div class="step-nav">
+        <button class="btn ghost" data-back="4">← Back</button>
+        <a href="/lessons/chatgpt/voice-mode" class="btn">Next lesson →</a>
+      </div>
+    </section>
+
   </div>
 </article>
+
 <footer>
   <div class="footer-inner">
-    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with OpenAI.</div>
+    <div>© 2026 LearningGPT · Independent. Not affiliated with OpenAI.</div>
     <a href="/lessons/chatgpt/" style="color: var(--text-dim);">← All ChatGPT lessons</a>
   </div>
 </footer>
@@ -199,7 +373,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -214,7 +387,7 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -222,15 +395,190 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   </div>
 </div>
 
+<script id="lessonScript">
+(function () {
+  var TOTAL = 5;
+  var cur = 1;
+  var prog = document.getElementById('prog');
+  var progLabel = document.getElementById('progLabel');
+
+  function go(n) {
+    n = Math.max(1, Math.min(TOTAL, n));
+    document.querySelectorAll('.step').forEach(function (s) {
+      s.classList.toggle('active', +s.dataset.step === n);
+    });
+    cur = n;
+    prog.style.width = (n / TOTAL * 100) + '%';
+    progLabel.textContent = 'Step ' + n + ' / ' + TOTAL;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  document.querySelectorAll('[data-back]').forEach(function (b) {
+    b.addEventListener('click', function () { go(+b.dataset.back); });
+  });
+  function nextBtn(id, to) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('click', function () { go(to); });
+  }
+  nextBtn('next1', 2); nextBtn('next2', 3); nextBtn('next3', 4); nextBtn('next4', 5);
+
+  // ── STEP 1 predict ──
+  var p1 = document.querySelectorAll('[data-step="1"] .opt');
+  var answered1 = false;
+  p1.forEach(function (o) {
+    o.addEventListener('click', function () {
+      if (answered1) return;
+      answered1 = true;
+      var correct = o.dataset.correct === 'true';
+      p1.forEach(function (x) {
+        x.disabled = true;
+        if (x.dataset.correct === 'true') { x.classList.add('correct'); x.innerHTML += '<span class="tick">✓</span>'; }
+      });
+      if (!correct) { o.classList.add('wrong'); o.innerHTML += '<span class="tick">✕</span>'; }
+      var r = document.getElementById('r1');
+      r.classList.add('show'); if (!correct) r.classList.add('miss');
+      document.getElementById('next1').disabled = false;
+    });
+  });
+
+  // ── STEP 2 canvas editor sim ──
+  var vpill = document.getElementById('vpill');
+  var editCount = document.getElementById('editCount');
+  var editorDone = document.getElementById('editorDone');
+  var paras = document.querySelectorAll('.para');
+  var version = 1;
+  var refined = 0;
+  var selected = null;
+
+  function selectPara(i) {
+    paras.forEach(function (p) {
+      var bar = document.querySelector('.editbar[data-for="' + p.dataset.i + '"]');
+      if (p.classList.contains('done')) return;
+      if (+p.dataset.i === i) {
+        p.classList.add('sel');
+        if (bar) bar.classList.add('show');
+      } else {
+        p.classList.remove('sel');
+        if (bar) bar.classList.remove('show');
+      }
+    });
+    selected = i;
+  }
+  paras.forEach(function (p) {
+    p.addEventListener('click', function () {
+      if (p.classList.contains('done')) return;
+      selectPara(+p.dataset.i);
+    });
+  });
+  document.querySelectorAll('.apply-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var bar = btn.closest('.editbar');
+      var i = bar.dataset.for;
+      var p = document.querySelector('.para[data-i="' + i + '"]');
+      if (!p || p.classList.contains('done')) return;
+      p.innerHTML = '<span class="selhint">Edited</span>' + p.dataset.after;
+      p.classList.remove('sel');
+      p.classList.add('done');
+      bar.classList.remove('show');
+      version++;
+      vpill.textContent = 'v' + version;
+      vpill.classList.add('bump');
+      setTimeout(function () { vpill.classList.remove('bump'); }, 250);
+      refined++;
+      editCount.textContent = refined + ' of 3 refined';
+      if (refined === 3) {
+        editorDone.classList.add('show');
+        document.getElementById('next2').disabled = false;
+      }
+    });
+  });
+
+  // ── STEP 4 gym ──
+  var G = [
+    {
+      prm: 'A quick "what time does the standup start?" reply to a teammate.',
+      opts: ['Open it in Canvas to be safe', 'Just answer in chat', 'Force Canvas and save a version'],
+      correct: 1,
+      why: 'One-line answers don\'t need a workspace. Canvas here is pure friction — chat is faster.'
+    },
+    {
+      prm: 'A 3-page proposal you\'ll revise over several passes before it goes out.',
+      opts: ['Keep re-pasting it into chat each time', 'Do it in Canvas', 'Write it once and send without revising'],
+      correct: 1,
+      why: 'Multi-pass work is exactly Canvas\'s job — pin the doc, edit sections in place, and keep the version history.'
+    },
+    {
+      prm: 'You\'ve iterated 6 times in Canvas and now dislike it. Version 2 was clearly better.',
+      opts: ['Keep editing forward and hope it recovers', 'Roll back to version 2 and branch from there', 'Start a brand-new chat from scratch'],
+      correct: 1,
+      why: 'That\'s what version history is for — roll back to the good draft and take a different direction from there, no lost work.'
+    },
+    {
+      prm: 'One function in a long code file needs a cleaner rewrite; the rest is fine.',
+      opts: ['Ask ChatGPT to rewrite the whole file', 'Highlight just that function in Canvas and refactor it', 'Paste the function into a fresh chat'],
+      correct: 1,
+      why: 'Point-and-refine works on code too — highlight the one function and refactor it without disturbing everything around it.'
+    }
+  ];
+  var gi = 0, gScore = 0, gymAnswered = false;
+  var gymCount = document.getElementById('gymCount');
+  var gymPrompt = document.getElementById('gymPrompt');
+  var gymOpts = document.getElementById('gymOpts');
+  var gymFb = document.getElementById('gymFb');
+  var gymNext = document.getElementById('gymNext');
+  var gymNextBtn = document.getElementById('gymNextBtn');
+
+  function renderGym() {
+    var q = G[gi];
+    gymAnswered = false;
+    gymCount.textContent = 'Question ' + (gi + 1) + ' of ' + G.length;
+    gymPrompt.textContent = q.prm;
+    gymOpts.innerHTML = '';
+    gymFb.className = 'gym-fb'; gymFb.textContent = '';
+    gymNext.classList.remove('show');
+    q.opts.forEach(function (txt, i) {
+      var b = document.createElement('button');
+      b.className = 'opt'; b.textContent = txt;
+      b.addEventListener('click', function () {
+        if (gymAnswered) return;
+        gymAnswered = true;
+        var ok = i === q.correct;
+        if (ok) gScore++;
+        Array.prototype.forEach.call(gymOpts.children, function (c, ci) {
+          c.disabled = true;
+          if (ci === q.correct) { c.classList.add('correct'); c.innerHTML += '<span class="tick">✓</span>'; }
+        });
+        if (!ok) { b.classList.add('wrong'); b.innerHTML += '<span class="tick">✕</span>'; }
+        gymFb.classList.add('show', ok ? 'ok' : 'no');
+        gymFb.innerHTML = (ok ? '<strong>Right.</strong> ' : '<strong>Not quite.</strong> ') + q.why;
+        gymNext.classList.add('show');
+      });
+      gymOpts.appendChild(b);
+    });
+  }
+  gymNextBtn.addEventListener('click', function () {
+    gi++;
+    if (gi < G.length) {
+      renderGym();
+    } else {
+      document.getElementById('gym').innerHTML =
+        '<div class="gym-score">You called ' + gScore + ' / ' + G.length +
+        ' right.<br><span style="font-weight:400;font-size:14px;color:var(--text-dim)">' +
+        (gScore === G.length ? 'You\'ve got it: Canvas for iterative work, chat for quick hits, version history to recover.' : 'The rule of thumb: reach for Canvas when you\'ll iterate; stay in chat for one-offs.') +
+        '</span></div>';
+      document.getElementById('next4').disabled = false;
+    }
+  });
+  renderGym();
+})();
+</script>
 
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Canvas: the editing surface that changes how you write\nTRACK: Chatgpt Mastery\n\nLESSON CONTENT SUMMARY:\nCanvas: the editing surface that changes how you write \u2014 LearningGPT L LearningGPT \u2190 ChatGPT Mastery Lesson 03 \u00b7 ChatGPT Mastery Pro ~10 min read 3 workflows Canvas: the writing partner you didn't know you had. Canvas is ChatGPT's side-panel editing surface \u2014 text or code in a persistent workspace where you can iterate, refine, and ship. Most users either ignore it or invoke it for trivial outputs. This lesson covers when Canvas genuinely changes the work, when it gets in the way, and three iterative-writing patterns that turn ChatGPT into a real writing partner. The mental model Canvas is for work, not chat. When you're going to iterate on something across multiple turns \u2014 a draft, a script, a doc, a piece of code \u2014 Canvas lets you point at specific sections, edit inline, refine without re-pasting. It's the difference between chatting about a thing and building the thing. Workflow 01 Force Canvas for substantial drafts 1 When ChatGPT doesn't auto-invoke ChatGPT opens Canvas automatically for some outputs but misses others. Force it. The prompt that works Forcing prompt Open this in Canvas so I can iterate on it. / Put this draft in Canvas. / Generate this as a Canvas document I can edit. Best use cases Drafts longer than 200 words you'll refine Code you want to iterate on Anything you'd otherwise paste between ChatGPT and your editor Outlines you'll expand section by section Forcing Canvas on a one-paragraph response is overkill. Use for actual work, not casual chat. Time savings: Lost-context-from-scrolling: gone. Workflow 02 Point-and-refine: target specific sections 2 Highlight + ask In Canvas, you can highlight specific text and ask ChatGPT to edit just that section. Massive precision upgrade vs. asking for whole-document changes. The prompt that works Targeted edits (Highlight paragraph 3) Make this more direct. (Highlight a sentence) Cut this and replace with a punchier transition. (Highlight a code function) Refactor for readability, same behavior. Best use cases Editing long drafts where only sections need work Refining code without rewriting the whole file Polishing specific phrases or sentences Iterative improvement of any structured content Don't get into a loop of micro-edits. After 5-10 targeted refinements, step back and read the whole thing \u2014 sometimes the cumulative changes need a holistic pass. Time savings: Edit cycles measured in seconds, not minutes. Workflow 03 Version-aware iteration 3 Roll back, branch, iterate Canvas tracks versions. You can go back to earlier drafts, branch from there, compare versions. This is the workflow that makes long sessions productive. The prompt that works Version pattern Draft \u2192 iterate 5 times \u2192 don't love it \u2192 roll back to version 2 \u2192 try a different direction \u2192 keep the winner. Best use cases Long writing projects where you might want to branch Code where one approach didn't work and you want to try another Anywhere you'd otherwise lose work because you went down the wrong path Versions don'\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Canvas: the editing surface that changes how you write\nTRACK: ChatGPT Mastery (Lesson 3, Pro)\n\nLESSON CONTENT SUMMARY:\nCanvas is ChatGPT's side-panel editing surface — a persistent workspace for text or code where you iterate, refine, and ship. The mental model: Canvas is for work, not chat. Regular chat re-pastes the whole output on every revision; Canvas pins the document so you can point at a section, edit it in place, and keep a version history. It's the difference between chatting about a thing and building it. Don't force Canvas on a one-line answer — that's just friction.\n\nThree workflows: (1) Force Canvas when ChatGPT doesn't auto-open it — 'Open this in Canvas so I can iterate,' 'Put this draft in Canvas,' 'Generate this as a Canvas document I can edit.' Best for drafts over ~200 words, code you'll iterate on, outlines you'll expand. (2) Point-and-refine — highlight a specific paragraph or code function and ask for a targeted change ('make this more direct,' 'punchier transition,' 'refactor for readability, same behavior'); only that section updates, far more precise than whole-document rewrites. (3) Version-aware iteration — Canvas tracks versions, so you can roll back to an earlier draft, branch a new direction, and keep the winner.\n\nTwo cautions: don't spiral into micro-edits — after 5–10 targeted refinements, step back and read the whole thing for a holistic pass; and copy important drafts out to a separate doc as you go, because Canvas versions don't always persist forever.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more\n- Be practical — give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only — no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -238,27 +586,21 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -267,7 +609,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -276,7 +617,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

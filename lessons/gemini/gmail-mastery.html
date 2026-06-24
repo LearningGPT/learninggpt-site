@@ -9,15 +9,13 @@
 <meta name="theme-color" content="#4285f4" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/gemini/gmail-mastery" />
 <meta property="og:title" content="Gemini in Gmail: write 10 emails in the time of 1" />
 <meta property="og:description" content="Free LearningGPT lesson. The 5 Gemini Gmail workflows that turn your Workspace inbox into 20-minute Mondays." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
-
 <style>
 :root {
   --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a;
@@ -50,41 +48,102 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .lesson h1 .grad { background: linear-gradient(135deg, #4285f4 0%, #9b72cb 50%, #d96570 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
 .lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+
+/* ── STEPPER ── */
+.stepper { position: sticky; top: 57px; z-index: 50; background: rgba(10,10,26,0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); margin: 0 0 8px; padding: 12px 0; }
+.stepper-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; align-items: center; gap: 14px; }
+.prog-track { flex: 1; height: 6px; background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden; }
+.prog-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #4285f4, #9b72cb, #d96570); border-radius: 999px; transition: width .4s cubic-bezier(.4,0,.2,1); }
+.prog-label { font-size: 12px; color: var(--text-mute); font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+.step { display: none; animation: stepIn .45s cubic-bezier(.2,.7,.2,1); }
+.step.active { display: block; }
+@keyframes stepIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+.step-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin: 8px 0 6px; }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 6px 0 16px; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 26px 0 10px; }
 .lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
 .lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(66,133,244,0.10), rgba(217,101,112,0.06)); border: 1px solid rgba(66,133,244,0.25); border-radius: var(--radius-lg); position: relative; }
+.lesson ul { padding-left: 22px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; }
+
+.callout { margin: 26px 0; padding: 20px 24px; background: linear-gradient(135deg, rgba(66,133,244,0.10), rgba(217,101,112,0.06)); border: 1px solid rgba(66,133,244,0.25); border-radius: var(--radius-lg); position: relative; }
 .callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #4285f4, #d96570); border-radius: 2px 0 0 2px; }
 .callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
 .callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(66,133,244,0.15); border: 1px solid rgba(66,133,244,0.35); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(66,133,244,0.18), rgba(155,114,203,0.1)); border: 1px solid rgba(66,133,244,0.3); border-radius: var(--radius-lg); padding: 36px; }
+
+/* ── PREDICT ── */
+.predict { margin: 26px 0; padding: 22px 24px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+.predict .q { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
+.opt { display: block; width: 100%; text-align: left; padding: 14px 16px; margin: 8px 0; background: rgba(255,255,255,0.03); border: 1px solid var(--line-strong); border-radius: 12px; color: var(--text); font-size: 14.5px; font-family: inherit; cursor: pointer; transition: all .18s; }
+.opt:hover:not(:disabled) { border-color: var(--track); background: rgba(66,133,244,0.07); }
+.opt:disabled { cursor: default; }
+.opt.correct { border-color: var(--accent); background: rgba(68,224,164,0.12); }
+.opt.wrong { border-color: var(--danger); background: rgba(255,107,138,0.10); opacity: 0.85; }
+.opt .tick { float: right; font-weight: 700; }
+.reveal { margin-top: 14px; padding: 16px 18px; border-radius: 12px; background: rgba(68,224,164,0.07); border: 1px solid rgba(68,224,164,0.25); font-size: 14.5px; display: none; }
+.reveal.show { display: block; animation: stepIn .4s ease; }
+.reveal.miss { background: rgba(255,181,71,0.07); border-color: rgba(255,181,71,0.25); }
+
+/* ── SIDE-PANEL DEMO ── */
+.panel { margin: 24px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden; background: #0d0d20; }
+.panel-bar { display: flex; align-items: center; gap: 9px; padding: 13px 16px; border-bottom: 1px solid var(--line); background: linear-gradient(90deg, rgba(66,133,244,0.08), rgba(217,101,112,0.05)); }
+.panel-spark { width: 22px; height: 22px; border-radius: 6px; background: linear-gradient(135deg,#4285f4,#9b72cb,#d96570); display: grid; place-items: center; font-size: 12px; }
+.panel-bar .pt { font-size: 13px; font-weight: 600; color: var(--text-dim); }
+.panel-body { padding: 16px 18px; }
+.panel-prompt { font-size: 14px; color: var(--text); background: rgba(124,92,255,0.10); border: 1px solid rgba(124,92,255,0.25); border-radius: 12px 12px 12px 4px; padding: 10px 14px; display: inline-block; margin-bottom: 14px; }
+.askbtn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg,#4285f4,#9b72cb); color: #fff; border: none; border-radius: 10px; padding: 10px 18px; font-size: 13.5px; font-weight: 700; font-family: inherit; cursor: pointer; transition: transform .15s, opacity .15s; }
+.askbtn:hover:not(:disabled) { transform: translateY(-1px); }
+.askbtn:disabled { opacity: 0.5; cursor: default; }
+.ans { margin-top: 14px; display: flex; flex-direction: column; gap: 9px; }
+.aline { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--text); opacity: 0; transform: translateY(6px); animation: stepIn .35s ease forwards; }
+.src { flex-shrink: 0; font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 999px; white-space: nowrap; margin-top: 1px; }
+.src.cal { background: rgba(66,133,244,0.16); color: #9cc0fb; border: 1px solid rgba(66,133,244,0.4); }
+.src.mail { background: rgba(217,101,112,0.16); color: #f0a8b0; border: 1px solid rgba(217,101,112,0.4); }
+.src.docs { background: rgba(155,114,203,0.16); color: #c9aef0; border: 1px solid rgba(155,114,203,0.4); }
+.panel-done { margin-top: 14px; padding: 13px 16px; border-radius: 12px; background: rgba(66,133,244,0.1); border: 1px solid rgba(66,133,244,0.3); font-size: 14px; display: none; }
+.panel-done.show { display: block; animation: stepIn .4s ease; }
+
+/* ── SURFACE CARDS ── */
+.surf { margin: 18px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 600px){ .surf { grid-template-columns: 1fr; } }
+.sc { padding: 15px 16px; border-radius: var(--radius); background: linear-gradient(180deg, var(--surface), var(--bg-soft)); border: 1px solid var(--line); }
+.sc h3 { margin: 0 0 4px; font-size: 15px; }
+.sc p { font-size: 13px; margin: 0; color: var(--text-dim); }
+
+/* ── GYM ── */
+.gym { margin: 26px 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px; }
+.gym-count { font-size: 12px; color: var(--text-mute); font-weight: 600; margin-bottom: 12px; }
+.gym-prompt { font-size: 16.5px; font-weight: 600; margin-bottom: 16px; line-height: 1.5; }
+.gym-fb { margin-top: 14px; padding: 14px 16px; border-radius: 12px; font-size: 14px; display: none; }
+.gym-fb.show { display: block; animation: stepIn .35s ease; }
+.gym-fb.ok { background: rgba(68,224,164,0.1); border: 1px solid rgba(68,224,164,0.3); }
+.gym-fb.no { background: rgba(255,181,71,0.08); border: 1px solid rgba(255,181,71,0.28); }
+.gym-next { margin-top: 16px; text-align: right; display: none; }
+.gym-next.show { display: block; }
+.gym-score { text-align: center; padding: 20px; font-size: 17px; font-weight: 700; }
+.mini-btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #4285f4, #9b72cb); color: white; padding: 11px 20px; border-radius: 10px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; font-family: inherit; transition: transform .15s; }
+.mini-btn:hover { transform: translateY(-1px); }
+
+/* ── NAV / CHALLENGE / NEXT ── */
+.step-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 36px; gap: 12px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #4285f4, #9b72cb); color: white; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: inherit; box-shadow: 0 6px 24px rgba(66,133,244,0.28); transition: transform .15s, opacity .15s; }
+.btn:hover { transform: translateY(-1px); color: white; }
+.btn:disabled { opacity: 0.4; cursor: default; transform: none; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+
+.challenge { margin: 10px 0 30px; background: linear-gradient(135deg, rgba(66,133,244,0.16), rgba(155,114,203,0.1)); border: 1px solid rgba(66,133,244,0.3); border-radius: var(--radius-lg); padding: 32px; }
 .challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #4285f4, #9b72cb); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(66,133,244,0.35); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge a.btn { text-decoration: none; }
 .challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.challenge ol { padding-left: 22px; }
+.checklist { margin: 30px 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
 .checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
 .checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
 .checklist li:first-child { border-top: none; padding-top: 0; }
 .checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up { margin: 20px 0 0; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
 .next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
 .next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
 .next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
@@ -93,36 +152,12 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -151,14 +186,11 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
-
 <div class="bg-orb one"></div>
 <div class="bg-orb two"></div>
-
 <nav class="top">
   <div class="nav-inner">
     <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
@@ -166,151 +198,173 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   </div>
 </nav>
 
+<!-- ── STEPPER ── -->
+<div class="stepper">
+  <div class="stepper-inner">
+    <div class="prog-track"><div class="prog-fill" id="prog"></div></div>
+    <div class="prog-label" id="progLabel">Step 1 / 5</div>
+  </div>
+</div>
+
 <article class="lesson">
   <div class="container">
-
     <div class="lesson-meta">
       <span class="chip">Lesson 1 · Gemini Mastery</span>
       <span class="chip chip-free">Free</span>
-      <span>~12 min read</span>
+      <span>~12 min</span>
       <span class="dot"></span>
       <span>5 workflows</span>
       <span class="dot"></span>
       <span>Google Workspace required</span>
     </div>
-
     <h1>Gemini in Gmail: <span class="grad serif">your inbox, only faster.</span></h1>
+    <p class="deck">Gemini's killer advantage over every other AI is that it lives <em>inside</em> Google Workspace — your email, calendar, docs, and drive are already connected. No setup, no permissions dance. These five Gmail workflows cut inbox time in half, and the cross-app trick at the center is the thing nothing else can match for Workspace users.</p>
 
-    <p class="deck">Gemini's killer advantage over every other AI is that it lives inside Google Workspace — your email, calendar, docs, and drive are already connected. No setup, no permissions dance. This lesson covers 5 workflows that use Gemini specifically in Gmail to cut inbox time in half, plus the cross-app tricks that make Workspace users glad they aren't on Outlook.</p>
+    <!-- ════ STEP 1 ════ -->
+    <section class="step active" data-step="1">
+      <span class="step-eyebrow">The mental model</span>
+      <h2>Gemini already knows your inbox.</h2>
+      <p>ChatGPT needs a Custom GPT setup; Claude needs an integration step. Gemini is wired into your Workspace by default — the minute it's enabled it can read your email, calendar, contacts, and the rest of Workspace (Docs, Sheets, Drive). So the biggest wins aren't "write me an email." They're prompts that <em>bridge apps</em>.</p>
+      <p class="callout" style="display:block"><span class="lbl">Note</span> Most Gemini-in-Gmail features need a Workspace plan with Gemini enabled (Business Standard+ or a Gemini add-on). And what used to be "Duet AI" is now just Gemini — same product.</p>
 
-    <p>Two notes. First: most Gemini features in Gmail require a Google Workspace plan with Gemini enabled (Business Standard or above, or a Gemini add-on). Second: the Gemini brand has changed several times — what used to be called Duet AI is now Gemini. Same product.</p>
-
-    <h2><span class="num">The mental model</span></h2>
-    <h3>Gemini already knows your inbox. Lean into that.</h3>
-
-    <p>Unlike ChatGPT (which needs Custom GPT setup) or Claude (which needs an integration step), Gemini is wired into your Workspace by default. The minute you have Gemini enabled, it can read your emails, your calendar, your contacts — and most importantly, the rest of your Google Workspace (Docs, Sheets, Drive, Calendar).</p>
-
-    <div class="callout">
-      <span class="lbl">The Reframe</span>
-      <p><strong>Gemini in Gmail is a Workspace-aware AI, not just an email AI.</strong> The biggest gains come from asking Gemini to bridge between Gmail and the rest of Workspace — "draft a reply referencing the Q3 doc I shared with them last week" or "find the email where I committed to a deadline and check it against my calendar."</p>
-    </div>
-
-    <h2><span class="num">Workflow 01</span> "Help me write" — but with constraints</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">1</div><h3>The Help me write button, used properly</h3></div>
-      <p><strong>Where:</strong> Compose a new email or reply → click the pen-and-sparkle "Help me write" icon at the bottom of the compose window.</p>
-      <p>Most people click "Help me write," type 5 words, get back a generic draft, hate it. The fix is the same fix as every AI: specificity.</p>
-      <div class="prompt-example">
-        <span class="label">Generic (bad)</span>
-        Reply agreeing to the meeting.
+      <div class="predict">
+        <div class="q">Every AI can draft an email. What can Gemini-in-Workspace do that browser ChatGPT can't, with zero setup?</div>
+        <button class="opt" data-correct="false">Write a more grammatically correct email</button>
+        <button class="opt" data-correct="true">Pull from your Gmail, Calendar, and Docs together in a single prompt</button>
+        <button class="opt" data-correct="false">Send emails faster than you can click</button>
+        <div class="reveal" id="r1">
+          <strong>Right.</strong> Drafting is table stakes — every AI does it. Gemini's edge is <em>cross-Workspace context</em>: one prompt that reaches your inbox, your calendar, and your docs at once. You're about to watch exactly that.
+        </div>
       </div>
-      <div class="prompt-example">
-        <span class="label">Specific (good)</span>
-        Reply agreeing to Maya's proposal but suggest moving to Thursday at 2pm instead of Wednesday. Mention I want to bring our head of operations. Friendly, casual, under 60 words.
+      <div class="step-nav">
+        <span></span>
+        <button class="btn" id="next1" disabled>Continue →</button>
       </div>
-      <p>After Gemini drafts, use the tone refinements — "Formalize," "Elaborate," "Shorten" — to fine-tune. The Polish button is genuinely useful.</p>
-      <div class="savings"><strong>Time savings:</strong> 5 min → 30 sec per draft.</div>
-    </div>
+    </section>
 
-    <h2><span class="num">Workflow 02</span> Thread summaries on long emails</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">2</div><h3>Summarize before you read</h3></div>
-      <p><strong>Where:</strong> Open any long thread → look for the <strong>"Summarize this email"</strong> button at the top of the reading pane (only appears on threads with multiple replies).</p>
-      <p>Click it. Get a structured summary with decisions made, action items, and open questions. Especially useful for returning from PTO or catching up on a thread you've been cc'd on without engaging.</p>
-      <div class="gotcha">Gemini's summaries struggle on threads with lots of forwarded content (newsletters, automated emails, attachments-as-conversation). If the summary feels off, scan the thread instead — the AI did its best with junk input.</div>
-      <div class="savings"><strong>Time savings:</strong> 10 min reading → 1 min summary.</div>
-    </div>
+    <!-- ════ STEP 2 ════ -->
+    <section class="step" data-step="2">
+      <span class="step-eyebrow">Signature move · one prompt, four apps</span>
+      <h2>Watch it reach across Workspace.</h2>
+      <p>This is the Gemini side panel in Gmail. One short prompt — and notice where each line of the answer comes <em>from</em>. That provenance across apps is the whole point.</p>
 
-    <h2><span class="num">Workflow 03</span> Side-panel chat for cross-Workspace queries</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">3</div><h3>The "wait, you can DO that?" workflow</h3></div>
-      <p><strong>Where:</strong> Open the Gemini side panel in Gmail (sparkle icon, usually top right). This is the chat interface separate from "Help me write."</p>
-      <p>Inside the side panel, you can ask questions across your entire Workspace:</p>
-      <div class="prompt-example">
-        <span class="label">Cross-Workspace queries</span>
-        Summarize emails I received over the weekend, grouped by what needs my reply vs. FYI only.
-        ---
-        Find the email where I committed to a deadline with the Acme team, and tell me if my calendar reflects that deadline.
-        ---
-        I'm preparing for a meeting with Sarah at 2pm. Pull anything relevant from my recent emails and the doc she shared with me last week.
-        ---
-        Draft an email to the team summarizing the decisions from yesterday's all-hands meeting (the meeting notes are in my recent Docs).
+      <div class="panel">
+        <div class="panel-bar"><div class="panel-spark">✦</div><div class="pt">Gemini · side panel</div></div>
+        <div class="panel-body">
+          <div class="panel-prompt">"Prep me for my 2pm with Sarah."</div>
+          <div>
+            <button class="askbtn" id="askBtn">✦ Ask Gemini</button>
+          </div>
+          <div class="ans" id="ans"></div>
+          <div class="panel-done" id="panelDone">
+            <strong>Four apps, one prompt.</strong> Calendar gave the agenda, Gmail surfaced the open threads and your unkept promise, Docs pulled the live status. No other assistant has this context for free — it's the reason Workspace users shouldn't reach for a browser tab.
+          </div>
+        </div>
       </div>
-      <p>The cross-Workspace context is Gemini's superpower. Asking it about Gmail + Docs + Calendar in one prompt produces results nothing else can match for Workspace users.</p>
-      <div class="savings"><strong>Time savings:</strong> Replaces 15-30 min of manual cross-app searching with one prompt.</div>
-    </div>
-
-    <h2><span class="num">Workflow 04</span> The Monday morning Gmail briefing</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">4</div><h3>Start your week with a briefing, not an inbox</h3></div>
-      <p>Run this prompt in the Gemini side panel before you open Gmail Monday morning:</p>
-      <div class="prompt-example">
-        <span class="label">Monday-morning briefing</span>
-        Summarize unread emails from the last 72 hours in Gmail. Organize into: (1) needs my reply this week — show who and what they need, (2) FYI only — just headlines, (3) probably ignorable. For anything from my top 10 contacts, flag it.
+      <div class="step-nav">
+        <button class="btn ghost" data-back="1">← Back</button>
+        <button class="btn" id="next2" disabled>The four surfaces →</button>
       </div>
-      <p>Read the briefing. Now you know what to handle, what to skim, what to archive without opening. Total time: 90 seconds.</p>
-      <div class="savings"><strong>Time savings:</strong> 30 min of Monday-morning email triage → 90 seconds + targeted replies.</div>
-    </div>
+    </section>
 
-    <h2><span class="num">Workflow 05</span> Smart Reply, but actually smart</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">5</div><h3>The Smart Reply suggestions are now actually useful</h3></div>
-      <p>For years, Gmail's "Smart Reply" suggestions were three generic phrases ("Thanks!" / "Sounds good!" / "I'll take a look."). Powered by Gemini, the suggestions now consider full thread context — and they're often closer to what you'd actually write.</p>
-      <p>Use them as a starting point. Click the closest one, then edit. Faster than writing from scratch for routine replies.</p>
-      <div class="gotcha">If the Smart Reply suggestions feel off, they're often a signal that this isn't a simple-reply situation. When the AI can't predict your reply in three words, that's because the situation genuinely needs your real thought.</div>
-      <div class="savings"><strong>Time savings:</strong> Small per email but compounds across dozens of routine replies per week.</div>
-    </div>
-
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Final challenge: a Workspace-native workday</h2>
-      <ol>
-        <li>Run the Monday-morning briefing (Workflow 04) before opening Gmail</li>
-        <li>For each long thread, summarize first (Workflow 02), read after</li>
-        <li>Use Workflow 03 for at least one cross-Workspace query that day (e.g., "find the doc + the email about it")</li>
-        <li>Draft 3+ replies using Help me write with specific constraints (Workflow 01)</li>
-        <li>Compare your end-of-day inbox to a normal day. The reduction is usually obvious.</li>
-      </ol>
-      <div class="btn-row">
-        <a href="/lessons/gemini/" class="btn">Back to Gemini Mastery →</a>
-        <a href="/#pricing" class="btn ghost">See Pro membership →</a>
+    <!-- ════ STEP 3 ════ -->
+    <section class="step" data-step="3">
+      <span class="step-eyebrow">Where to click</span>
+      <h2>Four Gmail surfaces, four jobs.</h2>
+      <p>Gemini shows up in Gmail in four distinct places. Knowing which one to reach for is half the skill.</p>
+      <div class="surf">
+        <div class="sc"><h3>✍️ Help me write</h3><p>In the compose window. Drafts and rewrites — give it specifics (recipient, goal, length, tone), then use Formalize / Shorten / Elaborate.</p></div>
+        <div class="sc"><h3>📑 Summarize this email</h3><p>Top of a long thread. One click → decisions, action items, open questions. Great for catch-up after PTO.</p></div>
+        <div class="sc"><h3>✦ Side-panel chat</h3><p>The sparkle icon. The cross-Workspace brain — ask it anything that spans Gmail + Calendar + Docs + Drive.</p></div>
+        <div class="sc"><h3>⚡ Smart Reply</h3><p>Under a message. Gemini-powered now, so the one-tap suggestions actually fit the thread. A starting point, then edit.</p></div>
       </div>
-    </div>
+      <div class="callout">
+        <span class="lbl">The one habit</span>
+        <p>Whatever the surface, <strong>be specific</strong>. "Reply agreeing" gets a generic draft. "Agree to Maya's proposal but move it to Thursday 2pm; mention I'm bringing our ops lead; casual, under 60 words" gets something you can send.</p>
+      </div>
+      <div class="step-nav">
+        <button class="btn ghost" data-back="2">← Back</button>
+        <button class="btn" id="next3">Test it →</button>
+      </div>
+    </section>
 
-    <div class="checklist">
-      <h3>What you can do now</h3>
-      <ul>
-        <li>Use "Help me write" with specific, constrained prompts that produce sendable drafts</li>
-        <li>Summarize long threads in one click before reading</li>
-        <li>Run cross-Workspace queries that pull from Gmail + Docs + Calendar at once</li>
-        <li>Generate a Monday-morning email briefing in under 90 seconds</li>
-        <li>Use Smart Reply suggestions as a starting point, not a finished response</li>
-      </ul>
-    </div>
+    <!-- ════ STEP 4 ════ -->
+    <section class="step" data-step="4">
+      <span class="step-eyebrow">Your turn · which surface?</span>
+      <h2>Pick the right tool for the moment.</h2>
+      <p>Four situations. Match each to the Gmail surface that fits.</p>
 
-    <div class="next-up">
-      <span class="pro-tag">Pro</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in Gemini Mastery</div>
-      <h3>Lesson 2 · Gemini in Docs: from blank page to polished draft</h3>
-      <p>The "Help me write" workflows, refining drafts, custom tone, generating outlines, fact-checking against your other docs. Real document workflows, not toy examples. <a href="/#pricing">Become a Pro member →</a></p>
-    </div>
+      <div class="gym" id="gym">
+        <div class="gym-count" id="gymCount">Question 1 of 4</div>
+        <div class="gym-prompt" id="gymPrompt"></div>
+        <div id="gymOpts"></div>
+        <div class="gym-fb" id="gymFb"></div>
+        <div class="gym-next" id="gymNext"><button class="mini-btn" id="gymNextBtn">Next →</button></div>
+      </div>
+      <div class="step-nav">
+        <button class="btn ghost" data-back="3">← Back</button>
+        <button class="btn" id="next4" disabled>Finish →</button>
+      </div>
+    </section>
+
+    <!-- ════ STEP 5 ════ -->
+    <section class="step" data-step="5">
+      <span class="step-eyebrow">You've got it</span>
+      <h2>A Workspace-native workday.</h2>
+
+      <div class="challenge">
+        <h2 style="margin-top:0;">Run a Workspace-native day</h2>
+        <ol>
+          <li>Before opening Gmail Monday, ask the side panel for a briefing: unread from the last 72h, grouped into <em>needs my reply / FYI / ignorable</em>, flagging your top contacts.</li>
+          <li>On every long thread, Summarize first, read after.</li>
+          <li>Run one true cross-Workspace query (e.g., "find the doc + the email about it + check my calendar").</li>
+          <li>Draft 3+ replies with Help me write — specific constraints each time.</li>
+        </ol>
+        <p>Compare your end-of-day inbox to a normal day. The drop is usually obvious.</p>
+        <div class="btn-row">
+          <a href="/playground" class="btn">Try a prompt in the playground →</a>
+          <a href="/lessons/gemini/" class="btn ghost">Back to Gemini Mastery</a>
+        </div>
+      </div>
+
+      <div class="checklist">
+        <h3>What you can do now</h3>
+        <ul>
+          <li>Use "Help me write" with specific, constrained prompts that produce sendable drafts</li>
+          <li>Summarize long threads in one click before reading</li>
+          <li>Run cross-Workspace queries that pull Gmail + Docs + Calendar at once</li>
+          <li>Generate a Monday-morning briefing in under 90 seconds</li>
+          <li>Use Smart Reply as a starting point, not a finished response</li>
+        </ul>
+      </div>
+
+      <div class="next-up">
+        <span class="pro-tag">Pro</span>
+        <div class="lbl" style="margin-top:14px;">Up next in Gemini Mastery</div>
+        <h3>Lesson 2 · Gemini in Docs: from blank page to polished draft</h3>
+        <p>"Help me write" in Docs, refining drafts, custom tone, generating outlines, and fact-checking against your other docs — real document workflows, not toy examples. <a href="/lessons/gemini/docs-mastery">Start lesson 2 →</a></p>
+      </div>
+      <div class="step-nav">
+        <button class="btn ghost" data-back="4">← Back</button>
+        <a href="/lessons/gemini/docs-mastery" class="btn">Next lesson →</a>
+      </div>
+    </section>
 
   </div>
 </article>
 
 <footer>
   <div class="footer-inner">
-    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Google.</div>
+    <div>© 2026 LearningGPT · Independent. Not affiliated with Google.</div>
     <a href="/lessons/gemini/" style="color: var(--text-dim);">← All Gemini lessons</a>
   </div>
 </footer>
-
 
 <!-- ── AI COACH FAB ── -->
 <button class="coach-fab" id="coachFab" title="Ask the AI Coach">
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -325,7 +379,7 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -333,15 +387,157 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   </div>
 </div>
 
+<script id="lessonScript">
+(function () {
+  var TOTAL = 5;
+  var cur = 1;
+  var prog = document.getElementById('prog');
+  var progLabel = document.getElementById('progLabel');
+
+  function go(n) {
+    n = Math.max(1, Math.min(TOTAL, n));
+    document.querySelectorAll('.step').forEach(function (s) {
+      s.classList.toggle('active', +s.dataset.step === n);
+    });
+    cur = n;
+    prog.style.width = (n / TOTAL * 100) + '%';
+    progLabel.textContent = 'Step ' + n + ' / ' + TOTAL;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  document.querySelectorAll('[data-back]').forEach(function (b) {
+    b.addEventListener('click', function () { go(+b.dataset.back); });
+  });
+  function nextBtn(id, to) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('click', function () { go(to); });
+  }
+  nextBtn('next1', 2); nextBtn('next2', 3); nextBtn('next3', 4); nextBtn('next4', 5);
+
+  // ── STEP 1 predict ──
+  var p1 = document.querySelectorAll('[data-step="1"] .opt');
+  var answered1 = false;
+  p1.forEach(function (o) {
+    o.addEventListener('click', function () {
+      if (answered1) return;
+      answered1 = true;
+      var correct = o.dataset.correct === 'true';
+      p1.forEach(function (x) {
+        x.disabled = true;
+        if (x.dataset.correct === 'true') { x.classList.add('correct'); x.innerHTML += '<span class="tick">✓</span>'; }
+      });
+      if (!correct) { o.classList.add('wrong'); o.innerHTML += '<span class="tick">✕</span>'; }
+      var r = document.getElementById('r1');
+      r.classList.add('show'); if (!correct) r.classList.add('miss');
+      document.getElementById('next1').disabled = false;
+    });
+  });
+
+  // ── STEP 2 cross-Workspace demo ──
+  var LINES = [
+    { src: 'cal', tag: '📅 Calendar', t: 'Sarah moved the 2pm to review the Q3 roadmap (30 min).' },
+    { src: 'mail', tag: '📧 Gmail', t: 'She left two open questions in Thursday\'s thread: timeline and budget.' },
+    { src: 'docs', tag: '📄 Docs', t: 'Her shared "Q3 Roadmap v2" now flags the launch slipping to November.' },
+    { src: 'mail', tag: '📧 Gmail', t: 'Heads-up — you promised her the headcount numbers and haven\'t sent them.' }
+  ];
+  var askBtn = document.getElementById('askBtn');
+  var ansEl = document.getElementById('ans');
+  var panelDone = document.getElementById('panelDone');
+  var asked = false;
+  askBtn.addEventListener('click', function () {
+    if (asked) return;
+    asked = true;
+    askBtn.disabled = true;
+    askBtn.textContent = '✦ Thinking across your Workspace…';
+    var i = 0;
+    (function add() {
+      if (i >= LINES.length) {
+        askBtn.textContent = '✓ Answered from 3 apps';
+        panelDone.classList.add('show');
+        document.getElementById('next2').disabled = false;
+        return;
+      }
+      var L = LINES[i];
+      var row = document.createElement('div');
+      row.className = 'aline';
+      row.innerHTML = '<span class="src ' + L.src + '">' + L.tag + '</span><span>' + L.t + '</span>';
+      ansEl.appendChild(row);
+      row.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      i++;
+      setTimeout(add, 760);
+    })();
+  });
+
+  // ── STEP 4 gym ──
+  var G = [
+    { prm: 'You were cc\'d on a 30-message thread and need the decisions and action items.', opts: ['Summarize this email', 'Smart Reply', 'Help me write'], correct: 0,
+      why: 'One click at the top of the thread gives you decisions, action items, and open questions — no scrolling.' },
+    { prm: 'Compose a reply politely declining a vendor — warm, under 50 words.', opts: ['Smart Reply', 'Help me write', 'Side-panel chat'], correct: 1,
+      why: 'Help me write is the compose-window drafter. Give it the goal, tone, and length and refine from there.' },
+    { prm: '"Find the email where I set a deadline with Acme and check it against my calendar."', opts: ['Help me write', 'Smart Reply', 'Side-panel chat'], correct: 2,
+      why: 'That spans Gmail + Calendar — only the side-panel chat reaches across Workspace like that.' },
+    { prm: 'A one-line "Thanks, got it!" on a quick note from a teammate.', opts: ['Smart Reply', 'Side-panel chat', 'Summarize this email'], correct: 0,
+      why: 'Routine one-tap replies are exactly what Smart Reply is for — pick the closest and send.' }
+  ];
+  var gi = 0, gScore = 0, gymAnswered = false;
+  var gymCount = document.getElementById('gymCount');
+  var gymPrompt = document.getElementById('gymPrompt');
+  var gymOpts = document.getElementById('gymOpts');
+  var gymFb = document.getElementById('gymFb');
+  var gymNext = document.getElementById('gymNext');
+  var gymNextBtn = document.getElementById('gymNextBtn');
+
+  function renderGym() {
+    var q = G[gi];
+    gymAnswered = false;
+    gymCount.textContent = 'Question ' + (gi + 1) + ' of ' + G.length;
+    gymPrompt.textContent = q.prm;
+    gymOpts.innerHTML = '';
+    gymFb.className = 'gym-fb'; gymFb.textContent = '';
+    gymNext.classList.remove('show');
+    q.opts.forEach(function (txt, i) {
+      var b = document.createElement('button');
+      b.className = 'opt'; b.textContent = txt;
+      b.addEventListener('click', function () {
+        if (gymAnswered) return;
+        gymAnswered = true;
+        var ok = i === q.correct;
+        if (ok) gScore++;
+        Array.prototype.forEach.call(gymOpts.children, function (c, ci) {
+          c.disabled = true;
+          if (ci === q.correct) { c.classList.add('correct'); c.innerHTML += '<span class="tick">✓</span>'; }
+        });
+        if (!ok) { b.classList.add('wrong'); b.innerHTML += '<span class="tick">✕</span>'; }
+        gymFb.classList.add('show', ok ? 'ok' : 'no');
+        gymFb.innerHTML = (ok ? '<strong>Right.</strong> ' : '<strong>Not quite.</strong> ') + q.why;
+        gymNext.classList.add('show');
+      });
+      gymOpts.appendChild(b);
+    });
+  }
+  gymNextBtn.addEventListener('click', function () {
+    gi++;
+    if (gi < G.length) {
+      renderGym();
+    } else {
+      document.getElementById('gym').innerHTML =
+        '<div class="gym-score">You matched ' + gScore + ' / ' + G.length +
+        ' surfaces.<br><span style="font-weight:400;font-size:14px;color:var(--text-dim)">' +
+        (gScore === G.length ? 'You know exactly where to click — and when to reach for the cross-Workspace brain.' : 'Re-skim the four surfaces above; each situation maps to one.') +
+        '</span></div>';
+      document.getElementById('next4').disabled = false;
+    }
+  });
+  renderGym();
+})();
+</script>
 
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Gemini in Gmail: write 10 emails in the time of 1\nTRACK: Gemini Mastery\n\nLESSON CONTENT SUMMARY:\nGemini in Gmail: write 10 emails in the time of 1 \u2014 LearningGPT L LearningGPT \u2190 Gemini Mastery Lesson 1 \u00b7 Gemini Mastery Free ~12 min read 5 workflows Google Workspace required Gemini in Gmail: your inbox, only faster. Gemini's killer advantage over every other AI is that it lives inside Google Workspace \u2014 your email, calendar, docs, and drive are already connected. No setup, no permissions dance. This lesson covers 5 workflows that use Gemini specifically in Gmail to cut inbox time in half, plus the cross-app tricks that make Workspace users glad they aren't on Outlook. Two notes. First: most Gemini features in Gmail require a Google Workspace plan with Gemini enabled (Business Standard or above, or a Gemini add-on). Second: the Gemini brand has changed several times \u2014 what used to be called Duet AI is now Gemini. Same product. The mental model Gemini already knows your inbox. Lean into that. Unlike ChatGPT (which needs Custom GPT setup) or Claude (which needs an integration step), Gemini is wired into your Workspace by default. The minute you have Gemini enabled, it can read your emails, your calendar, your contacts \u2014 and most importantly, the rest of your Google Workspace (Docs, Sheets, Drive, Calendar). The Reframe Gemini in Gmail is a Workspace-aware AI, not just an email AI. The biggest gains come from asking Gemini to bridge between Gmail and the rest of Workspace \u2014 \"draft a reply referencing the Q3 doc I shared with them last week\" or \"find the email where I committed to a deadline and check it against my calendar.\" Workflow 01 \"Help me write\" \u2014 but with constraints 1 The Help me write button, used properly Where: Compose a new email or reply \u2192 click the pen-and-sparkle \"Help me write\" icon at the bottom of the compose window. Most people click \"Help me write,\" type 5 words, get back a generic draft, hate it. The fix is the same fix as every AI: specificity. Generic (bad) Reply agreeing to the meeting. Specific (good) Reply agreeing to Maya's proposal but suggest moving to Thursday at 2pm instead of Wednesday. Mention I want to bring our head of operations. Friendly, casual, under 60 words. After Gemini drafts, use the tone refinements \u2014 \"Formalize,\" \"Elaborate,\" \"Shorten\" \u2014 to fine-tune. The Polish button is genuinely useful. Time savings: 5 min \u2192 30 sec per draft. Workflow 02 Thread summaries on long emails 2 Summarize before you read Where: Open any long thread \u2192 look for the \"Summarize this email\" button at the top of the reading pane (only appears on threads with multiple replies). Click it. Get a structured summary with decisions made, action items, and open questions. Especially useful for returning from PTO or catching up on a thread you've been cc'd on without engaging. Gemini's summaries struggle on threads with lots of forwarded content (newsletters, automated emails, attachments-as-conversation). If the summary feels off, scan the thread instead \u2014 the AI did its best with junk input. Time savings: 10 min reading \u2192 1 min summar\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Gemini in Gmail: write 10 emails in the time of 1\nTRACK: Gemini Mastery (Lesson 1, Free)\n\nLESSON CONTENT SUMMARY:\nGemini's killer advantage over other AIs is that it lives inside Google Workspace — email, calendar, docs, and drive are already connected, with no setup or permissions step. Most Gemini-in-Gmail features need a Workspace plan with Gemini enabled (Business Standard+ or a Gemini add-on). What used to be 'Duet AI' is now just Gemini.\n\nMental model: Gemini in Gmail is a WORKSPACE-AWARE AI, not just an email AI. The biggest gains come from prompts that bridge apps — e.g., 'draft a reply referencing the Q3 doc I shared last week' or 'find the email where I committed to a deadline and check it against my calendar.' Drafting alone is table stakes; cross-Workspace context (Gmail + Calendar + Docs + Drive in one prompt) is the edge nothing else matches for free.\n\nThe four Gmail surfaces: (1) Help me write — pen-and-sparkle icon in the compose window; drafts/rewrites; be specific (recipient, goal, length, tone) then use Formalize/Shorten/Elaborate. (2) Summarize this email — top of a long multi-reply thread; one click → decisions, action items, open questions; great for PTO catch-up; struggles on threads full of forwarded/automated junk. (3) Side-panel chat — the sparkle icon, separate from Help me write; the cross-Workspace brain for queries spanning Gmail+Calendar+Docs+Drive. (4) Smart Reply — Gemini-powered now, so one-tap suggestions actually fit the thread; use as a starting point, then edit; if they feel off, the situation probably needs real thought.\n\nThe Monday-morning briefing: in the side panel before opening Gmail, ask it to summarize unread from the last 72h grouped into needs-my-reply / FYI / probably-ignorable, flagging top contacts. The throughline: be specific, and lean on cross-Workspace prompts.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more\n- Be practical — give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only — no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -349,27 +545,21 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -378,7 +568,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -387,7 +576,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

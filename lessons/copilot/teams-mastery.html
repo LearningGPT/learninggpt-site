@@ -4,16 +4,16 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Copilot in Teams: meeting summaries that aren't garbage — LearningGPT</title>
-<meta name="description" content="Default Copilot meeting summaries are mediocre — a bulleted list of who said what, no structure, no actions. This lesson covers the four workflows tha" />
+<meta name="description" content="Default Copilot meeting recaps are mediocre. Four workflows that turn meeting Copilot into a real productivity layer: structured recaps, catch-up, pre-meeting briefings, and real action items." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#2c7be5" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/copilot/teams-mastery" />
 <meta property="og:title" content="Copilot in Teams: meeting summaries that aren't garbage" />
-<meta property="og:description" content="Default Copilot meeting summaries are mediocre — a bulleted list of who said what, no structure, no actions. This lesson covers the four workflows tha" />
+<meta property="og:description" content="Four Copilot-in-Teams workflows: structured recaps, missed-meeting catch-up, pre-meeting briefings, and real action items." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -21,6 +21,7 @@
 * { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
 body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+button { font-family: inherit; cursor: pointer; }
 .bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
 .bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #2c7be5; }
 .bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
@@ -30,89 +31,90 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
 .logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
 .nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
-.lesson { padding: 50px 0 100px; }
-.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
-.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(44,123,229,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(44,123,229,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
-.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
-.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
-.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #2c7be5 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
-.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
-.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #2c7be5, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(44,123,229,0.1); border: 1px solid rgba(44,123,229,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #2c7be5, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
-.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
-.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
-.checklist li:first-child { border-top: none; padding-top: 0; }
-.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
-.checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
-.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
-.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
-.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
 footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
+/* ===== Interactive lesson component (shared kit) ===== */
+.sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
+.serif { font-family:'Instrument Serif', serif; font-style:italic; font-weight:400; }
+.ilesson { max-width:720px; margin:0 auto; padding:44px 0 90px; }
+.l-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; font-size:12.5px; }
+.l-tag { font-weight:600; color:var(--track); }
+.l-count { color:var(--text-mute); }
+.prog-track { height:6px; background:var(--surface); border-radius:99px; overflow:hidden; margin-bottom:30px; }
+#prog { height:100%; width:14.2%; background:linear-gradient(90deg,var(--track),var(--brand)); border-radius:99px; transition:width .45s ease; }
+.step h1 { font-size:32px; line-height:1.12; letter-spacing:-.02em; margin:0 0 14px; font-weight:800; color:var(--text); }
+.step h3 { font-size:21px; line-height:1.2; margin:0 0 10px; font-weight:700; color:var(--text); }
+.step p { color:var(--text-dim); margin:0 0 16px; font-size:16px; line-height:1.65; }
+.step p strong { color:var(--text); font-weight:600; }
+.step em { color:var(--text); font-style:italic; }
+.wf-head { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+.wf-badge { margin-left:auto; font-size:10px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; padding:3px 9px; border-radius:999px; }
+.wf-badge.basic { background:rgba(68,224,164,.15); color:var(--accent); border:1px solid rgba(68,224,164,.35); }
+.wf-badge.inter { background:rgba(91,141,239,.15); color:var(--brand-2); border:1px solid rgba(91,141,239,.35); }
+.wf-badge.adv { background:rgba(255,181,71,.15); color:var(--warn); border:1px solid rgba(255,181,71,.35); }
+.btn { font-family:inherit; font-weight:600; font-size:14.5px; border-radius:10px; padding:11px 18px; cursor:pointer; border:1px solid transparent; display:inline-flex; align-items:center; gap:8px; transition:.15s; color:#fff; background:linear-gradient(135deg,#7c5cff,#5b8def); box-shadow:0 8px 22px -10px rgba(124,92,255,.8); }
+.btn:hover { transform:translateY(-1px); color:#fff; }
+.btn-ghost { background:transparent; border-color:var(--line-strong); color:var(--text); box-shadow:none; }
+.btn-ghost:hover { background:rgba(255,255,255,.05); color:var(--text); }
+.btn-block { width:100%; justify-content:center; }
+.where { font-size:12.5px; color:var(--text-mute); margin-bottom:14px; line-height:1.5; }
+.where b { color:var(--text-dim); font-weight:600; }
+.promptbox { background:rgba(0,0,0,0.3); border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin-bottom:12px; font-family:'SFMono-Regular',Consolas,monospace; font-size:12.5px; color:var(--text); line-height:1.6; white-space:pre-wrap; }
+.promptbox .label { display:block; font-family:'Inter',sans-serif; font-size:10.5px; color:var(--text-mute); margin-bottom:6px; text-transform:uppercase; letter-spacing:.8px; font-weight:600; }
+.promptbox.good { border-color:rgba(68,224,164,.3); }
+.recapcard { border:1px solid var(--line); border-radius:var(--radius); padding:12px 14px; margin-bottom:12px; font-size:13px; line-height:1.55; }
+.recapcard .who { font-size:11px; text-transform:uppercase; letter-spacing:.05em; font-weight:700; margin-bottom:6px; display:block; }
+.recapcard.bad { background:rgba(255,107,138,.05); border-color:rgba(255,107,138,.25); color:var(--text-mute); }
+.recapcard.bad .who { color:var(--danger); }
+.recapcard.good { background:rgba(68,224,164,.05); border-color:rgba(68,224,164,.28); color:var(--text-dim); }
+.recapcard.good .who { color:var(--accent); }
+.gotcha { background:rgba(255,181,71,.06); border:1px solid rgba(255,181,71,.22); border-radius:var(--radius); padding:12px 14px; margin-bottom:14px; font-size:13.5px; color:var(--text-dim); line-height:1.55; }
+.gotcha b { color:var(--warn); }
+.savings { display:inline-flex; align-items:center; gap:7px; background:rgba(68,224,164,.1); border:1px solid rgba(68,224,164,.3); padding:6px 12px; border-radius:8px; font-size:13px; color:var(--text); margin-bottom:6px; }
+.savings b { color:var(--accent); font-weight:700; }
+.chips { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; }
+.chip { font-size:13px; padding:8px 13px; font-family:inherit; color:var(--text-dim); background:var(--surface); border:1px solid var(--line-strong); border-radius:99px; cursor:pointer; transition:.15s; }
+.chip:hover { color:var(--text); border-color:var(--brand); }
+.chip.on { background:rgba(44,123,229,.18); color:#bcd6f7; border-color:var(--track); }
+.buildbox { background:rgba(0,0,0,0.3); border:1px solid var(--line-strong); border-radius:var(--radius); padding:14px 16px; font-size:13px; line-height:1.6; min-height:58px; color:var(--text); font-family:'SFMono-Regular',Consolas,monospace; }
+.buildbox .lbl { font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-mute); display:block; margin-bottom:7px; font-family:'Inter',sans-serif; font-weight:600; }
+.meter { margin-top:14px; font-size:13px; color:var(--text-dim); display:flex; align-items:center; gap:10px; }
+.meter-bar { flex:1; height:5px; background:var(--surface); border-radius:99px; overflow:hidden; }
+.meter-fill { height:100%; width:0; background:var(--accent); border-radius:99px; transition:width .35s ease; }
+#score-n { font-weight:600; }
+.eyebrow-do2 { font-size:12px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--track); margin:6px 0 8px; }
+.opts { display:flex; flex-direction:column; gap:10px; margin-bottom:6px; }
+.opt { text-align:left; padding:13px 15px; line-height:1.5; font-size:14.5px; font-family:inherit; color:var(--text); background:var(--surface); border:1px solid var(--line-strong); border-radius:var(--radius); cursor:pointer; transition:.15s; }
+.opt:hover:not(:disabled) { border-color:var(--brand); background:#20204a; }
+.opt:disabled { cursor:default; }
+.opt.on { background:rgba(44,123,229,.18); border-color:var(--track); }
+.fb { display:none; margin-top:14px; padding:12px 14px; border-radius:var(--radius); font-size:14px; line-height:1.6; }
+.fb.good { background:rgba(68,224,164,.1); border:1px solid rgba(68,224,164,.35); color:#a7efd2; }
+.fb.bad { background:rgba(124,92,255,.1); border:1px solid rgba(124,92,255,.3); color:#cfc4ff; }
+.cta-row { display:flex; gap:12px; flex-wrap:wrap; margin-top:22px; }
+.done-top { text-align:center; padding:6px 0 8px; }
+.done-check { width:52px; height:52px; border-radius:50%; background:rgba(44,123,229,.16); color:var(--track); display:flex; align-items:center; justify-content:center; margin:0 auto 14px; font-size:26px; border:1px solid rgba(44,123,229,.4); }
+.recap { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:16px 18px; margin-bottom:14px; }
+.recap .lbl { font-size:12px; color:var(--text-mute); }
+.recap p { margin:4px 0 0; color:var(--text); font-weight:500; font-size:15px; }
+.challenge-box { background:linear-gradient(135deg, rgba(44,123,229,.14), rgba(124,92,255,.1)); border:1px solid rgba(44,123,229,.3); border-radius:var(--radius); padding:16px 18px; margin-bottom:14px; }
+.challenge-box h4 { margin:0 0 8px; font-size:15px; color:var(--text); }
+.challenge-box ol { margin:0; padding-left:18px; }
+.challenge-box li { font-size:13.5px; color:var(--text-dim); margin-bottom:6px; line-height:1.5; }
+.upnext { background:var(--bg-soft); border:1px solid var(--line); border-radius:var(--radius); padding:14px 16px; margin-bottom:14px; }
+.upnext .lbl { font-size:12px; color:var(--text-mute); }
+.upnext p { margin:3px 0 0; font-weight:600; color:var(--text); }
+@media(max-width:560px){ .step h1{ font-size:26px; } }
+
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -141,7 +143,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -153,76 +154,147 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <a href="/lessons/copilot/" class="nav-back">← Copilot Mastery</a>
   </div>
 </nav>
-<article class="lesson">
-  <div class="container">
-    <div class="lesson-meta">
-      <span class="chip">Lesson 04 · Copilot Mastery</span>
-      <span class="chip chip-pro">Pro</span>
-      <span>~11 min read</span>
-      <span class="dot"></span>
-      <span>4 workflows</span>
+
+<div class="container">
+  <div class="sr-only">An interactive hands-on Copilot lesson on Teams meetings: it contrasts generic and structured recaps, has the learner build a structured recap prompt, make honesty and privacy judgment calls, and select the action items that are too vague to act on.</div>
+
+  <main class="ilesson">
+    <div class="l-top">
+      <span class="l-tag">Copilot Mastery · Lesson 04 · Pro</span>
+      <span class="l-count" id="step-count">Step 1 of 7 · ~12 min</span>
     </div>
-    <h1>Copilot in Teams: <span class="grad serif">meeting summaries that aren't garbage.</span></h1>
-    <p class="deck">Default Copilot meeting summaries are mediocre — a bulleted list of who said what, no structure, no actions. This lesson covers the four workflows that turn meeting Copilot into a real productivity layer: recap with structure, catch-up on missed meetings, pre-meeting briefings using past conversations, and action-item extraction that actually captures commitments.</p>
-    <h2><span class="num">The mental model</span></h2>
-    <h3>Generic recaps are useless. Structured recaps change how meetings work.</h3>
-    <p>The trick is in what you ask after the meeting ends. Don't accept Copilot's default summary. Prompt it specifically for the structure you need: decisions made, action items by owner, open questions, follow-up commitments.</p><h2><span class="num">Workflow 01</span> Post-meeting recap with the right structure</h2><div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">1</div><h3>Ask for the recap you actually want</h3></div>
-      <p>After the meeting, open the Copilot chat for the meeting. Don't accept the default summary; prompt for structure.</p>
-      <h4>The prompt that works</h4>
-      <div class="prompt-example"><span class="label">Recap prompt</span>Summarize this meeting. Use these sections: (1) Decisions made, (2) Action items with owner and due date, (3) Open questions, (4) Follow-up commitments by person. Skip pleasantries and small talk.</div>
-      <h4>Best use cases</h4>
-      <ul><li>Standups and team meetings</li><li>Customer calls</li><li>Project sync meetings</li><li>Any meeting where actions need to flow to someone afterward</li></ul>
-      <div class="gotcha">Copilot's accuracy degrades on poor-audio meetings, accents it doesn't handle well, and heavy crosstalk. Spot-check action items before forwarding them.</div>
-      <div class="savings"><strong>Time savings:</strong> 15 min of writing notes → 90 sec summary, accurate enough to forward.</div>
-    </div><h2><span class="num">Workflow 02</span> Catch up on a meeting you missed</h2><div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">2</div><h3>Get briefed in 2 minutes</h3></div>
-      <p>Missed a meeting? Open it in Teams, open the Copilot recap, and prompt as if you'd attended.</p>
-      <h4>The prompt that works</h4>
-      <div class="prompt-example"><span class="label">Catch-up prompt</span>I missed this meeting. Brief me as if I'd been there. Tell me: what was decided, what was disagreed about, what's expected of me, and what I should know before my next meeting with this group.</div>
-      <h4>Best use cases</h4>
-      <ul><li>Meetings you had to skip but needed context on</li><li>Recurring meetings you don't always attend</li><li>Cross-team meetings where you're a stakeholder, not core attendee</li></ul>
-      <div class="gotcha">Don't paste the summary into a reply email as if you were there. Be honest you reviewed the Copilot recap — it's a tool, not a substitute for actually attending.</div>
-      <div class="savings"><strong>Time savings:</strong> 30 min of watching a recording → 2 min of reading.</div>
-    </div><h2><span class="num">Workflow 03</span> Pre-meeting briefing across past conversations</h2><div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">3</div><h3>Walk into the next meeting with full context</h3></div>
-      <p>Before a meeting with a specific person or team, ask Copilot to brief you on past Teams conversations with them.</p>
-      <h4>The prompt that works</h4>
-      <div class="prompt-example"><span class="label">Pre-meeting prompt</span>I have a meeting with [name/team] in 30 minutes. Search Teams chats and past meetings with them in the last 30 days. Tell me: what's been discussed, what was committed, and what's likely to come up.</div>
-      <h4>Best use cases</h4>
-      <ul><li>1:1s with reports or managers</li><li>Customer-facing meetings</li><li>Cross-functional syncs</li><li>Anywhere context from past conversations would help</li></ul>
-      <div class="gotcha">This is one of Copilot's more privacy-sensitive features. Make sure you're searching <em>your own</em> conversations, not other people's. Microsoft 365 Copilot respects permissions, but always know what you're querying.</div>
-      <div class="savings"><strong>Time savings:</strong> Awkward "remind me what we discussed last time" moments: gone.</div>
-    </div><h2><span class="num">Workflow 04</span> Extract real action items, not vague todos</h2><div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">4</div><h3>Force commitments into a structured list</h3></div>
-      <p>Generic Copilot action items are usually too vague to act on ("Sarah to follow up on the proposal"). Prompt for specificity.</p>
-      <h4>The prompt that works</h4>
-      <div class="prompt-example"><span class="label">Action-item prompt</span>List action items from this meeting. For each: who owns it, the specific deliverable, and the deadline mentioned. If no deadline was mentioned, flag the item as "undated." Skip aspirational or vague items.</div>
-      <h4>Best use cases</h4>
-      <ul><li>Internal team meetings with multiple workstreams</li><li>Customer meetings where commitments matter</li><li>Project kickoffs and reviews</li><li>Any meeting where people leave with different memories of what was agreed</li></ul>
-      <div class="gotcha">If Copilot pulls action items that nobody actually committed to, that's hallucination. Verify with the meeting recording before assigning anything to anyone.</div>
-      <div class="savings"><strong>Time savings:</strong> End-of-day action-item collation: 30 min → 3 min.</div>
-    </div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Final challenge: a Teams-driven workweek</h2>
-      <p>For one work week, treat every Teams meeting as having a Copilot follow-up step. After each meeting:</p><ol><li>Run the structured recap prompt (Workflow 1)</li><li>Forward the recap to participants — replacing your usual "here's what I think we agreed" email</li><li>Use the action-item prompt (Workflow 4) to extract real commitments</li><li>For meetings you missed, run the catch-up prompt (Workflow 2)</li><li>Before next week's 1:1s, run the pre-meeting prompt (Workflow 3)</li></ol><p>Track how much meeting-related admin time decreased.</p>
-      <div class="btn-row">
-        <a href="/lessons/copilot/" class="btn">Back to Copilot Mastery →</a>
-        <a href="/#pricing" class="btn ghost">See pricing →</a>
+    <div class="prog-track"><div id="prog"></div></div>
+
+    <!-- STEP 1 · intro -->
+    <section id="step-1" class="step">
+      <h1>Meeting summaries that <span class="serif">aren't garbage.</span></h1>
+      <p>Default Copilot recaps are mediocre — a bulleted list of who said what, no structure, no actions. Four workflows turn meeting Copilot into a real productivity layer: <strong>structured recaps, missed-meeting catch-up, pre-meeting briefings, and action items that actually capture commitments.</strong></p>
+      <p>You'll build a recap prompt, make a couple of judgment calls, and learn to spot the action items that secretly do nothing. About 12 minutes.</p>
+      <button class="btn" onclick="go(2)">Start the lesson →</button>
+    </section>
+
+    <!-- STEP 2 · reframe -->
+    <section id="step-2" class="step" style="display:none">
+      <h3>Generic recaps get archived. Structured ones move work.</h3>
+      <p>The whole game is what you ask <em>after</em> the meeting. Same meeting, two recaps:</p>
+      <div class="recapcard bad"><span class="who">Default summary</span>Sarah talked about the proposal. Marcus raised pricing. The team discussed onboarding. General agreement to keep going.</div>
+      <div class="recapcard good"><span class="who">Structured recap</span>Decisions: pricing locked at $12k. Actions: Marcus → revised sheet to client by Thu; Priya → book venue by Fri. Open: who owns onboarding? Follow-ups: Sarah to confirm the timeline.</div>
+      <div class="eyebrow-do2">Your call</div>
+      <p style="margin-bottom:12px">Which recap actually moves work forward?</p>
+      <div class="opts">
+        <button class="opt" data-c="0" onclick="pick(this,2)">The default — a record of who said what</button>
+        <button class="opt" data-c="1" onclick="pick(this,2)">The structured one — decisions, owner-tagged actions, open questions, follow-ups</button>
+        <button class="opt" data-c="0" onclick="pick(this,2)">Whichever is shorter</button>
       </div>
-    </div>
-    <div class="checklist">
-      <h3>What you can do now</h3>
-      <ul><li>Get structured meeting recaps instead of generic bullet lists</li><li>Catch up on missed meetings in 2 minutes instead of 30</li><li>Walk into any 1:1 with full historical context from past chats</li><li>Extract real, owner-and-deadline-attached action items</li><li>Know when to trust Copilot's recap vs. when to verify against the recording</li></ul>
-    </div>
-    <div class="next-up">
-      <span class="pro-tag">Pro</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in Copilot Mastery</div>
-      <h3>Lesson 5 · Copilot Pages: the collaborative workspace nobody knows about</h3>
-      <p>The Microsoft 365 surface that ties everything together — and why most Copilot users haven't touched it yet. <a href="/#pricing">See pricing →</a></p>
-    </div>
-  </div>
-</article>
+      <div class="fb" id="fb-2"></div>
+      <button class="btn" id="next-2" style="display:none;margin-top:16px" onclick="go(3)">Workflow 01 · The recap →</button>
+    </section>
+
+    <!-- STEP 3 · WF1 recap build-it -->
+    <section id="step-3" class="step" style="display:none">
+      <div class="wf-head"><h3 style="margin:0">01 · Ask for the recap you actually want</h3><span class="wf-badge basic">Basic</span></div>
+      <div class="where"><b>Where:</b> After the meeting, open its Copilot chat. Don't accept the default — prompt for structure. Build it:</div>
+      <div class="chips">
+        <button class="chip" data-k="decisions" onclick="chip(this)">+ Decisions made</button>
+        <button class="chip" data-k="actions" onclick="chip(this)">+ Action items (owner + due date)</button>
+        <button class="chip" data-k="questions" onclick="chip(this)">+ Open questions</button>
+        <button class="chip" data-k="followups" onclick="chip(this)">+ Follow-ups by person</button>
+      </div>
+      <div class="buildbox"><span class="lbl">Your prompt</span><span id="prompt-text">Summarize this meeting.</span></div>
+      <div class="meter"><span>Usefulness:</span><div class="meter-bar"><div class="meter-fill" id="meter-fill"></div></div><span id="score-n">default summary</span></div>
+      <div id="reveal-3" style="display:none;margin-top:16px">
+        <div class="gotcha"><b>Gotcha:</b> Accuracy drops on poor audio, strong accents, and heavy crosstalk. Spot-check action items before you forward them.</div>
+        <div class="savings"><b>~15 min of notes → ~90 sec</b>, accurate enough to forward</div>
+      </div>
+      <br>
+      <button class="btn" id="next-3" style="display:none;margin-top:8px" onclick="go(4)">Workflow 02 · Catch up →</button>
+    </section>
+
+    <!-- STEP 4 · WF2 catch-up (honesty check) -->
+    <section id="step-4" class="step" style="display:none">
+      <div class="wf-head"><h3 style="margin:0">02 · Catch up on a meeting you missed</h3><span class="wf-badge inter">Intermediate</span></div>
+      <div class="where"><b>Where:</b> Open the meeting in Teams → its Copilot recap → prompt as if you'd attended.</div>
+      <div class="promptbox good"><span class="label">Catch-up prompt</span>I missed this meeting — brief me as if I'd been there: what was decided, what was disagreed about, what's expected of me, and what to know before my next meeting with this group.</div>
+      <div class="eyebrow-do2">Judgment call</div>
+      <p style="margin-bottom:12px">You caught up via the recap. Emailing the group afterward, you should:</p>
+      <div class="opts">
+        <button class="opt" data-c="0" onclick="pick(this,4)">Reply as if you were in the meeting</button>
+        <button class="opt" data-c="1" onclick="pick(this,4)">Be upfront that you reviewed the Copilot recap</button>
+        <button class="opt" data-c="0" onclick="pick(this,4)">Avoid mentioning the meeting at all</button>
+      </div>
+      <div class="fb" id="fb-4"></div>
+      <button class="btn" id="next-4" style="display:none;margin-top:16px" onclick="go(5)">Workflow 03 · Pre-meeting →</button>
+    </section>
+
+    <!-- STEP 5 · WF3 pre-meeting (privacy check) -->
+    <section id="step-5" class="step" style="display:none">
+      <div class="wf-head"><h3 style="margin:0">03 · Walk in with full context</h3><span class="wf-badge adv">Advanced</span></div>
+      <div class="where"><b>Where:</b> Before a meeting, ask Copilot to brief you from your past Teams conversations with that person/team.</div>
+      <div class="promptbox good"><span class="label">Pre-meeting prompt</span>I have a meeting with [name/team] in 30 minutes. Search my Teams chats and past meetings with them over the last 30 days. Tell me: what's been discussed, what was committed, and what's likely to come up.</div>
+      <div class="eyebrow-do2">Keep this straight</div>
+      <p style="margin-bottom:12px">This searches past conversations. What's actually happening?</p>
+      <div class="opts">
+        <button class="opt" data-c="0" onclick="pick(this,5)">You can pull context from anyone's chats</button>
+        <button class="opt" data-c="1" onclick="pick(this,5)">You're searching your own conversations; Copilot honors M365 permissions</button>
+        <button class="opt" data-c="0" onclick="pick(this,5)">It searches the public web for the person</button>
+      </div>
+      <div class="fb" id="fb-5"></div>
+      <button class="btn" id="next-5" style="display:none;margin-top:16px" onclick="go(6)">Workflow 04 · Action items →</button>
+    </section>
+
+    <!-- STEP 6 · WF4 action items (multi-select) -->
+    <section id="step-6" class="step" style="display:none">
+      <div class="wf-head"><h3 style="margin:0">04 · Real action items, not vague todos</h3><span class="wf-badge adv">Advanced</span></div>
+      <p>Copilot's default action items are often too vague to act on. A real one names <strong>who, the deliverable, and when.</strong> Here's what it pulled from a meeting:</p>
+      <div class="eyebrow-do2">Tap every item too vague to act on, then check</div>
+      <div class="opts" id="ms-opts">
+        <button class="opt" data-vague="1" onclick="msToggle(this)">Sarah to follow up on the proposal.</button>
+        <button class="opt" data-vague="0" onclick="msToggle(this)">Marcus: send the revised pricing sheet to the client by Thursday.</button>
+        <button class="opt" data-vague="1" onclick="msToggle(this)">We should think about improving onboarding.</button>
+        <button class="opt" data-vague="0" onclick="msToggle(this)">Priya: book the offsite venue and confirm by next Friday.</button>
+        <button class="opt" data-vague="1" onclick="msToggle(this)">Circle back on the budget thing.</button>
+      </div>
+      <div class="fb" id="ms-fb"></div>
+      <button class="btn" id="ms-check" style="margin-top:14px" onclick="msCheck()">Check my answer</button>
+      <button class="btn" id="next-6" style="display:none;margin-top:14px" onclick="go(7)">See what you learned →</button>
+    </section>
+
+    <!-- STEP 7 · complete -->
+    <section id="step-7" class="step" style="display:none">
+      <div class="done-top">
+        <div class="done-check">✓</div>
+        <h3>Lesson complete</h3>
+      </div>
+      <p style="text-align:center;max-width:480px;margin:0 auto 18px">Four workflows turn every meeting into something that actually produces output instead of a calendar entry you half-remember.</p>
+      <div class="challenge-box">
+        <h4>A Teams-driven workweek</h4>
+        <ol>
+          <li>After each meeting, run the structured recap prompt.</li>
+          <li>Forward it — replacing your usual "here's what I think we agreed" email.</li>
+          <li>Extract real, owner-and-deadline action items.</li>
+          <li>For meetings you skip, run the catch-up prompt.</li>
+          <li>Before next week's 1:1s, run the pre-meeting briefing.</li>
+        </ol>
+      </div>
+      <div class="recap">
+        <span class="lbl">What you can do now</span>
+        <p>Get structured recaps, catch up on a missed meeting in two minutes, walk into a 1:1 with full history, and extract action items that have an owner, a deliverable, and a deadline.</p>
+      </div>
+      <div class="upnext">
+        <span class="lbl">Up next in Copilot Mastery</span>
+        <p>Lesson 05 · Copilot Pages — the collaborative workspace nobody knows about</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-block" href="/lessons/copilot/pages-mastery">Continue to Lesson 05 · Copilot Pages →</a>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-ghost" href="/playground" target="_blank" rel="noopener">Open the Playground</a>
+        <a class="btn btn-ghost" href="/lessons/copilot/">Back to Copilot Mastery</a>
+      </div>
+    </section>
+  </main>
+</div>
+
 <footer>
   <div class="footer-inner">
     <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Microsoft.</div>
@@ -235,7 +307,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -247,10 +318,10 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <button class="coach-close" id="coachClose">✕</button>
   </div>
   <div class="coach-messages" id="coachMessages">
-    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about Copilot in Teams — structured recaps, catching up on a missed meeting, pre-meeting briefings, or pulling real action items. What's on your mind?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -258,15 +329,105 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   </div>
 </div>
 
+<!-- ── Interactive lesson logic ── -->
+<script>
+  var TOTAL = 7;
+  function go(n){
+    document.querySelectorAll('.step').forEach(function(s){ s.style.display='none'; });
+    document.getElementById('step-'+n).style.display='block';
+    document.getElementById('prog').style.width = Math.round(n/TOTAL*100)+'%';
+    document.getElementById('step-count').textContent = 'Step '+n+' of '+TOTAL+' · ~12 min';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  var pickMsg = {
+    2:{good:"Right — structure is the whole game. Decisions and owner-tagged actions are what people act on; a who-said-what list just gets archived.",
+       bad:"A generic record gets archived and ignored. The structured recap — decisions, owner-tagged actions, open questions, follow-ups — is what moves work."},
+    4:{good:"Right — say you reviewed the Copilot recap. It's a tool, not a stand-in for attending; pretending erodes trust fast.",
+       bad:"Don't pose as if you were there. Be upfront you reviewed the recap — honesty keeps the trust intact."},
+    5:{good:"Right — you're querying your own conversations, and Copilot honors your M365 permissions. Always know what you're searching.",
+       bad:"It's not anyone's chats or the web — it's your own conversations, within your M365 permissions. Know what you're querying."}
+  };
+  function pick(btn, step){
+    var correct = btn.dataset.c === '1';
+    document.getElementById('step-'+step).querySelectorAll('.opt').forEach(function(b){ b.disabled=true; b.style.opacity='0.5'; });
+    btn.style.opacity='1';
+    var fb = document.getElementById('fb-'+step);
+    btn.style.borderColor = correct ? 'var(--accent)' : 'var(--danger)';
+    fb.className = 'fb ' + (correct ? 'good' : 'bad');
+    fb.textContent = pickMsg[step][correct ? 'good' : 'bad'];
+    fb.style.display='block';
+    var rev = document.getElementById('reveal-'+step);
+    if(rev){ rev.style.display='block'; }
+    document.getElementById('next-'+step).style.display='inline-flex';
+  }
+  // Workflow 1 — build the structured recap prompt
+  var parts = { decisions:false, actions:false, questions:false, followups:false };
+  var frag = { decisions:'decisions made', actions:'action items with owner and due date', questions:'open questions', followups:'follow-up commitments by person' };
+  var labels = ['default summary','better','structured','strong','exactly what flows to owners'];
+  function chip(btn){
+    var k = btn.dataset.k; parts[k] = !parts[k]; btn.classList.toggle('on');
+    var add = [];
+    ['decisions','actions','questions','followups'].forEach(function(key){ if(parts[key]) add.push(frag[key]); });
+    var txt = add.length ? 'Summarize this meeting. Include: ' + add.join(', ') + '. Skip the small talk.' : 'Summarize this meeting.';
+    document.getElementById('prompt-text').textContent = txt;
+    var n = Object.values(parts).filter(Boolean).length;
+    document.getElementById('score-n').textContent = labels[n];
+    document.getElementById('meter-fill').style.width = Math.round(n/4*100)+'%';
+    var sn = document.getElementById('score-n');
+    sn.style.color = n>=4 ? 'var(--accent)' : n>=2 ? 'var(--brand-2)' : 'var(--text-dim)';
+    var ready = n>=3;
+    document.getElementById('next-3').style.display = ready ? 'inline-flex' : 'none';
+    document.getElementById('reveal-3').style.display = ready ? 'block' : 'none';
+  }
+  // Workflow 4 — multi-select the vague action items
+  var msDone = false;
+  function msToggle(btn){ if(msDone) return; btn.classList.toggle('on'); }
+  function msCheck(){
+    if(msDone) return; msDone = true;
+    var btns = document.getElementById('ms-opts').querySelectorAll('.opt');
+    var allCorrect = true;
+    btns.forEach(function(b){
+      var vague = b.dataset.vague === '1';
+      var sel = b.classList.contains('on');
+      b.disabled = true;
+      if(vague && sel){ b.style.borderColor = 'var(--accent)'; }
+      else if(vague && !sel){ b.style.borderColor = 'var(--warn)'; allCorrect = false; }
+      else if(!vague && sel){ b.style.borderColor = 'var(--danger)'; b.classList.remove('on'); allCorrect = false; }
+      else { b.style.opacity = '0.5'; }
+    });
+    var fb = document.getElementById('ms-fb');
+    fb.className = 'fb ' + (allCorrect ? 'good' : 'bad');
+    fb.textContent = (allCorrect ? '✓ Nailed it. ' : 'Close — check the highlights. ') + 'A real action item names WHO, the WHAT (a deliverable), and WHEN. "Follow up on the proposal," "think about onboarding," and "circle back" name none — so nothing happens. Prompt Copilot to flag undated/owner-less items and skip the vague ones.';
+    fb.style.display = 'block';
+    document.getElementById('ms-check').style.display = 'none';
+    document.getElementById('next-6').style.display = 'inline-flex';
+  }
+</script>
 
+<!-- ── AI Coach logic ── -->
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Copilot in Teams: meeting summaries that aren't garbage\nTRACK: Copilot Mastery\n\nLESSON CONTENT SUMMARY:\nCopilot in Teams: meeting summaries that aren't garbage \u2014 LearningGPT L LearningGPT \u2190 Copilot Mastery Lesson 04 \u00b7 Copilot Mastery Pro ~11 min read 4 workflows Copilot in Teams: meeting summaries that aren't garbage. Default Copilot meeting summaries are mediocre \u2014 a bulleted list of who said what, no structure, no actions. This lesson covers the four workflows that turn meeting Copilot into a real productivity layer: recap with structure, catch-up on missed meetings, pre-meeting briefings using past conversations, and action-item extraction that actually captures commitments. The mental model Generic recaps are useless. Structured recaps change how meetings work. The trick is in what you ask after the meeting ends. Don't accept Copilot's default summary. Prompt it specifically for the structure you need: decisions made, action items by owner, open questions, follow-up commitments. Workflow 01 Post-meeting recap with the right structure 1 Ask for the recap you actually want After the meeting, open the Copilot chat for the meeting. Don't accept the default summary; prompt for structure. The prompt that works Recap prompt Summarize this meeting. Use these sections: (1) Decisions made, (2) Action items with owner and due date, (3) Open questions, (4) Follow-up commitments by person. Skip pleasantries and small talk. Best use cases Standups and team meetings Customer calls Project sync meetings Any meeting where actions need to flow to someone afterward Copilot's accuracy degrades on poor-audio meetings, accents it doesn't handle well, and heavy crosstalk. Spot-check action items before forwarding them. Time savings: 15 min of writing notes \u2192 90 sec summary, accurate enough to forward. Workflow 02 Catch up on a meeting you missed 2 Get briefed in 2 minutes Missed a meeting? Open it in Teams, open the Copilot recap, and prompt as if you'd attended. The prompt that works Catch-up prompt I missed this meeting. Brief me as if I'd been there. Tell me: what was decided, what was disagreed about, what's expected of me, and what I should know before my next meeting with this group. Best use cases Meetings you had to skip but needed context on Recurring meetings you don't always attend Cross-team meetings where you're a stakeholder, not core attendee Don't paste the summary into a reply email as if you were there. Be honest you reviewed the Copilot recap \u2014 it's a tool, not a substitute for actually attending. Time savings: 30 min of watching a recording \u2192 2 min of reading. Workflow 03 Pre-meeting briefing across past conversations 3 Walk into the next meeting with full context Before a meeting with a specific person or team, ask Copilot to brief you on past Teams conversations with them. The prompt that works Pre-meeting prompt I have a meeting with [name/team] in 30 minutes. Search Teams chats and past meetings with them in the last 30 days. Tell me: what's been discussed, what was committed, and what's likely to come up. Best use cases 1:1s with reports or m\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = `You are an AI learning coach embedded in a lesson on LearningGPT.ai.
+LESSON TITLE: Copilot in Teams — meeting summaries that aren't garbage
+TRACK: Copilot Mastery (Pro)
+LESSON CONTENT SUMMARY:
+Default Copilot meeting recaps are mediocre (a who-said-what bullet list). The skill is what you prompt AFTER the meeting. Four workflows:
+1. Structured recap — open the meeting's Copilot chat and prompt for structure: (1) decisions made, (2) action items with owner and due date, (3) open questions, (4) follow-up commitments by person; skip the small talk. Gotcha: accuracy drops on poor audio, strong accents, and heavy crosstalk — spot-check action items before forwarding. ~15 min of notes → ~90 sec.
+2. Catch up on a missed meeting — open it in Teams, open the Copilot recap, prompt "brief me as if I'd been there: what was decided, what was disagreed, what's expected of me, what to know before next time." ~30 min recording → ~2 min. Gotcha: don't reply as if you attended — be honest you reviewed the Copilot recap; it's a tool, not a substitute for attending.
+3. Pre-meeting briefing — ask Copilot to search your past Teams chats and meetings with a person/team over the last 30 days and brief you on what's been discussed, committed, and likely to come up. Gotcha (privacy): you're searching YOUR OWN conversations; Microsoft 365 Copilot respects permissions — always know what you're querying.
+4. Real action items — default ones are too vague ("Sarah to follow up on the proposal"). Prompt for who owns it, the specific deliverable, and the deadline; flag undated items; skip aspirational/vague ones. A real action item names WHO, WHAT, and WHEN. Gotcha: if Copilot pulls items nobody committed to, that's hallucination — verify against the recording before assigning.
+YOUR ROLE:
+- Answer questions specifically about this lesson content
+- Be concise, 2-4 sentences per answer unless the question genuinely needs more
+- Be practical, give real work examples when helpful
+- If asked about something not in this lesson, briefly answer and point to where they can learn more
+- Never make up features that don't exist
+- Plain conversational text only, no markdown symbols like ** or ##
+- Do not start responses with "Great question!" or similar filler phrases`;
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -274,27 +435,21 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
   if (!fab) return; // safety check
-
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -303,7 +458,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -312,7 +466,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

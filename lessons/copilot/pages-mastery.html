@@ -4,16 +4,16 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Copilot Pages: the collaborative workspace nobody knows about — LearningGPT</title>
-<meta name="description" content="Copilot Pages is the Microsoft 365 surface most people haven't touched. It's the place where Copilot output becomes a collaborative document — a hybri" />
+<meta name="description" content="Copilot Pages is the Microsoft 365 surface most people haven't touched — where Copilot output becomes a persistent, collaborative, AI-aware document. Three workflows, and when to use it." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#2c7be5" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/copilot/pages-mastery" />
 <meta property="og:title" content="Copilot Pages: the collaborative workspace nobody knows about" />
-<meta property="og:description" content="Copilot Pages is the Microsoft 365 surface most people haven't touched. It's the place where Copilot output becomes a collaborative document — a hybri" />
+<meta property="og:description" content="Where Copilot output becomes a persistent, collaborative, AI-aware document — and when to use a Page vs chat vs Word." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -21,6 +21,7 @@
 * { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
 body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+button { font-family: inherit; cursor: pointer; }
 .bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
 .bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #2c7be5; }
 .bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
@@ -30,89 +31,90 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
 .logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
 .nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
-.lesson { padding: 50px 0 100px; }
-.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
-.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(44,123,229,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(44,123,229,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
-.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
-.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
-.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #2c7be5 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
-.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
-.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #2c7be5, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(44,123,229,0.1); border: 1px solid rgba(44,123,229,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #2c7be5, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
-.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
-.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
-.checklist li:first-child { border-top: none; padding-top: 0; }
-.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
-.checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
-.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
-.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
-.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
 footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
+/* ===== Interactive lesson component (shared kit) ===== */
+.sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
+.serif { font-family:'Instrument Serif', serif; font-style:italic; font-weight:400; }
+.ilesson { max-width:720px; margin:0 auto; padding:44px 0 90px; }
+.l-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; font-size:12.5px; }
+.l-tag { font-weight:600; color:var(--track); }
+.l-count { color:var(--text-mute); }
+.prog-track { height:6px; background:var(--surface); border-radius:99px; overflow:hidden; margin-bottom:30px; }
+#prog { height:100%; width:14.2%; background:linear-gradient(90deg,var(--track),var(--brand)); border-radius:99px; transition:width .45s ease; }
+.step h1 { font-size:32px; line-height:1.12; letter-spacing:-.02em; margin:0 0 14px; font-weight:800; color:var(--text); }
+.step h3 { font-size:21px; line-height:1.2; margin:0 0 10px; font-weight:700; color:var(--text); }
+.step p { color:var(--text-dim); margin:0 0 16px; font-size:16px; line-height:1.65; }
+.step p strong { color:var(--text); font-weight:600; }
+.step em { color:var(--text); font-style:italic; }
+.wf-head { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+.wf-badge { margin-left:auto; font-size:10px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; padding:3px 9px; border-radius:999px; }
+.wf-badge.basic { background:rgba(68,224,164,.15); color:var(--accent); border:1px solid rgba(68,224,164,.35); }
+.wf-badge.inter { background:rgba(91,141,239,.15); color:var(--brand-2); border:1px solid rgba(91,141,239,.35); }
+.wf-badge.adv { background:rgba(255,181,71,.15); color:var(--warn); border:1px solid rgba(255,181,71,.35); }
+.btn { font-family:inherit; font-weight:600; font-size:14.5px; border-radius:10px; padding:11px 18px; cursor:pointer; border:1px solid transparent; display:inline-flex; align-items:center; gap:8px; transition:.15s; color:#fff; background:linear-gradient(135deg,#7c5cff,#5b8def); box-shadow:0 8px 22px -10px rgba(124,92,255,.8); }
+.btn:hover { transform:translateY(-1px); color:#fff; }
+.btn-ghost { background:transparent; border-color:var(--line-strong); color:var(--text); box-shadow:none; }
+.btn-ghost:hover { background:rgba(255,255,255,.05); color:var(--text); }
+.btn-block { width:100%; justify-content:center; }
+.where { font-size:12.5px; color:var(--text-mute); margin-bottom:14px; line-height:1.5; }
+.where b { color:var(--text-dim); font-weight:600; }
+.callout { background:rgba(44,123,229,.1); border:1px solid rgba(44,123,229,.28); border-radius:var(--radius); padding:14px 16px; margin-bottom:18px; font-size:14.5px; color:var(--text-dim); line-height:1.65; }
+.callout b { color:var(--text); }
+.cmp { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
+@media(max-width:560px){ .cmp{ grid-template-columns:1fr; } }
+.cmp .card { border:1px solid var(--line); border-radius:var(--radius); padding:13px 15px; }
+.cmp .tag { font-size:11px; text-transform:uppercase; letter-spacing:.05em; font-weight:700; margin-bottom:6px; display:inline-block; }
+.cmp .ephem { background:rgba(255,107,138,.05); border-color:rgba(255,107,138,.25); }
+.cmp .ephem .tag { color:var(--danger); }
+.cmp .persist { background:rgba(68,224,164,.05); border-color:rgba(68,224,164,.28); }
+.cmp .persist .tag { color:var(--accent); }
+.cmp .d { font-size:13px; color:var(--text-dim); line-height:1.5; }
+.gotcha { background:rgba(255,181,71,.06); border:1px solid rgba(255,181,71,.22); border-radius:var(--radius); padding:12px 14px; margin-bottom:14px; font-size:13.5px; color:var(--text-dim); line-height:1.55; }
+.gotcha b { color:var(--warn); }
+.savings { display:inline-flex; align-items:center; gap:7px; background:rgba(68,224,164,.1); border:1px solid rgba(68,224,164,.3); padding:6px 12px; border-radius:8px; font-size:13px; color:var(--text); margin-bottom:6px; }
+.savings b { color:var(--accent); font-weight:700; }
+.usecases { list-style:none; padding:0; margin:0 0 12px; }
+.usecases li { padding:7px 0 7px 22px; position:relative; font-size:13.5px; color:var(--text-dim); border-top:1px solid var(--line); }
+.usecases li:first-child { border-top:none; }
+.usecases li::before { content:"→"; position:absolute; left:0; top:7px; color:var(--track); font-weight:700; }
+.eyebrow-do2 { font-size:12px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--track); margin:6px 0 8px; }
+.opts { display:flex; flex-direction:column; gap:10px; margin-bottom:6px; }
+.opt { text-align:left; padding:13px 15px; line-height:1.5; font-size:14.5px; font-family:inherit; color:var(--text); background:var(--surface); border:1px solid var(--line-strong); border-radius:var(--radius); cursor:pointer; transition:.15s; }
+.opt:hover:not(:disabled) { border-color:var(--brand); background:#20204a; }
+.opt:disabled { cursor:default; }
+.fb { display:none; margin-top:14px; padding:12px 14px; border-radius:var(--radius); font-size:14px; line-height:1.6; }
+.fb.good { background:rgba(68,224,164,.1); border:1px solid rgba(68,224,164,.35); color:#a7efd2; }
+.fb.bad { background:rgba(124,92,255,.1); border:1px solid rgba(124,92,255,.3); color:#cfc4ff; }
+.gymbar { display:flex; justify-content:space-between; font-size:12.5px; font-weight:600; color:var(--text-mute); margin-bottom:8px; }
+#m-score { color:var(--accent); }
+.gym-prog { height:5px; background:var(--surface); border-radius:99px; overflow:hidden; margin-bottom:18px; }
+#m-fill { height:100%; width:0; background:linear-gradient(90deg,var(--track),var(--brand)); border-radius:99px; transition:width .35s ease; }
+.scenario { background:var(--bg-soft); border:1px solid var(--line); border-left:3px solid var(--track); border-radius:0 var(--radius) var(--radius) 0; padding:15px 16px; margin-bottom:16px; font-size:16px; color:var(--text); line-height:1.5; min-height:48px; }
+.cta-row { display:flex; gap:12px; flex-wrap:wrap; margin-top:22px; }
+.done-top { text-align:center; padding:6px 0 8px; }
+.done-check { width:52px; height:52px; border-radius:50%; background:rgba(44,123,229,.16); color:var(--track); display:flex; align-items:center; justify-content:center; margin:0 auto 14px; font-size:26px; border:1px solid rgba(44,123,229,.4); }
+.recap { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:16px 18px; margin-bottom:14px; }
+.recap .lbl { font-size:12px; color:var(--text-mute); }
+.recap p { margin:4px 0 0; color:var(--text); font-weight:500; font-size:15px; }
+.challenge-box { background:linear-gradient(135deg, rgba(44,123,229,.14), rgba(124,92,255,.1)); border:1px solid rgba(44,123,229,.3); border-radius:var(--radius); padding:16px 18px; margin-bottom:14px; }
+.challenge-box h4 { margin:0 0 8px; font-size:15px; color:var(--text); }
+.challenge-box ol { margin:0; padding-left:18px; }
+.challenge-box li { font-size:13.5px; color:var(--text-dim); margin-bottom:6px; line-height:1.5; }
+.upnext { background:var(--bg-soft); border:1px solid var(--line); border-radius:var(--radius); padding:14px 16px; margin-bottom:14px; }
+.upnext .lbl { font-size:12px; color:var(--text-mute); }
+.upnext p { margin:3px 0 0; font-weight:600; color:var(--text); }
+@media(max-width:560px){ .step h1{ font-size:26px; } }
+
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -141,7 +143,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -153,67 +154,136 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <a href="/lessons/copilot/" class="nav-back">← Copilot Mastery</a>
   </div>
 </nav>
-<article class="lesson">
-  <div class="container">
-    <div class="lesson-meta">
-      <span class="chip">Lesson 05 · Copilot Mastery</span>
-      <span class="chip chip-pro">Pro</span>
-      <span>~8 min read</span>
-      <span class="dot"></span>
-      <span>3 workflows</span>
+
+<div class="container">
+  <div class="sr-only">An interactive hands-on Copilot lesson on Copilot Pages: it contrasts ephemeral chat with persistent Pages, walks the capture, co-edit, and living-brief workflows, and ends with a 'which surface — chat, Page, or Word' matching round.</div>
+
+  <main class="ilesson">
+    <div class="l-top">
+      <span class="l-tag">Copilot Mastery · Lesson 05 · Pro</span>
+      <span class="l-count" id="step-count">Step 1 of 7 · ~9 min</span>
     </div>
-    <h1>Copilot Pages: <span class="grad serif">the workspace nobody knows about.</span></h1>
-    <p class="deck">Copilot Pages is the Microsoft 365 surface most people haven't touched. It's the place where Copilot output becomes a collaborative document — a hybrid between a chat thread, a doc, and a workspace. Once you understand it, it changes how you handle multi-step work that crosses people and threads.</p>
-    <h2><span class="num">The mental model</span></h2>
-    <h3>Pages turns Copilot conversations into shared workspaces.</h3>
-    <p>Chat with Copilot is ephemeral — when the conversation closes, the work is gone unless you copied it out. Pages persists it as a collaborative document anyone you share with can extend, edit, or continue the Copilot conversation inside.</p><h2><span class="num">Workflow 01</span> Capture Copilot work into a persistent Page</h2><div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">1</div><h3>Stop losing Copilot output</h3></div>
-      <p>Anytime you have a Copilot conversation worth keeping, click "Edit in Pages." The conversation becomes a document with rich formatting and the option to continue.</p>
-      <h4>The prompt that works</h4>
-      <div class="prompt-example"><span class="label">When to use this</span>Multi-step plans, brainstorm sessions worth saving, drafts that need review from teammates, anything where you'd lose context closing the chat tab.</div>
-      <h4>Best use cases</h4>
-      <ul><li>Project planning sessions with Copilot</li><li>Research summaries you want to keep editing</li><li>Drafts that need collaborative input</li><li>Anything you'd otherwise paste into a new Word doc</li></ul>
-      <div class="gotcha">Pages are stored in your OneDrive — they count against your storage quota. Not unlimited, but generous.</div>
-      <div class="savings"><strong>Time savings:</strong> Re-doing lost Copilot work: never again.</div>
-    </div><h2><span class="num">Workflow 02</span> Co-edit with teammates inside a Page</h2><div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">2</div><h3>Share, comment, continue together</h3></div>
-      <p>Share a Page with a colleague. They can add to it, comment, ask Copilot follow-up questions inside the same Page. The AI sees the full thread; everyone stays in sync.</p>
-      <h4>The prompt that works</h4>
-      <div class="prompt-example"><span class="label">Common pattern</span>Use a Page as a "working doc" for any project where multiple people would otherwise be in conflicting threads of Copilot, each with their own context. Everyone working in the same Page = shared AI context.</div>
-      <h4>Best use cases</h4>
-      <ul><li>Cross-functional projects with multiple stakeholders</li><li>Sales pursuit pages (customer details, proposal drafts, internal notes)</li><li>Account planning with your team</li><li>Onboarding documents that evolve with input from many</li></ul>
-      <div class="gotcha">Permissions follow standard OneDrive sharing — same controls you'd use for any doc. Verify the share scope before adding sensitive context.</div>
-      <div class="savings"><strong>Time savings:</strong> Async collaboration that used to fragment across DMs and emails: now in one place.</div>
-    </div><h2><span class="num">Workflow 03</span> Use Pages as living, AI-aware briefs</h2><div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">3</div><h3>The brief that updates itself</h3></div>
-      <p>Build a Page that's a brief on a topic. Include source data, key questions, current status. Anyone (or you) can ask Copilot inside the Page "what's changed?" or "summarize where we are" and Copilot uses the full Page as context.</p>
-      <h4>The prompt that works</h4>
-      <div class="prompt-example"><span class="label">Use case example</span>A Page that's an account brief for a customer — past meetings, current deal stage, decision-makers, next steps. Re-open it monthly, ask Copilot for an update, get fresh recommendations based on the full history.</div>
-      <h4>Best use cases</h4>
-      <ul><li>Customer account briefs</li><li>Project status pages</li><li>Personal weekly review pages</li><li>Living strategy docs that update over time</li></ul>
-      <div class="gotcha">Pages can get unwieldy if they grow too long. Best practice: keep a Page focused on one topic; create new Pages for sub-topics that take on their own life.</div>
-      <div class="savings"><strong>Time savings:</strong> Context-switching tax on recurring work: dropped to near zero.</div>
-    </div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Final challenge: build one Page that pays off</h2>
-      <p>Pick one recurring topic that drags on you — a customer account, a long-running project, a personal goal you track. Build a Copilot Page for it:</p><ol><li>Open Copilot, prompt for the initial structure (e.g., "Set up a brief on the Acme account: history, current status, open items")</li><li>Click "Edit in Pages"</li><li>Add details that only you know</li><li>Share with a teammate if relevant</li><li>Re-open it once a week and ask Copilot "summarize what's changed" + "what should I do next"</li></ol><p>The Page becomes a permanent thinking partner on that topic.</p>
-      <div class="btn-row">
-        <a href="/lessons/copilot/" class="btn">Back to Copilot Mastery →</a>
-        <a href="/#pricing" class="btn ghost">See pricing →</a>
+    <div class="prog-track"><div id="prog"></div></div>
+
+    <!-- STEP 1 · intro -->
+    <section id="step-1" class="step">
+      <h1>The Copilot surface <span class="serif">nobody uses.</span></h1>
+      <p>Copilot Pages is the Microsoft 365 surface most people haven't touched — the place where Copilot output becomes a <strong>persistent, collaborative, AI-aware document</strong>. A hybrid of a chat thread, a doc, and a workspace. Once it clicks, it changes how you handle work that spans people and threads.</p>
+      <p>Three short workflows, then you'll make the call on when a Page beats a chat or a Word doc. About 9 minutes.</p>
+      <button class="btn" onclick="go(2)">Start the lesson →</button>
+    </section>
+
+    <!-- STEP 2 · mental model -->
+    <section id="step-2" class="step" style="display:none">
+      <h3>Pages turn conversations into workspaces</h3>
+      <p>The core difference, side by side:</p>
+      <div class="cmp">
+        <div class="card ephem"><span class="tag">Copilot chat</span><div class="d">Ephemeral. Close the tab and the work is gone unless you copied it out. Just you.</div></div>
+        <div class="card persist"><span class="tag">Copilot Page</span><div class="d">Persistent. A shared document anyone you invite can edit — and Copilot keeps the full context inside it.</div></div>
       </div>
-    </div>
-    <div class="checklist">
-      <h3>What you can do now</h3>
-      <ul><li>Capture any Copilot conversation into a persistent, editable Page</li><li>Co-edit with teammates while keeping Copilot in the same context</li><li>Build account briefs and project pages that improve over time</li><li>Know when a Page is the right surface vs. when chat or Word is better</li></ul>
-    </div>
-    <div class="next-up">
-      <span class="pro-tag">Pro+</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in Copilot Mastery</div>
-      <h3>Lesson 6 · Copilot Agents: build a custom assistant for your role</h3>
-      <p>Custom agents that know your team's data, your job, your style. Walkthrough builds: a sales follow-up agent, an HR policy agent, a Q&A agent for your knowledge base. <a href="/#pricing">See pricing →</a></p>
-    </div>
-  </div>
-</article>
+      <div class="eyebrow-do2">Your call</div>
+      <p style="margin-bottom:12px">So why does Pages matter versus a normal Copilot chat?</p>
+      <div class="opts">
+        <button class="opt" data-c="0" onclick="pick(this,2)">It runs a smarter model</button>
+        <button class="opt" data-c="1" onclick="pick(this,2)">Chat is ephemeral — a Page persists the work as a shared doc Copilot stays inside</button>
+        <button class="opt" data-c="0" onclick="pick(this,2)">It's free while chat costs extra</button>
+      </div>
+      <div class="fb" id="fb-2"></div>
+      <button class="btn" id="next-2" style="display:none;margin-top:16px" onclick="go(3)">Workflow 01 · Capture →</button>
+    </section>
+
+    <!-- STEP 3 · WF1 capture (show) -->
+    <section id="step-3" class="step" style="display:none">
+      <div class="wf-head"><h3 style="margin:0">01 · Stop losing Copilot output</h3><span class="wf-badge basic">Basic</span></div>
+      <div class="where"><b>Where:</b> In any Copilot conversation worth keeping → click <b>"Edit in Pages."</b> The chat becomes a formatted document you can keep editing.</div>
+      <p>Reach for this on anything you'd otherwise lose when you close the tab:</p>
+      <ul class="usecases">
+        <li>Multi-step plans and brainstorm sessions worth saving</li>
+        <li>Research summaries you want to keep editing</li>
+        <li>Drafts that need a teammate's input</li>
+        <li>Anything you'd otherwise paste into a fresh Word doc</li>
+      </ul>
+      <div class="gotcha"><b>Gotcha:</b> Pages live in your OneDrive and count against your storage quota — generous, not unlimited.</div>
+      <div class="savings"><b>Re-doing lost Copilot work:</b> never again</div>
+      <br>
+      <button class="btn" style="margin-top:8px" onclick="go(4)">Workflow 02 · Co-edit →</button>
+    </section>
+
+    <!-- STEP 4 · WF2 co-edit (permissions check) -->
+    <section id="step-4" class="step" style="display:none">
+      <div class="wf-head"><h3 style="margin:0">02 · Share, comment, continue together</h3><span class="wf-badge inter">Intermediate</span></div>
+      <p>Share a Page and teammates can add to it, comment, and ask Copilot follow-ups <em>inside the same Page</em> — the AI sees the full thread, so everyone shares one context instead of fragmenting into separate chats, DMs, and emails.</p>
+      <div class="eyebrow-do2">Judgment call</div>
+      <p style="margin-bottom:12px">You're about to add confidential deal details to a shared Page. First:</p>
+      <div class="opts">
+        <button class="opt" data-c="0" onclick="pick(this,4)">Go ahead — Pages are private by default</button>
+        <button class="opt" data-c="1" onclick="pick(this,4)">Check the share scope — Pages follow OneDrive sharing permissions</button>
+        <button class="opt" data-c="0" onclick="pick(this,4)">Move it to email instead</button>
+      </div>
+      <div class="fb" id="fb-4"></div>
+      <button class="btn" id="next-4" style="display:none;margin-top:16px" onclick="go(5)">Workflow 03 · Living briefs →</button>
+    </section>
+
+    <!-- STEP 5 · WF3 living briefs (show) -->
+    <section id="step-5" class="step" style="display:none">
+      <div class="wf-head"><h3 style="margin:0">03 · The brief that updates itself</h3><span class="wf-badge adv">Advanced</span></div>
+      <p>Build a Page that's a living brief — source data, key questions, current status. Re-open it anytime and ask Copilot, inside the Page, <em>"what's changed?"</em> or <em>"summarize where we are,"</em> and it uses the whole Page as context.</p>
+      <div class="where" style="margin-bottom:10px"><b>Example:</b> a customer account brief — past meetings, deal stage, decision-makers, next steps. Re-open it monthly, ask for an update, get fresh recommendations off the full history.</div>
+      <ul class="usecases">
+        <li>Customer account briefs and project status pages</li>
+        <li>Personal weekly-review pages</li>
+        <li>Living strategy docs that evolve over time</li>
+      </ul>
+      <div class="gotcha"><b>Gotcha:</b> Pages get unwieldy if they grow too long. Keep one Page to one topic; spin off a new Page for sub-topics that take on their own life.</div>
+      <button class="btn" style="margin-top:12px" onclick="startMatch()">Last thing — which surface for the job? →</button>
+    </section>
+
+    <!-- STEP 6 · which surface matching -->
+    <section id="step-6" class="step" style="display:none">
+      <h3>So when is a Page the right call?</h3>
+      <p style="margin-bottom:18px">Three quick scenarios. Pick the right Microsoft 365 surface for each.</p>
+      <div class="gymbar"><span id="m-count">Question 1 of 3</span><span id="m-score">Score 0</span></div>
+      <div class="gym-prog"><div id="m-fill"></div></div>
+      <div class="scenario" id="m-scenario">—</div>
+      <div class="opts" id="m-opts"></div>
+      <div class="fb" id="m-fb"></div>
+      <button class="btn" id="m-next" style="display:none;margin-top:16px" onclick="mNext()">Next →</button>
+    </section>
+
+    <!-- STEP 7 · complete -->
+    <section id="step-7" class="step" style="display:none">
+      <div class="done-top">
+        <div class="done-check">✓</div>
+        <h3>Lesson complete</h3>
+      </div>
+      <div class="recap">
+        <span class="lbl">What you can do now</span>
+        <p>Capture any Copilot conversation into a persistent Page, co-edit with teammates while keeping Copilot in the same context, build briefs that improve over time, and tell when a Page beats a chat or a Word doc.</p>
+      </div>
+      <div class="challenge-box">
+        <h4>Build one Page that pays off</h4>
+        <ol>
+          <li>Prompt Copilot for the initial structure ("set up a brief on the Acme account: history, status, open items").</li>
+          <li>Click "Edit in Pages."</li>
+          <li>Add the details only you know; share with a teammate if relevant.</li>
+          <li>Re-open it weekly and ask "summarize what's changed" + "what should I do next."</li>
+        </ol>
+      </div>
+      <div class="upnext">
+        <span class="lbl">Up next in Copilot Mastery</span>
+        <p>Lesson 06 · Copilot Agents — build a custom assistant for your role</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-block" href="/lessons/copilot/agents-mastery">Continue to Lesson 06 · Copilot Agents →</a>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-ghost" href="/playground" target="_blank" rel="noopener">Open the Playground</a>
+        <a class="btn btn-ghost" href="/lessons/copilot/">Back to Copilot Mastery</a>
+      </div>
+    </section>
+  </main>
+</div>
+
 <footer>
   <div class="footer-inner">
     <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Microsoft.</div>
@@ -226,7 +296,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -238,10 +307,10 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <button class="coach-close" id="coachClose">✕</button>
   </div>
   <div class="coach-messages" id="coachMessages">
-    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about Copilot Pages — capturing work, co-editing, living briefs, or whether a Page, a chat, or Word is the right surface for what you're doing. What's on your mind?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -249,15 +318,101 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   </div>
 </div>
 
+<!-- ── Interactive lesson logic ── -->
+<script>
+  var TOTAL = 7;
+  function go(n){
+    document.querySelectorAll('.step').forEach(function(s){ s.style.display='none'; });
+    document.getElementById('step-'+n).style.display='block';
+    document.getElementById('prog').style.width = Math.round(n/TOTAL*100)+'%';
+    document.getElementById('step-count').textContent = 'Step '+n+' of '+TOTAL+' · ~9 min';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  var pickMsg = {
+    2:{good:"Right — same model; the difference is permanence and collaboration. Chat disappears when you close it; a Page keeps the work and Copilot's context, shared.",
+       bad:"It's the same model and it isn't about price. The difference is permanence and collaboration — a Page persists the work and keeps Copilot in the shared context."},
+    4:{good:"Right — Pages inherit standard OneDrive sharing; they're not automatically private. Verify who it's shared with before adding sensitive context.",
+       bad:"Pages aren't private by default — they follow OneDrive sharing. Check the share scope before adding anything confidential."}
+  };
+  function pick(btn, step){
+    var correct = btn.dataset.c === '1';
+    document.getElementById('step-'+step).querySelectorAll('.opt').forEach(function(b){ b.disabled=true; b.style.opacity='0.5'; });
+    btn.style.opacity='1';
+    var fb = document.getElementById('fb-'+step);
+    btn.style.borderColor = correct ? 'var(--accent)' : 'var(--danger)';
+    fb.className = 'fb ' + (correct ? 'good' : 'bad');
+    fb.textContent = pickMsg[step][correct ? 'good' : 'bad'];
+    fb.style.display='block';
+    document.getElementById('next-'+step).style.display='inline-flex';
+  }
+  // Which surface? matching round
+  var M = [
+    { t:"A quick one-off question you won't need again.", opts:["Copilot chat","Copilot Page","Word"], c:0, why:"Chat — ephemeral is fine when you'll never need it again." },
+    { t:"A cross-functional project doc several people will extend, with Copilot kept in the same context.", opts:["Word","Copilot Page","Copilot chat"], c:1, why:"A Page — persistent, shared, and Copilot sees the whole thread." },
+    { t:"A polished proposal you'll send to a client as a final, formatted document.", opts:["Copilot Page","Copilot chat","Word"], c:2, why:"Word — for a finished, formatted deliverable that goes out the door." }
+  ];
+  var mi = 0, mScore = 0;
+  function startMatch(){ mi = 0; mScore = 0; go(6); mRender(); }
+  function mRender(){
+    var q = M[mi];
+    document.getElementById('m-count').textContent = 'Question '+(mi+1)+' of '+M.length;
+    document.getElementById('m-score').textContent = 'Score '+mScore;
+    document.getElementById('m-fill').style.width = Math.round(mi/M.length*100)+'%';
+    document.getElementById('m-scenario').textContent = q.t;
+    var box = document.getElementById('m-opts'); box.innerHTML = '';
+    q.opts.forEach(function(label, i){
+      var b = document.createElement('button'); b.className = 'opt'; b.textContent = label;
+      b.onclick = function(){ mAnswer(i); };
+      box.appendChild(b);
+    });
+    document.getElementById('m-fb').style.display = 'none';
+    document.getElementById('m-next').style.display = 'none';
+  }
+  function mAnswer(i){
+    var q = M[mi]; var correct = (i === q.c);
+    if(correct) mScore++;
+    document.getElementById('m-score').textContent = 'Score '+mScore;
+    var btns = document.getElementById('m-opts').querySelectorAll('.opt');
+    btns.forEach(function(b, idx){
+      b.disabled = true; b.style.opacity = (idx === i || idx === q.c) ? '1' : '0.5';
+      if(idx === q.c) b.style.borderColor = 'var(--accent)';
+    });
+    if(!correct) btns[i].style.borderColor = 'var(--danger)';
+    var fb = document.getElementById('m-fb');
+    fb.className = 'fb ' + (correct ? 'good' : 'bad');
+    fb.textContent = (correct ? '✓ ' : '✗ ') + q.opts[q.c] + '. ' + q.why;
+    fb.style.display = 'block';
+    var nx = document.getElementById('m-next');
+    nx.textContent = (mi === M.length-1) ? 'Finish →' : 'Next →';
+    nx.style.display = 'inline-flex';
+  }
+  function mNext(){ mi++; if(mi >= M.length){ go(7); } else { mRender(); window.scrollTo({top:0,behavior:'smooth'}); } }
+</script>
 
+<!-- ── AI Coach logic ── -->
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Copilot Pages: the collaborative workspace nobody knows about\nTRACK: Copilot Mastery\n\nLESSON CONTENT SUMMARY:\nCopilot Pages: the collaborative workspace nobody knows about \u2014 LearningGPT L LearningGPT \u2190 Copilot Mastery Lesson 05 \u00b7 Copilot Mastery Pro ~8 min read 3 workflows Copilot Pages: the workspace nobody knows about. Copilot Pages is the Microsoft 365 surface most people haven't touched. It's the place where Copilot output becomes a collaborative document \u2014 a hybrid between a chat thread, a doc, and a workspace. Once you understand it, it changes how you handle multi-step work that crosses people and threads. The mental model Pages turns Copilot conversations into shared workspaces. Chat with Copilot is ephemeral \u2014 when the conversation closes, the work is gone unless you copied it out. Pages persists it as a collaborative document anyone you share with can extend, edit, or continue the Copilot conversation inside. Workflow 01 Capture Copilot work into a persistent Page 1 Stop losing Copilot output Anytime you have a Copilot conversation worth keeping, click \"Edit in Pages.\" The conversation becomes a document with rich formatting and the option to continue. The prompt that works When to use this Multi-step plans, brainstorm sessions worth saving, drafts that need review from teammates, anything where you'd lose context closing the chat tab. Best use cases Project planning sessions with Copilot Research summaries you want to keep editing Drafts that need collaborative input Anything you'd otherwise paste into a new Word doc Pages are stored in your OneDrive \u2014 they count against your storage quota. Not unlimited, but generous. Time savings: Re-doing lost Copilot work: never again. Workflow 02 Co-edit with teammates inside a Page 2 Share, comment, continue together Share a Page with a colleague. They can add to it, comment, ask Copilot follow-up questions inside the same Page. The AI sees the full thread; everyone stays in sync. The prompt that works Common pattern Use a Page as a \"working doc\" for any project where multiple people would otherwise be in conflicting threads of Copilot, each with their own context. Everyone working in the same Page = shared AI context. Best use cases Cross-functional projects with multiple stakeholders Sales pursuit pages (customer details, proposal drafts, internal notes) Account planning with your team Onboarding documents that evolve with input from many Permissions follow standard OneDrive sharing \u2014 same controls you'd use for any doc. Verify the share scope before adding sensitive context. Time savings: Async collaboration that used to fragment across DMs and emails: now in one place. Workflow 03 Use Pages as living, AI-aware briefs 3 The brief that updates itself Build a Page that's a brief on a topic. Include source data, key questions, current status. Anyone (or you) can ask Copilot inside the Page \"what's changed?\" or \"summarize where we are\" and Copilot uses the full Page as context. The prompt that works Use case example A Page that's an account brief for a customer \u2014 past meetings, current deal stage, decisio\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = `You are an AI learning coach embedded in a lesson on LearningGPT.ai.
+LESSON TITLE: Copilot Pages — the collaborative workspace nobody knows about
+TRACK: Copilot Mastery (Pro)
+LESSON CONTENT SUMMARY:
+Copilot Pages is the Microsoft 365 surface where Copilot output becomes a persistent, collaborative, AI-aware document — a hybrid of a chat thread, a doc, and a workspace. Mental model: Copilot chat is ephemeral (close the tab and the work is gone unless you copied it out, and it's just you); a Page persists the work as a shared document anyone you invite can edit, with Copilot keeping the full context inside it. Three workflows:
+1. Capture — in any Copilot conversation worth keeping, click "Edit in Pages" to turn it into a formatted, editable document. Use for multi-step plans, brainstorms, research summaries, drafts needing teammate input. Gotcha: Pages live in your OneDrive and count against your storage quota (generous, not unlimited).
+2. Co-edit — share a Page and teammates can add, comment, and ask Copilot follow-ups inside the same Page; everyone shares one context instead of fragmenting into separate chats/DMs/emails. Gotcha (privacy): Pages follow standard OneDrive sharing permissions — they're not automatically private; verify the share scope before adding sensitive context.
+3. Living briefs — build a Page as a living brief (source data, key questions, current status); re-open it and ask Copilot "what's changed?" or "summarize where we are" and it uses the whole Page as context. Example: a customer account brief updated monthly. Gotcha: keep one Page to one topic; spin off a new Page for sub-topics so it doesn't get unwieldy.
+Which surface to use: chat for quick one-offs you won't need again; a Page for shared, evolving, multi-person work where Copilot should keep context; Word for a polished final deliverable.
+YOUR ROLE:
+- Answer questions specifically about this lesson content
+- Be concise, 2-4 sentences per answer unless the question genuinely needs more
+- Be practical, give real work examples when helpful
+- If asked about something not in this lesson, briefly answer and point to where they can learn more
+- Never make up features that don't exist
+- Plain conversational text only, no markdown symbols like ** or ##
+- Do not start responses with "Great question!" or similar filler phrases`;
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -265,27 +420,21 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
   if (!fab) return; // safety check
-
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -294,7 +443,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -303,7 +451,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

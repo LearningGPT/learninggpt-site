@@ -9,15 +9,13 @@
 <meta name="theme-color" content="#10a37f" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/chatgpt/email-mastery" />
 <meta property="og:title" content="ChatGPT for email: write 10 emails in the time of 1" />
 <meta property="og:description" content="Free LearningGPT lesson. The 5 ChatGPT workflows that turn it into a personal email copywriter." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
-
 <style>
 :root {
   --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a;
@@ -50,41 +48,99 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .lesson h1 .grad { background: linear-gradient(135deg, #10a37f 0%, #44e0a4 50%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
 .lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+
+/* ── STEPPER ── */
+.stepper { position: sticky; top: 57px; z-index: 50; background: rgba(10,10,26,0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); margin: 0 0 8px; padding: 12px 0; }
+.stepper-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; align-items: center; gap: 14px; }
+.prog-track { flex: 1; height: 6px; background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden; }
+.prog-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #10a37f, #7c5cff); border-radius: 999px; transition: width .4s cubic-bezier(.4,0,.2,1); }
+.prog-label { font-size: 12px; color: var(--text-mute); font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+.step { display: none; animation: stepIn .45s cubic-bezier(.2,.7,.2,1); }
+.step.active { display: block; }
+@keyframes stepIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+.step-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin: 8px 0 6px; }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 6px 0 16px; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 26px 0 10px; }
 .lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
 .lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(16,163,127,0.10), rgba(124,92,255,0.06)); border: 1px solid rgba(16,163,127,0.25); border-radius: var(--radius-lg); position: relative; }
+.lesson ol, .lesson ul { padding-left: 22px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; }
+
+.callout { margin: 26px 0; padding: 20px 24px; background: linear-gradient(135deg, rgba(16,163,127,0.10), rgba(124,92,255,0.06)); border: 1px solid rgba(16,163,127,0.25); border-radius: var(--radius-lg); position: relative; }
 .callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #10a37f, #7c5cff); border-radius: 2px 0 0 2px; }
 .callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
 .callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(16,163,127,0.15); border: 1px solid rgba(16,163,127,0.35); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; }
+
+/* ── PREDICT ── */
+.predict { margin: 26px 0; padding: 22px 24px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+.predict .q { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
+.opt { display: block; width: 100%; text-align: left; padding: 14px 16px; margin: 8px 0; background: rgba(255,255,255,0.03); border: 1px solid var(--line-strong); border-radius: 12px; color: var(--text); font-size: 14.5px; font-family: inherit; cursor: pointer; transition: all .18s; }
+.opt:hover:not(:disabled) { border-color: var(--track); background: rgba(16,163,127,0.07); }
+.opt:disabled { cursor: default; }
+.opt.correct { border-color: var(--accent); background: rgba(68,224,164,0.12); }
+.opt.wrong { border-color: var(--danger); background: rgba(255,107,138,0.10); opacity: 0.85; }
+.opt .tick { float: right; font-weight: 700; }
+.reveal { margin-top: 14px; padding: 16px 18px; border-radius: 12px; background: rgba(68,224,164,0.07); border: 1px solid rgba(68,224,164,0.25); font-size: 14.5px; display: none; }
+.reveal.show { display: block; animation: stepIn .4s ease; }
+.reveal.miss { background: rgba(255,181,71,0.07); border-color: rgba(255,181,71,0.25); }
+
+/* ── SCRUBBER ── */
+.scrub { margin: 26px 0; background: linear-gradient(180deg, var(--surface), var(--bg-soft)); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px; }
+.scrub-head { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-mute); font-weight: 700; margin-bottom: 4px; }
+.scrub-sub { font-size: 12px; color: var(--text-mute); margin-bottom: 14px; }
+.scrub-mail { font-size: 15.5px; line-height: 2.0; color: var(--text); }
+.scrub-mail .sig { color: var(--text-dim); }
+.tell { display: inline; padding: 2px 7px; margin: 0 1px; border-radius: 7px; background: rgba(255,107,138,0.14); border: 1px dashed rgba(255,107,138,0.5); color: #ffb0c1; cursor: pointer; transition: all .18s; font-size: 14.5px; }
+.tell:hover { background: rgba(255,107,138,0.22); }
+.tell.fixed { background: rgba(68,224,164,0.16); border: 1px solid rgba(68,224,164,0.5); color: #b6f4dc; cursor: default; }
+.tell.gone { background: transparent; border: 1px solid transparent; color: var(--text-mute); text-decoration: line-through; cursor: default; }
+.scrub-meter { margin-top: 20px; display: flex; align-items: center; gap: 12px; }
+.scrub-bar { flex: 1; height: 8px; background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden; }
+.scrub-bar-fill { height: 100%; width: 8%; background: linear-gradient(90deg, #ff6b8a, #ffb547 55%, #44e0a4); border-radius: 999px; transition: width .5s cubic-bezier(.4,0,.2,1); }
+.scrub-bar-label { font-size: 12px; font-weight: 700; color: var(--text-mute); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.scrub-done { margin-top: 16px; padding: 14px 18px; border-radius: 12px; background: rgba(16,163,127,0.1); border: 1px solid rgba(16,163,127,0.3); font-size: 14.5px; display: none; }
+.scrub-done.show { display: block; animation: stepIn .4s ease; }
+
+/* ── PROMPT / GOTCHA ── */
+.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
 .prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
 .gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
 .gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(16,163,127,0.18), rgba(124,92,255,0.1)); border: 1px solid rgba(16,163,127,0.3); border-radius: var(--radius-lg); padding: 36px; }
+
+/* ── GYM ── */
+.gym { margin: 26px 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px; }
+.gym-count { font-size: 12px; color: var(--text-mute); font-weight: 600; margin-bottom: 12px; }
+.gym-prompt { font-size: 16.5px; font-weight: 600; margin-bottom: 16px; line-height: 1.5; }
+.gym-fb { margin-top: 14px; padding: 14px 16px; border-radius: 12px; font-size: 14px; display: none; }
+.gym-fb.show { display: block; animation: stepIn .35s ease; }
+.gym-fb.ok { background: rgba(68,224,164,0.1); border: 1px solid rgba(68,224,164,0.3); }
+.gym-fb.no { background: rgba(255,181,71,0.08); border: 1px solid rgba(255,181,71,0.28); }
+.gym-next { margin-top: 16px; text-align: right; display: none; }
+.gym-next.show { display: block; }
+.gym-score { text-align: center; padding: 20px; font-size: 17px; font-weight: 700; }
+.mini-btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #10a37f, #7c5cff); color: white; padding: 11px 20px; border-radius: 10px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; font-family: inherit; transition: transform .15s; }
+.mini-btn:hover { transform: translateY(-1px); }
+
+/* ── NAV / CHALLENGE / NEXT ── */
+.step-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 36px; gap: 12px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #10a37f, #7c5cff); color: white; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: inherit; box-shadow: 0 6px 24px rgba(16,163,127,0.28); transition: transform .15s, opacity .15s; }
+.btn:hover { transform: translateY(-1px); color: white; }
+.btn:disabled { opacity: 0.4; cursor: default; transform: none; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+
+.challenge { margin: 10px 0 30px; background: linear-gradient(135deg, rgba(16,163,127,0.18), rgba(124,92,255,0.1)); border: 1px solid rgba(16,163,127,0.3); border-radius: var(--radius-lg); padding: 32px; }
 .challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #10a37f, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(16,163,127,0.35); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge a.btn { text-decoration: none; }
 .challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.challenge ol { padding-left: 22px; }
+.checklist { margin: 30px 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
 .checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
 .checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
 .checklist li:first-child { border-top: none; padding-top: 0; }
 .checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up { margin: 20px 0 0; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
 .next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
 .next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
 .next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
@@ -93,36 +149,12 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -151,14 +183,11 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
-
 <div class="bg-orb one"></div>
 <div class="bg-orb two"></div>
-
 <nav class="top">
   <div class="nav-inner">
     <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
@@ -166,173 +195,186 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   </div>
 </nav>
 
+<!-- ── STEPPER ── -->
+<div class="stepper">
+  <div class="stepper-inner">
+    <div class="prog-track"><div class="prog-fill" id="prog"></div></div>
+    <div class="prog-label" id="progLabel">Step 1 / 5</div>
+  </div>
+</div>
+
 <article class="lesson">
   <div class="container">
-
     <div class="lesson-meta">
       <span class="chip">Lesson 1 · ChatGPT Mastery</span>
       <span class="chip chip-free">Free</span>
-      <span>~12 min read</span>
+      <span>~12 min</span>
       <span class="dot"></span>
       <span>5 workflows + Custom GPT setup</span>
     </div>
-
     <h1>ChatGPT for email: <span class="grad serif">write 10 emails in the time of 1.</span></h1>
+    <p class="deck">ChatGPT isn't wired into your inbox the way Copilot is — but it has a different superpower: <strong>memory and customization.</strong> With one Custom GPT and a few habits, it becomes a personal email copywriter that knows your voice, your situations, and your style. Five workflows, one 10-minute setup that compounds across every email you'll ever write.</p>
 
-    <p class="deck">ChatGPT isn't connected to your inbox the way Copilot is, but it has a different superpower: <strong>memory and customization.</strong> With one Custom GPT and a few habits, you turn ChatGPT into a personal email copywriter that knows your voice, your common situations, and your style. This lesson walks 5 workflows for using ChatGPT specifically on email — plus a 10-minute setup that compounds across every email you write for the rest of your career.</p>
+    <!-- ════ STEP 1 ════ -->
+    <section class="step active" data-step="1">
+      <span class="step-eyebrow">The mental model</span>
+      <h2>ChatGPT remembers things. Use that.</h2>
+      <p>The biggest mistake people make: starting every email session with a blank chat and a one-line prompt. With no context about you, your audience, or your style, ChatGPT produces the most-average-possible output — and you burn three minutes editing it back toward something you'd actually send.</p>
+      <p>Three features let you bake context in once and reuse it forever: <strong>Custom Instructions</strong> (global preferences), <strong>Memory</strong> (what it learns about you over time), and <strong>Custom GPTs</strong> (purpose-built mini-assistants). But first, the habit that matters most in a single prompt.</p>
 
-    <p>If you also use Copilot in Outlook, the two are complementary. Copilot wins when you need inbox context. ChatGPT wins when you need a careful, polished draft and don't want generic AI tone.</p>
-
-    <h2><span class="num">The mental model</span></h2>
-    <h3>ChatGPT remembers things. Use that.</h3>
-
-    <p>The single biggest mistake people make: starting every email session with a blank chat and a one-line prompt. You give ChatGPT no context about you, your audience, or your style — so it produces the most-average-possible output and you spend three minutes editing.</p>
-
-    <div class="callout">
-      <span class="lbl">The Reframe</span>
-      <p><strong>ChatGPT is most useful when it knows about you.</strong> Three features let you bake context in once and reuse it forever: <em>Custom Instructions</em> (your global preferences), <em>Memory</em> (things it learns about you over time), and <em>Custom GPTs</em> (purpose-built mini-assistants with their own instructions and knowledge). The 10-minute setup at the end of this lesson uses all three.</p>
-    </div>
-
-    <h2><span class="num">Workflow 01</span> The specific-friction prompt</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">1</div><h3>Stop writing generic prompts</h3></div>
-      <p>Same pattern from the <a href="/lessons/sales-follow-up-emails">Foundations lesson</a>: reference one specific detail from the prior interaction. ChatGPT will produce dramatically better drafts.</p>
-      <div class="prompt-example">
-        <span class="label">Generic (bad)</span>
-        Write a follow-up email to a prospect.
+      <div class="predict">
+        <div class="q">Two prompts for the same follow-up email. Which one returns a draft you can send with almost no editing?</div>
+        <button class="opt" data-correct="false">"Write a follow-up email to a prospect."</button>
+        <button class="opt" data-correct="true">"Reply to Marcus at Acme — demoed Thursday, he said sales ops loses 6 hrs every Friday to Salesforce hygiene. Get him to a 20-min call this week to show the automation feature. Friendly, direct, under 90 words."</button>
+        <button class="opt" data-correct="false">About the same — ChatGPT fills in the missing details on its own</button>
+        <div class="reveal" id="r1">
+          <strong>Right.</strong> The second prompt names the person, the friction, the goal, and the constraints — so ChatGPT has something real to work with instead of guessing. One specific detail from the prior interaction is worth more than any amount of "make it good." That's the whole game, and you'll see the flip side of it next: scrubbing the generic tone <em>out</em>.
+        </div>
       </div>
-      <div class="prompt-example">
-        <span class="label">Specific friction (good)</span>
-        Reply to Marcus at Acme. We did a demo Thursday. He mentioned that their sales ops team is spending 6 hours every Friday on Salesforce hygiene. Goal: get him to agree to a 20-min call this week where I show the automation feature specifically. Friendly but direct, under 90 words.
+      <div class="step-nav">
+        <span></span>
+        <button class="btn" id="next1" disabled>Continue →</button>
       </div>
-      <div class="savings"><strong>Time savings:</strong> 5 min → 30 sec per draft.</div>
-    </div>
+    </section>
 
-    <h2><span class="num">Workflow 02</span> Match the voice of a customer's email</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">2</div><h3>Mirror their tone</h3></div>
-      <p>One of ChatGPT's most underused capabilities: paste an email you received and tell it to match the tone of the reply.</p>
-      <div class="prompt-example">
-        <span class="label">Tone-matching prompt</span>
-        Here's an email I received: [paste]. Draft my reply agreeing to a meeting next Tuesday. Match the tone of their email — if they're casual, be casual; if formal, be formal. Same length as their email.
+    <!-- ════ STEP 2 ════ -->
+    <section class="step" data-step="2">
+      <span class="step-eyebrow">Signature move · scrub the AI tells</span>
+      <h2>Make it sound like a human sent it.</h2>
+      <p>Here's a draft with every classic "AI smell" left in — the phrases that make a reader's eyes glaze. <strong>Tap each highlighted phrase</strong> to swap it for how a real person would say it. Watch the meter climb from <em>bot</em> to <em>you</em>.</p>
+
+      <div class="scrub">
+        <div class="scrub-head">Draft reply · tap the tells</div>
+        <div class="scrub-sub">5 phrases to fix</div>
+        <div class="scrub-mail" id="scrubMail">
+          <span class="tell" data-k="1" data-strong="Quick one —">I hope this email finds you well.</span> <span class="tell" data-k="2" data-strong="Following up on Thursday's demo.">I just wanted to circle back and follow up on our previous conversation.</span> <span class="tell" data-k="3" data-strong="Worth a 20-minute call this week">I'd love to leverage this opportunity to touch base</span> and <span class="tell" data-k="4" data-strong="see if the automation piece fits how your team works.">explore potential synergies going forward.</span><br>
+          <span class="sig"><span class="tell" data-k="5" data-strong="Does Tuesday work?">Looking forward to hearing from you!</span></span>
+        </div>
+        <div class="scrub-meter">
+          <div class="scrub-bar"><div class="scrub-bar-fill" id="scrubBar"></div></div>
+          <div class="scrub-bar-label" id="scrubBarLabel">Reads like a bot</div>
+        </div>
+        <div class="scrub-done" id="scrubDone">
+          <strong>That's the rewrite-pattern in miniature.</strong> Same message, none of the filler — it's shorter, warmer, and ends on a concrete ask. When ChatGPT hands you a draft, this is the pass you make (or tell it to make): cut the tells, keep the point.
+        </div>
       </div>
-      <p>Reply matches the energy of the original. Way more natural than a generic "Hi [Name], thank you for reaching out" template.</p>
-      <div class="savings"><strong>Time savings:</strong> Awkward tone mismatch eliminated. Worth more than minutes.</div>
-    </div>
+      <div class="step-nav">
+        <button class="btn ghost" data-back="1">← Back</button>
+        <button class="btn" id="next2" disabled>Build the setup →</button>
+      </div>
+    </section>
 
-    <h2><span class="num">Workflow 03</span> Build a Custom GPT for your role</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">3</div><h3>A reusable email writer that knows you</h3></div>
-      <p>The 10-minute setup that pays off forever. We're building a Custom GPT called "My Email Assistant" that knows your job, your common email types, and your voice.</p>
-      <h4>Steps</h4>
+    <!-- ════ STEP 3 ════ -->
+    <section class="step" data-step="3">
+      <span class="step-eyebrow">The 10-minute setup</span>
+      <h2>A Custom GPT that already knows you.</h2>
+      <p>The investment that pays off forever: a Custom GPT called "My Email Assistant" that knows your job, your common email types, and your voice. Open it instead of vanilla ChatGPT for anything email-related.</p>
       <ol>
-        <li>Go to chatgpt.com → <strong>Explore GPTs</strong> → <strong>Create</strong></li>
-        <li>Name: "My Email Assistant" (or whatever you prefer)</li>
-        <li>In <strong>Instructions</strong>, paste this template and customize it:
-          <div class="prompt-example" style="margin-top:8px;">
-You are my personal email copywriter.
-
-About me: I'm [your role] at [company]. I write emails primarily to [audience — customers, prospects, internal teams, etc.].
-
+        <li>chatgpt.com → <strong>Explore GPTs</strong> → <strong>Create</strong></li>
+        <li>Name it "My Email Assistant"</li>
+        <li>Paste this into <strong>Instructions</strong> and customize it:</li>
+      </ol>
+      <div class="prompt-example">You are my personal email copywriter.
+About me: I'm [your role] at [company]. I mostly email [audience].
 My voice:
-- Conversational, not stiff
-- Direct, no "circling back" or "just wanted to follow up"
-- Use contractions
-- Avoid corporate buzzwords ("synergy," "leverage," "touch base")
-
+- Conversational, not stiff · direct, no "circling back"
+- Use contractions · avoid buzzwords (synergy, leverage, touch base)
 Default rules:
-- Keep replies under 100 words unless I say otherwise
-- Always include a clear next step or ask
-- If I paste an email I received, match its tone in the reply
-- Never use [Name] or [Company] placeholders — leave a blank line if info is missing
-          </div>
-        </li>
-        <li>Add 2-3 <strong>Conversation Starters</strong> (e.g., "Draft a follow-up to a customer who went quiet")</li>
-        <li>Save (Private — just for you)</li>
-      </ol>
-      <p>Now you have a Custom GPT permanently available in your sidebar. Open it instead of regular ChatGPT for any email-related task. It will be dramatically better than vanilla ChatGPT because it already knows the context.</p>
-      <div class="gotcha">Don't put confidential details in Custom GPT instructions (customer names, financial details). The instructions are stored — keep them about <em>style and process</em>, not about specific deals.</div>
-      <div class="savings"><strong>Time savings:</strong> Compounds. Every future email is 20% better with zero extra effort.</div>
-    </div>
+- Replies under 100 words unless I say otherwise
+- Always end with a clear next step or ask
+- If I paste an email I received, match its tone
+- Never leave [Name]/[Company] placeholders — blank line if info is missing</div>
+      <p>Add 2-3 conversation starters, save it Private, and it lives in your sidebar permanently — dramatically better than vanilla ChatGPT because the context is already there.</p>
 
-    <h2><span class="num">Workflow 04</span> The "rewrite this draft" pattern</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">4</div><h3>Write your draft, ChatGPT polishes</h3></div>
-      <p>Counterintuitively, writing your draft first (rough, imperfect) and asking ChatGPT to refine it produces better emails than asking ChatGPT to write from scratch. Your draft carries your voice; ChatGPT cleans it up.</p>
-      <div class="prompt-example">
-        <span class="label">Rewrite prompt</span>
-        Here's my draft: [paste your rough draft]. Tighten it. Cut filler. Keep my voice but make it more direct. If anything's unclear, flag it instead of guessing.
+      <div class="gotcha">Keep Custom GPT instructions about <em>style and process</em>, not specific deals. Don't bake in customer names or financial details — the instructions are stored.</div>
+
+      <div class="callout">
+        <span class="lbl">And Memory</span>
+        <p>When you catch yourself explaining the same thing twice — your industry, your subject-line rules, what "draft a follow-up" means to you — tell ChatGPT to <strong>remember</strong> it. Six months later it's still applied automatically, across every chat. (Settings → Personalization. Glance at it occasionally and prune anything it stored that you didn't mean.)</p>
       </div>
-      <p>Best for: sensitive emails (rejections, pushback, difficult feedback) where the content needs to be yours but the delivery needs polish.</p>
-      <div class="savings"><strong>Time savings:</strong> Less than from-scratch, but produces emails that actually sound like you sent them.</div>
-    </div>
-
-    <h2><span class="num">Workflow 05</span> Use Memory for recurring patterns</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">5</div><h3>Teach ChatGPT once, save forever</h3></div>
-      <p>ChatGPT's Memory feature lets it remember things across conversations. When you find yourself explaining the same context twice, tell ChatGPT to remember it.</p>
-      <div class="prompt-example">
-        <span class="label">Memory-building prompts</span>
-        Remember that I work in B2B SaaS sales, and my customers are mostly mid-market companies in healthcare and finance.
-        ---
-        Remember that I prefer email subject lines under 6 words, in sentence case (not Title Case).
-        ---
-        Remember that when I say "draft a follow-up," I mean: under 80 words, ends with a specific time-bound ask, no "looking forward to hearing from you."
+      <div class="step-nav">
+        <button class="btn ghost" data-back="2">← Back</button>
+        <button class="btn" id="next3">Test the judgment →</button>
       </div>
-      <p>Six months later, those preferences are still applied automatically. No more re-explaining your style every conversation.</p>
-      <div class="gotcha">Memory is in Settings → Personalization. Check what ChatGPT has remembered occasionally — sometimes it stores things you didn't mean for it to. Prune as needed.</div>
-    </div>
+    </section>
 
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Final challenge: build your email-writing setup in 30 minutes</h2>
-      <ol>
-        <li>Update your <strong>Custom Instructions</strong> (Settings → Personalization → Customize ChatGPT) with your role, audience, and voice rules</li>
-        <li>Build the "My Email Assistant" Custom GPT from Workflow 03</li>
-        <li>Have one real conversation where you explicitly add 3-4 things to Memory about your style</li>
-        <li>Write your next 3 emails using this setup. Compare quality to your usual ChatGPT output.</li>
-      </ol>
-      <p>Once it's set up, every email you write for the rest of your time using ChatGPT is automatically 20% better. The investment pays off within a week.</p>
-      <div class="btn-row">
-        <a href="/lessons/chatgpt/" class="btn">Back to ChatGPT Mastery →</a>
-        <a href="/#pricing" class="btn ghost">See Pro membership →</a>
+    <!-- ════ STEP 4 ════ -->
+    <section class="step" data-step="4">
+      <span class="step-eyebrow">Your turn · pick the move</span>
+      <h2>Which workflow fits the situation?</h2>
+      <p>Four real email moments. Pick the ChatGPT move that fits each.</p>
+
+      <div class="gym" id="gym">
+        <div class="gym-count" id="gymCount">Question 1 of 4</div>
+        <div class="gym-prompt" id="gymPrompt"></div>
+        <div id="gymOpts"></div>
+        <div class="gym-fb" id="gymFb"></div>
+        <div class="gym-next" id="gymNext"><button class="mini-btn" id="gymNextBtn">Next →</button></div>
       </div>
-    </div>
+      <div class="step-nav">
+        <button class="btn ghost" data-back="3">← Back</button>
+        <button class="btn" id="next4" disabled>Finish →</button>
+      </div>
+    </section>
 
-    <div class="checklist">
-      <h3>What you can do now</h3>
-      <ul>
-        <li>Write specific-friction prompts that produce sendable drafts in 30 seconds</li>
-        <li>Match the tone of an incoming email automatically</li>
-        <li>Build a Custom GPT that knows your role, audience, and voice</li>
-        <li>Use the "rewrite my draft" pattern for sensitive emails where your voice matters</li>
-        <li>Teach ChatGPT recurring patterns via Memory so you stop repeating yourself</li>
-      </ul>
-    </div>
+    <!-- ════ STEP 5 ════ -->
+    <section class="step" data-step="5">
+      <span class="step-eyebrow">You've got it</span>
+      <h2>Set it up once, write better forever.</h2>
 
-    <div class="next-up">
-      <span class="pro-tag">Pro</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in ChatGPT Mastery</div>
-      <h3>Lesson 2 · Custom GPTs: build your first three in 20 minutes</h3>
-      <p>Beyond email — Custom GPTs for meeting prep, executive summaries, code review, customer research. The full pattern, walked step by step. <a href="/#pricing">Become a Pro member →</a></p>
-    </div>
+      <div class="challenge">
+        <h2 style="margin-top:0;">Build your email-writing setup in 30 minutes</h2>
+        <ol>
+          <li>Update your <strong>Custom Instructions</strong> (Settings → Personalization) with your role, audience, and voice rules</li>
+          <li>Build the "My Email Assistant" Custom GPT from Step 3</li>
+          <li>In one real chat, explicitly add 3-4 things to <strong>Memory</strong> about your style</li>
+          <li>Write your next 3 emails with this setup and compare to your usual output</li>
+        </ol>
+        <p>Once it's set up, every email you write is automatically sharper — the investment pays off within a week.</p>
+        <div class="btn-row">
+          <a href="/playground" class="btn">Try a prompt in the playground →</a>
+          <a href="/lessons/chatgpt/" class="btn ghost">Back to ChatGPT Mastery</a>
+        </div>
+      </div>
+
+      <div class="checklist">
+        <h3>What you can do now</h3>
+        <ul>
+          <li>Write specific-friction prompts that produce sendable drafts in 30 seconds</li>
+          <li>Scrub the AI tells out of any draft so it sounds like you sent it</li>
+          <li>Match the tone of an incoming email automatically</li>
+          <li>Build a Custom GPT that knows your role, audience, and voice</li>
+          <li>Teach ChatGPT recurring patterns via Memory so you stop repeating yourself</li>
+        </ul>
+      </div>
+
+      <div class="next-up">
+        <span class="pro-tag">Pro</span>
+        <div class="lbl" style="margin-top:14px;">Up next in ChatGPT Mastery</div>
+        <h3>Lesson 2 · Custom GPTs: build your first three in 20 minutes</h3>
+        <p>Beyond email — Custom GPTs for meeting prep, executive summaries, and customer research. The full build pattern, walked step by step. <a href="/lessons/chatgpt/custom-gpts">Start lesson 2 →</a></p>
+      </div>
+      <div class="step-nav">
+        <button class="btn ghost" data-back="4">← Back</button>
+        <a href="/lessons/chatgpt/custom-gpts" class="btn">Next lesson →</a>
+      </div>
+    </section>
 
   </div>
 </article>
 
 <footer>
   <div class="footer-inner">
-    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with OpenAI.</div>
+    <div>© 2026 LearningGPT · Independent. Not affiliated with OpenAI.</div>
     <a href="/lessons/chatgpt/" style="color: var(--text-dim);">← All ChatGPT lessons</a>
   </div>
 </footer>
-
 
 <!-- ── AI COACH FAB ── -->
 <button class="coach-fab" id="coachFab" title="Ask the AI Coach">
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -347,7 +389,7 @@ Default rules:
     <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -355,15 +397,167 @@ Default rules:
   </div>
 </div>
 
+<script id="lessonScript">
+(function () {
+  var TOTAL = 5;
+  var cur = 1;
+  var prog = document.getElementById('prog');
+  var progLabel = document.getElementById('progLabel');
+
+  function go(n) {
+    n = Math.max(1, Math.min(TOTAL, n));
+    document.querySelectorAll('.step').forEach(function (s) {
+      s.classList.toggle('active', +s.dataset.step === n);
+    });
+    cur = n;
+    prog.style.width = (n / TOTAL * 100) + '%';
+    progLabel.textContent = 'Step ' + n + ' / ' + TOTAL;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  document.querySelectorAll('[data-back]').forEach(function (b) {
+    b.addEventListener('click', function () { go(+b.dataset.back); });
+  });
+  function nextBtn(id, to) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('click', function () { go(to); });
+  }
+  nextBtn('next1', 2); nextBtn('next2', 3); nextBtn('next3', 4); nextBtn('next4', 5);
+
+  // ── STEP 1 predict ──
+  var p1 = document.querySelectorAll('[data-step="1"] .opt');
+  var answered1 = false;
+  p1.forEach(function (o) {
+    o.addEventListener('click', function () {
+      if (answered1) return;
+      answered1 = true;
+      var correct = o.dataset.correct === 'true';
+      p1.forEach(function (x) {
+        x.disabled = true;
+        if (x.dataset.correct === 'true') { x.classList.add('correct'); x.innerHTML += '<span class="tick">✓</span>'; }
+      });
+      if (!correct) { o.classList.add('wrong'); o.innerHTML += '<span class="tick">✕</span>'; }
+      var r = document.getElementById('r1');
+      r.classList.add('show'); if (!correct) r.classList.add('miss');
+      document.getElementById('next1').disabled = false;
+    });
+  });
+
+  // ── STEP 2 scrubber ──
+  var tells = document.querySelectorAll('.tell');
+  var scrubBar = document.getElementById('scrubBar');
+  var scrubBarLabel = document.getElementById('scrubBarLabel');
+  var scrubDone = document.getElementById('scrubDone');
+  var fixed = 0;
+  var TOTAL_TELLS = tells.length;
+  var LABELS = ['Reads like a bot', 'Still stiff', 'Warming up', 'Getting human', 'Almost you', 'Sounds like you'];
+  tells.forEach(function (t) {
+    t.addEventListener('click', function () {
+      if (t.classList.contains('fixed') || t.classList.contains('gone')) return;
+      var strong = t.dataset.strong;
+      if (strong && strong.length) {
+        t.textContent = strong;
+        t.classList.add('fixed');
+      } else {
+        t.textContent = '';
+        t.classList.add('gone');
+      }
+      fixed++;
+      scrubBar.style.width = Math.round((fixed / TOTAL_TELLS) * 92 + 8) + '%';
+      scrubBarLabel.textContent = LABELS[Math.min(fixed, LABELS.length - 1)];
+      if (fixed === TOTAL_TELLS) {
+        scrubDone.classList.add('show');
+        document.getElementById('next2').disabled = false;
+      }
+    });
+  });
+
+  // ── STEP 4 gym ──
+  var G = [
+    {
+      prm: 'You have to push back on a client. The wording has to be yours, but it needs polish before it goes out.',
+      opts: ['Ask ChatGPT to write it from scratch', 'Draft it rough yourself, then ask ChatGPT to tighten it', 'Send your rough draft as-is'],
+      correct: 1,
+      why: 'For sensitive email, the rewrite pattern wins: your draft carries your voice and judgment; ChatGPT just cleans up the delivery.'
+    },
+    {
+      prm: 'For the third chat this week you\'ve re-typed "I work in B2B SaaS sales, customers are mid-market healthcare and finance."',
+      opts: ['Add it to Memory so it sticks across chats', 'Keep pasting it into every prompt', 'Start a brand-new chat each time'],
+      correct: 0,
+      why: 'Recurring context belongs in Memory — say it once and it\'s applied automatically in future conversations, no re-explaining.'
+    },
+    {
+      prm: 'A customer sent a warm, casual note. You want your reply to feel like it belongs in the thread.',
+      opts: ['Reach for your most formal template', 'Paste their email and tell ChatGPT to match its tone and length', 'Keep it generic to be safe'],
+      correct: 1,
+      why: 'Tone-matching: paste what you received and ask ChatGPT to mirror it. The reply lands in the same register instead of clashing.'
+    },
+    {
+      prm: 'Everything ChatGPT writes for you comes out generic and average, and you edit it heavily every time.',
+      opts: ['Write even shorter prompts', 'Build a Custom GPT with your role, audience, and voice rules', 'Accept that AI just sounds that way'],
+      correct: 1,
+      why: 'Generic output is missing context. Bake your role, audience, and voice into a Custom GPT once and every draft starts closer to sendable.'
+    }
+  ];
+  var gi = 0, gScore = 0, gymAnswered = false;
+  var gymCount = document.getElementById('gymCount');
+  var gymPrompt = document.getElementById('gymPrompt');
+  var gymOpts = document.getElementById('gymOpts');
+  var gymFb = document.getElementById('gymFb');
+  var gymNext = document.getElementById('gymNext');
+  var gymNextBtn = document.getElementById('gymNextBtn');
+
+  function renderGym() {
+    var q = G[gi];
+    gymAnswered = false;
+    gymCount.textContent = 'Question ' + (gi + 1) + ' of ' + G.length;
+    gymPrompt.textContent = q.prm;
+    gymOpts.innerHTML = '';
+    gymFb.className = 'gym-fb'; gymFb.textContent = '';
+    gymNext.classList.remove('show');
+    q.opts.forEach(function (txt, i) {
+      var b = document.createElement('button');
+      b.className = 'opt'; b.textContent = txt;
+      b.addEventListener('click', function () {
+        if (gymAnswered) return;
+        gymAnswered = true;
+        var ok = i === q.correct;
+        if (ok) gScore++;
+        Array.prototype.forEach.call(gymOpts.children, function (c, ci) {
+          c.disabled = true;
+          if (ci === q.correct) { c.classList.add('correct'); c.innerHTML += '<span class="tick">✓</span>'; }
+        });
+        if (!ok) { b.classList.add('wrong'); b.innerHTML += '<span class="tick">✕</span>'; }
+        gymFb.classList.add('show', ok ? 'ok' : 'no');
+        gymFb.innerHTML = (ok ? '<strong>Right.</strong> ' : '<strong>Not quite.</strong> ') + q.why;
+        gymNext.classList.add('show');
+      });
+      gymOpts.appendChild(b);
+    });
+  }
+  gymNextBtn.addEventListener('click', function () {
+    gi++;
+    if (gi < G.length) {
+      renderGym();
+    } else {
+      document.getElementById('gym').innerHTML =
+        '<div class="gym-score">You matched ' + gScore + ' / ' + G.length +
+        ' situations.<br><span style="font-weight:400;font-size:14px;color:var(--text-dim)">' +
+        (gScore === G.length ? 'You\'ve got the toolkit: specific prompts, rewrite for voice, tone-match, Memory, Custom GPT.' : 'Re-skim the five workflows — each situation maps to one of them.') +
+        '</span></div>';
+      document.getElementById('next4').disabled = false;
+    }
+  });
+  renderGym();
+})();
+</script>
 
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: ChatGPT for email: write 10 emails in the time of 1\nTRACK: Chatgpt Mastery\n\nLESSON CONTENT SUMMARY:\nChatGPT for email: write 10 emails in the time of 1 \u2014 LearningGPT L LearningGPT \u2190 ChatGPT Mastery Lesson 1 \u00b7 ChatGPT Mastery Free ~12 min read 5 workflows + Custom GPT setup ChatGPT for email: write 10 emails in the time of 1. ChatGPT isn't connected to your inbox the way Copilot is, but it has a different superpower: memory and customization. With one Custom GPT and a few habits, you turn ChatGPT into a personal email copywriter that knows your voice, your common situations, and your style. This lesson walks 5 workflows for using ChatGPT specifically on email \u2014 plus a 10-minute setup that compounds across every email you write for the rest of your career. If you also use Copilot in Outlook, the two are complementary. Copilot wins when you need inbox context. ChatGPT wins when you need a careful, polished draft and don't want generic AI tone. The mental model ChatGPT remembers things. Use that. The single biggest mistake people make: starting every email session with a blank chat and a one-line prompt. You give ChatGPT no context about you, your audience, or your style \u2014 so it produces the most-average-possible output and you spend three minutes editing. The Reframe ChatGPT is most useful when it knows about you. Three features let you bake context in once and reuse it forever: Custom Instructions (your global preferences), Memory (things it learns about you over time), and Custom GPTs (purpose-built mini-assistants with their own instructions and knowledge). The 10-minute setup at the end of this lesson uses all three. Workflow 01 The specific-friction prompt 1 Stop writing generic prompts Same pattern from the Foundations lesson : reference one specific detail from the prior interaction. ChatGPT will produce dramatically better drafts. Generic (bad) Write a follow-up email to a prospect. Specific friction (good) Reply to Marcus at Acme. We did a demo Thursday. He mentioned that their sales ops team is spending 6 hours every Friday on Salesforce hygiene. Goal: get him to agree to a 20-min call this week where I show the automation feature specifically. Friendly but direct, under 90 words. Time savings: 5 min \u2192 30 sec per draft. Workflow 02 Match the voice of a customer's email 2 Mirror their tone One of ChatGPT's most underused capabilities: paste an email you received and tell it to match the tone of the reply. Tone-matching prompt Here's an email I received: [paste]. Draft my reply agreeing to a meeting next Tuesday. Match the tone of their email \u2014 if they're casual, be casual; if formal, be formal. Same length as their email. Reply matches the energy of the original. Way more natural than a generic \"Hi [Name], thank you for reaching out\" template. Time savings: Awkward tone mismatch eliminated. Worth more than minutes. Workflow 03 Build a Custom GPT for your role 3 A reusable email writer that knows you The 10-minute setup that pays off forever. We're building a Custom GPT called \"My Email Assistant\" that knows your job, your common email typ\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: ChatGPT for email: write 10 emails in the time of 1\nTRACK: ChatGPT Mastery (Lesson 1, Free)\n\nLESSON CONTENT SUMMARY:\nChatGPT isn't connected to your inbox like Copilot, but its edge is memory and customization. The core habit: don't start with a blank chat and a one-line prompt. Give specific friction — name the person, the detail from the last interaction, the goal, and the constraints (length, tone). 'Write a follow-up to a prospect' is weak; 'Reply to Marcus at Acme, we demoed Thursday, he said sales ops loses 6 hrs/Friday to Salesforce hygiene, get him to a 20-min call this week, friendly, under 90 words' is sendable.\n\nFive workflows: (1) specific-friction prompts; (2) tone-matching — paste an email you received and tell ChatGPT to mirror its tone and length; (3) build a Custom GPT 'My Email Assistant' with your role, audience, and voice rules so it's better than vanilla ChatGPT every time; (4) the rewrite pattern — write a rough draft yourself, then ask ChatGPT to tighten it (best for sensitive emails where the voice must be yours); (5) use Memory for recurring context (your industry, subject-line rules, what 'draft a follow-up' means to you) so you stop re-explaining.\n\nThe AI-tell scrubbing idea: cut phrases like 'I hope this email finds you well,' 'just circling back / following up,' 'leverage this opportunity to touch base,' 'explore potential synergies,' and 'looking forward to hearing from you' — replace with direct, contraction-y language that ends on a concrete ask.\n\nThree customization features to know: Custom Instructions (global preferences), Memory (learned over time, in Settings > Personalization — prune occasionally), and Custom GPTs (purpose-built assistants). Don't put confidential details (customer names, financials) into Custom GPT instructions — keep them about style and process.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more\n- Be practical — give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only — no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -371,27 +565,21 @@ Default rules:
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -400,7 +588,6 @@ Default rules:
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -409,7 +596,6 @@ Default rules:
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;
@@ -449,6 +635,6 @@ Default rules:
   }
 })();
 </script>
-<script src="/gate.js"></script> 
+<script src="/gate.js"></script>
 </body>
 </html>

@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#2c7be5" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/copilot/copilot-studio" />
 <meta property="og:title" content="Copilot Studio — build custom agents for your workflows" />
@@ -30,90 +30,120 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
 .logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
 .nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
-.lesson { padding: 50px 0 100px; }
-.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+
+/* ── INTERACTIVE LESSON SHELL ── */
+.ilesson { padding: 46px 0 100px; }
+.lesson-meta { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
 .lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(44,123,229,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(44,123,229,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
 .lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
-.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #2c7be5 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
-.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
-.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #2c7be5, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(44,123,229,0.1); border: 1px solid rgba(44,123,229,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
+.ilesson h1 { font-size: clamp(31px, 4.5vw, 44px); font-weight: 800; line-height: 1.14; letter-spacing: -0.02em; margin: 0 0 18px; }
+.ilesson h1 .grad { background: linear-gradient(135deg, #2c7be5 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.ilesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.12em; }
+.deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 30px; padding-bottom: 26px; border-bottom: 1px solid var(--line); }
+
+.progwrap { position: sticky; top: 59px; z-index: 50; background: rgba(10,10,26,0.9); backdrop-filter: blur(8px); padding: 14px 0 12px; margin-bottom: 6px; }
+.progbar { height: 6px; background: rgba(255,255,255,0.07); border-radius: 999px; overflow: hidden; }
+.progfill { height: 100%; width: 0%; background: linear-gradient(90deg, #2c7be5, #7c5cff); border-radius: 999px; transition: width .4s cubic-bezier(.4,0,.2,1); }
+.progmeta { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--text-mute); margin-top: 7px; letter-spacing: 0.3px; }
+
+.step { display: none; animation: stepIn .4s ease; }
+.step.active { display: block; }
+@keyframes stepIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.step-k { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin: 26px 0 6px; }
+.step h2 { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; line-height: 1.25; }
+.step h3 { font-size: 18px; font-weight: 600; margin: 22px 0 9px; }
+.step p { font-size: 16.5px; color: var(--text); margin: 0 0 16px; }
+.step strong { font-weight: 700; } .step em { font-style: italic; }
+
+.card { background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 22px 26px; margin: 20px 0; }
+.card p:last-child { margin-bottom: 0; }
+.split2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+@media (max-width: 560px){ .split2 { grid-template-columns: 1fr; } }
+.scol { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius); padding: 15px 16px; }
+.scol .sh { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 9px; }
+.scol.build .sh { color: var(--brand); }
+.scol.buy .sh { color: var(--accent); }
+.scol ul { list-style: none; padding: 0; margin: 0; }
+.scol li { font-size: 13px; color: var(--text-dim); padding: 6px 0 6px 16px; position: relative; line-height: 1.45; }
+.scol li::before { content: '•'; position: absolute; left: 2px; color: var(--text-mute); }
+.pcard { background: var(--bg-soft); border: 1px solid var(--line); border-left: 3px solid var(--track); border-radius: 0 var(--radius) var(--radius) 0; padding: 14px 16px; margin-bottom: 11px; }
+.pcard .pn { font-size: 15px; font-weight: 700; color: var(--text); }
+.pcard .pd { font-size: 13.5px; color: var(--text-dim); margin-top: 4px; line-height: 1.5; }
+.prompt-example { background: rgba(0,0,0,0.32); border: 1px solid var(--line); border-radius: 10px; padding: 13px 15px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
 .prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 13px 16px; margin: 16px 0; font-size: 14.5px; }
 .gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #2c7be5, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
-.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
-.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
-.checklist li:first-child { border-top: none; padding-top: 0; }
-.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+
+/* choices */
+.choices { display: flex; flex-direction: column; gap: 10px; margin: 16px 0 8px; }
+.choice { text-align: left; background: var(--surface); border: 1px solid var(--line-strong); color: var(--text); border-radius: 12px; padding: 14px 16px; font-size: 15px; font-family: inherit; cursor: pointer; transition: border-color .15s, background .15s, transform .1s; line-height: 1.5; }
+.choice:hover:not(:disabled) { border-color: var(--brand-2); transform: translateX(2px); }
+.choice:disabled { cursor: default; }
+.choice.correct { border-color: var(--accent); background: rgba(68,224,164,0.1); }
+.choice.wrong { border-color: var(--danger); background: rgba(255,107,138,0.08); opacity: 0.75; }
+.fb { margin: 6px 0 0; padding: 14px 16px; border-radius: 12px; font-size: 14.5px; line-height: 1.6; display: none; }
+.fb.show { display: block; animation: stepIn .3s ease; }
+.fb.good { background: rgba(68,224,164,0.1); border: 1px solid rgba(68,224,164,0.3); }
+.fb.bad { background: rgba(255,181,71,0.08); border: 1px solid rgba(255,181,71,0.3); }
+.fb b { color: var(--text); }
+
+/* signature: anatomy assembler */
+.assembler { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 22px 24px; margin: 18px 0; }
+.blueprint { background: rgba(0,0,0,0.28); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin-bottom: 18px; }
+.blueprint .bph { font-size: 11px; text-transform: uppercase; letter-spacing: 0.9px; color: var(--brand-2); font-weight: 700; margin-bottom: 10px; }
+.bp-slot { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid var(--line); }
+.bp-slot:first-of-type { border-top: none; }
+.bp-key { font-size: 12px; font-weight: 700; color: var(--text-mute); width: 92px; flex-shrink: 0; text-transform: uppercase; letter-spacing: 0.5px; }
+.bp-val { font-size: 13.5px; color: var(--text-mute); font-family: 'SFMono-Regular', Consolas, monospace; }
+.bp-val.set { color: var(--accent); }
+.bp-val.miss { color: var(--warn); }
+.asm-prog { font-size: 13px; color: var(--text-mute); margin-bottom: 10px; }
+.asm-prog b { color: var(--accent); }
+.asm-q { font-size: 16px; font-weight: 600; margin: 0 0 14px; line-height: 1.4; }
+.asm-opts { display: flex; flex-direction: column; gap: 10px; }
+.asm-opt { text-align: left; background: var(--surface); border: 1px solid var(--line-strong); color: var(--text); border-radius: 11px; padding: 12px 15px; font-size: 14.5px; font-family: inherit; cursor: pointer; transition: all .14s; line-height: 1.4; }
+.asm-opt:hover:not(:disabled) { border-color: var(--brand-2); }
+.asm-opt:disabled { cursor: default; }
+.asm-opt.correct { border-color: var(--accent); background: rgba(68,224,164,0.12); }
+.asm-opt.wrong { border-color: var(--danger); background: rgba(255,107,138,0.08); opacity: 0.8; }
+
+.step-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 30px; gap: 12px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #7c5cff, #5b8def); color: white; padding: 13px 24px; border-radius: 11px; font-weight: 600; font-size: 15px; border: none; font-family: inherit; cursor: pointer; box-shadow: 0 6px 22px rgba(124,92,255,0.3); transition: transform .15s, opacity .15s; }
+.btn:hover:not(:disabled) { transform: translateY(-1px); color: white; }
+.btn:disabled { opacity: 0.4; cursor: default; box-shadow: none; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.btn-back { background: none; border: none; color: var(--text-mute); font-size: 14px; cursor: pointer; font-family: inherit; padding: 8px 4px; }
+.btn-back:hover { color: var(--text); } .btn-back:disabled { opacity: 0; cursor: default; }
+
+.complete { text-align: center; padding: 14px 0 0; }
+.complete .big { font-size: 48px; margin-bottom: 6px; }
+.checklist { margin: 26px 0; padding: 24px 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); text-align: left; }
+.checklist h3 { margin: 0 0 6px; font-size: 17px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 30px; position: relative; font-size: 15px; border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 13px; width: 18px; height: 18px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
-.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
-.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
-.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
+.challenge { margin: 24px 0; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); padding: 28px; text-align: left; }
+.challenge h3 { margin: 0 0 8px; font-size: 19px; }
+.next-up { margin: 26px 0 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); text-align: left; }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 8px; }
 .next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
+.next-up h3 { margin: 12px 0 8px; font-size: 19px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+
 footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -142,7 +172,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -154,119 +183,180 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <a href="/lessons/copilot/" class="nav-back">← Copilot Mastery</a>
   </div>
 </nav>
-<article class="lesson">
-  <div class="container">
+
+<div class="container">
+  <div class="ilesson">
     <div class="lesson-meta">
       <span class="chip">Agents · Lesson 07</span>
       <span class="chip chip-pro-plus">Pro+</span>
-      <span>~14 min read</span>
+      <span>~14 min</span>
       <span class="dot"></span>
-      <span>Build + deploy</span>
+      <span>Interactive</span>
     </div>
     <h1>Copilot Studio: <span class="grad serif">agents you architect, not buy.</span></h1>
-    <p class="deck">Microsoft's named agents (Researcher, Analyst, Sales, etc.) solve common patterns. For everything else, Copilot Studio is the build platform — visual flow editor, connectors to your systems, your own knowledge sources, and publishing as a real agent inside Copilot Chat or Teams. This is the Pro+ tier of Microsoft AI mastery.</p>
-    <h2><span class="num">Workflow 01</span> When to build vs. buy (use a named agent)</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>The build/buy decision for custom agents</h3></div><p>Don't build what you can configure. Most use cases are better served by a named Microsoft agent + good configuration than by building from scratch. The framework below tells you when to build.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Build/buy decision</span>Build a custom agent when:
-• Your workflow uses systems Microsoft&#x27;s named agents don&#x27;t touch (line-of-business apps, niche SaaS)
-• Your process has unusual logic Microsoft doesn&#x27;t anticipate (industry-specific compliance, multi-step approvals)
-• You need to embed agent capability in a specific product or experience
-• Your customer-facing requirements need branding or specific UX
+    <p class="deck">Microsoft's named agents solve common patterns. For everything else, Copilot Studio is the build platform — a visual editor, connectors to your systems, your own knowledge, and publishing as a real agent inside Copilot Chat or Teams. This is the Pro+ tier: knowing when to build, how to structure an agent, and how to ship it without breaking things.</p>
 
-Use a named agent (Researcher, Analyst, etc.) when:
-• The use case is general (research, analysis, meeting notes, sales prep)
-• Microsoft already covers 80% of what you need
-• The remaining 20% can be solved via configuration or prompting
-• You&#x27;re not ready to maintain a custom agent over time</div><h4>Best use cases</h4><ul><li>Initial evaluation of a new agent project</li><li>Migration assessment (we built an agent — should we keep it?)</li><li>Team capability planning</li><li>Total-cost-of-ownership analysis</li></ul><div class="gotcha">Building custom agents is fun. The trap is building things that 70% duplicate a named agent. Always verify the named agent can't do what you need first.</div><div class="savings"><strong>Time savings:</strong> Building/buy clarity: avoids weeks of work on the wrong path.</div></div><h2><span class="num">Workflow 02</span> Build a custom agent — the structure</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>The pieces of a Copilot Studio agent</h3></div><p>A Copilot Studio agent has 4 main pieces: trigger, topics (the conversations it handles), knowledge sources (your data), and actions (the things it can do).</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Agent structure</span>Anatomy of a custom agent:
+    <div class="progwrap">
+      <div class="progbar"><div class="progfill" id="prog"></div></div>
+      <div class="progmeta"><span id="progStep">Step 1 of 6</span><span id="progPct">0% complete</span></div>
+    </div>
 
-1. **Trigger** — what starts the conversation?
-   - User invokes by name (chat with &#x27;expense agent&#x27;)
-   - Inline trigger (typing &#x27;submit expense&#x27; anywhere in Copilot)
-   - Programmatic (another system calls it)
-
-2. **Topics** — the conversation flows it handles
-   - Each topic is a flow: triggers, dialog nodes, branching logic
-   - Example: &#x27;Submit an expense&#x27; topic handles the whole flow from category to amount to receipt upload
-
-3. **Knowledge sources** — what it knows
-   - SharePoint sites, OneDrive folders, public websites, custom docs
-   - The agent searches these when answering related questions
-
-4. **Actions** — what it can do
-   - Power Automate flows (your existing workflows)
-   - Custom connectors to your APIs
-   - Native Microsoft actions (create a Teams message, file a SharePoint item, etc.)</div><h4>Best use cases</h4><ul><li>Internal IT helpdesk agent</li><li>Expense or PTO submission agent</li><li>Customer-facing FAQ agent</li><li>Vendor onboarding workflow agent</li></ul><div class="gotcha">Topics that branch heavily get hard to maintain. Keep individual topics focused; chain them through actions if a workflow is multi-step.</div><div class="savings"><strong>Time savings:</strong> Custom agent for a real workflow: 2-3 weeks to build, then permanent.</div></div><h2><span class="num">Workflow 03</span> Knowledge sources that work</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>Connect the right data, structured right</h3></div><p>Most custom-agent failures come from messy knowledge sources. The agent searches what you point at — if it's outdated, scattered, or contradictory, the agent confuses users.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Knowledge curation</span>Knowledge source best practices:
-
-• **Curate, don&#x27;t dump** — Don&#x27;t point the agent at &#x27;all of SharePoint.&#x27; Point it at 5-15 specific, well-maintained pages or documents.
-• **One source of truth per topic** — If your expense policy exists in 3 places, the agent will get confused. Designate one as canonical, redirect the others.
-• **Last-updated dates matter** — agents preferring recent sources is built-in. Documents 2+ years old get used less reliably.
-• **Structure your docs** — Headings, bullet lists, clear sections. The agent finds info faster.
-• **Anti-patterns to flag** — outdated wiki pages, drafts marked &#x27;final v2,&#x27; SharePoint sites with permissions you can&#x27;t audit.</div><h4>Best use cases</h4><ul><li>Building an HR policy agent</li><li>IT helpdesk agent powered by your runbooks</li><li>Sales enablement agent on internal playbooks</li><li>Compliance answer agent on policy docs</li></ul><div class="gotcha">Knowledge source quality is the single biggest factor in agent quality. A well-prompted agent on bad data is worse than a basic agent on great data.</div><div class="savings"><strong>Time savings:</strong> Curated sources: agent quality from 'sometimes right' to 'reliably correct.'</div></div><h2><span class="num">Workflow 04</span> Actions — let the agent do, not just say</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">4</div><h3>Wire up Power Automate and custom connectors</h3></div><p>The transformative capability: actions let the agent create tickets, send approvals, update records — not just answer questions.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Actions design</span>Common action patterns:
-
-• **Lookup actions** (read-only, no confirmation needed)
-   - Look up an employee&#x27;s PTO balance
-   - Check ticket status in ServiceNow
-   - Find a customer&#x27;s contract end date in Dynamics
-
-• **Create-with-confirmation actions** (always confirm before executing)
-   - File an expense report
-   - Submit a PTO request
-   - Open a support ticket
-   - Send a meeting request
-
-• **Notify actions** (low-risk)
-   - Post to a Teams channel
-   - Send a calendar invite
-   - Add a SharePoint item
-
-• **Avoid auto-actions** (require human-in-the-loop)
-   - Approving anything financial
-   - Sending external emails
-   - Modifying production data
-   - Any irreversible action</div><h4>Best use cases</h4><ul><li>Self-service IT ticket creation</li><li>HR self-service (PTO, benefits questions, etc.)</li><li>Sales pipeline updates</li><li>Internal expense and finance workflows</li></ul><div class="gotcha">Always design with confirmation for create/modify actions, even if it feels redundant. The first time the agent auto-submits something incorrect, you'll wish you had.</div><div class="savings"><strong>Time savings:</strong> Self-service agents: reduce manual workflow handling 60-80%.</div></div><h2><span class="num">Workflow 05</span> Test and publish</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">5</div><h3>How to roll out a custom agent without breaking things</h3></div><p>The last step is rollout. Test thoroughly, deploy to a pilot group, expand based on real usage.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Rollout</span>Rollout sequence:
-
-1. **Internal test** — invite 3-5 trusted users to test for 1 week
-   - Have them try to break it: ambiguous prompts, edge cases, off-topic queries
-   - Track every failure or weird interaction
-
-2. **Iteration** — fix the top 10 issues from internal test
-   - Add knowledge sources for what was missing
-   - Refine topic flows for confused conversations
-   - Strengthen guardrails for the off-topic prompts
-
-3. **Pilot** — release to a small department (10-30 users)
-   - Track usage metrics: invocations, completed flows, fallback to human
-   - Survey users at end of pilot
-   - Iterate one more time
-
-4. **General release** — publish to the broader org
-   - Include training material: what the agent does, what it doesn&#x27;t
-   - Set up feedback channel for bug reports
-   - Monitor monthly metrics; iterate quarterly</div><h4>Best use cases</h4><ul><li>Any custom agent shipping to production</li><li>Major changes to an existing agent</li><li>Migration from a third-party tool to a custom agent</li><li>Org-wide deployments</li></ul><div class="gotcha">Skip the pilot at your peril. Bugs that pass internal test consistently surface in pilot. Don't go org-wide until pilot is clean.</div><div class="savings"><strong>Time savings:</strong> Disciplined rollout: 1 month upfront → years of clean operation.</div></div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Build a small, scoped custom agent end-to-end</h2>
-      <p>Pick a real workflow that's annoying for your team: PTO requests, expense submissions, helpdesk routing. Build a Copilot Studio agent for it end-to-end. Pilot it with 5 users. See whether it's worth scaling. The skill is in the iteration, not the first version.</p>
-      <div class="btn-row">
-        <a href="/lessons/copilot/" class="btn">Back to Copilot Mastery →</a>
-        <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+    <!-- STEP 1 — build vs buy predict -->
+    <section class="step active" data-step="1">
+      <span class="step-k">First principle</span>
+      <h2>Don't build what you can configure</h2>
+      <p>Copilot Studio is powerful, and that's the trap — it's easy to spend three weeks building something a named agent already does. The first skill isn't building. It's knowing when <em>not</em> to.</p>
+      <h3>Predict first</h3>
+      <p>You want an agent that researches across your SharePoint docs <em>and</em> the web, then writes a brief. Build it in Copilot Studio, or use a named agent?</p>
+      <div class="choices" id="c1">
+        <button class="choice" onclick="pick(this,1,'a')">Build custom — it touches your data, so it has to be custom</button>
+        <button class="choice" onclick="pick(this,1,'b')">Use Researcher — it already blends internal data + web; don't rebuild it</button>
+        <button class="choice" onclick="pick(this,1,'c')">Build it, plus a second one as a backup</button>
       </div>
-    </div>
-    <div class="checklist">
-      <h3>What you can do now</h3>
-      <ul>
-        <li>Verify a named Microsoft agent can't do it before building custom</li>
-        <li>Curate knowledge sources tightly — quality over quantity</li>
-        <li>Use confirmation for create/modify actions, never auto-execute</li>
-        <li>Pilot with a small group before org-wide release</li>
-        <li>Set up feedback monitoring after release</li>
-      </ul>
-    </div>
-    <div class="next-up">
-      <span class="pro-plus-tag">Pro+</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in Copilot Mastery</div>
-      <h3>The full Copilot agent ecosystem</h3>
-      <p>You've now covered the 7 most important Copilot agents — and the platform to build your own. The next horizon is governance, agent inventory management, and the role of the AI architect. <a href="/lessons/copilot/">See the track →</a></p>
-    </div>
+      <div class="fb" id="fb1"></div>
+      <div class="step-nav">
+        <button class="btn-back" disabled>← Back</button>
+        <button class="btn" id="next1" disabled onclick="go(2)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- STEP 2 — build/buy + anatomy (show) -->
+    <section class="step" data-step="2">
+      <span class="step-k">When to build · the anatomy</span>
+      <h2>Build only when a named agent can't reach it</h2>
+      <div class="split2">
+        <div class="scol build">
+          <div class="sh">Build custom when</div>
+          <ul>
+            <li>It uses systems Microsoft's agents don't touch (line-of-business apps, niche SaaS)</li>
+            <li>Your process has unusual logic (industry compliance, multi-step approvals)</li>
+            <li>You need it embedded in a specific product or branded UX</li>
+          </ul>
+        </div>
+        <div class="scol buy">
+          <div class="sh">Use a named agent when</div>
+          <ul>
+            <li>The job is general (research, analysis, notes, sales prep)</li>
+            <li>Microsoft already covers ~80% of it</li>
+            <li>The last 20% is solvable by configuration or prompting</li>
+          </ul>
+        </div>
+      </div>
+      <p>When you do build, every Copilot Studio agent is the same four parts:</p>
+      <div class="pcard"><div class="pn">Trigger</div><div class="pd">What starts it — a user invoking it by name, an inline phrase, or another system calling it.</div></div>
+      <div class="pcard"><div class="pn">Topic</div><div class="pd">A focused conversation flow it handles (e.g. "Submit an expense"), with its own dialog and branching.</div></div>
+      <div class="pcard"><div class="pn">Knowledge</div><div class="pd">The data it searches to answer — specific SharePoint pages, docs, sites.</div></div>
+      <div class="pcard"><div class="pn">Actions</div><div class="pd">The things it can <em>do</em> — Power Automate flows, custom connectors, native Microsoft actions.</div></div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(1)">← Back</button>
+        <button class="btn" onclick="go(3)">Build one →</button>
+      </div>
+    </section>
+
+    <!-- STEP 3 — signature: anatomy assembler -->
+    <section class="step" data-step="3">
+      <span class="step-k">Do it · architect the agent</span>
+      <h2>Spec out a "PTO Request" agent</h2>
+      <p>You're building an agent that lets staff book time off. Choose the right option for each of the four parts — the blueprint fills in as you go.</p>
+      <div class="assembler">
+        <div class="blueprint">
+          <div class="bph">PTO Request Agent · blueprint</div>
+          <div class="bp-slot"><span class="bp-key">Trigger</span><span class="bp-val" id="bp0">— not set</span></div>
+          <div class="bp-slot"><span class="bp-key">Topic</span><span class="bp-val" id="bp1">— not set</span></div>
+          <div class="bp-slot"><span class="bp-key">Knowledge</span><span class="bp-val" id="bp2">— not set</span></div>
+          <div class="bp-slot"><span class="bp-key">Action</span><span class="bp-val" id="bp3">— not set</span></div>
+        </div>
+        <div class="asm-prog" id="asmProg">Part <b id="asmNum">1</b> of 4</div>
+        <div class="asm-q" id="asmQ"></div>
+        <div class="asm-opts" id="asmOpts"></div>
+        <div class="fb" id="fb3"></div>
+        <button class="btn" id="asmNext" style="margin-top:16px;display:none" onclick="asmAdvance()">Next part →</button>
+      </div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(2)">← Back</button>
+        <button class="btn" id="next3" disabled onclick="go(4)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- STEP 4 — knowledge sources (show) -->
+    <section class="step" data-step="4">
+      <span class="step-k">Knowledge</span>
+      <h2>The data decides the quality</h2>
+      <p>Most custom-agent failures aren't the flow — they're the sources. The agent searches what you point it at, so messy, stale, or contradictory data makes it confidently wrong.</p>
+      <div class="card">
+        <div class="pcard"><div class="pn">Curate, don't dump</div><div class="pd">Point it at 5–15 specific, well-maintained pages — never "all of SharePoint."</div></div>
+        <div class="pcard"><div class="pn">One source of truth per topic</div><div class="pd">If the PTO policy lives in three places, the agent contradicts itself. Pick one canonical doc; redirect the rest.</div></div>
+        <div class="pcard"><div class="pn">Fresh &amp; structured</div><div class="pd">Recent, well-headed docs get used reliably; two-year-old wiki pages and "final v2 (draft)" do not.</div></div>
+      </div>
+      <div class="gotcha">Knowledge quality is the single biggest factor in agent quality. A well-prompted agent on bad data is worse than a basic agent on great data.</div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(3)">← Back</button>
+        <button class="btn" onclick="go(5)">Wire the actions →</button>
+      </div>
+    </section>
+
+    <!-- STEP 5 — actions + rollout + pick -->
+    <section class="step" data-step="5">
+      <span class="step-k">Actions, safely</span>
+      <h2>Let it do things — with a hand on the wheel</h2>
+      <p>Actions are what make an agent more than a chatbot. They also carry the risk, so tier them:</p>
+      <div class="pcard"><div class="pn">Lookups → run freely</div><div class="pd">Read-only and reversible: check a PTO balance, a ticket status, a contract date. No confirmation needed.</div></div>
+      <div class="pcard"><div class="pn">Create / modify → confirm first</div><div class="pd">File an expense, submit PTO, open a ticket — always show a summary and require a confirm before executing.</div></div>
+      <div class="pcard"><div class="pn">Financial / external / irreversible → human in the loop</div><div class="pd">Approving money, sending external email, changing production data — never auto. A person decides.</div></div>
+      <p style="font-size:14.5px;color:var(--text-dim)">And ship it in order: internal test (try to break it) → fix the top issues → pilot with 10–30 users → general release with training. Skip the pilot and the bugs surface org-wide.</p>
+      <h3>The call</h3>
+      <p>Your PTO agent's action can file the request straight into HR's system. How do you wire it?</p>
+      <div class="choices" id="c5">
+        <button class="choice" onclick="pick(this,5,'a')">Auto-file the moment it has the dates — that's the fastest</button>
+        <button class="choice" onclick="pick(this,5,'b')">Show a summary and require the user to confirm before it files</button>
+        <button class="choice" onclick="pick(this,5,'c')">Email the whole HR team to file it manually</button>
+      </div>
+      <div class="fb" id="fb5"></div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(4)">← Back</button>
+        <button class="btn" id="next5" disabled onclick="go(6)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- STEP 6 — completion -->
+    <section class="step" data-step="6">
+      <div class="complete">
+        <div class="big">🛠️</div>
+        <span class="step-k">Lesson complete</span>
+        <h2>You can architect an agent, not just use one</h2>
+      </div>
+      <div class="checklist">
+        <h3>What you can do now</h3>
+        <ul>
+          <li>Check a named agent can't do it before you build custom</li>
+          <li>Structure an agent as trigger → topic → knowledge → actions</li>
+          <li>Curate knowledge tightly — one canonical, current source per topic</li>
+          <li>Confirm before create/modify actions; never auto-run anything irreversible</li>
+          <li>Test, then pilot with a small group, before going org-wide</li>
+        </ul>
+      </div>
+      <div class="challenge">
+        <h3>Your move: build one small, scoped agent</h3>
+        <p>Pick a real annoyance — PTO requests, expense submissions, helpdesk routing. Build it end-to-end in Copilot Studio: trigger, one focused topic, a single canonical knowledge source, and a confirm-first action. Pilot it with five people. The skill is in the iteration, not version one.</p>
+        <div class="btn-row">
+          <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+        </div>
+      </div>
+      <div class="next-up">
+        <span class="pro-plus-tag">Pro+</span>
+        <div class="lbl" style="margin-top:12px">Up next in Copilot Mastery</div>
+        <h3>Copilot at scale — rollout, governance &amp; the AI architect</h3>
+        <p>Building one agent is the start. Next is the org view: adoption playbooks, prompt libraries by department, security and compliance settings, agent inventory, and measuring real ROI.</p>
+        <div class="btn-row">
+          <a href="/lessons/copilot/enterprise-rollout" class="btn">Continue to Copilot at scale →</a>
+          <a href="/lessons/copilot/" class="btn ghost">Back to all lessons</a>
+        </div>
+      </div>
+    </section>
+
   </div>
-</article>
+</div>
+
 <footer>
   <div class="footer-inner">
     <div>© 2026 LearningGPT · Independent. Not affiliated with Microsoft.</div>
@@ -279,7 +369,6 @@ Use a named agent (Researcher, Analyst, etc.) when:
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -291,10 +380,10 @@ Use a named agent (Researcher, Analyst, etc.) when:
     <button class="coach-close" id="coachClose">✕</button>
   </div>
   <div class="coach-messages" id="coachMessages">
-    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson on Copilot Studio. Ask me about the build-vs-buy call, structuring an agent, curating knowledge, or wiring actions safely. What are you thinking of building?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -302,15 +391,140 @@ Use a named agent (Researcher, Analyst, etc.) when:
   </div>
 </div>
 
+<script id="lessonScript">
+/* ── stepper ── */
+var TOTAL = 6;
+var cur = 1;
+function go(n){
+  if(n<1||n>TOTAL) return;
+  document.querySelector('.step[data-step="'+cur+'"]').classList.remove('active');
+  cur = n;
+  document.querySelector('.step[data-step="'+cur+'"]').classList.add('active');
+  var pct = Math.round(((cur-1)/(TOTAL-1))*100);
+  document.getElementById('prog').style.width = pct+'%';
+  document.getElementById('progStep').textContent = 'Step '+cur+' of '+TOTAL;
+  document.getElementById('progPct').textContent = pct+'% complete';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
 
-<script id="coachScript">
+/* ── predict / pick ── */
+var pickMsg = {
+  '1': {
+    correct: 'b',
+    good: '<b>Use Researcher.</b> Blending internal data with the web and writing a brief is exactly what it already does — building a custom version would be weeks of work to recreate something maintained for you. Build only when a named agent can\'t reach your systems or your logic is genuinely unusual.',
+    bad: '<b>Don\'t build this one.</b> "It touches our data" doesn\'t require custom — Researcher already searches your M365 plus the web. Reserve Copilot Studio for workflows named agents can\'t do; here, configuration wins.'
+  },
+  '5': {
+    correct: 'b',
+    good: '<b>Confirm first.</b> Filing PTO is a create action that changes a record, so the agent shows a summary and waits for the user to confirm before it executes. Lookups can run freely; creates and anything irreversible always get a human checkpoint.',
+    bad: '<b>Not quite.</b> Auto-filing skips the checkpoint that catches a wrong date or a misread request; punting to HR email throws away the automation. The rule: create/modify actions require a confirmation step before they run.'
+  }
+};
+function pick(btn, step, val){
+  var box = document.getElementById('c'+step);
+  if(box.dataset.done) return;
+  box.dataset.done = '1';
+  var info = pickMsg[String(step)];
+  Array.prototype.forEach.call(box.querySelectorAll('.choice'), function(b){
+    b.disabled = true;
+    var v = b.getAttribute('onclick').match(/'([a-z])'\)/)[1];
+    if(v === info.correct) b.classList.add('correct');
+    else if(b === btn) b.classList.add('wrong');
+  });
+  var fb = document.getElementById('fb'+step);
+  var ok = val === info.correct;
+  fb.className = 'fb show ' + (ok ? 'good' : 'bad');
+  fb.innerHTML = ok ? info.good : info.bad;
+  document.getElementById('next'+step).disabled = false;
+}
+
+/* ── signature: anatomy assembler ── */
+var ANAT = [
+  { slot:0, fill:'User invokes "PTO agent" / types "submit PTO"',
+    q:'TRIGGER — how should the agent start?',
+    opts:['The user invokes it by name or types "submit PTO"','It runs on a schedule every hour whether or not anyone asks','It auto-files PTO for everyone each Friday'],
+    correct:0,
+    why:'A request agent is started by the user invoking it by name or an inline phrase. Schedules and blanket auto-filing aren\'t triggers for a request flow.' },
+  { slot:1, fill:'"Submit PTO" flow: dates → balance → confirm → file',
+    q:'TOPIC — what\'s the core conversation flow?',
+    opts:['A focused "Submit PTO" flow: ask dates → check balance → confirm → file','A single static FAQ answer about the PTO policy','One giant topic covering payroll, benefits, and PTO together'],
+    correct:0,
+    why:'A topic is a focused flow. Keep it scoped to submitting PTO — a static answer isn\'t a flow, and a mega-topic gets unmaintainable.' },
+  { slot:2, fill:'The one canonical, current PTO policy page',
+    q:'KNOWLEDGE — what should it draw on?',
+    opts:['The single canonical PTO policy page, current and structured','All of SharePoint, pointed at the whole tenant','An old wiki page titled "PTO policy final v2 (draft)"'],
+    correct:0,
+    why:'Curate to one canonical, up-to-date source. Dumping all of SharePoint or using a stale draft is how agents start contradicting themselves.' },
+  { slot:3, fill:'Power Automate flow that files it — after the user confirms',
+    q:'ACTION — how should it actually file the request?',
+    opts:['A Power Automate flow that files it — after the user confirms','Auto-approve and deduct the PTO with no confirmation','Just tell the user to email HR and do it themselves'],
+    correct:0,
+    why:'A create action gets a confirmation step before it executes. Auto-deducting is unsafe; punting to email means the agent isn\'t actually doing anything.' }
+];
+var ai = 0, aDone = false, aRight = 0;
+function asmRender(){
+  var q = ANAT[ai];
+  document.getElementById('asmNum').textContent = ai+1;
+  document.getElementById('asmQ').textContent = q.q;
+  var opts = document.getElementById('asmOpts');
+  opts.innerHTML = '';
+  q.opts.forEach(function(label, idx){
+    var b = document.createElement('button');
+    b.className = 'asm-opt';
+    b.textContent = label;
+    b.onclick = function(){ asmAnswer(idx, b); };
+    opts.appendChild(b);
+  });
+  document.getElementById('fb3').className = 'fb';
+  document.getElementById('fb3').innerHTML = '';
+  document.getElementById('asmNext').style.display = 'none';
+}
+function asmAnswer(idx, btn){
+  if(aDone) return;
+  aDone = true;
+  var q = ANAT[ai];
+  var opts = document.getElementById('asmOpts').querySelectorAll('.asm-opt');
+  opts.forEach(function(b, i){
+    b.disabled = true;
+    if(i === q.correct) b.classList.add('correct');
+    else if(b === btn) b.classList.add('wrong');
+  });
+  var ok = idx === q.correct;
+  if(ok) aRight++;
+  var bp = document.getElementById('bp'+q.slot);
+  bp.textContent = q.fill;
+  bp.className = 'bp-val ' + (ok ? 'set' : 'miss');
+  var fb = document.getElementById('fb3');
+  fb.className = 'fb show ' + (ok ? 'good' : 'bad');
+  fb.innerHTML = (ok ? '✓ ' : '✗ ') + q.why;
+  var nb = document.getElementById('asmNext');
+  if(ai < ANAT.length-1){ nb.style.display = 'inline-flex'; nb.textContent = 'Next part →'; }
+  else {
+    nb.style.display = 'inline-flex';
+    nb.textContent = 'See the blueprint →';
+    nb.onclick = asmFinish;
+  }
+}
+function asmAdvance(){
+  if(ai < ANAT.length-1){ ai++; aDone = false; asmRender(); }
+}
+function asmFinish(){
+  var fb = document.getElementById('fb3');
+  fb.className = 'fb show good';
+  fb.innerHTML = '<b>That\'s a shippable agent in four parts</b> — and you got ' + aRight + ' of 4. Trigger, one focused topic, a single canonical knowledge source, and a confirm-first action. Every Copilot Studio agent, however complex, is just more of these four pieces.';
+  document.getElementById('asmNext').style.display = 'none';
+  document.getElementById('next3').disabled = false;
+  window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
+}
+asmRender();
+
+/* ── AI COACH ── */
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Copilot Studio \u2014 build custom agents for your workflows\nTRACK: Copilot Mastery\n\nLESSON CONTENT SUMMARY:\nCopilot Studio \u2014 build custom agents for your workflows \u2014 LearningGPT L LearningGPT \u2190 Copilot Mastery Agents \u00b7 Lesson 07 Pro+ ~14 min read Build + deploy Copilot Studio: agents you architect, not buy. Microsoft's named agents (Researcher, Analyst, Sales, etc.) solve common patterns. For everything else, Copilot Studio is the build platform \u2014 visual flow editor, connectors to your systems, your own knowledge sources, and publishing as a real agent inside Copilot Chat or Teams. This is the Pro+ tier of Microsoft AI mastery. Workflow 01 When to build vs. buy (use a named agent) 1 The build/buy decision for custom agents Don't build what you can configure. Most use cases are better served by a named Microsoft agent + good configuration than by building from scratch. The framework below tells you when to build. The prompt that works Build/buy decision Build a custom agent when: \u2022 Your workflow uses systems Microsoft&#x27;s named agents don&#x27;t touch (line-of-business apps, niche SaaS) \u2022 Your process has unusual logic Microsoft doesn&#x27;t anticipate (industry-specific compliance, multi-step approvals) \u2022 You need to embed agent capability in a specific product or experience \u2022 Your customer-facing requirements need branding or specific UX Use a named agent (Researcher, Analyst, etc.) when: \u2022 The use case is general (research, analysis, meeting notes, sales prep) \u2022 Microsoft already covers 80% of what you need \u2022 The remaining 20% can be solved via configuration or prompting \u2022 You&#x27;re not ready to maintain a custom agent over time Best use cases Initial evaluation of a new agent project Migration assessment (we built an agent \u2014 should we keep it?) Team capability planning Total-cost-of-ownership analysis Building custom agents is fun. The trap is building things that 70% duplicate a named agent. Always verify the named agent can't do what you need first. Time savings: Building/buy clarity: avoids weeks of work on the wrong path. Workflow 02 Build a custom agent \u2014 the structure 2 The pieces of a Copilot Studio agent A Copilot Studio agent has 4 main pieces: trigger, topics (the conversations it handles), knowledge sources (your data), and actions (the things it can do). The prompt that works Agent structure Anatomy of a custom agent: 1. **Trigger** \u2014 what starts the conversation? - User invokes by name (chat with &#x27;expense agent&#x27;) - Inline trigger (typing &#x27;submit expense&#x27; anywhere in Copilot) - Programmatic (another system calls it) 2. **Topics** \u2014 the conversation flows it handles - Each topic is a flow: triggers, dialog nodes, branching logic - Example: &#x27;Submit an expense&#x27; topic handles the whole flow from category to amount to receipt upload 3. **Knowledge sources** \u2014 what it knows - SharePoint sites, OneDrive folders, public websites, custom docs - The agent searches these when answering related questions 4. **Actions** \u2014 what it can do - Power Automate flows (your existing workflows) - Custom connectors to your API\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Copilot Studio — build custom agents for your workflows\nTRACK: Copilot Mastery (Agents block, Lesson 07, Pro+)\n\nLESSON CONTENT SUMMARY:\nCopilot Studio is Microsoft's platform for building custom agents (visual editor, connectors, knowledge sources) and publishing them into Copilot Chat or Teams. The skills: knowing when to build, how to structure an agent, curating knowledge, wiring actions safely, and rolling out.\n\nBUILD vs BUY: Don't build what you can configure. Use a named agent (Researcher, Analyst, etc.) when the job is general and Microsoft covers ~80% with the rest solvable by configuration/prompting. Build custom only when the workflow uses systems the named agents don't touch (line-of-business apps, niche SaaS), has unusual logic (industry compliance, multi-step approvals), or needs embedding/branding. Trap: building things that 70% duplicate a named agent.\n\nAGENT ANATOMY (4 parts):\n1. Trigger — what starts it (user invokes by name, an inline phrase, or a programmatic call).\n2. Topic — a focused conversation flow with dialog and branching (e.g. 'Submit an expense'). Keep topics scoped; chain via actions for multi-step.\n3. Knowledge — the data it searches (specific SharePoint pages, docs, sites).\n4. Actions — what it can DO (Power Automate flows, custom connectors, native Microsoft actions).\n\nKNOWLEDGE CURATION (biggest quality factor): curate don't dump (5-15 specific maintained pages, never 'all of SharePoint'); one canonical source of truth per topic; prefer fresh, well-structured docs; avoid stale wikis and 'final v2 (draft)' files. A well-prompted agent on bad data is worse than a basic agent on great data.\n\nACTIONS, TIERED BY RISK:\n- Lookups (read-only, reversible): run freely, no confirmation (PTO balance, ticket status, contract date).\n- Create/modify: ALWAYS confirm before executing (file expense, submit PTO, open ticket) — show a summary and require a confirm.\n- Financial/external/irreversible (approve money, send external email, change production data): never auto — human in the loop.\n\nROLLOUT: internal test (3-5 users try to break it) → fix top issues → pilot with 10-30 users, track metrics → general release with training and a feedback channel. Don't skip the pilot; bugs that pass internal test surface in pilot.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content.\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more.\n- Be practical — give real work examples when helpful.\n- If asked about something not in this lesson, briefly answer and point to where they can learn more.\n- Never make up Copilot Studio features that don't exist.\n- Plain conversational text only — no markdown symbols like ** or ##.\n- Do not start responses with \"Great question!\" or similar filler phrases.";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -318,27 +532,21 @@ Use a named agent (Researcher, Analyst, etc.) when:
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -347,7 +555,6 @@ Use a named agent (Researcher, Analyst, etc.) when:
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -356,7 +563,6 @@ Use a named agent (Researcher, Analyst, etc.) when:
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

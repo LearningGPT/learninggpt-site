@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#10a37f" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/chatgpt/custom-gpts" />
 <meta property="og:title" content="Custom GPTs: build your first one in 20 minutes" />
@@ -34,47 +34,115 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
 .lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(16,163,127,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(16,163,127,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
 .lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
-.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
 .lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #10a37f 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .grad { background: linear-gradient(135deg, #10a37f 0%, #44e0a4 50%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
 .lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+
+/* ── STEPPER ── */
+.stepper { position: sticky; top: 57px; z-index: 50; background: rgba(10,10,26,0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); margin: 0 0 8px; padding: 12px 0; }
+.stepper-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; align-items: center; gap: 14px; }
+.prog-track { flex: 1; height: 6px; background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden; }
+.prog-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #10a37f, #7c5cff); border-radius: 999px; transition: width .4s cubic-bezier(.4,0,.2,1); }
+.prog-label { font-size: 12px; color: var(--text-mute); font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+.step { display: none; animation: stepIn .45s cubic-bezier(.2,.7,.2,1); }
+.step.active { display: block; }
+@keyframes stepIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+.step-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin: 8px 0 6px; }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 6px 0 16px; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 26px 0 10px; }
 .lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
 .lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(16,163,127,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(16,163,127,0.25); border-radius: var(--radius-lg); position: relative; }
+.lesson ol, .lesson ul { padding-left: 22px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; }
+
+.callout { margin: 26px 0; padding: 20px 24px; background: linear-gradient(135deg, rgba(16,163,127,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(16,163,127,0.25); border-radius: var(--radius-lg); position: relative; }
 .callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #10a37f, #7c5cff); border-radius: 2px 0 0 2px; }
 .callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
 .callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(16,163,127,0.1); border: 1px solid rgba(16,163,127,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+
+/* ── PREDICT ── */
+.predict { margin: 26px 0; padding: 22px 24px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+.predict .q { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
+.opt { display: block; width: 100%; text-align: left; padding: 14px 16px; margin: 8px 0; background: rgba(255,255,255,0.03); border: 1px solid var(--line-strong); border-radius: 12px; color: var(--text); font-size: 14.5px; font-family: inherit; cursor: pointer; transition: all .18s; }
+.opt:hover:not(:disabled) { border-color: var(--track); background: rgba(16,163,127,0.07); }
+.opt:disabled { cursor: default; }
+.opt.correct { border-color: var(--accent); background: rgba(68,224,164,0.12); }
+.opt.wrong { border-color: var(--danger); background: rgba(255,107,138,0.10); opacity: 0.85; }
+.opt .tick { float: right; font-weight: 700; }
+.reveal { margin-top: 14px; padding: 16px 18px; border-radius: 12px; background: rgba(68,224,164,0.07); border: 1px solid rgba(68,224,164,0.25); font-size: 14.5px; display: none; }
+.reveal.show { display: block; animation: stepIn .4s ease; }
+.reveal.miss { background: rgba(255,181,71,0.07); border-color: rgba(255,181,71,0.25); }
+
+/* ── BUILDER ── */
+.builder { margin: 26px 0; }
+.tune-row { background: linear-gradient(180deg, var(--surface), var(--bg-soft)); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 14px; }
+.tune-facet { font-size: 12px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-mute); font-weight: 700; margin-bottom: 12px; }
+.tune-opts { display: flex; flex-direction: column; gap: 8px; }
+.tune { text-align: left; padding: 11px 14px; border-radius: 10px; background: rgba(255,255,255,0.03); border: 1px solid var(--line-strong); color: var(--text-dim); font-size: 13.5px; font-family: inherit; cursor: pointer; transition: all .15s; }
+.tune:hover:not(:disabled) { border-color: var(--track); color: var(--text); }
+.tune:disabled { cursor: default; }
+.tune .kind { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; padding: 1px 7px; border-radius: 999px; margin-right: 8px; vertical-align: middle; }
+.tune.lock-right { border-color: var(--accent); background: rgba(68,224,164,0.12); color: #d6fff0; }
+.tune.lock-wrong { border-color: var(--danger); background: rgba(255,107,138,0.10); color: #ffb0c1; }
+.tune-note { margin-top: 8px; font-size: 12.5px; color: var(--text-dim); display: none; }
+.tune-note.show { display: block; }
+.tune-note b { color: var(--warn); }
+.gptcard { margin-top: 18px; border: 1px solid rgba(16,163,127,0.3); border-radius: var(--radius-lg); background: rgba(16,163,127,0.05); padding: 20px 22px; }
+.gptcard-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.gptcard-avatar { width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, #10a37f, #44e0a4); display: grid; place-items: center; font-size: 19px; }
+.gptcard-name { font-weight: 700; font-size: 16px; }
+.gptcard-sub { font-size: 11.5px; color: var(--text-mute); }
+.gptcard-lbl { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-mute); font-weight: 700; margin-bottom: 8px; }
+.gptcard-line { font-size: 13.5px; color: var(--text-mute); padding: 8px 12px; border-radius: 8px; background: rgba(0,0,0,0.25); border: 1px dashed var(--line-strong); margin-bottom: 8px; font-family: 'SFMono-Regular', Consolas, monospace; transition: all .3s; }
+.gptcard-line.filled { color: #d6fff0; border: 1px solid rgba(68,224,164,0.35); background: rgba(68,224,164,0.06); }
+.builder-done { margin-top: 16px; padding: 14px 18px; border-radius: 12px; background: rgba(16,163,127,0.1); border: 1px solid rgba(16,163,127,0.3); font-size: 14.5px; display: none; }
+.builder-done.show { display: block; animation: stepIn .4s ease; }
+
+/* ── REFERENCE CARDS ── */
+.buildcard { margin: 16px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 20px 22px; }
+.buildcard-head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.buildcard-num { width: 28px; height: 28px; border-radius: 8px; background: rgba(16,163,127,0.15); border: 1px solid rgba(16,163,127,0.35); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); flex-shrink: 0; }
+.buildcard-head h3 { margin: 0; font-size: 17px; }
+.buildcard p { font-size: 14.5px; margin: 0 0 10px; }
+.buildcard .spec { font-size: 13px; padding: 11px 13px; border-radius: 9px; background: rgba(0,0,0,0.25); border: 1px solid var(--line); font-family: 'SFMono-Regular', Consolas, monospace; color: var(--text-dim); line-height: 1.55; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 16px 0; font-size: 14.5px; }
 .gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(16,163,127,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(16,163,127,0.25); border-radius: var(--radius-lg); padding: 36px; }
+
+/* ── GYM ── */
+.gym { margin: 26px 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px; }
+.gym-count { font-size: 12px; color: var(--text-mute); font-weight: 600; margin-bottom: 12px; }
+.gym-prompt { font-size: 16.5px; font-weight: 600; margin-bottom: 16px; line-height: 1.5; }
+.gym-fb { margin-top: 14px; padding: 14px 16px; border-radius: 12px; font-size: 14px; display: none; }
+.gym-fb.show { display: block; animation: stepIn .35s ease; }
+.gym-fb.ok { background: rgba(68,224,164,0.1); border: 1px solid rgba(68,224,164,0.3); }
+.gym-fb.no { background: rgba(255,181,71,0.08); border: 1px solid rgba(255,181,71,0.28); }
+.gym-next { margin-top: 16px; text-align: right; display: none; }
+.gym-next.show { display: block; }
+.gym-score { text-align: center; padding: 20px; font-size: 17px; font-weight: 700; }
+.mini-btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #10a37f, #7c5cff); color: white; padding: 11px 20px; border-radius: 10px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; font-family: inherit; transition: transform .15s; }
+.mini-btn:hover { transform: translateY(-1px); }
+
+/* ── NAV / CHALLENGE / NEXT ── */
+.step-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 36px; gap: 12px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #10a37f, #7c5cff); color: white; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: inherit; box-shadow: 0 6px 24px rgba(16,163,127,0.28); transition: transform .15s, opacity .15s; }
+.btn:hover { transform: translateY(-1px); color: white; }
+.btn:disabled { opacity: 0.4; cursor: default; transform: none; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+
+.challenge { margin: 10px 0 30px; background: linear-gradient(135deg, rgba(16,163,127,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(16,163,127,0.25); border-radius: var(--radius-lg); padding: 32px; }
 .challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #10a37f, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge a.btn { text-decoration: none; }
 .challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist { margin: 30px 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
 .checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
 .checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
 .checklist li:first-child { border-top: none; padding-top: 0; }
 .checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up { margin: 20px 0 0; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
 .next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
 .next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
 .next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
@@ -83,36 +151,12 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -141,7 +185,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -153,41 +196,201 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <a href="/lessons/chatgpt/" class="nav-back">← ChatGPT Mastery</a>
   </div>
 </nav>
+
+<!-- ── STEPPER ── -->
+<div class="stepper">
+  <div class="stepper-inner">
+    <div class="prog-track"><div class="prog-fill" id="prog"></div></div>
+    <div class="prog-label" id="progLabel">Step 1 / 5</div>
+  </div>
+</div>
+
 <article class="lesson">
   <div class="container">
     <div class="lesson-meta">
       <span class="chip">Lesson 02 · ChatGPT Mastery</span>
       <span class="chip chip-pro">Pro</span>
-      <span>~16 min read</span>
+      <span>~16 min</span>
       <span class="dot"></span>
       <span>3 GPT builds</span>
     </div>
     <h1>Custom GPTs: <span class="grad serif">build your first in 20 min.</span></h1>
-    <p class="deck">Custom GPTs are ChatGPT's most underused power feature. Every Plus subscriber can build their own — a purpose-built assistant with custom instructions, conversation starters, knowledge files, and even tool integrations. Most users have never made one. This lesson walks 3 real builds: a sales follow-up GPT, a meeting prep GPT, and an executive summary GPT.</p>
-    <h2><span class="num">The mental model</span></h2><h3>Custom GPTs are reusable instructions you build once.</h3><p>Instead of re-prompting Claude with the same setup every time, you bake the setup into a GPT. Open the GPT, type a short query, get high-quality output that matches the patterns you defined. The 20-minute investment compounds across every future use.</p><h2><span class="num">Workflow 01</span> Build a Sales Follow-Up GPT</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>GPT: "Sales Follow-Up Pro"</h3></div><p>A GPT that drafts follow-up emails using the specific-friction pattern and your tone.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Setup walkthrough</span>ChatGPT → Explore GPTs → Create → Name: 'Sales Follow-Up Pro' → Instructions: 'You draft sales follow-up emails. Always ask first: what happened in the prior interaction, what specific detail or friction can I reference, what's the ask. Then draft. Under 80 words, friendly but not desperate, no clichés.' → Conversation starters: 'Draft a follow-up to a ghosted prospect' / 'Help me ask for a renewal'</div><h4>Best use cases</h4><ul><li>B2B sales reps</li><li>Account managers</li><li>Anyone doing customer-facing outreach</li><li>Founders writing customer emails</li></ul><div class="gotcha">Don't put real customer names or deal details in the GPT instructions — they're stored. Keep instructions about process; keep specifics in the conversation.</div><div class="savings"><strong>Time savings:</strong> Re-explaining the email pattern: gone forever.</div></div><h2><span class="num">Workflow 02</span> Build a Meeting Prep GPT</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>GPT: "Meeting Prep"</h3></div><p>A GPT that helps you walk into any meeting prepared. Tell it who/what, get a brief.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Setup walkthrough</span>Create → 'Meeting Prep' → Instructions: 'When given a meeting topic and attendees, produce: (1) 3-bullet context summary, (2) the 3 most likely outcomes to push for, (3) the 2 most likely objections to prepare for, (4) one good opening question.' → Starters: 'Help me prep for a 1:1' / 'I have a customer meeting in 30 min'</div><h4>Best use cases</h4><ul><li>Anyone with back-to-back meetings</li><li>Sales reps prepping for calls</li><li>Managers prepping for 1:1s and reviews</li><li>Founders prepping for investor or partner meetings</li></ul><div class="gotcha">The GPT can't know specifics about your company or contacts unless you tell it in the prompt. Keep a doc of context to paste in.</div><div class="savings"><strong>Time savings:</strong> 10 min of meeting prep → 2 min.</div></div><h2><span class="num">Workflow 03</span> Build an Executive Summary GPT</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>GPT: "Exec Summary"</h3></div><p>A GPT that turns long content into ruthless executive summaries that respect a CFO's attention.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Setup walkthrough</span>Create → 'Exec Summary' → Instructions: 'When given any content, produce: (1) one-sentence TLDR, (2) three bullet points of what matters, (3) one bullet of what to do about it. No fluff, no "this comprehensive report explores" garbage. Direct, executive voice.' → Starters: 'Summarize this report' / 'Compress this thread'</div><h4>Best use cases</h4><ul><li>Anyone who has to forward info to time-poor executives</li><li>Investor updates</li><li>Internal team briefings</li><li>Long-meeting recap summaries</li></ul><div class="gotcha">Test the output against a 30-second CEO read. If they couldn't act on it without reading more, the summary failed.</div><div class="savings"><strong>Time savings:</strong> Re-drafting summaries to fit attention spans: gone.</div></div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Final challenge: build the one GPT that pays off</h2>
-      <p>Pick the workflow you do most often in ChatGPT. Build a Custom GPT for it in 20 minutes. Use it for the next week instead of regular ChatGPT. Most users find the quality jump immediate.</p>
-      <div class="btn-row">
-        <a href="/lessons/chatgpt/" class="btn">Back to ChatGPT Mastery →</a>
-        <a href="/#pricing" class="btn ghost">See pricing →</a>
+    <p class="deck">Custom GPTs are ChatGPT's most underused power feature. Every Plus subscriber can build one — a purpose-built assistant with its own instructions, conversation starters, and knowledge. Most users never have. This lesson builds three real ones, and the skill that separates a good GPT from a useless one: writing instructions that <em>constrain without paralyzing</em>.</p>
+
+    <!-- ════ STEP 1 ════ -->
+    <section class="step active" data-step="1">
+      <span class="step-eyebrow">The mental model</span>
+      <h2>A Custom GPT is your setup, baked in once.</h2>
+      <p>Every time you open a blank chat and re-paste the same role, rules, and format, you're paying the setup tax again. A Custom GPT bakes that setup in permanently. You open it, type a short query, and get output already shaped to your patterns — no re-prompting <strong>ChatGPT</strong> from scratch each time.</p>
+      <p>The 20-minute build compounds across every future use. But the value lives entirely in the <em>instructions</em> — and there's a sweet spot most people miss.</p>
+
+      <div class="predict">
+        <div class="q">What actually makes a Custom GPT better than just re-prompting ChatGPT each time?</div>
+        <button class="opt" data-correct="false">It runs on a smarter, exclusive model than normal ChatGPT</button>
+        <button class="opt" data-correct="true">It stores your role, rules, and format so every session starts pre-loaded with context</button>
+        <button class="opt" data-correct="false">It can access your private files and email automatically</button>
+        <div class="reveal" id="r1">
+          <strong>Right.</strong> Same underlying model — the win is that your context is saved, not re-typed. That makes the <em>instructions</em> the whole ballgame. Too vague and it's no better than blank ChatGPT; too rigid and it can't adapt. Next you'll tune that dial yourself.
+        </div>
       </div>
-    </div>
-    <div class="checklist">
-      <h3>What you can do now</h3>
-      <ul><li>Build a Custom GPT in under 20 minutes with the 4 essential fields (name, instructions, starters, capabilities)</li><li>Write instructions that constrain output without paralyzing the model</li><li>Decide what to keep in instructions (process) vs. what to put in each conversation (specifics)</li><li>Test a GPT against real use cases before deploying it widely</li><li>Recognize when to update vs. create-new for an evolving workflow</li></ul>
-    </div>
-    <div class="next-up">
-      <span class="pro-tag">Pro</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in ChatGPT Mastery</div>
-      <h3>Lesson 3 · Canvas: the editing surface that changes how you write</h3>
-      <p>When to invoke Canvas (and when it gets in the way), inline editing, version control, collaborative writing patterns. The feature that turns ChatGPT into a real writing partner. <a href="/#pricing">See pricing →</a></p>
-    </div>
+      <div class="step-nav">
+        <span></span>
+        <button class="btn" id="next1" disabled>Continue →</button>
+      </div>
+    </section>
+
+    <!-- ════ STEP 2 ════ -->
+    <section class="step" data-step="2">
+      <span class="step-eyebrow">Signature move · build the GPT</span>
+      <h2>Tune the instructions to the sweet spot.</h2>
+      <p>You're building <strong>Sales Follow-Up Pro</strong>. For each line, pick the version that <em>constrains without paralyzing</em> — not so loose it's useless, not so rigid it can't write. Land all three and the GPT comes together.</p>
+
+      <div class="builder">
+        <div class="tune-row" data-facet="behavior">
+          <div class="tune-facet">Core behavior</div>
+          <div class="tune-opts">
+            <button class="tune" data-kind="loose"><span class="kind" style="background:rgba(255,181,71,.18);color:var(--warn)">Too loose</span>Write good sales emails.</button>
+            <button class="tune" data-kind="cal"><span class="kind" style="background:rgba(68,224,164,.18);color:var(--accent)">Calibrated</span>Before drafting, ask what happened last, what specific detail to reference, and what the ask is — then draft.</button>
+            <button class="tune" data-kind="rigid"><span class="kind" style="background:rgba(255,107,138,.18);color:var(--danger)">Too rigid</span>Always output exactly five sentences, each starting with a verb, no exceptions.</button>
+          </div>
+          <div class="tune-note"></div>
+        </div>
+
+        <div class="tune-row" data-facet="length">
+          <div class="tune-facet">Length</div>
+          <div class="tune-opts">
+            <button class="tune" data-kind="loose"><span class="kind" style="background:rgba(255,181,71,.18);color:var(--warn)">Too loose</span>Keep it a reasonable length.</button>
+            <button class="tune" data-kind="cal"><span class="kind" style="background:rgba(68,224,164,.18);color:var(--accent)">Calibrated</span>Under 80 words unless I say otherwise.</button>
+            <button class="tune" data-kind="rigid"><span class="kind" style="background:rgba(255,107,138,.18);color:var(--danger)">Too rigid</span>Exactly 80 words, every single time.</button>
+          </div>
+          <div class="tune-note"></div>
+        </div>
+
+        <div class="tune-row" data-facet="tone">
+          <div class="tune-facet">Tone</div>
+          <div class="tune-opts">
+            <button class="tune" data-kind="loose"><span class="kind" style="background:rgba(255,181,71,.18);color:var(--warn)">Too loose</span>Sound nice.</button>
+            <button class="tune" data-kind="cal"><span class="kind" style="background:rgba(68,224,164,.18);color:var(--accent)">Calibrated</span>Friendly but not desperate; no clichés like "just circling back."</button>
+            <button class="tune" data-kind="rigid"><span class="kind" style="background:rgba(255,107,138,.18);color:var(--danger)">Too rigid</span>Never use the words follow, touch, or connect, ever.</button>
+          </div>
+          <div class="tune-note"></div>
+        </div>
+
+        <div class="gptcard">
+          <div class="gptcard-head">
+            <div class="gptcard-avatar">📧</div>
+            <div>
+              <div class="gptcard-name">Sales Follow-Up Pro</div>
+              <div class="gptcard-sub">Custom GPT · Private</div>
+            </div>
+          </div>
+          <div class="gptcard-lbl">Instructions</div>
+          <div class="gptcard-line" data-slot="behavior">Core behavior — not set yet</div>
+          <div class="gptcard-line" data-slot="length">Length — not set yet</div>
+          <div class="gptcard-line" data-slot="tone">Tone — not set yet</div>
+        </div>
+
+        <div class="builder-done" id="builderDone">
+          <strong>That's a working GPT.</strong> Each line gives ChatGPT a clear rule with room to think. Add 2-3 conversation starters, save it Private, and it lives in your sidebar — sharper than vanilla ChatGPT on every follow-up you write.
+        </div>
+      </div>
+      <div class="step-nav">
+        <button class="btn ghost" data-back="1">← Back</button>
+        <button class="btn" id="next2" disabled>See two more builds →</button>
+      </div>
+    </section>
+
+    <!-- ════ STEP 3 ════ -->
+    <section class="step" data-step="3">
+      <span class="step-eyebrow">Three builds to steal</span>
+      <h2>Same pattern, different jobs.</h2>
+      <p>Every build follows the same shape: a clear role, a structured output, calibrated constraints. Here are three worth copying.</p>
+
+      <div class="buildcard">
+        <div class="buildcard-head"><div class="buildcard-num">1</div><h3>Sales Follow-Up Pro</h3></div>
+        <p>Drafts follow-ups using the specific-friction pattern and your tone.</p>
+        <div class="spec">Instructions: "Before drafting, ask what happened last, what detail to reference, and what the ask is. Then draft — under 80 words, friendly but not desperate, no clichés." · Starters: "Draft a follow-up to a ghosted prospect" / "Help me ask for a renewal"</div>
+      </div>
+      <div class="buildcard">
+        <div class="buildcard-head"><div class="buildcard-num">2</div><h3>Meeting Prep</h3></div>
+        <p>Give it a topic and attendees; walk in prepared.</p>
+        <div class="spec">Instructions: "Produce (1) a 3-bullet context summary, (2) the 3 outcomes to push for, (3) the 2 likely objections, (4) one strong opening question." · Starters: "Prep me for a 1:1" / "Customer meeting in 30 min"</div>
+      </div>
+      <div class="buildcard">
+        <div class="buildcard-head"><div class="buildcard-num">3</div><h3>Exec Summary</h3></div>
+        <p>Turns long content into a summary that respects a busy reader's attention.</p>
+        <div class="spec">Instructions: "Produce (1) a one-sentence TLDR, (2) three bullets of what matters, (3) one bullet of what to do about it. No fluff, no 'this comprehensive report explores.' Direct, executive voice." · Starters: "Summarize this report" / "Compress this thread"</div>
+      </div>
+
+      <div class="gotcha">Keep instructions about <em>process and style</em> — they're stored. Real customer names, deal values, and other specifics go in the conversation, not the GPT. (That's the exact judgment you'll drill next.)</div>
+      <div class="step-nav">
+        <button class="btn ghost" data-back="2">← Back</button>
+        <button class="btn" id="next3">Test the judgment →</button>
+      </div>
+    </section>
+
+    <!-- ════ STEP 4 ════ -->
+    <section class="step" data-step="4">
+      <span class="step-eyebrow">Your turn · what goes where</span>
+      <h2>Stored instructions, or this chat?</h2>
+      <p>For each piece of context, decide whether it belongs in the GPT's saved <strong>Instructions</strong> or only in the live <strong>Conversation</strong>.</p>
+
+      <div class="gym" id="gym">
+        <div class="gym-count" id="gymCount">Item 1 of 4</div>
+        <div class="gym-prompt" id="gymPrompt"></div>
+        <div id="gymOpts"></div>
+        <div class="gym-fb" id="gymFb"></div>
+        <div class="gym-next" id="gymNext"><button class="mini-btn" id="gymNextBtn">Next →</button></div>
+      </div>
+      <div class="step-nav">
+        <button class="btn ghost" data-back="3">← Back</button>
+        <button class="btn" id="next4" disabled>Finish →</button>
+      </div>
+    </section>
+
+    <!-- ════ STEP 5 ════ -->
+    <section class="step" data-step="5">
+      <span class="step-eyebrow">You've got it</span>
+      <h2>Build the one that pays off.</h2>
+
+      <div class="challenge">
+        <h2 style="margin-top:0;">Build the GPT you'll actually use</h2>
+        <p>Pick the workflow you run most often in ChatGPT. Build a Custom GPT for it in 20 minutes — name, calibrated instructions, 2-3 starters. Use it for the next week instead of regular ChatGPT. Most people feel the quality jump immediately.</p>
+        <div class="btn-row">
+          <a href="/playground" class="btn">Try a prompt in the playground →</a>
+          <a href="/lessons/chatgpt/" class="btn ghost">Back to ChatGPT Mastery</a>
+        </div>
+      </div>
+
+      <div class="checklist">
+        <h3>What you can do now</h3>
+        <ul>
+          <li>Build a Custom GPT in under 20 minutes with the four essential fields</li>
+          <li>Write instructions that constrain output without paralyzing the model</li>
+          <li>Decide what to keep in instructions (process) vs. each conversation (specifics)</li>
+          <li>Reuse the build pattern for sales, meeting prep, and executive summaries</li>
+          <li>Test a GPT against real use cases before you rely on it</li>
+        </ul>
+      </div>
+
+      <div class="next-up">
+        <span class="pro-tag">Pro</span>
+        <div class="lbl" style="margin-top:14px;">Up next in ChatGPT Mastery</div>
+        <h3>Lesson 3 · Canvas: the editing surface that changes how you write</h3>
+        <p>When to invoke Canvas (and when it gets in the way), inline editing, version control, and the collaborative writing patterns that turn ChatGPT into a real writing partner. <a href="/lessons/chatgpt/canvas-mastery">Start lesson 3 →</a></p>
+      </div>
+      <div class="step-nav">
+        <button class="btn ghost" data-back="4">← Back</button>
+        <a href="/lessons/chatgpt/canvas-mastery" class="btn">Next lesson →</a>
+      </div>
+    </section>
+
   </div>
 </article>
+
 <footer>
   <div class="footer-inner">
-    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with OpenAI.</div>
+    <div>© 2026 LearningGPT · Independent. Not affiliated with OpenAI.</div>
     <a href="/lessons/chatgpt/" style="color: var(--text-dim);">← All ChatGPT lessons</a>
   </div>
 </footer>
@@ -197,7 +400,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -212,7 +414,7 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -220,15 +422,181 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   </div>
 </div>
 
+<script id="lessonScript">
+(function () {
+  var TOTAL = 5;
+  var cur = 1;
+  var prog = document.getElementById('prog');
+  var progLabel = document.getElementById('progLabel');
+
+  function go(n) {
+    n = Math.max(1, Math.min(TOTAL, n));
+    document.querySelectorAll('.step').forEach(function (s) {
+      s.classList.toggle('active', +s.dataset.step === n);
+    });
+    cur = n;
+    prog.style.width = (n / TOTAL * 100) + '%';
+    progLabel.textContent = 'Step ' + n + ' / ' + TOTAL;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  document.querySelectorAll('[data-back]').forEach(function (b) {
+    b.addEventListener('click', function () { go(+b.dataset.back); });
+  });
+  function nextBtn(id, to) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('click', function () { go(to); });
+  }
+  nextBtn('next1', 2); nextBtn('next2', 3); nextBtn('next3', 4); nextBtn('next4', 5);
+
+  // ── STEP 1 predict ──
+  var p1 = document.querySelectorAll('[data-step="1"] .opt');
+  var answered1 = false;
+  p1.forEach(function (o) {
+    o.addEventListener('click', function () {
+      if (answered1) return;
+      answered1 = true;
+      var correct = o.dataset.correct === 'true';
+      p1.forEach(function (x) {
+        x.disabled = true;
+        if (x.dataset.correct === 'true') { x.classList.add('correct'); x.innerHTML += '<span class="tick">✓</span>'; }
+      });
+      if (!correct) { o.classList.add('wrong'); o.innerHTML += '<span class="tick">✕</span>'; }
+      var r = document.getElementById('r1');
+      r.classList.add('show'); if (!correct) r.classList.add('miss');
+      document.getElementById('next1').disabled = false;
+    });
+  });
+
+  // ── STEP 2 builder ──
+  var CARD_LINES = {
+    behavior: 'Ask first: what happened, what detail to reference, the ask. Then draft.',
+    length: 'Keep replies under 80 words unless told otherwise.',
+    tone: 'Friendly, not desperate. No clichés.'
+  };
+  var NOTES = {
+    loose: 'Too loose — that\'s no more guidance than a blank chat. It can\'t shape the output.',
+    rigid: 'Too rigid — a hard rule like this breaks on the first email that doesn\'t fit. Leave room to adapt.'
+  };
+  var locked = 0;
+  var rows = document.querySelectorAll('.tune-row');
+  rows.forEach(function (row) {
+    var facet = row.dataset.facet;
+    var note = row.querySelector('.tune-note');
+    var tunes = row.querySelectorAll('.tune');
+    var solved = false;
+    tunes.forEach(function (t) {
+      t.addEventListener('click', function () {
+        if (solved) return;
+        if (t.dataset.kind === 'cal') {
+          solved = true;
+          t.classList.add('lock-right');
+          tunes.forEach(function (x) { x.disabled = true; });
+          note.classList.remove('show');
+          var slot = document.querySelector('.gptcard-line[data-slot="' + facet + '"]');
+          if (slot) { slot.textContent = CARD_LINES[facet]; slot.classList.add('filled'); }
+          locked++;
+          if (locked === rows.length) {
+            document.getElementById('builderDone').classList.add('show');
+            document.getElementById('next2').disabled = false;
+          }
+        } else {
+          t.classList.add('lock-wrong');
+          t.disabled = true;
+          note.innerHTML = '<b>Not the sweet spot.</b> ' + NOTES[t.dataset.kind];
+          note.classList.add('show');
+        }
+      });
+    });
+  });
+
+  // ── STEP 4 gym ──
+  var G = [
+    {
+      prm: '"Before drafting, ask what happened, what detail to reference, and what the ask is."',
+      hint: 'A reusable process — same every time.',
+      correct: 'Instructions',
+      why: 'Process and style get reused on every chat, so they belong in the saved instructions.'
+    },
+    {
+      prm: '"The Henderson renewal is at $48k and they\'re unhappy about the onboarding delay."',
+      hint: 'A specific, sensitive deal detail.',
+      correct: 'Conversation',
+      why: 'Specific, confidential deal details are stored if you put them in instructions — keep them in the live chat instead.'
+    },
+    {
+      prm: '"Default to replies under 80 words and always end on a clear ask."',
+      hint: 'A formatting rule you want every time.',
+      correct: 'Instructions',
+      why: 'A consistent format rule is exactly what instructions are for — set it once, applied to every draft.'
+    },
+    {
+      prm: '"Marcus said on Thursday\'s call that their team loses 6 hours every Friday."',
+      hint: 'A one-off fact about a specific person.',
+      correct: 'Conversation',
+      why: 'This is per-situation context, not a permanent rule. It goes in the conversation for this draft only.'
+    }
+  ];
+  var BTNS = ['Instructions', 'Conversation'];
+  var gi = 0, gScore = 0, gymAnswered = false;
+  var gymCount = document.getElementById('gymCount');
+  var gymPrompt = document.getElementById('gymPrompt');
+  var gymOpts = document.getElementById('gymOpts');
+  var gymFb = document.getElementById('gymFb');
+  var gymNext = document.getElementById('gymNext');
+  var gymNextBtn = document.getElementById('gymNextBtn');
+
+  function renderGym() {
+    var q = G[gi];
+    gymAnswered = false;
+    gymCount.textContent = 'Item ' + (gi + 1) + ' of ' + G.length;
+    gymPrompt.innerHTML = q.prm + '<br><span style="font-weight:400;font-size:13.5px;color:var(--text-mute)">' + q.hint + '</span>';
+    gymOpts.innerHTML = '';
+    gymFb.className = 'gym-fb'; gymFb.textContent = '';
+    gymNext.classList.remove('show');
+    BTNS.forEach(function (label) {
+      var b = document.createElement('button');
+      b.className = 'opt'; b.textContent = label;
+      b.addEventListener('click', function () {
+        if (gymAnswered) return;
+        gymAnswered = true;
+        var ok = label === q.correct;
+        if (ok) gScore++;
+        Array.prototype.forEach.call(gymOpts.children, function (c) {
+          c.disabled = true;
+          if (c.textContent.replace(/[✓✕]/g,'').trim() === q.correct) { c.classList.add('correct'); c.innerHTML += '<span class="tick">✓</span>'; }
+        });
+        if (!ok) { b.classList.add('wrong'); b.innerHTML += '<span class="tick">✕</span>'; }
+        gymFb.classList.add('show', ok ? 'ok' : 'no');
+        gymFb.innerHTML = (ok ? '<strong>Right.</strong> ' : '<strong>Careful.</strong> ') + q.why;
+        gymNext.classList.add('show');
+      });
+      gymOpts.appendChild(b);
+    });
+  }
+  gymNextBtn.addEventListener('click', function () {
+    gi++;
+    if (gi < G.length) {
+      renderGym();
+    } else {
+      document.getElementById('gym').innerHTML =
+        '<div class="gym-score">You placed ' + gScore + ' / ' + G.length +
+        ' correctly.<br><span style="font-weight:400;font-size:14px;color:var(--text-dim)">' +
+        (gScore === G.length ? 'You\'ve got the rule: process in instructions, specifics in the chat.' : 'The line: reusable process stays in instructions, specific/sensitive details stay in the conversation.') +
+        '</span></div>';
+      document.getElementById('next4').disabled = false;
+    }
+  });
+  renderGym();
+})();
+</script>
 
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Custom GPTs: build your first one in 20 minutes\nTRACK: Chatgpt Mastery\n\nLESSON CONTENT SUMMARY:\nCustom GPTs: build your first one in 20 minutes \u2014 LearningGPT L LearningGPT \u2190 ChatGPT Mastery Lesson 02 \u00b7 ChatGPT Mastery Pro ~16 min read 3 GPT builds Custom GPTs: build your first in 20 min. Custom GPTs are ChatGPT's most underused power feature. Every Plus subscriber can build their own \u2014 a purpose-built assistant with custom instructions, conversation starters, knowledge files, and even tool integrations. Most users have never made one. This lesson walks 3 real builds: a sales follow-up GPT, a meeting prep GPT, and an executive summary GPT. The mental model Custom GPTs are reusable instructions you build once. Instead of re-prompting Claude with the same setup every time, you bake the setup into a GPT. Open the GPT, type a short query, get high-quality output that matches the patterns you defined. The 20-minute investment compounds across every future use. Workflow 01 Build a Sales Follow-Up GPT 1 GPT: \"Sales Follow-Up Pro\" A GPT that drafts follow-up emails using the specific-friction pattern and your tone. The prompt that works Setup walkthrough ChatGPT \u2192 Explore GPTs \u2192 Create \u2192 Name: 'Sales Follow-Up Pro' \u2192 Instructions: 'You draft sales follow-up emails. Always ask first: what happened in the prior interaction, what specific detail or friction can I reference, what's the ask. Then draft. Under 80 words, friendly but not desperate, no clich\u00e9s.' \u2192 Conversation starters: 'Draft a follow-up to a ghosted prospect' / 'Help me ask for a renewal' Best use cases B2B sales reps Account managers Anyone doing customer-facing outreach Founders writing customer emails Don't put real customer names or deal details in the GPT instructions \u2014 they're stored. Keep instructions about process; keep specifics in the conversation. Time savings: Re-explaining the email pattern: gone forever. Workflow 02 Build a Meeting Prep GPT 2 GPT: \"Meeting Prep\" A GPT that helps you walk into any meeting prepared. Tell it who/what, get a brief. The prompt that works Setup walkthrough Create \u2192 'Meeting Prep' \u2192 Instructions: 'When given a meeting topic and attendees, produce: (1) 3-bullet context summary, (2) the 3 most likely outcomes to push for, (3) the 2 most likely objections to prepare for, (4) one good opening question.' \u2192 Starters: 'Help me prep for a 1:1' / 'I have a customer meeting in 30 min' Best use cases Anyone with back-to-back meetings Sales reps prepping for calls Managers prepping for 1:1s and reviews Founders prepping for investor or partner meetings The GPT can't know specifics about your company or contacts unless you tell it in the prompt. Keep a doc of context to paste in. Time savings: 10 min of meeting prep \u2192 2 min. Workflow 03 Build an Executive Summary GPT 3 GPT: \"Exec Summary\" A GPT that turns long content into ruthless executive summaries that respect a CFO's attention. The prompt that works Setup walkthrough Create \u2192 'Exec Summary' \u2192 Instructions: 'When given any content, produce: (1) one-sentence TLDR, (2) three bullet points of what matters, (3)\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Custom GPTs: build your first one in 20 minutes\nTRACK: ChatGPT Mastery (Lesson 2, Pro)\n\nLESSON CONTENT SUMMARY:\nCustom GPTs are ChatGPT's most underused power feature — any Plus subscriber can build a purpose-built assistant with its own instructions, conversation starters, and knowledge files. The mental model: a Custom GPT bakes your setup in once, so you stop re-prompting ChatGPT with the same role, rules, and format every session. Same underlying model — the win is that the context is stored, not re-typed.\n\nThe key skill is writing instructions that CONSTRAIN WITHOUT PARALYZING — not so vague they're no better than a blank chat ('write good sales emails'), not so rigid they break on the first case that doesn't fit ('exactly 80 words, every time'). The calibrated middle: 'ask what happened, what detail to reference, and the ask, then draft'; 'under 80 words unless I say otherwise'; 'friendly but not desperate, no clichés.'\n\nThree builds walked in the lesson, all the same shape (clear role + structured output + calibrated constraints): (1) Sales Follow-Up Pro — drafts follow-ups with the specific-friction pattern; (2) Meeting Prep — given a topic and attendees, returns a 3-bullet context summary, 3 outcomes to push for, 2 likely objections, and one opening question; (3) Exec Summary — one-sentence TLDR, three bullets of what matters, one bullet of what to do, no fluff.\n\nThe critical safety rule: keep instructions about PROCESS and STYLE (they're stored), and keep SPECIFICS in the conversation — never put real customer names, deal values, or sensitive details in the GPT's saved instructions. Build the four fields (name, instructions, starters, capabilities), test against real use, and update vs. create-new as the workflow evolves.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more\n- Be practical — give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only — no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -236,27 +604,21 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -265,7 +627,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -274,7 +635,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

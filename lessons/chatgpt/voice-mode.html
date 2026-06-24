@@ -4,16 +4,16 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Voice mode: real-world use cases (and what it's actually for) — LearningGPT</title>
-<meta name="description" content="ChatGPT's voice mode demos great but most people never integrate it into their workflow. This lesson skips the marketing and focuses on the four use c" />
+<meta name="description" content="ChatGPT's voice mode demos great but most people never integrate it into their workflow. The four use cases where voice genuinely beats typing — and where it doesn't." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#10a37f" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/chatgpt/voice-mode" />
 <meta property="og:title" content="Voice mode: real-world use cases (and what it's actually for)" />
-<meta property="og:description" content="ChatGPT's voice mode demos great but most people never integrate it into their workflow. This lesson skips the marketing and focuses on the four use c" />
+<meta property="og:description" content="The four use cases where ChatGPT voice mode genuinely beats typing — and where it doesn't." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -34,85 +34,111 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
 .lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(16,163,127,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(16,163,127,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
 .lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
-.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
 .lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #10a37f 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .grad { background: linear-gradient(135deg, #10a37f 0%, #44e0a4 50%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 24px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.sec { margin: 48px 0 0; }
+.sec-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.lesson h2 { font-size: 27px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 26px 0 10px; }
 .lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
 .lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(16,163,127,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(16,163,127,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #10a37f, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(16,163,127,0.1); border: 1px solid rgba(16,163,127,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(16,163,127,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(16,163,127,0.25); border-radius: var(--radius-lg); padding: 36px; }
+
+/* ── MOMENT TILES ── */
+.moments { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 22px 0; }
+@media (max-width: 620px) { .moments { grid-template-columns: repeat(2, 1fr); } }
+.moment { padding: 16px 12px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); text-align: center; }
+.moment .ic { font-size: 24px; display: block; margin-bottom: 6px; }
+.moment .t { font-size: 13px; font-weight: 600; }
+.moment .s { font-size: 11.5px; color: var(--text-mute); }
+
+/* ── VOICE SIM ── */
+.vsim { margin: 26px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); background: radial-gradient(120% 80% at 50% -10%, rgba(16,163,127,0.10), transparent 60%), #0d0d20; overflow: hidden; }
+.vsim-tabs { display: flex; gap: 6px; padding: 14px 16px 0; flex-wrap: wrap; }
+.vtab { font-size: 12.5px; font-weight: 600; font-family: inherit; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); color: var(--text-dim); cursor: pointer; transition: all .15s; }
+.vtab:hover { color: var(--text); }
+.vtab.on { background: rgba(16,163,127,0.14); border-color: rgba(16,163,127,0.5); color: #b8f0e0; }
+.vsim-stage { padding: 10px 18px 4px; min-height: 230px; }
+.vorb-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 18px 0 10px; }
+.vorb { width: 76px; height: 76px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #6ff2cf, #10a37f 55%, #0c7d61); box-shadow: 0 0 0 0 rgba(16,163,127,0.5); position: relative; }
+.vorb.speaking { animation: orbPulse 1.1s ease-in-out infinite; }
+@keyframes orbPulse { 0%{ box-shadow: 0 0 0 0 rgba(16,163,127,0.45); transform: scale(1);} 50%{ box-shadow: 0 0 0 16px rgba(16,163,127,0);} 100%{ box-shadow: 0 0 0 0 rgba(16,163,127,0); transform: scale(1.04);} }
+.vorb-cap { font-size: 11.5px; color: var(--text-mute); }
+.vbubbles { display: flex; flex-direction: column; gap: 10px; margin: 6px 0 10px; }
+.vb { max-width: 84%; font-size: 14px; line-height: 1.55; padding: 10px 14px; border-radius: 14px; animation: vIn .35s ease; }
+@keyframes vIn { from{opacity:0; transform: translateY(8px);} to{opacity:1; transform:none;} }
+.vb.you { align-self: flex-end; background: linear-gradient(135deg, rgba(124,92,255,0.22), rgba(91,141,239,0.22)); border: 1px solid rgba(124,92,255,0.3); border-bottom-right-radius: 4px; }
+.vb.gpt { align-self: flex-start; background: rgba(16,163,127,0.10); border: 1px solid rgba(16,163,127,0.3); border-bottom-left-radius: 4px; }
+.vb .who { display: block; font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.7px; font-weight: 700; margin-bottom: 3px; color: var(--text-mute); }
+.vsim-bar { display: flex; align-items: center; gap: 12px; padding: 12px 18px 18px; border-top: 1px solid var(--line); }
+.mic { width: 50px; height: 50px; border-radius: 50%; border: none; flex-shrink: 0; background: linear-gradient(135deg, #10a37f, #44e0a4); color: #042; font-size: 22px; display: grid; place-items: center; cursor: pointer; transition: transform .15s, opacity .15s; box-shadow: 0 6px 20px rgba(16,163,127,0.35); }
+.mic:hover:not(:disabled) { transform: scale(1.06); }
+.mic:disabled { opacity: 0.45; cursor: default; }
+.mic-label { font-size: 13.5px; color: var(--text-dim); }
+.mic-label b { color: var(--text); }
+.vsim-done { margin: 0 18px 18px; padding: 14px 16px; border-radius: 12px; background: rgba(16,163,127,0.1); border: 1px solid rgba(16,163,127,0.3); font-size: 14px; display: none; }
+.vsim-done.show { display: block; animation: vIn .4s ease; }
+
+/* ── INLINE QUIZ ── */
+.vq { margin: 22px 0; }
+.vq-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); margin-bottom: 10px; }
+.vq-scn { flex: 1; min-width: 200px; font-size: 14.5px; }
+.vq-btns { display: flex; gap: 8px; }
+.vq-btn { font-size: 12.5px; font-weight: 700; font-family: inherit; padding: 7px 16px; border-radius: 8px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); color: var(--text-dim); cursor: pointer; transition: all .15s; }
+.vq-btn:hover:not(:disabled) { border-color: var(--track); color: var(--text); }
+.vq-btn:disabled { cursor: default; }
+.vq-btn.right { background: rgba(68,224,164,0.16); border-color: var(--accent); color: #b6f4dc; }
+.vq-btn.wrong { background: rgba(255,107,138,0.12); border-color: var(--danger); color: #ffb0c1; }
+.vq-fb { flex-basis: 100%; font-size: 13px; color: var(--text-dim); display: none; }
+.vq-fb.show { display: block; }
+.vq-fb b { color: var(--track); }
+
+/* ── USE-CASE CARDS ── */
+.cases { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin: 22px 0; }
+@media (max-width: 640px) { .cases { grid-template-columns: 1fr; } }
+.case { padding: 18px 20px; border-radius: var(--radius-lg); background: linear-gradient(180deg, var(--surface), var(--bg-soft)); border: 1px solid var(--line); }
+.case .ch { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.case .ic { font-size: 20px; }
+.case h3 { margin: 0; font-size: 16px; }
+.case p { font-size: 14px; margin: 0 0 8px; color: var(--text-dim); }
+.case .pat { font-size: 12.5px; font-family: 'SFMono-Regular', Consolas, monospace; color: var(--text-mute); border-left: 2px solid rgba(16,163,127,0.4); padding-left: 10px; }
+
+.callout { margin: 26px 0; padding: 20px 24px; background: linear-gradient(135deg, rgba(255,181,71,0.08), rgba(124,92,255,0.05)); border: 1px solid rgba(255,181,71,0.22); border-radius: var(--radius-lg); position: relative; }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--warn); margin-bottom: 8px; }
+.callout p { margin: 0; font-size: 15px; }
+.callout ul { margin: 8px 0 0; padding-left: 20px; font-size: 14.5px; color: var(--text-dim); }
+.callout li { margin-bottom: 5px; }
+
+.challenge { margin: 48px 0 30px; background: linear-gradient(135deg, rgba(16,163,127,0.14), rgba(124,92,255,0.1)); border: 1px solid rgba(16,163,127,0.3); border-radius: var(--radius-lg); padding: 32px; }
 .challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #10a37f, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
 .challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #10a37f, #7c5cff); color: white; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: inherit; box-shadow: 0 6px 24px rgba(16,163,127,0.28); transition: transform .15s; text-decoration: none; }
+.btn:hover { transform: translateY(-1px); color: white; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.checklist { margin: 30px 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
 .checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
 .checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
 .checklist li:first-child { border-top: none; padding-top: 0; }
 .checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up { margin: 40px 0 0; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
 .next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
 .next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
 .next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
-footer { border-top: 1px solid var(--line); padding: 30px 0; }
+footer { border-top: 1px solid var(--line); padding: 30px 0; margin-top: 40px; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -141,7 +167,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -153,41 +178,140 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <a href="/lessons/chatgpt/" class="nav-back">← ChatGPT Mastery</a>
   </div>
 </nav>
+
 <article class="lesson">
   <div class="container">
     <div class="lesson-meta">
       <span class="chip">Lesson 04 · ChatGPT Mastery</span>
       <span class="chip chip-pro">Pro</span>
-      <span>~9 min read</span>
+      <span>~9 min</span>
       <span class="dot"></span>
       <span>4 use cases</span>
     </div>
     <h1>Voice mode: <span class="grad serif">the use cases that matter.</span></h1>
-    <p class="deck">ChatGPT's voice mode demos great but most people never integrate it into their workflow. This lesson skips the marketing and focuses on the four use cases where voice mode genuinely beats typing: commute thinking, language practice, hands-free brainstorming, and accessibility.</p>
-    <h2><span class="num">The mental model</span></h2><h3>Voice mode is for the moments when you can't or shouldn't be typing.</h3><p>Walking. Driving (hands-free). Cooking. Falling asleep mulling a problem. Voice isn't a replacement for typing — it's a complement. The win is fitting AI conversation into the gaps in your day when typing isn't an option.</p><h2><span class="num">Workflow 01</span> Commute thinking</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>Turn dead time into thinking time</h3></div><p>On a walk, drive, or transit: use voice mode to think out loud about a problem with ChatGPT pushing back.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Use pattern</span>(Out loud) "I'm working through a decision about whether to take a new role. Help me think through it. Ask me questions, push back on my reasoning, don't just validate."</div><h4>Best use cases</h4><ul><li>Career or life decisions you're mulling</li><li>Strategy thinking before a meeting</li><li>Working through a problem with no obvious answer</li><li>Drafting a difficult conversation</li></ul><div class="gotcha">Voice mode has occasional latency and misunderstands proper nouns. For high-stakes facts, switch to typing.</div><div class="savings"><strong>Time savings:</strong> 30-min walk → 30-min thinking session that would otherwise be lost time.</div></div><h2><span class="num">Workflow 02</span> Language practice</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>A patient conversation partner</h3></div><p>Practicing a language? Voice mode lets you have actual conversations in your target language with real-time correction.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Practice pattern</span>"Let's have a conversation in Spanish about my weekend. Correct my grammar gently when I make mistakes and rephrase my responses in better Spanish."</div><h4>Best use cases</h4><ul><li>Language learners at any level</li><li>Maintaining fluency in a language you don't use daily</li><li>Practicing for an upcoming trip or meeting</li><li>Building vocabulary in a specific domain</li></ul><div class="gotcha">Voice mode handles many languages well but pronunciation feedback is uneven. For accent work, get a human teacher.</div><div class="savings"><strong>Time savings:</strong> Language practice without scheduling tutors: anytime.</div></div><h2><span class="num">Workflow 03</span> Hands-free brainstorming</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>When your hands are busy but your brain isn't</h3></div><p>Cooking, exercising, doing chores: voice mode keeps a conversation going while your hands work.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Brainstorm pattern</span>"I'm cooking. Let's brainstorm names for the new product. Keep firing ideas; I'll react to them."</div><h4>Best use cases</h4><ul><li>Creative work without a desk</li><li>Long brainstorming sessions where typing would slow you down</li><li>Working through ideas while exercising</li><li>Idea generation during commutes</li></ul><div class="gotcha">Don't rely on voice mode to remember details across long sessions. For anything you want to keep, also have it summarize to text at the end.</div><div class="savings"><strong>Time savings:</strong> Brainstorming hours: previously wasted, now productive.</div></div><h2><span class="num">Workflow 04</span> Accessibility</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">4</div><h3>Vision impairment, motor limitations, mobility</h3></div><p>For users with disabilities affecting typing or reading, voice mode makes ChatGPT fully accessible.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Common patterns</span>Voice queries with audio responses bypass typing entirely. Combined with screen readers for the rare cases voice can't handle.</div><h4>Best use cases</h4><ul><li>Vision impairments where reading text is hard</li><li>Motor disabilities affecting keyboard use</li><li>Temporary limitations (injuries, etc.)</li><li>Multi-tasking when full attention isn't possible</li></ul><div class="gotcha">Voice mode is not yet a complete replacement for typed input — especially for code, specific formatting, or copying text out. It's a powerful complement.</div><div class="savings"><strong>Time savings:</strong> Accessibility transformation for those who need it.</div></div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Final challenge: find one voice-mode habit</h2>
-      <p>For one week, pick one daily situation (commute, walk, workout, dishes) and use voice mode in that slot. Don't force it for everything — find the one slot where it genuinely adds value. Keep that habit; ignore the rest.</p>
-      <div class="btn-row">
-        <a href="/lessons/chatgpt/" class="btn">Back to ChatGPT Mastery →</a>
-        <a href="/#pricing" class="btn ghost">See pricing →</a>
+    <p class="deck">Voice mode demos great and then sits unused. The reason: people try it at their desk, where typing is already faster. Voice earns its place somewhere else entirely — in the gaps in your day when typing isn't an option. Here are the four that actually stick.</p>
+
+    <!-- mental model + moments -->
+    <div class="sec">
+      <span class="sec-eyebrow">The mental model</span>
+      <h2>It's for when you can't — or shouldn't — type.</h2>
+      <p>Voice isn't a replacement for the keyboard; it's a complement. The whole value is fitting an AI conversation into time that was otherwise dead: walking, driving hands-free, cooking, lying awake turning a problem over. If you're sitting at a desk, just type. If your hands or eyes are busy, voice unlocks a conversation you couldn't otherwise have.</p>
+      <div class="moments">
+        <div class="moment"><span class="ic">🚶</span><div class="t">Walking</div><div class="s">think out loud</div></div>
+        <div class="moment"><span class="ic">🚗</span><div class="t">Driving</div><div class="s">hands-free</div></div>
+        <div class="moment"><span class="ic">🍳</span><div class="t">Cooking</div><div class="s">hands busy</div></div>
+        <div class="moment"><span class="ic">🌙</span><div class="t">Winding down</div><div class="s">no screen</div></div>
       </div>
     </div>
+
+    <!-- SIGNATURE: voice sim -->
+    <div class="sec">
+      <span class="sec-eyebrow">Hear it · tap through a session</span>
+      <h2>What a real voice session sounds like.</h2>
+      <p>Pick a scenario, then tap the mic to move the conversation forward one exchange at a time. Notice it's not Q&amp;A — it's a back-and-forth that thinks <em>with</em> you.</p>
+
+      <div class="vsim">
+        <div class="vsim-tabs" id="vtabs">
+          <button class="vtab on" data-s="decision">🧭 Think through a decision</button>
+          <button class="vtab" data-s="es">🗣️ Practice Spanish</button>
+          <button class="vtab" data-s="brainstorm">💡 Brainstorm (hands-free)</button>
+        </div>
+        <div class="vsim-stage">
+          <div class="vorb-wrap">
+            <div class="vorb" id="vorb"></div>
+            <div class="vorb-cap" id="vorbCap">Ready</div>
+          </div>
+          <div class="vbubbles" id="vbubbles"></div>
+          <div class="vsim-done" id="vsimDone"></div>
+        </div>
+        <div class="vsim-bar">
+          <button class="mic" id="mic">🎤</button>
+          <div class="mic-label" id="micLabel"><b>Tap to talk</b> — start the session</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- inline quiz -->
+    <div class="sec">
+      <span class="sec-eyebrow">Your call · voice or type?</span>
+      <h2>Where voice wins — and where it loses.</h2>
+      <p>Voice is great for some of these and actively worse for others. Make the call on each.</p>
+      <div class="vq" id="vq"></div>
+    </div>
+
+    <!-- use-case cards -->
+    <div class="sec">
+      <span class="sec-eyebrow">The four that stick</span>
+      <h2>Use cases worth a habit.</h2>
+      <div class="cases">
+        <div class="case">
+          <div class="ch"><span class="ic">🧭</span><h3>Commute thinking</h3></div>
+          <p>Think out loud about a real decision while ChatGPT pushes back instead of just agreeing.</p>
+          <div class="pat">"Help me think through this. Ask me questions, push back — don't just validate."</div>
+        </div>
+        <div class="case">
+          <div class="ch"><span class="ic">🗣️</span><h3>Language practice</h3></div>
+          <p>An always-available conversation partner that corrects you gently and rephrases in better form.</p>
+          <div class="pat">"Let's talk in Spanish about my weekend. Correct my grammar as we go."</div>
+        </div>
+        <div class="case">
+          <div class="ch"><span class="ic">💡</span><h3>Hands-free brainstorm</h3></div>
+          <p>Keep ideas flowing while your hands are busy cooking, exercising, or doing chores.</p>
+          <div class="pat">"I'm cooking. Keep firing product-name ideas; I'll react to them."</div>
+        </div>
+        <div class="case">
+          <div class="ch"><span class="ic">♿</span><h3>Accessibility</h3></div>
+          <p>For vision or motor limitations, spoken queries and audio replies make ChatGPT usable without typing or reading.</p>
+          <div class="pat">Voice in, audio out — bypasses the keyboard entirely.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- honest limits -->
+    <div class="sec">
+      <div class="callout">
+        <span class="lbl">Where it falls short — switch to typing</span>
+        <p>Voice is a complement, not a full replacement. Type instead when:</p>
+        <ul>
+          <li><strong>High-stakes facts or proper nouns</strong> — voice mishears names and numbers; verify in text.</li>
+          <li><strong>Code, formatting, or copying text out</strong> — voice mangles it.</li>
+          <li><strong>Anything you need to keep</strong> — ask it to summarize to text at the end; don't trust it to hold details across a long spoken session.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="challenge">
+      <h2 style="margin-top:0;">Find your one voice-mode habit</h2>
+      <p>For one week, pick a single daily slot — commute, walk, workout, dishes — and use voice mode only there. Don't force it everywhere; find the one moment where it genuinely adds value, keep that, and drop the rest. One sticky habit beats ten you abandon.</p>
+      <div class="btn-row">
+        <a href="/playground" class="btn">Try a prompt in the playground →</a>
+        <a href="/lessons/chatgpt/" class="btn ghost">Back to ChatGPT Mastery</a>
+      </div>
+    </div>
+
     <div class="checklist">
       <h3>What you can do now</h3>
-      <ul><li>Use voice mode for thinking-out-loud sessions during dead time</li><li>Practice a language with real-time conversation and correction</li><li>Brainstorm hands-free while doing other things</li><li>Apply voice mode for accessibility benefits where typing is hard</li><li>Recognize when voice is better than typing and when it's worse</li></ul>
+      <ul>
+        <li>Use voice for thinking-out-loud sessions during dead time</li>
+        <li>Practice a language with live conversation and gentle correction</li>
+        <li>Brainstorm hands-free while doing something else</li>
+        <li>Lean on voice for accessibility where typing or reading is hard</li>
+        <li>Switch to typing for facts, code, and anything you need to keep</li>
+      </ul>
     </div>
+
     <div class="next-up">
       <span class="pro-tag">Pro</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in ChatGPT Mastery</div>
-      <h3>Lesson 5 · Memory & custom instructions: teach ChatGPT to know you</h3>
-      <p>Setting up memory effectively, what to put in custom instructions (and what NOT to), pruning what ChatGPT remembers when it gets confused. <a href="/#pricing">See pricing →</a></p>
+      <div class="lbl" style="margin-top:14px;">Up next in ChatGPT Mastery</div>
+      <h3>Lesson 5 · Memory &amp; custom instructions: teach ChatGPT to know you</h3>
+      <p>Setting up memory effectively, what to put in custom instructions (and what not to), and pruning what ChatGPT remembers when it gets confused. <a href="/lessons/chatgpt/memory-instructions">Start lesson 5 →</a></p>
     </div>
   </div>
 </article>
+
 <footer>
   <div class="footer-inner">
-    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with OpenAI.</div>
+    <div>© 2026 LearningGPT · Independent. Not affiliated with OpenAI.</div>
     <a href="/lessons/chatgpt/" style="color: var(--text-dim);">← All ChatGPT lessons</a>
   </div>
 </footer>
@@ -197,7 +321,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -212,7 +335,7 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -220,15 +343,149 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   </div>
 </div>
 
+<script id="lessonScript">
+(function () {
+  // ── VOICE SIM ──
+  var SCRIPTS = {
+    decision: [
+      { who: 'you', text: "Help me think through taking a new role. Push back on my reasoning — don't just validate." },
+      { who: 'gpt', text: "Deal. What's actually pulling you — the work itself, or the title?" },
+      { who: 'you', text: "Honestly… probably the title." },
+      { who: 'gpt', text: "Then the hard question: if the title were identical to your current one, would you still want it?" },
+      { who: 'you', text: "…no. Probably not." },
+      { who: 'gpt', text: "Worth sitting with. Let's pressure-test what the role actually changes day to day." }
+    ],
+    es: [
+      { who: 'you', text: "Vamos a hablar en español sobre mi fin de semana. Corrige mis errores." },
+      { who: 'gpt', text: "¡Claro! ¿Qué hiciste el fin de semana?" },
+      { who: 'you', text: "Yo fui a la playa y nadar." },
+      { who: 'gpt', text: "Casi — di 'fui a la playa y nadé.' Los dos verbos en pasado. ¿Con quién fuiste?" },
+      { who: 'you', text: "Fui con mi hermana." },
+      { who: 'gpt', text: "¡Perfecto! Ahora cuéntame: ¿qué fue lo mejor del día?" }
+    ],
+    brainstorm: [
+      { who: 'you', text: "I'm cooking. Fire product-name ideas; I'll react." },
+      { who: 'gpt', text: "Driftwork. Tideline. Ferry. Lapse. Quorum." },
+      { who: 'you', text: "Quorum's interesting. More like that — one word, a little corporate-subversive." },
+      { who: 'gpt', text: "Caucus. Tally. Margin. Footnote. Errata." },
+      { who: 'you', text: "Errata. Love it. Put that one at the top." },
+      { who: 'gpt', text: "Saved. Want me to text you the shortlist when we're done?" }
+    ]
+  };
+  var DONE = {
+    decision: "That's commute thinking — a sparring partner for a decision, not a yes-machine. Thirty minutes of walking became thirty minutes of real thinking.",
+    es: "That's language practice — a patient partner that corrects in the flow of conversation, available the moment you have a free ten minutes.",
+    brainstorm: "That's hands-free brainstorming — ideas keep coming while your hands stay busy, and it summarizes to text so nothing's lost."
+  };
+
+  var vtabs = document.getElementById('vtabs');
+  var vbubbles = document.getElementById('vbubbles');
+  var vsimDone = document.getElementById('vsimDone');
+  var mic = document.getElementById('mic');
+  var micLabel = document.getElementById('micLabel');
+  var vorb = document.getElementById('vorb');
+  var vorbCap = document.getElementById('vorbCap');
+  var current = 'decision';
+  var idx = 0;
+
+  function resetSim(s) {
+    current = s;
+    idx = 0;
+    vbubbles.innerHTML = '';
+    vsimDone.classList.remove('show');
+    vsimDone.textContent = '';
+    mic.disabled = false;
+    vorb.classList.remove('speaking');
+    vorbCap.textContent = 'Ready';
+    micLabel.innerHTML = '<b>Tap to talk</b> — start the session';
+  }
+  vtabs.querySelectorAll('.vtab').forEach(function (t) {
+    t.addEventListener('click', function () {
+      vtabs.querySelectorAll('.vtab').forEach(function (x) { x.classList.remove('on'); });
+      t.classList.add('on');
+      resetSim(t.dataset.s);
+    });
+  });
+
+  mic.addEventListener('click', function () {
+    var script = SCRIPTS[current];
+    if (idx >= script.length) return;
+    var line = script[idx];
+    var b = document.createElement('div');
+    b.className = 'vb ' + line.who;
+    b.innerHTML = '<span class="who">' + (line.who === 'you' ? 'You' : 'ChatGPT') + '</span>' + line.text;
+    vbubbles.appendChild(b);
+    idx++;
+
+    if (line.who === 'gpt') {
+      vorb.classList.add('speaking');
+      vorbCap.textContent = 'Speaking…';
+      setTimeout(function () {
+        vorb.classList.remove('speaking');
+        vorbCap.textContent = idx >= script.length ? 'Done' : 'Listening';
+      }, 900);
+    } else {
+      vorbCap.textContent = 'Listening';
+    }
+
+    if (idx >= script.length) {
+      mic.disabled = true;
+      micLabel.innerHTML = 'Session complete';
+      vsimDone.textContent = DONE[current];
+      vsimDone.classList.add('show');
+    } else {
+      micLabel.innerHTML = '<b>Tap to talk</b> — continue';
+    }
+    b.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  });
+
+  // ── INLINE QUIZ ──
+  var QS = [
+    { scn: 'Mulling a career decision on a long walk.', ans: 'Voice', why: 'Dead time + open-ended thinking is voice\'s sweet spot — talk it through hands-free.' },
+    { scn: 'Pasting a 40-line error log to debug some code.', ans: 'Type', why: 'Code and long exact text get mangled by voice. Type it.' },
+    { scn: 'Confirming an exact revenue figure for a report.', ans: 'Type', why: 'Voice mishears numbers and names — verify high-stakes facts in text.' },
+    { scn: 'Practicing Spanish before a trip while doing dishes.', ans: 'Voice', why: 'Live spoken practice with hands busy is exactly what voice is for.' }
+  ];
+  var vq = document.getElementById('vq');
+  QS.forEach(function (q) {
+    var row = document.createElement('div');
+    row.className = 'vq-row';
+    row.innerHTML =
+      '<div class="vq-scn">' + q.scn + '</div>' +
+      '<div class="vq-btns">' +
+        '<button class="vq-btn" data-v="Voice">🎤 Voice</button>' +
+        '<button class="vq-btn" data-v="Type">⌨️ Type</button>' +
+      '</div>' +
+      '<div class="vq-fb"></div>';
+    vq.appendChild(row);
+    var fb = row.querySelector('.vq-fb');
+    var btns = row.querySelectorAll('.vq-btn');
+    var done = false;
+    btns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (done) return;
+        done = true;
+        var ok = btn.dataset.v === q.ans;
+        btns.forEach(function (x) {
+          x.disabled = true;
+          if (x.dataset.v === q.ans) x.classList.add('right');
+        });
+        if (!ok) btn.classList.add('wrong');
+        fb.innerHTML = (ok ? '' : '<b>' + q.ans + '.</b> ') + q.why;
+        fb.classList.add('show');
+      });
+    });
+  });
+})();
+</script>
 
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Voice mode: real-world use cases (and what it's actually for)\nTRACK: Chatgpt Mastery\n\nLESSON CONTENT SUMMARY:\nVoice mode: real-world use cases (and what it's actually for) \u2014 LearningGPT L LearningGPT \u2190 ChatGPT Mastery Lesson 04 \u00b7 ChatGPT Mastery Pro ~9 min read 4 use cases Voice mode: the use cases that matter. ChatGPT's voice mode demos great but most people never integrate it into their workflow. This lesson skips the marketing and focuses on the four use cases where voice mode genuinely beats typing: commute thinking, language practice, hands-free brainstorming, and accessibility. The mental model Voice mode is for the moments when you can't or shouldn't be typing. Walking. Driving (hands-free). Cooking. Falling asleep mulling a problem. Voice isn't a replacement for typing \u2014 it's a complement. The win is fitting AI conversation into the gaps in your day when typing isn't an option. Workflow 01 Commute thinking 1 Turn dead time into thinking time On a walk, drive, or transit: use voice mode to think out loud about a problem with ChatGPT pushing back. The prompt that works Use pattern (Out loud) \"I'm working through a decision about whether to take a new role. Help me think through it. Ask me questions, push back on my reasoning, don't just validate.\" Best use cases Career or life decisions you're mulling Strategy thinking before a meeting Working through a problem with no obvious answer Drafting a difficult conversation Voice mode has occasional latency and misunderstands proper nouns. For high-stakes facts, switch to typing. Time savings: 30-min walk \u2192 30-min thinking session that would otherwise be lost time. Workflow 02 Language practice 2 A patient conversation partner Practicing a language? Voice mode lets you have actual conversations in your target language with real-time correction. The prompt that works Practice pattern \"Let's have a conversation in Spanish about my weekend. Correct my grammar gently when I make mistakes and rephrase my responses in better Spanish.\" Best use cases Language learners at any level Maintaining fluency in a language you don't use daily Practicing for an upcoming trip or meeting Building vocabulary in a specific domain Voice mode handles many languages well but pronunciation feedback is uneven. For accent work, get a human teacher. Time savings: Language practice without scheduling tutors: anytime. Workflow 03 Hands-free brainstorming 3 When your hands are busy but your brain isn't Cooking, exercising, doing chores: voice mode keeps a conversation going while your hands work. The prompt that works Brainstorm pattern \"I'm cooking. Let's brainstorm names for the new product. Keep firing ideas; I'll react to them.\" Best use cases Creative work without a desk Long brainstorming sessions where typing would slow you down Working through ideas while exercising Idea generation during commutes Don't rely on voice mode to remember details across long sessions. For anything you want to keep, also have it summarize to text at the end. Time savings: Brainstorming hours: previously wasted, now productive. Workflow 04 Accessibili\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Voice mode: real-world use cases (and what it's actually for)\nTRACK: ChatGPT Mastery (Lesson 4, Pro)\n\nLESSON CONTENT SUMMARY:\nChatGPT's voice mode demos well but goes unused because people try it at a desk, where typing is faster. The mental model: voice is for moments when you can't or shouldn't type — walking, driving hands-free, cooking, winding down without a screen. It's a complement to typing, not a replacement; the value is fitting an AI conversation into otherwise dead time.\n\nFour use cases that actually stick: (1) Commute thinking — think out loud about a real decision and have ChatGPT push back instead of just validating ('ask me questions, push back, don't just validate'). (2) Language practice — a patient conversation partner in your target language that corrects gently and rephrases ('let's talk in Spanish about my weekend, correct my grammar as we go'). (3) Hands-free brainstorming — keep ideas flowing while cooking, exercising, or doing chores ('keep firing ideas; I'll react'). (4) Accessibility — spoken queries and audio replies make ChatGPT usable without typing or reading, for vision or motor limitations.\n\nWhere voice loses, switch to typing: high-stakes facts and proper nouns (voice mishears names/numbers), code/formatting/copying text out (voice mangles it), and anything you need to keep (ask it to summarize to text at the end — don't trust it to hold details across a long spoken session). Voice also has occasional latency and uneven pronunciation feedback, so for serious accent work use a human teacher. The takeaway habit: pick ONE daily slot (commute, walk, workout, dishes) and use voice only there for a week.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more\n- Be practical — give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only — no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -236,27 +493,21 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -265,7 +516,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -274,7 +524,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

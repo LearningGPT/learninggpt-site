@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#2c7be5" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/copilot/copilot-researcher" />
 <meta property="og:title" content="Copilot Researcher — multi-step research inside M365" />
@@ -30,90 +30,125 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
 .logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
 .nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
-.lesson { padding: 50px 0 100px; }
-.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+
+/* ── INTERACTIVE LESSON SHELL ── */
+.ilesson { padding: 46px 0 100px; }
+.lesson-meta { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
 .lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(44,123,229,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(44,123,229,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
 .lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
-.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
-.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #2c7be5 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
-.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
-.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #2c7be5, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(44,123,229,0.1); border: 1px solid rgba(44,123,229,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
+.ilesson h1 { font-size: clamp(31px, 4.5vw, 44px); font-weight: 800; line-height: 1.14; letter-spacing: -0.02em; margin: 0 0 18px; }
+.ilesson h1 .grad { background: linear-gradient(135deg, #2c7be5 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.ilesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.12em; }
+.deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 30px; padding-bottom: 26px; border-bottom: 1px solid var(--line); }
+
+.progwrap { position: sticky; top: 59px; z-index: 50; background: rgba(10,10,26,0.9); backdrop-filter: blur(8px); padding: 14px 0 12px; margin-bottom: 6px; }
+.progbar { height: 6px; background: rgba(255,255,255,0.07); border-radius: 999px; overflow: hidden; }
+.progfill { height: 100%; width: 0%; background: linear-gradient(90deg, #2c7be5, #7c5cff); border-radius: 999px; transition: width .4s cubic-bezier(.4,0,.2,1); }
+.progmeta { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--text-mute); margin-top: 7px; letter-spacing: 0.3px; }
+
+.step { display: none; animation: stepIn .4s ease; }
+.step.active { display: block; }
+@keyframes stepIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.step-k { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin: 26px 0 6px; }
+.step h2 { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; line-height: 1.25; }
+.step h3 { font-size: 18px; font-weight: 600; margin: 22px 0 9px; }
+.step p { font-size: 16.5px; color: var(--text); margin: 0 0 16px; }
+.step strong { font-weight: 700; } .step em { font-style: italic; }
+
+.card { background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 22px 26px; margin: 20px 0; }
+.card p:last-child { margin-bottom: 0; }
+
+/* source split (web / your data) */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+@media (max-width: 560px){ .split { grid-template-columns: 1fr; } }
+.scol { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius); padding: 15px 16px; }
+.scol .sh { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 9px; }
+.scol.web .sh { color: var(--brand-2); }
+.scol.mine .sh { color: var(--accent); }
+.scol ul { list-style: none; padding: 0; margin: 0; }
+.scol li { font-size: 13.5px; color: var(--text-dim); padding: 6px 0 6px 16px; position: relative; line-height: 1.45; }
+.scol li::before { content: '•'; position: absolute; left: 2px; color: var(--text-mute); }
+
+.pcard { background: var(--bg-soft); border: 1px solid var(--line); border-left: 3px solid var(--track); border-radius: 0 var(--radius) var(--radius) 0; padding: 14px 16px; margin-bottom: 11px; }
+.pcard .pn { font-size: 15px; font-weight: 700; color: var(--text); }
+.pcard .pd { font-size: 13.5px; color: var(--text-dim); margin-top: 4px; line-height: 1.5; }
+
+.prompt-example { background: rgba(0,0,0,0.32); border: 1px solid var(--line); border-radius: 10px; padding: 13px 15px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
 .prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 13px 16px; margin: 16px 0; font-size: 14.5px; }
 .gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #2c7be5, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
-.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
-.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
-.checklist li:first-child { border-top: none; padding-top: 0; }
-.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.callout { margin: 18px 0; padding: 16px 18px; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius); }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 6px; }
+.callout p { margin: 0; font-size: 14.5px; color: var(--text-dim); }
+
+/* choices */
+.choices { display: flex; flex-direction: column; gap: 10px; margin: 16px 0 8px; }
+.choice { text-align: left; background: var(--surface); border: 1px solid var(--line-strong); color: var(--text); border-radius: 12px; padding: 14px 16px; font-size: 15px; font-family: inherit; cursor: pointer; transition: border-color .15s, background .15s, transform .1s; line-height: 1.5; }
+.choice:hover:not(:disabled) { border-color: var(--brand-2); transform: translateX(2px); }
+.choice:disabled { cursor: default; }
+.choice.correct { border-color: var(--accent); background: rgba(68,224,164,0.1); }
+.choice.wrong { border-color: var(--danger); background: rgba(255,107,138,0.08); opacity: 0.75; }
+.fb { margin: 6px 0 0; padding: 14px 16px; border-radius: 12px; font-size: 14.5px; line-height: 1.6; display: none; }
+.fb.show { display: block; animation: stepIn .3s ease; }
+.fb.good { background: rgba(68,224,164,0.1); border: 1px solid rgba(68,224,164,0.3); }
+.fb.bad { background: rgba(255,181,71,0.08); border: 1px solid rgba(255,181,71,0.3); }
+.fb b { color: var(--text); }
+
+/* signature: number hunt */
+.hunt { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 22px 24px; margin: 18px 0; }
+.srcbox { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px; margin-bottom: 16px; }
+.srcbox .sbh { font-size: 11px; text-transform: uppercase; letter-spacing: 0.9px; color: var(--accent); font-weight: 700; margin-bottom: 8px; }
+.srctable { width: 100%; border-collapse: collapse; font-size: 14px; }
+.srctable td { padding: 8px 0; border-top: 1px solid var(--line); }
+.srctable tr:first-child td { border-top: none; }
+.srctable td.k { color: var(--text-dim); }
+.srctable td.v { text-align: right; font-weight: 700; font-family: 'SFMono-Regular', Consolas, monospace; color: var(--text); }
+.draftbox { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; font-size: 15px; line-height: 2.05; color: var(--text); }
+.draftbox .dh { font-size: 11px; text-transform: uppercase; letter-spacing: 0.9px; color: var(--brand-2); font-weight: 700; margin-bottom: 8px; line-height: 1.4; }
+.fig { font-family: 'SFMono-Regular', Consolas, monospace; font-weight: 700; font-size: 14px; background: rgba(44,123,229,0.14); border: none; border-bottom: 1.5px dashed var(--brand-2); border-radius: 4px; padding: 1px 6px; cursor: pointer; color: var(--text); transition: background .15s; }
+.fig:hover:not(.locked) { background: rgba(44,123,229,0.26); }
+.fig.match { background: rgba(68,224,164,0.14); border-bottom: 1.5px solid var(--accent); cursor: default; }
+.fig.caught { background: rgba(255,107,138,0.2); border-bottom: 1.5px solid var(--danger); cursor: default; }
+.fig.locked { cursor: default; }
+.hunt-note { font-size: 13px; color: var(--text-mute); margin-top: 12px; min-height: 18px; }
+
+.step-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 30px; gap: 12px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #7c5cff, #5b8def); color: white; padding: 13px 24px; border-radius: 11px; font-weight: 600; font-size: 15px; border: none; font-family: inherit; cursor: pointer; box-shadow: 0 6px 22px rgba(124,92,255,0.3); transition: transform .15s, opacity .15s; }
+.btn:hover:not(:disabled) { transform: translateY(-1px); color: white; }
+.btn:disabled { opacity: 0.4; cursor: default; box-shadow: none; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.btn-back { background: none; border: none; color: var(--text-mute); font-size: 14px; cursor: pointer; font-family: inherit; padding: 8px 4px; }
+.btn-back:hover { color: var(--text); } .btn-back:disabled { opacity: 0; cursor: default; }
+
+.complete { text-align: center; padding: 14px 0 0; }
+.complete .big { font-size: 48px; margin-bottom: 6px; }
+.checklist { margin: 26px 0; padding: 24px 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); text-align: left; }
+.checklist h3 { margin: 0 0 6px; font-size: 17px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 30px; position: relative; font-size: 15px; border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 13px; width: 18px; height: 18px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
-.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
-.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.challenge { margin: 24px 0; background: linear-gradient(135deg, rgba(44,123,229,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(44,123,229,0.25); border-radius: var(--radius-lg); padding: 28px; text-align: left; }
+.challenge h3 { margin: 0 0 8px; font-size: 19px; }
+.next-up { margin: 26px 0 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); text-align: left; }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 8px; }
 .next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
-.next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
+.next-up h3 { margin: 12px 0 8px; font-size: 19px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+
 footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -142,7 +177,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -154,83 +188,174 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <a href="/lessons/copilot/" class="nav-back">← Copilot Mastery</a>
   </div>
 </nav>
-<article class="lesson">
-  <div class="container">
+
+<div class="container">
+  <div class="ilesson">
     <div class="lesson-meta">
       <span class="chip">Agents · Lesson 01</span>
       <span class="chip chip-pro">Pro</span>
-      <span>~11 min read</span>
+      <span>~11 min</span>
       <span class="dot"></span>
-      <span>Multi-source research</span>
+      <span>Interactive</span>
     </div>
     <h1>Researcher: <span class="grad serif">the analyst on your team.</span></h1>
-    <p class="deck">Researcher is one of two flagship named agents Microsoft shipped in Copilot Chat (the other is Analyst). It synthesizes information from your work data — emails, SharePoint, Teams, OneDrive — alongside the web, and produces full reports. Think Deep Research, but with access to your company's context.</p>
-    <h2><span class="num">Workflow 01</span> Internal-aware competitive analysis</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>Use Researcher to pull from your work data + the web</h3></div><p>The killer Researcher pattern: ask a question that requires both external context and your internal knowledge.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Hybrid research</span>Run a competitive analysis on [Competitor X] for our upcoming customer meeting. Use both web sources and our internal data:
+    <p class="deck">Researcher is one of two flagship named agents Microsoft shipped in Copilot Chat. It synthesizes information from your work data — emails, SharePoint, Teams, OneDrive — alongside the web, and produces full reports. Think Deep Research, but with access to your company's context. The skill is knowing when that blend is its edge — and never trusting a number it pulls without checking.</p>
 
-From the web: their public positioning, pricing (if listed), product changes in the last 6 months, analyst coverage, recent funding or layoffs.
+    <div class="progwrap">
+      <div class="progbar"><div class="progfill" id="prog"></div></div>
+      <div class="progmeta"><span id="progStep">Step 1 of 6</span><span id="progPct">0% complete</span></div>
+    </div>
 
-From our SharePoint and Teams: any sales notes mentioning them in the last 90 days, the competitive battlecard from product marketing, any customer feedback comparing us to them.
-
-Produce a structured report:
-- Their current positioning vs. ours
-- Top 3 strengths they have (from web + customer feedback)
-- Top 3 weaknesses we can lean into
-- 3 concrete talking points for the customer meeting
-
-Cite every internal source by document name and last-modified date.</div><h4>Best use cases</h4><ul><li>Competitive analysis for sales conversations</li><li>Market research informed by your CRM</li><li>Strategy memos blending internal data + external context</li><li>Prep for executive briefings</li></ul><div class="gotcha">Researcher can only see what your M365 permissions allow. If a SharePoint site is restricted, Researcher can't read it — that's correct behavior, but means some sources may be invisible.</div><div class="savings"><strong>Time savings:</strong> A real competitive analysis: 4-6 hours analyst time → 20 min Researcher + review.</div></div><h2><span class="num">Workflow 02</span> Long-form internal report production</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>Quarterly business review draft, generated from your data</h3></div><p>Researcher excels at multi-document synthesis. When you need to pull together a coherent narrative from scattered sources, it's the right tool.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">QBR draft</span>Draft our Q1 business review for the leadership team. Pull from:
-- Our Q1 financials in SharePoint (file: Q1-2026-Financials.xlsx)
-- Sales pipeline reports in our &#x27;Sales Ops&#x27; team site
-- Customer success quarterly review in &#x27;CS Team&#x27; site
-- Engineering velocity metrics from our &#x27;Eng Ops&#x27; Teams channel
-- Our written Q1 strategy doc from leadership SharePoint
-
-Structure the report:
-- Executive summary (1 page)
-- Financial performance vs. plan
-- Sales: pipeline, wins, losses
-- Customer outcomes: NPS, churn, success stories
-- Engineering progress vs. roadmap
-- Strategic risks identified this quarter
-
-Match the voice of last quarter&#x27;s review (also in SharePoint, file: Q4-2025-Review.docx).</div><h4>Best use cases</h4><ul><li>Quarterly or monthly business reviews</li><li>Board reports drafted from data sources</li><li>All-hands prep covering multiple functions</li><li>Investor updates pulled from your real data</li></ul><div class="gotcha">Researcher's output is a draft. Always review numbers manually — if it misread a cell label in your financials, the wrong number flows through the whole report.</div><div class="savings"><strong>Time savings:</strong> QBR draft: 1-2 days of work → 1-2 hours including human review.</div></div><h2><span class="num">Workflow 03</span> Decision-support research</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>A specific question, all relevant sources</h3></div><p>Sometimes you need an answer informed by context, not a research report. Researcher in 'specific question' mode is fast and concrete.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Decision support</span>Should we approve the budget request from Marketing for the conference sponsorship?
-
-Pull from:
-- The request itself (email from [name], date [date])
-- Our last 4 quarters of marketing spend ROI data
-- Past conference sponsorships and outcomes (in SharePoint marketing folder)
-- Industry benchmarks for B2B conference sponsorship ROI
-
-Don&#x27;t tell me yes/no — give me:
-- The 3 strongest reasons in favor
-- The 3 strongest reasons against
-- The 1 data point that should drive the decision
-- 2 questions to ask Marketing before approving</div><h4>Best use cases</h4><ul><li>Budget approval prep</li><li>Vendor selection support</li><li>Hiring decision context</li><li>Go/no-go on strategic projects</li></ul><div class="gotcha">Researcher will respect a 'don't tell me yes/no' instruction. If you want a recommendation, ask for one explicitly.</div><div class="savings"><strong>Time savings:</strong> Decision context gathering: 30-60 min → 5 min.</div></div><div class="callout"><span class="lbl">Researcher access</span><p>Generally available in Microsoft 365 Copilot as of June 2025. Requires a Copilot for Microsoft 365 license. Available in Copilot Chat — invoke by selecting 'Researcher' from the agent picker or by prompting with research-focused phrasing.</p></div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Run one Researcher task that uses both internal + external sources</h2>
-      <p>Pick a real decision or report you owe someone this week. Frame it as a Researcher prompt that requires both your company's data AND web context. Compare the time and quality to what you'd produce manually.</p>
-      <div class="btn-row">
-        <a href="/lessons/copilot/" class="btn">Back to Copilot Mastery →</a>
-        <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+    <!-- STEP 1 — mental model + predict -->
+    <section class="step active" data-step="1">
+      <span class="step-k">The mental model</span>
+      <h2>Deep research, plus your company's context</h2>
+      <p>A public research tool can read the whole web but knows nothing about your business. A plain chatbot knows your files but won't go research the market. <strong>Researcher does both at once</strong> — and the combination is where it earns its keep.</p>
+      <h3>Predict first</h3>
+      <p>You ask for a competitive analysis on a rival. What can <strong>Researcher</strong> do that a public deep-research tool fundamentally can't?</p>
+      <div class="choices" id="c1">
+        <button class="choice" onclick="pick(this,1,'a')">Read more of the public web, faster</button>
+        <button class="choice" onclick="pick(this,1,'b')">Blend the web with your internal data — sales notes, battlecards, customer feedback</button>
+        <button class="choice" onclick="pick(this,1,'c')">Guarantee every fact is correct without review</button>
       </div>
-    </div>
-    <div class="checklist">
-      <h3>What you can do now</h3>
-      <ul>
-        <li>Use Researcher for tasks needing both internal + external context</li>
-        <li>Cite internal sources by name so you can verify</li>
-        <li>Always review numbers from financial or data sources manually</li>
-        <li>Frame multi-document syntheses as structured reports, not vague asks</li>
-        <li>Know that permission boundaries are enforced — some sources invisible to it</li>
-      </ul>
-    </div>
-    <div class="next-up">
-      <span class="pro-tag">Pro</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in Copilot Mastery</div>
-      <h3>Lesson 02 · Analyst — turn data into insight</h3>
-      <p>Analyst is Researcher's sibling agent — focused on quantitative work. Excel-heavy analysis, charts, statistical insight, all from natural language prompts. <a href="/lessons/copilot/">See the track →</a></p>
-    </div>
+      <div class="fb" id="fb1"></div>
+      <div class="step-nav">
+        <button class="btn-back" disabled>← Back</button>
+        <button class="btn" id="next1" disabled onclick="go(2)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- STEP 2 — the hybrid pattern (show) -->
+    <section class="step" data-step="2">
+      <span class="step-k">The killer pattern</span>
+      <h2>Ask a question that needs both sources</h2>
+      <p>The best Researcher prompts deliberately span the outside world and your own data. Here's a competitive analysis for a customer meeting, split by where each piece comes from:</p>
+      <div class="split">
+        <div class="scol web">
+          <div class="sh">From the web</div>
+          <ul>
+            <li>Their public positioning &amp; pricing</li>
+            <li>Product changes in the last 6 months</li>
+            <li>Analyst coverage</li>
+            <li>Recent funding or layoffs</li>
+          </ul>
+        </div>
+        <div class="scol mine">
+          <div class="sh">From your M365 data</div>
+          <ul>
+            <li>Sales notes mentioning them (last 90 days)</li>
+            <li>Product marketing's battlecard</li>
+            <li>Customer feedback comparing you to them</li>
+            <li>Win/loss notes from deals</li>
+          </ul>
+        </div>
+      </div>
+      <p>Then you ask for a structured output: their positioning vs yours, their top 3 strengths, your 3 angles, and 3 talking points — with <strong>every internal source cited by document name and date</strong> so you can verify.</p>
+      <div class="callout"><span class="lbl">Why cite internal sources</span><p>Citations by file name turn an impressive report into a checkable one. You can open the exact battlecard or sales note and confirm Researcher read it right.</p></div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(1)">← Back</button>
+        <button class="btn" onclick="go(3)">Now stress-test a draft →</button>
+      </div>
+    </section>
+
+    <!-- STEP 3 — signature: number hunt -->
+    <section class="step" data-step="3">
+      <span class="step-k">Do it · verify the numbers</span>
+      <h2>Catch the figure Researcher misread</h2>
+      <p>Researcher drafted a slice of a QBR from your real data. It reads cleanly — which is exactly the danger. Below is the <strong>source data</strong>, and below that the <strong>draft</strong>. One figure in the draft doesn't match the source. Tap it.</p>
+      <div class="hunt">
+        <div class="srcbox">
+          <div class="sbh">Source · Q1-2026-Financials.xlsx</div>
+          <table class="srctable">
+            <tr><td class="k">Q1 revenue</td><td class="v">$4.2M</td></tr>
+            <tr><td class="k">New customers</td><td class="v">137</td></tr>
+            <tr><td class="k">Churn rate</td><td class="v">3.1%</td></tr>
+            <tr><td class="k">NPS</td><td class="v">52</td></tr>
+          </table>
+        </div>
+        <div class="draftbox">
+          <div class="dh">Researcher draft · Q1 executive summary</div>
+          Q1 revenue landed at <button class="fig" data-k="rev" onclick="figClick(this)">$4.2M</button>, up 12% on plan. We added <button class="fig" data-k="cust" onclick="figClick(this)">137</button> new customers, and churn improved to <button class="fig" data-k="churn" data-bad="1" onclick="figClick(this)">1.3%</button>. Customer sentiment held strong, with an NPS of <button class="fig" data-k="nps" onclick="figClick(this)">52</button>.
+        </div>
+        <div class="hunt-note" id="huntNote">Tap the figure that doesn't match the source table.</div>
+        <div class="fb" id="fb3"></div>
+      </div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(2)">← Back</button>
+        <button class="btn" id="next3" disabled onclick="go(4)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- STEP 4 — other patterns (show) -->
+    <section class="step" data-step="4">
+      <span class="step-k">More ways to use it</span>
+      <h2>Two more patterns worth keeping</h2>
+      <div class="pcard"><div class="pn">Long-form report from scattered sources</div><div class="pd">Point Researcher at five places — financials, pipeline, CS review, eng metrics, the strategy doc — and have it draft a structured QBR, even matching last quarter's voice from a prior file.</div></div>
+      <div class="pcard"><div class="pn">Decision-support, not a verdict</div><div class="pd">Ask for the 3 strongest reasons for, the 3 against, the one data point that should decide it, and 2 questions to ask first. Tell it <em>not</em> to give a yes/no — it'll respect that.</div></div>
+      <div class="prompt-example"><span class="label">Decision support</span>Should we approve Marketing's conference sponsorship? Pull the request, our last 4 quarters of marketing-spend ROI, past sponsorship outcomes, and industry benchmarks. Don't tell me yes/no — give 3 reasons for, 3 against, the 1 data point that should drive it, and 2 questions to ask Marketing first.</div>
+      <div class="gotcha">Researcher only sees what your M365 permissions allow. A restricted SharePoint site is invisible to it — correct behavior, but it means a source can be silently missing from the report.</div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(3)">← Back</button>
+        <button class="btn" onclick="go(5)">One more judgment call →</button>
+      </div>
+    </section>
+
+    <!-- STEP 5 — permission boundary pick -->
+    <section class="step" data-step="5">
+      <span class="step-k">The boundary</span>
+      <h2>When a source goes missing</h2>
+      <p>Researcher's report on a rival is solid — except it never mentions the big deal your team lost to them last quarter, which everyone on the deal team knows about. What's the most likely reason?</p>
+      <div class="choices" id="c5">
+        <button class="choice" onclick="pick(this,5,'a')">Researcher isn't capable of competitive analysis</button>
+        <button class="choice" onclick="pick(this,5,'b')">The deal notes live in a SharePoint site Researcher's permissions don't include</button>
+        <button class="choice" onclick="pick(this,5,'c')">Researcher only reads the web and never touches internal data</button>
+      </div>
+      <div class="fb" id="fb5"></div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="go(4)">← Back</button>
+        <button class="btn" id="next5" disabled onclick="go(6)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- STEP 6 — completion -->
+    <section class="step" data-step="6">
+      <div class="complete">
+        <div class="big">🔎</div>
+        <span class="step-k">Lesson complete</span>
+        <h2>Researcher is your analyst — and you're its editor</h2>
+      </div>
+      <div class="checklist">
+        <h3>What you can do now</h3>
+        <ul>
+          <li>Reach for Researcher when a question needs internal data + web context</li>
+          <li>Split a prompt explicitly into web sources and your-data sources</li>
+          <li>Make it cite internal sources by file name so you can verify</li>
+          <li>Check every number against the source — a misread cell flows through the whole report</li>
+          <li>Remember permission boundaries: a restricted site is silently invisible</li>
+        </ul>
+      </div>
+      <div class="challenge">
+        <h3>Your move: run one hybrid Researcher task</h3>
+        <p>Pick a real decision or report you owe someone this week. Frame it as a Researcher prompt that needs both your company's data and web context — and tell it to cite internal sources. Then verify the numbers before you send. Compare the time and quality to doing it by hand.</p>
+        <div class="btn-row">
+          <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+        </div>
+      </div>
+      <div class="next-up">
+        <span class="pro-tag">Pro</span>
+        <div class="lbl" style="margin-top:12px">Up next in Copilot Mastery</div>
+        <h3>Agents · Lesson 02 — Analyst: turn data into insight</h3>
+        <p>Analyst is Researcher's quantitative sibling. Where Researcher synthesizes documents and the web, Analyst crunches the numbers — Excel-heavy analysis, charts, and statistical insight, all from natural-language prompts.</p>
+        <div class="btn-row">
+          <a href="/lessons/copilot/copilot-analyst" class="btn">Continue to Agents · Lesson 02 · Analyst →</a>
+          <a href="/lessons/copilot/" class="btn ghost">Back to all lessons</a>
+        </div>
+      </div>
+    </section>
+
   </div>
-</article>
+</div>
+
 <footer>
   <div class="footer-inner">
     <div>© 2026 LearningGPT · Independent. Not affiliated with Microsoft.</div>
@@ -243,7 +368,6 @@ Don&#x27;t tell me yes/no — give me:
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -255,10 +379,10 @@ Don&#x27;t tell me yes/no — give me:
     <button class="coach-close" id="coachClose">✕</button>
   </div>
   <div class="coach-messages" id="coachMessages">
-    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson on Copilot Researcher. Ask me how to frame a hybrid research prompt, when to use Researcher vs Analyst, or how to verify what it pulls. What are you researching?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -266,15 +390,79 @@ Don&#x27;t tell me yes/no — give me:
   </div>
 </div>
 
+<script id="lessonScript">
+/* ── stepper ── */
+var TOTAL = 6;
+var cur = 1;
+function go(n){
+  if(n<1||n>TOTAL) return;
+  document.querySelector('.step[data-step="'+cur+'"]').classList.remove('active');
+  cur = n;
+  document.querySelector('.step[data-step="'+cur+'"]').classList.add('active');
+  var pct = Math.round(((cur-1)/(TOTAL-1))*100);
+  document.getElementById('prog').style.width = pct+'%';
+  document.getElementById('progStep').textContent = 'Step '+cur+' of '+TOTAL;
+  document.getElementById('progPct').textContent = pct+'% complete';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
 
-<script id="coachScript">
+/* ── predict / pick ── */
+var pickMsg = {
+  '1': {
+    correct: 'b',
+    good: '<b>Exactly — the blend.</b> A public tool can\'t read your sales notes, battlecards, or customer feedback. Researcher pulls those alongside the web, so the analysis is grounded in what your company actually knows. That\'s the whole reason it exists.',
+    bad: '<b>Not the key difference.</b> Speed and accuracy aren\'t its edge (and nothing guarantees correctness without review). What only Researcher can do is <b>blend the web with your internal M365 data</b> — sales notes, battlecards, customer feedback.'
+  },
+  '5': {
+    correct: 'b',
+    good: '<b>Right — it\'s a permissions boundary.</b> Researcher only sees what your M365 access allows. If those deal notes live in a SharePoint site you can\'t reach, they\'re invisible to it — correct behavior, but it means you should point it at the right sources or get access.',
+    bad: '<b>Not quite.</b> Researcher is fully capable and does read internal data. The likely cause is a <b>permissions boundary</b> — the deal notes sit in a SharePoint site Researcher can\'t access, so they\'re silently missing from the report.'
+  }
+};
+function pick(btn, step, val){
+  var box = document.getElementById('c'+step);
+  if(box.dataset.done) return;
+  box.dataset.done = '1';
+  var info = pickMsg[String(step)];
+  Array.prototype.forEach.call(box.querySelectorAll('.choice'), function(b){
+    b.disabled = true;
+    var v = b.getAttribute('onclick').match(/'([a-z])'\)/)[1];
+    if(v === info.correct) b.classList.add('correct');
+    else if(b === btn) b.classList.add('wrong');
+  });
+  var fb = document.getElementById('fb'+step);
+  var ok = val === info.correct;
+  fb.className = 'fb show ' + (ok ? 'good' : 'bad');
+  fb.innerHTML = ok ? info.good : info.bad;
+  document.getElementById('next'+step).disabled = false;
+}
+
+/* ── signature: number hunt ── */
+var huntDone = false;
+function figClick(btn){
+  if(huntDone) return;
+  if(btn.dataset.bad){
+    huntDone = true;
+    btn.classList.add('caught','locked');
+    document.querySelectorAll('.fig').forEach(function(f){ f.classList.add('locked'); });
+    document.getElementById('huntNote').textContent = '';
+    var fb = document.getElementById('fb3');
+    fb.className = 'fb show good';
+    fb.innerHTML = '<b>Caught it.</b> The source says churn was <b>3.1%</b>; the draft says <b>1.3%</b> — a transposed digit. Worse, the draft frames it as "improved," so the wrong number reads like good news and sails right past you. This is why you check every figure against the source: one misread cell flows through the entire report.';
+    document.getElementById('next3').disabled = false;
+  } else {
+    btn.classList.add('match','locked');
+    document.getElementById('huntNote').textContent = '✓ That one matches the source — keep looking.';
+  }
+}
+
+/* ── AI COACH ── */
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Copilot Researcher \u2014 multi-step research inside M365\nTRACK: Copilot Mastery\n\nLESSON CONTENT SUMMARY:\nCopilot Researcher \u2014 multi-step research inside M365 \u2014 LearningGPT L LearningGPT \u2190 Copilot Mastery Agents \u00b7 Lesson 01 Pro ~11 min read Multi-source research Researcher: the analyst on your team. Researcher is one of two flagship named agents Microsoft shipped in Copilot Chat (the other is Analyst). It synthesizes information from your work data \u2014 emails, SharePoint, Teams, OneDrive \u2014 alongside the web, and produces full reports. Think Deep Research, but with access to your company's context. Workflow 01 Internal-aware competitive analysis 1 Use Researcher to pull from your work data + the web The killer Researcher pattern: ask a question that requires both external context and your internal knowledge. The prompt that works Hybrid research Run a competitive analysis on [Competitor X] for our upcoming customer meeting. Use both web sources and our internal data: From the web: their public positioning, pricing (if listed), product changes in the last 6 months, analyst coverage, recent funding or layoffs. From our SharePoint and Teams: any sales notes mentioning them in the last 90 days, the competitive battlecard from product marketing, any customer feedback comparing us to them. Produce a structured report: - Their current positioning vs. ours - Top 3 strengths they have (from web + customer feedback) - Top 3 weaknesses we can lean into - 3 concrete talking points for the customer meeting Cite every internal source by document name and last-modified date. Best use cases Competitive analysis for sales conversations Market research informed by your CRM Strategy memos blending internal data + external context Prep for executive briefings Researcher can only see what your M365 permissions allow. If a SharePoint site is restricted, Researcher can't read it \u2014 that's correct behavior, but means some sources may be invisible. Time savings: A real competitive analysis: 4-6 hours analyst time \u2192 20 min Researcher + review. Workflow 02 Long-form internal report production 2 Quarterly business review draft, generated from your data Researcher excels at multi-document synthesis. When you need to pull together a coherent narrative from scattered sources, it's the right tool. The prompt that works QBR draft Draft our Q1 business review for the leadership team. Pull from: - Our Q1 financials in SharePoint (file: Q1-2026-Financials.xlsx) - Sales pipeline reports in our &#x27;Sales Ops&#x27; team site - Customer success quarterly review in &#x27;CS Team&#x27; site - Engineering velocity metrics from our &#x27;Eng Ops&#x27; Teams channel - Our written Q1 strategy doc from leadership SharePoint Structure the report: - Executive summary (1 page) - Financial performance vs. plan - Sales: pipeline, wins, losses - Customer outcomes: NPS, churn, success stories - Engineering progress vs. roadmap - Strategic risks identified this quarter Match the voice of last quarter&#x27;s review (also in SharePoint, file: Q4-2025-Review.docx). Best use cases Quarterly or monthly business\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Copilot Researcher — multi-step research inside M365\nTRACK: Copilot Mastery (Agents block, Lesson 01)\n\nLESSON CONTENT SUMMARY:\nResearcher is one of two flagship named agents in Microsoft 365 Copilot Chat (the other is Analyst). It synthesizes information from your work data (emails, SharePoint, Teams, OneDrive) AND the web, and produces full structured reports. Think Deep Research, but with your company's context.\n\nGenerally available in M365 Copilot as of June 2025; needs a Copilot for Microsoft 365 license; invoked from the agent picker in Copilot Chat.\n\nTHE KILLER PATTERN — HYBRID RESEARCH: ask a question that needs BOTH external and internal context. Example competitive analysis splits sources: from the web (competitor positioning, pricing, product changes, analyst coverage, funding/layoffs) and from your M365 (sales notes, product-marketing battlecard, customer feedback, win/loss notes). Then request a structured output and have it CITE every internal source by document name + last-modified date so you can verify.\n\nOTHER PATTERNS:\n- Long-form report from scattered sources: point it at multiple places (financials, pipeline, CS review, eng metrics, strategy doc) to draft a QBR, even matching a prior quarter's voice from an existing file.\n- Decision-support (not a verdict): ask for 3 reasons for, 3 against, the 1 data point that should decide it, 2 questions to ask first. It will respect a 'don't tell me yes/no' instruction; ask explicitly if you DO want a recommendation.\n\nKEY DISCIPLINES:\n- VERIFY NUMBERS: Researcher's output is a draft. Always check figures from financial/data sources manually — if it misreads a cell label or transposes a digit (e.g. 3.1% becoming 1.3%), the wrong number flows through the whole report, and a wrong number that reads as good news is especially easy to miss.\n- PERMISSION BOUNDARIES: Researcher can only see what your M365 permissions allow. A restricted SharePoint site is invisible to it — correct behavior, but it means a source can be silently missing. Point it at the right sources or get access.\n\nTime savings: competitive analysis 4-6 hrs to ~20 min + review; QBR draft 1-2 days to 1-2 hrs incl. review.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content.\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more.\n- Be practical — give real work examples and sample prompts when helpful.\n- If asked about something not in this lesson, briefly answer and point to where they can learn more.\n- Never make up Copilot features that don't exist.\n- Plain conversational text only — no markdown symbols like ** or ##.\n- Do not start responses with \"Great question!\" or similar filler phrases.";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -282,27 +470,21 @@ Don&#x27;t tell me yes/no — give me:
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -311,7 +493,6 @@ Don&#x27;t tell me yes/no — give me:
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -320,7 +501,6 @@ Don&#x27;t tell me yes/no — give me:
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

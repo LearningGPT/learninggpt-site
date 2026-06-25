@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Tech help on demand | AI for Seniors | LearningGPT</title>
-<meta name="description" content="Stuck on your phone, email, photos, or even the remote? Describe the problem and get calm, step-by-step help that never sighs at you." />
+<meta name="description" content="The most patient tech-support helper in the world, any time. Describe your problem and get clear, one-step-at-a-time guidance." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#2dd4a7" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +13,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/seniors/tech-help" />
 <meta property="og:title" content="Tech help on demand" />
-<meta property="og:description" content="Stuck on your phone, email, photos, or even the remote? Describe the problem and get calm, step-by-step help that never sighs at you." />
+<meta property="og:description" content="The most patient tech-support helper in the world, any time. Describe your problem and get clear, one-step-at-a-time guidance." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -33,9 +33,7 @@ nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(18
 .lesson{padding:46px 0 100px;}
 .lesson-meta{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:15px;color:var(--text-mute);margin-bottom:22px;}
 .lesson-meta .chip{padding:5px 13px;border:1px solid rgba(45,212,167,0.4);border-radius:999px;font-size:13px;color:var(--track);background:rgba(45,212,167,0.12);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;}
-.lesson-meta .chip-free{border-color:rgba(68,224,164,0.45);color:#44e0a4;background:rgba(68,224,164,0.12);}
 .lesson-meta .chip-pro{border-color:rgba(124,92,255,0.5);color:#b9a6ff;background:rgba(124,92,255,0.14);}
-.lesson-meta .chip-pro-plus{border-color:rgba(255,181,71,0.5);color:#ffce82;background:rgba(255,181,71,0.14);}
 .lesson-meta .dot{width:5px;height:5px;border-radius:50%;background:var(--text-mute);}
 .lesson h1{font-size:clamp(30px,4.6vw,44px);font-weight:800;line-height:1.18;letter-spacing:-0.01em;margin:0 0 20px;}
 .lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;background:linear-gradient(135deg,#2dd4a7 0%,#5b8def 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;padding-right:0.12em;}
@@ -53,9 +51,30 @@ nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(18
 .prompt .lbl{display:block;font-size:13px;letter-spacing:0.4px;text-transform:uppercase;color:var(--track);font-weight:700;margin-bottom:8px;}
 .note{background:rgba(255,181,71,0.08);border:1px solid rgba(255,181,71,0.3);border-radius:12px;padding:18px 20px;margin:18px 0;font-size:17.5px;line-height:1.75;}
 .note b{color:var(--warn);}
+
+/* ── GUIDED STEPS ── */
+.guide{margin:24px 0;border:1px solid rgba(45,212,167,0.3);border-radius:18px;overflow:hidden;background:var(--surface);}
+.gd-head{padding:15px 18px;border-bottom:1px solid var(--line);font-size:16px;font-weight:700;background:rgba(45,212,167,0.06);}
+.gd-pick{padding:16px 18px;}
+.gd-lbl{font-size:15px;color:var(--text-dim);margin-bottom:11px;}
+.gdbtn{display:block;width:100%;text-align:left;font-family:inherit;font-size:16.5px;font-weight:600;color:var(--text);padding:15px 18px;margin-bottom:10px;border-radius:13px;border:1.5px solid var(--line-strong);background:rgba(255,255,255,0.04);cursor:pointer;transition:all .15s;}
+.gdbtn:hover{border-color:var(--track);background:rgba(45,212,167,0.08);}
+.gdbtn.on{border-color:var(--track);background:rgba(45,212,167,0.12);color:#bdf5e2;}
+.gdbtn .em{color:var(--track);margin-right:9px;}
+.gd-steps{padding:0 18px 6px;display:none;}
+.gd-steps.show{display:block;}
+.gstep{display:flex;gap:13px;align-items:flex-start;padding:13px 0;border-top:1px solid var(--line);font-size:17px;line-height:1.6;animation:slideIn .3s ease;}
+.gstep .gn{width:30px;height:30px;flex-shrink:0;border-radius:9px;background:rgba(45,212,167,0.16);border:1px solid rgba(45,212,167,0.35);display:grid;place-items:center;font-size:15px;font-weight:800;color:var(--track);}
+@keyframes slideIn{from{opacity:0;transform:translateX(-8px);}to{opacity:1;transform:none;}}
+.gd-next{padding:14px 18px 18px;}
+.nextbtn{font-family:inherit;font-size:16px;font-weight:700;padding:14px 24px;border-radius:12px;border:none;cursor:pointer;background:linear-gradient(135deg,#2dd4a7,#5b8def);color:white;}
+.nextbtn:disabled{opacity:0.5;cursor:default;}
+.gd-done{padding:0 18px 18px;font-size:16px;color:#bdf5e2;display:none;}
+.gd-done.show{display:block;}
+
 .challenge{margin:50px 0 36px;background:linear-gradient(135deg,rgba(45,212,167,0.14),rgba(91,141,239,0.1));border:1px solid rgba(45,212,167,0.3);border-radius:var(--radius-lg);padding:32px;}
 .challenge h2{margin-top:0;}
-.challenge .btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#2dd4a7,#5b8def);color:white;padding:14px 26px;border-radius:11px;font-weight:700;font-size:16px;}
+.challenge .btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#2dd4a7,#5b8def);color:white;padding:15px 28px;border-radius:11px;font-weight:700;font-size:17px;text-decoration:none;}
 .challenge .btn:hover{color:white;}
 .challenge .btn.ghost{background:rgba(255,255,255,0.06);border:1px solid var(--line-strong);}
 .challenge .btn-row{margin-top:22px;display:flex;gap:12px;flex-wrap:wrap;}
@@ -71,8 +90,6 @@ nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(18
 .next-up h3{margin:0 0 8px;font-size:21px;}.next-up p{margin:0 0 14px;color:var(--text-dim);font-size:17px;}
 .next-up .tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:0.5px;padding:4px 12px;border-radius:999px;}
 .tag-pro{background:rgba(124,92,255,0.18);color:#b9a6ff;border:1px solid rgba(124,92,255,0.35);}
-.tag-pro-plus{background:rgba(255,181,71,0.18);color:#ffce82;border:1px solid rgba(255,181,71,0.35);}
-.tag-free{background:rgba(68,224,164,0.16);color:#44e0a4;border:1px solid rgba(68,224,164,0.35);}
 footer{border-top:1px solid var(--line);padding:30px 0;}
 .footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;font-size:15px;color:var(--text-mute);flex-wrap:wrap;gap:12px;}
 @media(max-width:600px){.footer-inner{flex-direction:column;text-align:center;}}
@@ -105,14 +122,34 @@ footer{border-top:1px solid var(--line);padding:30px 0;}
 <div class="lesson-meta"><span class="chip">AI for Seniors</span><span class="chip chip-pro">Pro</span><span>~6 min</span><span class="dot"></span><span>Easy read</span></div>
 <h1>Tech help on demand &mdash; <span class='serif'>a patient guide, any time.</span></h1>
 <p class="deck">The most patient tech-support person in the world is now available any time, for free, and it will never make you feel foolish. Describe what you're stuck on, and it walks you through it one small step at a time.</p>
-<h2><span class="num">The idea</span></h2><h3>Describe the problem like you'd describe it to a grandchild.</h3><p>Tell it what device you have, what you're trying to do, and what's happening. The magic words are 'one step at a time' and 'explain it simply.' If a step doesn't match what you see on your screen, just say so, and it will adjust.</p>
-<h2><span class="num">Step 1</span>Say what you have and what you want</h2><p>Be specific about your device (iPhone, Android phone, iPad, a Windows computer) and the goal.</p><div class="prompt"><span class="lbl">Try typing this</span>Explain it to me one simple step at a time, like I'm not a computer person: how do I make the text bigger on my iPhone?</div><h2><span class="num">Step 2</span>Go one step at a time</h2><p>If it gives you a list, do the first step, then tell it what you see. This keeps you from getting lost.</p><div class="prompt"><span class="lbl">Try typing this</span>Okay, I did the first step and now I see [describe your screen]. What's the next step?</div><h2><span class="num">Step 3</span>Ask it to back up</h2><p>If you get confused or something looks different, that's normal. Just say so.</p><div class="prompt"><span class="lbl">Try typing this</span>That doesn't match what I'm seeing on my screen. Can we go back a step and try again, more slowly?</div>
+
+<h2><span class="num">The idea</span></h2>
+<h3>Describe the problem like you'd describe it to a grandchild.</h3>
+<p>Tell it what device you have, what you're trying to do, and what's happening. The magic words are 'one step at a time' and 'explain it simply.' If a step doesn't match what you see on your screen, just say so, and it will adjust.</p>
+
+<h2><span class="num">Try it</span>One small step at a time</h2>
+<p>Pick something you've wanted to fix. Tap <strong>Show me the next step</strong> to reveal each step on its own &mdash; the calm, unhurried way to follow along.</p>
+<div class="guide">
+  <div class="gd-head">🛠️ A patient walkthrough</div>
+  <div class="gd-pick">
+    <div class="gd-lbl">What would you like to do?</div>
+    <div id="gdBtns"></div>
+  </div>
+  <div class="gd-steps" id="gdSteps"></div>
+  <div class="gd-next" id="gdNextWrap" style="display:none;"><button class="nextbtn" id="gdNext">Show me the next step ›</button></div>
+  <div class="gd-done" id="gdDone">✓ That's all of them — and notice how much calmer it feels one step at a time. The AI helper works exactly like this, and you can tell it what you see on screen at any step.</div>
+</div>
+
 <div class="note"><b>Good to know:</b> If a tech problem involves your bank, passwords, or money, be careful who you let 'help.' Never let a stranger who called you take control of your computer or screen &mdash; that's a common scam. AI only gives you instructions; it never needs your passwords.</div>
+
 <div class="challenge"><h2 style="margin-top:0;">Fix one small thing</h2><p>Pick something that's been bugging you:</p><ol><li>Choose one small tech annoyance (bigger text, a setting, finding a photo).</li><li>Tell AI your device and the goal, and ask for one step at a time.</li><li>Do each step, telling it what you see.</li><li>Enjoy fixing it yourself.</li></ol><div class="btn-row"><a href="/seniors" class="btn ghost">Back to AI for Seniors</a></div></div>
+
 <div class="checklist"><h3>What you can do now</h3><ul><li>Describe a tech problem clearly to get good help</li><li>Get step-by-step guidance for your phone, tablet, or computer</li><li>Tell AI what you see so it can guide you to the next step</li><li>Stay safe by never giving passwords or screen control to strangers</li></ul></div>
+
 <div class="next-up"><span class="tag tag-pro">Pro</span><div class="lbl" style="margin-top:12px;">Up next</div><h3>Stay close to family</h3><p>Warm messages and good things to talk about with the grandkids.</p><a href="/lessons/seniors/stay-close-to-family">Go to the next lesson &rarr;</a></div>
 </div></article>
-<footer><div class="footer-inner"><div>&copy; 2026 LearningGPT, Inc. &middot; Independent.</div><a href="/seniors" style="color:var(--text-dim);">&larr; Back to AI for Seniors</a></div></footer>
+<footer><div class="footer-inner"><div>&copy; 2026 LearningGPT &middot; Independent.</div><a href="/seniors" style="color:var(--text-dim);">&larr; Back to AI for Seniors</a></div></footer>
+
 <button class="coach-fab" id="coachFab" title="Ask the AI Coach">&#127891;<span class="coach-fab-badge">AI</span></button>
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head"><div class="coach-avatar">&#127891;</div><div><div class="coach-head-name">Your AI Helper</div><div class="coach-head-sub">Ask me anything &mdash; no question is too small</div></div><button class="coach-close" id="coachClose">&times;</button></div>
@@ -120,9 +157,75 @@ footer{border-top:1px solid var(--line);padding:30px 0;}
   <div class="coach-limit" id="coachLimit">Free lessons include 3 questions with your helper. <a href="/pricing">Go Pro</a> for unlimited help on every lesson.</div>
   <div class="coach-input-row"><textarea class="coach-input" id="coachInput" placeholder="Type your question here..." rows="1"></textarea><button class="coach-send" id="coachSend">&#10148;</button></div>
 </div>
+
+<script id="lessonScript">
+(function(){
+  var TASKS = [
+    { label: 'Make the text bigger on an iPhone', steps: [
+      'Open the Settings app (the grey gear icon).',
+      'Tap "Display & Brightness."',
+      'Tap "Text Size."',
+      'Drag the slider to the right until the text feels comfortable. Done!'
+    ]},
+    { label: 'Quiet notifications while you sleep', steps: [
+      'Open Settings, then tap "Focus."',
+      'Tap "Do Not Disturb."',
+      'Turn on "Schedule" and pick your bedtime and morning.',
+      'Now your phone stays quiet overnight, all on its own.'
+    ]},
+    { label: 'Find an old photo on your phone', steps: [
+      'Open the Photos app.',
+      'Tap the "Search" button (the magnifying glass).',
+      'Type what you remember — a place, a month, or even "dog" or "beach."',
+      'Your phone finds matching photos for you. Lovely, isn\'t it?'
+    ]}
+  ];
+  var btns = document.getElementById('gdBtns');
+  var stepsWrap = document.getElementById('gdSteps');
+  var nextWrap = document.getElementById('gdNextWrap');
+  var nextBtn = document.getElementById('gdNext');
+  var doneEl = document.getElementById('gdDone');
+  var current = null, shown = 0;
+
+  function start(task, btn){
+    btns.querySelectorAll('.gdbtn').forEach(function(x){x.classList.remove('on');});
+    btn.classList.add('on');
+    current = task; shown = 0;
+    stepsWrap.innerHTML = ''; stepsWrap.classList.add('show');
+    doneEl.classList.remove('show');
+    nextWrap.style.display = 'block';
+    nextBtn.disabled = false;
+    nextBtn.textContent = 'Show me the first step ›';
+    revealNext();
+  }
+  function revealNext(){
+    var s = current.steps[shown];
+    var row = document.createElement('div');
+    row.className = 'gstep';
+    row.innerHTML = '<span class="gn">' + (shown + 1) + '</span><span>' + s + '</span>';
+    stepsWrap.appendChild(row);
+    shown++;
+    if (shown >= current.steps.length){
+      nextWrap.style.display = 'none';
+      doneEl.classList.add('show');
+    } else {
+      nextBtn.textContent = 'Show me the next step ›';
+    }
+  }
+  TASKS.forEach(function(task){
+    var b = document.createElement('button');
+    b.className = 'gdbtn';
+    b.innerHTML = '<span class="em">›</span>' + task.label;
+    btns.appendChild(b);
+    b.addEventListener('click', function(){ start(task, b); });
+  });
+  nextBtn.addEventListener('click', function(){ if(current) revealNext(); });
+})();
+</script>
+
 <script>
 (function(){
-  var LESSON_CONTEXT = "You are a kind, patient AI learning coach inside a lesson on LearningGPT.ai, helping a senior who may be new to technology.\n\nLESSON: Tech help on demand (AI for Seniors, Pro)\n\nWHAT THIS LESSON COVERS:\nThis Pro lesson is patient tech support for seniors. They describe their device and goal and get step-by-step help for phones, tablets, computers, email, photos, even TV remotes. Coach them to go one step at a time and report what they see on screen; if a step doesn't match, back up and go slower. Safety note: never let a stranger who called them take control of their computer/screen (common scam); AI only gives instructions and never needs passwords. Be patient and encouraging.\n\nYOUR ROLE:\n- Be warm, patient, and encouraging. Never make them feel silly. No question is too basic.\n- Use plain, simple words. Short sentences. No jargon. Explain any technical word.\n- Keep answers short - 2 to 4 sentences unless they ask for more.\n- For anything about health, money, or legal matters, gently remind them to confirm with a doctor, the bank, or a trusted person.\n- If a message looks like a possible scam, warn them clearly and kindly.\n- Plain conversational text only - no markdown symbols.\n- Do not start with 'Great question!' or similar filler.";
+  var LESSON_CONTEXT = "You are a kind, patient AI learning coach inside a lesson on LearningGPT.ai, helping a senior who may be new to technology.\n\nLESSON: Tech help on demand (AI for Seniors, Pro)\n\nWHAT THIS LESSON COVERS:\nThis Pro lesson is patient tech support for seniors. They describe their device and goal and get step-by-step help for phones, tablets, computers, email, photos, even TV remotes. Coach them to go one step at a time and report what they see on screen; if a step doesn't match, back up and go slower. Safety note: never let a stranger who called them take control of their computer/screen (common scam); AI only gives instructions and never needs passwords. Be patient and encouraging.\n\nYOUR ROLE:\n- Be warm, patient, and encouraging. Never make them feel silly. No question is too basic.\n- Use plain, simple words. Short sentences. No jargon. Explain any technical word.\n- When giving steps, give ONE step at a time and ask what they see before the next.\n- Keep answers short - 2 to 4 sentences unless they ask for more.\n- For anything about health, money, or legal matters, gently remind them to confirm with a doctor, the bank, or a trusted person.\n- If a message looks like a possible scam, warn them clearly and kindly.\n- Plain conversational text only - no markdown symbols.\n- Do not start with 'Great question!' or similar filler.";
   var MAX_FREE=3,count=0,isThinking=false,history=[];
   var fab=document.getElementById('coachFab'),drawer=document.getElementById('coachDrawer'),closeBtn=document.getElementById('coachClose'),msgs=document.getElementById('coachMessages'),input=document.getElementById('coachInput'),sendBtn=document.getElementById('coachSend'),limitBar=document.getElementById('coachLimit');
   if(!fab)return;

@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Install OpenClaw step by step: the onboard walkthrough — LearningGPT</title>
-<meta name="description" content="Installing OpenClaw the safe way: Node setup, the openclaw onboard wizard, gateway binding, running it as a service, choosing a model provider, and verifying your instance is NOT publicly exposed before going further." />
+<title>Before you install OpenClaw: the safe-setup checklist — LearningGPT</title>
+<meta name="description" content="The pre-install decisions that keep your OpenClaw agent off the exposed lists: isolated hardware, binding the gateway to localhost, API-key hygiene, and the five isolation rules — all about shrinking the blast radius." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#f0544f" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://learninggpt.ai/lessons/openclaw/install-and-onboard" />
-<meta property="og:title" content="Install OpenClaw step by step: the onboard walkthrough" />
-<meta property="og:description" content="From bare machine to working agent in ~25 minutes — with the safety verifications most guides skip." />
+<meta property="og:url" content="https://learninggpt.ai/lessons/openclaw/safe-setup-checklist" />
+<meta property="og:title" content="Before you install OpenClaw: the safe-setup checklist" />
+<meta property="og:description" content="The pre-install decisions that determine whether your agent stays private: hardware, network binding, key hygiene, and the five isolation rules." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -36,50 +36,119 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
 .lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #f0544f 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .grad { background: linear-gradient(135deg, #f0544f 0%, #ff8a4d 45%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 24px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.sec { margin: 46px 0 0; }
+.sec-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.lesson h2 { font-size: 27px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; }
 .lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
 .lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(240,84,79,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(240,84,79,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #f0544f, #7c5cff); border-radius: 2px 0 0 2px; }
+
+/* hardware selector */
+.homes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 18px 0 0; }
+@media (max-width: 600px){ .homes { grid-template-columns: 1fr 1fr; } }
+.home { font-family: inherit; text-align: center; padding: 13px 8px; border-radius: 11px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); color: var(--text-dim); cursor: pointer; transition: all .15s; }
+.home:hover { border-color: var(--track); color: var(--text); }
+.home.active { border-color: var(--track); background: rgba(240,84,79,0.1); color: var(--text); }
+.home .hi { font-size: 22px; }
+.home .hn { font-size: 12px; font-weight: 700; margin-top: 3px; }
+.home-detail { margin-top: 12px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: 15px 17px; display: none; }
+.home-detail.show { display: block; animation: fadeIn .3s ease; }
+.home-detail .hd-rank { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; padding: 3px 10px; border-radius: 999px; margin-bottom: 9px; }
+.home-detail.gold .hd-rank { background: rgba(68,224,164,0.16); color: #b6f4dc; }
+.home-detail.good .hd-rank { background: rgba(68,224,164,0.12); color: #9fe6c8; }
+.home-detail.care .hd-rank { background: rgba(255,181,71,0.16); color: #ffe0ad; }
+.home-detail p { font-size: 13.5px; margin: 0; color: var(--text-dim); } .home-detail b { color: var(--text); }
+@keyframes fadeIn { from{opacity:0;transform:translateY(5px);} to{opacity:1;transform:none;} }
+
+/* ── BLAST RADIUS CONSOLE ── */
+.console { margin: 22px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden; background: #0d0d20; }
+.br-head { padding: 16px; border-bottom: 1px solid var(--line); }
+.br-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 9px; }
+.br-top .lbl { font-size: 12.5px; font-weight: 700; color: var(--text); }
+.br-top .val { font-size: 12.5px; font-weight: 800; letter-spacing: 0.4px; }
+.br-track { height: 12px; background: rgba(68,224,164,0.1); border-radius: 99px; overflow: hidden; position: relative; }
+.br-fill { position: absolute; right: 0; top: 0; height: 100%; width: 100%; background: linear-gradient(90deg, #ffb547, #ff6b8a); border-radius: 99px; transition: width .45s cubic-bezier(.4,0,.2,1), background .45s; }
+.br-sub { font-size: 11.5px; color: var(--text-mute); margin-top: 7px; }
+.rule { padding: 15px 16px; border-bottom: 1px solid var(--line); }
+.rule:last-child { border-bottom: none; }
+.rule-h { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.rule-n { width: 24px; height: 24px; flex-shrink: 0; border-radius: 7px; background: rgba(240,84,79,0.14); border: 1px solid rgba(240,84,79,0.3); display: grid; place-items: center; font-size: 11px; font-weight: 700; color: var(--track); }
+.rule-t { font-size: 14.5px; font-weight: 700; color: var(--text); }
+.rule-btns { display: grid; gap: 8px; }
+.rbtn { text-align: left; font-family: inherit; font-size: 13px; color: var(--text); padding: 10px 13px; border-radius: 9px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); cursor: pointer; transition: all .15s; }
+.rbtn:hover:not(:disabled){ border-color: var(--track); }
+.rbtn:disabled { cursor: default; }
+.rbtn.safe-right { background: rgba(68,224,164,0.16); border-color: var(--accent); color: #b6f4dc; }
+.rbtn.unsafe-pick { background: rgba(255,107,138,0.12); border-color: var(--danger); color: #ffb0c1; }
+.rule-fb { margin-top: 10px; font-size: 12.5px; color: var(--text-dim); display: none; padding: 10px 13px; border-radius: 9px; background: rgba(240,84,79,0.07); border-left: 2px solid var(--track); }
+.rule-fb.show { display: block; } .rule-fb b { color: var(--text); }
+.br-done { padding: 15px 16px; font-size: 13.5px; display: none; border-top: 1px solid var(--line); }
+.br-done.show { display: block; animation: fadeIn .35s ease; }
+.br-done.ready { background: rgba(68,224,164,0.08); } .br-done.review { background: rgba(255,181,71,0.08); }
+.br-done b { color: var(--text); }
+
+.callout { margin: 22px 0; padding: 18px 22px; background: linear-gradient(135deg, rgba(240,84,79,0.12), rgba(124,92,255,0.05)); border: 1px solid rgba(240,84,79,0.25); border-radius: var(--radius-lg); }
 .callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(240,84,79,0.1); border: 1px solid rgba(240,84,79,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '✓'; font-size: 14px; color: var(--accent); } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(240,84,79,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(240,84,79,0.25); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #f0544f, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.callout p { margin: 0; font-size: 14.5px; color: var(--text-dim); } .callout b { color: var(--text); }
+
+.challenge { margin: 46px 0 30px; background: linear-gradient(135deg, rgba(240,84,79,0.14), rgba(124,92,255,0.1)); border: 1px solid rgba(240,84,79,0.3); border-radius: var(--radius-lg); padding: 32px; }
+.challenge h2 { margin-top: 0; font-size: 24px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #f0544f, #7c5cff); color: white; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: inherit; box-shadow: 0 6px 24px rgba(240,84,79,0.3); transition: transform .15s; text-decoration: none; }
+.btn:hover { transform: translateY(-1px); color: white; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 30px 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
 .checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
 .checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
 .checklist li:first-child { border-top: none; padding-top: 0; }
 .checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up { margin: 40px 0 0; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
 .next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
 .next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
 .next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
-footer { border-top: 1px solid var(--line); padding: 30px 0; }
+footer { border-top: 1px solid var(--line); padding: 30px 0; margin-top: 40px; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+
+/* ── AI COACH WIDGET ── */
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
+.coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
+.coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
+.coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
+.coach-head-info { flex: 1; }
+.coach-head-name { font-weight: 700; font-size: 14px; }
+.coach-head-sub { font-size: 11px; color: #44e0a4; }
+.coach-close { background: none; border: none; color: #6b6b85; font-size: 18px; padding: 4px; line-height: 1; cursor: pointer; }
+.coach-close:hover { color: #f5f5fa; }
+.coach-messages { flex: 1; overflow-y: auto; padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth; }
+.coach-messages::-webkit-scrollbar { width: 4px; }
+.coach-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.14); border-radius: 4px; }
+.msg { max-width: 88%; font-size: 13.5px; line-height: 1.6; }
+.msg-coach { align-self: flex-start; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px 14px 14px 4px; padding: 10px 14px; color: #f5f5fa; }
+.msg-user { align-self: flex-end; background: linear-gradient(135deg, rgba(124,92,255,0.25), rgba(91,141,239,0.25)); border: 1px solid rgba(124,92,255,0.3); border-radius: 14px 14px 4px 14px; padding: 10px 14px; color: #f5f5fa; }
+.msg-thinking { align-self: flex-start; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px 14px 14px 4px; padding: 10px 14px; display: flex; align-items: center; gap: 6px; color: #6b6b85; font-size: 13px; }
+.thinking-dot { width: 6px; height: 6px; border-radius: 50%; background: #44e0a4; animation: coachPulse 1.2s ease-in-out infinite; }
+.thinking-dot:nth-child(2) { animation-delay: .2s; }
+.thinking-dot:nth-child(3) { animation-delay: .4s; }
+@keyframes coachPulse { 0%,100%{opacity:.3;transform:scale(.8)} 50%{opacity:1;transform:scale(1)} }
+.coach-limit { padding: 10px 18px; font-size: 11px; color: #6b6b85; text-align: center; border-top: 1px solid rgba(255,255,255,0.08); display: none; }
+.coach-limit.visible { display: block; }
+.coach-limit a { color: #5b8def; }
+.coach-input-row { padding: 12px 18px 16px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; gap: 8px; align-items: flex-end; }
+.coach-input { flex: 1; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); color: #f5f5fa; border-radius: 10px; padding: 9px 12px; font-size: 13px; font-family: inherit; resize: none; max-height: 100px; line-height: 1.5; }
+.coach-input:focus { outline: none; border-color: #44e0a4; }
+.coach-input::placeholder { color: #6b6b85; }
+.coach-send { width: 34px; height: 34px; border-radius: 9px; border: none; flex-shrink: 0; background: linear-gradient(135deg, #44e0a4, #7c5cff); color: white; font-size: 15px; display: grid; place-items: center; cursor: pointer; transition: opacity .15s; }
+.coach-send:hover { opacity: 0.85; }
+.coach-send:disabled { opacity: 0.4; cursor: default; }
+@media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
 </style>
 </head>
 <body>
@@ -94,111 +163,301 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 <article class="lesson">
   <div class="container">
     <div class="lesson-meta">
-      <span class="chip">Lesson 4 · OpenClaw, Safely</span>
+      <span class="chip">Lesson 03 · OpenClaw, Safely</span>
       <span class="chip chip-pro">Pro</span>
-      <span>~12 min read</span>
+      <span>~10 min</span>
       <span class="dot"></span>
-      <span>Hands-on install</span>
+      <span>5 isolation rules</span>
     </div>
-    <h1>Install and onboard, <span class="grad serif">step by step.</span></h1>
-    <p class="deck">You did the Lesson 3 prep: an isolated machine, a dedicated API key with a spend cap, a kill-switch plan. Now the fun part — from bare machine to an agent that answers you, in about 25 minutes. We follow the official <code>openclaw onboard</code> wizard, with the two safety verifications most guides skip entirely.</p>
+    <h1>Before you install: <span class="grad serif">the safe-setup checklist.</span></h1>
+    <p class="deck">Every exposed OpenClaw in those scans was a setup decision, not a sophisticated hack. Which means safety is also a setup decision — made <em>before</em> the installer runs. This is the 30 minutes of choices that keep your agent private for as long as you run it.</p>
 
-    <div class="gotcha">OpenClaw ships new releases weekly, so menus and wording drift. This lesson teaches the decisions, which are stable — when a screen looks different, the choice behind it is still the one described here. Where exact commands matter, cross-check the official docs at docs.openclaw.ai. (Independent reality: we update this lesson with each significant change — that's the point of us.)</div>
-
-    <h2><span class="num">01</span> Prerequisites (5 minutes)</h2>
-    <p>On your prepared machine you need exactly three things:</p>
-    <ul>
-      <li><strong>Node.js</strong> — version 22 LTS or newer (the project recommends current; 22.19+ works). Install from nodejs.org or your package manager.</li>
-      <li><strong>Your dedicated API key</strong> — the spend-capped one from Lesson 3 (Anthropic, OpenAI, or OpenRouter if you want to switch models freely).</li>
-      <li><strong>A terminal you can paste into.</strong> That's the whole toolkit.</li>
-    </ul>
-    <div class="prompt-example"><span class="label">Verify Node first</span>node --version
-# Want: v22.x or newer. If "command not found," install Node before continuing.</div>
-
-    <h2><span class="num">02</span> Run the onboarding wizard</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">1</div><h3>Start the wizard</h3></div>
-      <div class="prompt-example"><span class="label">Terminal</span>npm install -g openclaw@latest
-openclaw onboard</div>
-      <p>The wizard walks you through gateway, workspace, channels, and skills. You'll make four decisions — here's the safe answer to each.</p>
-    </div>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">2</div><h3>Decision: quickstart or custom? → Custom</h3></div>
-      <p>Quickstart optimizes for the demo high. Custom takes three extra minutes and lets you make the binding choice deliberately — which is the one choice that matters.</p>
-    </div>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">3</div><h3>Decision: where to bind the gateway? → Localhost. Always localhost.</h3></div>
-      <p>This is THE setting from Lesson 3. When asked where the gateway should listen, choose <strong>127.0.0.1 (localhost)</strong> — never 0.0.0.0, never your machine's LAN address "just to test." Remote access comes via Tailscale later, not via an open door now.</p>
-    </div>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">4</div><h3>Decision: model provider → the brain you budgeted for</h3></div>
-      <p>Paste your dedicated API key when asked. Model guidance, honestly: <strong>a mid-tier model is the right starting brain</strong> (Claude Sonnet-class or equivalent) — smart enough for real work, cheap enough that an always-on agent doesn't sting. Save frontier models for when a specific task proves it needs one. You can change this anytime; your spend cap has your back while you learn the cost rhythm.</p>
-    </div>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">5</div><h3>Decision: run as a service? → Yes</h3></div>
-      <p>Let the wizard install OpenClaw as a system service (systemd on Linux, launchd on macOS) so it survives reboots. Bonus: this also teaches you half your kill switch —</p>
-      <div class="prompt-example"><span class="label">Your stop/start commands (sticky note!)</span># Linux
-sudo systemctl stop openclaw     # stop NOW
-sudo systemctl start openclaw    # resume
-# macOS: use the wizard-provided launchctl equivalents</div>
-    </div>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">6</div><h3>Skip skills and extra channels — for now</h3></div>
-      <p>The wizard will offer to connect chat apps and install skills. Decline both today. Channels are Lesson 5 (done carefully), skills are Lesson 7 (done very carefully). Today's goal is a working, private, boring agent.</p>
+    <!-- principle -->
+    <div class="sec">
+      <span class="sec-eyebrow">The principle behind everything</span>
+      <h2>Shrink the blast radius.</h2>
+      <p>One sentence worth memorizing: <strong>assume your agent will eventually be tricked, and build so that a tricked agent can't hurt you.</strong> Prompt injection can't be fully prevented (Lesson 2), so we don't rely on the agent behaving — we limit what a misbehaving one can reach. Security people call that the <em>blast radius</em>. Every choice below shrinks it.</p>
     </div>
 
-    <h2><span class="num">03</span> Say hello</h2>
-    <p>With the service running, open the local web chat (the wizard prints the localhost URL) and introduce yourself. Give it a small real task — "what's on this machine in the workspace folder?" or "summarize this pasted article." Confirm it thinks, answers, and feels alive. Enjoy the moment — it's a legitimately great one.</p>
+    <!-- hardware selector -->
+    <div class="sec">
+      <span class="sec-eyebrow">Do it · choose where it lives</span>
+      <h2>Pick a home — see what it costs you if it's breached.</h2>
+      <p>The hardware decision sets the floor for everything else. Tap each to see its blast radius.</p>
+      <div class="homes" id="homes"></div>
+      <div class="home-detail" id="homeDetail"></div>
+    </div>
 
-    <h2><span class="num">04</span> The two verifications nobody does (do them)</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">A</div><h3>Verify you're not on the internet</h3></div>
-      <div class="prompt-example"><span class="label">From ANOTHER device on a DIFFERENT network (e.g., phone on cellular)</span># Try to reach your agent's gateway port at your home IP.
-# Expected result: nothing. Timeout. Dead air.
-# If anything answers, stop the service and revisit binding NOW.</div>
-      <p>Also worth doing: search your home's public IP on shodan.io (free) — the same scanner that finds exposed instances can confirm you're not one.</p>
+    <!-- BLAST RADIUS CONSOLE -->
+    <div class="sec">
+      <span class="sec-eyebrow">Do it · the five isolation rules</span>
+      <h2>Make each safe choice and watch the radius shrink.</h2>
+      <p>Five decisions stand between "private assistant" and "scan-report statistic." Pick the safe option for each.</p>
+      <div class="console">
+        <div class="br-head">
+          <div class="br-top"><span class="lbl">🛡 Blast radius</span><span class="val" id="brVal" style="color:var(--danger);">Exposed</span></div>
+          <div class="br-track"><div class="br-fill" id="brFill"></div></div>
+          <div class="br-sub" id="brSub">0 / 5 safe choices made</div>
+        </div>
+        <div id="rules"></div>
+        <div class="br-done" id="brDone"></div>
+      </div>
+      <div class="callout">
+        <span class="lbl">The 30-second self-test</span>
+        <p>Finish this sentence honestly: "If a stranger fully controlled my agent's machine right now, the worst they could do is ______." If the blank contains your real email, files, passwords, or anything involving your employer — your setup isn't done. If it's <b>"read an empty box and spend $20 of API credit,"</b> you're ready to install.</p>
+      </div>
     </div>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">B</div><h3>Verify the spend cap is real</h3></div>
-      <p>Check your provider's usage dashboard after the first day. You should see small, explainable numbers. You're learning the agent's cost rhythm now, while it does almost nothing — so you'll notice immediately if something later makes it spike.</p>
-    </div>
-    <div class="savings"><strong>State achieved:</strong> a working agent, reachable only from your own machines, with a capped budget and a tested off switch.</div>
 
     <div class="challenge">
-      <h2 style="margin-top: 0;">Run it boring for 48 hours</h2>
-      <p>Before connecting WhatsApp or anything exciting: just use the local chat for two days. Ask it real questions, watch the usage dashboard, stop and restart the service once for practice. Trust is built in the boring phase — and you'll meet Lesson 5 knowing exactly how your agent behaves when nothing is wrong.</p>
+      <h2>Your pre-flight checklist</h2>
+      <p>Pick your hardware, create the agent's dedicated email + a spend-capped API key, install Tailscale if you want remote access, and write the kill-switch sticky note. That's the whole assignment. When those four things exist you've done the hard part — the install itself is the easy 20 minutes.</p>
       <div class="btn-row">
-        <a href="/lessons/openclaw/connect-your-channels" class="btn">Next: connect your channels →</a>
-        <a href="/lessons/openclaw/" class="btn ghost">All OpenClaw lessons →</a>
+        <a href="/lessons/openclaw/install-and-onboard" class="btn">Next: install &amp; onboard →</a>
+        <a href="/lessons/openclaw/" class="btn ghost">All OpenClaw lessons</a>
       </div>
     </div>
 
     <div class="checklist">
       <h3>What you can do now</h3>
       <ul>
-        <li>Install OpenClaw via the official onboard wizard with Node 22+</li>
-        <li>Make the four wizard decisions safely: custom setup, localhost binding, budgeted model, run-as-service</li>
-        <li>Start and stop the agent on command — your kill switch is now muscle memory</li>
-        <li>Verify from an outside network that your gateway is unreachable</li>
-        <li>Read your provider's usage dashboard and recognize your agent's normal cost rhythm</li>
-        <li>Resist the urge to connect everything on night one</li>
+        <li>Explain blast radius: build so a tricked agent can't reach anything that matters</li>
+        <li>Choose the right home: spare machine, Pi, VPS, or (carefully) a VM on your main computer</li>
+        <li>Bind the gateway to localhost and use Tailscale instead of ever exposing a port</li>
+        <li>Provision dedicated accounts and a spend-capped, revocable API key</li>
+        <li>Write the agent's data scope before connecting anything</li>
+        <li>Keep a three-move kill switch: stop service, revoke key, pull the plug</li>
       </ul>
     </div>
 
     <div class="next-up">
       <span class="pro-tag">Pro</span>
       <div class="lbl" style="margin-top: 14px;">Up next in OpenClaw, Safely</div>
-      <h3>Lesson 5 · Connect your channels: WhatsApp, Telegram, Discord</h3>
-      <p>Your agent meets your chat apps — one channel, done right, including the shared-context trap that leaks secrets into group chats. <a href="/#pricing">See pricing →</a></p>
+      <h3>Lesson 04 · Install and onboard, step by step</h3>
+      <p>The <code>openclaw onboard</code> walkthrough on your prepared machine — Node, the gateway, running as a service, picking your model — and verifying you're NOT publicly visible before you go further. <a href="/lessons/openclaw/install-and-onboard">Start lesson 04 →</a></p>
     </div>
   </div>
 </article>
 <footer>
   <div class="footer-inner">
-    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with the OpenClaw project.</div>
+    <div>© 2026 LearningGPT · Independent. Not affiliated with the OpenClaw project.</div>
     <a href="/lessons/openclaw/" style="color: var(--text-dim);">← All OpenClaw lessons</a>
   </div>
 </footer>
+
+<!-- ── AI COACH FAB ── -->
+<button class="coach-fab" id="coachFab" title="Ask the AI Coach">
+  🎓
+  <span class="coach-fab-badge">AI</span>
+</button>
+<!-- ── AI COACH DRAWER ── -->
+<div class="coach-drawer" id="coachDrawer">
+  <div class="coach-drawer-head">
+    <div class="coach-avatar">🎓</div>
+    <div class="coach-head-info">
+      <div class="coach-head-name">AI Coach</div>
+      <div class="coach-head-sub">Ask anything about this lesson</div>
+    </div>
+    <button class="coach-close" id="coachClose">✕</button>
+  </div>
+  <div class="coach-messages" id="coachMessages">
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about safe setup — hardware, localhost binding, key hygiene, the kill switch. What's on your mind?</div>
+  </div>
+  <div class="coach-limit" id="coachLimit">
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
+  </div>
+  <div class="coach-input-row">
+    <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
+    <button class="coach-send" id="coachSend">➤</button>
+  </div>
+</div>
+
+<script id="lessonScript">
+(function () {
+  // ── HARDWARE SELECTOR ──
+  var HOMES = [
+    { k: 'spare', ic: '💻', n: 'Spare machine', rank: 'Gold standard', cls: 'gold',
+      d: 'An old laptop or Mac mini, wiped clean — OS and OpenClaw, nothing else. <b>Blast radius: one disposable box.</b> Fully compromised, the attacker gets an empty machine and one API key you revoke in 60 seconds. This is the setup the track assumes.' },
+    { k: 'pi', ic: '🥧', n: 'Raspberry Pi', rank: 'Great + cheap', cls: 'good',
+      d: 'A Pi 5 (~$80) runs OpenClaw, sips power, and has the same property: nothing else lives there. <b>Blast radius: one tiny dedicated box.</b> A bit more fiddly (Linux from scratch), perfect for always-on briefings and monitors.' },
+    { k: 'vps', ic: '☁️', n: 'Small VPS', rank: 'Strong isolation', cls: 'good',
+      d: 'A $5–10/mo cloud server keeps the agent off your home network — the strongest network isolation. <b>Trade:</b> your data lives on rented hardware, and a public-internet VPS makes the localhost-binding rules below absolutely non-negotiable.' },
+    { k: 'main', ic: '🖥️', n: 'Main computer', rank: 'Only inside a fence', cls: 'care',
+      d: 'Only if it\'s all you have: run it in a VM/container, its own user account, exactly one folder mounted. <b>Works, but the fence is the whole defense</b> — a VM escape or sloppy folder grant and it\'s gone. And never, ever on a work machine — not in a VM, not at all.' }
+  ];
+  var homes = document.getElementById('homes');
+  var homeDetail = document.getElementById('homeDetail');
+  HOMES.forEach(function (h) {
+    var b = document.createElement('button');
+    b.className = 'home';
+    b.innerHTML = '<div class="hi">' + h.ic + '</div><div class="hn">' + h.n + '</div>';
+    homes.appendChild(b);
+    b.addEventListener('click', function () {
+      homes.querySelectorAll('.home').forEach(function (x) { x.classList.remove('active'); });
+      b.classList.add('active');
+      homeDetail.className = 'home-detail show ' + h.cls;
+      homeDetail.innerHTML = '<span class="hd-rank">' + h.rank + '</span><p>' + h.d + '</p>';
+    });
+  });
+
+  // ── BLAST RADIUS CONSOLE ──
+  var RULES = [
+    { t: 'Where the gateway listens', safe: 'localhost (127.0.0.1) + Tailscale for remote access', unsafe: 'Bind to 0.0.0.0 and port-forward my router',
+      why: '0.0.0.0 opens it to the whole network — potentially the whole internet. Nearly all ~42,900 exposed instances got this wrong. Localhost + a private Tailscale tunnel gives you remote access with nothing exposed.' },
+    { t: 'Whose accounts it uses', safe: 'Dedicated email + its own bot identity for the agent', unsafe: 'My main Google login and personal number',
+      why: 'Dedicated identities mean you can revoke the agent\'s access without killing your own — and you always know which actor did what.' },
+    { t: 'API key handling', safe: 'A dedicated key named "openclaw", monthly spend cap, stored only on the box', unsafe: 'My shared personal key, no cap',
+      why: 'The cap isn\'t just budget: a hijacked agent burning tokens at 3am hits the ceiling, not your card. And a dedicated key is revocable without touching anything else.' },
+    { t: 'What data it can see', safe: 'Write down exactly which folder/inbox/calendar — everything else off-menu', unsafe: 'Grant broad access now, tighten later',
+      why: 'Capability creep on a giddy first night is the Lesson-2 failure pattern. The antidote is a written scope you set while sober.' },
+    { t: 'The kill switch', safe: 'Plan three moves on day zero: stop service · revoke key · unplug', unsafe: 'I\'ll figure it out if something happens',
+      why: 'Stop the service, revoke the key (60 sec in the console), pull the plug. Write all three on a sticky note — the moment you need them isn\'t the moment to research them.' }
+  ];
+  var rulesEl = document.getElementById('rules');
+  var brFill = document.getElementById('brFill');
+  var brVal = document.getElementById('brVal');
+  var brSub = document.getElementById('brSub');
+  var brDone = document.getElementById('brDone');
+  var answered = 0, safeCount = 0;
+  var LADDER = ['Exposed', 'High', 'Moderate', 'Contained', 'Low', 'Minimal'];
+  var LADDER_COLOR = ['#ff6b8a', '#ff8a6a', '#ffb547', '#d6cf6a', '#8fe0a0', '#44e0a4'];
+
+  RULES.forEach(function (r, i) {
+    var row = document.createElement('div');
+    row.className = 'rule';
+    // randomize-ish order but keep deterministic: safe first on even, second on odd
+    var safeFirst = i % 2 === 0;
+    var a = safeFirst ? r.safe : r.unsafe, aSafe = safeFirst;
+    var b = safeFirst ? r.unsafe : r.safe, bSafe = !safeFirst;
+    row.innerHTML =
+      '<div class="rule-h"><div class="rule-n">' + (i + 1) + '</div><div class="rule-t">' + r.t + '</div></div>' +
+      '<div class="rule-btns">' +
+        '<button class="rbtn" data-safe="' + aSafe + '">' + a + '</button>' +
+        '<button class="rbtn" data-safe="' + bSafe + '">' + b + '</button>' +
+      '</div><div class="rule-fb"></div>';
+    rulesEl.appendChild(row);
+    var fb = row.querySelector('.rule-fb');
+    var btns = row.querySelectorAll('.rbtn');
+    var done = false;
+    btns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (done) return; done = true;
+        var pickedSafe = btn.dataset.safe === 'true';
+        btns.forEach(function (x) {
+          x.disabled = true;
+          if (x.dataset.safe === 'true') x.classList.add('safe-right');
+        });
+        if (!pickedSafe) btn.classList.add('unsafe-pick');
+        fb.innerHTML = (pickedSafe ? '<b>Safe choice.</b> ' : '<b>That\'s the mistake.</b> ') + r.why;
+        fb.classList.add('show');
+        answered++;
+        if (pickedSafe) safeCount++;
+        // meter: residual risk shrinks as rules are addressed; color by safe count
+        var w = 100 - (answered * 16);
+        brFill.style.width = w + '%';
+        var idx = Math.min(safeCount, 5);
+        brVal.textContent = LADDER[idx];
+        brVal.style.color = LADDER_COLOR[idx];
+        brFill.style.background = idx >= 4 ? 'linear-gradient(90deg, #2ea88a, #44e0a4)' : (idx >= 2 ? 'linear-gradient(90deg, #ffb547, #ff8a6a)' : 'linear-gradient(90deg, #ffb547, #ff6b8a)');
+        brSub.textContent = safeCount + ' / 5 safe choices made';
+        if (answered === 5) {
+          if (safeCount === 5) {
+            brDone.className = 'br-done show ready';
+            brDone.innerHTML = '<b>Minimal blast radius — ready to install.</b> Five safe choices, and the worst a breach gets is an empty box plus a capped, revocable key. That\'s the green light from the self-test below.';
+          } else {
+            brDone.className = 'br-done show review';
+            brDone.innerHTML = '<b>Review the flagged rules.</b> ' + (5 - safeCount) + ' choice' + (5 - safeCount > 1 ? 's' : '') + ' left a door open. Each red one above is exactly how the exposed instances got exposed — fix them before the installer runs.';
+          }
+        }
+      });
+    });
+  });
+})();
+</script>
+
+<script id="coachScript">
+(function() {
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Before you install OpenClaw — the safe-setup checklist\nTRACK: OpenClaw, Safely (Lesson 03, Pro — the first paid lesson)\n\nLESSON CONTENT SUMMARY:\nEvery exposed OpenClaw instance in the 2026 scans was a setup decision, not a sophisticated hack — so safety is also a setup decision, made BEFORE the installer runs. THE GUIDING PRINCIPLE: assume your agent will eventually be tricked (prompt injection can't be fully prevented), and build so a tricked agent can't hurt you. Security people call this shrinking the BLAST RADIUS — limiting what a misbehaving agent can reach.\n\nCHOOSE WHERE IT LIVES (sets the floor): (A) SPARE MACHINE — gold standard; an old laptop/Mac mini wiped to just OS + OpenClaw, nothing sensitive; breached = an empty box + one revocable API key. (B) RASPBERRY PI (~$80) — cheap always-on, same 'nothing else lives here' property, a bit more fiddly (Linux). (C) SMALL VPS ($5-10/mo) — strongest network isolation (off your home network), but data on rented hardware and a public VPS makes localhost binding non-negotiable. (D) MAIN COMPUTER — only inside a VM/container with its own user and exactly one mounted folder; the fence is the whole defense (a VM escape or sloppy grant ends it). NEVER on a work machine — not in a VM, not at all.\n\nTHE FIVE ISOLATION RULES: (1) BIND THE GATEWAY TO LOCALHOST (127.0.0.1) — only the machine itself can talk to it; 0.0.0.0 opens it to the whole network/internet and is how nearly all ~42,900 exposed instances got exposed. For remote access use a private tunnel like Tailscale (free personal), NOT a port-forwarded router. This single setting is most of your safety. (2) DEDICATED ACCOUNTS — give the agent a fresh email, fresh API keys, its own bot/number; never your main Google login or shared personal key. Reasons: revocation and attribution. (3) API-KEY HYGIENE — dedicated key named 'openclaw' in your provider console (Anthropic/OpenAI/OpenRouter), a MONTHLY SPEND CAP ($10-20 to start; a hijacked agent hits the ceiling, not your card), stored only on the box, never in a chat or skill file. (4) DATA DIET — write down exactly what it may see (which folder, calendar, inbox — its own); everything else off-menu until earned. The antidote to capability creep is a written scope set while sober. (5) KILL SWITCH ON DAY ZERO — know three moves: stop the service (one command, Lesson 4), revoke the API key (console, ~60 sec), and unplug the box (always works). Write them on a sticky note.\n\nKEY GOTCHA: exposed instances leaked access tokens through URLs and logs — treat every credential on the agent box as 'will eventually be seen,' which is exactly why none should be credentials you care about elsewhere.\n\nTHE 30-SECOND SELF-TEST: finish 'if a stranger fully controlled my agent's machine right now, the worst they could do is ___.' If it contains your real email/files/passwords/employer, the setup isn't done. If it's 'read an empty box and spend $20 of API credit,' you're ready to install.\n\nNext (Lesson 4, Pro): the openclaw onboard walkthrough on the prepared machine, plus verifying you're NOT publicly visible.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more\n- Be practical and safety-first\n- If asked about something not in this lesson, briefly answer and point to where they can learn more (install is Lesson 4, channels Lesson 5, capabilities Lesson 8)\n- Never make up features that don't exist\n- Plain conversational text only — no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var MAX_FREE = 3;
+  var count = 0;
+  var isThinking = false;
+  var history = [];
+  var fab = document.getElementById('coachFab');
+  var drawer = document.getElementById('coachDrawer');
+  var closeBtn = document.getElementById('coachClose');
+  var msgs = document.getElementById('coachMessages');
+  var input = document.getElementById('coachInput');
+  var sendBtn = document.getElementById('coachSend');
+  var limitBar = document.getElementById('coachLimit');
+  if (!fab) return;
+  fab.addEventListener('click', function() { toggle(true); });
+  closeBtn.addEventListener('click', function() { toggle(false); });
+  function toggle(open) {
+    drawer.classList.toggle('open', open);
+    if (open) setTimeout(function() { input.focus(); }, 300);
+  }
+  input.addEventListener('input', function() {
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 100) + 'px';
+  });
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+  });
+  sendBtn.addEventListener('click', send);
+  function addMsg(text, type) {
+    var d = document.createElement('div');
+    d.className = 'msg msg-' + type;
+    d.textContent = text;
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+    return d;
+  }
+  function addThinking() {
+    var d = document.createElement('div');
+    d.className = 'msg-thinking';
+    d.innerHTML = '<div class="thinking-dot"></div><div class="thinking-dot"></div><div class="thinking-dot"></div>';
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+    return d;
+  }
+  async function send() {
+    var text = input.value.trim();
+    if (!text || isThinking) return;
+    if (count >= MAX_FREE) {
+      limitBar.classList.add('visible');
+      input.disabled = true;
+      sendBtn.disabled = true;
+      return;
+    }
+    count++;
+    if (count >= MAX_FREE) limitBar.classList.add('visible');
+    addMsg(text, 'user');
+    history.push({ role: 'user', content: text });
+    input.value = '';
+    input.style.height = 'auto';
+    isThinking = true;
+    sendBtn.disabled = true;
+    var thinking = addThinking();
+    try {
+      var res = await fetch('/api/playground', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ coach: true, lessonCoach: true, lessonContext: LESSON_CONTEXT, history: history })
+      });
+      thinking.remove();
+      var data = await res.json();
+      var reply = (data && data.coach) ? data.coach : "Sorry, something went wrong. Try again in a moment.";
+      addMsg(reply, 'coach');
+      history.push({ role: 'assistant', content: reply });
+    } catch(err) {
+      thinking.remove();
+      addMsg("Something went wrong — try again in a moment.", 'coach');
+    } finally {
+      isThinking = false;
+      sendBtn.disabled = count >= MAX_FREE;
+    }
+  }
+})();
+</script>
 <script src="/gate.js"></script>
 </body>
 </html>

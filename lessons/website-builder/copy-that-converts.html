@@ -7,405 +7,318 @@
 <meta name="description" content="Turn your AI-built page into a multi-page site that converts: the right pages in the right order, prompt patterns for real structure, copy that turns visitors into leads, and the SEO basics you can't skip." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#5b8def" />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
-
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/website-builder/copy-that-converts" />
 <meta property="og:title" content="Multi-page sites that convert — Build a Website, Lesson 2" />
 <meta property="og:description" content="The difference between 'looks nice' and 'gets results' — page architecture, conversion copy, and the SEO you can't skip." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
-
 <style>
-:root {
-  --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a;
-  --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14);
-  --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85;
-  --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4;
-  --warn: #ffb547; --danger: #ff6b8a;
-  --radius: 14px; --radius-lg: 20px;
-  --container: 820px;
-  --track: #5b8def;
-  --track-2: #7c5cff;
-}
-* { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
-body {
-  font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif;
-  background: var(--bg); color: var(--text);
-  line-height: 1.7; -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
-a { color: var(--brand-2); text-decoration: none; }
-a:hover { color: var(--text); }
-
-.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
-.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #5b8def; }
-.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
-
-.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
-
-nav.top {
-  position: sticky; top: 0; z-index: 100;
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  background: rgba(10,10,26,0.85);
-  border-bottom: 1px solid var(--line);
-}
-.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
-.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
-.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
-.nav-back { font-size: 13px; color: var(--text-dim); }
-.nav-back:hover { color: var(--text); }
-
-.lesson { padding: 50px 0 100px; }
-.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
-.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(91,141,239,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(91,141,239,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-.lesson-meta .chip-free { border-color: rgba(68,224,164,0.4); color: var(--accent); background: rgba(68,224,164,0.1); }
-.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.45); color: var(--brand); background: rgba(124,92,255,0.12); }
-.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.45); color: var(--warn); background: rgba(255,181,71,0.12); }
-.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
-
-.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #5b8def 0%, #7c5cff 50%, #44e0a4 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
-.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
-.lesson strong { font-weight: 700; color: var(--text); }
-.lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; }
-.lesson li { margin-bottom: 8px; color: var(--text); }
-
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(91,141,239,0.10), rgba(124,92,255,0.06)); border: 1px solid rgba(91,141,239,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #5b8def, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-
-.step-box { margin: 26px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.step-box h3 { margin-top: 0; }
-.step-box ol { padding-left: 22px; }
-.step-box ol li { margin-bottom: 12px; font-size: 15.5px; }
-.step-box code { background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 4px; font-size: 13px; color: var(--accent); font-family: 'SFMono-Regular', Consolas, monospace; }
-
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(91,141,239,0.15); border: 1px solid rgba(91,141,239,0.35); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; }
-.savings strong { color: var(--accent); font-weight: 700; }
-
-.limitations { margin: 36px 0; background: rgba(255,107,138,0.04); border: 1px solid rgba(255,107,138,0.2); border-radius: var(--radius-lg); padding: 26px 28px; }
-.limitations h3 { margin-top: 0; color: var(--text); }
-.limitations ul li { font-size: 14.5px; }
-
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(91,141,239,0.18), rgba(124,92,255,0.1)); border: 1px solid rgba(91,141,239,0.3); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #5b8def, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(91,141,239,0.35); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
-.checklist h3 { margin-top: 0; font-size: 18px; }
-.checklist ul { list-style: none; padding: 0; margin: 0; }
-.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
-.checklist li:first-child { border-top: none; padding-top: 0; }
-.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
-.checklist li:first-child::before { top: 4px; }
-
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
-.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
-.next-up h3 { margin: 0 0 8px; font-size: 20px; }
-.next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
-.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
-
-footer { border-top: 1px solid var(--line); padding: 30px 0; }
-.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
-@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
-
-/* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
-.coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
-.coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
-.coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
-.coach-head-info { flex: 1; }
-.coach-head-name { font-weight: 700; font-size: 14px; }
-.coach-head-sub { font-size: 11px; color: #44e0a4; }
-.coach-close { background: none; border: none; color: #6b6b85; font-size: 18px; padding: 4px; line-height: 1; cursor: pointer; }
-.coach-close:hover { color: #f5f5fa; }
-.coach-messages { flex: 1; overflow-y: auto; padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth; }
-.coach-messages::-webkit-scrollbar { width: 4px; }
-.coach-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.14); border-radius: 4px; }
-.msg { max-width: 88%; font-size: 13.5px; line-height: 1.6; }
-.msg-coach { align-self: flex-start; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px 14px 14px 4px; padding: 10px 14px; color: #f5f5fa; }
-.msg-user { align-self: flex-end; background: linear-gradient(135deg, rgba(124,92,255,0.25), rgba(91,141,239,0.25)); border: 1px solid rgba(124,92,255,0.3); border-radius: 14px 14px 4px 14px; padding: 10px 14px; color: #f5f5fa; }
-.msg-thinking { align-self: flex-start; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px 14px 14px 4px; padding: 10px 14px; display: flex; align-items: center; gap: 6px; color: #6b6b85; font-size: 13px; }
-.thinking-dot { width: 6px; height: 6px; border-radius: 50%; background: #44e0a4; animation: coachPulse 1.2s ease-in-out infinite; }
-.thinking-dot:nth-child(2) { animation-delay: .2s; }
-.thinking-dot:nth-child(3) { animation-delay: .4s; }
-@keyframes coachPulse { 0%,100%{opacity:.3;transform:scale(.8)} 50%{opacity:1;transform:scale(1)} }
-.coach-limit { padding: 10px 18px; font-size: 11px; color: #6b6b85; text-align: center; border-top: 1px solid rgba(255,255,255,0.08); display: none; }
-.coach-limit.visible { display: block; }
-.coach-limit a { color: #5b8def; }
-.coach-input-row { padding: 12px 18px 16px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; gap: 8px; align-items: flex-end; }
-.coach-input { flex: 1; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); color: #f5f5fa; border-radius: 10px; padding: 9px 12px; font-size: 13px; font-family: inherit; resize: none; max-height: 100px; line-height: 1.5; }
-.coach-input:focus { outline: none; border-color: #44e0a4; }
-.coach-input::placeholder { color: #6b6b85; }
-.coach-send { width: 34px; height: 34px; border-radius: 9px; border: none; flex-shrink: 0; background: linear-gradient(135deg, #44e0a4, #7c5cff); color: white; font-size: 15px; display: grid; place-items: center; cursor: pointer; transition: opacity .15s; }
-.coach-send:hover { opacity: 0.85; }
-.coach-send:disabled { opacity: 0.4; cursor: default; }
-@media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
+  :root{
+    --bg:#0a0a1a;--bg-2:#0f0f23;--bg-soft:#14142b;--surface:#1a1a3a;
+    --line:rgba(255,255,255,.08);--line-strong:rgba(255,255,255,.14);
+    --text:#f5f5fa;--text-dim:#a8a8c0;--text-mute:#6b6b85;
+    --track:#5b8def;--track-2:#3b6fd4;--accent:#44e0a4;--warn:#ffb547;--danger:#ff6b8a;
+    --radius:14px;--radius-lg:20px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;background:radial-gradient(1000px 560px at 75% -10%,rgba(91,141,239,.18),transparent 60%),var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;line-height:1.6}
+  a{text-decoration:none;color:inherit}
+  .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--line)}
+  .logo{display:flex;align-items:center;gap:9px;font-weight:700;font-size:17px}
+  .logo .mark{width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,#5b8def,#3b6fd4 60%,#44e0a4);display:grid;place-items:center;font-size:14px;color:#fff;font-weight:800}
+  .nav-r{display:flex;gap:18px;align-items:center;font-size:14px;color:var(--text-dim)}
+  .nav-r a:hover{color:var(--text)}
+  .btn{font-family:inherit;font-weight:600;font-size:14.5px;border-radius:10px;padding:11px 18px;cursor:pointer;border:1px solid transparent;display:inline-flex;align-items:center;gap:8px;transition:.15s;color:#fff;background:linear-gradient(135deg,#5b8def,#3b6fd4);box-shadow:0 8px 22px -10px rgba(91,141,239,.8)}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-ghost{background:transparent;border-color:var(--line-strong);color:var(--text);box-shadow:none}
+  .btn-ghost:hover{background:rgba(255,255,255,.05)}
+  .btn-block{width:100%;justify-content:center}
+  .lesson{max-width:740px;margin:34px auto 60px}
+  .l-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;font-size:12.5px;flex-wrap:wrap;gap:6px}
+  .l-tag{font-weight:600;color:var(--track)}
+  .l-meta{color:var(--text-mute)}
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;background:rgba(91,141,239,.16);color:var(--track);border:1px solid rgba(91,141,239,.32)}
+  h1.title{font-size:34px;line-height:1.12;letter-spacing:-.02em;margin:14px 0 16px;font-weight:800}
+  .lede{color:var(--text-dim);font-size:17px;margin-bottom:14px}
+  .section{margin:30px 0}
+  h2.sec{font-size:13px;text-transform:uppercase;letter-spacing:.09em;color:var(--track);font-weight:700;margin-bottom:10px}
+  h3.blk{font-size:21px;line-height:1.25;margin-bottom:10px;font-weight:700}
+  p{color:var(--text-dim);margin-bottom:14px;font-size:15.5px}
+  p strong{color:var(--text);font-weight:600}
+  .mm{background:linear-gradient(135deg,rgba(91,141,239,.12),rgba(68,224,164,.06));border:1px solid rgba(91,141,239,.25);border-radius:var(--radius);padding:18px 20px;margin-bottom:16px}
+  .mm h3{font-size:18px;color:var(--text);margin-bottom:8px;font-weight:700}
+  .callout{background:rgba(91,141,239,.08);border:1px solid rgba(91,141,239,.22);border-left:3px solid var(--track);border-radius:0 var(--radius) var(--radius) 0;padding:14px 16px;margin-bottom:16px;font-size:14.5px;color:var(--text-dim);line-height:1.65}
+  .callout b{color:var(--text)}
+  .reframe{background:rgba(255,181,71,.08);border:1px solid rgba(255,181,71,.25);border-radius:var(--radius);padding:13px 16px;margin-bottom:16px;font-size:14.5px;color:var(--text-dim)}
+  .reframe .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--warn);font-weight:700;display:block;margin-bottom:5px}
+  .reframe b{color:var(--text)}
+  .promptcard{background:var(--bg-soft);border:1px solid var(--line);border-left:3px solid var(--track);border-radius:0 var(--radius) var(--radius) 0;padding:14px 16px;margin-bottom:16px;font-size:14px;color:var(--text);line-height:1.6}
+  .promptcard .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-mute);display:block;margin-bottom:6px}
+  /* copy bench */
+  .bench{background:var(--bg-soft);border:1px solid var(--line-strong);border-radius:var(--radius);padding:16px;margin-bottom:14px}
+  .bench .q{font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px}
+  .bench .sub{font-size:12.5px;color:var(--text-mute);margin-bottom:12px}
+  .pair{display:grid;gap:10px}
+  .copyopt{text-align:left;background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:13px 15px;cursor:pointer;transition:.15s;font-family:inherit;color:var(--text);font-size:14px;line-height:1.5}
+  .copyopt:hover:not(:disabled){border-color:var(--track)}
+  .copyopt:disabled{cursor:default}
+  .copyopt.right{border-color:var(--accent);background:rgba(68,224,164,.1)}
+  .copyopt.wrong{border-color:var(--danger);background:rgba(255,107,138,.08);opacity:.7}
+  .benchfb{display:none;margin-top:10px;padding:11px 13px;border-radius:var(--radius);font-size:13.5px;line-height:1.6}
+  .benchfb.show{display:block}
+  .benchfb.good{background:rgba(68,224,164,.1);border:1px solid rgba(68,224,164,.35);color:#bdebd6}
+  .benchcount{font-size:12.5px;color:var(--text-mute);margin-top:8px}
+  /* hype zapper */
+  .zapwrap{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;font-size:15px;line-height:1.85;color:var(--text-dim)}
+  .hype{display:inline;background:rgba(255,107,138,.16);border-bottom:2px dashed var(--danger);color:#ffb6c6;padding:0 2px;border-radius:3px;cursor:pointer;transition:.15s;font-weight:600}
+  .hype:hover{background:rgba(255,107,138,.28)}
+  .hype.zapped{background:rgba(68,224,164,.14);border-bottom:2px solid var(--accent);color:#bdebd6;font-style:italic}
+  .zapmeter{margin-top:14px;font-size:13px;color:var(--text-dim);display:flex;align-items:center;gap:10px}
+  .meter-bar{flex:1;height:6px;background:var(--surface);border-radius:99px;overflow:hidden}
+  .meter-fill{height:100%;width:0;background:linear-gradient(90deg,var(--track),var(--accent));border-radius:99px;transition:width .35s ease}
+  .zapdone{display:none;margin-top:12px;padding:12px 14px;border-radius:var(--radius);background:rgba(68,224,164,.09);border:1px solid rgba(68,224,164,.32);font-size:13.5px;color:#bdebd6}
+  .zapdone.show{display:block}
+  ul.clean{list-style:none;margin:6px 0 14px}
+  ul.clean li{position:relative;padding-left:26px;margin-bottom:9px;font-size:14.5px;color:var(--text-dim);line-height:1.5}
+  ul.clean li::before{content:'';position:absolute;left:0;top:3px;width:16px;height:16px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E");background-size:contain;background-repeat:no-repeat}
+  ol.list{margin:6px 0 14px 18px;color:var(--text-dim);font-size:14.5px}
+  ol.list li{margin-bottom:8px}
+  ol.list li strong{color:var(--text)}
+  .challenge{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin:24px 0}
+  .challenge h3{font-size:17px;margin-bottom:10px;color:var(--text)}
+  ol.steps{margin:0 0 0 18px;color:var(--text-dim);font-size:14.5px}
+  ol.steps li{margin-bottom:7px}
+  .done{background:linear-gradient(135deg,rgba(91,141,239,.14),rgba(68,224,164,.07));border:1px solid rgba(91,141,239,.3);border-radius:var(--radius);padding:22px;text-align:center;margin:26px 0}
+  .done .check{width:50px;height:50px;border-radius:50%;background:rgba(68,224,164,.14);color:var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:24px;border:1px solid rgba(68,224,164,.4)}
+  .upnext{background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:14px 0;text-align:left}
+  .upnext .lbl{font-size:11px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.06em}
+  .upnext p{margin:3px 0 0;font-weight:600;color:var(--text)}
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+  footer{border-top:1px solid var(--line);padding:30px 0;font-size:13px;color:var(--text-mute);text-align:center}
+  .coach-fab{position:fixed;bottom:28px;right:28px;z-index:999;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#5b8def,#44e0a4);border:none;box-shadow:0 8px 28px rgba(91,141,239,.4);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;transition:transform .2s,box-shadow .2s}
+  .coach-fab:hover{transform:scale(1.08)}
+  .coach-fab .coach-fab-badge{position:absolute;top:-4px;right:-4px;background:#3b6fd4;color:#fff;font-size:9px;font-weight:700;padding:2px 5px;border-radius:999px;border:2px solid #0a0a1a;line-height:1.2}
+  .coach-drawer{position:fixed;bottom:90px;right:28px;z-index:998;width:360px;max-height:520px;background:#13132a;border:1px solid rgba(91,141,239,.25);border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.5);display:flex;flex-direction:column;transform:scale(.92) translateY(16px);opacity:0;pointer-events:none;transition:transform .25s cubic-bezier(.34,1.56,.64,1),opacity .2s}
+  .coach-drawer.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
+  .coach-drawer-head{padding:16px 18px 14px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px}
+  .coach-avatar{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#5b8def,#44e0a4);display:grid;place-items:center;font-size:16px;flex-shrink:0}
+  .coach-head-info{flex:1}
+  .coach-head-name{font-weight:700;font-size:14px}
+  .coach-head-sub{font-size:11px;color:#5b8def}
+  .coach-close{background:none;border:none;color:#6b6b85;font-size:18px;padding:4px;line-height:1;cursor:pointer}
+  .coach-close:hover{color:#f5f5fa}
+  .coach-messages{flex:1;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}
+  .coach-messages::-webkit-scrollbar{width:4px}
+  .coach-messages::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:4px}
+  .msg{max-width:88%;font-size:13.5px;line-height:1.6}
+  .msg-coach{align-self:flex-start;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:14px 14px 14px 4px;padding:10px 14px;color:#f5f5fa}
+  .msg-user{align-self:flex-end;background:linear-gradient(135deg,rgba(91,141,239,.25),rgba(59,111,212,.25));border:1px solid rgba(91,141,239,.3);border-radius:14px 14px 4px 14px;padding:10px 14px;color:#f5f5fa}
+  .msg-thinking{align-self:flex-start;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px 14px 14px 4px;padding:10px 14px;display:flex;align-items:center;gap:6px;color:#6b6b85;font-size:13px}
+  .thinking-dot{width:6px;height:6px;border-radius:50%;background:#5b8def;animation:coachPulse 1.2s ease-in-out infinite}
+  .thinking-dot:nth-child(2){animation-delay:.2s}
+  .thinking-dot:nth-child(3){animation-delay:.4s}
+  @keyframes coachPulse{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}
+  .coach-limit{padding:10px 18px;font-size:11px;color:#6b6b85;text-align:center;border-top:1px solid rgba(255,255,255,.08);display:none}
+  .coach-limit.visible{display:block}
+  .coach-limit a{color:#5b8def}
+  .coach-input-row{padding:12px 18px 16px;border-top:1px solid rgba(255,255,255,.08);display:flex;gap:8px;align-items:flex-end}
+  .coach-input{flex:1;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.08);color:#f5f5fa;border-radius:10px;padding:9px 12px;font-size:13px;font-family:inherit;resize:none;max-height:100px;line-height:1.5}
+  .coach-input:focus{outline:none;border-color:#5b8def}
+  .coach-input::placeholder{color:#6b6b85}
+  .coach-send{width:34px;height:34px;border-radius:9px;border:none;flex-shrink:0;background:linear-gradient(135deg,#5b8def,#44e0a4);color:#fff;font-size:15px;display:grid;place-items:center;cursor:pointer;transition:opacity .15s}
+  .coach-send:hover{opacity:.85}
+  .coach-send:disabled{opacity:.4;cursor:default}
+  @media(max-width:480px){.coach-drawer{width:calc(100vw - 32px);right:16px;bottom:80px}.coach-fab{right:16px;bottom:16px}h1.title{font-size:28px}}
 </style>
 </head>
 <body>
+<div class="sr-only">Interactive Build a Website Lesson 2: spot the converting copy, zap hype words out of a paragraph, and learn page architecture and SEO, with an AI Coach.</div>
+<div class="wrap">
+  <nav>
+    <a href="/" class="logo"><span class="mark">L</span> LearningGPT</a>
+    <div class="nav-r">
+      <a href="/lessons/website-builder/">← Build a Website</a>
+      <a href="/playground">Playground</a>
+    </div>
+  </nav>
+  <main class="lesson">
+    <div class="l-top">
+      <span class="l-tag">Build a Website · Lesson 2</span>
+      <span class="l-meta"><span class="pill">Pro</span> &nbsp;~14 min · Builds on Lesson 1</span>
+    </div>
+    <h1 class="title">Make it multi-page, and <span class="serif">make it convert.</span></h1>
+    <p class="lede">You've got a page live. Now turn it into a site people actually act on — the difference between "looks nice" and "gets results." Same no-code approach as Lesson 1, just aimed at outcomes: the right pages in the right order, prompt patterns that produce real structure, copy that turns a visitor into a lead, and the SEO you can't skip.</p>
 
-<div class="bg-orb one"></div>
-<div class="bg-orb two"></div>
-
-<nav class="top">
-  <div class="nav-inner">
-    <a href="/" class="logo">
-      <div class="logo-mark">L</div>
-      LearningGPT
-    </a>
-    <a href="/lessons/website-builder/" class="nav-back">← Build a Website</a>
-  </div>
-</nav>
-
-<article class="lesson">
-  <div class="container">
-
-    <div class="lesson-meta">
-      <span class="chip">Build a Website · Lesson 2</span>
-      <span class="chip chip-pro">Pro</span>
-      <span>~14 min read</span>
-      <span class="dot"></span>
-      <span>Multi-page + conversion copy</span>
-      <span class="dot"></span>
-      <span>Builds on Lesson 1</span>
+    <div class="section">
+      <h2 class="sec">The mental model</h2>
+      <div class="mm">
+        <h3>A website is a path, not a page. Every page has one job, and the path leads to one action.</h3>
+        <p style="margin-bottom:0">Beginners build a pile of pages and hope. People who convert build a <strong>route</strong>: a visitor lands, understands in five seconds, gets one reason to keep going, and is funneled toward a single action. Each page does one job and hands off to the next. Prompt with that route in mind and AI builds you a machine instead of a brochure.</p>
+      </div>
+      <div class="reframe"><span class="lbl">The reframe</span><b>One page, one job, one action.</b> If a page is trying to do three things, it does none of them well. Decide the single thing each page exists to make happen before you generate anything.</div>
     </div>
 
-    <h1>Make it multi-page, <span class="grad serif">and make it convert.</span></h1>
-
-    <p class="deck">You've got a page live. Now turn it into a site people actually act on. This is the difference between "looks nice" and "gets results" — the right pages in the right order, the prompt patterns that produce real structure, copy that turns a visitor into a lead, and the SEO basics you can't skip. Same no-code approach as Lesson 1, just aimed at outcomes.</p>
-
-    <!-- MENTAL MODEL -->
-    <h2><span class="num">The mental model</span></h2>
-    <h3>A website is a path, not a page. Every page has one job, and the path leads to one action.</h3>
-
-    <p>Beginners build a pile of pages and hope. People who convert build a <em>route</em>: a visitor lands, understands in five seconds, gets one reason to keep going, and is funneled toward a single action. Each page does one job and hands off to the next. When you prompt with that route in mind, AI builds you a machine instead of a brochure.</p>
-
-    <div class="callout">
-      <span class="lbl">The Reframe</span>
-      <p><strong>One page, one job, one action.</strong> If a page is trying to do three things, it does none of them well. Before you generate anything, decide the single thing each page exists to make happen.</p>
+    <div class="section">
+      <h2 class="sec">Step 01 · Spot the converting copy</h2>
+      <p>The AI's first-draft copy is almost always too clever and too much about you. Conversion copy leads with the benefit to the reader, uses "you" not "we," and is specific. Pick the version that converts in each pair:</p>
+      <div class="bench">
+        <div class="q" id="q1">Round 1 of 3 · Hero headline</div>
+        <div class="sub">For a tool that schedules client calls. Which headline pulls the visitor in?</div>
+        <div class="pair" id="pair-1">
+          <button class="copyopt" data-c="0" onclick="benchPick(this,1)">"AI-powered scheduling, reimagined for the modern team."</button>
+          <button class="copyopt" data-c="1" onclick="benchPick(this,1)">"Stop losing an hour a day to back-and-forth scheduling emails."</button>
+        </div>
+        <div class="benchfb" id="fb-1"></div>
+      </div>
+      <div class="bench" id="bench-2" style="display:none">
+        <div class="q">Round 2 of 3 · Section opener</div>
+        <div class="sub">Opening line of the "how it works" section. Which one earns the next scroll?</div>
+        <div class="pair">
+          <button class="copyopt" data-c="1" onclick="benchPick(this,2)">"You pick three times that work. Your client books one. Done — no email chain."</button>
+          <button class="copyopt" data-c="0" onclick="benchPick(this,2)">"We leverage cutting-edge technology to deliver a seamless scheduling experience."</button>
+        </div>
+        <div class="benchfb" id="fb-2"></div>
+      </div>
+      <div class="bench" id="bench-3" style="display:none">
+        <div class="q">Round 3 of 3 · Call-to-action button</div>
+        <div class="sub">The button at the bottom of the page. Which converts better?</div>
+        <div class="pair">
+          <button class="copyopt" data-c="0" onclick="benchPick(this,3)">"Submit"</button>
+          <button class="copyopt" data-c="1" onclick="benchPick(this,3)">"Book my first call — free"</button>
+        </div>
+        <div class="benchfb" id="fb-3"></div>
+      </div>
+      <div class="benchcount" id="benchCount">Score: 0 / 3</div>
     </div>
 
-    <!-- STEP 1 -->
-    <h2><span class="num">Step 01</span> Plan the pages first</h2>
-    <p>Most small businesses need four pages, not forty. Generate the structure before any content:</p>
-    <div class="step-box">
-      <ol>
-        <li><strong>Home</strong> — what you do, for whom, and the main action. The hub of the whole route.</li>
+    <div class="section">
+      <h2 class="sec">Step 02 · Zap the hype words</h2>
+      <p>AI loves hype — "revolutionary," "seamless," "cutting-edge," "game-changing." They signal nothing and quietly lower trust. Tap each highlighted hype word below to cut it. Get them all and you'll see the honest version.</p>
+      <div class="zapwrap" id="zapText">
+        Our <span class="hype" onclick="zap(this)">revolutionary</span> platform delivers a <span class="hype" onclick="zap(this)">seamless</span>, <span class="hype" onclick="zap(this)">cutting-edge</span> experience that's a true <span class="hype" onclick="zap(this)">game-changer</span> for <span class="hype" onclick="zap(this)">world-class</span> teams.
+      </div>
+      <div class="zapmeter"><span>Hype removed:</span><div class="meter-bar"><div class="meter-fill" id="zapFill"></div></div><span id="zapN" style="font-weight:600">0 / 5</span></div>
+      <div class="zapdone" id="zapDone">Now it can say something true: <b>"Pick three times, your client books one, no email chain."</b> Ask AI to replace every hype word with a specific claim — or delete the sentence. Specific always beats clever.</div>
+    </div>
+
+    <div class="section">
+      <h2 class="sec">Step 03 · Plan the pages first</h2>
+      <p>Most small businesses need four pages, not forty. Generate the structure before any content — each page with one job:</p>
+      <ol class="list">
+        <li><strong>Home</strong> — what you do, for whom, and the main action. The hub of the route.</li>
         <li><strong>Offer / Services</strong> — the details a serious visitor wants before they commit.</li>
         <li><strong>About / Proof</strong> — why trust you: story, results, credentials, real testimonials.</li>
         <li><strong>Contact</strong> — the finish line. Make the action effortless.</li>
       </ol>
-    </div>
-    <div class="prompt-example">
-      <span class="label">Sitemap prompt</span>
-      I'm building a website for [business] that helps [audience] do [outcome]. The one action I want visitors to take is [action]. Propose a 4-page sitemap. For each page give me its single job, the sections it needs in order, and the one call-to-action it should drive toward. Keep it lean — no pages that don't earn their place.
+      <div class="promptcard"><span class="lbl">Sitemap prompt</span>I'm building a website for [business] that helps [audience] do [outcome]. The one action I want visitors to take is [action]. Propose a 4-page sitemap. For each page give me its single job, the sections it needs in order, and the one call-to-action it should drive toward. Keep it lean — no pages that don't earn their place.</div>
+      <div class="callout"><b>Keep the whole site on-brand.</b> Write a one-paragraph brand brief once — colors, fonts, voice (three adjectives + one "never"), audience — then paste it into every page prompt: "Apply this brand consistently… don't introduce new styles." It's the fastest fix for a site that looks amateur.</div>
     </div>
 
-    <!-- STEP 2 -->
-    <h2><span class="num">Step 02</span> The structure prompts that produce real pages</h2>
-    <p>Generic prompts make generic pages. These patterns force structure the AI would otherwise skip:</p>
-    <div class="prompt-example">
-      <span class="label">Page-build prompt</span>
-      Build the [Home] page from the sitemap. Open with a headline that names the visitor's problem and the outcome in under 10 words, then a one-line subhead. Follow with these sections in order: [sections]. Put the primary call-to-action both in the top hero and again at the very bottom, with identical wording. Use specific, real copy — no placeholder text, no invented stats or logos. Keep paragraphs short.
-    </div>
-    <p>Notice what's doing the work: a headline formula, an explicit section order, and the call-to-action repeated top and bottom in identical words. Those three things are most of what separates a converting page from a pretty one.</p>
-
-    <!-- STEP 3 -->
-    <h2><span class="num">Step 03</span> Copy that converts</h2>
-    <p>The AI's first-draft copy is almost always too clever and too much about you. Fix it with these moves:</p>
-    <ul>
-      <li><strong>Benefits over features.</strong> Not "AI-powered scheduling" — "stop losing an hour a day to back-and-forth emails."</li>
-      <li><strong>"You," not "we."</strong> Count the "we"s. Most should be "you."</li>
-      <li><strong>One idea per section.</strong> If a section makes two points, split it or cut one.</li>
-      <li><strong>Specific beats clever.</strong> A real number or example outperforms a slogan every time.</li>
-    </ul>
-    <div class="prompt-example">
-      <span class="label">Copy-refinement prompts</span>
-      Rewrite this section to lead with the benefit to the reader, not the feature. Use "you" instead of "we."
-      ---
-      This headline is vague. Make three versions, each naming a specific problem [audience] has, under 10 words.
-      ---
-      Cut every sentence that doesn't help the reader decide. Tighten by a third.
-    </div>
-    <div class="gotcha">AI loves hype words — "revolutionary," "seamless," "cutting-edge," "game-changing." They signal nothing and quietly lower trust. Ask it to replace every hype word with a specific claim or delete the sentence.</div>
-
-    <!-- STEP 4 -->
-    <h2><span class="num">Step 04</span> Keep the whole site on-brand</h2>
-    <p>The fastest way to make an AI site look amateur is to let each page invent its own voice and colors. Fix it once with a brand brief, then paste it into every page prompt.</p>
-    <div class="step-box">
-      <h3>Your one-paragraph brand brief</h3>
-      <ol>
-        <li><strong>Colors</strong> — one primary, one accent (hex codes if you have them).</li>
-        <li><strong>Type</strong> — one heading font, one body font.</li>
-        <li><strong>Voice</strong> — three adjectives, plus one "never" (e.g., "never salesy").</li>
-        <li><strong>Audience</strong> — one line, so tone stays anchored.</li>
-      </ol>
-    </div>
-    <div class="prompt-example">
-      <span class="label">Reuse on every page</span>
-      Apply this brand consistently: [paste your brand brief]. Use the same colors, fonts, button style, and voice as the other pages. Don't introduce new styles.
+    <div class="section">
+      <h2 class="sec">Step 04 · The SEO you can't skip</h2>
+      <p>You don't need to be an expert — you need five things on every page, and AI can do all of them if you ask:</p>
+      <ul class="clean">
+        <li><strong>Page title</strong> — unique, under ~60 characters, says what the page is about.</li>
+        <li><strong>Meta description</strong> — one honest sentence that earns the click, ~150 characters.</li>
+        <li><strong>One focus per page</strong> — one main topic, not ten.</li>
+        <li><strong>Real headings</strong> — one H1, then logical H2s. Structure, not decoration.</li>
+        <li><strong>Alt text + fast images</strong> — describe every image; compress them so the page loads quickly.</li>
+      </ul>
+      <div class="promptcard"><span class="lbl">SEO prompt</span>For each page, write a unique SEO title (under 60 characters) and a meta description (around 150 characters) that's accurate and makes someone want to click. Give each page one focus topic. Then add descriptive alt text to every image.</div>
     </div>
 
-    <!-- STEP 5 -->
-    <h2><span class="num">Step 05</span> The SEO you can't skip</h2>
-    <p>You don't need to be an SEO expert — you need five things done on every page. AI can do all of them; you just have to ask.</p>
-    <ul>
-      <li><strong>Page title</strong> — unique, under ~60 characters, with what the page is about.</li>
-      <li><strong>Meta description</strong> — one honest sentence that earns the click, ~150 characters.</li>
-      <li><strong>One focus per page</strong> — one main topic/keyword, not ten.</li>
-      <li><strong>Real headings</strong> — one H1, then logical H2s. Structure, not decoration.</li>
-      <li><strong>Alt text + fast images</strong> — describe every image; compress them so the page loads quickly.</li>
-    </ul>
-    <div class="prompt-example">
-      <span class="label">SEO prompt</span>
-      For each page, write a unique SEO title (under 60 characters) and a meta description (around 150 characters) that's accurate and makes someone want to click. Give each page one focus topic. Then add descriptive alt text to every image.
-    </div>
-
-    <!-- CHALLENGE -->
     <div class="challenge">
-      <h2 style="margin-top: 0;">Your challenge: turn the page into a site</h2>
-      <p>Take the one-pager you built in Lesson 1 and level it up:</p>
-      <ol>
+      <h3>Your challenge: turn the page into a site</h3>
+      <p style="margin-bottom:10px">Take the one-pager from Lesson 1 and level it up:</p>
+      <ol class="steps">
         <li>Generate a lean 3–4 page sitemap with one job per page.</li>
         <li>Write your one-paragraph brand brief and reuse it on every page.</li>
         <li>Rewrite the home headline three ways; pick the most specific.</li>
         <li>Add SEO titles, meta descriptions, and image alt text everywhere.</li>
         <li>Read it on your phone, then republish.</li>
       </ol>
-      <p>That's a real, on-brand, multi-page site built to convert. Next, when you want full control — custom features, working forms, your own domain — that's Lesson 3.</p>
-      <div class="btn-row">
-        <a href="/lessons/website-builder/going-live" class="btn">Next: custom code & going live →</a>
-        <a href="/lessons/website-builder/" class="btn ghost">Back to Build a Website</a>
+    </div>
+
+    <div class="done">
+      <div class="check">✓</div>
+      <h3 style="margin-bottom:8px">Lesson complete</h3>
+      <p style="max-width:480px;margin:0 auto">You can plan a lean multi-page site where every page has one job, force real structure with prompt patterns, rewrite AI copy to be benefit-led and specific, keep a whole site on-brand, and add the five SEO basics.</p>
+      <div class="upnext"><span class="lbl">Up next</span><p>Lesson 3 · Custom code, forms &amp; going live</p></div>
+      <div class="cta-row">
+        <a class="btn btn-block" href="/lessons/website-builder/going-live">Continue to Lesson 3 →</a>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-ghost" href="/playground" target="_blank" rel="noopener">Open the Playground</a>
+        <a class="btn btn-ghost" href="/lessons/website-builder/">Back to Build a Website</a>
       </div>
     </div>
+  </main>
+</div>
+<footer>© 2026 LearningGPT · Independent. Not affiliated with OpenAI, Anthropic, Microsoft, Google, or xAI.</footer>
 
-    <!-- CHECKLIST -->
-    <div class="checklist">
-      <h3>What you can do now</h3>
-      <ul>
-        <li>Plan a lean multi-page site where every page has one job</li>
-        <li>Use prompt patterns that force real structure and repeated CTAs</li>
-        <li>Rewrite AI copy to be benefit-led, reader-focused, and specific</li>
-        <li>Keep an entire site on-brand with a reusable brand brief</li>
-        <li>Add the five SEO basics to every page</li>
-      </ul>
-    </div>
-
-    <div class="next-up">
-      <span class="pro-tag" style="background:rgba(255,181,71,0.18);color:var(--warn);border-color:rgba(255,181,71,0.4);">Pro+</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in Build a Website</div>
-      <h3>Lesson 3 · Custom code, forms & going live</h3>
-      <p>Graduate from prompt-to-site to a coding AI for total control: custom components, a contact form that actually lands in your inbox, and your own domain, live. <a href="/lessons/website-builder/going-live">Go to Lesson 3 →</a></p>
-    </div>
-
-  </div>
-</article>
-
-<footer>
-  <div class="footer-inner">
-    <div>© 2026 LearningGPT, Inc. · Independent.</div>
-    <a href="/lessons/website-builder/" style="color: var(--text-dim);">← Back to Build a Website</a>
-  </div>
-</footer>
-
-
-<!-- ── AI COACH FAB ── -->
-<button class="coach-fab" id="coachFab" title="Ask the AI Coach">
-  🎓
-  <span class="coach-fab-badge">AI</span>
-</button>
-
-<!-- ── AI COACH DRAWER ── -->
+<button class="coach-fab" id="coachFab" title="Ask the AI Coach">🎓<span class="coach-fab-badge">AI</span></button>
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
     <div class="coach-avatar">🎓</div>
-    <div class="coach-head-info">
-      <div class="coach-head-name">AI Coach</div>
-      <div class="coach-head-sub">Ask anything about this lesson</div>
-    </div>
+    <div class="coach-head-info"><div class="coach-head-name">AI Coach</div><div class="coach-head-sub">Ask anything about this lesson</div></div>
     <button class="coach-close" id="coachClose">✕</button>
   </div>
   <div class="coach-messages" id="coachMessages">
     <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about turning your page into a multi-page site that converts — page structure, conversion copy, brand consistency, or the SEO basics. What's on your mind?</div>
   </div>
-  <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
-  </div>
+  <div class="coach-limit" id="coachLimit">Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.</div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
     <button class="coach-send" id="coachSend">➤</button>
   </div>
 </div>
 
-
+<script id="lessonScript">
+  var benchScore = 0, benchDone = {};
+  var benchMsg = {
+    1:"Right — it names a specific pain the reader feels (an hour a day lost), not a vague boast about the product. Benefit over feature, every time.",
+    2:"Right — it's concrete, uses 'you,' and shows the outcome in plain steps. The hype version says nothing a buyer can picture.",
+    3:"Right — the button names exactly what happens next and removes risk ('free'). 'Submit' makes the visitor guess."
+  };
+  function benchPick(btn, round){
+    if(benchDone[round]) return;
+    benchDone[round] = true;
+    var correct = btn.dataset.c === '1';
+    var group = document.getElementById('pair-'+round) || btn.closest('.pair');
+    group.querySelectorAll('.copyopt').forEach(function(b){
+      b.disabled = true;
+      if(b.dataset.c === '1') b.classList.add('right');
+      else if(b === btn) b.classList.add('wrong');
+    });
+    var fb = document.getElementById('fb-'+round);
+    fb.className = 'benchfb show good';
+    fb.textContent = (correct ? '' : 'The other one converts. ') + benchMsg[round];
+    if(correct) benchScore++;
+    document.getElementById('benchCount').textContent = 'Score: ' + benchScore + ' / 3';
+    if(round < 3){ document.getElementById('bench-'+(round+1)).style.display = 'block'; }
+  }
+  var zapTotal = 5, zapped = 0;
+  function zap(el){
+    if(el.classList.contains('zapped')) return;
+    el.classList.add('zapped');
+    zapped++;
+    document.getElementById('zapFill').style.width = Math.round(zapped/zapTotal*100)+'%';
+    document.getElementById('zapN').textContent = zapped + ' / ' + zapTotal;
+    if(zapped === zapTotal) document.getElementById('zapDone').classList.add('show');
+  }
+</script>
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Make it multi-page and make it convert (Build a Website, Lesson 2, Pro)\nTRACK: Build a Website (a cross-tool 'What can you do with AI' build)\n\nLESSON CONTENT SUMMARY:\nThis Pro lesson takes a learner from a single AI-built page to a multi-page site designed to convert visitors into leads, still with no code. Mental model: a website is a path, not a page; every page has one job and the whole path funnels toward one action. Plan the pages first - most small businesses need about four: Home (what you do, for whom, the main action), Offer/Services, About/Proof (story, results, real testimonials), and Contact. Generate a lean sitemap before any content. Structure prompts that produce real pages use a headline formula (name the problem and outcome in under 10 words), an explicit section order, and the primary call-to-action repeated top and bottom in identical wording. Copy that converts: benefits over features, 'you' not 'we', one idea per section, specific beats clever. Refine AI copy with targeted prompts and strip hype words like revolutionary, seamless, cutting-edge. Keep the whole site on-brand with a one-paragraph brand brief (colors, fonts, voice with one 'never', audience) reused in every page prompt. SEO you cannot skip, all doable by asking the AI: unique page title under ~60 chars, meta description ~150 chars, one focus topic per page, real heading structure (one H1 then logical H2s), and descriptive alt text plus compressed/fast images. The challenge: rebuild the Lesson 1 one-pager into a lean, on-brand, multi-page site with SEO basics.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise - 2-4 sentences per answer unless the question genuinely needs more\n- Be practical - give real examples when helpful\n- If asked about custom code, forms, or domains, briefly answer and point to Lesson 3 (Pro+) in this build\n- Never make up tools, features, or statistics that don't exist\n- Plain conversational text only - no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Multi-page sites that convert — page architecture, conversion copy, and SEO\nTRACK: Build a Website (Lesson 02, Pro)\n\nLESSON CONTENT SUMMARY:\nTurn a live page into a multi-page site people act on. Mental model: a website is a PATH not a page — a visitor lands, understands in five seconds, gets one reason to continue, and is funneled to a single action; each page does one job and hands off to the next. Reframe: one page, one job, one action.\n\nPlan the pages first — most small businesses need four, not forty: (1) Home — what you do, for whom, the main action (the hub); (2) Offer/Services — details a serious visitor wants; (3) About/Proof — why trust you (story, results, credentials, REAL testimonials); (4) Contact — the finish line, make it effortless. Sitemap prompt asks AI for each page's single job, ordered sections, and one CTA, kept lean.\n\nStructure prompts force what AI skips: a headline naming the visitor's problem and outcome in under 10 words, an explicit section order, and the primary CTA repeated in the top hero and again at the very bottom in IDENTICAL wording. Those three things are most of what separates a converting page from a pretty one.\n\nCopy that converts: BENEFITS over features (not 'AI-powered scheduling' but 'stop losing an hour a day to back-and-forth emails'); 'YOU' not 'we' (count the we's, most should be you); ONE IDEA per section; SPECIFIC beats clever (a real number/example beats a slogan). Kill hype words — 'revolutionary, seamless, cutting-edge, game-changing' signal nothing and lower trust; replace each with a specific claim or delete the sentence.\n\nKeep the whole site on-brand with a one-paragraph brand brief (colors: one primary + one accent; type: one heading + one body font; voice: three adjectives + one 'never'; audience: one line) pasted into every page prompt so pages don't invent their own voice and colors.\n\nThe five SEO basics on every page (AI can do all if asked): unique page title under ~60 chars; meta description ~150 chars that earns the click; one focus topic per page; real headings (one H1 then logical H2s); alt text on every image plus compressed/fast images.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise — 2-4 sentences unless more is genuinely needed\n- Be practical — give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where to learn more\n- Never make up features that don't exist\n- Plain conversational text only — no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler";
   var MAX_FREE = 3;
-  var count = 0;
-  var isThinking = false;
-  var history = [];
-
+  var count = 0, isThinking = false, history = [];
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -413,81 +326,32 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
-  fab.addEventListener('click', function() { toggle(true); });
-  closeBtn.addEventListener('click', function() { toggle(false); });
-
-  function toggle(open) {
-    drawer.classList.toggle('open', open);
-    if (open) setTimeout(function() { input.focus(); }, 300);
-  }
-
-  input.addEventListener('input', function() {
-    input.style.height = 'auto';
-    input.style.height = Math.min(input.scrollHeight, 100) + 'px';
-  });
-
-  input.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
-  });
+  if (!fab) return;
+  fab.addEventListener('click', function(){ toggle(true); });
+  closeBtn.addEventListener('click', function(){ toggle(false); });
+  function toggle(open){ drawer.classList.toggle('open', open); if(open) setTimeout(function(){ input.focus(); }, 300); }
+  input.addEventListener('input', function(){ input.style.height='auto'; input.style.height=Math.min(input.scrollHeight,100)+'px'; });
+  input.addEventListener('keydown', function(e){ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); send(); } });
   sendBtn.addEventListener('click', send);
-
-  function addMsg(text, type) {
-    var d = document.createElement('div');
-    d.className = 'msg msg-' + type;
-    d.textContent = text;
-    msgs.appendChild(d);
-    msgs.scrollTop = msgs.scrollHeight;
-    return d;
-  }
-
-  function addThinking() {
-    var d = document.createElement('div');
-    d.className = 'msg-thinking';
-    d.innerHTML = '<div class="thinking-dot"></div><div class="thinking-dot"></div><div class="thinking-dot"></div>';
-    msgs.appendChild(d);
-    msgs.scrollTop = msgs.scrollHeight;
-    return d;
-  }
-
-  async function send() {
+  function addMsg(text, type){ var d=document.createElement('div'); d.className='msg msg-'+type; d.textContent=text; msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight; return d; }
+  function addThinking(){ var d=document.createElement('div'); d.className='msg-thinking'; d.innerHTML='<div class="thinking-dot"></div><div class="thinking-dot"></div><div class="thinking-dot"></div>'; msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight; return d; }
+  async function send(){
     var text = input.value.trim();
-    if (!text || isThinking) return;
-    if (count >= MAX_FREE) {
-      limitBar.classList.add('visible');
-      input.disabled = true;
-      sendBtn.disabled = true;
-      return;
-    }
+    if(!text || isThinking) return;
+    if(count >= MAX_FREE){ limitBar.classList.add('visible'); input.disabled=true; sendBtn.disabled=true; return; }
     count++;
-    if (count >= MAX_FREE) limitBar.classList.add('visible');
-    addMsg(text, 'user');
-    history.push({ role: 'user', content: text });
-    input.value = '';
-    input.style.height = 'auto';
-    isThinking = true;
-    sendBtn.disabled = true;
+    if(count >= MAX_FREE) limitBar.classList.add('visible');
+    addMsg(text,'user'); history.push({role:'user',content:text});
+    input.value=''; input.style.height='auto'; isThinking=true; sendBtn.disabled=true;
     var thinking = addThinking();
-    try {
-      var res = await fetch('/api/playground', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ coach: true, lessonCoach: true, lessonContext: LESSON_CONTEXT, history: history })
-      });
+    try{
+      var res = await fetch('/api/playground', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ coach:true, lessonCoach:true, lessonContext:LESSON_CONTEXT, history:history }) });
       thinking.remove();
       var data = await res.json();
       var reply = (data && data.coach) ? data.coach : "Sorry, something went wrong. Try again in a moment.";
-      addMsg(reply, 'coach');
-      history.push({ role: 'assistant', content: reply });
-    } catch(err) {
-      thinking.remove();
-      addMsg("Something went wrong — try again in a moment.", 'coach');
-    } finally {
-      isThinking = false;
-      sendBtn.disabled = count >= MAX_FREE;
-    }
+      addMsg(reply,'coach'); history.push({role:'assistant',content:reply});
+    } catch(err){ thinking.remove(); addMsg("Something went wrong — try again in a moment.",'coach'); }
+    finally{ isThinking=false; sendBtn.disabled = count >= MAX_FREE; }
   }
 })();
 </script>

@@ -4,12 +4,12 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Your first real OpenClaw workflows: email triage, briefings, watchers — LearningGPT</title>
-<meta name="description" content="The starter OpenClaw automations that justify the setup: a morning briefing, email triage on a dedicated inbox, price/website watchers, and a research errand pattern — each designed to stay inside your safety rails." />
+<meta name="description" content="The starter OpenClaw automations that justify the setup: a morning briefing, email triage on a dedicated inbox, watchers, and a research-errand pattern — each designed to stay inside your safety rails." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#f0544f" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/openclaw/first-real-workflows" />
 <meta property="og:title" content="Your first real OpenClaw workflows" />
@@ -36,50 +36,114 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
 .lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #f0544f 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .grad { background: linear-gradient(135deg, #f0544f 0%, #ff8a4d 45%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 24px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.sec { margin: 46px 0 0; }
+.sec-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.lesson h2 { font-size: 27px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; }
 .lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
 .lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(240,84,79,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(240,84,79,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #f0544f, #7c5cff); border-radius: 2px 0 0 2px; }
+
+/* ── WORKFLOW CARDS ── */
+.wfs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 18px 0; }
+@media (max-width: 600px){ .wfs { grid-template-columns: 1fr; } }
+.wf { border: 1px solid var(--line); border-radius: var(--radius-lg); background: linear-gradient(180deg, var(--surface), var(--bg-soft)); overflow: hidden; }
+.wf-top { padding: 15px 16px; }
+.wf-h { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
+.wf-h .wi { font-size: 20px; }
+.wf-h .wn { font-size: 15px; font-weight: 700; color: var(--text); }
+.wf-val { font-size: 12.5px; color: var(--text-dim); margin-bottom: 11px; }
+.wf-rule { font-size: 11.5px; font-weight: 600; color: #b6f4dc; background: rgba(68,224,164,0.08); border: 1px solid rgba(68,224,164,0.22); border-radius: 8px; padding: 6px 10px; margin-bottom: 11px; }
+.wf-btn { font-family: inherit; font-size: 12px; font-weight: 700; padding: 7px 14px; border-radius: 8px; border: 1px solid var(--line-strong); background: rgba(240,84,79,0.07); color: #ff9b86; cursor: pointer; transition: all .15s; }
+.wf-btn:hover:not(:disabled){ background: rgba(240,84,79,0.14); }
+.wf-btn:disabled { cursor: default; }
+.wf-prompt { display: none; padding: 12px 16px; border-top: 1px solid var(--line); background: rgba(0,0,0,0.25); font-family: 'SFMono-Regular', Consolas, monospace; font-size: 11.5px; line-height: 1.55; color: var(--text-dim); white-space: pre-wrap; }
+.wf-prompt.show { display: block; animation: fadeIn .3s ease; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(5px);} to{opacity:1;transform:none;} }
+
+/* benches (classifier + watcher) */
+.bench { margin: 22px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden; background: #0d0d20; }
+.bench-bar { display: flex; align-items: center; justify-content: space-between; padding: 11px 16px; border-bottom: 1px solid var(--line); background: linear-gradient(90deg, rgba(240,84,79,0.08), rgba(124,92,255,0.05)); font-size: 12.5px; font-weight: 700; color: var(--text); }
+.bench-bar .ct { color: var(--track); }
+.brow { padding: 14px 16px; border-bottom: 1px solid var(--line); }
+.brow:last-of-type { border-bottom: none; }
+.brow-q { font-size: 14px; margin-bottom: 10px; } .brow-q b { color: var(--text); }
+.brow-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+@media (max-width: 480px){ .brow-btns { grid-template-columns: 1fr; } }
+.bbtn { font-size: 12px; font-weight: 700; font-family: inherit; padding: 10px 8px; border-radius: 9px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); color: var(--text-dim); cursor: pointer; transition: all .15s; }
+.bbtn:hover:not(:disabled){ border-color: var(--track); color: var(--text); }
+.bbtn:disabled { cursor: default; }
+.bbtn.read.right { background: rgba(68,224,164,0.16); border-color: var(--accent); color: #b6f4dc; }
+.bbtn.write.right { background: rgba(255,181,71,0.16); border-color: var(--warn); color: #ffe0ad; }
+.bbtn.ping.right { background: rgba(91,141,239,0.18); border-color: var(--brand-2); color: #cdd9ff; }
+.bbtn.silent.right { background: rgba(68,224,164,0.16); border-color: var(--accent); color: #b6f4dc; }
+.bbtn.wrong { background: rgba(255,107,138,0.12); border-color: var(--danger); color: #ffb0c1; }
+.brow-fb { margin-top: 9px; font-size: 12.5px; color: var(--text-dim); display: none; }
+.brow-fb.show { display: block; } .brow-fb b { color: var(--text); }
+
+.callout { margin: 22px 0; padding: 18px 22px; background: linear-gradient(135deg, rgba(240,84,79,0.12), rgba(124,92,255,0.05)); border: 1px solid rgba(240,84,79,0.25); border-radius: var(--radius-lg); }
+.callout.warn { background: linear-gradient(135deg, rgba(255,181,71,0.10), rgba(124,92,255,0.04)); border-color: rgba(255,181,71,0.28); }
 .callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(240,84,79,0.1); border: 1px solid rgba(240,84,79,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(240,84,79,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(240,84,79,0.25); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #f0544f, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.callout.warn .lbl { color: var(--warn); }
+.callout p { margin: 0; font-size: 14.5px; color: var(--text-dim); } .callout b { color: var(--text); }
+
+.challenge { margin: 46px 0 30px; background: linear-gradient(135deg, rgba(240,84,79,0.14), rgba(124,92,255,0.1)); border: 1px solid rgba(240,84,79,0.3); border-radius: var(--radius-lg); padding: 32px; }
+.challenge h2 { margin-top: 0; font-size: 24px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #f0544f, #7c5cff); color: white; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: inherit; box-shadow: 0 6px 24px rgba(240,84,79,0.3); transition: transform .15s; text-decoration: none; }
+.btn:hover { transform: translateY(-1px); color: white; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 30px 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
 .checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
 .checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
 .checklist li:first-child { border-top: none; padding-top: 0; }
 .checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up { margin: 40px 0 0; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
 .next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
 .next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
 .next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
-footer { border-top: 1px solid var(--line); padding: 30px 0; }
+footer { border-top: 1px solid var(--line); padding: 30px 0; margin-top: 40px; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+
+/* ── AI COACH WIDGET ── */
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
+.coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
+.coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
+.coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
+.coach-head-info { flex: 1; }
+.coach-head-name { font-weight: 700; font-size: 14px; }
+.coach-head-sub { font-size: 11px; color: #44e0a4; }
+.coach-close { background: none; border: none; color: #6b6b85; font-size: 18px; padding: 4px; line-height: 1; cursor: pointer; }
+.coach-close:hover { color: #f5f5fa; }
+.coach-messages { flex: 1; overflow-y: auto; padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth; }
+.coach-messages::-webkit-scrollbar { width: 4px; }
+.coach-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.14); border-radius: 4px; }
+.msg { max-width: 88%; font-size: 13.5px; line-height: 1.6; }
+.msg-coach { align-self: flex-start; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px 14px 14px 4px; padding: 10px 14px; color: #f5f5fa; }
+.msg-user { align-self: flex-end; background: linear-gradient(135deg, rgba(124,92,255,0.25), rgba(91,141,239,0.25)); border: 1px solid rgba(124,92,255,0.3); border-radius: 14px 14px 4px 14px; padding: 10px 14px; color: #f5f5fa; }
+.msg-thinking { align-self: flex-start; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px 14px 14px 4px; padding: 10px 14px; display: flex; align-items: center; gap: 6px; color: #6b6b85; font-size: 13px; }
+.thinking-dot { width: 6px; height: 6px; border-radius: 50%; background: #44e0a4; animation: coachPulse 1.2s ease-in-out infinite; }
+.thinking-dot:nth-child(2) { animation-delay: .2s; }
+.thinking-dot:nth-child(3) { animation-delay: .4s; }
+@keyframes coachPulse { 0%,100%{opacity:.3;transform:scale(.8)} 50%{opacity:1;transform:scale(1)} }
+.coach-limit { padding: 10px 18px; font-size: 11px; color: #6b6b85; text-align: center; border-top: 1px solid rgba(255,255,255,0.08); display: none; }
+.coach-limit.visible { display: block; }
+.coach-limit a { color: #5b8def; }
+.coach-input-row { padding: 12px 18px 16px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; gap: 8px; align-items: flex-end; }
+.coach-input { flex: 1; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); color: #f5f5fa; border-radius: 10px; padding: 9px 12px; font-size: 13px; font-family: inherit; resize: none; max-height: 100px; line-height: 1.5; }
+.coach-input:focus { outline: none; border-color: #44e0a4; }
+.coach-input::placeholder { color: #6b6b85; }
+.coach-send { width: 34px; height: 34px; border-radius: 9px; border: none; flex-shrink: 0; background: linear-gradient(135deg, #44e0a4, #7c5cff); color: white; font-size: 15px; display: grid; place-items: center; cursor: pointer; transition: opacity .15s; }
+.coach-send:hover { opacity: 0.85; }
+.coach-send:disabled { opacity: 0.4; cursor: default; }
+@media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
 </style>
 </head>
 <body>
@@ -94,80 +158,60 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 <article class="lesson">
   <div class="container">
     <div class="lesson-meta">
-      <span class="chip">Lesson 6 · OpenClaw, Safely</span>
+      <span class="chip">Lesson 06 · OpenClaw, Safely</span>
       <span class="chip chip-pro">Pro</span>
-      <span>~11 min read</span>
+      <span>~11 min</span>
       <span class="dot"></span>
       <span>4 starter workflows</span>
     </div>
     <h1>Your first real workflows: <span class="grad serif">briefing, triage, watchers.</span></h1>
-    <p class="deck">A safe agent that does nothing useful is a smoke detector with no kitchen. These four starter workflows are chosen on two criteria: they deliver real daily value, and every one stays inside the safety rails you built in Lessons 3–5. Notice what's <em>not</em> here — nothing that needs your passwords, your main inbox, or marketplace skills.</p>
+    <p class="deck">A safe agent that does nothing useful is a smoke detector with no kitchen. These four starters were chosen on two criteria: they deliver real daily value, and every one stays inside the rails you built in Lessons 3–5. Notice what's <em>not</em> here — nothing that needs your passwords, your main inbox, or marketplace skills.</p>
 
-    <h2><span class="num">01</span> The morning briefing — your agent's signature move</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">1</div><h3>One message, waiting for you at 7am</h3></div>
-      <p>The classic always-on win: a scheduled job that assembles your morning in one chat message. Weather, your calendar (the agent's copy — see the pattern below), top headlines on topics you care about, and anything your watchers (workflow 3) flagged overnight.</p>
-      <h4>Tell your agent (in your own words)</h4>
-      <div class="prompt-example"><span class="label">Setting it up conversationally</span>Every weekday at 7:00am, send me a briefing:
-1. Weather for Fargo today, one line.
-2. My calendar events for today (from the shared calendar).
-3. Top 3 news items on: AI tools, small business tech. One sentence each, with links.
-4. Anything your watchers flagged since yesterday.
-Keep the whole thing under 200 words. If something failed overnight, say so first.</div>
-      <p>OpenClaw turns this into a cron job (Lesson 9 goes deep on those). The "if something failed, say so first" line teaches your agent the most underrated habit: reporting its own failures instead of silently skipping.</p>
-      <div class="savings"><strong>Value:</strong> your day's dashboard, in the app you check first anyway.</div>
+    <!-- WORKFLOW CARDS -->
+    <div class="sec">
+      <span class="sec-eyebrow">The four starters</span>
+      <h2>Real value, all read-and-report.</h2>
+      <p>Tap each to see how you'd ask for it — in plain English — and the one safety rule baked in.</p>
+      <div class="wfs" id="wfs"></div>
     </div>
 
-    <h2><span class="num">02</span> Email triage — on the agent's OWN inbox</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">2</div><h3>The dedicated-inbox pattern (this is the important part)</h3></div>
-      <p>Remember Lesson 3: the agent gets its own accounts. So don't wire it into your personal Gmail — instead, <strong>make the agent's inbox useful by forwarding into it.</strong> Set rules in YOUR email that forward selected, low-risk streams: newsletters, receipts, shipping notices, school announcements, that one chatty mailing list. The agent reads only what you've chosen to send it.</p>
-      <h4>Then ask for triage like this</h4>
-      <div class="prompt-example"><span class="label">Triage instruction</span>Each evening at 6pm, summarize what arrived in your inbox today:
-- Anything that needs action from me (deadlines, RSVPs, payments due) — list first, bold.
-- Receipts and orders: one line each.
-- Newsletters: just the 3 most interesting headlines total.
-Never click links in emails. Never reply to anyone. Read and report only.</div>
-      <p>"Never click links, never reply" matters: emails are exactly where prompt-injection payloads arrive (Lesson 2). A read-and-report agent on a forwarded-mail diet gets you 80% of the value at a tiny fraction of the risk of full inbox access.</p>
-      <div class="savings"><strong>Value:</strong> newsletter pile → 60-second digest, with deadlines surfaced.</div>
+    <!-- CLASSIFIER -->
+    <div class="sec">
+      <span class="sec-eyebrow">Do it · what's a starter, what must wait</span>
+      <h2>Read-and-report now, or earn write access first?</h2>
+      <p>The thread through all four starters: the agent <em>reads and reports</em>, it doesn't act on your behalf. An agent earns write access the way a new hire does — weeks of clean, observable work first. Sort each task.</p>
+      <div class="bench">
+        <div class="bench-bar"><span>Sort each task</span><span class="ct" id="clCt">0 / 5</span></div>
+        <div id="clRows"></div>
+      </div>
     </div>
 
-    <h2><span class="num">03</span> Watchers — the patience you don't have</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">3</div><h3>Check a thing, every day, forever</h3></div>
-      <p>Anything you'd check repeatedly is a watcher: a price you're waiting to drop, a permit status page, concert tickets, a competitor's pricing page, the release notes of software you depend on. The agent browses on schedule, compares against last time, and messages you only when something changed.</p>
-      <div class="prompt-example"><span class="label">Watcher pattern</span>Once a day, check [URL]. Compare to what you saw yesterday.
-If [the price drops below $X / the status changes / new content appears], message me immediately with what changed.
-If nothing changed, stay silent — no daily "no news" messages.
-If the page won't load two days in a row, tell me that too.</div>
-      <p>"Stay silent unless something changed" is the difference between an assistant and a notification problem. Three or four watchers running quietly is where an always-on agent starts feeling like a superpower.</p>
-      <div class="savings"><strong>Value:</strong> you stop checking; it never forgets to.</div>
+    <!-- WATCHER SIM -->
+    <div class="sec">
+      <span class="sec-eyebrow">Do it · the watcher's discipline</span>
+      <h2>Ping me, or stay silent?</h2>
+      <p>A good watcher messages you only when something <em>changed</em> — that's the line between an assistant and a notification problem. But it should still surface failures. For each daily check, what should the agent do?</p>
+      <div class="bench">
+        <div class="bench-bar"><span>👁 Daily watcher</span><span class="ct" id="wCt">0 / 3</span></div>
+        <div id="wRows"></div>
+      </div>
+      <div class="callout warn">
+        <span class="lbl">The earn-it rule</span>
+        <p>All four starters let the agent do <b>nothing irreversible</b> — no sending mail to others, no spending, no posting, no files outside its workspace. That's deliberate. Write access to your life is earned one scope at a time, after the read-only phase proves boringly reliable. Lesson 8 covers exactly how to grant it.</p>
+      </div>
     </div>
-
-    <h2><span class="num">04</span> Research errands — fire and forget</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">4</div><h3>Send a question from the grocery line, read the answer at your desk</h3></div>
-      <p>The ambient win: any moment a question occurs to you, hand it off in one message. The agent researches with the time you don't have and files the answer back — in chat, or into a notes file in its workspace folder you sync later.</p>
-      <div class="prompt-example"><span class="label">Errand brief (the Foundations patterns apply!)</span>Research errand, no rush — reply within the hour:
-Best options for [X] under [$Y]. Compare the top 3 on [criteria].
-Cite sources with links. If reviews disagree, say so instead of averaging.
-Save the full version to notes/research/ and send me just the 5-line summary.</div>
-      <p>Notice this is just a <a href="/lessons/foundations/">Foundations-style brief</a> with a delivery instruction. Everything you learned about constraint stacks and hallucination flags applies to your agent — it's the same discipline, with the answers arriving in your pocket.</p>
-    </div>
-
-    <div class="gotcha">All four workflows are read-and-report. None of them let the agent send email to other people, spend money, post publicly, or touch files outside its workspace. That's deliberate. An agent earns "write access" to your life the way a new employee earns it: weeks of clean, observable work first — and even then, one scope at a time (Lesson 8 covers exactly how).</div>
 
     <div class="callout">
       <span class="lbl">The cost check-in</span>
-      <p>Four daily workflows on a mid-tier model typically lands in the $5–15/month range depending on how chatty your briefings are. Check the usage dashboard after week one. If costs surprise you, the briefing word limits and "stay silent" rules above are the dials that matter.</p>
+      <p>Four daily workflows on a mid-tier model typically lands around <b>$5–15/month</b>, depending on how chatty your briefings are. Check the usage dashboard after week one — the briefing word limits and "stay silent" rules are the dials that move the bill.</p>
     </div>
 
     <div class="challenge">
-      <h2 style="margin-top: 0;">Build two this week</h2>
+      <h2>Build two this week</h2>
       <p>The morning briefing plus one watcher is the perfect starter pair — one scheduled push, one quiet monitor. Run them a full week. When both have been boringly reliable for seven days, you've earned the next power-up: skills. Which is also where the danger comes back — so don't skip the vetting lesson.</p>
       <div class="btn-row">
         <a href="/lessons/openclaw/skills-and-clawhub" class="btn">Next: skills &amp; the ClawHub problem →</a>
-        <a href="/lessons/openclaw/" class="btn ghost">All OpenClaw lessons →</a>
+        <a href="/lessons/openclaw/" class="btn ghost">All OpenClaw lessons</a>
       </div>
     </div>
 
@@ -186,17 +230,232 @@ Save the full version to notes/research/ and send me just the 5-line summary.</d
     <div class="next-up">
       <span class="pro-tag">Pro</span>
       <div class="lbl" style="margin-top: 14px;">Up next in OpenClaw, Safely</div>
-      <h3>Lesson 7 · Skills: the app store with a malware problem</h3>
-      <p>ClawHub has thousands of skills — and an audit found roughly a third with prompt-injection content. The vetting checklist, and why the safest skill is the one you write yourself. <a href="/#pricing">See pricing →</a></p>
+      <h3>Lesson 07 · Skills: the app store with a malware problem</h3>
+      <p>ClawHub has thousands of skills — and an audit found roughly a third with prompt-injection content. The vetting checklist, and why the safest skill is the one you write yourself. <a href="/lessons/openclaw/skills-and-clawhub">Start lesson 07 →</a></p>
     </div>
   </div>
 </article>
 <footer>
   <div class="footer-inner">
-    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with the OpenClaw project.</div>
+    <div>© 2026 LearningGPT · Independent. Not affiliated with the OpenClaw project.</div>
     <a href="/lessons/openclaw/" style="color: var(--text-dim);">← All OpenClaw lessons</a>
   </div>
 </footer>
+
+<!-- ── AI COACH FAB ── -->
+<button class="coach-fab" id="coachFab" title="Ask the AI Coach">
+  🎓
+  <span class="coach-fab-badge">AI</span>
+</button>
+<!-- ── AI COACH DRAWER ── -->
+<div class="coach-drawer" id="coachDrawer">
+  <div class="coach-drawer-head">
+    <div class="coach-avatar">🎓</div>
+    <div class="coach-head-info">
+      <div class="coach-head-name">AI Coach</div>
+      <div class="coach-head-sub">Ask anything about this lesson</div>
+    </div>
+    <button class="coach-close" id="coachClose">✕</button>
+  </div>
+  <div class="coach-messages" id="coachMessages">
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about the starter workflows — the briefing, triage, watchers, research errands, or why they're all read-only. What's on your mind?</div>
+  </div>
+  <div class="coach-limit" id="coachLimit">
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
+  </div>
+  <div class="coach-input-row">
+    <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
+    <button class="coach-send" id="coachSend">➤</button>
+  </div>
+</div>
+
+<script id="lessonScript">
+(function () {
+  // ── WORKFLOW CARDS ──
+  var WF = [
+    { ic: '🌅', n: 'Morning briefing', val: 'Weather, your calendar, top headlines, and overnight watcher flags — one message at 7am.', rule: '✓ Reads the agent\'s calendar copy · reports its own failures first',
+      prompt: 'Every weekday at 7:00am, send a briefing:\n1. Today\'s weather, one line.\n2. My calendar events (shared calendar).\n3. Top 3 items on AI tools + small-biz tech, one line + link each.\n4. Anything your watchers flagged.\nUnder 200 words. If something failed overnight, say so first.' },
+    { ic: '📥', n: 'Email triage', val: 'A 60-second evening digest of what landed: actions first, receipts, the 3 best newsletter headlines.', rule: '✓ Dedicated forward-fed inbox · never clicks links · never replies',
+      prompt: 'Each evening at 6pm, summarize today\'s inbox:\n- Needs my action (deadlines, RSVPs, payments) — list first, bold.\n- Receipts/orders: one line each.\n- Newsletters: the 3 most interesting headlines total.\nNever click links. Never reply. Read and report only.' },
+    { ic: '👁️', n: 'Watchers', val: 'A price, a status page, release notes — checked daily, you\'re pinged only when something changes.', rule: '✓ Stays silent unless something changed (but reports failures)',
+      prompt: 'Once a day, check [URL]. Compare to yesterday.\nIf [price < $X / status changes / new content], message me with what changed.\nIf nothing changed, stay silent.\nIf the page won\'t load two days running, tell me that too.' },
+    { ic: '🔎', n: 'Research errands', val: 'Hand off a question from anywhere; the answer is filed back to chat or a notes file at your desk.', rule: '✓ A Foundations-style brief · saves to its workspace, doesn\'t act',
+      prompt: 'Research errand, reply within the hour:\nBest options for [X] under [$Y], compare top 3 on [criteria].\nCite sources with links. If reviews disagree, say so — don\'t average.\nSave the full version to notes/research/ and send me the 5-line summary.' }
+  ];
+  var wfs = document.getElementById('wfs');
+  WF.forEach(function (w) {
+    var card = document.createElement('div');
+    card.className = 'wf';
+    card.innerHTML =
+      '<div class="wf-top">' +
+        '<div class="wf-h"><span class="wi">' + w.ic + '</span><span class="wn">' + w.n + '</span></div>' +
+        '<div class="wf-val">' + w.val + '</div>' +
+        '<div class="wf-rule">' + w.rule + '</div>' +
+        '<button class="wf-btn">› See how you\'d ask</button>' +
+      '</div>' +
+      '<div class="wf-prompt">' + w.prompt + '</div>';
+    wfs.appendChild(card);
+    var btn = card.querySelector('.wf-btn');
+    var pr = card.querySelector('.wf-prompt');
+    btn.addEventListener('click', function () {
+      if (btn.disabled) return;
+      btn.disabled = true; btn.style.display = 'none';
+      pr.classList.add('show');
+    });
+  });
+
+  // ── CLASSIFIER (read vs write) ──
+  var CL = [
+    { task: 'Summarize my forwarded newsletters each evening', a: 'read', why: 'Pure read-and-report on a forward-fed inbox — a perfect starter.' },
+    { task: 'Reply to clients who email me, in my voice', a: 'write', why: 'Sending mail as you is irreversible and high-stakes — earn it slowly, never a starter.' },
+    { task: 'Watch a competitor\'s pricing page and ping me on changes', a: 'read', why: 'Browse-and-report on a schedule — squarely in the rails.' },
+    { task: 'Pay an invoice automatically when it arrives', a: 'write', why: 'Money and irreversible action — exactly what stays off the menu until trust is deeply earned (if ever).' },
+    { task: 'Brief me on three product options I asked about', a: 'read', why: 'A research errand that files an answer back — read-only.' }
+  ];
+  var clRows = document.getElementById('clRows');
+  var clCt = document.getElementById('clCt');
+  var clDone = 0;
+  CL.forEach(function (it) {
+    var row = document.createElement('div');
+    row.className = 'brow';
+    row.innerHTML = '<div class="brow-q">' + it.task + '</div>' +
+      '<div class="brow-btns"><button class="bbtn read" data-a="read">📖 Read &amp; report — safe now</button><button class="bbtn write" data-a="write">✍️ Write access — earn it</button></div>' +
+      '<div class="brow-fb"></div>';
+    clRows.appendChild(row);
+    var fb = row.querySelector('.brow-fb');
+    var btns = row.querySelectorAll('.bbtn');
+    var done = false;
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (done) return; done = true;
+        var ok = b.dataset.a === it.a;
+        btns.forEach(function (x) { x.disabled = true; if (x.dataset.a === it.a) x.classList.add('right'); });
+        if (!ok) b.classList.add('wrong');
+        fb.innerHTML = (ok ? '' : '<b>' + (it.a === 'read' ? 'Read &amp; report.' : 'Write — earn it.') + '</b> ') + it.why;
+        fb.classList.add('show');
+        clDone++; clCt.textContent = clDone + ' / ' + CL.length;
+      });
+    });
+  });
+
+  // ── WATCHER SIM (ping vs silent) ──
+  var W = [
+    { obs: 'The price page is exactly the same as yesterday.', a: 'silent', why: 'No news isn\'t news. Daily "nothing changed" pings are how a useful watcher becomes noise you mute.' },
+    { obs: 'The permit status flipped to "Approved" overnight.', a: 'ping', why: 'Something changed — and it\'s exactly what you were waiting for. Ping immediately with what changed.' },
+    { obs: 'The page failed to load two days in a row.', a: 'ping', why: 'Report failures too. A silently-broken watcher is worse than none — you\'d think no news meant no change.' }
+  ];
+  var wRows = document.getElementById('wRows');
+  var wCt = document.getElementById('wCt');
+  var wDone = 0;
+  W.forEach(function (it) {
+    var row = document.createElement('div');
+    row.className = 'brow';
+    row.innerHTML = '<div class="brow-q"><b>Today\'s check:</b> ' + it.obs + '</div>' +
+      '<div class="brow-btns"><button class="bbtn ping" data-a="ping">🔔 Ping me</button><button class="bbtn silent" data-a="silent">🤫 Stay silent</button></div>' +
+      '<div class="brow-fb"></div>';
+    wRows.appendChild(row);
+    var fb = row.querySelector('.brow-fb');
+    var btns = row.querySelectorAll('.bbtn');
+    var done = false;
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (done) return; done = true;
+        var ok = b.dataset.a === it.a;
+        btns.forEach(function (x) { x.disabled = true; if (x.dataset.a === it.a) x.classList.add('right'); });
+        if (!ok) b.classList.add('wrong');
+        fb.innerHTML = (ok ? '' : '<b>' + (it.a === 'ping' ? 'Ping me.' : 'Stay silent.') + '</b> ') + it.why;
+        fb.classList.add('show');
+        wDone++; wCt.textContent = wDone + ' / ' + W.length;
+      });
+    });
+  });
+})();
+</script>
+
+<script id="coachScript">
+(function() {
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Your first real OpenClaw workflows — briefing, triage, watchers\nTRACK: OpenClaw, Safely (Lesson 06, Pro — 4 starter workflows)\n\nLESSON CONTENT SUMMARY:\nFour starter automations chosen because they deliver real daily value AND every one stays inside the safety rails from Lessons 3-5. None need your passwords, your main inbox, or marketplace skills. THE THREAD: all four are READ-AND-REPORT — the agent reads and tells you; it doesn't act on your behalf.\n\n(1) MORNING BRIEFING (the signature move): a scheduled 7am message assembling weather, your calendar (the agent's shared/copy calendar), top headlines on topics you choose, and anything overnight watchers flagged. Keep it under ~200 words, and include 'if something failed overnight, say so first' — teaching the agent to report its own failures instead of silently skipping. OpenClaw turns this into a cron job (Lesson 9).\n\n(2) EMAIL TRIAGE on the agent's OWN inbox (the key pattern): don't wire it into your personal Gmail. Instead make the agent's dedicated inbox useful by FORWARDING selected low-risk streams into it (newsletters, receipts, shipping notices, school announcements). Ask for an evening digest: actions-needed first and bold, receipts one line each, the 3 best newsletter headlines. CRITICAL INSTRUCTION: 'never click links in emails, never reply to anyone, read and report only' — emails are exactly where prompt-injection payloads arrive (Lesson 2). A read-and-report agent on a forwarded-mail diet gets ~80% of the value at a fraction of the risk of full inbox access.\n\n(3) WATCHERS: anything you'd check repeatedly (a price waiting to drop, a permit status, tickets, a competitor's pricing, release notes). The agent browses on schedule, compares to last time, and messages you ONLY WHEN SOMETHING CHANGED — 'if nothing changed, stay silent' (no daily no-news pings). But it should still report failures: 'if the page won't load two days running, tell me that too.' Three or four quiet watchers is where always-on starts feeling like a superpower.\n\n(4) RESEARCH ERRANDS (fire and forget): hand off any question in one message; the agent researches and files the answer back — in chat or to a notes file in its workspace folder. It's just a Foundations-style brief (constraint stacks, 'if reviews disagree, say so instead of averaging', cite sources) plus a delivery instruction; save the full version to its workspace, send a short summary.\n\nKEY RULE (the gotcha): all four are read-and-report — none let the agent send mail to other people, spend money, post publicly, or touch files outside its workspace. That's deliberate. An agent earns WRITE ACCESS the way a new employee does — weeks of clean, observable work first, and even then one scope at a time (Lesson 8). COST: four daily workflows on a mid-tier model is typically ~$5-15/month; the briefing word limits and 'stay silent' rules are the dials that move the bill; check the usage dashboard after week one.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more\n- Be practical and safety-first\n- If asked about something not in this lesson, briefly answer and point to where they can learn more (capabilities/write-access is Lesson 8, skills Lesson 7, automations/cron Lesson 9)\n- Never make up features that don't exist\n- Plain conversational text only — no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var MAX_FREE = 3;
+  var count = 0;
+  var isThinking = false;
+  var history = [];
+  var fab = document.getElementById('coachFab');
+  var drawer = document.getElementById('coachDrawer');
+  var closeBtn = document.getElementById('coachClose');
+  var msgs = document.getElementById('coachMessages');
+  var input = document.getElementById('coachInput');
+  var sendBtn = document.getElementById('coachSend');
+  var limitBar = document.getElementById('coachLimit');
+  if (!fab) return;
+  fab.addEventListener('click', function() { toggle(true); });
+  closeBtn.addEventListener('click', function() { toggle(false); });
+  function toggle(open) {
+    drawer.classList.toggle('open', open);
+    if (open) setTimeout(function() { input.focus(); }, 300);
+  }
+  input.addEventListener('input', function() {
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 100) + 'px';
+  });
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+  });
+  sendBtn.addEventListener('click', send);
+  function addMsg(text, type) {
+    var d = document.createElement('div');
+    d.className = 'msg msg-' + type;
+    d.textContent = text;
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+    return d;
+  }
+  function addThinking() {
+    var d = document.createElement('div');
+    d.className = 'msg-thinking';
+    d.innerHTML = '<div class="thinking-dot"></div><div class="thinking-dot"></div><div class="thinking-dot"></div>';
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+    return d;
+  }
+  async function send() {
+    var text = input.value.trim();
+    if (!text || isThinking) return;
+    if (count >= MAX_FREE) {
+      limitBar.classList.add('visible');
+      input.disabled = true;
+      sendBtn.disabled = true;
+      return;
+    }
+    count++;
+    if (count >= MAX_FREE) limitBar.classList.add('visible');
+    addMsg(text, 'user');
+    history.push({ role: 'user', content: text });
+    input.value = '';
+    input.style.height = 'auto';
+    isThinking = true;
+    sendBtn.disabled = true;
+    var thinking = addThinking();
+    try {
+      var res = await fetch('/api/playground', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ coach: true, lessonCoach: true, lessonContext: LESSON_CONTEXT, history: history })
+      });
+      thinking.remove();
+      var data = await res.json();
+      var reply = (data && data.coach) ? data.coach : "Sorry, something went wrong. Try again in a moment.";
+      addMsg(reply, 'coach');
+      history.push({ role: 'assistant', content: reply });
+    } catch(err) {
+      thinking.remove();
+      addMsg("Something went wrong — try again in a moment.", 'coach');
+    } finally {
+      isThinking = false;
+      sendBtn.disabled = count >= MAX_FREE;
+    }
+  }
+})();
+</script>
 <script src="/gate.js"></script>
 </body>
 </html>

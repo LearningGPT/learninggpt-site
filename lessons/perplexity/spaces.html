@@ -3,21 +3,21 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Spaces — collaborative research workspaces — LearningGPT</title>
-<meta name="description" content="Perplexity Spaces are persistent, shareable research workspaces. Accumulate sources, ask questions over time, share with teammates. Different from one-off searches." />
+<title>Spaces: organize your research like a pro — LearningGPT</title>
+<meta name="description" content="Perplexity Spaces are persistent, shareable research workspaces. When to make one, how to focus it with custom instructions, and how to share it without leaks." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#20808d" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/perplexity/spaces" />
-<meta property="og:title" content="Spaces — collaborative research workspaces" />
-<meta property="og:description" content="Perplexity Spaces are persistent, shareable research workspaces. Accumulate sources, ask questions over time, share with teammates. Different from one-off searches." />
+<meta property="og:title" content="Spaces: organize your research like a pro" />
+<meta property="og:description" content="Persistent, shareable research workspaces. When to make one, how to focus it, and how to share it without leaks." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
-:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #20808d; }
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #2ea6b4; }
 * { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
 body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
@@ -32,88 +32,115 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
 .lesson { padding: 50px 0 100px; }
 .lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
-.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(32,128,141,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(32,128,141,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(46,166,180,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(46,166,180,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
 .lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
-.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
 .lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #20808d 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .grad { background: linear-gradient(135deg, #2ea6b4 0%, #44e0a4 50%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 24px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.sec { margin: 46px 0 0; }
+.sec-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.lesson h2 { font-size: 27px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; }
 .lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
 .lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(32,128,141,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(32,128,141,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #20808d, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(32,128,141,0.1); border: 1px solid rgba(32,128,141,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(32,128,141,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(32,128,141,0.25); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #20808d, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+
+/* one-off vs space */
+.vs2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 22px 0; }
+@media (max-width: 560px){ .vs2 { grid-template-columns: 1fr; } }
+.vs2 .c { border-radius: var(--radius); padding: 16px 18px; border: 1px solid var(--line); background: var(--surface); }
+.vs2 .c .h { font-size: 14.5px; font-weight: 700; margin-bottom: 4px; }
+.vs2 .c.off .h { color: var(--text-dim); }
+.vs2 .c.spc { background: rgba(46,166,180,0.08); border-color: rgba(46,166,180,0.3); }
+.vs2 .c.spc .h { color: #7fe0d0; }
+.vs2 .c p { font-size: 13.5px; margin: 0; color: var(--text-dim); }
+
+/* builder shell */
+.builder { margin: 22px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden; background: #0d0d20; }
+.builder-bar { display: flex; align-items: center; gap: 9px; padding: 12px 16px; border-bottom: 1px solid var(--line); background: linear-gradient(90deg, rgba(46,166,180,0.08), rgba(124,92,255,0.05)); font-size: 13px; font-weight: 700; color: var(--text); }
+.builder-bar .ic { font-size: 15px; }
+.bstep { padding: 16px; border-bottom: 1px solid var(--line); }
+.bstep:last-child { border-bottom: none; }
+.bstep-lbl { font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--track); margin-bottom: 4px; }
+.bstep-q { font-size: 14.5px; margin-bottom: 11px; color: var(--text); }
+.bstep-q b { color: var(--text); }
+
+/* name / sharing single-choice */
+.choices { display: grid; gap: 8px; }
+.choice { text-align: left; font-family: inherit; font-size: 13.5px; color: var(--text); padding: 11px 14px; border-radius: 9px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); cursor: pointer; transition: all .15s; }
+.choice:hover:not(:disabled) { border-color: var(--track); }
+.choice:disabled { cursor: default; }
+.choice.correct { background: rgba(46,166,180,0.16); border-color: var(--track); color: #9fe6e0; }
+.choice.wrong { background: rgba(255,107,138,0.12); border-color: var(--danger); color: #ffb0c1; }
+.choice .mono { font-family: 'SFMono-Regular', Consolas, monospace; font-size: 12.5px; }
+.cfb { margin-top: 10px; font-size: 13px; color: var(--text-dim); display: none; padding: 10px 13px; border-radius: 9px; background: rgba(46,166,180,0.07); border-left: 2px solid var(--track); }
+.cfb.show { display: block; animation: fadeIn .3s ease; }
+.cfb b { color: var(--text); }
+@keyframes fadeIn { from{opacity:0;transform:translateY(5px);} to{opacity:1;transform:none;} }
+
+/* instruction multi-select */
+.instr-meta { font-size: 12px; color: var(--text-mute); margin-bottom: 10px; }
+.instr-list { display: grid; gap: 7px; }
+.instr { display: flex; align-items: flex-start; gap: 10px; text-align: left; font-family: inherit; font-size: 13px; color: var(--text-dim); padding: 10px 13px; border-radius: 9px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.02); cursor: pointer; transition: all .15s; }
+.instr:hover:not(.locked) { border-color: var(--track); color: var(--text); }
+.instr .box { width: 17px; height: 17px; border-radius: 5px; border: 1.5px solid var(--line-strong); flex-shrink: 0; margin-top: 1px; display: grid; place-items: center; font-size: 11px; color: transparent; transition: all .15s; }
+.instr.on { color: var(--text); border-color: rgba(46,166,180,0.5); background: rgba(46,166,180,0.07); }
+.instr.on .box { background: var(--track); border-color: var(--track); color: #06121a; }
+.instr.locked { cursor: default; }
+.instr.reveal-keep { border-color: var(--accent); }
+.instr.reveal-keep .tagv { color: var(--accent); }
+.instr.reveal-skip { border-color: rgba(255,181,71,0.4); }
+.instr.reveal-skip .tagv { color: var(--warn); }
+.instr .tagv { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-left: auto; white-space: nowrap; display: none; }
+.instr.locked .tagv { display: inline; }
+.lock-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; }
+.lock-count { font-size: 12.5px; color: var(--text-mute); }
+.lock-count b { color: var(--track); }
+.lock-btn { font-family: inherit; font-size: 13px; font-weight: 700; padding: 9px 18px; border-radius: 9px; border: none; cursor: pointer; background: linear-gradient(135deg, #20808d, #2ea6b4); color: white; transition: transform .15s, opacity .15s; }
+.lock-btn:hover:not(:disabled) { transform: translateY(-1px); }
+.lock-btn:disabled { opacity: 0.4; cursor: default; }
+.lock-fb { margin-top: 12px; font-size: 13px; color: var(--text-dim); display: none; padding: 12px 14px; border-radius: 10px; background: rgba(46,166,180,0.08); border-left: 2px solid var(--track); }
+.lock-fb.show { display: block; animation: fadeIn .3s ease; }
+.lock-fb b { color: var(--text); }
+
+.callout { margin: 20px 0; padding: 18px 22px; background: linear-gradient(135deg, rgba(255,181,71,0.10), rgba(124,92,255,0.04)); border: 1px solid rgba(255,181,71,0.25); border-radius: var(--radius-lg); }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--warn); margin-bottom: 8px; }
+.callout p { margin: 0; font-size: 14.5px; color: var(--text-dim); } .callout b { color: var(--text); }
+
+/* sharing patterns reference */
+.patgrid { display: grid; gap: 10px; margin: 16px 0; }
+.pat { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: 13px 16px; }
+.pat .pn { font-size: 13.5px; font-weight: 700; color: #7fe0d0; margin-bottom: 2px; }
+.pat .pd { font-size: 13px; color: var(--text-dim); }
+
+.challenge { margin: 46px 0 30px; background: linear-gradient(135deg, rgba(46,166,180,0.16), rgba(124,92,255,0.1)); border: 1px solid rgba(46,166,180,0.3); border-radius: var(--radius-lg); padding: 32px; }
+.challenge h2 { margin-top: 0; font-size: 24px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #20808d, #7c5cff); color: white; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: inherit; box-shadow: 0 6px 24px rgba(32,128,141,0.3); transition: transform .15s; text-decoration: none; }
+.btn:hover { transform: translateY(-1px); color: white; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 30px 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
 .checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
 .checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
 .checklist li:first-child { border-top: none; padding-top: 0; }
 .checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up { margin: 40px 0 0; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
 .next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
 .next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
 .next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
-.next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
-footer { border-top: 1px solid var(--line); padding: 30px 0; }
+footer { border-top: 1px solid var(--line); padding: 30px 0; margin-top: 40px; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -142,7 +169,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -157,81 +183,117 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 <article class="lesson">
   <div class="container">
     <div class="lesson-meta">
-      <span class="chip">Agents · Lesson 02</span>
+      <span class="chip">Lesson 02 · Perplexity Mastery</span>
       <span class="chip chip-pro">Pro</span>
-      <span>~10 min read</span>
+      <span>~10 min</span>
       <span class="dot"></span>
       <span>Persistent research</span>
     </div>
     <h1>Spaces: <span class="grad serif">research that lives somewhere.</span></h1>
-    <p class="deck">Perplexity Spaces solve the problem with one-off AI searches: your research disappears when you close the tab. Spaces are persistent workspaces — they hold sources, custom instructions, and conversation history. They can be shared with a team. For any ongoing research project, Spaces is the right home.</p>
-    <h2><span class="num">Workflow 01</span> Create a Space for an ongoing project</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>When to use a Space vs. a regular search</h3></div><p>Spaces are right for research that continues over days or weeks, or that you want to share. One-off searches stay in regular Perplexity.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Space setup</span>Use a Space when:
-• Research will continue over multiple sessions
-• Multiple people need to contribute or view
-• You want to add custom instructions or focus the AI&#x27;s behavior
-• You need to upload specific documents as context
-• The topic benefits from accumulated context
+    <p class="deck">A one-off Perplexity search vanishes when you close the tab. Spaces are persistent workspaces — they hold sources, custom instructions, and conversation history, and they can be shared with a team. For any research that runs longer than a single question, a Space is the right home. Let's build one.</p>
 
-Don&#x27;t use a Space when:
-• It&#x27;s a single question you&#x27;d ask once
-• You&#x27;re just looking up a fact
-• The topic is sensitive and shouldn&#x27;t have a persistent record
-
-Space setup:
-1. Name it clearly: &#x27;Competitor analysis: Acme Inc&#x27; not &#x27;Research&#x27;
-2. Add a description so future-you (or teammates) understand the focus
-3. Upload key reference documents at the start
-4. Write a custom instruction that tells the Space how you want answers formatted</div><h4>Best use cases</h4><ul><li>Ongoing competitive analysis</li><li>Multi-week research projects</li><li>Team research with shared findings</li><li>Reusable research templates (e.g., 'New market entry research')</li></ul><div class="gotcha">Don't pile every research session into one Space — they get cluttered. One Space per distinct topic.</div><div class="savings"><strong>Time savings:</strong> Reusing accumulated context: 10-15 min saved per follow-up search.</div></div><h2><span class="num">Workflow 02</span> Custom instructions per Space</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>Focus the AI on what you actually need</h3></div><p>Custom instructions in a Space change how Perplexity answers within that space. Format preferences, focus areas, what to avoid.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Custom instructions</span>Useful custom instructions:
-
-For a sales-research Space:
-• &#x27;Always include the company&#x27;s revenue if findable&#x27;
-• &#x27;Cite primary sources (company filings, official press releases) over secondary&#x27;
-• &#x27;End every answer with one specific question I should ask in my sales call&#x27;
-• &#x27;Don&#x27;t include generic company descriptions — assume I know what they do&#x27;
-
-For a technical-research Space:
-• &#x27;Prioritize official documentation and primary sources over blog posts&#x27;
-• &#x27;Include code examples in answers when relevant&#x27;
-• &#x27;Flag if information might be outdated (&gt;12 months old)&#x27;
-
-For an executive-prep Space:
-• &#x27;Keep answers under 200 words&#x27;
-• &#x27;Lead with the bottom line; supporting detail after&#x27;
-• &#x27;Cite sources but don&#x27;t include URLs inline&#x27;</div><h4>Best use cases</h4><ul><li>Role-specific research patterns</li><li>Format preferences (bullet vs. prose, length, tone)</li><li>Source quality requirements</li><li>Removing noise from generic answers</li></ul><div class="gotcha">Too many instructions confuse the AI. Pick the 3-5 most important; revise from there.</div><div class="savings"><strong>Time savings:</strong> Each query returns more usable output, less editing needed.</div></div><h2><span class="num">Workflow 03</span> Sharing Spaces with your team</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>Collaborative research patterns</h3></div><p>Shared Spaces enable team research where everyone contributes. Especially useful for sales teams, research teams, and any context where multiple people benefit from one knowledge pool.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Team sharing</span>Sharing patterns that work:
-
-• **Team competitor Space** — one per major competitor, all sales reps contribute. New questions and findings accumulate.
-• **Account-specific Spaces** — one per top-tier customer or prospect, shared with the account team.
-• **Project research Spaces** — one per active project; PM, eng, design, and PMs all contribute.
-• **Industry intelligence Spaces** — one per market or vertical; product marketing maintains it.
-
-Governance:
-- Designate an owner per Space (responsible for hygiene)
-- Review quarterly for relevance — archive stale ones
-- Use clear naming so Spaces are findable
-- For sensitive research, use private Spaces, not shared</div><h4>Best use cases</h4><ul><li>Sales-team competitive intelligence</li><li>Cross-functional project research</li><li>Industry watch (multiple analysts contribute)</li><li>Customer success knowledge bases</li></ul><div class="gotcha">Shared Spaces are public to whoever you share with. Don't put confidential customer data in a Space without considering who has access.</div><div class="savings"><strong>Time savings:</strong> Team knowledge that compounds vs. individual searches that vanish.</div></div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Build a Space for your most active project</h2>
-      <p>Pick the work topic you research most often — a customer, a competitor, an ongoing initiative. Create a Space for it. Upload key docs. Write custom instructions. Use it for a week and notice how much faster follow-up questions are.</p>
-      <div class="btn-row">
-        <a href="/lessons/perplexity/" class="btn">Back to Perplexity Mastery →</a>
-        <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+    <!-- mental model -->
+    <div class="sec">
+      <span class="sec-eyebrow">The mental model</span>
+      <h2>One-off search, or a Space?</h2>
+      <p>The dividing line is whether the research <em>continues</em>. If you'll only ask once, stay in regular Perplexity. If it'll run over days, involve teammates, or benefit from accumulated context, make a Space.</p>
+      <div class="vs2">
+        <div class="c off"><div class="h">🔎 One-off search</div><p>A single fact or question you'll ask once. No persistence needed — and don't make a Space for anything sensitive you don't want kept on record.</p></div>
+        <div class="c spc"><div class="h">📚 Space</div><p>Multi-session research, shared findings, uploaded reference docs, custom instructions. Context compounds instead of vanishing.</p></div>
       </div>
     </div>
+
+    <!-- SIGNATURE: build a space -->
+    <div class="sec">
+      <span class="sec-eyebrow">Do it · build a Space</span>
+      <h2>Configure a sales-research Space.</h2>
+      <p>You research competitors before every sales call. That's exactly the kind of recurring work a Space is for. Set it up in three moves.</p>
+
+      <div class="builder">
+        <div class="builder-bar"><span class="ic">📚</span> New Space · setup</div>
+
+        <!-- step 1: name -->
+        <div class="bstep">
+          <div class="bstep-lbl">1 · Name it</div>
+          <div class="bstep-q">A Space you'll reuse needs a name future-you and teammates understand at a glance. Pick one:</div>
+          <div class="choices" data-name>
+            <button class="choice" data-correct="0"><span class="mono">Research</span></button>
+            <button class="choice" data-correct="1"><span class="mono">Competitor analysis: Acme Inc</span></button>
+            <button class="choice" data-correct="0"><span class="mono">stuff for work</span></button>
+          </div>
+          <div class="cfb" data-name-fb><b>Specific wins.</b> "Competitor analysis: Acme Inc" tells anyone what's inside and keeps Spaces findable. "Research" and "stuff for work" become indistinguishable the moment you have three of them.</div>
+        </div>
+
+        <!-- step 2: custom instructions -->
+        <div class="bstep">
+          <div class="bstep-lbl">2 · Focus it with custom instructions</div>
+          <div class="bstep-q">Custom instructions change how Perplexity answers <b>inside this Space</b>. Pick the ones that sharpen a sales-research Space — and leave out the noise. Aim for a focused set, not everything.</div>
+          <div class="instr-meta">Select the instructions to include, then lock it in.</div>
+          <div class="instr-list" id="instrList"></div>
+          <div class="lock-row">
+            <div class="lock-count"><b id="instrCount">0</b> selected</div>
+            <button class="lock-btn" id="lockBtn" disabled>Lock in this Space</button>
+          </div>
+          <div class="lock-fb" id="lockFb"></div>
+        </div>
+
+        <!-- step 3: sharing -->
+        <div class="bstep">
+          <div class="bstep-lbl">3 · Share it</div>
+          <div class="bstep-q">Your whole sales team researches the same competitors. How should this Space be shared?</div>
+          <div class="choices" data-share>
+            <button class="choice" data-correct="0">Keep it private to me — I'll paste findings into Slack</button>
+            <button class="choice" data-correct="1">Shared team Space with a named owner who reviews it quarterly</button>
+            <button class="choice" data-correct="0">Shared with everyone, no owner — let it grow on its own</button>
+          </div>
+          <div class="cfb" data-share-fb><b>Shared, with an owner.</b> Team knowledge that compounds beats individual searches that vanish — but an ownerless Space gets cluttered and stale. Name an owner for hygiene and review it quarterly; archive what's dead.</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <span class="lbl">Before you share</span>
+        <p>A shared Space is visible to <b>everyone you share it with</b>. Don't drop confidential customer data, contracts, or anything sensitive into a shared Space without thinking about who can see it — keep that research in a <b>private</b> Space.</p>
+      </div>
+    </div>
+
+    <!-- sharing patterns -->
+    <div class="sec">
+      <span class="sec-eyebrow">Patterns that work</span>
+      <h2>Four ways teams use shared Spaces.</h2>
+      <div class="patgrid">
+        <div class="pat"><div class="pn">Team competitor Space</div><div class="pd">One per major competitor; every rep contributes. Questions and findings accumulate into shared intel.</div></div>
+        <div class="pat"><div class="pn">Account-specific Space</div><div class="pd">One per top-tier customer or prospect, shared with that account team.</div></div>
+        <div class="pat"><div class="pn">Project research Space</div><div class="pd">One per active project — PM, eng, design, marketing all contribute.</div></div>
+        <div class="pat"><div class="pn">Industry intelligence Space</div><div class="pd">One per market or vertical; product marketing keeps it current.</div></div>
+      </div>
+      <p>One Space per distinct topic. Don't pile every session into one — they clutter fast, and clutter degrades the search.</p>
+    </div>
+
+    <div class="challenge">
+      <h2>Challenge: build a Space for your most active project</h2>
+      <p>Pick the work topic you research most — a customer, a competitor, an ongoing initiative. Create a Space for it. Name it clearly, upload key docs, write 3–5 focused custom instructions, set the right sharing. Use it for a week and notice how much faster follow-up questions get when the context is already there.</p>
+      <div class="btn-row">
+        <a href="/playground" class="btn">Try a research prompt in the playground →</a>
+        <a href="/lessons/perplexity/" class="btn ghost">Back to Perplexity Mastery</a>
+      </div>
+    </div>
+
     <div class="checklist">
       <h3>What you can do now</h3>
       <ul>
-        <li>Create Spaces only for research that extends beyond a single session</li>
-        <li>Write clear custom instructions to focus the AI per Space</li>
-        <li>Designate owners for shared Spaces with quarterly review</li>
-        <li>Archive stale Spaces — clutter degrades search experience</li>
-        <li>Use private Spaces for anything sensitive</li>
+        <li>Make a Space only for research that extends beyond a single session</li>
+        <li>Name Spaces clearly so they stay findable</li>
+        <li>Write 3–5 focused custom instructions — not a wall of them</li>
+        <li>Give shared Spaces a named owner and a quarterly review</li>
+        <li>Keep anything sensitive in a private Space</li>
       </ul>
     </div>
+
     <div class="next-up">
       <span class="pro-tag">Pro</span>
       <div class="lbl" style="margin-top: 14px;">Up next in Perplexity Mastery</div>
-      <h3>Lesson 03 · Deep Research — Perplexity's analyst mode</h3>
-      <p>Perplexity Deep Research is the long-running research agent — now built on Claude Opus 4.5. Multi-source synthesis, deliverables include presentations and spreadsheets. <a href="/lessons/perplexity/">See the track →</a></p>
+      <h3>Lesson 03 · Deep Research — when you need a 20-source briefing</h3>
+      <p>Perplexity's long-running research agent. Triggering it correctly, refining the prompt, evaluating multi-source output, and exporting it. <a href="/lessons/perplexity/deep-research">Start lesson 03 →</a></p>
     </div>
   </div>
 </article>
@@ -247,7 +309,6 @@ Governance:
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -262,7 +323,7 @@ Governance:
     <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -270,15 +331,107 @@ Governance:
   </div>
 </div>
 
+<script id="lessonScript">
+(function () {
+  // ── single-choice blocks (name + sharing) ──
+  function singleChoice(sel, fbSel) {
+    var grp = document.querySelector(sel);
+    var fb = document.querySelector(fbSel);
+    if (!grp) return;
+    var done = false;
+    grp.querySelectorAll('.choice').forEach(function (c) {
+      c.addEventListener('click', function () {
+        if (done) return;
+        done = true;
+        var ok = c.dataset.correct === '1';
+        grp.querySelectorAll('.choice').forEach(function (x) {
+          x.disabled = true;
+          if (x.dataset.correct === '1') x.classList.add('correct');
+        });
+        if (!ok) c.classList.add('wrong');
+        if (fb) fb.classList.add('show');
+      });
+    });
+  }
+  singleChoice('[data-name]', '[data-name-fb]');
+  singleChoice('[data-share]', '[data-share-fb]');
+
+  // ── instruction multi-select ──
+  var INSTR = [
+    { t: 'Always include the company’s revenue if findable', keep: true },
+    { t: 'Cite primary sources (filings, press releases) over secondary', keep: true },
+    { t: 'End every answer with one specific question to ask in my sales call', keep: true },
+    { t: 'Skip generic company descriptions — assume I know what they do', keep: true },
+    { t: 'Write in a bubbly, enthusiastic tone with lots of emojis', keep: false },
+    { t: 'Give me the full company history since its founding, every time', keep: false },
+    { t: 'Be helpful and thorough', keep: false }
+  ];
+  var list = document.getElementById('instrList');
+  var countEl = document.getElementById('instrCount');
+  var lockBtn = document.getElementById('lockBtn');
+  var lockFb = document.getElementById('lockFb');
+  var selected = [];
+  var locked = false;
+
+  INSTR.forEach(function (it, i) {
+    var row = document.createElement('button');
+    row.className = 'instr';
+    row.dataset.i = i;
+    row.innerHTML = '<span class="box">✓</span><span class="it">' + it.t + '</span><span class="tagv"></span>';
+    list.appendChild(row);
+    row.addEventListener('click', function () {
+      if (locked) return;
+      var on = row.classList.toggle('on');
+      if (on) selected.push(i); else selected = selected.filter(function (x) { return x !== i; });
+      countEl.textContent = selected.length;
+      lockBtn.disabled = selected.length === 0;
+    });
+  });
+
+  lockBtn.addEventListener('click', function () {
+    if (locked) return;
+    locked = true;
+    lockBtn.disabled = true;
+    var keptGood = 0, keptNoise = 0, missedGood = 0;
+    document.querySelectorAll('.instr').forEach(function (row) {
+      var it = INSTR[+row.dataset.i];
+      var chosen = row.classList.contains('on');
+      row.classList.add('locked');
+      var tag = row.querySelector('.tagv');
+      if (it.keep) {
+        row.classList.add('reveal-keep');
+        tag.textContent = 'Keep';
+        if (chosen) keptGood++; else missedGood++;
+      } else {
+        row.classList.add('reveal-skip');
+        tag.textContent = 'Skip';
+        if (chosen) keptNoise++;
+      }
+    });
+    var n = selected.length;
+    var msg;
+    if (keptGood === 4 && keptNoise === 0) {
+      msg = '<b>Perfect set.</b> Four focused, sales-specific instructions — right in the 3–5 sweet spot. Each one sharpens the output without confusing the model.';
+    } else {
+      var bits = [];
+      if (keptNoise > 0) bits.push('you included ' + keptNoise + ' noise instruction' + (keptNoise > 1 ? 's' : '') + ' (vague or off-purpose — they dilute the focus)');
+      if (missedGood > 0) bits.push('you left out ' + missedGood + ' sharp one' + (missedGood > 1 ? 's' : ''));
+      if (n > 5) bits.push('and ' + n + ' is past the focused 3–5 — too many instructions confuse the AI');
+      msg = '<b>Close.</b> The four "Keep" instructions are specific and sales-focused; the three "Skip" ones are vague or off-purpose. Here, ' + bits.join('; ') + '. Pick the 3–5 that matter and revise from there.';
+    }
+    lockFb.innerHTML = msg;
+    lockFb.classList.add('show');
+  });
+})();
+</script>
 
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Spaces \u2014 collaborative research workspaces\nTRACK: Perplexity Mastery\n\nLESSON CONTENT SUMMARY:\nSpaces \u2014 collaborative research workspaces \u2014 LearningGPT L LearningGPT \u2190 Perplexity Mastery Agents \u00b7 Lesson 02 Pro ~10 min read Persistent research Spaces: research that lives somewhere. Perplexity Spaces solve the problem with one-off AI searches: your research disappears when you close the tab. Spaces are persistent workspaces \u2014 they hold sources, custom instructions, and conversation history. They can be shared with a team. For any ongoing research project, Spaces is the right home. Workflow 01 Create a Space for an ongoing project 1 When to use a Space vs. a regular search Spaces are right for research that continues over days or weeks, or that you want to share. One-off searches stay in regular Perplexity. The prompt that works Space setup Use a Space when: \u2022 Research will continue over multiple sessions \u2022 Multiple people need to contribute or view \u2022 You want to add custom instructions or focus the AI&#x27;s behavior \u2022 You need to upload specific documents as context \u2022 The topic benefits from accumulated context Don&#x27;t use a Space when: \u2022 It&#x27;s a single question you&#x27;d ask once \u2022 You&#x27;re just looking up a fact \u2022 The topic is sensitive and shouldn&#x27;t have a persistent record Space setup: 1. Name it clearly: &#x27;Competitor analysis: Acme Inc&#x27; not &#x27;Research&#x27; 2. Add a description so future-you (or teammates) understand the focus 3. Upload key reference documents at the start 4. Write a custom instruction that tells the Space how you want answers formatted Best use cases Ongoing competitive analysis Multi-week research projects Team research with shared findings Reusable research templates (e.g., 'New market entry research') Don't pile every research session into one Space \u2014 they get cluttered. One Space per distinct topic. Time savings: Reusing accumulated context: 10-15 min saved per follow-up search. Workflow 02 Custom instructions per Space 2 Focus the AI on what you actually need Custom instructions in a Space change how Perplexity answers within that space. Format preferences, focus areas, what to avoid. The prompt that works Custom instructions Useful custom instructions: For a sales-research Space: \u2022 &#x27;Always include the company&#x27;s revenue if findable&#x27; \u2022 &#x27;Cite primary sources (company filings, official press releases) over secondary&#x27; \u2022 &#x27;End every answer with one specific question I should ask in my sales call&#x27; \u2022 &#x27;Don&#x27;t include generic company descriptions \u2014 assume I know what they do&#x27; For a technical-research Space: \u2022 &#x27;Prioritize official documentation and primary sources over blog posts&#x27; \u2022 &#x27;Include code examples in answers when relevant&#x27; \u2022 &#x27;Flag if information might be outdated (&gt;12 months old)&#x27; For an executive-prep Space: \u2022 &#x27;Keep answers under 200 words&#x27; \u2022 &#x27;Lead with the bottom line; supporting detail after&#x27; \u2022 &#x27;Cite sources but don&#x27;t include URLs inline&#x27; Best use cases Role-specific re\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Spaces: organize your research like a pro\nTRACK: Perplexity Mastery (Lesson 02, Pro)\n\nLESSON CONTENT SUMMARY:\nPerplexity Spaces are persistent, shareable research workspaces. A one-off search vanishes when you close the tab; a Space holds sources, custom instructions, and conversation history, and can be shared with a team. Context compounds instead of disappearing.\n\nOne-off search vs Space: stay in a regular search for a single fact/question you'll ask once (and for anything sensitive you don't want kept on record). Make a Space when research continues over multiple sessions, multiple people contribute or view, you want custom instructions to focus the AI, you want to upload reference documents, or the topic benefits from accumulated context. One Space per distinct topic — don't pile every session into one, they clutter and clutter degrades search.\n\nSetting one up: (1) NAME IT CLEARLY — 'Competitor analysis: Acme Inc', not 'Research' or 'stuff for work' — so it stays findable; add a description; upload key reference docs at the start. (2) CUSTOM INSTRUCTIONS change how Perplexity answers inside that Space (format, focus, what to avoid). Good sales-research examples: 'always include revenue if findable', 'cite primary sources over secondary', 'end every answer with one specific question to ask in my sales call', 'skip generic company descriptions — assume I know what they do'. KEY RULE: pick the 3-5 most important — too many instructions confuse the AI; revise from there. Vague ones ('be helpful and thorough') or off-purpose ones (bubbly tone with emojis, full company history every time) just dilute focus. (3) SHARING — for team research (e.g. a sales team researching the same competitors), use a SHARED Space with a NAMED OWNER who reviews it quarterly and archives stale ones; ownerless shared Spaces go cluttered and stale.\n\nGovernance/safety: a shared Space is visible to everyone you share it with — keep confidential customer data, contracts, or sensitive research in a PRIVATE Space. Sharing patterns that work: team competitor Space (one per competitor, all reps contribute), account-specific Space (one per top customer/prospect), project research Space (one per active project, cross-functional), industry intelligence Space (one per market/vertical).\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more\n- Be practical — give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only — no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -286,27 +439,21 @@ Governance:
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -315,7 +462,6 @@ Governance:
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -324,7 +470,6 @@ Governance:
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;
@@ -367,4 +512,3 @@ Governance:
 <script src="/gate.js"></script>
 </body>
 </html>
- 

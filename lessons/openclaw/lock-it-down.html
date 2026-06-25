@@ -4,12 +4,12 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Lock down OpenClaw and keep it current: updates, SecureClaw, backups — LearningGPT</title>
-<meta name="description" content="The OpenClaw maintenance contract: weekly updates for a project that ships constantly, SecureClaw security audits, workspace backups, the graceful teardown — and how to stay current as the ecosystem changes." />
+<meta name="description" content="The OpenClaw maintenance contract: weekly updates, SecureClaw security audits, workspace backups, the graceful teardown — and how to stay current as the ecosystem changes." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#f0544f" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/openclaw/lock-it-down" />
 <meta property="og:title" content="Lock down OpenClaw and keep it current" />
@@ -33,51 +33,132 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .lesson { padding: 50px 0 100px; }
 .lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
 .lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(240,84,79,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(240,84,79,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
+.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
 .lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #f0544f 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .grad { background: linear-gradient(135deg, #f0544f 0%, #ff8a4d 45%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 24px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.sec { margin: 46px 0 0; }
+.sec-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.lesson h2 { font-size: 27px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; }
 .lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
 .lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(240,84,79,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(240,84,79,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #f0544f, #7c5cff); border-radius: 2px 0 0 2px; }
+.lesson code { background: rgba(240,84,79,0.14); color: #ff9b86; padding: 1px 6px; border-radius: 5px; font-size: 0.86em; font-family: 'SFMono-Regular', Consolas, monospace; }
+
+/* ── PHYSICAL CHECKUP ── */
+.physical { margin: 22px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden; background: #0d0d20; }
+.phys-bar { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--line); background: linear-gradient(90deg, rgba(240,84,79,0.08), rgba(124,92,255,0.05)); font-size: 13px; font-weight: 700; color: var(--text); }
+.phys-bar .ct { color: var(--track); }
+.pchk { padding: 14px 16px; border-bottom: 1px solid var(--line); }
+.pchk:last-of-type { border-bottom: none; }
+.pchk-h { display: flex; align-items: center; gap: 11px; }
+.pchk-ic { font-size: 19px; }
+.pchk-t { flex: 1; }
+.pchk-t .pn { font-size: 14.5px; font-weight: 700; color: var(--text); }
+.pchk-t .pd { font-size: 12.5px; color: var(--text-dim); }
+.runbtn { font-family: inherit; font-size: 12px; font-weight: 700; padding: 8px 15px; border-radius: 8px; border: 1px solid var(--line-strong); background: rgba(240,84,79,0.08); color: #ff9b86; cursor: pointer; transition: all .15s; flex-shrink: 0; }
+.runbtn:hover:not(:disabled){ background: rgba(240,84,79,0.16); }
+.runbtn:disabled { cursor: default; opacity: 0.7; }
+.pchk-res { margin-top: 11px; font-size: 12.5px; color: var(--text-dim); display: none; padding: 10px 13px; border-radius: 9px; background: rgba(68,224,164,0.07); border-left: 2px solid var(--accent); }
+.pchk-res.show { display: block; animation: fadeIn .3s ease; }
+.pchk-res b { color: #b6f4dc; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(5px);} to{opacity:1;transform:none;} }
+.phys-pass { padding: 16px; text-align: center; border-top: 1px solid var(--line); background: rgba(68,224,164,0.08); display: none; }
+.phys-pass.show { display: block; animation: fadeIn .4s ease; }
+.phys-pass .big { font-size: 30px; }
+.phys-pass .pt { font-size: 15px; font-weight: 700; color: #b6f4dc; margin-top: 4px; }
+.phys-pass .ps { font-size: 13px; color: var(--text-dim); margin-top: 4px; }
+
+/* ── TEARDOWN SEQUENCER ── */
+.seq { margin: 22px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden; background: #0d0d20; }
+.seq-bar { display: flex; align-items: center; justify-content: space-between; padding: 11px 16px; border-bottom: 1px solid var(--line); background: linear-gradient(90deg, rgba(240,84,79,0.08), rgba(124,92,255,0.05)); font-size: 12.5px; font-weight: 700; color: var(--text); }
+.seq-bar .ct { color: var(--track); }
+.seq-hint { padding: 9px 16px; font-size: 12px; color: var(--text-mute); border-bottom: 1px solid var(--line); }
+.seq-list { padding: 12px 16px; display: grid; gap: 8px; }
+.seqo { display: flex; align-items: center; gap: 11px; text-align: left; font-family: inherit; font-size: 13.5px; color: var(--text); padding: 11px 14px; border-radius: 9px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); cursor: pointer; transition: all .15s; }
+.seqo:hover:not(:disabled){ border-color: var(--track); }
+.seqo:disabled { cursor: default; }
+.seqo .seqn { width: 24px; height: 24px; flex-shrink: 0; border-radius: 7px; background: rgba(255,255,255,0.05); display: grid; place-items: center; font-size: 11px; font-weight: 700; color: var(--text-mute); }
+.seqo.placed { border-color: var(--accent); background: rgba(68,224,164,0.1); color: #b6f4dc; }
+.seqo.placed .seqn { background: var(--accent); color: #06121a; }
+.seqo.shake { animation: shake .3s; border-color: var(--danger); }
+@keyframes shake { 0%,100%{transform:translateX(0);} 25%{transform:translateX(-5px);} 75%{transform:translateX(5px);} }
+.seq-done { padding: 14px 16px; font-size: 13px; border-top: 1px solid var(--line); background: rgba(68,224,164,0.08); color: var(--text-dim); display: none; }
+.seq-done.show { display: block; animation: fadeIn .35s ease; } .seq-done b { color: var(--text); }
+
+/* recap timeline */
+.recap { margin: 16px 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: 4px 18px; }
+.rc-row { display: grid; grid-template-columns: 58px 1fr; gap: 12px; padding: 9px 0; border-top: 1px solid var(--line); font-size: 13px; color: var(--text-dim); align-items: center; }
+.rc-row:first-child { border-top: none; }
+.rc-row .rl { font-size: 11px; font-weight: 700; color: var(--track); }
+.rc-row b { color: var(--text); }
+
+.callout { margin: 22px 0; padding: 18px 22px; background: linear-gradient(135deg, rgba(240,84,79,0.12), rgba(124,92,255,0.05)); border: 1px solid rgba(240,84,79,0.25); border-radius: var(--radius-lg); }
 .callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(240,84,79,0.1); border: 1px solid rgba(240,84,79,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(240,84,79,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(240,84,79,0.25); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #f0544f, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.callout p { margin: 0; font-size: 14.5px; color: var(--text-dim); } .callout b { color: var(--text); } .callout em { color: var(--text); font-style: italic; }
+
+.completion { text-align: center; padding: 32px 24px; border: 1px solid rgba(240,84,79,0.3); border-radius: var(--radius-lg); background: linear-gradient(135deg, rgba(240,84,79,0.12), rgba(124,92,255,0.08)); margin: 30px 0; }
+.completion .big { font-size: 40px; margin-bottom: 8px; }
+.completion h3 { font-size: 22px; margin: 0 0 10px; }
+.completion p { font-size: 14.5px; color: var(--text-dim); margin: 0 auto 18px; max-width: 520px; }
+
+.challenge { margin: 46px 0 30px; background: linear-gradient(135deg, rgba(240,84,79,0.14), rgba(124,92,255,0.1)); border: 1px solid rgba(240,84,79,0.3); border-radius: var(--radius-lg); padding: 32px; }
+.challenge h2 { margin-top: 0; font-size: 24px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #f0544f, #7c5cff); color: white; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: inherit; box-shadow: 0 6px 24px rgba(240,84,79,0.3); transition: transform .15s; text-decoration: none; }
+.btn:hover { transform: translateY(-1px); color: white; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 30px 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
 .checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
 .checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
 .checklist li:first-child { border-top: none; padding-top: 0; }
 .checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up { margin: 40px 0 0; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
 .next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
 .next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
 .next-up .free-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(68,224,164,0.18); color: var(--accent); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(68,224,164,0.35); }
-footer { border-top: 1px solid var(--line); padding: 30px 0; }
+footer { border-top: 1px solid var(--line); padding: 30px 0; margin-top: 40px; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+
+/* ── AI COACH WIDGET ── */
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
+.coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
+.coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
+.coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
+.coach-head-info { flex: 1; }
+.coach-head-name { font-weight: 700; font-size: 14px; }
+.coach-head-sub { font-size: 11px; color: #44e0a4; }
+.coach-close { background: none; border: none; color: #6b6b85; font-size: 18px; padding: 4px; line-height: 1; cursor: pointer; }
+.coach-close:hover { color: #f5f5fa; }
+.coach-messages { flex: 1; overflow-y: auto; padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth; }
+.coach-messages::-webkit-scrollbar { width: 4px; }
+.coach-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.14); border-radius: 4px; }
+.msg { max-width: 88%; font-size: 13.5px; line-height: 1.6; }
+.msg-coach { align-self: flex-start; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px 14px 14px 4px; padding: 10px 14px; color: #f5f5fa; }
+.msg-user { align-self: flex-end; background: linear-gradient(135deg, rgba(124,92,255,0.25), rgba(91,141,239,0.25)); border: 1px solid rgba(124,92,255,0.3); border-radius: 14px 14px 4px 14px; padding: 10px 14px; color: #f5f5fa; }
+.msg-thinking { align-self: flex-start; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px 14px 14px 4px; padding: 10px 14px; display: flex; align-items: center; gap: 6px; color: #6b6b85; font-size: 13px; }
+.thinking-dot { width: 6px; height: 6px; border-radius: 50%; background: #44e0a4; animation: coachPulse 1.2s ease-in-out infinite; }
+.thinking-dot:nth-child(2) { animation-delay: .2s; }
+.thinking-dot:nth-child(3) { animation-delay: .4s; }
+@keyframes coachPulse { 0%,100%{opacity:.3;transform:scale(.8)} 50%{opacity:1;transform:scale(1)} }
+.coach-limit { padding: 10px 18px; font-size: 11px; color: #6b6b85; text-align: center; border-top: 1px solid rgba(255,255,255,0.08); display: none; }
+.coach-limit.visible { display: block; }
+.coach-limit a { color: #5b8def; }
+.coach-input-row { padding: 12px 18px 16px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; gap: 8px; align-items: flex-end; }
+.coach-input { flex: 1; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); color: #f5f5fa; border-radius: 10px; padding: 9px 12px; font-size: 13px; font-family: inherit; resize: none; max-height: 100px; line-height: 1.5; }
+.coach-input:focus { outline: none; border-color: #44e0a4; }
+.coach-input::placeholder { color: #6b6b85; }
+.coach-send { width: 34px; height: 34px; border-radius: 9px; border: none; flex-shrink: 0; background: linear-gradient(135deg, #44e0a4, #7c5cff); color: white; font-size: 15px; display: grid; place-items: center; cursor: pointer; transition: opacity .15s; }
+.coach-send:hover { opacity: 0.85; }
+.coach-send:disabled { opacity: 0.4; cursor: default; }
+@media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
 </style>
 </head>
 <body>
@@ -94,77 +175,82 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <div class="lesson-meta">
       <span class="chip">Lesson 10 · OpenClaw, Safely</span>
       <span class="chip chip-pro-plus">Pro+</span>
-      <span>~9 min read</span>
+      <span>~9 min</span>
       <span class="dot"></span>
       <span>The maintenance contract</span>
     </div>
     <h1>Lock it down <span class="grad serif">and keep it current.</span></h1>
     <p class="deck">Here's the deal you signed when you chose self-hosting: the agent works for you, and you do maintenance for the agent. This closing lesson is the whole contract — fifteen minutes a week that keeps your setup an asset instead of a slowly-expiring liability — plus the graceful exit, because knowing how to leave is part of owning anything.</p>
 
-    <h2><span class="num">01</span> Updates: weekly, not "when I remember"</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">1</div><h3>A project that ships weekly needs an owner who updates weekly</h3></div>
-      <p>OpenClaw releases at a pace most commercial software doesn't attempt — features, yes, but critically <strong>security patches for an actively-attacked project.</strong> The vulnerability you read about in Lesson 2 gets patched fast; the patch only protects people who apply it. Unpatched instances are exactly what internet scanners harvest.</p>
-      <h4>The weekly ritual (10 minutes, calendar it)</h4>
-      <div class="prompt-example"><span class="label">Update routine</span>1. Skim the release notes (GitHub releases page) — 2 minutes.
-   Watching for: SECURITY fixes, changes to channels/skills you use.
-2. sudo systemctl stop openclaw
-3. npm update -g openclaw
-4. sudo systemctl start openclaw
-5. Send it one test message. Confirm the morning briefing still fires.</div>
-      <div class="gotcha">Don't auto-update blind. A weekly manual update with release-note skim catches both worlds: you're never weeks behind on a security fix, and you're never surprised by a breaking change your jobs depend on. The skim is also where you re-vet updated skills (Lesson 7's long-con rule).</div>
+    <!-- mental model -->
+    <div class="sec">
+      <span class="sec-eyebrow">The contract</span>
+      <h2>An owner who updates weekly.</h2>
+      <p>OpenClaw ships releases at a pace most commercial software doesn't attempt — features, and critically <strong>security patches for an actively-attacked project.</strong> The vulnerability from Lesson 2 gets patched fast; the patch only protects people who apply it. Unpatched instances are exactly what internet scanners harvest. So the contract is a short weekly routine — and a monthly checkup. Let's run that checkup.</p>
     </div>
 
-    <h2><span class="num">02</span> Audit: let SecureClaw grade your homework</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">2</div><h3>The community's answer to the security crisis</h3></div>
-      <p>After the exposure scandals, the community produced <strong>SecureClaw</strong> — an open-source tool that audits an OpenClaw instance for the known failure modes: exposed bindings, weak auth, leaky token handling, risky skill configurations. Run it after setup, after major updates, and monthly on the calendar.</p>
-      <p>Treat its findings the way you'd treat a home inspector's report: most items are small and fixable in minutes, and the two or three serious ones are precisely the things this track taught you to care about. A clean SecureClaw report plus a flat spend curve plus quiet logs — that's your instance's physical, passed.</p>
-      <h4>Plus the two manual checks no tool replaces</h4>
-      <ul>
-        <li><strong>The outside knock</strong> (from Lesson 4): once a month, from a network that isn't yours, confirm your gateway answers with silence.</li>
-        <li><strong>The key inventory:</strong> in your provider console, confirm the agent's API key is still the only one it has, still spend-capped, and that usage matches what your logs say it did.</li>
-      </ul>
+    <!-- PHYSICAL CHECKUP -->
+    <div class="sec">
+      <span class="sec-eyebrow">Do it · the monthly physical</span>
+      <h2>Run the five checks. Pass them all.</h2>
+      <p>This is the whole maintenance contract as one routine — run each check and read the clean result you're aiming for.</p>
+      <div class="physical">
+        <div class="phys-bar"><span>🩺 OpenClaw checkup</span><span class="ct" id="physCt">0 / 5 run</span></div>
+        <div id="physChecks"></div>
+        <div class="phys-pass" id="physPass">
+          <div class="big">🩺✅</div>
+          <div class="pt">Passed its physical.</div>
+          <div class="ps">Clean SecureClaw report + flat spend curve + quiet logs + a tested backup = your instance's checkup, passed.</div>
+        </div>
+      </div>
     </div>
 
-    <h2><span class="num">03</span> Backups: the workspace is the asset</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">3</div><h3>Back up the notes, not the machine</h3></div>
-      <p>Six months in, your agent's workspace holds real accumulated value: research archives, watcher histories, your daily digests, the skills you wrote. The machine and the software are disposable by design (that was the whole isolation strategy) — <strong>the workspace folder is the only thing worth protecting.</strong></p>
-      <ul>
-        <li><strong>One-way sync outward</strong> (Lesson 8's rule, now doing double duty): workspace → your main storage, nightly. Never the reverse direction.</li>
-        <li><strong>Config copy:</strong> after any config change, copy your OpenClaw config (minus any embedded tokens) into the workspace so it rides the same backup. Rebuild time after a dead Pi: under an hour.</li>
-        <li><strong>The rebuild test:</strong> once, deliberately, restore onto a fresh machine or VM. A backup you've never restored is a hypothesis, not a backup.</li>
-      </ul>
+    <!-- TEARDOWN SEQUENCER -->
+    <div class="sec">
+      <span class="sec-eyebrow">Do it · the graceful teardown</span>
+      <h2>Knowing how to leave is part of owning.</h2>
+      <p>Maybe life gets busy, maybe the managed alternatives catch up. Quitting cleanly is a legitimate graduation, not a failure — but order matters. Tap the exit steps in the right sequence.</p>
+      <div class="seq">
+        <div class="seq-bar"><span>Order the teardown</span><span class="ct" id="seqCt">0 / 5 placed</span></div>
+        <div class="seq-hint">Tap the step that comes next.</div>
+        <div class="seq-list" id="seqList"></div>
+        <div class="seq-done" id="seqDone"></div>
+      </div>
     </div>
 
-    <h2><span class="num">04</span> The graceful teardown</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">4</div><h3>Knowing how to leave is part of owning</h3></div>
-      <p>Maybe life gets busy, maybe the managed alternatives catch up, maybe the maintenance contract stops being worth it — Lesson 2 said it and it's still true: <strong>quitting cleanly is a legitimate graduation, not a failure.</strong> The exit, in order:</p>
-      <ol>
-        <li><strong>Stop and disable the service</strong> (so a reboot doesn't resurrect it).</li>
-        <li><strong>Revoke the API key</strong> at the provider — the agent is now inert everywhere, forever.</li>
-        <li><strong>Disconnect channels:</strong> delete the Telegram bot via BotFather, unlink WhatsApp, kick the Discord bot.</li>
-        <li><strong>Save the workspace</strong> (it's already backed up, because section 03), then wipe the box.</li>
-        <li><strong>Uninstall Tailscale / close the tunnel</strong> and remove the machine from your network list.</li>
-      </ol>
-      <p>Fifteen minutes, nothing lingering, all the accumulated notes kept. An abandoned half-alive agent is the only truly bad ending — and now it's the one outcome you can't have by accident.</p>
+    <!-- recap -->
+    <div class="sec">
+      <span class="sec-eyebrow">The whole track in one screen</span>
+      <h2>What you can now do that most of the industry can't.</h2>
+      <div class="recap">
+        <div class="rc-row"><span class="rl">L 1–2</span><span><b>Decide with clear eyes.</b> What it is, the honest risks, and whether to run it at all.</span></div>
+        <div class="rc-row"><span class="rl">L 3–4</span><span><b>Isolate before you install.</b> Blast radius, localhost, dedicated keys, the onboard wizard.</span></div>
+        <div class="rc-row"><span class="rl">L 5</span><span><b>One channel, allowlisted.</b> No groups, no secrets in chat.</span></div>
+        <div class="rc-row"><span class="rl">L 6</span><span><b>Read-only value first.</b> Briefings, triage, watchers — earn write access.</span></div>
+        <div class="rc-row"><span class="rl">L 7</span><span><b>Skills are obeyed text.</b> Vet hard, or write your own.</span></div>
+        <div class="rc-row"><span class="rl">L 8</span><span><b>The trio is earned.</b> Browser, files, shell — scoped and sandboxed.</span></div>
+        <div class="rc-row"><span class="rl">L 9</span><span><b>Automate loudly, log everything.</b> Bounded jobs, the 3am question.</span></div>
+        <div class="rc-row"><span class="rl">L 10</span><span><b>Maintain weekly, audit monthly, know your exit.</b></span></div>
+      </div>
+      <div class="completion">
+        <div class="big">🦞🏆</div>
+        <h3>OpenClaw, Safely — complete.</h3>
+        <p>That's not just OpenClaw — it's how professionals will run <em>every</em> personal agent in the years ahead: untrusted input, least privilege, blast radius, observability. You operate at a standard most of the industry hasn't caught up to.</p>
+        <a href="/lessons/ai-security/" class="btn">Go deeper: the AI Security track →</a>
+      </div>
     </div>
 
-    <h2><span class="num">05</span> Staying current — the honest close</h2>
-    <p>OpenClaw will not sit still. Channels get added, configs get renamed, the security story keeps evolving, and the ecosystem around it (ClawHub, SecureClaw, the managed competitors) moves monthly. Two habits keep you ahead of it: the weekly release-note skim you just calendared — and checking back here. <strong>We update this track as the project changes;</strong> that's the standing promise of an independent platform with no stake in the hype. When something big shifts — a major security event, a breaking release, a new must-know capability — the lessons get revised, and the <a href="/lessons/openclaw/">track page</a> shows what's fresh.</p>
     <div class="callout">
-      <span class="lbl">The whole track in one paragraph</span>
-      <p>Decide with clear eyes (1–2). Isolate before you install (3–4). One channel, allowlisted (5). Read-only value first (6). Skills are obeyed text — vet or write them (7). The trio is earned, scoped, sandboxed (8). Automate loudly, log everything (9). Maintain weekly, audit monthly, and know your exit (10). That's not just OpenClaw — that's how professionals will run <em>every</em> personal agent in the years ahead. You now operate at a standard most of the industry hasn't caught up to.</p>
+      <span class="lbl">Staying current — the honest close</span>
+      <p>OpenClaw will not sit still: channels get added, configs renamed, the security story keeps evolving. Two habits keep you ahead — the weekly release-note skim you just calendared, and checking back here. <b>We update this track as the project changes</b>; when something big shifts (a major security event, a breaking release, a new must-know capability), the lessons get revised and the track page shows what's fresh.</p>
     </div>
 
     <div class="challenge">
-      <h2 style="margin-top: 0;">Final challenge: the full physical</h2>
+      <h2>Final challenge: the full physical</h2>
       <p>This week, run the complete checkup end to end: update + release-note skim, SecureClaw audit, outside knock, key inventory, backup restore test. Two coffees' worth of time. When all five come back clean, take the win — you built and operate something genuinely yours, genuinely useful, and genuinely safe.</p>
       <div class="btn-row">
         <a href="/lessons/openclaw/" class="btn">Back to OpenClaw, Safely →</a>
-        <a href="/lessons/ai-security/" class="btn ghost">Go deeper: AI Security →</a>
+        <a href="/lessons/ai-security/" class="btn ghost">Go deeper: AI Security</a>
       </div>
     </div>
 
@@ -189,10 +275,207 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 </article>
 <footer>
   <div class="footer-inner">
-    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with the OpenClaw project.</div>
+    <div>© 2026 LearningGPT · Independent. Not affiliated with the OpenClaw project.</div>
     <a href="/lessons/openclaw/" style="color: var(--text-dim);">← All OpenClaw lessons</a>
   </div>
 </footer>
+
+<!-- ── AI COACH FAB ── -->
+<button class="coach-fab" id="coachFab" title="Ask the AI Coach">
+  🎓
+  <span class="coach-fab-badge">AI</span>
+</button>
+<!-- ── AI COACH DRAWER ── -->
+<div class="coach-drawer" id="coachDrawer">
+  <div class="coach-drawer-head">
+    <div class="coach-avatar">🎓</div>
+    <div class="coach-head-info">
+      <div class="coach-head-name">AI Coach</div>
+      <div class="coach-head-sub">Ask anything about this lesson</div>
+    </div>
+    <button class="coach-close" id="coachClose">✕</button>
+  </div>
+  <div class="coach-messages" id="coachMessages">
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson — and the last one in the track. Ask me anything about maintaining OpenClaw: updates, SecureClaw, backups, or the clean teardown. What's on your mind?</div>
+  </div>
+  <div class="coach-limit" id="coachLimit">
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
+  </div>
+  <div class="coach-input-row">
+    <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
+    <button class="coach-send" id="coachSend">➤</button>
+  </div>
+</div>
+
+<script id="lessonScript">
+(function () {
+  // ── PHYSICAL CHECKUP ──
+  var CHECKS = [
+    { ic: '⬆️', n: 'Weekly update + release-note skim', d: 'Skim release notes for security fixes, then stop → npm update -g openclaw → start → test.', run: 'Updating…',
+      res: '<b>On the latest release.</b> One SECURITY patch applied; release notes had no breaking changes to your channels; the 7am briefing still fires after restart.' },
+    { ic: '🛡️', n: 'SecureClaw audit', d: 'Run the community auditor: bindings, auth, token handling, skill configs.', run: 'Auditing…',
+      res: '<b>Clean report.</b> 2 minor cosmetic items, 0 serious. Gateway bound to localhost, auth strong, no leaky token handling, skills within limits.' },
+    { ic: '📵', n: 'The outside knock', d: 'From a network that isn’t yours, try to reach the gateway at your home IP.', run: 'Knocking…',
+      res: '<b>Silence from outside.</b> Connection timed out — you’re not reachable from the public internet, and shodan.io doesn’t find you. Not a scan-report statistic.' },
+    { ic: '🔑', n: 'Key inventory', d: 'Provider console: one key, still spend-capped, usage matches the logs.', run: 'Checking…',
+      res: '<b>One capped key.</b> Still the only key the agent has, still spend-capped, and the month’s usage matches what your activity log says it did. No surprises.' },
+    { ic: '♻️', n: 'Backup restore test', d: 'Restore the workspace onto a fresh machine or VM.', run: 'Restoring…',
+      res: '<b>Restored in ~40 minutes.</b> Notes, watcher histories, and your own skills all came back. A backup you’ve actually restored is a real backup, not a hypothesis.' }
+  ];
+  var physChecks = document.getElementById('physChecks');
+  var physCt = document.getElementById('physCt');
+  var physPass = document.getElementById('physPass');
+  var ran = 0;
+  CHECKS.forEach(function (c) {
+    var row = document.createElement('div');
+    row.className = 'pchk';
+    row.innerHTML =
+      '<div class="pchk-h"><span class="pchk-ic">' + c.ic + '</span>' +
+      '<div class="pchk-t"><div class="pn">' + c.n + '</div><div class="pd">' + c.d + '</div></div>' +
+      '<button class="runbtn">▶ Run</button></div>' +
+      '<div class="pchk-res"></div>';
+    physChecks.appendChild(row);
+    var btn = row.querySelector('.runbtn');
+    var res = row.querySelector('.pchk-res');
+    btn.addEventListener('click', function () {
+      if (btn.disabled) return;
+      btn.disabled = true;
+      btn.textContent = '⏳ ' + c.run;
+      setTimeout(function () {
+        btn.textContent = '✓ pass';
+        res.innerHTML = c.res;
+        res.classList.add('show');
+        ran++; physCt.textContent = ran + ' / 5 run';
+        if (ran === CHECKS.length) physPass.classList.add('show');
+      }, 720);
+    });
+  });
+
+  // ── TEARDOWN SEQUENCER ──
+  var STEPS = [
+    'Stop &amp; disable the service (no reboot resurrection)',
+    'Revoke the API key — the agent is now inert everywhere',
+    'Disconnect channels (delete the Telegram bot, unlink WhatsApp, kick Discord)',
+    'Save the workspace (already backed up), then wipe the box',
+    'Uninstall Tailscale / close the tunnel, remove it from your network list'
+  ];
+  // shuffle display order
+  var order = [0, 1, 2, 3, 4];
+  var shown = [2, 0, 4, 1, 3]; // fixed scramble
+  var seqList = document.getElementById('seqList');
+  var seqCt = document.getElementById('seqCt');
+  var seqDone = document.getElementById('seqDone');
+  var nextIdx = 0;
+  shown.forEach(function (origIdx) {
+    var b = document.createElement('button');
+    b.className = 'seqo';
+    b.dataset.idx = origIdx;
+    b.innerHTML = '<span class="seqn">?</span><span>' + STEPS[origIdx] + '</span>';
+    seqList.appendChild(b);
+    b.addEventListener('click', function () {
+      if (b.classList.contains('placed')) return;
+      if (+b.dataset.idx === nextIdx) {
+        b.classList.add('placed');
+        b.querySelector('.seqn').textContent = nextIdx + 1;
+        nextIdx++;
+        seqCt.textContent = nextIdx + ' / 5 placed';
+        if (nextIdx === 5) {
+          seqDone.classList.add('show');
+          seqDone.innerHTML = '<b>Clean exit.</b> Service down, key dead, channels gone, workspace kept, tunnel closed — fifteen minutes, nothing lingering, all your notes saved. An abandoned half-alive agent is the only truly bad ending, and now it\'s the one outcome you can\'t have by accident.';
+        }
+      } else {
+        b.classList.add('shake');
+        setTimeout(function () { b.classList.remove('shake'); }, 320);
+      }
+    });
+  });
+})();
+</script>
+
+<script id="coachScript">
+(function() {
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Lock it down and keep it current\nTRACK: OpenClaw, Safely (Lesson 10, Pro+ — the FINAL lesson of the track)\n\nLESSON CONTENT SUMMARY:\nThe deal of self-hosting: the agent works for you, and you do maintenance for the agent — about fifteen minutes a week keeps the setup an asset instead of a slowly-expiring liability. Plus the graceful exit, because knowing how to leave is part of owning anything.\n\n(1) UPDATES — weekly, not 'when I remember.' OpenClaw ships releases fast, including SECURITY PATCHES for an actively-attacked project; a patch only protects people who apply it, and unpatched instances are what scanners harvest. The weekly ritual (~10 min, calendar it): skim the GitHub release notes (watch for SECURITY fixes and changes to channels/skills you use), 'sudo systemctl stop openclaw', 'npm update -g openclaw', 'sudo systemctl start openclaw', then send a test message and confirm the morning briefing still fires. DON'T auto-update blind — a weekly manual update with a release-note skim keeps you neither weeks behind a security fix nor surprised by a breaking change; the skim is also where you RE-VET updated skills (Lesson 7's long-con rule).\n\n(2) AUDIT — SecureClaw, the community's open-source auditor that checks known failure modes (exposed bindings, weak auth, leaky token handling, risky skill configs). Run it after setup, after major updates, and monthly. Treat findings like a home inspector's report. PLUS two manual checks no tool replaces: the OUTSIDE KNOCK (monthly, from a network that isn't yours, confirm the gateway answers with silence) and the KEY INVENTORY (provider console: the agent's API key is still the only one, still spend-capped, usage matches the logs). Clean SecureClaw report + flat spend curve + quiet logs + a tested backup = the instance's physical, passed.\n\n(3) BACKUPS — back up the NOTES, not the machine. The machine and software are disposable by design (the isolation strategy); the WORKSPACE FOLDER is the only thing worth protecting (research archives, watcher histories, daily digests, the skills you wrote). One-way sync OUTWARD (workspace → your main storage, nightly; never the reverse). Copy your OpenClaw config (minus embedded tokens) into the workspace so it rides the same backup. And do a REBUILD TEST: once, restore onto a fresh machine/VM — a backup you've never restored is a hypothesis, not a backup.\n\n(4) THE GRACEFUL TEARDOWN (quitting cleanly is a legitimate graduation). In ORDER: (a) stop & disable the service (so a reboot doesn't resurrect it); (b) revoke the API key at the provider (agent now inert everywhere); (c) disconnect channels (delete the Telegram bot via BotFather, unlink WhatsApp, kick the Discord bot); (d) save the workspace (already backed up) then wipe the box; (e) uninstall Tailscale / close the tunnel and remove the machine from your network list. ~15 minutes, nothing lingering, all notes kept. An abandoned half-alive agent is the only truly bad ending.\n\n(5) STAYING CURRENT — OpenClaw won't sit still (channels added, configs renamed, security story evolving, ecosystem moving). Two habits: the weekly release-note skim, and checking back as the track is updated when something big shifts.\n\nTHE WHOLE TRACK IN ONE LINE: Decide with clear eyes (1-2). Isolate before you install (3-4). One channel, allowlisted (5). Read-only value first (6). Skills are obeyed text — vet or write them (7). The trio is earned, scoped, sandboxed (8). Automate loudly, log everything (9). Maintain weekly, audit monthly, know your exit (10). That's how professionals will run every personal agent: untrusted input, least privilege, blast radius, observability.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more\n- Be practical and security-first\n- If asked about something not in this lesson, briefly answer and point to where they can learn more (earlier lessons cover setup, skills, capabilities, automations)\n- Never make up features that don't exist\n- Plain conversational text only — no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var MAX_FREE = 3;
+  var count = 0;
+  var isThinking = false;
+  var history = [];
+  var fab = document.getElementById('coachFab');
+  var drawer = document.getElementById('coachDrawer');
+  var closeBtn = document.getElementById('coachClose');
+  var msgs = document.getElementById('coachMessages');
+  var input = document.getElementById('coachInput');
+  var sendBtn = document.getElementById('coachSend');
+  var limitBar = document.getElementById('coachLimit');
+  if (!fab) return;
+  fab.addEventListener('click', function() { toggle(true); });
+  closeBtn.addEventListener('click', function() { toggle(false); });
+  function toggle(open) {
+    drawer.classList.toggle('open', open);
+    if (open) setTimeout(function() { input.focus(); }, 300);
+  }
+  input.addEventListener('input', function() {
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 100) + 'px';
+  });
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+  });
+  sendBtn.addEventListener('click', send);
+  function addMsg(text, type) {
+    var d = document.createElement('div');
+    d.className = 'msg msg-' + type;
+    d.textContent = text;
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+    return d;
+  }
+  function addThinking() {
+    var d = document.createElement('div');
+    d.className = 'msg-thinking';
+    d.innerHTML = '<div class="thinking-dot"></div><div class="thinking-dot"></div><div class="thinking-dot"></div>';
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+    return d;
+  }
+  async function send() {
+    var text = input.value.trim();
+    if (!text || isThinking) return;
+    if (count >= MAX_FREE) {
+      limitBar.classList.add('visible');
+      input.disabled = true;
+      sendBtn.disabled = true;
+      return;
+    }
+    count++;
+    if (count >= MAX_FREE) limitBar.classList.add('visible');
+    addMsg(text, 'user');
+    history.push({ role: 'user', content: text });
+    input.value = '';
+    input.style.height = 'auto';
+    isThinking = true;
+    sendBtn.disabled = true;
+    var thinking = addThinking();
+    try {
+      var res = await fetch('/api/playground', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ coach: true, lessonCoach: true, lessonContext: LESSON_CONTEXT, history: history })
+      });
+      thinking.remove();
+      var data = await res.json();
+      var reply = (data && data.coach) ? data.coach : "Sorry, something went wrong. Try again in a moment.";
+      addMsg(reply, 'coach');
+      history.push({ role: 'assistant', content: reply });
+    } catch(err) {
+      thinking.remove();
+      addMsg("Something went wrong — try again in a moment.", 'coach');
+    } finally {
+      isThinking = false;
+      sendBtn.disabled = count >= MAX_FREE;
+    }
+  }
+})();
+</script>
 <script src="/gate.js"></script>
 </body>
 </html>

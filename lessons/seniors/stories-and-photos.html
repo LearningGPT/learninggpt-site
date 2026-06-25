@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Your stories and photos | AI for Seniors | LearningGPT</title>
-<meta name="description" content="Use AI to organize photos, write captions, and turn your life stories into a little memoir to pass down to family." />
+<meta name="description" content="Turn your memories into a keepsake for the family — AI is your patient ghostwriter for stories, a little memoir, and photo captions." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#2dd4a7" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +13,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/seniors/stories-and-photos" />
 <meta property="og:title" content="Your stories and photos" />
-<meta property="og:description" content="Use AI to organize photos, write captions, and turn your life stories into a little memoir to pass down to family." />
+<meta property="og:description" content="Turn your memories into a keepsake for the family — AI is your patient ghostwriter." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -33,8 +33,6 @@ nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(18
 .lesson{padding:46px 0 100px;}
 .lesson-meta{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:15px;color:var(--text-mute);margin-bottom:22px;}
 .lesson-meta .chip{padding:5px 13px;border:1px solid rgba(45,212,167,0.4);border-radius:999px;font-size:13px;color:var(--track);background:rgba(45,212,167,0.12);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;}
-.lesson-meta .chip-free{border-color:rgba(68,224,164,0.45);color:#44e0a4;background:rgba(68,224,164,0.12);}
-.lesson-meta .chip-pro{border-color:rgba(124,92,255,0.5);color:#b9a6ff;background:rgba(124,92,255,0.14);}
 .lesson-meta .chip-pro-plus{border-color:rgba(255,181,71,0.5);color:#ffce82;background:rgba(255,181,71,0.14);}
 .lesson-meta .dot{width:5px;height:5px;border-radius:50%;background:var(--text-mute);}
 .lesson h1{font-size:clamp(30px,4.6vw,44px);font-weight:800;line-height:1.18;letter-spacing:-0.01em;margin:0 0 20px;}
@@ -46,16 +44,30 @@ nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(18
 .lesson p{font-size:18.5px;color:var(--text);margin:0 0 18px;line-height:1.85;}
 .lesson strong{font-weight:700;}.lesson em{font-style:italic;}
 .lesson ul,.lesson ol{padding-left:26px;margin:0 0 18px;}.lesson li{margin-bottom:10px;font-size:18px;line-height:1.7;}
-.callout{margin:26px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(45,212,167,0.12),rgba(91,141,239,0.07));border:1px solid rgba(45,212,167,0.3);border-radius:var(--radius-lg);}
-.callout .lbl{display:inline-block;font-size:13px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
-.callout p:last-child{margin-bottom:0;}
 .prompt{background:rgba(0,0,0,0.32);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:10px 0 16px;font-size:17px;color:var(--text);line-height:1.7;}
 .prompt .lbl{display:block;font-size:13px;letter-spacing:0.4px;text-transform:uppercase;color:var(--track);font-weight:700;margin-bottom:8px;}
 .note{background:rgba(255,181,71,0.08);border:1px solid rgba(255,181,71,0.3);border-radius:12px;padding:18px 20px;margin:18px 0;font-size:17.5px;line-height:1.75;}
 .note b{color:var(--warn);}
+
+/* ── MEMORY PROMPTER ── */
+.mem{margin:24px 0;border:1px solid rgba(45,212,167,0.3);border-radius:18px;overflow:hidden;background:var(--surface);}
+.mem-head{padding:15px 18px;border-bottom:1px solid var(--line);font-size:16px;font-weight:700;background:rgba(45,212,167,0.06);}
+.mem-pick{padding:16px 18px 8px;}
+.mem-lbl{font-size:15px;color:var(--text-dim);margin-bottom:11px;}
+.mem-btns{display:flex;flex-wrap:wrap;gap:10px;}
+.mbtn{font-family:inherit;font-size:16px;font-weight:600;padding:12px 18px;border-radius:999px;border:1.5px solid var(--line-strong);background:rgba(255,255,255,0.04);color:var(--text);cursor:pointer;transition:all .15s;}
+.mbtn:hover{border-color:var(--track);}
+.mbtn.on{border-color:var(--track);background:rgba(45,212,167,0.16);color:#bdf5e2;}
+.mem-out{margin:8px 18px 16px;border:1px solid var(--line);border-radius:13px;background:rgba(0,0,0,0.22);padding:20px;display:none;}
+.mem-out.show{display:block;}
+.mem-out .qmark{font-family:'Instrument Serif',serif;font-style:italic;font-size:40px;color:var(--track);line-height:0.6;display:block;margin-bottom:6px;}
+.mem-q{font-size:19px;line-height:1.55;color:#eaeaf5;min-height:56px;font-style:italic;}
+.mem-more{margin-top:16px;font-family:inherit;font-size:15px;font-weight:700;padding:11px 20px;border-radius:11px;border:1.5px solid var(--line-strong);background:rgba(255,255,255,0.04);color:#bdf5e2;cursor:pointer;}
+.mem-more:hover{border-color:var(--track);}
+
 .challenge{margin:50px 0 36px;background:linear-gradient(135deg,rgba(45,212,167,0.14),rgba(91,141,239,0.1));border:1px solid rgba(45,212,167,0.3);border-radius:var(--radius-lg);padding:32px;}
 .challenge h2{margin-top:0;}
-.challenge .btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#2dd4a7,#5b8def);color:white;padding:14px 26px;border-radius:11px;font-weight:700;font-size:16px;}
+.challenge .btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#2dd4a7,#5b8def);color:white;padding:15px 28px;border-radius:11px;font-weight:700;font-size:17px;text-decoration:none;}
 .challenge .btn:hover{color:white;}
 .challenge .btn.ghost{background:rgba(255,255,255,0.06);border:1px solid var(--line-strong);}
 .challenge .btn-row{margin-top:22px;display:flex;gap:12px;flex-wrap:wrap;}
@@ -70,9 +82,7 @@ nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(18
 .next-up .lbl{font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--text-mute);font-weight:700;margin-bottom:10px;}
 .next-up h3{margin:0 0 8px;font-size:21px;}.next-up p{margin:0 0 14px;color:var(--text-dim);font-size:17px;}
 .next-up .tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:0.5px;padding:4px 12px;border-radius:999px;}
-.tag-pro{background:rgba(124,92,255,0.18);color:#b9a6ff;border:1px solid rgba(124,92,255,0.35);}
 .tag-pro-plus{background:rgba(255,181,71,0.18);color:#ffce82;border:1px solid rgba(255,181,71,0.35);}
-.tag-free{background:rgba(68,224,164,0.16);color:#44e0a4;border:1px solid rgba(68,224,164,0.35);}
 footer{border-top:1px solid var(--line);padding:30px 0;}
 .footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;font-size:15px;color:var(--text-mute);flex-wrap:wrap;gap:12px;}
 @media(max-width:600px){.footer-inner{flex-direction:column;text-align:center;}}
@@ -105,14 +115,38 @@ footer{border-top:1px solid var(--line);padding:30px 0;}
 <div class="lesson-meta"><span class="chip">AI for Seniors</span><span class="chip chip-pro-plus">Pro+</span><span>~7 min</span><span class="dot"></span><span>Easy read</span></div>
 <h1>Your stories &amp; photos &mdash; <span class='serif'>save the memories that matter.</span></h1>
 <p class="deck">Your stories are a treasure your family will cherish &mdash; but they rarely get written down. AI can be your patient ghostwriter, helping you turn memories into something you can keep and pass on.</p>
-<h2><span class="num">The idea</span></h2><h3>You remember it. AI helps you put it into words.</h3><p>You don't have to be a writer. You simply tell the story out loud or in rough notes, and AI helps shape it into something lovely. The memories are yours; AI just helps you save them before they fade.</p>
-<h2><span class="num">Step 1</span>Turn a memory into a written story</h2><p>Tell it a memory in your own rough words, and ask it to write it up warmly. Then adjust until it sounds like you.</p><div class="prompt"><span class="lbl">Try typing this</span>I want to write down a memory for my family. Here's roughly what happened: [tell the story in your own words]. Please write it up warmly, in the first person, and keep my voice.</div><h2><span class="num">Step 2</span>Build it into a little life story</h2><p>One memory at a time, you can build a small memoir. Ask AI to help you decide what to include or to ask you questions that jog your memory.</p><div class="prompt"><span class="lbl">Try typing this</span>I'd like to write a short life story for my grandchildren. Ask me a few gentle questions, one at a time, to help me remember the moments worth including.</div><h2><span class="num">Step 3</span>Write captions for your photos</h2><p>Going through old photos? Describe one and AI will help you write a caption or note about it for the family.</p><div class="prompt"><span class="lbl">Try typing this</span>Help me write a short, warm caption for a photo: it's [describe the photo - who, when, where]. Something my family would love to read.</div>
+
+<h2><span class="num">The idea</span></h2>
+<h3>You remember it. AI helps you put it into words.</h3>
+<p>You don't have to be a writer. You simply tell the story out loud or in rough notes, and AI helps shape it into something lovely. The memories are yours; AI just helps you save them before they fade.</p>
+
+<h2><span class="num">Try it</span>Let a gentle question spark a memory</h2>
+<p>Sometimes the hardest part is knowing where to start. Pick a theme and AI offers a soft question to get you remembering &mdash; tap for another any time.</p>
+<div class="mem">
+  <div class="mem-head">📖 A gentle question to begin</div>
+  <div class="mem-pick">
+    <div class="mem-lbl">Choose a corner of your life:</div>
+    <div class="mem-btns" id="memBtns"></div>
+  </div>
+  <div class="mem-out" id="memOut">
+    <span class="qmark">&ldquo;</span>
+    <div class="mem-q" id="memQ"></div>
+    <button class="mem-more" id="memMore">↻ Ask me another</button>
+  </div>
+</div>
+
+<h2><span class="num">And then</span>Let AI write it up in your voice</h2>
+<p>Once a memory comes back, tell it to AI in your own rough words and ask it to shape it warmly &mdash; then adjust until it sounds just like you. The same works for a caption on an old photo.</p>
+<div class="prompt"><span class="lbl">Try typing this</span>I want to write down a memory for my family. Here's roughly what happened: [tell the story in your own words]. Please write it up warmly, in the first person, and keep my voice.</div>
 
 <div class="challenge"><h2 style="margin-top:0;">Save one memory today</h2><p>Start your family keepsake:</p><ol><li>Pick one memory you'd like your family to have.</li><li>Tell it to AI in your own rough words.</li><li>Ask it to write it up warmly in your voice.</li><li>Read it, fix anything, and save it somewhere safe.</li></ol><div class="btn-row"><a href="/seniors" class="btn ghost">Back to AI for Seniors</a></div></div>
+
 <div class="checklist"><h3>What you can do now</h3><ul><li>Turn spoken memories into warmly written stories</li><li>Build a little memoir one memory at a time</li><li>Write captions and notes for old photos</li><li>Create a keepsake to pass down to family</li></ul></div>
+
 <div class="next-up"><span class="tag tag-pro-plus">Pro+</span><div class="lbl" style="margin-top:12px;">Up next</div><h3>Bigger plans</h3><p>Plan a trip or a big purchase with confidence.</p><a href="/lessons/seniors/bigger-plans">Go to the next lesson &rarr;</a></div>
 </div></article>
-<footer><div class="footer-inner"><div>&copy; 2026 LearningGPT, Inc. &middot; Independent.</div><a href="/seniors" style="color:var(--text-dim);">&larr; Back to AI for Seniors</a></div></footer>
+<footer><div class="footer-inner"><div>&copy; 2026 LearningGPT &middot; Independent.</div><a href="/seniors" style="color:var(--text-dim);">&larr; Back to AI for Seniors</a></div></footer>
+
 <button class="coach-fab" id="coachFab" title="Ask the AI Coach">&#127891;<span class="coach-fab-badge">AI</span></button>
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head"><div class="coach-avatar">&#127891;</div><div><div class="coach-head-name">Your AI Helper</div><div class="coach-head-sub">Ask me anything &mdash; no question is too small</div></div><button class="coach-close" id="coachClose">&times;</button></div>
@@ -120,9 +154,62 @@ footer{border-top:1px solid var(--line);padding:30px 0;}
   <div class="coach-limit" id="coachLimit">Free lessons include 3 questions with your helper. <a href="/pricing">Go Pro</a> for unlimited help on every lesson.</div>
   <div class="coach-input-row"><textarea class="coach-input" id="coachInput" placeholder="Type your question here..." rows="1"></textarea><button class="coach-send" id="coachSend">&#10148;</button></div>
 </div>
+
+<script id="lessonScript">
+(function(){
+  var SETS = {
+    childhood: [
+      'What did your childhood home smell like when you walked in the door?',
+      'Who taught you to do something you still do today?',
+      'What was a treat that felt truly special back then?',
+      'What did you and your friends do on a long summer afternoon?'
+    ],
+    love: [
+      'Where did you and your partner first meet — and what do you remember about that day?',
+      'What is a small, ordinary moment together you would happily relive?',
+      'What made you laugh together, even years later?'
+    ],
+    work: [
+      'What was your very first job, and what did you earn?',
+      'What is something you are proud of that nobody made a fuss about?',
+      'Who believed in you early on, and how did it change things?'
+    ],
+    legacy: [
+      'What is one piece of advice you would want your grandchildren to carry?',
+      'What do you hope they remember most about you?',
+      'What is a value you tried hard to pass down?'
+    ]
+  };
+  var LABELS = [
+    { key:'childhood', text:'🏡 Childhood' },
+    { key:'love', text:'💛 Love &amp; family' },
+    { key:'work', text:'💼 Work &amp; pride' },
+    { key:'legacy', text:'🌳 Advice to pass on' }
+  ];
+  var btns = document.getElementById('memBtns');
+  var out = document.getElementById('memOut');
+  var q = document.getElementById('memQ');
+  var more = document.getElementById('memMore');
+  var current = null, i = 0;
+  function show(){ q.style.opacity='0'; setTimeout(function(){ q.textContent = SETS[current][i % SETS[current].length]; q.style.transition='opacity .25s'; q.style.opacity='1'; }, 120); }
+  LABELS.forEach(function(l){
+    var b = document.createElement('button');
+    b.className = 'mbtn';
+    b.innerHTML = l.text;
+    btns.appendChild(b);
+    b.addEventListener('click', function(){
+      btns.querySelectorAll('.mbtn').forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on');
+      current = l.key; i = 0; out.classList.add('show'); show();
+    });
+  });
+  more.addEventListener('click', function(){ if(current){ i++; show(); } });
+})();
+</script>
+
 <script>
 (function(){
-  var LESSON_CONTEXT = "You are a kind, patient AI learning coach inside a lesson on LearningGPT.ai, helping a senior who may be new to technology.\n\nLESSON: Your stories and photos (AI for Seniors, Pro+)\n\nWHAT THIS LESSON COVERS:\nThis Pro+ lesson helps seniors preserve memories: turning spoken or rough memories into warmly written stories in their own voice, building a small memoir one memory at a time (AI can ask gentle prompting questions), and writing captions for old photos. Emphasize they're the author and AI is the ghostwriter; keep their voice; save the keepsake for family. Warm and a little emotional.\n\nYOUR ROLE:\n- Be warm, patient, and encouraging. Never make them feel silly. No question is too basic.\n- Use plain, simple words. Short sentences. No jargon. Explain any technical word.\n- Keep answers short - 2 to 4 sentences unless they ask for more.\n- For anything about health, money, or legal matters, gently remind them to confirm with a doctor, the bank, or a trusted person.\n- If a message looks like a possible scam, warn them clearly and kindly.\n- Plain conversational text only - no markdown symbols.\n- Do not start with 'Great question!' or similar filler.";
+  var LESSON_CONTEXT = "You are a kind, patient AI learning coach inside a lesson on LearningGPT.ai, helping a senior who may be new to technology.\n\nLESSON: Your stories and photos (AI for Seniors, Pro+)\n\nWHAT THIS LESSON COVERS:\nThis Pro+ lesson helps seniors preserve memories: turning spoken or rough memories into warmly written stories in their own voice, building a small memoir one memory at a time (AI can ask gentle prompting questions), and writing captions for old photos. Emphasize they're the author and AI is the ghostwriter; keep their voice; save the keepsake for family. Warm and a little emotional.\n\nYOUR ROLE:\n- Be warm, patient, and encouraging. Never make them feel silly. No question is too basic.\n- Use plain, simple words. Short sentences. No jargon. Explain any technical word.\n- When helping with memories, you can ask one gentle question at a time to jog their memory.\n- Keep answers short - 2 to 4 sentences unless they ask for more.\n- For anything about health, money, or legal matters, gently remind them to confirm with a doctor, the bank, or a trusted person.\n- If a message looks like a possible scam, warn them clearly and kindly.\n- Plain conversational text only - no markdown symbols.\n- Do not start with 'Great question!' or similar filler.";
   var MAX_FREE=3,count=0,isThinking=false,history=[];
   var fab=document.getElementById('coachFab'),drawer=document.getElementById('coachDrawer'),closeBtn=document.getElementById('coachClose'),msgs=document.getElementById('coachMessages'),input=document.getElementById('coachInput'),sendBtn=document.getElementById('coachSend'),limitBar=document.getElementById('coachLimit');
   if(!fab)return;

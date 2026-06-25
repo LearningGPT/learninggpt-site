@@ -4,20 +4,20 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Model Council — compare frontier models on your question — LearningGPT</title>
-<meta name="description" content="Perplexity Model Council runs the same query across multiple frontier models (GPT, Claude, Gemini, etc.) and shows the differences. The honest comparison." />
+<meta name="description" content="Perplexity Model Council runs the same query across multiple frontier models and shows the differences. The skill is reading the disagreement, not averaging it." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#20808d" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/perplexity/model-council" />
 <meta property="og:title" content="Model Council — compare frontier models on your question" />
-<meta property="og:description" content="Perplexity Model Council runs the same query across multiple frontier models (GPT, Claude, Gemini, etc.) and shows the differences. The honest comparison." />
+<meta property="og:description" content="Run one query across frontier models and read the disagreement — the most honest way to get an AI answer." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
-:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #20808d; }
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #2ea6b4; }
 * { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
 body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
@@ -32,88 +32,110 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
 .lesson { padding: 50px 0 100px; }
 .lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
-.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(32,128,141,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(32,128,141,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(46,166,180,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(46,166,180,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
 .lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
 .lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #20808d 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .grad { background: linear-gradient(135deg, #2ea6b4 0%, #44e0a4 50%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 24px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.sec { margin: 46px 0 0; }
+.sec-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.lesson h2 { font-size: 27px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; }
 .lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
 .lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(32,128,141,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(32,128,141,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #20808d, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(32,128,141,0.1); border: 1px solid rgba(32,128,141,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(32,128,141,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(32,128,141,0.25); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #20808d, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+
+/* when to convene router */
+.router { margin: 22px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden; background: #0d0d20; }
+.router-bar { display: flex; align-items: center; justify-content: space-between; padding: 11px 16px; border-bottom: 1px solid var(--line); background: linear-gradient(90deg, rgba(46,166,180,0.08), rgba(124,92,255,0.05)); font-size: 12.5px; font-weight: 700; color: var(--text); }
+.router-bar .ct { color: var(--track); }
+.rcard { padding: 14px 16px; border-bottom: 1px solid var(--line); }
+.rcard:last-of-type { border-bottom: none; }
+.rcard-task { font-size: 14px; margin-bottom: 10px; }
+.rcard-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.rbtn { font-size: 12.5px; font-weight: 700; font-family: inherit; padding: 10px 8px; border-radius: 9px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); color: var(--text-dim); cursor: pointer; transition: all .15s; }
+.rbtn:hover:not(:disabled){ border-color: var(--track); color: var(--text); }
+.rbtn:disabled { cursor: default; }
+.rbtn.council.right { background: rgba(124,92,255,0.18); border-color: var(--brand); color: #cdbcff; }
+.rbtn.single.right { background: rgba(46,166,180,0.16); border-color: var(--track); color: #9fe6e0; }
+.rbtn.wrong { background: rgba(255,107,138,0.12); border-color: var(--danger); color: #ffb0c1; }
+.rcard-fb { margin-top: 9px; font-size: 12.5px; color: var(--text-dim); display: none; }
+.rcard-fb.show { display: block; } .rcard-fb b { color: var(--text); }
+
+/* ── COUNCIL PANEL ── */
+.council { margin: 22px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden; background: #0d0d20; }
+.council-bar { display: flex; align-items: center; gap: 9px; padding: 12px 16px; border-bottom: 1px solid var(--line); background: linear-gradient(90deg, rgba(46,166,180,0.08), rgba(124,92,255,0.05)); font-size: 13px; font-weight: 700; color: var(--text); }
+.council-q { padding: 13px 16px; font-size: 13.5px; color: var(--text); border-bottom: 1px solid var(--line); }
+.council-q .qlbl { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: var(--track); margin-bottom: 4px; }
+.council-q b { color: #9fe6e0; }
+.council-run { padding: 14px 16px; }
+.crun-btn { font-family: inherit; font-size: 13.5px; font-weight: 700; padding: 11px 20px; border-radius: 10px; border: none; cursor: pointer; background: linear-gradient(135deg, #20808d, #2ea6b4); color: white; transition: transform .15s, opacity .15s; }
+.crun-btn:hover:not(:disabled){ transform: translateY(-1px); }
+.crun-btn:disabled { opacity: 0.5; cursor: default; }
+.cgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+@media (max-width: 560px){ .cgrid { grid-template-columns: 1fr; } }
+.ccard { border: 1px solid var(--line); border-radius: 11px; padding: 12px 13px; background: var(--surface); opacity: 0; transform: translateY(8px); transition: opacity .35s, transform .35s, border-color .25s; }
+.ccard.show { opacity: 1; transform: none; }
+.ccard.diverge { border-color: var(--warn); background: rgba(255,181,71,0.06); }
+.ccard-h { display: flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 700; margin-bottom: 6px; }
+.ccard-h .av { width: 20px; height: 20px; border-radius: 6px; display: grid; place-items: center; font-size: 11px; flex-shrink: 0; }
+.ccard-verdict { font-size: 13px; color: var(--text); }
+.ccard-tag { display: inline-block; margin-top: 7px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 2px 7px; border-radius: 999px; }
+.ccard.diverge .ccard-tag { background: rgba(255,181,71,0.16); color: #ffe0ad; }
+.ccard.agree .ccard-tag { background: rgba(68,224,164,0.14); color: #b6f4dc; }
+.council-read { padding: 14px 16px; border-top: 1px solid var(--line); display: none; }
+.council-read.show { display: block; animation: fadeIn .4s ease; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(6px);} to{opacity:1;transform:none;} }
+.council-read .crq { font-size: 14px; margin-bottom: 11px; } .council-read .crq b { color: var(--text); }
+.cr-opts { display: grid; gap: 8px; }
+.cropt { text-align: left; font-family: inherit; font-size: 13px; color: var(--text); padding: 11px 13px; border-radius: 9px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); cursor: pointer; transition: all .15s; }
+.cropt:hover:not(:disabled){ border-color: var(--track); }
+.cropt:disabled { cursor: default; }
+.cropt.correct { background: rgba(46,166,180,0.16); border-color: var(--track); color: #9fe6e0; }
+.cropt.wrong { background: rgba(255,107,138,0.12); border-color: var(--danger); color: #ffb0c1; }
+.cr-fb { margin-top: 11px; font-size: 13px; color: var(--text-dim); display: none; padding: 11px 14px; border-radius: 9px; background: rgba(46,166,180,0.07); border-left: 2px solid var(--track); }
+.cr-fb.show { display: block; } .cr-fb b { color: var(--text); }
+
+/* patterns reference */
+.pats { margin: 16px 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: 6px 18px; }
+.pat-row { display: grid; grid-template-columns: 1fr auto; gap: 12px; padding: 11px 0; border-top: 1px solid var(--line); font-size: 13px; align-items: center; }
+.pat-row:first-child { border-top: none; }
+.pat-row .pat-when { color: var(--text-dim); }
+.pat-row .pat-when b { color: var(--text); }
+.pat-row .pat-do { font-size: 12px; font-weight: 700; color: #9fe6e0; text-align: right; white-space: nowrap; }
+
+.callout { margin: 22px 0; padding: 18px 22px; background: linear-gradient(135deg, rgba(255,181,71,0.10), rgba(124,92,255,0.04)); border: 1px solid rgba(255,181,71,0.25); border-radius: var(--radius-lg); }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--warn); margin-bottom: 8px; }
+.callout p { margin: 0; font-size: 14.5px; color: var(--text-dim); } .callout b { color: var(--text); }
+
+.challenge { margin: 46px 0 30px; background: linear-gradient(135deg, rgba(46,166,180,0.16), rgba(124,92,255,0.1)); border: 1px solid rgba(46,166,180,0.3); border-radius: var(--radius-lg); padding: 32px; }
+.challenge h2 { margin-top: 0; font-size: 24px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #20808d, #7c5cff); color: white; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: inherit; box-shadow: 0 6px 24px rgba(32,128,141,0.3); transition: transform .15s; text-decoration: none; }
+.btn:hover { transform: translateY(-1px); color: white; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 30px 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
 .checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
 .checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
 .checklist li:first-child { border-top: none; padding-top: 0; }
 .checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up { margin: 40px 0 0; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
 .next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
 .next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
-.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
 .next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
-footer { border-top: 1px solid var(--line); padding: 30px 0; }
+footer { border-top: 1px solid var(--line); padding: 30px 0; margin-top: 40px; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -142,7 +164,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -157,68 +178,103 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 <article class="lesson">
   <div class="container">
     <div class="lesson-meta">
-      <span class="chip">Agents · Lesson 04</span>
+      <span class="chip">Lesson 09 · Perplexity Mastery</span>
       <span class="chip chip-pro-plus">Pro+</span>
-      <span>~10 min read</span>
+      <span>~10 min</span>
       <span class="dot"></span>
       <span>Multi-model comparison</span>
     </div>
     <h1>Model Council: <span class="grad serif">every frontier model, one query.</span></h1>
-    <p class="deck">Model Council is one of Perplexity's most useful 2026 additions: ask the same question to multiple frontier AI models at once and see how they answer. Where they agree, where they disagree, where one knows something another doesn't. For high-stakes questions, it's the most honest way to get an AI answer.</p>
-    <h2><span class="num">Workflow 01</span> Use Model Council for important questions</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>When to reach for the council vs. a single model</h3></div><p>Model Council is more expensive (more compute, more time) than a single-model answer. Reserve it for questions where you actually need multi-model verification.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">When to use</span>Use Model Council when:
-• The answer matters (high-stakes decision, customer-facing claim)
-• You suspect a single model might be biased or wrong
-• You want to catch hallucination by seeing disagreement
-• You&#x27;re researching something where models might have very different training data
-• You&#x27;re building an opinion and want to test it against multiple AI perspectives
+    <p class="deck">Model Council asks the same question to several frontier models at once and lays the answers side by side — where they agree, where they split, where one knows something the others don't. For high-stakes questions it's the most honest way to get an AI answer. The skill isn't picking a winner; it's reading the disagreement.</p>
 
-Use a single model when:
-• It&#x27;s a quick question or a draft
-• You already know which model is best for this task
-• Speed matters more than depth
-• You&#x27;re iterating on something where multi-model is overkill</div><h4>Best use cases</h4><ul><li>Important strategic questions</li><li>Fact-checking before publication</li><li>Customer claims you want verified</li><li>Topics where you suspect model bias</li></ul><div class="gotcha">Just because multiple models agree doesn't mean they're right. They share training data and biases. Agreement reduces error probability but doesn't eliminate it.</div><div class="savings"><strong>Time savings:</strong> Catching one wrong answer in a high-stakes context = huge value.</div></div><h2><span class="num">Workflow 02</span> Reading Model Council disagreements</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>What to do when models give different answers</h3></div><p>The genuinely useful Model Council output is disagreement. When all 4 models say the same thing, you've confirmed consensus (or shared bias). When they disagree, that's your signal to dig deeper.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Reading disagreements</span>Model Council interpretation patterns:
+    <!-- mental model -->
+    <div class="sec">
+      <span class="sec-eyebrow">The mental model</span>
+      <h2>The value is in the disagreement.</h2>
+      <p>A single model gives you one confident answer and hides its uncertainty. A council exposes it. When four models agree, you've confirmed consensus (or a shared blind spot). When they split, that's the signal you need human judgment — exactly the moment a single model would have quietly led you astray.</p>
+    </div>
 
-• **All models agree on facts, vary on emphasis** → trust the facts, develop your own opinion
-• **Models disagree on a specific fact** → don&#x27;t trust ANY of them; check primary sources
-• **One model has more recent info than others** → use the most recent (Perplexity flags this)
-• **One model is dramatically more confident than others** → be suspicious of the confident one
-• **Models disagree on tone or interpretation** → see this as range of valid views, not as wrong-vs-right
-
-The goal: use Model Council to surface uncertainty, not to resolve it. Disagreement is signal that you need human judgment.</div><h4>Best use cases</h4><ul><li>High-stakes fact verification</li><li>Topics with recent updates (where training cutoffs matter)</li><li>Controversial or evolving questions</li><li>Decisions you'd otherwise consult multiple experts on</li></ul><div class="gotcha">Don't average across models. 'Two said A, two said B, so the truth is in between' is bad reasoning. Investigate the disagreement, don't smooth it over.</div><div class="savings"><strong>Time savings:</strong> Better-calibrated AI use: fewer confidently-wrong moments.</div></div><h2><span class="num">Workflow 03</span> Cross-check critical claims</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>The pre-publication routine</h3></div><p>For anyone producing public-facing content (writers, analysts, founders), Model Council is the right tool right before publishing. Catch errors before the world sees them.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Pre-publication check</span>Pre-publication check for [the claim you&#x27;re about to make publicly]:
-
-Ask Model Council:
-• &#x27;Is this claim accurate based on current information?&#x27;
-• &#x27;What are the strongest counter-arguments?&#x27;
-• &#x27;What context is missing that would change interpretation?&#x27;
-• &#x27;Are there recent (2026) developments that should be acknowledged?&#x27;
-• &#x27;Would a domain expert push back on this claim, and how?&#x27;
-
-If all models confirm: ship with confidence.
-If models disagree: revise to acknowledge uncertainty, or research further.
-If any model raises a concern none of the others did: investigate that specific concern.</div><h4>Best use cases</h4><ul><li>Blog posts before publishing</li><li>LinkedIn posts on contested topics</li><li>Marketing copy with claims</li><li>Executive memos with strategic positions</li></ul><div class="gotcha">Model Council isn't a substitute for domain expert review. For genuinely high-stakes claims (legal, medical, financial), get a human expert.</div><div class="savings"><strong>Time savings:</strong> One avoided public mistake: priceless reputation protection.</div></div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Run one important question through Model Council</h2>
-      <p>Identify a question or claim you'd normally answer with one AI. Run it through Model Council. Notice the disagreements and what they reveal. The skill is in reading the differences, not in picking 'the right' answer.</p>
-      <div class="btn-row">
-        <a href="/lessons/perplexity/" class="btn">Back to Perplexity Mastery →</a>
-        <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+    <!-- WHEN TO CONVENE -->
+    <div class="sec">
+      <span class="sec-eyebrow">Do it · when to convene</span>
+      <h2>Council, or single model?</h2>
+      <p>The council costs more compute and time. Spend it where verification actually matters — for each task, pick the right tool.</p>
+      <div class="router">
+        <div class="router-bar"><span>Route each task</span><span class="ct" id="routeCt">0 / 4</span></div>
+        <div id="routeDeck"></div>
       </div>
     </div>
+
+    <!-- COUNCIL PANEL -->
+    <div class="sec">
+      <span class="sec-eyebrow">Do it · read the council</span>
+      <h2>Four answers. Now what?</h2>
+      <p>A claim you're about to put in an investor update. Convene the council and read what comes back.</p>
+      <div class="council">
+        <div class="council-bar">⚖️ Model Council</div>
+        <div class="council-q"><div class="qlbl">Your question</div><b>"Did Meridian Corp beat earnings expectations last quarter, and by how much?"</b></div>
+        <div class="council-run">
+          <button class="crun-btn" id="convene">▶ Ask all four models</button>
+          <div class="cgrid" id="cgrid"></div>
+        </div>
+        <div class="council-read" id="councilRead">
+          <div class="crq">The four don't line up. <b>What's the right move?</b></div>
+          <div class="cr-opts" id="crOpts">
+            <button class="cropt" data-correct="0">Three of four say "beat," so call it a beat and move on</button>
+            <button class="cropt" data-correct="0">Go with the most confident model — it sounded sure</button>
+            <button class="cropt" data-correct="1">They split on a hard fact — trust none, open the actual earnings release</button>
+          </div>
+          <div class="cr-fb" id="crFb"></div>
+        </div>
+      </div>
+      <div class="callout">
+        <span class="lbl">The averaging trap</span>
+        <p>"Two said A, two said B, so the truth's in the middle" is <b>bad reasoning</b>. Models share training data and biases, so a majority isn't a vote — and agreement doesn't make them right. When they disagree on a fact, don't smooth it over; <b>investigate it</b> at the primary source.</p>
+      </div>
+    </div>
+
+    <!-- PATTERNS -->
+    <div class="sec">
+      <span class="sec-eyebrow">Read the room</span>
+      <h2>Five patterns, five moves.</h2>
+      <div class="pats">
+        <div class="pat-row"><span class="pat-when"><b>Agree on facts, vary on emphasis</b> — same numbers, different framing</span><span class="pat-do">Trust facts · form your own view</span></div>
+        <div class="pat-row"><span class="pat-when"><b>Disagree on a specific fact</b> — one says X, another says Y</span><span class="pat-do">Trust none · check the source</span></div>
+        <div class="pat-row"><span class="pat-when"><b>One has more recent info</b> — Perplexity flags it</span><span class="pat-do">Use the most recent</span></div>
+        <div class="pat-row"><span class="pat-when"><b>One is wildly more confident</b> than the rest</span><span class="pat-do">Be suspicious of it</span></div>
+        <div class="pat-row"><span class="pat-when"><b>Disagree on tone / interpretation</b></span><span class="pat-do">Treat as a range of valid views</span></div>
+      </div>
+      <div class="callout" style="background:linear-gradient(135deg, rgba(46,166,180,0.12), rgba(124,92,255,0.05)); border-color:rgba(46,166,180,0.25);">
+        <span class="lbl" style="color:var(--track);">Pre-publication routine</span>
+        <p>Before you ship a public claim, ask the council: is this accurate on current info, what are the strongest counter-arguments, what context is missing, and would a domain expert push back? <b>All confirm → ship.</b> They split → revise to acknowledge uncertainty or dig deeper. One raises a concern the others didn't → investigate <em>that</em>. And for legal, medical, or financial stakes, a council still doesn't replace a human expert.</p>
+      </div>
+    </div>
+
+    <div class="challenge">
+      <h2>Challenge: run one real question through the council</h2>
+      <p>Take a question or claim you'd normally settle with a single AI. Convene the council. Notice where the models diverge and what that reveals — the skill is reading the differences, not crowning a winner. If they split on a fact, go verify it at the source.</p>
+      <div class="btn-row">
+        <a href="/playground" class="btn">Try a question in the playground →</a>
+        <a href="/lessons/perplexity/" class="btn ghost">Back to Perplexity Mastery</a>
+      </div>
+    </div>
+
     <div class="checklist">
       <h3>What you can do now</h3>
       <ul>
-        <li>Use Model Council for high-stakes questions, not casual ones</li>
-        <li>Read disagreements as signal — don't average across models</li>
-        <li>Always check primary sources when models disagree on facts</li>
-        <li>Build a pre-publication routine for public-facing content</li>
-        <li>Trust expert review over Model Council consensus for critical claims</li>
+        <li>Reserve Model Council for high-stakes questions, not casual ones</li>
+        <li>Read disagreement as signal — never average across models</li>
+        <li>When models split on a fact, trust none and check the primary source</li>
+        <li>Be suspicious of the single over-confident model</li>
+        <li>Run a council pass before publishing — and still get an expert for critical claims</li>
       </ul>
     </div>
+
     <div class="next-up">
       <span class="pro-plus-tag">Pro+</span>
       <div class="lbl" style="margin-top: 14px;">Up next in Perplexity Mastery</div>
-      <h3>Lesson 05 · Labs — autonomous long-running tasks</h3>
-      <p>Labs is Perplexity's newest agentic mode: long-running autonomous tasks that produce finished artifacts. The closest thing to handing AI a multi-hour project and getting back a deliverable. <a href="/lessons/perplexity/">See the track →</a></p>
+      <h3>Lesson 10 · Labs — autonomous long-running tasks</h3>
+      <p>Perplexity's autonomous mode: hand it a multi-hour project and get back a finished artifact — a working app, a structured spreadsheet, a multi-page document. <a href="/lessons/perplexity/labs">Start lesson 10 →</a></p>
     </div>
   </div>
 </article>
@@ -234,7 +290,6 @@ If any model raises a concern none of the others did: investigate that specific 
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -249,7 +304,7 @@ If any model raises a concern none of the others did: investigate that specific 
     <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -257,15 +312,93 @@ If any model raises a concern none of the others did: investigate that specific 
   </div>
 </div>
 
+<script id="lessonScript">
+(function () {
+  // ── WHEN TO CONVENE ──
+  var TASKS = [
+    { task: 'Draft a quick internal Slack message', a: 'single', why: 'A throwaway draft — one good model is faster and the stakes are nil.' },
+    { task: 'Verify a statistic you\'re about to put in a published report', a: 'council', why: 'High-stakes and public — convene the council to catch a confidently-wrong answer before the world sees it.' },
+    { task: 'Pressure-test a strategic claim you suspect might be biased', a: 'council', why: 'Exactly the case for a council — disagreement surfaces the bias a single model would hide.' },
+    { task: 'Reword a sentence you already like', a: 'single', why: 'Speed over depth, no verification needed — multi-model is overkill.' }
+  ];
+  var routeDeck = document.getElementById('routeDeck');
+  var routeCt = document.getElementById('routeCt');
+  var routed = 0;
+  TASKS.forEach(function (t) {
+    var card = document.createElement('div');
+    card.className = 'rcard';
+    card.innerHTML = '<div class="rcard-task">' + t.task + '</div>' +
+      '<div class="rcard-btns"><button class="rbtn single" data-a="single">⚡ Single model</button><button class="rbtn council" data-a="council">⚖️ Model Council</button></div>' +
+      '<div class="rcard-fb"></div>';
+    routeDeck.appendChild(card);
+    var fb = card.querySelector('.rcard-fb');
+    var btns = card.querySelectorAll('.rbtn');
+    var done = false;
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (done) return; done = true;
+        var ok = b.dataset.a === t.a;
+        btns.forEach(function (x) { x.disabled = true; if (x.dataset.a === t.a) x.classList.add('right'); });
+        if (!ok) b.classList.add('wrong');
+        fb.innerHTML = (ok ? '' : '<b>' + (t.a === 'council' ? 'Model Council.' : 'Single model.') + '</b> ') + t.why;
+        fb.classList.add('show');
+        routed++; routeCt.textContent = routed + ' / ' + TASKS.length;
+      });
+    });
+  });
+
+  // ── COUNCIL PANEL ──
+  var MODELS = [
+    { name: 'OpenAI GPT', av: '🟢', avbg: 'rgba(68,224,164,0.18)', verdict: 'Beat by about 4% on EPS.', diverge: false },
+    { name: 'Anthropic Claude', av: '🟠', avbg: 'rgba(255,181,71,0.18)', verdict: 'Beat by ~4% — but note guidance was cut.', diverge: false },
+    { name: 'Google Gemini', av: '🔵', avbg: 'rgba(91,141,239,0.18)', verdict: 'Actually missed slightly on revenue.', diverge: true },
+    { name: 'xAI Grok', av: '⚫', avbg: 'rgba(255,255,255,0.12)', verdict: 'Beat, around 4%.', diverge: false }
+  ];
+  var convene = document.getElementById('convene');
+  var cgrid = document.getElementById('cgrid');
+  var councilRead = document.getElementById('councilRead');
+  MODELS.forEach(function (m) {
+    var card = document.createElement('div');
+    card.className = 'ccard ' + (m.diverge ? 'diverge' : 'agree');
+    card.innerHTML = '<div class="ccard-h"><span class="av" style="background:' + m.avbg + '">' + m.av + '</span>' + m.name + '</div>' +
+      '<div class="ccard-verdict">' + m.verdict + '</div>' +
+      '<span class="ccard-tag">' + (m.diverge ? '⚠ diverges' : '✓ beat') + '</span>';
+    cgrid.appendChild(card);
+  });
+  var cards = cgrid.querySelectorAll('.ccard');
+  convene.addEventListener('click', function () {
+    if (convene.disabled) return;
+    convene.disabled = true;
+    convene.textContent = '⏳ Polling the council…';
+    cards.forEach(function (c, i) { setTimeout(function () { c.classList.add('show'); }, 350 * (i + 1)); });
+    setTimeout(function () { convene.textContent = '✓ 4 answers in'; councilRead.classList.add('show'); }, 350 * cards.length + 300);
+  });
+
+  // interpretation pick
+  var crOpts = document.getElementById('crOpts');
+  var crFb = document.getElementById('crFb');
+  var done = false;
+  crOpts.querySelectorAll('.cropt').forEach(function (o) {
+    o.addEventListener('click', function () {
+      if (done) return; done = true;
+      var ok = o.dataset.correct === '1';
+      crOpts.querySelectorAll('.cropt').forEach(function (x) { x.disabled = true; if (x.dataset.correct === '1') x.classList.add('correct'); });
+      if (!ok) o.classList.add('wrong');
+      crFb.innerHTML = (ok ? '<b>Exactly.</b> ' : '<b>Don\'t average the council.</b> ') +
+        'Three saying "beat" isn\'t a vote — they share training data, so a wrong answer can be the popular one. Gemini contradicts the others on a hard fact (beat vs. miss), which means you can\'t trust any of them here. Open the earnings release and read the actual number.';
+      crFb.classList.add('show');
+    });
+  });
+})();
+</script>
 
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Model Council \u2014 compare frontier models on your question\nTRACK: Perplexity Mastery\n\nLESSON CONTENT SUMMARY:\nModel Council \u2014 compare frontier models on your question \u2014 LearningGPT L LearningGPT \u2190 Perplexity Mastery Agents \u00b7 Lesson 04 Pro+ ~10 min read Multi-model comparison Model Council: every frontier model, one query. Model Council is one of Perplexity's most useful 2026 additions: ask the same question to multiple frontier AI models at once and see how they answer. Where they agree, where they disagree, where one knows something another doesn't. For high-stakes questions, it's the most honest way to get an AI answer. Workflow 01 Use Model Council for important questions 1 When to reach for the council vs. a single model Model Council is more expensive (more compute, more time) than a single-model answer. Reserve it for questions where you actually need multi-model verification. The prompt that works When to use Use Model Council when: \u2022 The answer matters (high-stakes decision, customer-facing claim) \u2022 You suspect a single model might be biased or wrong \u2022 You want to catch hallucination by seeing disagreement \u2022 You&#x27;re researching something where models might have very different training data \u2022 You&#x27;re building an opinion and want to test it against multiple AI perspectives Use a single model when: \u2022 It&#x27;s a quick question or a draft \u2022 You already know which model is best for this task \u2022 Speed matters more than depth \u2022 You&#x27;re iterating on something where multi-model is overkill Best use cases Important strategic questions Fact-checking before publication Customer claims you want verified Topics where you suspect model bias Just because multiple models agree doesn't mean they're right. They share training data and biases. Agreement reduces error probability but doesn't eliminate it. Time savings: Catching one wrong answer in a high-stakes context = huge value. Workflow 02 Reading Model Council disagreements 2 What to do when models give different answers The genuinely useful Model Council output is disagreement. When all 4 models say the same thing, you've confirmed consensus (or shared bias). When they disagree, that's your signal to dig deeper. The prompt that works Reading disagreements Model Council interpretation patterns: \u2022 **All models agree on facts, vary on emphasis** \u2192 trust the facts, develop your own opinion \u2022 **Models disagree on a specific fact** \u2192 don&#x27;t trust ANY of them; check primary sources \u2022 **One model has more recent info than others** \u2192 use the most recent (Perplexity flags this) \u2022 **One model is dramatically more confident than others** \u2192 be suspicious of the confident one \u2022 **Models disagree on tone or interpretation** \u2192 see this as range of valid views, not as wrong-vs-right The goal: use Model Council to surface uncertainty, not to resolve it. Disagreement is signal that you need human judgment. Best use cases High-stakes fact verification Topics with recent updates (where training cutoffs matter) Controversial or evolving questions Decisions you'd otherwise consult multiple experts on Don't average acr\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Model Council — compare frontier models on your question\nTRACK: Perplexity Mastery (Lesson 09, Pro+)\n\nLESSON CONTENT SUMMARY:\nModel Council (a 2026 Perplexity addition) asks the same question to several frontier models at once (e.g. GPT, Claude, Gemini, Grok) and lays the answers side by side — where they agree, where they split, where one knows something the others don't. For high-stakes questions it's the most honest way to get an AI answer. THE SKILL ISN'T PICKING A WINNER; IT'S READING THE DISAGREEMENT. A single model gives one confident answer and hides its uncertainty; a council exposes it.\n\nWHEN TO CONVENE vs use a single model: use the COUNCIL when the answer matters (high-stakes decision, customer-facing/published claim), you suspect a single model is biased or wrong, you want to catch hallucination via disagreement, or you're pressure-testing an opinion. Use a SINGLE model for quick questions/drafts, when you already know the best model for the task, when speed matters more than depth, or when multi-model is overkill. The council costs more compute and time — spend it where verification matters.\n\nREADING DISAGREEMENTS (the core skill): all agree on facts but vary on emphasis → trust the facts, form your own view. Disagree on a specific fact → DON'T trust ANY of them, check primary sources. One has more recent info (Perplexity flags it) → use the most recent. One is dramatically more confident than the others → be suspicious of the confident one. Disagree on tone/interpretation → treat as a range of valid views, not wrong-vs-right. Goal: use the council to SURFACE uncertainty, not resolve it.\n\nKEY TRAPS: (1) Agreement doesn't mean correct — models share training data and biases, so consensus reduces but doesn't eliminate error. (2) DON'T AVERAGE — 'two said A, two said B, so truth is in the middle' is bad reasoning; a majority isn't a vote. Investigate disagreement, don't smooth it over.\n\nPRE-PUBLICATION ROUTINE (for writers/analysts/founders): before shipping a public claim, ask the council whether it's accurate on current info, the strongest counter-arguments, what context is missing, recent (2026) developments, and whether a domain expert would push back. All confirm → ship. They split → revise to acknowledge uncertainty or research more. One raises a unique concern → investigate that. For genuinely high-stakes claims (legal/medical/financial), a council still doesn't replace a human expert.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more\n- Be practical — give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only — no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -273,27 +406,21 @@ If any model raises a concern none of the others did: investigate that specific 
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -302,7 +429,6 @@ If any model raises a concern none of the others did: investigate that specific 
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -311,7 +437,6 @@ If any model raises a concern none of the others did: investigate that specific 
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

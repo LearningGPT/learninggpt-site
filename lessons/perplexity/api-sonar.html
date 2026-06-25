@@ -4,20 +4,20 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Perplexity API & Sonar: build your own research workflows — LearningGPT</title>
-<meta name="description" content="Perplexity's Sonar API gives you programmatic access to grounded-with-citations AI. For technical users, that means automated research pipelines, inte" />
+<meta name="description" content="Perplexity's Sonar API is grounded-with-citations AI as a building block. Compose research pipelines, keep the citations, and control cost." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#20808d" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/perplexity/api-sonar" />
 <meta property="og:title" content="Perplexity API & Sonar: build your own research workflows" />
-<meta property="og:description" content="Perplexity's Sonar API gives you programmatic access to grounded-with-citations AI. For technical users, that means automated research pipelines, inte" />
+<meta property="og:description" content="Grounded-with-citations AI as a building block. Compose research pipelines, keep the citations, and control cost." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
-:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #20808d; }
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #2ea6b4; }
 * { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
 body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
@@ -32,87 +32,122 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
 .lesson { padding: 50px 0 100px; }
 .lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
-.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(32,128,141,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(32,128,141,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(46,166,180,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(46,166,180,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
 .lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
 .lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #20808d 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .grad { background: linear-gradient(135deg, #2ea6b4 0%, #44e0a4 50%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 24px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.sec { margin: 46px 0 0; }
+.sec-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.lesson h2 { font-size: 27px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; }
 .lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
 .lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(32,128,141,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(32,128,141,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #20808d, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(32,128,141,0.1); border: 1px solid rgba(32,128,141,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(32,128,141,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(32,128,141,0.25); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #20808d, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+
+/* vs plain LLM */
+.vs2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 22px 0; }
+@media (max-width: 560px){ .vs2 { grid-template-columns: 1fr; } }
+.vs2 .c { border-radius: var(--radius); padding: 16px 18px; border: 1px solid var(--line); background: var(--surface); }
+.vs2 .c .h { font-size: 14.5px; font-weight: 700; margin-bottom: 4px; }
+.vs2 .c.so { background: rgba(46,166,180,0.08); border-color: rgba(46,166,180,0.3); }
+.vs2 .c.so .h { color: #7fe0d0; }
+.vs2 .c.llm .h { color: var(--text-dim); }
+.vs2 .c p { font-size: 13.5px; margin: 0; color: var(--text-dim); }
+
+/* ── API CONSOLE ── */
+.api { margin: 22px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden; background: #0d0d20; }
+.api-bar { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-bottom: 1px solid var(--line); background: #15152e; }
+.api-bar .m { font-size: 11px; font-weight: 700; color: var(--accent); background: rgba(68,224,164,0.12); border: 1px solid rgba(68,224,164,0.3); padding: 2px 8px; border-radius: 6px; font-family: 'SFMono-Regular', Consolas, monospace; }
+.api-bar .u { flex: 1; margin-left: 10px; font-size: 11.5px; color: var(--text-dim); font-family: 'SFMono-Regular', Consolas, monospace; }
+pre.code { margin: 0; padding: 13px 15px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 12px; line-height: 1.6; color: var(--text-dim); white-space: pre-wrap; overflow-x: auto; }
+pre.code .k { color: #9fe6e0; } pre.code .s { color: #ffd9a0; } pre.code .cite { color: var(--accent); }
+.api-run { padding: 12px 15px; border-top: 1px solid var(--line); }
+.api-run-btn { font-family: inherit; font-size: 13px; font-weight: 700; padding: 9px 18px; border-radius: 9px; border: none; cursor: pointer; background: linear-gradient(135deg, #20808d, #2ea6b4); color: white; transition: transform .15s, opacity .15s; }
+.api-run-btn:hover:not(:disabled){ transform: translateY(-1px); }
+.api-run-btn:disabled { opacity: 0.5; cursor: default; }
+.api-resp { margin-top: 12px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; display: none; }
+.api-resp.show { display: block; animation: fadeIn .35s ease; }
+.api-resp .rh { font-size: 11px; font-weight: 700; color: var(--text-mute); padding: 8px 13px; background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--line); }
+.api-resp .rh .ok { color: var(--accent); }
+.api-note { margin-top: 10px; font-size: 12.5px; color: var(--text-dim); }
+.api-note b { color: var(--accent); }
+@keyframes fadeIn { from{opacity:0;transform:translateY(6px);} to{opacity:1;transform:none;} }
+
+/* ── PIPELINE COMPOSER ── */
+.pipe { margin: 22px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden; background: #0d0d20; }
+.pipe-bar { display: flex; align-items: center; justify-content: space-between; padding: 11px 16px; border-bottom: 1px solid var(--line); background: linear-gradient(90deg, rgba(46,166,180,0.08), rgba(124,92,255,0.05)); font-size: 12.5px; font-weight: 700; color: var(--text); }
+.pipe-bar .ct { color: var(--track); }
+.pipe-flow { display: flex; align-items: stretch; gap: 0; padding: 14px 16px; overflow-x: auto; }
+.pnode { flex: 1; min-width: 92px; border: 1px solid var(--line-strong); border-radius: 10px; padding: 11px 9px; text-align: center; background: rgba(255,255,255,0.02); transition: all .25s; }
+.pnode.filled { border-color: var(--track); background: rgba(46,166,180,0.1); }
+.pnode .pn-ic { font-size: 18px; opacity: 0.5; transition: opacity .25s; }
+.pnode.filled .pn-ic { opacity: 1; }
+.pnode .pn-lbl { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-mute); margin-top: 3px; }
+.pnode.filled .pn-lbl { color: var(--track); }
+.pnode .pn-val { font-size: 11px; color: var(--text-dim); margin-top: 4px; min-height: 14px; }
+.pnode.filled .pn-val { color: var(--text); }
+.parrow { display: flex; align-items: center; color: var(--text-mute); font-size: 15px; padding: 0 5px; flex-shrink: 0; }
+.pstage { padding: 14px 16px; border-top: 1px solid var(--line); }
+.pstage-q { font-size: 14px; margin-bottom: 11px; } .pstage-q b { color: var(--text); }
+.pstage-opts { display: grid; gap: 8px; }
+.popt { text-align: left; font-family: inherit; font-size: 13px; color: var(--text); padding: 10px 13px; border-radius: 9px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); cursor: pointer; transition: all .15s; }
+.popt:hover:not(:disabled){ border-color: var(--track); }
+.popt:disabled { cursor: default; }
+.popt.correct { background: rgba(46,166,180,0.16); border-color: var(--track); color: #9fe6e0; }
+.popt.wrong { background: rgba(255,107,138,0.12); border-color: var(--danger); color: #ffb0c1; }
+.popt .mono { font-family: 'SFMono-Regular', Consolas, monospace; font-size: 12px; }
+.pstage-fb { margin-top: 10px; font-size: 12.5px; color: var(--text-dim); display: none; padding: 10px 13px; border-radius: 9px; background: rgba(46,166,180,0.07); border-left: 2px solid var(--track); }
+.pstage-fb.show { display: block; } .pstage-fb b { color: var(--text); }
+.pstage-fb.trap { background: rgba(255,181,71,0.08); border-left-color: var(--warn); }
+.pipe-done { padding: 14px 16px; font-size: 13.5px; background: rgba(46,166,180,0.08); border-top: 1px solid var(--line); display: none; }
+.pipe-done.show { display: block; animation: fadeIn .35s ease; } .pipe-done b { color: var(--text); }
+
+/* ship-safely decisions */
+.decide { margin: 12px 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: 15px 17px; }
+.decide-q { font-size: 14px; margin-bottom: 11px; } .decide-q b { color: var(--text); }
+.decide-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+@media (max-width: 480px){ .decide-btns { grid-template-columns: 1fr; } }
+.dbtn { font-size: 12.5px; font-weight: 700; font-family: inherit; padding: 10px 10px; border-radius: 9px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); color: var(--text-dim); cursor: pointer; transition: all .15s; }
+.dbtn:hover:not(:disabled){ border-color: var(--track); color: var(--text); }
+.dbtn:disabled { cursor: default; }
+.dbtn.right { background: rgba(46,166,180,0.16); border-color: var(--track); color: #9fe6e0; }
+.dbtn.wrong { background: rgba(255,107,138,0.12); border-color: var(--danger); color: #ffb0c1; }
+.decide-fb { margin-top: 10px; font-size: 13px; color: var(--text-dim); display: none; padding: 10px 13px; border-radius: 9px; background: rgba(46,166,180,0.07); border-left: 2px solid var(--track); }
+.decide-fb.show { display: block; } .decide-fb b { color: var(--text); }
+
+.callout { margin: 22px 0; padding: 18px 22px; background: linear-gradient(135deg, rgba(255,181,71,0.10), rgba(124,92,255,0.04)); border: 1px solid rgba(255,181,71,0.25); border-radius: var(--radius-lg); }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--warn); margin-bottom: 8px; }
+.callout p { margin: 0; font-size: 14.5px; color: var(--text-dim); } .callout b { color: var(--text); }
+
+.challenge { margin: 46px 0 30px; background: linear-gradient(135deg, rgba(46,166,180,0.16), rgba(124,92,255,0.1)); border: 1px solid rgba(46,166,180,0.3); border-radius: var(--radius-lg); padding: 32px; }
+.challenge h2 { margin-top: 0; font-size: 24px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #20808d, #7c5cff); color: white; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: inherit; box-shadow: 0 6px 24px rgba(32,128,141,0.3); transition: transform .15s; text-decoration: none; }
+.btn:hover { transform: translateY(-1px); color: white; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 30px 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
 .checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
 .checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
 .checklist li:first-child { border-top: none; padding-top: 0; }
 .checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up { margin: 40px 0 0; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
 .next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
 .next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
-.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
-footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; margin-top: 40px; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -141,7 +176,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -156,44 +190,122 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 <article class="lesson">
   <div class="container">
     <div class="lesson-meta">
-      <span class="chip">Lesson 06 · Perplexity Mastery</span>
+      <span class="chip">Lesson 07 · Perplexity Mastery</span>
       <span class="chip chip-pro-plus">Pro+</span>
-      <span>~13 min read</span>
+      <span>~13 min</span>
       <span class="dot"></span>
-      <span>Setup + 3 workflows</span>
+      <span>For technical roles</span>
     </div>
     <h1>Perplexity API: <span class="grad serif">build research pipelines.</span></h1>
-    <p class="deck">Perplexity's Sonar API gives you programmatic access to grounded-with-citations AI. For technical users, that means automated research pipelines, integrated tools, and custom workflows. This Pro+ lesson covers the basics of the Sonar API, three real use cases, and the cost-optimization patterns.</p>
-    <h2><span class="num">The mental model</span></h2><h3>The Sonar API is grounded search as a building block.</h3><p>Whatever you build with it gets Perplexity's research grounding — real sources, citations, current information. Use it for any workflow that needs answers based on current web data, not LLM training data.</p><h2><span class="num">Workflow 01</span> Setup and first API call</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>Get an API key and make your first call</h3></div><p>Sign up at sonar.perplexity.ai → get an API key → make your first call.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">First call</span>POST https://api.perplexity.ai/chat/completions
-Authorization: Bearer YOUR_KEY
-{
-  "model": "sonar-pro",
-  "messages": [{"role": "user", "content": "What's the latest on Microsoft Copilot enterprise adoption?"}]
-}</div><h4>Best use cases</h4><ul><li>Developers building research-grounded apps</li><li>Internal tools that need current information</li><li>Integrations with CRMs, ticketing systems, etc.</li><li>Replacing generic LLM calls with grounded ones</li></ul><div class="gotcha">Sonar is more expensive than GPT-4 per call. Budget accordingly; cache where possible.</div><div class="savings"><strong>Time savings:</strong> Building from scratch what would have taken months: days.</div></div><h2><span class="num">Workflow 02</span> Automated daily briefings</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>Build a daily briefing pipeline</h3></div><p>Set up a scheduled job that hits Sonar each morning, generates a custom briefing, emails it to your team.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Pipeline pattern</span>Cron job at 7am → Sonar API call: "Summarize news in [our industry] from the past 24 hours. Include sources." → Format output → Email via SendGrid/Resend → Done.</div><h4>Best use cases</h4><ul><li>Daily industry briefings for executive teams</li><li>Competitive intelligence pipelines</li><li>Custom news feeds for specific roles</li><li>Internal newsletter generation</li></ul><div class="gotcha">Always include source citations in your output — that's Sonar's defining feature. Strip them and you're just using a worse general LLM.</div><div class="savings"><strong>Time savings:</strong> Manual daily briefing creation: gone.</div></div><h2><span class="num">Workflow 03</span> CRM enrichment with Sonar</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>Auto-enrich every new lead</h3></div><p>When a new lead enters your CRM, trigger a Sonar call to enrich the record.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Enrichment pattern</span>CRM webhook on new lead → Sonar call: "Brief me on [Company]: industry, size, recent news, likely needs related to [your category]" → Parse response → Update CRM record with summary + citation URLs.</div><h4>Best use cases</h4><ul><li>B2B SaaS sales-development workflows</li><li>Account-based marketing enrichment</li><li>Pre-call research at the CRM layer</li><li>Quality-tier sorting of inbound leads</li></ul><div class="gotcha">Don't let enrichment introduce hallucinated data into your CRM. Tag enriched fields as "AI-sourced" so they can be verified before use.</div><div class="savings"><strong>Time savings:</strong> Sales rep prospect research time: cut significantly.</div></div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Final challenge: ship one Sonar-powered workflow</h2>
-      <p>Pick a single research task you or your team does manually. Build a Sonar-powered automation for it. Start with the simplest pipeline (script + email). Iterate from there.</p>
-      <div class="btn-row">
-        <a href="/lessons/perplexity/" class="btn">Back to Perplexity Mastery →</a>
-        <a href="/#pricing" class="btn ghost">See pricing →</a>
+    <p class="deck">The Sonar API gives you programmatic access to grounded-with-citations AI. For technical users that means automated research pipelines, integrations, and custom tools — anything that needs answers from the current web, not frozen training data. Let's wire one up, keep the part that matters, and control the cost.</p>
+
+    <!-- mental model -->
+    <div class="sec">
+      <span class="sec-eyebrow">The mental model</span>
+      <h2>Grounded search, as a building block.</h2>
+      <p>Whatever you build on Sonar inherits Perplexity's research grounding — real sources, citations, and current information. Reach for it whenever a workflow needs answers based on live web data instead of an LLM's training cutoff.</p>
+      <div class="vs2">
+        <div class="c llm"><div class="h">🧠 Plain LLM call</div><p>Answers from training data — no live web, no sources you can show. Fine for drafting; risky for current facts.</p></div>
+        <div class="c so"><div class="h">📡 Sonar call</div><p>Searches the live web and returns an answer plus a citations array. Drop-in grounding for any pipeline.</p></div>
       </div>
     </div>
+
+    <!-- API CONSOLE -->
+    <div class="sec">
+      <span class="sec-eyebrow">Do it · your first call</span>
+      <h2>One POST, grounded answer back.</h2>
+      <p>Sign up at sonar.perplexity.ai, get an API key, and the first call looks like any chat-completions request — with one difference in the response.</p>
+      <div class="api">
+        <div class="api-bar"><span class="m">POST</span><span class="u">api.perplexity.ai/chat/completions</span></div>
+<pre class="code"><span class="k">Authorization</span>: Bearer YOUR_KEY
+{
+  <span class="k">"model"</span>: <span class="s">"sonar-pro"</span>,
+  <span class="k">"messages"</span>: [{ <span class="k">"role"</span>: <span class="s">"user"</span>,
+    <span class="k">"content"</span>: <span class="s">"What's the latest on Microsoft Copilot enterprise adoption?"</span> }]
+}</pre>
+        <div class="api-run">
+          <button class="api-run-btn" id="apiRun">▶ Send request</button>
+          <div class="api-resp" id="apiResp">
+            <div class="rh"><span class="ok">200 OK</span> · response</div>
+<pre class="code">{
+  <span class="k">"choices"</span>: [{ <span class="k">"message"</span>: { <span class="k">"content"</span>:
+    <span class="s">"Enterprise Copilot adoption accelerated through 2026, with…"</span> }}],
+  <span class="cite">"citations"</span>: [
+    <span class="cite">"https://news.microsoft.com/…"</span>,
+    <span class="cite">"https://www.reuters.com/…"</span>,
+    <span class="cite">"https://sec.gov/…"</span>
+  ]
+}</pre>
+          </div>
+          <div class="api-note" id="apiNote" style="display:none;">The <b>citations</b> array is the whole point — that's what a plain LLM endpoint can't give you. Carry it through everything you build.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PIPELINE COMPOSER -->
+    <div class="sec">
+      <span class="sec-eyebrow">Do it · compose a pipeline</span>
+      <h2>Build a daily-briefing automation.</h2>
+      <p>You want a sourced industry briefing in your team's inbox every morning. Pick the right node for each stage — the wrong ones quietly break it.</p>
+      <div class="pipe">
+        <div class="pipe-bar"><span>📡 Daily briefing pipeline</span><span class="ct" id="pipeCt">0 / 4 wired</span></div>
+        <div class="pipe-flow">
+          <div class="pnode" data-node="0"><div class="pn-ic">⏰</div><div class="pn-lbl">Trigger</div><div class="pn-val">—</div></div>
+          <div class="parrow">→</div>
+          <div class="pnode" data-node="1"><div class="pn-ic">📡</div><div class="pn-lbl">Sonar</div><div class="pn-val">—</div></div>
+          <div class="parrow">→</div>
+          <div class="pnode" data-node="2"><div class="pn-ic">🛠️</div><div class="pn-lbl">Process</div><div class="pn-val">—</div></div>
+          <div class="parrow">→</div>
+          <div class="pnode" data-node="3"><div class="pn-ic">📤</div><div class="pn-lbl">Deliver</div><div class="pn-val">—</div></div>
+        </div>
+        <div id="pstages"></div>
+        <div class="pipe-done" id="pipeDone"><b>That's the whole pattern.</b> Cron → grounded Sonar call asking for sources → format while keeping the citations → email. Swap the prompt and the recipient and you've got competitive intel, a role-specific feed, or an internal newsletter.</div>
+      </div>
+    </div>
+
+    <!-- SHIP SAFELY -->
+    <div class="sec">
+      <span class="sec-eyebrow">Ship it without regrets</span>
+      <h2>Two calls that decide if this is worth running.</h2>
+      <div id="ship"></div>
+      <div class="callout">
+        <span class="lbl">Cost reality</span>
+        <p>Sonar costs <b>more per call than a plain GPT-4 request</b> — you're paying for live search. Budget for it, <b>cache</b> repeated queries, and rate-limit. And always carry the <b>citations</b> through to your output: strip them and you've built a slower, pricier, worse general LLM.</p>
+      </div>
+    </div>
+
+    <div class="challenge">
+      <h2>Challenge: ship one Sonar-powered workflow</h2>
+      <p>Pick a single research task you or your team does by hand. Build the simplest possible Sonar automation for it — a script plus an email is enough. Keep the citations in the output, cache where you can, and tag anything written to a system of record as AI-sourced. Then iterate.</p>
+      <div class="btn-row">
+        <a href="/playground" class="btn">Try a research prompt in the playground →</a>
+        <a href="/lessons/perplexity/" class="btn ghost">Back to Perplexity Mastery</a>
+      </div>
+    </div>
+
     <div class="checklist">
       <h3>What you can do now</h3>
-      <ul><li>Get a Sonar API key and make a successful first call</li><li>Build a simple daily-briefing pipeline</li><li>Integrate Sonar with a tool you actually use</li><li>Apply cost-optimization (caching, rate-limiting)</li><li>Tag AI-sourced data in your systems so it can be verified</li></ul>
+      <ul>
+        <li>Get a Sonar API key and make a successful first call</li>
+        <li>Compose a daily-briefing pipeline: cron → Sonar → format → email</li>
+        <li>Always carry the citations through to your output</li>
+        <li>Apply cost controls — caching and rate-limiting</li>
+        <li>Tag AI-sourced data so it's verified before anyone trusts it</li>
+      </ul>
     </div>
+
     <div class="next-up">
-      <span class="pro-tag">Pro+</span>
+      <span class="pro-plus-tag">Pro+</span>
       <div class="lbl" style="margin-top: 14px;">Up next in Perplexity Mastery</div>
-      <h3>Lesson 7+ · Plus: financial research, academic search, and advanced citation</h3>
-      <p>Specialized Perplexity workflows for finance, academia, legal research. Advanced source filtering, focus modes, and integrations. <a href="/#pricing">See pricing →</a></p>
+      <h3>Lesson 08 · Advanced Perplexity — finance, academia, legal research</h3>
+      <p>Specialized workflows for finance, academia, and legal research: advanced source filtering, focus modes, and integrations. <a href="/lessons/perplexity/advanced-research">Start lesson 08 →</a></p>
     </div>
   </div>
 </article>
 <footer>
   <div class="footer-inner">
-    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Perplexity.</div>
-    <a href="/lessons/perplexity/" style="color: var(--text-dim);">← All Perplexity lessons</a>
+    <div>© 2026 LearningGPT · Independent. Not affiliated with Perplexity.</div>
+    <a href="/lessons/perplexity/" style="color: var(--text-dim);">← All Perplexity Mastery lessons</a>
   </div>
 </footer>
 
@@ -202,7 +314,6 @@ Authorization: Bearer YOUR_KEY
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -217,7 +328,7 @@ Authorization: Bearer YOUR_KEY
     <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -225,15 +336,131 @@ Authorization: Bearer YOUR_KEY
   </div>
 </div>
 
+<script id="lessonScript">
+(function () {
+  // ── API CONSOLE ──
+  var apiRun = document.getElementById('apiRun');
+  var apiResp = document.getElementById('apiResp');
+  var apiNote = document.getElementById('apiNote');
+  apiRun.addEventListener('click', function () {
+    if (apiRun.disabled) return;
+    apiRun.disabled = true;
+    apiRun.textContent = '⏳ Searching the web…';
+    setTimeout(function () {
+      apiResp.classList.add('show');
+      apiNote.style.display = 'block';
+      apiRun.textContent = '✓ 200 OK';
+    }, 850);
+  });
+
+  // ── PIPELINE COMPOSER ──
+  var STAGES = [
+    { node: 0, val: 'Cron · 7am',
+      q: 'It should run on its own every morning at 7am. What <b>triggers</b> it?',
+      opts: [
+        { t: 'A cron job scheduled for 7am daily', ok: true },
+        { t: 'A button you click each morning', ok: false },
+        { t: 'Every page load of your website', ok: false }
+      ],
+      why: 'A scheduled cron is the automation. A manual button isn\'t automation, and per-page-load would hammer the API.' },
+    { node: 1, val: 'sonar-pro + sources',
+      q: 'What do you send to <b>Sonar</b>?',
+      opts: [
+        { t: '"Summarize news in [our industry] from the past 24 hours. Include sources."', ok: true },
+        { t: '"Summarize news in our industry." (no window, no sources)', ok: false },
+        { t: 'The same prompt to a plain GPT-4 endpoint', ok: false }
+      ],
+      why: 'Ask for the recency window AND sources — that\'s Sonar\'s value. A plain LLM has no live grounding at all.' },
+    { node: 2, val: 'format · keep cites', trap: true,
+      q: 'How do you <b>process</b> the response before sending?',
+      opts: [
+        { t: 'Format it cleanly and keep the citation URLs', ok: true },
+        { t: 'Strip the citations to save a few tokens', ok: false },
+        { t: 'Forward the raw JSON, unread', ok: false }
+      ],
+      why: 'The citations are the defining feature. Strip them and you\'ve paid more for a worse general LLM. Keep them, formatted and clickable.' },
+    { node: 3, val: 'Email · Resend',
+      q: 'How does it <b>reach</b> the team?',
+      opts: [
+        { t: 'Email it via a service like Resend or SendGrid', ok: true },
+        { t: 'Just log it to the server console', ok: false }
+      ],
+      why: 'Email lands it where the team already looks. A console log helps nobody at 7am.' }
+  ];
+  var pstages = document.getElementById('pstages');
+  var pipeCt = document.getElementById('pipeCt');
+  var pipeDone = document.getElementById('pipeDone');
+  var nodes = document.querySelectorAll('.pnode');
+  var wired = 0;
+
+  STAGES.forEach(function (s) {
+    var box = document.createElement('div');
+    box.className = 'pstage';
+    var opts = s.opts.map(function (o, i) { return '<button class="popt" data-i="' + i + '">' + o.t + '</button>'; }).join('');
+    box.innerHTML = '<div class="pstage-q">' + s.q + '</div><div class="pstage-opts">' + opts + '</div><div class="pstage-fb' + (s.trap ? ' trap' : '') + '"></div>';
+    pstages.appendChild(box);
+    var fb = box.querySelector('.pstage-fb');
+    var btns = box.querySelectorAll('.popt');
+    var done = false;
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (done) return; done = true;
+        var pick = s.opts[+b.dataset.i];
+        btns.forEach(function (x, xi) { x.disabled = true; if (s.opts[xi].ok) x.classList.add('correct'); });
+        if (!pick.ok) b.classList.add('wrong');
+        fb.innerHTML = (pick.ok ? '<b>Wired.</b> ' : '<b>That breaks the pipeline.</b> ') + s.why;
+        fb.classList.add('show');
+        var node = nodes[s.node];
+        node.classList.add('filled');
+        node.querySelector('.pn-val').textContent = s.val;
+        wired++;
+        pipeCt.textContent = wired + ' / 4 wired';
+        if (wired === 4) pipeDone.classList.add('show');
+      });
+    });
+  });
+
+  // ── SHIP SAFELY ──
+  var SHIP = [
+    { q: 'Your "industry news, past 24h" briefing goes to 200 employees each morning. To control cost…',
+      opts: [{ t: '🗃️ Run one Sonar call, cache it, fan it out', a: true }, { t: '🔁 Call Sonar separately for all 200', a: false }],
+      why: 'It\'s the same query — make the call once, cache the result, and distribute. Sonar bills per call, so 200 identical calls is 200× the cost for one answer.' },
+    { q: 'Sonar enriches a new CRM lead with a company summary. Before it writes to the record…',
+      opts: [{ t: '🏷️ Tag the fields "AI-sourced" for review', a: true }, { t: '✍️ Silently overwrite the rep\'s data', a: false }],
+      why: 'Enrichment can hallucinate. Tag AI-sourced fields so a human verifies before anyone quotes them — never silently overwrite verified data.' }
+  ];
+  var ship = document.getElementById('ship');
+  SHIP.forEach(function (s) {
+    var card = document.createElement('div');
+    card.className = 'decide';
+    card.innerHTML = '<div class="decide-q">' + s.q + '</div>' +
+      '<div class="decide-btns"><button class="dbtn" data-a="1">' + s.opts[0].t + '</button><button class="dbtn" data-a="0">' + s.opts[1].t + '</button></div>' +
+      '<div class="decide-fb"></div>';
+    ship.appendChild(card);
+    var fb = card.querySelector('.decide-fb');
+    var btns = card.querySelectorAll('.dbtn');
+    var done = false;
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (done) return; done = true;
+        var ok = b.dataset.a === '1';
+        btns.forEach(function (x) { x.disabled = true; if (x.dataset.a === '1') x.classList.add('right'); });
+        if (!ok) b.classList.add('wrong');
+        fb.innerHTML = s.why;
+        fb.classList.add('show');
+      });
+    });
+  });
+})();
+</script>
 
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Perplexity API & Sonar: build your own research workflows\nTRACK: Perplexity Mastery\n\nLESSON CONTENT SUMMARY:\nPerplexity API & Sonar: build your own research workflows \u2014 LearningGPT L LearningGPT \u2190 Perplexity Mastery Lesson 06 \u00b7 Perplexity Mastery Pro+ ~13 min read Setup + 3 workflows Perplexity API: build research pipelines. Perplexity's Sonar API gives you programmatic access to grounded-with-citations AI. For technical users, that means automated research pipelines, integrated tools, and custom workflows. This Pro+ lesson covers the basics of the Sonar API, three real use cases, and the cost-optimization patterns. The mental model The Sonar API is grounded search as a building block. Whatever you build with it gets Perplexity's research grounding \u2014 real sources, citations, current information. Use it for any workflow that needs answers based on current web data, not LLM training data. Workflow 01 Setup and first API call 1 Get an API key and make your first call Sign up at sonar.perplexity.ai \u2192 get an API key \u2192 make your first call. The prompt that works First call POST https://api.perplexity.ai/chat/completions Authorization: Bearer YOUR_KEY { \"model\": \"sonar-pro\", \"messages\": [{\"role\": \"user\", \"content\": \"What's the latest on Microsoft Copilot enterprise adoption?\"}] } Best use cases Developers building research-grounded apps Internal tools that need current information Integrations with CRMs, ticketing systems, etc. Replacing generic LLM calls with grounded ones Sonar is more expensive than GPT-4 per call. Budget accordingly; cache where possible. Time savings: Building from scratch what would have taken months: days. Workflow 02 Automated daily briefings 2 Build a daily briefing pipeline Set up a scheduled job that hits Sonar each morning, generates a custom briefing, emails it to your team. The prompt that works Pipeline pattern Cron job at 7am \u2192 Sonar API call: \"Summarize news in [our industry] from the past 24 hours. Include sources.\" \u2192 Format output \u2192 Email via SendGrid/Resend \u2192 Done. Best use cases Daily industry briefings for executive teams Competitive intelligence pipelines Custom news feeds for specific roles Internal newsletter generation Always include source citations in your output \u2014 that's Sonar's defining feature. Strip them and you're just using a worse general LLM. Time savings: Manual daily briefing creation: gone. Workflow 03 CRM enrichment with Sonar 3 Auto-enrich every new lead When a new lead enters your CRM, trigger a Sonar call to enrich the record. The prompt that works Enrichment pattern CRM webhook on new lead \u2192 Sonar call: \"Brief me on [Company]: industry, size, recent news, likely needs related to [your category]\" \u2192 Parse response \u2192 Update CRM record with summary + citation URLs. Best use cases B2B SaaS sales-development workflows Account-based marketing enrichment Pre-call research at the CRM layer Quality-tier sorting of inbound leads Don't let enrichment introduce hallucinated data into your CRM. Tag enriched fields as \"AI-sourced\" so they can be verified before use. Time savings: Sales rep prospect research time: c\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Perplexity API & Sonar: build your own research workflows\nTRACK: Perplexity Mastery (Lesson 07, Pro+ — for technical roles)\n\nLESSON CONTENT SUMMARY:\nPerplexity's Sonar API gives programmatic access to grounded-with-citations AI: automated research pipelines, integrations, and custom tools for anything that needs answers from the current web rather than an LLM's training cutoff.\n\nMental model: Sonar is GROUNDED SEARCH AS A BUILDING BLOCK. Whatever you build on it inherits real sources, citations, and current info. Use it instead of a plain LLM call whenever the workflow needs live web data. (A plain LLM answers from training data — no live web, no showable sources.)\n\nFirst call: sign up at sonar.perplexity.ai, get an API key, POST to api.perplexity.ai/chat/completions with Authorization: Bearer YOUR_KEY and a body like { model: 'sonar-pro', messages: [{role:'user', content:'...'}] }. The response includes the usual choices/message/content PLUS a 'citations' array of source URLs — that array is the whole point and is what a plain LLM endpoint can't give you. Carry it through everything you build.\n\nWorkflow patterns: (1) DAILY BRIEFING PIPELINE — cron at 7am → Sonar call ('Summarize news in [our industry] from the past 24 hours. Include sources.') → format the output (KEEP the citations) → email via SendGrid/Resend. (2) CRM ENRICHMENT — on a new-lead webhook, call Sonar ('Brief me on [Company]: industry, size, recent news, likely needs related to [your category]') → parse → update the record with summary + citation URLs.\n\nKey rules / gotchas: ALWAYS include source citations in your output — that's Sonar's defining feature; strip them and you're just using a slower, pricier, worse general LLM. COST: Sonar is more expensive per call than a plain GPT-4 request (you're paying for live search) — budget for it, CACHE repeated/identical queries (e.g. one call fanned out to 200 recipients, not 200 calls), and rate-limit. DATA INTEGRITY: don't let enrichment write hallucinated data into your CRM — TAG AI-sourced fields so a human verifies them before use; never silently overwrite verified data.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more\n- Be practical — give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only — no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -241,27 +468,21 @@ Authorization: Bearer YOUR_KEY
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -270,7 +491,6 @@ Authorization: Bearer YOUR_KEY
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -279,7 +499,6 @@ Authorization: Bearer YOUR_KEY
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

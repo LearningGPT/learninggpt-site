@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Ask anything, in plain words | AI for Seniors | LearningGPT</title>
-<meta name="description" content="Get clear answers to any question without the confusing parts, and learn the simple habit of double-checking what really matters." />
+<meta name="description" content="Get clear answers to anything by asking in plain words — and learn the simple habit of double-checking what matters." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#2dd4a7" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +13,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/seniors/ask-in-plain-words" />
 <meta property="og:title" content="Ask anything, in plain words" />
-<meta property="og:description" content="Get clear answers to any question without the confusing parts, and learn the simple habit of double-checking what really matters." />
+<meta property="og:description" content="Get clear answers to anything by asking in plain words — and learn the simple habit of double-checking what matters." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -33,9 +33,7 @@ nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(18
 .lesson{padding:46px 0 100px;}
 .lesson-meta{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:15px;color:var(--text-mute);margin-bottom:22px;}
 .lesson-meta .chip{padding:5px 13px;border:1px solid rgba(45,212,167,0.4);border-radius:999px;font-size:13px;color:var(--track);background:rgba(45,212,167,0.12);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;}
-.lesson-meta .chip-free{border-color:rgba(68,224,164,0.45);color:#44e0a4;background:rgba(68,224,164,0.12);}
 .lesson-meta .chip-pro{border-color:rgba(124,92,255,0.5);color:#b9a6ff;background:rgba(124,92,255,0.14);}
-.lesson-meta .chip-pro-plus{border-color:rgba(255,181,71,0.5);color:#ffce82;background:rgba(255,181,71,0.14);}
 .lesson-meta .dot{width:5px;height:5px;border-radius:50%;background:var(--text-mute);}
 .lesson h1{font-size:clamp(30px,4.6vw,44px);font-weight:800;line-height:1.18;letter-spacing:-0.01em;margin:0 0 20px;}
 .lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;background:linear-gradient(135deg,#2dd4a7 0%,#5b8def 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;padding-right:0.12em;}
@@ -53,9 +51,24 @@ nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(18
 .prompt .lbl{display:block;font-size:13px;letter-spacing:0.4px;text-transform:uppercase;color:var(--track);font-weight:700;margin-bottom:8px;}
 .note{background:rgba(255,181,71,0.08);border:1px solid rgba(255,181,71,0.3);border-radius:12px;padding:18px 20px;margin:18px 0;font-size:17.5px;line-height:1.75;}
 .note b{color:var(--warn);}
+
+/* ── RESHAPE DEMO ── */
+.reshape{margin:24px 0;border:1px solid rgba(45,212,167,0.3);border-radius:18px;overflow:hidden;background:var(--surface);}
+.rs-q{padding:16px 18px;border-bottom:1px solid var(--line);background:rgba(45,212,167,0.06);}
+.rs-q .ql{font-size:14px;color:var(--text-mute);margin-bottom:5px;}
+.rs-q .qt{font-size:18px;font-weight:700;}
+.rs-ans{padding:18px;font-size:17.5px;line-height:1.7;color:#eaeaf5;min-height:90px;}
+.rs-pick{padding:0 18px 18px;}
+.rs-lbl{font-size:15px;color:var(--text-dim);margin-bottom:11px;}
+.rs-btns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+@media(max-width:560px){.rs-btns{grid-template-columns:1fr;}}
+.rsbtn{font-family:inherit;font-size:15.5px;font-weight:700;padding:14px 10px;border-radius:12px;border:1.5px solid var(--line-strong);background:rgba(255,255,255,0.04);color:var(--text);cursor:pointer;transition:all .15s;}
+.rsbtn:hover{border-color:var(--track);}
+.rsbtn.on{border-color:var(--track);background:rgba(45,212,167,0.12);color:#bdf5e2;}
+
 .challenge{margin:50px 0 36px;background:linear-gradient(135deg,rgba(45,212,167,0.14),rgba(91,141,239,0.1));border:1px solid rgba(45,212,167,0.3);border-radius:var(--radius-lg);padding:32px;}
 .challenge h2{margin-top:0;}
-.challenge .btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#2dd4a7,#5b8def);color:white;padding:14px 26px;border-radius:11px;font-weight:700;font-size:16px;}
+.challenge .btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#2dd4a7,#5b8def);color:white;padding:15px 28px;border-radius:11px;font-weight:700;font-size:17px;text-decoration:none;}
 .challenge .btn:hover{color:white;}
 .challenge .btn.ghost{background:rgba(255,255,255,0.06);border:1px solid var(--line-strong);}
 .challenge .btn-row{margin-top:22px;display:flex;gap:12px;flex-wrap:wrap;}
@@ -71,8 +84,6 @@ nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(18
 .next-up h3{margin:0 0 8px;font-size:21px;}.next-up p{margin:0 0 14px;color:var(--text-dim);font-size:17px;}
 .next-up .tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:0.5px;padding:4px 12px;border-radius:999px;}
 .tag-pro{background:rgba(124,92,255,0.18);color:#b9a6ff;border:1px solid rgba(124,92,255,0.35);}
-.tag-pro-plus{background:rgba(255,181,71,0.18);color:#ffce82;border:1px solid rgba(255,181,71,0.35);}
-.tag-free{background:rgba(68,224,164,0.16);color:#44e0a4;border:1px solid rgba(68,224,164,0.35);}
 footer{border-top:1px solid var(--line);padding:30px 0;}
 .footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;font-size:15px;color:var(--text-mute);flex-wrap:wrap;gap:12px;}
 @media(max-width:600px){.footer-inner{flex-direction:column;text-align:center;}}
@@ -105,14 +116,36 @@ footer{border-top:1px solid var(--line);padding:30px 0;}
 <div class="lesson-meta"><span class="chip">AI for Seniors</span><span class="chip chip-pro">Pro</span><span>~6 min</span><span class="dot"></span><span>Easy read</span></div>
 <h1>Ask anything &mdash; <span class='serif'>in plain, simple words.</span></h1>
 <p class="deck">You don't need fancy 'computer words' to get a good answer. The trick is just to ask for the answer in the form you want &mdash; simple, short, step by step &mdash; and to know when to double-check.</p>
-<h2><span class="num">The idea</span></h2><h3>Ask for the answer the way you want it.</h3><p>If an answer is too long or too technical, that's easily fixed: just ask it to be simpler. You can say 'explain like I'm 80 and new to this,' 'keep it short,' or 'give me three bullet points.' AI happily adjusts. You're in charge of how the answer comes out.</p>
-<h2><span class="num">Step 1</span>Ask plainly, and say how simple you want it</h2><p>Add a little instruction about the form you'd like. It makes a big difference.</p><div class="prompt"><span class="lbl">Try typing this</span>In simple terms and just a few sentences, explain what [the thing you're curious about] means. Assume I'm new to it.</div><h2><span class="num">Step 2</span>Ask follow-up questions</h2><p>You don't have to understand it all at once. Keep asking until it's clear &mdash; that's exactly what it's there for.</p><div class="prompt"><span class="lbl">Try typing this</span>I still don't quite follow. Can you give me a simple, real-life example?</div><h2><span class="num">Step 3</span>Double-check what matters</h2><p>AI is a wonderful starting point, but it can be wrong. For anything about your health, money, or legal matters, treat its answer as a helpful first step, then confirm with a real professional.</p>
+
+<h2><span class="num">The idea</span></h2>
+<h3>Ask for the answer the way you want it.</h3>
+<p>If an answer is too long or too technical, that's easily fixed: just ask it to be simpler. You can say 'explain like I'm 80 and new to this,' 'keep it short,' or 'give me three bullet points.' AI happily adjusts. You're in charge of how the answer comes out.</p>
+
+<h2><span class="num">Try it</span>You're in charge of the answer</h2>
+<p>Here's a question with a long, technical answer. Tap a button and watch the very same answer change shape &mdash; that's all it takes.</p>
+<div class="reshape">
+  <div class="rs-q"><div class="ql">You asked:</div><div class="qt">What does "cloud storage" mean?</div></div>
+  <div class="rs-ans" id="rsAns">Cloud storage is a model of computer data storage in which digital data is maintained on remote servers accessed via the internet, with the physical environment typically owned and managed by a hosting provider responsible for keeping the data available and the underlying infrastructure protected.</div>
+  <div class="rs-pick">
+    <div class="rs-lbl">Now tap how you'd like it instead:</div>
+    <div class="rs-btns" id="rsBtns"></div>
+  </div>
+</div>
+
+<h2><span class="num">The habit</span>Double-check what matters</h2>
+<p>AI is a wonderful starting point, but it can be wrong. For anything about your health, money, or legal matters, treat its answer as a helpful first step, then confirm with a real professional. You can even ask it to tell you what to verify.</p>
+<div class="prompt"><span class="lbl">Try typing this</span>Explain this simply, then tell me what I should double-check with a professional before I rely on it.</div>
+
 <div class="note"><b>Good to know:</b> A good habit: if an answer could affect your health, your money, or an important decision, ask AI 'what should I double-check with a professional?' &mdash; then actually do it. AI is a helper, not a doctor, lawyer, or banker.</div>
+
 <div class="challenge"><h2 style="margin-top:0;">Ask three questions</h2><p>Get comfortable steering the answers:</p><ol><li>Ask something you've genuinely wondered about.</li><li>Add 'explain it simply, in a few sentences.'</li><li>Ask one follow-up to go deeper.</li><li>Notice how you can shape the answer just by asking.</li></ol><div class="btn-row"><a href="/seniors" class="btn ghost">Back to AI for Seniors</a></div></div>
+
 <div class="checklist"><h3>What you can do now</h3><ul><li>Ask any question in your own plain words</li><li>Tell AI how simple or short you want the answer</li><li>Ask follow-up questions until it's clear</li><li>Know when and how to double-check important answers</li></ul></div>
+
 <div class="next-up"><span class="tag tag-pro">Pro</span><div class="lbl" style="margin-top:12px;">Up next</div><h3>Talk to your doctor</h3><p>Walk into appointments prepared and walk out understanding.</p><a href="/lessons/seniors/talk-to-your-doctor">Go to the next lesson &rarr;</a></div>
 </div></article>
-<footer><div class="footer-inner"><div>&copy; 2026 LearningGPT, Inc. &middot; Independent.</div><a href="/seniors" style="color:var(--text-dim);">&larr; Back to AI for Seniors</a></div></footer>
+<footer><div class="footer-inner"><div>&copy; 2026 LearningGPT &middot; Independent.</div><a href="/seniors" style="color:var(--text-dim);">&larr; Back to AI for Seniors</a></div></footer>
+
 <button class="coach-fab" id="coachFab" title="Ask the AI Coach">&#127891;<span class="coach-fab-badge">AI</span></button>
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head"><div class="coach-avatar">&#127891;</div><div><div class="coach-head-name">Your AI Helper</div><div class="coach-head-sub">Ask me anything &mdash; no question is too small</div></div><button class="coach-close" id="coachClose">&times;</button></div>
@@ -120,6 +153,31 @@ footer{border-top:1px solid var(--line);padding:30px 0;}
   <div class="coach-limit" id="coachLimit">Free lessons include 3 questions with your helper. <a href="/pricing">Go Pro</a> for unlimited help on every lesson.</div>
   <div class="coach-input-row"><textarea class="coach-input" id="coachInput" placeholder="Type your question here..." rows="1"></textarea><button class="coach-send" id="coachSend">&#10148;</button></div>
 </div>
+
+<script id="lessonScript">
+(function(){
+  var SHAPES = [
+    { label: 'Make it simpler', text: 'Cloud storage means your photos and files are kept safely on a big computer somewhere else — run by a company like Apple or Google — instead of only on your own device. You reach them over the internet whenever you like.' },
+    { label: 'Just one sentence', text: 'It means your files live safely on the internet, so you can get to them from any of your devices.' },
+    { label: 'Give me an example', text: 'Think of it like a safety deposit box at the bank: your important things are stored somewhere secure off-site, and you can go and look at them whenever you need. Your phone photos backing up automatically? That\'s cloud storage at work.' }
+  ];
+  var ans = document.getElementById('rsAns');
+  var btns = document.getElementById('rsBtns');
+  SHAPES.forEach(function(s){
+    var b = document.createElement('button');
+    b.className = 'rsbtn';
+    b.textContent = s.label;
+    btns.appendChild(b);
+    b.addEventListener('click', function(){
+      btns.querySelectorAll('.rsbtn').forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on');
+      ans.style.opacity = '0';
+      setTimeout(function(){ ans.textContent = s.text; ans.style.transition='opacity .3s'; ans.style.opacity='1'; }, 150);
+    });
+  });
+})();
+</script>
+
 <script>
 (function(){
   var LESSON_CONTEXT = "You are a kind, patient AI learning coach inside a lesson on LearningGPT.ai, helping a senior who may be new to technology.\n\nLESSON: Ask anything, in plain words (AI for Seniors, Pro)\n\nWHAT THIS LESSON COVERS:\nThis Pro lesson teaches seniors to get clear answers by asking plainly and specifying the form they want (simple, short, examples, bullet points). They can ask follow-ups until it's clear. Emphasize the double-check habit: for health, money, or legal matters, AI is a starting point - confirm with a real professional. Encourage them to ask 'what should I double-check with a professional?'\n\nYOUR ROLE:\n- Be warm, patient, and encouraging. Never make them feel silly. No question is too basic.\n- Use plain, simple words. Short sentences. No jargon. Explain any technical word.\n- Keep answers short - 2 to 4 sentences unless they ask for more.\n- For anything about health, money, or legal matters, gently remind them to confirm with a doctor, the bank, or a trusted person.\n- If a message looks like a possible scam, warn them clearly and kindly.\n- Plain conversational text only - no markdown symbols.\n- Do not start with 'Great question!' or similar filler.";

@@ -4,12 +4,12 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>OpenClaw explained: a personal AI agent that lives on your computer — LearningGPT</title>
-<meta name="description" content="OpenClaw is the viral open-source AI agent (250k+ GitHub stars) that runs on your own machine and messages you on WhatsApp, Telegram, or Discord. Plain-English explainer: what it actually does, the ClawdBot→Moltbot story, what it costs, and who should (and shouldn't) run one." />
+<meta name="description" content="OpenClaw is the viral open-source AI agent (250k+ GitHub stars) that runs on your own machine and messages you on WhatsApp, Telegram, or Discord. Plain-English explainer: what it does, the ClawdBot→Moltbot story, what it costs, and who should (and shouldn't) run one." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#f0544f" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/openclaw/openclaw-explained" />
 <meta property="og:title" content="OpenClaw explained: a personal AI agent that lives on your computer" />
@@ -36,48 +36,148 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .lesson-meta .chip-free { border-color: rgba(68,224,164,0.4); color: var(--accent); background: rgba(68,224,164,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
 .lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #f0544f 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .grad { background: linear-gradient(135deg, #f0544f 0%, #ff8a4d 45%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 24px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.sec { margin: 46px 0 0; }
+.sec-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.lesson h2 { font-size: 27px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; }
 .lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
 .lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(240,84,79,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(240,84,79,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #f0544f, #7c5cff); border-radius: 2px 0 0 2px; }
+
+/* compare */
+.vs2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 22px 0; }
+@media (max-width: 560px){ .vs2 { grid-template-columns: 1fr; } }
+.vs2 .c { border-radius: var(--radius); padding: 16px 18px; border: 1px solid var(--line); background: var(--surface); }
+.vs2 .c .h { font-size: 14.5px; font-weight: 700; margin-bottom: 4px; }
+.vs2 .c.cloud .h { color: var(--text-dim); }
+.vs2 .c.claw { background: rgba(240,84,79,0.08); border-color: rgba(240,84,79,0.3); }
+.vs2 .c.claw .h { color: #ff9b86; }
+.vs2 .c p { font-size: 13.5px; margin: 0; color: var(--text-dim); }
+
+.callout { margin: 22px 0; padding: 18px 22px; background: linear-gradient(135deg, rgba(240,84,79,0.12), rgba(124,92,255,0.05)); border: 1px solid rgba(240,84,79,0.25); border-radius: var(--radius-lg); }
+.callout.warn { background: linear-gradient(135deg, rgba(255,181,71,0.10), rgba(124,92,255,0.04)); border-color: rgba(255,181,71,0.28); }
 .callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(240,84,79,0.1); border: 1px solid rgba(240,84,79,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(240,84,79,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(240,84,79,0.25); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #f0544f, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.callout.warn .lbl { color: var(--warn); }
+.callout p { margin: 0; font-size: 14.5px; color: var(--text-dim); } .callout b { color: var(--text); } .callout em { color: var(--text); font-style: italic; }
+
+/* ── PIECE MATCHER ── */
+.matcher { margin: 22px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden; background: #0d0d20; }
+.matcher-bar { display: flex; align-items: center; justify-content: space-between; padding: 11px 16px; border-bottom: 1px solid var(--line); background: linear-gradient(90deg, rgba(240,84,79,0.08), rgba(124,92,255,0.05)); font-size: 12.5px; font-weight: 700; color: var(--text); }
+.matcher-bar .ct { color: var(--track); }
+.mrow { padding: 14px 16px; border-bottom: 1px solid var(--line); }
+.mrow:last-of-type { border-bottom: none; }
+.mrow-desc { font-size: 14px; margin-bottom: 10px; }
+.mrow-btns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+@media (max-width: 520px){ .mrow-btns { grid-template-columns: 1fr; } }
+.mbtn { font-size: 12.5px; font-weight: 700; font-family: inherit; padding: 9px 8px; border-radius: 8px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); color: var(--text-dim); cursor: pointer; transition: all .15s; }
+.mbtn:hover:not(:disabled){ border-color: var(--track); color: var(--text); }
+.mbtn:disabled { cursor: default; }
+.mbtn.right { background: rgba(240,84,79,0.16); border-color: var(--track); color: #ff9b86; }
+.mbtn.wrong { background: rgba(255,107,138,0.12); border-color: var(--danger); color: #ffb0c1; }
+.mrow-fb { margin-top: 10px; font-size: 12.5px; color: var(--text-dim); display: none; }
+.mrow-fb.show { display: block; } .mrow-fb b { color: var(--text); }
+.mrow-fb.flag b { color: var(--warn); }
+
+/* ── TIMELINE ── */
+.tl { margin: 20px 0; padding-left: 8px; }
+.tl-item { position: relative; padding: 0 0 18px 26px; border-left: 2px solid rgba(240,84,79,0.3); }
+.tl-item:last-child { border-left-color: transparent; padding-bottom: 0; }
+.tl-item::before { content: ''; position: absolute; left: -7px; top: 2px; width: 12px; height: 12px; border-radius: 50%; background: var(--track); box-shadow: 0 0 0 3px rgba(240,84,79,0.15); }
+.tl-when { font-size: 11px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: var(--track); }
+.tl-what { font-size: 14px; color: var(--text); margin-top: 2px; }
+.tl-what b { color: var(--text); }
+
+/* ── CAPABILITY CARDS ── */
+.caps { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 18px 0; }
+@media (max-width: 560px){ .caps { grid-template-columns: 1fr; } }
+.cap { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: 14px 16px; }
+.cap .ci { font-size: 20px; margin-bottom: 6px; }
+.cap .cn { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+.cap .cd { font-size: 12.5px; color: var(--text-dim); }
+
+/* ── COST STACK ── */
+.cost { margin: 18px 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: 4px 18px; }
+.cost-row { display: grid; grid-template-columns: 26px 1fr auto; gap: 12px; align-items: center; padding: 13px 0; border-top: 1px solid var(--line); }
+.cost-row:first-child { border-top: none; }
+.cost-row .ci { font-size: 17px; }
+.cost-row .cl { font-size: 13.5px; color: var(--text-dim); } .cost-row .cl b { color: var(--text); }
+.cost-row .cv { font-size: 12.5px; font-weight: 700; color: var(--accent); white-space: nowrap; }
+
+/* ── FIT CHECK ── */
+.fit { margin: 22px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden; background: #0d0d20; }
+.fit-bar { padding: 11px 16px; border-bottom: 1px solid var(--line); background: linear-gradient(90deg, rgba(240,84,79,0.08), rgba(124,92,255,0.05)); font-size: 12.5px; font-weight: 700; color: var(--text); }
+.fit-rows { padding: 6px 16px; }
+.fit-row { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-top: 1px solid var(--line); }
+.fit-row:first-child { border-top: none; }
+.fit-row .ft { flex: 1; font-size: 13.5px; color: var(--text); }
+.fit-toggle { display: flex; gap: 6px; flex-shrink: 0; }
+.fbtn { font-size: 11.5px; font-weight: 700; font-family: inherit; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); color: var(--text-dim); cursor: pointer; transition: all .15s; }
+.fbtn:hover { border-color: var(--track); color: var(--text); }
+.fbtn.on-yes { background: rgba(68,224,164,0.16); border-color: var(--accent); color: #b6f4dc; }
+.fbtn.on-no { background: rgba(255,255,255,0.06); border-color: var(--line-strong); color: var(--text-dim); }
+.fit-result { padding: 14px 16px; border-top: 1px solid var(--line); background: rgba(240,84,79,0.06); font-size: 13.5px; color: var(--text-dim); }
+.fit-result b { color: var(--text); }
+.fit-result .verdict { font-weight: 700; }
+.fit-result .verdict.good { color: var(--accent); }
+.fit-result .verdict.maybe { color: var(--warn); }
+
+.challenge { margin: 46px 0 30px; background: linear-gradient(135deg, rgba(240,84,79,0.14), rgba(124,92,255,0.1)); border: 1px solid rgba(240,84,79,0.3); border-radius: var(--radius-lg); padding: 32px; }
+.challenge h2 { margin-top: 0; font-size: 24px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #f0544f, #7c5cff); color: white; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: inherit; box-shadow: 0 6px 24px rgba(240,84,79,0.3); transition: transform .15s; text-decoration: none; }
+.btn:hover { transform: translateY(-1px); color: white; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 30px 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
 .checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
 .checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
 .checklist li:first-child { border-top: none; padding-top: 0; }
 .checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up { margin: 40px 0 0; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
 .next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
 .next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
 .next-up .free-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(68,224,164,0.18); color: var(--accent); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(68,224,164,0.35); }
-footer { border-top: 1px solid var(--line); padding: 30px 0; }
+footer { border-top: 1px solid var(--line); padding: 30px 0; margin-top: 40px; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+
+/* ── AI COACH WIDGET ── */
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
+.coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
+.coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
+.coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
+.coach-head-info { flex: 1; }
+.coach-head-name { font-weight: 700; font-size: 14px; }
+.coach-head-sub { font-size: 11px; color: #44e0a4; }
+.coach-close { background: none; border: none; color: #6b6b85; font-size: 18px; padding: 4px; line-height: 1; cursor: pointer; }
+.coach-close:hover { color: #f5f5fa; }
+.coach-messages { flex: 1; overflow-y: auto; padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth; }
+.coach-messages::-webkit-scrollbar { width: 4px; }
+.coach-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.14); border-radius: 4px; }
+.msg { max-width: 88%; font-size: 13.5px; line-height: 1.6; }
+.msg-coach { align-self: flex-start; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px 14px 14px 4px; padding: 10px 14px; color: #f5f5fa; }
+.msg-user { align-self: flex-end; background: linear-gradient(135deg, rgba(124,92,255,0.25), rgba(91,141,239,0.25)); border: 1px solid rgba(124,92,255,0.3); border-radius: 14px 14px 4px 14px; padding: 10px 14px; color: #f5f5fa; }
+.msg-thinking { align-self: flex-start; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px 14px 14px 4px; padding: 10px 14px; display: flex; align-items: center; gap: 6px; color: #6b6b85; font-size: 13px; }
+.thinking-dot { width: 6px; height: 6px; border-radius: 50%; background: #44e0a4; animation: coachPulse 1.2s ease-in-out infinite; }
+.thinking-dot:nth-child(2) { animation-delay: .2s; }
+.thinking-dot:nth-child(3) { animation-delay: .4s; }
+@keyframes coachPulse { 0%,100%{opacity:.3;transform:scale(.8)} 50%{opacity:1;transform:scale(1)} }
+.coach-limit { padding: 10px 18px; font-size: 11px; color: #6b6b85; text-align: center; border-top: 1px solid rgba(255,255,255,0.08); display: none; }
+.coach-limit.visible { display: block; }
+.coach-limit a { color: #5b8def; }
+.coach-input-row { padding: 12px 18px 16px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; gap: 8px; align-items: flex-end; }
+.coach-input { flex: 1; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); color: #f5f5fa; border-radius: 10px; padding: 9px 12px; font-size: 13px; font-family: inherit; resize: none; max-height: 100px; line-height: 1.5; }
+.coach-input:focus { outline: none; border-color: #44e0a4; }
+.coach-input::placeholder { color: #6b6b85; }
+.coach-send { width: 34px; height: 34px; border-radius: 9px; border: none; flex-shrink: 0; background: linear-gradient(135deg, #44e0a4, #7c5cff); color: white; font-size: 15px; display: grid; place-items: center; cursor: pointer; transition: opacity .15s; }
+.coach-send:hover { opacity: 0.85; }
+.coach-send:disabled { opacity: 0.4; cursor: default; }
+@media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
 </style>
 </head>
 <body>
@@ -92,91 +192,119 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 <article class="lesson">
   <div class="container">
     <div class="lesson-meta">
-      <span class="chip">Lesson 1 · OpenClaw, Safely</span>
+      <span class="chip">Lesson 01 · OpenClaw, Safely</span>
       <span class="chip chip-free">Free</span>
-      <span>~9 min read</span>
+      <span>~9 min</span>
       <span class="dot"></span>
       <span>Updated June 2026</span>
     </div>
     <h1>OpenClaw explained: <span class="grad serif">a personal AI agent that lives on your computer.</span></h1>
-    <p class="deck">It has 250,000+ stars on GitHub, a lobster for a mascot, and a habit of showing up in your group chats. OpenClaw is the open-source project that turned "AI assistant" from an app you open into an agent that messages <em>you</em>. Here's what it actually is, in plain English — including the parts the hype skips.</p>
+    <p class="deck">250,000+ stars on GitHub, a lobster for a mascot, and a habit of showing up in your group chats. OpenClaw turned "AI assistant" from an app you open into an agent that messages <em>you</em>. Here's what it actually is, in plain English — including the parts the hype skips.</p>
 
-    <h2>The short version</h2>
-    <p>OpenClaw is a free, open-source program that runs on <strong>your own computer</strong> — not in some company's cloud. It connects an AI model you choose (Claude, GPT, and others) to your real life: it can read and send messages on WhatsApp, Telegram, Discord, Signal, and a dozen other apps, browse the web, manage files, run scheduled tasks, and act on your behalf around the clock.</p>
-    <p>The simplest way to picture it: <strong>ChatGPT is a place you visit. OpenClaw is a colleague who texts you.</strong> You message it from the chat app you already use — "remind me when the contractor emails back," "summarize what I missed in the family group chat," "check this site every morning and tell me if the price drops" — and it does the work from your machine, on your schedule, whether or not you're at a keyboard.</p>
-    <div class="callout">
-      <span class="lbl">The trade in one line</span>
-      <p>OpenClaw gives you more power and more privacy than any cloud assistant — in exchange for making <em>you</em> the IT department. That trade is the whole story, and it's why the next lesson in this track is entirely about safety.</p>
+    <!-- mental model -->
+    <div class="sec">
+      <span class="sec-eyebrow">The short version</span>
+      <h2>ChatGPT is a place you visit. OpenClaw is a colleague who texts.</h2>
+      <p>OpenClaw is a free, open-source program that runs on <strong>your own computer</strong> — not in a company's cloud. It wires an AI model you choose (Claude, GPT, others) into your real life: it reads and sends messages on WhatsApp, Telegram, Discord, Signal and a dozen more, browses the web, manages files, runs scheduled tasks, and acts on your behalf around the clock.</p>
+      <div class="vs2">
+        <div class="c cloud"><div class="h">☁️ A cloud assistant</div><p>You open an app and start a conversation. It waits for you, in someone else's data center.</p></div>
+        <div class="c claw"><div class="h">🦞 OpenClaw</div><p>Lives on your machine, reachable from the chat apps you already use, working on your schedule whether you're at a keyboard or not.</p></div>
+      </div>
+      <div class="callout">
+        <span class="lbl">The trade in one line</span>
+        <p>OpenClaw gives you more power and more privacy than any cloud assistant — in exchange for making <em>you</em> the IT department. That trade is the whole story, and it's why the very next lesson is entirely about safety.</p>
+      </div>
     </div>
 
-    <h2><span class="num">01</span> Where it came from (and why the names keep changing)</h2>
-    <p>In late 2025, developer Peter Steinberger released a scrappy personal project called <strong>ClawdBot</strong> — an agent that let Claude run on his Mac and talk to him over WhatsApp. It went viral, got renamed <strong>Moltbot</strong> (lobsters molt — the community leaned into the joke), and in January 2026 settled on <strong>OpenClaw</strong>. By April 2026 it had crossed 250,000 GitHub stars — making it one of the fastest-growing open-source projects ever.</p>
-    <p>In February 2026, Steinberger announced he was joining OpenAI. The project didn't die — it's community-run, with releases still shipping at a pace most commercial software can't match. That pace is part of the appeal and part of the risk: features arrive weekly, and so do the security patches.</p>
-    <p>One name you'll see that is <em>not</em> part of the project: <strong>Moltbook</strong>, a social network where OpenClaw agents post and talk to each other autonomously. It's a fascinating, slightly unhinged corner of the internet — but it's an independent third-party site, not something your agent needs or should join by default.</p>
-
-    <h2><span class="num">02</span> What it can actually do</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">1</div><h3>Meet you in your own chat apps</h3></div>
-      <p>This is the signature feature. Once running, your agent is reachable from WhatsApp, Telegram, Slack, Discord, Signal, iMessage, Microsoft Teams, and more than a dozen others. No new app to open — your assistant is just another contact.</p>
-    </div>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">2</div><h3>Act, not just answer</h3></div>
-      <p>Out of the box it can browse the web, read and write files on its machine, run shell commands, schedule recurring jobs (think: a 7am briefing built from your calendar and the news), and respond to webhooks from other services. This is what people mean by "agent" — it does things, not just says things.</p>
-    </div>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">3</div><h3>Learn new tricks via "skills"</h3></div>
-      <p>Skills are add-on instruction packs — check your email, control smart-home gear, track a portfolio. There's an official marketplace (ClawHub) with thousands of community-built skills. Treat it like a flea market, not an app store: powerful, uncurated, and — as we cover hard in Lessons 2 and 7 — a real security minefield.</p>
-    </div>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">4</div><h3>Use whatever AI brain you choose</h3></div>
-      <p>OpenClaw isn't a model — it's the body. You plug in the brain: Anthropic's Claude, OpenAI's GPT models, or others, via your own API key. Better model, better agent; you can also switch anytime. (Our <a href="/lessons/foundations/which-ai-for-which-job">which-AI-for-which-job framework</a> applies directly.)</p>
+    <!-- SIGNATURE: piece matcher -->
+    <div class="sec">
+      <span class="sec-eyebrow">Do it · tell the pieces apart</span>
+      <h2>Three names, three very different things.</h2>
+      <p>People blur these together and get burned. Match each description to its name.</p>
+      <div class="matcher">
+        <div class="matcher-bar"><span>Name the piece</span><span class="ct" id="matchCt">0 / 3</span></div>
+        <div id="matchRows"></div>
+      </div>
     </div>
 
-    <h2><span class="num">03</span> What it costs</h2>
-    <p>The software is free. Running it isn't quite:</p>
-    <ul>
-      <li><strong>Model usage:</strong> your agent burns API tokens every time it thinks. A lightly-used agent might cost a few dollars a month; a busy one doing daily research and long tasks can run $20–100+. You control this with model choice and limits.</li>
-      <li><strong>Hardware:</strong> it needs a machine that stays on — an old laptop, a Mac mini, a Raspberry Pi, or a small cloud server ($5–10/mo). We cover the safest options in Lesson 3.</li>
-      <li><strong>Your time:</strong> the honest line item. Setup is a 15–30 minute job, but ownership is ongoing — updates ship weekly, and an unmaintained agent is a security problem, not a convenience.</li>
-    </ul>
+    <!-- origin timeline -->
+    <div class="sec">
+      <span class="sec-eyebrow">Where it came from</span>
+      <h2>Why the name keeps changing.</h2>
+      <div class="tl">
+        <div class="tl-item"><div class="tl-when">Late 2025</div><div class="tl-what"><b>ClawdBot.</b> Developer Peter Steinberger wires Claude into his Mac, talking to him over WhatsApp. It goes viral.</div></div>
+        <div class="tl-item"><div class="tl-when">The rename</div><div class="tl-what"><b>Moltbot.</b> The community leans into the lobster joke — lobsters molt.</div></div>
+        <div class="tl-item"><div class="tl-when">Jan 2026</div><div class="tl-what"><b>OpenClaw.</b> The name settles for good.</div></div>
+        <div class="tl-item"><div class="tl-when">Feb 2026</div><div class="tl-what"><b>Steinberger joins OpenAI.</b> The project doesn't die — it's community-run, still shipping releases weekly.</div></div>
+        <div class="tl-item"><div class="tl-when">Apr 2026</div><div class="tl-what"><b>250,000+ GitHub stars</b> — one of the fastest-growing open-source projects ever.</div></div>
+      </div>
+    </div>
 
-    <h2><span class="num">04</span> Who it's for — and who it's not for</h2>
-    <h3>A good fit if…</h3>
-    <ul>
-      <li>You're comfortable with a terminal, or willing to learn — this is install-it-yourself software, not an app store download</li>
-      <li>You want an assistant that's private by design: your messages and files stay on hardware you control</li>
-      <li>You have real recurring tasks — monitoring, briefings, triage — that justify an always-on agent</li>
-      <li>You can give it an isolated machine to live on (this matters more than anything else; Lesson 3 explains why)</li>
-    </ul>
-    <h3>Skip it (for now) if…</h3>
-    <ul>
-      <li>You want zero maintenance — a cloud assistant like Claude, ChatGPT, or Copilot will serve you better with none of the risk</li>
-      <li>You planned to run it on your main work laptop, next to client files and saved passwords — that's the single most common mistake, and the next lesson shows you exactly what it costs people</li>
-      <li>Your employer restricts unapproved software — several major companies have banned OpenClaw on work devices outright</li>
-    </ul>
-    <div class="gotcha">"It's open source" does not mean "it's safe." It means the code is public — including for attackers, who in early 2026 found tens of thousands of badly-configured OpenClaw instances exposed on the open internet. The difference between a private assistant and a public liability is entirely in how you set it up. That's not a footnote to this track; it IS this track.</div>
+    <!-- capabilities -->
+    <div class="sec">
+      <span class="sec-eyebrow">What it can actually do</span>
+      <h2>It acts, it doesn't just answer.</h2>
+      <div class="caps">
+        <div class="cap"><div class="ci">💬</div><div class="cn">Meets you in your chat apps</div><div class="cd">WhatsApp, Telegram, Slack, Discord, Signal, iMessage, Teams — no new app, just another contact.</div></div>
+        <div class="cap"><div class="ci">⚙️</div><div class="cn">Acts, not just answers</div><div class="cd">Browses the web, reads/writes files, runs shell commands, schedules jobs, responds to webhooks.</div></div>
+        <div class="cap"><div class="ci">🧩</div><div class="cn">Learns via skills</div><div class="cd">Add-on instruction packs from ClawHub. Powerful and uncurated — a flea market, not an app store.</div></div>
+        <div class="cap"><div class="ci">🧠</div><div class="cn">Brings your own brain</div><div class="cd">OpenClaw is the body; you plug in the model (Claude, GPT…) via your own API key. Swap anytime.</div></div>
+      </div>
+    </div>
 
-    <h2><span class="num">05</span> How it compares</h2>
-    <p><strong>vs. ChatGPT / Claude / Gemini apps:</strong> those are conversations you start. OpenClaw is an agent that's always on, reachable by chat, and able to act on a machine — but you host, secure, and maintain it yourself.</p>
-    <p><strong>vs. Copilot:</strong> Copilot lives inside your Microsoft 365 work world and is managed by your employer. OpenClaw is the opposite end of the spectrum: total freedom, total responsibility, and absolutely not for company data without IT's blessing.</p>
-    <p><strong>vs. Claude Cowork / Claude Code:</strong> Anthropic's own agentic tools run with a vendor's guardrails and support. OpenClaw trades those guardrails for reach (your chat apps, your hardware, 24/7) — that's precisely why the security bar is on you.</p>
-    <p><strong>And the fact that tells you where this is going:</strong> Microsoft's new always-on agent for Microsoft 365 — <em>Scout</em>, announced June 2026 — is built on the OpenClaw framework, wrapped in enterprise governance (its own managed identity, IT policy controls). The open-source lobster you can run tonight is the same foundation Microsoft chose for its enterprise autopilot. Learning OpenClaw isn't a hobbyist detour; it's an early look at the architecture your workplace tools are adopting.</p>
+    <!-- cost -->
+    <div class="sec">
+      <span class="sec-eyebrow">What it costs</span>
+      <h2>Free software, real running costs.</h2>
+      <div class="cost">
+        <div class="cost-row"><span class="ci">🔑</span><span class="cl"><b>Model usage</b> — it burns API tokens every time it thinks. You control it with model choice + limits.</span><span class="cv">$ few → $20–100+/mo</span></div>
+        <div class="cost-row"><span class="ci">🖥️</span><span class="cl"><b>An always-on machine</b> — old laptop, Mac mini, Raspberry Pi, or a small cloud server.</span><span class="cv">$0 → ~$10/mo</span></div>
+        <div class="cost-row"><span class="ci">⏱️</span><span class="cl"><b>Your time</b> — 15–30 min to set up, but ownership is ongoing; updates ship weekly.</span><span class="cv">the honest line</span></div>
+      </div>
+    </div>
+
+    <!-- FIT CHECK -->
+    <div class="sec">
+      <span class="sec-eyebrow">Do it · is it for you?</span>
+      <h2>Power and privacy, or none of the upkeep?</h2>
+      <p>Mark each as you or not-you. The read updates as you go.</p>
+      <div class="fit">
+        <div class="fit-bar">🦞 Fit check</div>
+        <div class="fit-rows" id="fitRows"></div>
+        <div class="fit-result" id="fitResult">Mark the statements above to see your read.</div>
+      </div>
+      <div class="callout warn">
+        <span class="lbl">Hard stops</span>
+        <p>Two situations are flat "not yet," whatever your score: you planned to run it on your <b>main work laptop</b> next to client files and saved passwords (the single most common mistake), or your <b>employer restricts unapproved software</b> — several major companies have banned OpenClaw on work devices outright.</p>
+      </div>
+    </div>
+
+    <!-- the gotcha -->
+    <div class="sec">
+      <span class="sec-eyebrow">The part the hype skips</span>
+      <h2>"Open source" does not mean "safe."</h2>
+      <p>It means the code is public — including for attackers, who in early 2026 found tens of thousands of badly-configured OpenClaw instances exposed on the open internet. The difference between a private assistant and a public liability is <em>entirely</em> in how you set it up. That's not a footnote to this track; it <strong>is</strong> this track.</p>
+      <div class="callout">
+        <span class="lbl">Where this is going</span>
+        <p>Microsoft's new always-on agent for Microsoft 365 — <b>Scout</b>, announced June 2026 — is built on the OpenClaw framework, wrapped in enterprise governance. The open-source lobster you can run tonight is the same foundation Microsoft chose for its enterprise autopilot. Learning OpenClaw is an early look at the architecture your workplace tools are adopting.</p>
+      </div>
+    </div>
 
     <div class="challenge">
-      <h2 style="margin-top: 0;">Before you install anything</h2>
-      <p>Read the next lesson first. It's free, it's honest, and it covers what the hype videos don't: the exposed-instance scans, the malicious-skill problem, and a clear decision framework for whether you should run OpenClaw at all. Ten minutes there saves real grief later.</p>
+      <h2>Before you install anything</h2>
+      <p>Read the next lesson first. It's free, it's honest, and it covers what the hype videos don't: the exposed-instance scans, the malicious-skill problem, and a clear framework for whether you should run OpenClaw at all. Ten minutes there saves real grief later.</p>
       <div class="btn-row">
         <a href="/lessons/openclaw/is-openclaw-safe" class="btn">Next: Is OpenClaw safe? →</a>
-        <a href="/lessons/openclaw/" class="btn ghost">All OpenClaw lessons →</a>
+        <a href="/lessons/openclaw/" class="btn ghost">All OpenClaw lessons</a>
       </div>
     </div>
 
     <div class="checklist">
       <h3>What you can do now</h3>
       <ul>
-        <li>Explain what OpenClaw is: an open-source AI agent that runs on your own machine and reaches you via your chat apps</li>
-        <li>Tell the project's pieces apart: OpenClaw (the agent), ClawHub (the skills marketplace), Moltbook (an unaffiliated agent social network)</li>
-        <li>Name what it can do: messaging, browsing, files, shell, schedules, webhooks, and add-on skills</li>
+        <li>Explain what OpenClaw is: an open-source AI agent on your own machine, reachable via your chat apps</li>
+        <li>Tell the pieces apart: OpenClaw (the agent), ClawHub (the skills marketplace), Moltbook (an unaffiliated agent social network)</li>
+        <li>Name what it does: messaging, browsing, files, shell, schedules, webhooks, and add-on skills</li>
         <li>Estimate the real costs: API usage, an always-on machine, and your maintenance time</li>
         <li>Make the fit call: power + privacy + responsibility, or a cloud assistant with none of the upkeep</li>
       </ul>
@@ -185,17 +313,206 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <div class="next-up">
       <span class="free-tag">Free</span>
       <div class="lbl" style="margin-top: 14px;">Up next in OpenClaw, Safely</div>
-      <h3>Lesson 2 · Is OpenClaw safe? The honest risk briefing</h3>
-      <p>42,900 exposed instances. A poisoned skills marketplace. Corporate bans. What the security research actually found, and a clear framework for deciding whether to run it. <a href="/lessons/openclaw/is-openclaw-safe">Read it free →</a></p>
+      <h3>Lesson 02 · Is OpenClaw safe? The honest risk briefing</h3>
+      <p>Tens of thousands of exposed instances. A poisoned skills marketplace. Corporate bans. What the security research actually found, and a clear framework for deciding whether to run it. <a href="/lessons/openclaw/is-openclaw-safe">Read it free →</a></p>
     </div>
   </div>
 </article>
 <footer>
   <div class="footer-inner">
-    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with the OpenClaw project.</div>
+    <div>© 2026 LearningGPT · Independent. Not affiliated with the OpenClaw project.</div>
     <a href="/lessons/openclaw/" style="color: var(--text-dim);">← All OpenClaw lessons</a>
   </div>
 </footer>
+
+<!-- ── AI COACH FAB ── -->
+<button class="coach-fab" id="coachFab" title="Ask the AI Coach">
+  🎓
+  <span class="coach-fab-badge">AI</span>
+</button>
+<!-- ── AI COACH DRAWER ── -->
+<div class="coach-drawer" id="coachDrawer">
+  <div class="coach-drawer-head">
+    <div class="coach-avatar">🎓</div>
+    <div class="coach-head-info">
+      <div class="coach-head-name">AI Coach</div>
+      <div class="coach-head-sub">Ask anything about this lesson</div>
+    </div>
+    <button class="coach-close" id="coachClose">✕</button>
+  </div>
+  <div class="coach-messages" id="coachMessages">
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — what OpenClaw is, what it costs, whether it's a fit for you. What's on your mind?</div>
+  </div>
+  <div class="coach-limit" id="coachLimit">
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
+  </div>
+  <div class="coach-input-row">
+    <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
+    <button class="coach-send" id="coachSend">➤</button>
+  </div>
+</div>
+
+<script id="lessonScript">
+(function () {
+  // ── PIECE MATCHER ──
+  var ROWS = [
+    { desc: 'The agent itself — the open-source program that runs on your machine.', a: 'OpenClaw',
+      why: 'OpenClaw is the body: it connects a model you choose to your chat apps, files, and schedule.' },
+    { desc: 'The marketplace of add-on "skills" — thousands of community packs, powerful but uncurated.', a: 'ClawHub',
+      why: 'ClawHub is the skills store. Treat it like a flea market — Lessons 2 and 7 cover the malware problem.' },
+    { desc: 'A social network where agents post and talk to each other autonomously — not part of the project.', a: 'Moltbook', flag: true,
+      why: 'Moltbook is a fascinating but independent third-party site. Your agent doesn\'t need it and shouldn\'t join by default.' }
+  ];
+  var NAMES = ['OpenClaw', 'ClawHub', 'Moltbook'];
+  var matchRows = document.getElementById('matchRows');
+  var matchCt = document.getElementById('matchCt');
+  var matched = 0;
+  ROWS.forEach(function (r) {
+    var row = document.createElement('div');
+    row.className = 'mrow';
+    var btns = NAMES.map(function (n) { return '<button class="mbtn" data-n="' + n + '">' + n + '</button>'; }).join('');
+    row.innerHTML = '<div class="mrow-desc">' + r.desc + '</div><div class="mrow-btns">' + btns + '</div><div class="mrow-fb' + (r.flag ? ' flag' : '') + '"></div>';
+    matchRows.appendChild(row);
+    var fb = row.querySelector('.mrow-fb');
+    var btns2 = row.querySelectorAll('.mbtn');
+    var done = false;
+    btns2.forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (done) return; done = true;
+        var ok = b.dataset.n === r.a;
+        btns2.forEach(function (x) { x.disabled = true; if (x.dataset.n === r.a) x.classList.add('right'); });
+        if (!ok) b.classList.add('wrong');
+        fb.innerHTML = '<b>' + r.a + '.</b> ' + r.why;
+        fb.classList.add('show');
+        matched++; matchCt.textContent = matched + ' / ' + ROWS.length;
+      });
+    });
+  });
+
+  // ── FIT CHECK ──
+  var FITS = [
+    "I'm comfortable in a terminal — or willing to learn",
+    "I want an assistant that's private by design",
+    "I have real recurring tasks worth an always-on agent",
+    "I can give it an isolated machine to live on"
+  ];
+  var fitRows = document.getElementById('fitRows');
+  var fitResult = document.getElementById('fitResult');
+  var answers = {};
+  function render() {
+    var ans = Object.keys(answers).length;
+    var yes = Object.values(answers).filter(Boolean).length;
+    if (ans < FITS.length) {
+      fitResult.innerHTML = '<b>' + ans + ' of ' + FITS.length + '</b> marked — finish to see your read.';
+      return;
+    }
+    if (yes >= 3) {
+      fitResult.innerHTML = '<span class="verdict good">Strong fit.</span> ' + yes + '/4 — you have the appetite, the use case, and (crucially) the isolated hardware. Read Lesson 2, then set it up the safe way.';
+    } else {
+      fitResult.innerHTML = '<span class="verdict maybe">Maybe a cloud assistant instead.</span> ' + yes + '/4 — especially if "isolated machine" is a no, a managed assistant (Claude, ChatGPT, Copilot) gives you most of the value with none of the upkeep or risk.';
+    }
+  }
+  FITS.forEach(function (t, i) {
+    var row = document.createElement('div');
+    row.className = 'fit-row';
+    row.innerHTML = '<div class="ft">' + t + '</div><div class="fit-toggle"><button class="fbtn" data-v="yes">That\'s me</button><button class="fbtn" data-v="no">Not me</button></div>';
+    fitRows.appendChild(row);
+    row.querySelectorAll('.fbtn').forEach(function (b) {
+      b.addEventListener('click', function () {
+        answers[i] = b.dataset.v === 'yes';
+        row.querySelectorAll('.fbtn').forEach(function (x) { x.classList.remove('on-yes', 'on-no'); });
+        b.classList.add(b.dataset.v === 'yes' ? 'on-yes' : 'on-no');
+        render();
+      });
+    });
+  });
+})();
+</script>
+
+<script id="coachScript">
+(function() {
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: OpenClaw explained — a personal AI agent that lives on your computer\nTRACK: OpenClaw, Safely (Lesson 01, Free — the plain-English foundation)\n\nLESSON CONTENT SUMMARY:\nOpenClaw is a free, open-source program (250,000+ GitHub stars by April 2026) that runs on YOUR OWN computer — not a company's cloud. It connects an AI model you choose (Claude, GPT, others, via your own API key) to your real life: it reads/sends messages on WhatsApp, Telegram, Discord, Signal, Slack, iMessage, Teams and more, browses the web, manages files, runs shell commands, schedules recurring jobs, and responds to webhooks — acting on your behalf around the clock. The mental model: a cloud assistant (ChatGPT) is a place you VISIT; OpenClaw is a colleague who TEXTS you, living on your machine and working on your schedule. THE TRADE: more power and more privacy than any cloud assistant, in exchange for making YOU the IT department — which is why the whole track is about safety.\n\nThree pieces people blur together: OPENCLAW = the agent (the program on your machine). CLAWHUB = the skills marketplace — thousands of community 'skill' instruction packs, powerful but uncurated; treat it like a flea market, not an app store (security minefield, covered in Lessons 2 and 7). MOLTBOOK = a third-party social network where agents post to each other autonomously — NOT part of the project; your agent doesn't need it and shouldn't join by default.\n\nOrigin: late 2025 developer Peter Steinberger released ClawdBot (Claude on his Mac via WhatsApp); it went viral, was renamed Moltbot (lobsters molt), settled on OpenClaw in Jan 2026, hit 250k+ stars by April 2026. Steinberger joined OpenAI Feb 2026; the project is community-run and ships releases weekly (that pace is both appeal and risk — features and security patches both arrive weekly).\n\nWhat it costs: software is free, but (1) MODEL USAGE — burns API tokens; a light agent is a few $/mo, a busy one $20-100+/mo, controlled by model choice and limits; (2) HARDWARE — an always-on machine (old laptop, Mac mini, Raspberry Pi, or a $5-10/mo cloud server); (3) YOUR TIME — 15-30 min setup but ongoing ownership, since an unmaintained agent is a security problem.\n\nWho it's FOR: people comfortable in a terminal (or willing to learn), who want privacy-by-design, have real recurring tasks (monitoring, briefings, triage), and can give it an ISOLATED machine (matters most — Lesson 3). SKIP it (for now) if: you want zero maintenance (use a cloud assistant), you planned to run it on your MAIN WORK LAPTOP next to client files and passwords (the most common mistake), or your EMPLOYER restricts unapproved software (several major companies banned OpenClaw on work devices).\n\nKey truth: 'open source' does NOT mean 'safe' — it means the code is public, including for attackers, who in early 2026 found tens of thousands of badly-configured exposed instances on the open internet. The difference between a private assistant and a public liability is entirely in how you set it up. Forward note: Microsoft's always-on Microsoft 365 agent 'Scout' (announced June 2026) is built on the OpenClaw framework wrapped in enterprise governance.\n\nNext lesson (Lesson 2, free): 'Is OpenClaw safe? The honest risk briefing' — the exposed-instance scans, the malicious-skill problem, corporate bans, and a green/yellow/red decision framework.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more\n- Be practical and honest about both the power and the risks\n- If asked about something not in this lesson, briefly answer and point to where they can learn more (e.g. the safety lesson, the setup lesson)\n- Never make up features that don't exist\n- Plain conversational text only — no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var MAX_FREE = 3;
+  var count = 0;
+  var isThinking = false;
+  var history = [];
+  var fab = document.getElementById('coachFab');
+  var drawer = document.getElementById('coachDrawer');
+  var closeBtn = document.getElementById('coachClose');
+  var msgs = document.getElementById('coachMessages');
+  var input = document.getElementById('coachInput');
+  var sendBtn = document.getElementById('coachSend');
+  var limitBar = document.getElementById('coachLimit');
+  if (!fab) return;
+  fab.addEventListener('click', function() { toggle(true); });
+  closeBtn.addEventListener('click', function() { toggle(false); });
+  function toggle(open) {
+    drawer.classList.toggle('open', open);
+    if (open) setTimeout(function() { input.focus(); }, 300);
+  }
+  input.addEventListener('input', function() {
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 100) + 'px';
+  });
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+  });
+  sendBtn.addEventListener('click', send);
+  function addMsg(text, type) {
+    var d = document.createElement('div');
+    d.className = 'msg msg-' + type;
+    d.textContent = text;
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+    return d;
+  }
+  function addThinking() {
+    var d = document.createElement('div');
+    d.className = 'msg-thinking';
+    d.innerHTML = '<div class="thinking-dot"></div><div class="thinking-dot"></div><div class="thinking-dot"></div>';
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+    return d;
+  }
+  async function send() {
+    var text = input.value.trim();
+    if (!text || isThinking) return;
+    if (count >= MAX_FREE) {
+      limitBar.classList.add('visible');
+      input.disabled = true;
+      sendBtn.disabled = true;
+      return;
+    }
+    count++;
+    if (count >= MAX_FREE) limitBar.classList.add('visible');
+    addMsg(text, 'user');
+    history.push({ role: 'user', content: text });
+    input.value = '';
+    input.style.height = 'auto';
+    isThinking = true;
+    sendBtn.disabled = true;
+    var thinking = addThinking();
+    try {
+      var res = await fetch('/api/playground', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ coach: true, lessonCoach: true, lessonContext: LESSON_CONTEXT, history: history })
+      });
+      thinking.remove();
+      var data = await res.json();
+      var reply = (data && data.coach) ? data.coach : "Sorry, something went wrong. Try again in a moment.";
+      addMsg(reply, 'coach');
+      history.push({ role: 'assistant', content: reply });
+    } catch(err) {
+      thinking.remove();
+      addMsg("Something went wrong — try again in a moment.", 'coach');
+    } finally {
+      isThinking = false;
+      sendBtn.disabled = count >= MAX_FREE;
+    }
+  }
+})();
+</script>
 <script src="/gate.js"></script>
 </body>
 </html>

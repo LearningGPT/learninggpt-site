@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
-:root{--bg:#0a0a1a;--bg-soft:#14142b;--surface:#1c1c3d;--line:rgba(255,255,255,0.1);--line-strong:rgba(255,255,255,0.16);--text:#ffffff;--text-dim:#cfcfe0;--text-mute:#9a9ab0;--brand:#7c5cff;--brand-2:#5b8def;--accent:#44e0a4;--warn:#ffb547;--track:#2dd4a7;--radius:14px;--radius-lg:20px;--container:760px;}
+:root{--bg:#0a0a1a;--bg-soft:#14142b;--surface:#1c1c3d;--line:rgba(255,255,255,0.1);--line-strong:rgba(255,255,255,0.16);--text:#ffffff;--text-dim:#cfcfe0;--text-mute:#9a9ab0;--brand:#7c5cff;--brand-2:#5b8def;--accent:#44e0a4;--warn:#ffb547;--danger:#ff6b8a;--track:#2dd4a7;--radius:14px;--radius-lg:20px;--container:760px;}
 *{box-sizing:border-box;}html,body{margin:0;padding:0;}
 body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.85;font-size:18.5px;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
 a{color:#7fe3c8;text-decoration:none;}a:hover{color:#fff;}
@@ -34,8 +34,6 @@ nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(18
 .lesson-meta{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:15px;color:var(--text-mute);margin-bottom:22px;}
 .lesson-meta .chip{padding:5px 13px;border:1px solid rgba(45,212,167,0.4);border-radius:999px;font-size:13px;color:var(--track);background:rgba(45,212,167,0.12);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;}
 .lesson-meta .chip-free{border-color:rgba(68,224,164,0.45);color:#44e0a4;background:rgba(68,224,164,0.12);}
-.lesson-meta .chip-pro{border-color:rgba(124,92,255,0.5);color:#b9a6ff;background:rgba(124,92,255,0.14);}
-.lesson-meta .chip-pro-plus{border-color:rgba(255,181,71,0.5);color:#ffce82;background:rgba(255,181,71,0.14);}
 .lesson-meta .dot{width:5px;height:5px;border-radius:50%;background:var(--text-mute);}
 .lesson h1{font-size:clamp(30px,4.6vw,44px);font-weight:800;line-height:1.18;letter-spacing:-0.01em;margin:0 0 20px;}
 .lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;background:linear-gradient(135deg,#2dd4a7 0%,#5b8def 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;padding-right:0.12em;}
@@ -53,9 +51,32 @@ nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(18
 .prompt .lbl{display:block;font-size:13px;letter-spacing:0.4px;text-transform:uppercase;color:var(--track);font-weight:700;margin-bottom:8px;}
 .note{background:rgba(255,181,71,0.08);border:1px solid rgba(255,181,71,0.3);border-radius:12px;padding:18px 20px;margin:18px 0;font-size:17.5px;line-height:1.75;}
 .note b{color:var(--warn);}
+
+/* ── SCAM SPOTTER ── */
+.spotter{margin:24px 0;}
+.spot-bar{display:flex;align-items:center;justify-content:space-between;font-size:15px;color:var(--text-dim);margin-bottom:14px;}
+.spot-bar .ct{font-weight:700;color:var(--track);}
+.scard{border:1px solid var(--line);border-radius:18px;background:var(--surface);padding:20px;margin-bottom:16px;}
+.sc-from{font-size:14px;color:var(--text-mute);margin-bottom:8px;}
+.sc-bubble{background:rgba(0,0,0,0.28);border:1px solid var(--line);border-radius:14px;padding:16px 18px;font-size:17.5px;line-height:1.6;color:#eaeaf5;margin-bottom:16px;}
+.sc-btns{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:520px){.sc-btns{grid-template-columns:1fr;}}
+.scbtn{font-family:inherit;font-size:16px;font-weight:700;padding:15px 12px;border-radius:13px;border:1.5px solid var(--line-strong);background:rgba(255,255,255,0.04);color:var(--text);cursor:pointer;transition:all .15s;}
+.scbtn:hover:not(:disabled){border-color:var(--track);}
+.scbtn:disabled{cursor:default;}
+.scbtn.safe.right{background:rgba(68,224,164,0.18);border-color:var(--accent);color:#bdf5e2;}
+.scbtn.scam.right{background:rgba(255,107,138,0.16);border-color:var(--danger);color:#ffc0cf;}
+.scbtn.wrong{opacity:0.5;}
+.sc-fb{margin-top:14px;font-size:16.5px;line-height:1.65;color:var(--text-dim);display:none;padding:14px 16px;border-radius:12px;}
+.sc-fb.show{display:block;animation:fadeIn .3s ease;}
+.sc-fb.scam{background:rgba(255,107,138,0.1);border:1px solid rgba(255,107,138,0.3);}
+.sc-fb.safe{background:rgba(68,224,164,0.08);border:1px solid rgba(68,224,164,0.3);}
+.sc-fb b{color:#fff;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
 .challenge{margin:50px 0 36px;background:linear-gradient(135deg,rgba(45,212,167,0.14),rgba(91,141,239,0.1));border:1px solid rgba(45,212,167,0.3);border-radius:var(--radius-lg);padding:32px;}
 .challenge h2{margin-top:0;}
-.challenge .btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#2dd4a7,#5b8def);color:white;padding:14px 26px;border-radius:11px;font-weight:700;font-size:16px;}
+.challenge .btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#2dd4a7,#5b8def);color:white;padding:15px 28px;border-radius:11px;font-weight:700;font-size:17px;text-decoration:none;}
 .challenge .btn:hover{color:white;}
 .challenge .btn.ghost{background:rgba(255,255,255,0.06);border:1px solid var(--line-strong);}
 .challenge .btn-row{margin-top:22px;display:flex;gap:12px;flex-wrap:wrap;}
@@ -71,8 +92,6 @@ nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(18
 .next-up h3{margin:0 0 8px;font-size:21px;}.next-up p{margin:0 0 14px;color:var(--text-dim);font-size:17px;}
 .next-up .tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:0.5px;padding:4px 12px;border-radius:999px;}
 .tag-pro{background:rgba(124,92,255,0.18);color:#b9a6ff;border:1px solid rgba(124,92,255,0.35);}
-.tag-pro-plus{background:rgba(255,181,71,0.18);color:#ffce82;border:1px solid rgba(255,181,71,0.35);}
-.tag-free{background:rgba(68,224,164,0.16);color:#44e0a4;border:1px solid rgba(68,224,164,0.35);}
 footer{border-top:1px solid var(--line);padding:30px 0;}
 .footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;font-size:15px;color:var(--text-mute);flex-wrap:wrap;gap:12px;}
 @media(max-width:600px){.footer-inner{flex-direction:column;text-align:center;}}
@@ -105,14 +124,36 @@ footer{border-top:1px solid var(--line);padding:30px 0;}
 <div class="lesson-meta"><span class="chip">AI for Seniors</span><span class="chip chip-free">Free</span><span>~7 min</span><span class="dot"></span><span>Easy read</span></div>
 <h1>Spot the scam &mdash; <span class='serif'>and never get fooled.</span></h1>
 <p class="deck">Here's the most important lesson on this whole site. Scammers now use AI to sound more real than ever &mdash; but once you know what to look for, they're easy to catch. And AI can actually help you check.</p>
-<h2><span class="num">The idea</span></h2><h3>Scams almost always do two things: rush you and scare you.</h3><p>A real bank, the government, or a family member will never demand that you act this second, keep it a secret, or pay with gift cards. Scammers create panic on purpose, because panicked people stop thinking clearly. The moment a message rushes or frightens you, slow down. That pause is your best protection.</p><div class="callout"><span class="lbl">Remember</span><p>The single rule that stops almost every scam: if someone contacts YOU asking for money or information, hang up or stop, and reach out to them yourself using a number you already trust &mdash; not the one they gave you.</p></div>
-<h2><span class="num">Step 1</span>Know the warning signs</h2><p>These are the big red flags. If you see any of them, it's very likely a scam: a sense of urgency ('act now or else'), a request for secrecy, asking for gift cards, wire transfers, or your password, or a message that's oddly worded or comes from a number you don't know.</p><h2><span class="num">Step 2</span>Never share these</h2><p>No legitimate company will ever ask for these out of the blue: your passwords, the security codes texted to your phone, your full Social Security number, or your bank or card numbers over a call or text you didn't start. If asked, that's your answer &mdash; it's a scam.</p><h2><span class="num">Step 3</span>Let AI check it for you</h2><p>This is the wonderful part. If you get a message and you're not sure, you can paste it into an AI helper and simply ask. It will point out the warning signs in plain language.</p><div class="prompt"><span class="lbl">Type this (paste the message in)</span>I received this message and I'm not sure about it: [paste the message]. Does this look like a scam? What are the warning signs, and what should I do?</div>
+
+<h2><span class="num">The idea</span></h2>
+<h3>Scams almost always do two things: rush you and scare you.</h3>
+<p>A real bank, the government, or a family member will never demand that you act this second, keep it a secret, or pay with gift cards. Scammers create panic on purpose, because panicked people stop thinking clearly. The moment a message rushes or frightens you, slow down. That pause is your best protection.</p>
+<div class="callout"><span class="lbl">Remember</span><p>The single rule that stops almost every scam: if someone contacts YOU asking for money or information, hang up or stop, and reach out to them yourself using a number you already trust &mdash; not the one they gave you.</p></div>
+
+<h2><span class="num">Try it</span>Is this a scam? You decide</h2>
+<p>Read each message below and tap your answer &mdash; there's no penalty for guessing. You'll see kindly what the tell-tale signs are.</p>
+<div class="spotter">
+  <div class="spot-bar"><span>Tap your answer on each one</span><span class="ct" id="spotCt">0 of 3</span></div>
+  <div id="spotCards"></div>
+</div>
+
+<h2><span class="num">The rules</span>What to never share</h2>
+<p>No legitimate company will ever ask for these out of the blue: your <strong>passwords</strong>, the <strong>security codes texted to your phone</strong>, your <strong>full Social Security number</strong>, or your <strong>bank or card numbers</strong> over a call or text you didn't start. If asked, that's your answer &mdash; it's a scam.</p>
+
+<h2><span class="num">The wonderful part</span>Let AI check it for you</h2>
+<p>If you get a message and you're not sure, you can paste it into an AI helper and simply ask. It will point out the warning signs in plain language.</p>
+<div class="prompt"><span class="lbl">Type this (paste the message in)</span>I received this message and I'm not sure about it: [paste the message]. Does this look like a scam? What are the warning signs, and what should I do?</div>
+
 <div class="note"><b>Stay safe:</b> Scammers can now fake a loved one's voice on a phone call asking for emergency money. If you ever get a call like that, hang up and call that family member back on their real number. A real emergency will survive a two-minute pause to verify.</div>
+
 <div class="challenge"><h2 style="margin-top:0;">Practice spotting one</h2><p>Let's build the habit so it's automatic:</p><ol><li>Think of a recent text or email you weren't sure about (or wait for the next one).</li><li>Before doing anything, ask yourself: is it rushing me or scaring me?</li><li>Paste it into an AI helper and ask 'Is this a scam?'</li><li>If in any doubt, contact the company or person directly using a number you already trust.</li></ol><div class="btn-row"><a href="/seniors" class="btn ghost">Back to AI for Seniors</a></div></div>
+
 <div class="checklist"><h3>What you can do now</h3><ul><li>Recognize the warning signs: urgency, secrecy, gift cards, password requests</li><li>Know the things you should never share</li><li>Paste a suspicious message into AI and ask if it's a scam</li><li>Use the golden rule: if they contacted you, verify it yourself before acting</li></ul></div>
+
 <div class="next-up"><span class="tag tag-pro">Pro</span><div class="lbl" style="margin-top:12px;">Up next</div><h3>Write anything</h3><p>Letters, emails, and notes made easy &mdash; in your own voice.</p><a href="/lessons/seniors/write-anything">Go to the next lesson &rarr;</a></div>
 </div></article>
-<footer><div class="footer-inner"><div>&copy; 2026 LearningGPT, Inc. &middot; Independent.</div><a href="/seniors" style="color:var(--text-dim);">&larr; Back to AI for Seniors</a></div></footer>
+<footer><div class="footer-inner"><div>&copy; 2026 LearningGPT &middot; Independent.</div><a href="/seniors" style="color:var(--text-dim);">&larr; Back to AI for Seniors</a></div></footer>
+
 <button class="coach-fab" id="coachFab" title="Ask the AI Coach">&#127891;<span class="coach-fab-badge">AI</span></button>
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head"><div class="coach-avatar">&#127891;</div><div><div class="coach-head-name">Your AI Helper</div><div class="coach-head-sub">Ask me anything &mdash; no question is too small</div></div><button class="coach-close" id="coachClose">&times;</button></div>
@@ -120,6 +161,59 @@ footer{border-top:1px solid var(--line);padding:30px 0;}
   <div class="coach-limit" id="coachLimit">Free lessons include 3 questions with your helper. <a href="/pricing">Go Pro</a> for unlimited help on every lesson.</div>
   <div class="coach-input-row"><textarea class="coach-input" id="coachInput" placeholder="Type your question here..." rows="1"></textarea><button class="coach-send" id="coachSend">&#10148;</button></div>
 </div>
+
+<script id="lessonScript">
+(function(){
+  var CARDS = [
+    { from: 'Text from an unknown number', msg: 'URGENT: Your bank account has been LOCKED. You must verify within 1 hour or lose access. Tap here now: bit-ly-secure-verify.co',
+      answer: 'scam',
+      why: 'This one rushes you ("within 1 hour"), scares you ("LOCKED"), comes from a number you don\'t know, and pushes a strange link. A real bank won\'t threaten you by text. Don\'t tap the link — if worried, call the number on the back of your card.' },
+    { from: 'Text saying it\'s a family member', msg: 'Hi Grandma, it\'s me. I\'m in trouble and need $500 in gift cards right away. Please don\'t tell Mom and Dad.',
+      answer: 'scam',
+      why: 'Secrecy ("don\'t tell Mom"), gift cards, and urgency together are a classic scam — and scammers can even fake a familiar voice. Hang up or stop, and call your real family member back on their own number to check. A true emergency survives a two-minute pause.' },
+    { from: 'Text from your pharmacy', msg: 'Reminder from Park Pharmacy: your prescription is ready for pickup. Our hours are 9am–6pm. Reply STOP to opt out.',
+      answer: 'safe',
+      why: 'This asks for no money, no passwords, no secrecy, and creates no panic — it\'s just a normal reminder. Still, if anything ever feels off, you can call the pharmacy using the number you already have for them. Calm and ordinary is usually genuine.' }
+  ];
+  var wrap = document.getElementById('spotCards');
+  var ct = document.getElementById('spotCt');
+  var done = 0;
+  CARDS.forEach(function(c){
+    var card = document.createElement('div');
+    card.className = 'scard';
+    card.innerHTML =
+      '<div class="sc-from">' + c.from + '</div>' +
+      '<div class="sc-bubble">' + c.msg + '</div>' +
+      '<div class="sc-btns">' +
+        '<button class="scbtn safe" data-a="safe">🟢 Looks safe</button>' +
+        '<button class="scbtn scam" data-a="scam">🔴 Looks like a scam</button>' +
+      '</div>' +
+      '<div class="sc-fb"></div>';
+    wrap.appendChild(card);
+    var fb = card.querySelector('.sc-fb');
+    var btns = card.querySelectorAll('.scbtn');
+    var answered = false;
+    btns.forEach(function(b){
+      b.addEventListener('click', function(){
+        if (answered) return; answered = true;
+        var correct = b.dataset.a === c.answer;
+        btns.forEach(function(x){
+          x.disabled = true;
+          if (x.dataset.a === c.answer) x.classList.add('right');
+          else x.classList.add('wrong');
+        });
+        fb.className = 'sc-fb show ' + c.answer;
+        var lead = correct
+          ? (c.answer === 'scam' ? '<b>Yes — that\'s a scam.</b> ' : '<b>Right — this one\'s fine.</b> ')
+          : (c.answer === 'scam' ? '<b>This one is a scam.</b> ' : '<b>This one is actually safe.</b> ');
+        fb.innerHTML = lead + c.why;
+        done++; ct.textContent = done + ' of 3';
+      });
+    });
+  });
+})();
+</script>
+
 <script>
 (function(){
   var LESSON_CONTEXT = "You are a kind, patient AI learning coach inside a lesson on LearningGPT.ai, helping a senior who may be new to technology.\n\nLESSON: Spot the scam and stay safe (AI for Seniors, Free)\n\nWHAT THIS LESSON COVERS:\nThis free lesson teaches scam safety, the most important lesson on the site. Core idea: scams rush you and scare you on purpose; slow down. Warning signs: urgency, secrecy, requests for gift cards/wire transfers/passwords/codes, odd wording, unknown senders. Never share passwords, texted security codes, full SSN, or bank/card numbers to someone who contacted you. Golden rule: if someone contacts YOU asking for money or info, stop and reach out yourself using a trusted number. You can paste any suspicious message into AI and ask 'is this a scam?'. Warn about AI voice-cloning 'grandkid in trouble' calls - hang up and call the family member back on their real number. Be especially protective and clear here.\n\nYOUR ROLE:\n- Be warm, patient, and encouraging. Never make them feel silly. No question is too basic.\n- Use plain, simple words. Short sentences. No jargon. Explain any technical word.\n- Keep answers short - 2 to 4 sentences unless they ask for more.\n- For anything about health, money, or legal matters, gently remind them to confirm with a doctor, the bank, or a trusted person.\n- If a message looks like a possible scam, warn them clearly and kindly.\n- Plain conversational text only - no markdown symbols.\n- Do not start with 'Great question!' or similar filler.";

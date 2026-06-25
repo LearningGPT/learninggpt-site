@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Talk, don't type | AI for Seniors | LearningGPT</title>
-<meta name="description" content="Use AI by voice on your phone - a big help for tired eyes, stiff hands, or anyone who finds typing slow. Speak naturally and it understands." />
+<meta name="description" content="Use AI by voice — just speak, and it listens and talks back. Easy on tired eyes and hands." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#2dd4a7" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +13,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/seniors/talk-dont-type" />
 <meta property="og:title" content="Talk, don't type" />
-<meta property="og:description" content="Use AI by voice on your phone - a big help for tired eyes, stiff hands, or anyone who finds typing slow. Speak naturally and it understands." />
+<meta property="og:description" content="Use AI by voice — just speak, and it listens and talks back. Easy on tired eyes and hands." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -33,8 +33,6 @@ nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(18
 .lesson{padding:46px 0 100px;}
 .lesson-meta{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:15px;color:var(--text-mute);margin-bottom:22px;}
 .lesson-meta .chip{padding:5px 13px;border:1px solid rgba(45,212,167,0.4);border-radius:999px;font-size:13px;color:var(--track);background:rgba(45,212,167,0.12);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;}
-.lesson-meta .chip-free{border-color:rgba(68,224,164,0.45);color:#44e0a4;background:rgba(68,224,164,0.12);}
-.lesson-meta .chip-pro{border-color:rgba(124,92,255,0.5);color:#b9a6ff;background:rgba(124,92,255,0.14);}
 .lesson-meta .chip-pro-plus{border-color:rgba(255,181,71,0.5);color:#ffce82;background:rgba(255,181,71,0.14);}
 .lesson-meta .dot{width:5px;height:5px;border-radius:50%;background:var(--text-mute);}
 .lesson h1{font-size:clamp(30px,4.6vw,44px);font-weight:800;line-height:1.18;letter-spacing:-0.01em;margin:0 0 20px;}
@@ -46,16 +44,30 @@ nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(18
 .lesson p{font-size:18.5px;color:var(--text);margin:0 0 18px;line-height:1.85;}
 .lesson strong{font-weight:700;}.lesson em{font-style:italic;}
 .lesson ul,.lesson ol{padding-left:26px;margin:0 0 18px;}.lesson li{margin-bottom:10px;font-size:18px;line-height:1.7;}
-.callout{margin:26px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(45,212,167,0.12),rgba(91,141,239,0.07));border:1px solid rgba(45,212,167,0.3);border-radius:var(--radius-lg);}
-.callout .lbl{display:inline-block;font-size:13px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
-.callout p:last-child{margin-bottom:0;}
 .prompt{background:rgba(0,0,0,0.32);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:10px 0 16px;font-size:17px;color:var(--text);line-height:1.7;}
 .prompt .lbl{display:block;font-size:13px;letter-spacing:0.4px;text-transform:uppercase;color:var(--track);font-weight:700;margin-bottom:8px;}
 .note{background:rgba(255,181,71,0.08);border:1px solid rgba(255,181,71,0.3);border-radius:12px;padding:18px 20px;margin:18px 0;font-size:17.5px;line-height:1.75;}
 .note b{color:var(--warn);}
+
+/* ── MIC DEMO ── */
+.voice{margin:24px 0;border:1px solid rgba(45,212,167,0.3);border-radius:18px;background:var(--surface);padding:26px 20px;text-align:center;}
+.mic{width:108px;height:108px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(135deg,#2dd4a7,#5b8def);color:white;font-size:46px;display:grid;place-items:center;margin:0 auto;box-shadow:0 10px 30px rgba(45,212,167,0.4);transition:transform .15s;position:relative;}
+.mic:hover{transform:scale(1.04);}
+.mic.listening{animation:pulse 1s ease-in-out infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 10px 30px rgba(45,212,167,0.4);}50%{box-shadow:0 10px 30px rgba(45,212,167,0.4),0 0 0 16px rgba(45,212,167,0.12);}}
+.mic-hint{font-size:16px;color:var(--text-dim);margin-top:16px;}
+.voice-convo{margin-top:18px;display:none;text-align:left;}
+.voice-convo.show{display:block;}
+.vb{max-width:90%;font-size:17px;line-height:1.6;padding:13px 17px;border-radius:16px;margin-bottom:11px;}
+.vb.you{margin-left:auto;background:linear-gradient(135deg,rgba(45,212,167,0.22),rgba(91,141,239,0.22));border:1px solid rgba(45,212,167,0.3);border-bottom-right-radius:5px;}
+.vb.you .lab{display:block;font-size:12.5px;color:#bdf5e2;margin-bottom:3px;}
+.vb.help{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.09);border-bottom-left-radius:5px;}
+.vb.help .lab{display:block;font-size:12.5px;color:var(--track);margin-bottom:3px;}
+.vb.help .spk{display:inline-block;margin-top:7px;font-size:13.5px;color:#bdf5e2;}
+
 .challenge{margin:50px 0 36px;background:linear-gradient(135deg,rgba(45,212,167,0.14),rgba(91,141,239,0.1));border:1px solid rgba(45,212,167,0.3);border-radius:var(--radius-lg);padding:32px;}
 .challenge h2{margin-top:0;}
-.challenge .btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#2dd4a7,#5b8def);color:white;padding:14px 26px;border-radius:11px;font-weight:700;font-size:16px;}
+.challenge .btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#2dd4a7,#5b8def);color:white;padding:15px 28px;border-radius:11px;font-weight:700;font-size:17px;text-decoration:none;}
 .challenge .btn:hover{color:white;}
 .challenge .btn.ghost{background:rgba(255,255,255,0.06);border:1px solid var(--line-strong);}
 .challenge .btn-row{margin-top:22px;display:flex;gap:12px;flex-wrap:wrap;}
@@ -70,9 +82,7 @@ nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(18
 .next-up .lbl{font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--text-mute);font-weight:700;margin-bottom:10px;}
 .next-up h3{margin:0 0 8px;font-size:21px;}.next-up p{margin:0 0 14px;color:var(--text-dim);font-size:17px;}
 .next-up .tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:0.5px;padding:4px 12px;border-radius:999px;}
-.tag-pro{background:rgba(124,92,255,0.18);color:#b9a6ff;border:1px solid rgba(124,92,255,0.35);}
 .tag-pro-plus{background:rgba(255,181,71,0.18);color:#ffce82;border:1px solid rgba(255,181,71,0.35);}
-.tag-free{background:rgba(68,224,164,0.16);color:#44e0a4;border:1px solid rgba(68,224,164,0.35);}
 footer{border-top:1px solid var(--line);padding:30px 0;}
 .footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;font-size:15px;color:var(--text-mute);flex-wrap:wrap;gap:12px;}
 @media(max-width:600px){.footer-inner{flex-direction:column;text-align:center;}}
@@ -105,14 +115,33 @@ footer{border-top:1px solid var(--line);padding:30px 0;}
 <div class="lesson-meta"><span class="chip">AI for Seniors</span><span class="chip chip-pro-plus">Pro+</span><span>~6 min</span><span class="dot"></span><span>Easy read</span></div>
 <h1>Talk, don't type &mdash; <span class='serif'>just speak, and AI listens.</span></h1>
 <p class="deck">If typing is slow or hard on your hands and eyes, here's wonderful news: you can simply talk to AI out loud, and it talks back. For many people, this is the moment AI finally clicks.</p>
-<h2><span class="num">The idea</span></h2><h3>Speaking is often easier than typing &mdash; and it works beautifully.</h3><p>Most AI helpers on a phone have a little microphone button. Tap it, speak naturally like you're talking to a person, and it hears you. Some can even read their answers back to you out loud. No more squinting or hunting for keys.</p>
-<h2><span class="num">Step 1</span>Find the microphone button</h2><p>In the AI app on your phone, look for a small microphone icon near the typing box (and sometimes a headphone or 'voice' icon for a full spoken conversation). Tap it to start talking.</p><div class="prompt"><span class="lbl">If you can't find it, ask</span>I'm using [the app] on my [iPhone/Android phone]. Where is the microphone or voice button, and how do I talk to you out loud? Explain step by step.</div><h2><span class="num">Step 2</span>Just speak naturally</h2><p>Talk the way you normally would &mdash; no special words. Pause when you're done and it'll respond. If it mishears a name, just say it again.</p><h2><span class="num">Step 3</span>Have it read answers aloud</h2><p>If reading on screen is tiring, ask it to keep things short, or use the spoken 'voice mode' so it reads its replies to you.</p><div class="prompt"><span class="lbl">Try saying or typing</span>Please keep your answers short and easy to listen to, since I'm using voice.</div>
+
+<h2><span class="num">The idea</span></h2>
+<h3>Speaking is often easier than typing &mdash; and it works beautifully.</h3>
+<p>Most AI helpers on a phone have a little microphone button. Tap it, speak naturally like you're talking to a person, and it hears you. Some can even read their answers back to you out loud. No more squinting or hunting for keys.</p>
+
+<h2><span class="num">Try it</span>Tap the microphone and "speak"</h2>
+<p>Tap the big button below to see exactly how it feels &mdash; it listens, shows your words, and reads a short answer back. (This is a gentle preview; the real one uses your phone's microphone.)</p>
+<div class="voice">
+  <button class="mic" id="micBtn" aria-label="Tap to speak">🎤</button>
+  <div class="mic-hint" id="micHint">Tap to speak</div>
+  <div class="voice-convo" id="convo"></div>
+</div>
+
 <div class="note"><b>Good to know:</b> Voice works best in a quiet room. If it mishears you, that's normal &mdash; just repeat yourself or speak a little slower. You're not doing anything wrong; it gets better as you go.</div>
+
+<h2><span class="num">In the real app</span>Where to find it</h2>
+<p>In the AI app on your phone, look for a small <strong>microphone icon</strong> near the typing box (and sometimes a headphone or 'voice' icon for a full spoken conversation). If reading on screen tires you, ask it to keep answers short or read them aloud.</p>
+<div class="prompt"><span class="lbl">If you can't find it, ask (or say)</span>I'm using [the app] on my [iPhone/Android phone]. Where is the microphone or voice button, and how do I talk to you out loud? Explain step by step.</div>
+
 <div class="challenge"><h2 style="margin-top:0;">Have one spoken chat</h2><p>Give your eyes and hands a rest:</p><ol><li>Open the AI app on your phone.</li><li>Find and tap the microphone button.</li><li>Ask a question out loud, naturally.</li><li>Notice how much easier that felt &mdash; and use it from now on.</li></ol><div class="btn-row"><a href="/seniors" class="btn ghost">Back to AI for Seniors</a></div></div>
+
 <div class="checklist"><h3>What you can do now</h3><ul><li>Find the microphone or voice button in an AI app</li><li>Speak to AI naturally instead of typing</li><li>Have answers kept short or read aloud</li><li>Use voice to make AI comfortable for tired eyes and hands</li></ul></div>
+
 <div class="next-up"><span class="tag tag-pro-plus">Pro+</span><div class="lbl" style="margin-top:12px;">Up next</div><h3>Your stories and photos</h3><p>Turn your memories into a keepsake for the family.</p><a href="/lessons/seniors/stories-and-photos">Go to the next lesson &rarr;</a></div>
 </div></article>
-<footer><div class="footer-inner"><div>&copy; 2026 LearningGPT, Inc. &middot; Independent.</div><a href="/seniors" style="color:var(--text-dim);">&larr; Back to AI for Seniors</a></div></footer>
+<footer><div class="footer-inner"><div>&copy; 2026 LearningGPT &middot; Independent.</div><a href="/seniors" style="color:var(--text-dim);">&larr; Back to AI for Seniors</a></div></footer>
+
 <button class="coach-fab" id="coachFab" title="Ask the AI Coach">&#127891;<span class="coach-fab-badge">AI</span></button>
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head"><div class="coach-avatar">&#127891;</div><div><div class="coach-head-name">Your AI Helper</div><div class="coach-head-sub">Ask me anything &mdash; no question is too small</div></div><button class="coach-close" id="coachClose">&times;</button></div>
@@ -120,6 +149,37 @@ footer{border-top:1px solid var(--line);padding:30px 0;}
   <div class="coach-limit" id="coachLimit">Free lessons include 3 questions with your helper. <a href="/pricing">Go Pro</a> for unlimited help on every lesson.</div>
   <div class="coach-input-row"><textarea class="coach-input" id="coachInput" placeholder="Type your question here..." rows="1"></textarea><button class="coach-send" id="coachSend">&#10148;</button></div>
 </div>
+
+<script id="lessonScript">
+(function(){
+  var SAMPLES = [
+    { you:'What\'s the weather like today?', help:'It looks bright and mild where you are — a good day for a short walk. Would you like the hour-by-hour?' },
+    { you:'Tell me a gentle joke.', help:'Why did the gardener plant light bulbs? She wanted a power plant! Want another?' },
+    { you:'Remind me what I was going to ask my doctor.', help:'You mentioned wanting to ask about your new prescription and whether to take it with food. Shall I add anything else to the list?' }
+  ];
+  var btn = document.getElementById('micBtn');
+  var hint = document.getElementById('micHint');
+  var convo = document.getElementById('convo');
+  var i = 0, busy = false;
+  btn.addEventListener('click', function(){
+    if (busy) return; busy = true;
+    btn.classList.add('listening');
+    hint.textContent = 'Listening… (speak naturally)';
+    var s = SAMPLES[i % SAMPLES.length]; i++;
+    setTimeout(function(){
+      btn.classList.remove('listening');
+      hint.textContent = 'Tap to speak again';
+      convo.classList.add('show');
+      convo.innerHTML =
+        '<div class="vb you"><span class="lab">🎙️ You said</span>"' + s.you + '"</div>' +
+        '<div class="vb help"><span class="lab">🤖 Your helper</span>' + s.help + '<span class="spk">🔊 (read aloud to you)</span></div>';
+      convo.scrollIntoView({behavior:'smooth', block:'nearest'});
+      busy = false;
+    }, 1300);
+  });
+})();
+</script>
+
 <script>
 (function(){
   var LESSON_CONTEXT = "You are a kind, patient AI learning coach inside a lesson on LearningGPT.ai, helping a senior who may be new to technology.\n\nLESSON: Talk, don't type (AI for Seniors, Pro+)\n\nWHAT THIS LESSON COVERS:\nThis Pro+ lesson teaches seniors to use AI by voice on a phone instead of typing - a big help for tired eyes and stiff hands. Find the microphone/voice button in the app, speak naturally, repeat if it mishears, and use voice mode or ask for short answers read aloud. Reassure that mishearing is normal and works best in a quiet room. Patient and encouraging.\n\nYOUR ROLE:\n- Be warm, patient, and encouraging. Never make them feel silly. No question is too basic.\n- Use plain, simple words. Short sentences. No jargon. Explain any technical word.\n- Keep answers short - 2 to 4 sentences unless they ask for more.\n- For anything about health, money, or legal matters, gently remind them to confirm with a doctor, the bank, or a trusted person.\n- If a message looks like a possible scam, warn them clearly and kindly.\n- Plain conversational text only - no markdown symbols.\n- Do not start with 'Great question!' or similar filler.";

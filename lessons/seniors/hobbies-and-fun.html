@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Hobbies and fun | AI for Seniors | LearningGPT</title>
-<meta name="description" content="Recipes, gardening, travel ideas, crossword help, history, and learning something new - a patient helper for whatever you enjoy." />
+<meta name="description" content="A cheerful, curious companion for cooking, gardening, history, puzzles, and anything you love — for seniors." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#2dd4a7" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +13,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/seniors/hobbies-and-fun" />
 <meta property="og:title" content="Hobbies and fun" />
-<meta property="og:description" content="Recipes, gardening, travel ideas, crossword help, history, and learning something new - a patient helper for whatever you enjoy." />
+<meta property="og:description" content="A cheerful, curious companion for cooking, gardening, history, puzzles, and anything you love." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -33,9 +33,7 @@ nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(18
 .lesson{padding:46px 0 100px;}
 .lesson-meta{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:15px;color:var(--text-mute);margin-bottom:22px;}
 .lesson-meta .chip{padding:5px 13px;border:1px solid rgba(45,212,167,0.4);border-radius:999px;font-size:13px;color:var(--track);background:rgba(45,212,167,0.12);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;}
-.lesson-meta .chip-free{border-color:rgba(68,224,164,0.45);color:#44e0a4;background:rgba(68,224,164,0.12);}
 .lesson-meta .chip-pro{border-color:rgba(124,92,255,0.5);color:#b9a6ff;background:rgba(124,92,255,0.14);}
-.lesson-meta .chip-pro-plus{border-color:rgba(255,181,71,0.5);color:#ffce82;background:rgba(255,181,71,0.14);}
 .lesson-meta .dot{width:5px;height:5px;border-radius:50%;background:var(--text-mute);}
 .lesson h1{font-size:clamp(30px,4.6vw,44px);font-weight:800;line-height:1.18;letter-spacing:-0.01em;margin:0 0 20px;}
 .lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;background:linear-gradient(135deg,#2dd4a7 0%,#5b8def 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;padding-right:0.12em;}
@@ -46,16 +44,30 @@ nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(18
 .lesson p{font-size:18.5px;color:var(--text);margin:0 0 18px;line-height:1.85;}
 .lesson strong{font-weight:700;}.lesson em{font-style:italic;}
 .lesson ul,.lesson ol{padding-left:26px;margin:0 0 18px;}.lesson li{margin-bottom:10px;font-size:18px;line-height:1.7;}
-.callout{margin:26px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(45,212,167,0.12),rgba(91,141,239,0.07));border:1px solid rgba(45,212,167,0.3);border-radius:var(--radius-lg);}
-.callout .lbl{display:inline-block;font-size:13px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
-.callout p:last-child{margin-bottom:0;}
 .prompt{background:rgba(0,0,0,0.32);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:10px 0 16px;font-size:17px;color:var(--text);line-height:1.7;}
 .prompt .lbl{display:block;font-size:13px;letter-spacing:0.4px;text-transform:uppercase;color:var(--track);font-weight:700;margin-bottom:8px;}
-.note{background:rgba(255,181,71,0.08);border:1px solid rgba(255,181,71,0.3);border-radius:12px;padding:18px 20px;margin:18px 0;font-size:17.5px;line-height:1.75;}
-.note b{color:var(--warn);}
+
+/* ── FRIDGE PICKER ── */
+.fridge{margin:24px 0;border:1px solid rgba(45,212,167,0.3);border-radius:18px;overflow:hidden;background:var(--surface);}
+.fr-head{padding:15px 18px;border-bottom:1px solid var(--line);font-size:16px;font-weight:700;background:rgba(45,212,167,0.06);}
+.fr-pick{padding:16px 18px;}
+.fr-lbl{font-size:15px;color:var(--text-dim);margin-bottom:12px;}
+.fr-chips{display:flex;flex-wrap:wrap;gap:10px;}
+.frchip{font-family:inherit;font-size:16px;font-weight:600;padding:12px 18px;border-radius:999px;border:1.5px solid var(--line-strong);background:rgba(255,255,255,0.04);color:var(--text);cursor:pointer;transition:all .15s;}
+.frchip:hover{border-color:var(--track);}
+.frchip.on{border-color:var(--track);background:rgba(45,212,167,0.16);color:#bdf5e2;}
+.fr-go{padding:0 18px 16px;}
+.gobtn{font-family:inherit;font-size:17px;font-weight:700;padding:15px 26px;border-radius:13px;border:none;cursor:pointer;background:linear-gradient(135deg,#2dd4a7,#5b8def);color:white;}
+.gobtn:disabled{opacity:0.5;cursor:default;}
+.fr-out{margin:0 18px 18px;border:1px solid var(--line);border-radius:13px;background:rgba(0,0,0,0.22);padding:18px 20px;display:none;}
+.fr-out.show{display:block;animation:fadeIn .35s ease;}
+.fr-out .ro-name{font-size:18px;font-weight:800;color:#bdf5e2;margin-bottom:8px;}
+.fr-out .ro-steps{font-size:16.5px;line-height:1.7;color:#eaeaf5;white-space:pre-wrap;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
 .challenge{margin:50px 0 36px;background:linear-gradient(135deg,rgba(45,212,167,0.14),rgba(91,141,239,0.1));border:1px solid rgba(45,212,167,0.3);border-radius:var(--radius-lg);padding:32px;}
 .challenge h2{margin-top:0;}
-.challenge .btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#2dd4a7,#5b8def);color:white;padding:14px 26px;border-radius:11px;font-weight:700;font-size:16px;}
+.challenge .btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#2dd4a7,#5b8def);color:white;padding:15px 28px;border-radius:11px;font-weight:700;font-size:17px;text-decoration:none;}
 .challenge .btn:hover{color:white;}
 .challenge .btn.ghost{background:rgba(255,255,255,0.06);border:1px solid var(--line-strong);}
 .challenge .btn-row{margin-top:22px;display:flex;gap:12px;flex-wrap:wrap;}
@@ -71,8 +83,6 @@ nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(18
 .next-up h3{margin:0 0 8px;font-size:21px;}.next-up p{margin:0 0 14px;color:var(--text-dim);font-size:17px;}
 .next-up .tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:0.5px;padding:4px 12px;border-radius:999px;}
 .tag-pro{background:rgba(124,92,255,0.18);color:#b9a6ff;border:1px solid rgba(124,92,255,0.35);}
-.tag-pro-plus{background:rgba(255,181,71,0.18);color:#ffce82;border:1px solid rgba(255,181,71,0.35);}
-.tag-free{background:rgba(68,224,164,0.16);color:#44e0a4;border:1px solid rgba(68,224,164,0.35);}
 footer{border-top:1px solid var(--line);padding:30px 0;}
 .footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;font-size:15px;color:var(--text-mute);flex-wrap:wrap;gap:12px;}
 @media(max-width:600px){.footer-inner{flex-direction:column;text-align:center;}}
@@ -105,14 +115,36 @@ footer{border-top:1px solid var(--line);padding:30px 0;}
 <div class="lesson-meta"><span class="chip">AI for Seniors</span><span class="chip chip-pro">Pro</span><span>~6 min</span><span class="dot"></span><span>Easy read</span></div>
 <h1>Hobbies &amp; fun &mdash; <span class='serif'>a curious companion for anything.</span></h1>
 <p class="deck">Whatever you love &mdash; cooking, the garden, history, puzzles, planning a trip &mdash; AI is a tireless, cheerful companion who's happy to dig in with you. It's like having a very well-read friend on call.</p>
-<h2><span class="num">The idea</span></h2><h3>Curiosity is the only thing you need to bring.</h3><p>There's no subject too big or too small. You can use what's in your kitchen tonight, settle a history question that's been nagging you, or get a hint on a tricky crossword clue. Just ask in your own words.</p>
-<h2><span class="num">Step 1</span>Cook with what you have</h2><p>Tell it what's in the fridge and it'll suggest something to make.</p><div class="prompt"><span class="lbl">Try typing this</span>I have eggs, potatoes, an onion, and some cheese. Give me one simple dinner idea with easy, short steps.</div><h2><span class="num">Step 2</span>Dig into what interests you</h2><p>History, gardening, your hometown &mdash; ask away and follow your curiosity wherever it leads.</p><div class="prompt"><span class="lbl">Try typing this</span>I'd love to know more about [a topic you enjoy]. Tell me a few interesting things about it in simple terms, and ask if I'd like to go deeper.</div><h2><span class="num">Step 3</span>Get a hand with puzzles and games</h2><p>Stuck on a crossword clue or want a new game to try? Ask for a hint rather than the answer, so it's still fun.</p><div class="prompt"><span class="lbl">Try typing this</span>I'm stuck on a crossword clue: '[the clue]' with [number] letters. Give me a gentle hint first, not the answer.</div>
+
+<h2><span class="num">The idea</span></h2>
+<h3>Curiosity is the only thing you need to bring.</h3>
+<p>There's no subject too big or too small. You can use what's in your kitchen tonight, settle a history question that's been nagging you, or get a hint on a tricky crossword clue. Just ask in your own words.</p>
+
+<h2><span class="num">Try it</span>What's for dinner tonight?</h2>
+<p>Tap whatever you have in the kitchen, then ask &mdash; this is exactly how AI helps you cook with what's on hand.</p>
+<div class="fridge">
+  <div class="fr-head">🍳 Tap what you've got</div>
+  <div class="fr-pick">
+    <div class="fr-lbl">Choose your ingredients:</div>
+    <div class="fr-chips" id="frChips"></div>
+  </div>
+  <div class="fr-go"><button class="gobtn" id="frGo" disabled>What can I make? →</button></div>
+  <div class="fr-out" id="frOut"></div>
+</div>
+
+<h2><span class="num">And anything else</span>Follow your curiosity</h2>
+<p>History, gardening, your hometown, a tricky crossword &mdash; ask away and let it lead you somewhere interesting. For puzzles, ask for a <em>hint</em> rather than the answer, so it stays fun.</p>
+<div class="prompt"><span class="lbl">Try typing this</span>I'd love to know more about [a topic you enjoy]. Tell me a few interesting things about it in simple terms, and ask if I'd like to go deeper.</div>
+<div class="prompt"><span class="lbl">Or for a puzzle</span>I'm stuck on a crossword clue: '[the clue]' with [number] letters. Give me a gentle hint first, not the answer.</div>
 
 <div class="challenge"><h2 style="margin-top:0;">Explore one thing you enjoy</h2><p>Follow your curiosity for ten minutes:</p><ol><li>Pick a hobby or topic you love.</li><li>Ask AI something about it in your own words.</li><li>Ask one follow-up to go deeper.</li><li>Notice how it's happy to keep going as long as you are.</li></ol><div class="btn-row"><a href="/seniors" class="btn ghost">Back to AI for Seniors</a></div></div>
+
 <div class="checklist"><h3>What you can do now</h3><ul><li>Get recipe ideas from what you already have</li><li>Explore history, gardening, travel, and any topic you enjoy</li><li>Get gentle hints for puzzles and games</li><li>Follow your curiosity with a patient companion</li></ul></div>
+
 <div class="next-up"><span class="tag tag-pro">Pro</span><div class="lbl" style="margin-top:12px;">Up next</div><h3>Little life helpers</h3><p>Make confusing forms, lists, and instructions simple.</p><a href="/lessons/seniors/little-life-helpers">Go to the next lesson &rarr;</a></div>
 </div></article>
-<footer><div class="footer-inner"><div>&copy; 2026 LearningGPT, Inc. &middot; Independent.</div><a href="/seniors" style="color:var(--text-dim);">&larr; Back to AI for Seniors</a></div></footer>
+<footer><div class="footer-inner"><div>&copy; 2026 LearningGPT &middot; Independent.</div><a href="/seniors" style="color:var(--text-dim);">&larr; Back to AI for Seniors</a></div></footer>
+
 <button class="coach-fab" id="coachFab" title="Ask the AI Coach">&#127891;<span class="coach-fab-badge">AI</span></button>
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head"><div class="coach-avatar">&#127891;</div><div><div class="coach-head-name">Your AI Helper</div><div class="coach-head-sub">Ask me anything &mdash; no question is too small</div></div><button class="coach-close" id="coachClose">&times;</button></div>
@@ -120,6 +152,51 @@ footer{border-top:1px solid var(--line);padding:30px 0;}
   <div class="coach-limit" id="coachLimit">Free lessons include 3 questions with your helper. <a href="/pricing">Go Pro</a> for unlimited help on every lesson.</div>
   <div class="coach-input-row"><textarea class="coach-input" id="coachInput" placeholder="Type your question here..." rows="1"></textarea><button class="coach-send" id="coachSend">&#10148;</button></div>
 </div>
+
+<script id="lessonScript">
+(function(){
+  var ITEMS = ['Eggs','Potatoes','Onion','Cheese','Bread','Tomatoes'];
+  var chosen = {};
+  var chips = document.getElementById('frChips');
+  var go = document.getElementById('frGo');
+  var out = document.getElementById('frOut');
+  ITEMS.forEach(function(it){
+    var b = document.createElement('button');
+    b.className = 'frchip';
+    b.textContent = it;
+    chips.appendChild(b);
+    b.addEventListener('click', function(){
+      var on = b.classList.toggle('on');
+      chosen[it] = on;
+      go.disabled = Object.values(chosen).filter(Boolean).length === 0;
+    });
+  });
+  function has(x){ return chosen[x]; }
+  go.addEventListener('click', function(){
+    var name, steps;
+    if (has('Eggs') && has('Potatoes')){
+      name = '🥘 A simple potato &amp; egg frittata';
+      steps = '1. Soften sliced potatoes' + (has('Onion') ? ' and onion' : '') + ' gently in a pan with a little oil.\n2. Beat the eggs' + (has('Cheese') ? ' with the cheese' : '') + ', pour over the top, and cook on low until set.\n3. Slide it onto a plate. Lovely warm or cold.';
+    } else if (has('Bread') && has('Cheese')){
+      name = '🧀 A proper grilled cheese';
+      steps = '1. Butter the outsides of two slices of bread.\n2. Put the cheese' + (has('Tomatoes') ? ' and a slice of tomato' : '') + ' between them.\n3. Cook in a pan on medium until golden on both sides. Comfort in a sandwich.';
+    } else if (has('Tomatoes') && has('Onion')){
+      name = '🍅 A quick tomato &amp; onion soup';
+      steps = '1. Soften the chopped onion in a pot with a little oil.\n2. Add the tomatoes and a cup of water, simmer 15 minutes.\n3. Season to taste. Warm and simple — toast on the side if you have bread.';
+    } else if (has('Eggs')){
+      name = '🍳 Soft scrambled eggs';
+      steps = '1. Beat the eggs with a pinch of salt.\n2. Cook gently in a buttered pan, stirring slowly.\n3. Take them off while still a little soft' + (has('Bread') ? ' and pile onto toast' : '') + '. A perfect light supper.';
+    } else {
+      name = '🍽️ Plenty to work with';
+      steps = 'With what you\'ve picked, a simple skillet supper or a tasty sandwich is well within reach. Tell the AI helper exactly what you have and it\'ll suggest something with short, easy steps.';
+    }
+    out.className = 'fr-out show';
+    out.innerHTML = '<div class="ro-name">' + name + '</div><div class="ro-steps">' + steps + '</div>';
+    out.scrollIntoView({behavior:'smooth', block:'nearest'});
+  });
+})();
+</script>
+
 <script>
 (function(){
   var LESSON_CONTEXT = "You are a kind, patient AI learning coach inside a lesson on LearningGPT.ai, helping a senior who may be new to technology.\n\nLESSON: Hobbies and fun (AI for Seniors, Pro)\n\nWHAT THIS LESSON COVERS:\nThis Pro lesson is about hobbies and fun for seniors: recipes from what's on hand, exploring history/gardening/travel/any interest, and gentle hints for crosswords and games. Light, cheerful, encouraging tone. Follow the senior's curiosity and offer to go deeper. No heavy safety concerns here, just be warm and helpful.\n\nYOUR ROLE:\n- Be warm, patient, and encouraging. Never make them feel silly. No question is too basic.\n- Use plain, simple words. Short sentences. No jargon. Explain any technical word.\n- Keep answers short - 2 to 4 sentences unless they ask for more.\n- For anything about health, money, or legal matters, gently remind them to confirm with a doctor, the bank, or a trusted person.\n- If a message looks like a possible scam, warn them clearly and kindly.\n- Plain conversational text only - no markdown symbols.\n- Do not start with 'Great question!' or similar filler.";

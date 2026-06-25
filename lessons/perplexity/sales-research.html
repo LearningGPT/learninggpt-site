@@ -4,20 +4,20 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Perplexity for sales: prospect research in 5 minutes flat — LearningGPT</title>
-<meta name="description" content="B2B sales reps are Perplexity's best-fit user base, and most of them haven't realized it yet. The four-prompt research routine below turns 45 minutes " />
+<meta name="description" content="B2B sales reps are Perplexity's best-fit users. A four-prompt routine that turns 45 minutes of LinkedIn-spelunking into a 5-minute prospect briefing." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#20808d" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/perplexity/sales-research" />
 <meta property="og:title" content="Perplexity for sales: prospect research in 5 minutes flat" />
-<meta property="og:description" content="B2B sales reps are Perplexity's best-fit user base, and most of them haven't realized it yet. The four-prompt research routine below turns 45 minutes " />
+<meta property="og:description" content="A four-prompt routine that turns 45 minutes of LinkedIn-spelunking into a 5-minute prospect briefing." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
-:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #20808d; }
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #2ea6b4; }
 * { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
 body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
@@ -32,87 +32,96 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
 .lesson { padding: 50px 0 100px; }
 .lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
-.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(32,128,141,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(32,128,141,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(46,166,180,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(46,166,180,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
 .lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
-.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
 .lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #20808d 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .grad { background: linear-gradient(135deg, #2ea6b4 0%, #44e0a4 50%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 24px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.sec { margin: 46px 0 0; }
+.sec-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.lesson h2 { font-size: 27px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; }
 .lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
 .lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(32,128,141,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(32,128,141,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #20808d, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(32,128,141,0.1); border: 1px solid rgba(32,128,141,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(32,128,141,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(32,128,141,0.25); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #20808d, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+
+/* dossier panel */
+.dossier { margin: 22px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden; background: linear-gradient(180deg, #11112a, #0d0d20); position: sticky; top: 66px; z-index: 5; }
+.dossier-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--line); background: linear-gradient(90deg, rgba(46,166,180,0.10), rgba(124,92,255,0.06)); }
+.dossier-bar .t { font-size: 13px; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 8px; }
+.dossier-bar .meta { font-size: 11.5px; font-weight: 700; color: var(--track); }
+.dslots { display: grid; grid-template-columns: 1fr 1fr; }
+@media (max-width: 600px){ .dslots { grid-template-columns: 1fr; } }
+.dslot { padding: 12px 14px; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); min-height: 78px; }
+.dslot:nth-child(2n){ border-right: none; }
+.dslot-h { font-size: 10.5px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: var(--text-mute); margin-bottom: 5px; display: flex; align-items: center; gap: 6px; }
+.dslot-h .ic { font-size: 12px; }
+.dslot-body { font-size: 12.5px; color: var(--text-mute); font-style: italic; }
+.dslot.filled .dslot-body { color: var(--text); font-style: normal; animation: fadeIn .35s ease; }
+.dslot.filled .dslot-h { color: var(--track); }
+.verify-flag { display: inline-block; margin-top: 7px; font-size: 10.5px; font-weight: 600; color: #ffe0ad; background: rgba(255,181,71,0.12); border: 1px solid rgba(255,181,71,0.3); border-radius: 999px; padding: 2px 8px; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(5px);} to{opacity:1;transform:none;} }
+
+/* prompt cards */
+.pcards { display: grid; gap: 12px; margin: 18px 0; }
+.pcard { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: 15px 17px; }
+.pcard-head { display: flex; align-items: center; gap: 11px; margin-bottom: 4px; }
+.pcard-num { width: 26px; height: 26px; flex-shrink: 0; border-radius: 7px; background: rgba(46,166,180,0.14); border: 1px solid rgba(46,166,180,0.3); display: grid; place-items: center; font-size: 11px; font-weight: 700; color: var(--track); }
+.pcard-head h3 { font-size: 15.5px; font-weight: 700; margin: 0; flex: 1; }
+.pcard-sub { font-size: 13px; color: var(--text-dim); margin: 4px 0 10px; }
+.pcard-prompt { font-family: 'SFMono-Regular', Consolas, monospace; font-size: 12.5px; color: var(--text); background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 9px; padding: 11px 13px; line-height: 1.55; margin: 0 0 10px; display: none; }
+.pcard-prompt.show { display: block; animation: fadeIn .3s ease; }
+.pcard-prompt .lbl { display: block; font-family: 'Inter', sans-serif; font-size: 10px; color: var(--text-mute); text-transform: uppercase; letter-spacing: 0.7px; margin-bottom: 5px; font-weight: 600; }
+.reveal-btn { font-family: inherit; font-size: 12.5px; font-weight: 700; padding: 8px 16px; border-radius: 8px; border: 1px solid var(--line-strong); background: rgba(46,166,180,0.08); color: var(--track); cursor: pointer; transition: all .15s; }
+.reveal-btn:hover:not(:disabled){ background: rgba(46,166,180,0.16); color: #9fe6e0; }
+.reveal-btn:disabled { opacity: 0.5; cursor: default; }
+
+/* hook decision */
+.hook { margin: 22px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); background: #0d0d20; padding: 16px; display: none; }
+.hook.show { display: block; animation: fadeIn .4s ease; }
+.hook-lbl { font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--track); margin-bottom: 6px; }
+.hook-q { font-size: 14.5px; margin-bottom: 12px; }
+.hopts { display: grid; gap: 8px; }
+.hopt { text-align: left; font-family: inherit; font-size: 13.5px; color: var(--text); padding: 11px 14px; border-radius: 9px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); cursor: pointer; transition: all .15s; }
+.hopt:hover:not(:disabled){ border-color: var(--track); }
+.hopt:disabled { cursor: default; }
+.hopt.correct { background: rgba(46,166,180,0.16); border-color: var(--track); color: #9fe6e0; }
+.hopt.wrong { background: rgba(255,107,138,0.12); border-color: var(--danger); color: #ffb0c1; }
+.hook-fb { margin-top: 11px; font-size: 13px; color: var(--text-dim); display: none; padding: 11px 14px; border-radius: 9px; background: rgba(46,166,180,0.07); border-left: 2px solid var(--track); }
+.hook-fb.show { display: block; } .hook-fb b { color: var(--text); }
+
+.callout { margin: 22px 0; padding: 18px 22px; background: linear-gradient(135deg, rgba(255,181,71,0.10), rgba(124,92,255,0.04)); border: 1px solid rgba(255,181,71,0.25); border-radius: var(--radius-lg); }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--warn); margin-bottom: 8px; }
+.callout p { margin: 0; font-size: 14.5px; color: var(--text-dim); } .callout b { color: var(--text); }
+
+.challenge { margin: 46px 0 30px; background: linear-gradient(135deg, rgba(46,166,180,0.16), rgba(124,92,255,0.1)); border: 1px solid rgba(46,166,180,0.3); border-radius: var(--radius-lg); padding: 32px; }
+.challenge h2 { margin-top: 0; font-size: 24px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #20808d, #7c5cff); color: white; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: inherit; box-shadow: 0 6px 24px rgba(32,128,141,0.3); transition: transform .15s; text-decoration: none; }
+.btn:hover { transform: translateY(-1px); color: white; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 30px 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
 .checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
 .checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
 .checklist li:first-child { border-top: none; padding-top: 0; }
 .checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up { margin: 40px 0 0; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
 .next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
 .next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
 .next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
-footer { border-top: 1px solid var(--line); padding: 30px 0; }
+footer { border-top: 1px solid var(--line); padding: 30px 0; margin-top: 40px; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -141,7 +150,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -158,37 +166,91 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <div class="lesson-meta">
       <span class="chip">Lesson 04 · Perplexity Mastery</span>
       <span class="chip chip-pro">Pro</span>
-      <span>~10 min read</span>
+      <span>~10 min</span>
       <span class="dot"></span>
       <span>4 saved prompts</span>
     </div>
     <h1>Perplexity for sales: <span class="grad serif">5-minute prospect prep.</span></h1>
-    <p class="deck">B2B sales reps are Perplexity's best-fit user base, and most of them haven't realized it yet. The four-prompt research routine below turns 45 minutes of LinkedIn-spelunking into a 5-minute briefing better than what most sales orgs train their reps to do.</p>
-    <h2><span class="num">The mental model</span></h2><h3>Sales research is repetitive — and that's why Perplexity wins.</h3><p>Every prospect needs the same 4-5 angles of research: company context, recent news, decision-maker background, competitive landscape, likely pain points. Save the prompts once; use them on every prospect forever.</p><h2><span class="num">Workflow 01</span> Prompt 1: Company overview</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>The 60-second company brief</h3></div><p>Get the basic facts you need before any call.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Save this prompt</span>Give me a 60-second briefing on [Company]. Include: what they do, approximate size and revenue if known, key markets, biggest products or services, and notable recent moves in the past 6 months.</div><h4>Best use cases</h4><ul><li>Pre-call prep on every new prospect</li><li>Account research for QBRs</li><li>Quick context before a referral intro</li></ul><div class="gotcha">Always verify revenue and size estimates — Perplexity sometimes pulls from outdated sources for private companies.</div><div class="savings"><strong>Time savings:</strong> 30-45 min of LinkedIn/website scrolling: 1 min.</div></div><h2><span class="num">Workflow 02</span> Prompt 2: Recent news scan</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>What's happened recently that matters</h3></div><p>News from the last 90 days — funding, leadership changes, launches, controversies.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Save this prompt</span>What's the news on [Company] in the past 90 days? Cover: funding events, leadership changes, new products or pivots, partnerships, lawsuits or controversies. Cite sources.</div><h4>Best use cases</h4><ul><li>Pre-call freshness check</li><li>Identifying conversation hooks for outreach</li><li>Spotting good timing for follow-up</li></ul><div class="gotcha">News scan won't catch private rumors or internal moves. Combine with LinkedIn for full picture.</div><div class="savings"><strong>Time savings:</strong> Mention recent news on calls: prep ratio shifts dramatically.</div></div><h2><span class="num">Workflow 03</span> Prompt 3: Decision-maker background</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>Know who you're meeting</h3></div><p>Build a quick profile of the person before the call.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Save this prompt</span>Give me a background on [Person] who works at [Company] as [Title]. Cover: career path, where they came from, what they've said publicly, any podcasts or interviews, and shared connections with [your company] if known.</div><h4>Best use cases</h4><ul><li>Pre-call prep for any meeting</li><li>Building rapport with personalization</li><li>Finding warm-intro paths</li></ul><div class="gotcha">Verify with LinkedIn before relying on details — Perplexity's profile data can be stale or incomplete.</div><div class="savings"><strong>Time savings:</strong> Awkward "so tell me about yourself" first 5 minutes: gone.</div></div><h2><span class="num">Workflow 04</span> Prompt 4: Competitive context</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">4</div><h3>Who else are they considering</h3></div><p>What competitors they're using or evaluating, what trade-offs they care about.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Save this prompt</span>What's [Company]'s current stack for [your product category]? What competitors are they likely evaluating? What public hints have they given about what they care about (cost, integration, security, ease of use)?</div><h4>Best use cases</h4><ul><li>Late-stage deal prep</li><li>Differentiation positioning</li><li>Anticipating objections</li></ul><div class="gotcha">Competitive intel from public sources is incomplete. Use it as a starting point, not the answer.</div><div class="savings"><strong>Time savings:</strong> Walk into calls knowing the competitive landscape: every time.</div></div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Final challenge: run the routine on your next prospect</h2>
-      <p>Before your next sales meeting, run all four prompts. Save them as a Space (Lesson 2). Time yourself — most reps complete the full prospect briefing in under 5 minutes. Track win-rate change over the next month.</p>
-      <div class="btn-row">
-        <a href="/lessons/perplexity/" class="btn">Back to Perplexity Mastery →</a>
-        <a href="/#pricing" class="btn ghost">See pricing →</a>
+    <p class="deck">B2B sales reps are Perplexity's best-fit users, and most of them haven't realized it yet. The four-prompt routine below turns 45 minutes of LinkedIn-spelunking into a 5-minute briefing that's sharper than what most sales orgs train their reps to do. Build it once, run it before every call.</p>
+
+    <!-- mental model -->
+    <div class="sec">
+      <span class="sec-eyebrow">The mental model</span>
+      <h2>Sales research is repetitive — that's the edge.</h2>
+      <p>Every prospect needs the same handful of angles: company context, recent news, the decision-maker's background, the competitive landscape. Because it's the same every time, you save the prompts <em>once</em> and reuse them on every account forever. Let's build the briefing live.</p>
+    </div>
+
+    <!-- SIGNATURE: dossier assembler -->
+    <div class="sec">
+      <span class="sec-eyebrow">Do it · build the 5-minute dossier</span>
+      <h2>Your call is with Northwind Logistics.</h2>
+      <p>Reveal each saved prompt to run it. Watch the briefing fill in — and note the flag on anything you'd verify before you trust it on a call.</p>
+
+      <div class="dossier">
+        <div class="dossier-bar">
+          <span class="t">📋 Pre-call dossier · Northwind Logistics</span>
+          <span class="meta" id="dMeta">0 / 4 angles</span>
+        </div>
+        <div class="dslots">
+          <div class="dslot" data-slot="0"><div class="dslot-h"><span class="ic">🏢</span> Company</div><div class="dslot-body">Run prompt 1…</div></div>
+          <div class="dslot" data-slot="1"><div class="dslot-h"><span class="ic">📰</span> Recent news</div><div class="dslot-body">Run prompt 2…</div></div>
+          <div class="dslot" data-slot="2"><div class="dslot-h"><span class="ic">👤</span> Decision-maker</div><div class="dslot-body">Run prompt 3…</div></div>
+          <div class="dslot" data-slot="3"><div class="dslot-h"><span class="ic">⚔️</span> Competitive</div><div class="dslot-body">Run prompt 4…</div></div>
+        </div>
+      </div>
+
+      <div class="pcards" id="pcards"></div>
+
+      <!-- hook decision -->
+      <div class="hook" id="hook">
+        <div class="hook-lbl">Now turn research into the opener</div>
+        <div class="hook-q">Dossier's built in under five minutes. Which opening line actually uses it?</div>
+        <div class="hopts" id="hopts">
+          <button class="hopt" data-correct="0">"Hi Maria — I wanted to tell you about our industry-leading logistics platform."</button>
+          <button class="hopt" data-correct="1">"Hi Maria — saw Northwind just closed its Series B, congrats. Teams scaling ops at that stage usually hit a wall on empty-mile %, which I heard you talk about on the podcast…"</button>
+          <button class="hopt" data-correct="0">"Hi Maria — how are you today? Do you have a few minutes to chat?"</button>
+        </div>
+        <div class="hook-fb" id="hookFb"></div>
+      </div>
+
+      <div class="callout">
+        <span class="lbl">Verify before you trust it</span>
+        <p>Perplexity pulls from public sources, so <b>time-sensitive and private-company data drifts</b> — revenue estimates, headcount, and profile details especially. Cross-check the flagged items against LinkedIn or a filing before you quote a number or a name on a live call. Competitive intel from public sources is a <b>starting point, not the answer</b>.</p>
       </div>
     </div>
+
+    <div class="challenge">
+      <h2>Challenge: run the routine on your next prospect</h2>
+      <p>Before your next meaningful sales meeting, run all four prompts and save them as a Space (Lesson 02) so they're one click next time. Time yourself — most reps finish the full briefing in under five minutes. Then track your win-rate over the next month.</p>
+      <div class="btn-row">
+        <a href="/playground" class="btn">Try a research prompt in the playground →</a>
+        <a href="/lessons/perplexity/" class="btn ghost">Back to Perplexity Mastery</a>
+      </div>
+    </div>
+
     <div class="checklist">
       <h3>What you can do now</h3>
-      <ul><li>Save the 4-prompt prospect research routine</li><li>Run it before every meaningful sales meeting</li><li>Verify time-sensitive and private-company data against other sources</li><li>Build a personal library of Perplexity prompts for sales workflows</li></ul>
+      <ul>
+        <li>Save the four-prompt prospect-research routine</li>
+        <li>Run it before every meaningful sales meeting</li>
+        <li>Turn a specific, timely finding into your opening line</li>
+        <li>Verify time-sensitive and private-company data against other sources</li>
+        <li>Keep the prompts in a Space so they're one click away</li>
+      </ul>
     </div>
+
     <div class="next-up">
       <span class="pro-tag">Pro</span>
       <div class="lbl" style="margin-top: 14px;">Up next in Perplexity Mastery</div>
-      <h3>Lesson 5 · Comet: the browser with AI built in</h3>
-      <p>Setting up Comet, the in-browser AI workflows, tab-aware queries, page summarization. The future of browsing, available now. <a href="/#pricing">See pricing →</a></p>
+      <h3>Lesson 05 · Comet — the browser with AI built in</h3>
+      <p>Setting up Comet, the in-browser AI workflows, tab-aware queries, and page summarization. The future of browsing, available now. <a href="/lessons/perplexity/comet">Start lesson 05 →</a></p>
     </div>
   </div>
 </article>
 <footer>
   <div class="footer-inner">
-    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Perplexity.</div>
-    <a href="/lessons/perplexity/" style="color: var(--text-dim);">← All Perplexity lessons</a>
+    <div>© 2026 LearningGPT · Independent. Not affiliated with Perplexity.</div>
+    <a href="/lessons/perplexity/" style="color: var(--text-dim);">← All Perplexity Mastery lessons</a>
   </div>
 </footer>
 
@@ -197,7 +259,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -212,7 +273,7 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -220,15 +281,86 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   </div>
 </div>
 
+<script id="lessonScript">
+(function () {
+  var PROMPTS = [
+    { slot: 0, title: 'Prompt 1 · Company overview', sub: 'The 60-second company brief — basic facts before any call.',
+      prompt: 'Give me a 60-second briefing on [Company]. Include: what they do, approximate size and revenue if known, key markets, biggest products or services, and notable moves in the past 6 months.',
+      fill: 'B2B freight-tech, ~600 staff, est. ~$90M revenue. Core product: route-optimization SaaS.',
+      flag: 'Verify revenue — private company' },
+    { slot: 1, title: 'Prompt 2 · Recent news scan', sub: 'What happened in the last 90 days that matters.',
+      prompt: 'What’s the news on [Company] in the past 90 days? Cover funding, leadership changes, new products or pivots, partnerships, and any controversies. Cite sources.',
+      fill: 'Closed a $40M Series B ~6 weeks ago; hired a new VP of Operations last month.',
+      flag: 'Cite sources · combine with LinkedIn' },
+    { slot: 2, title: 'Prompt 3 · Decision-maker background', sub: 'Know who you’re meeting before you meet them.',
+      prompt: 'Give me a background on [Person], [Title] at [Company]. Cover career path, where they came from, anything they’ve said publicly (talks, podcasts, interviews), and shared connections with [your company].',
+      fill: 'Maria Chen, VP Ops. Ex-Flexport. On a supply-chain podcast she pushed cutting empty-mile %.',
+      flag: 'Confirm details on LinkedIn' },
+    { slot: 3, title: 'Prompt 4 · Competitive context', sub: 'Who else they’re considering, and what they care about.',
+      prompt: 'What’s [Company]’s current stack for [your category]? Which competitors are they likely evaluating, and what public hints have they given about priorities (cost, integration, security, ease of use)?',
+      fill: 'Likely weighing legacy TMS vendors; public hints emphasize integration + security.',
+      flag: 'Public intel is partial — a starting point' }
+  ];
+  var pcards = document.getElementById('pcards');
+  var dMeta = document.getElementById('dMeta');
+  var hook = document.getElementById('hook');
+  var slots = document.querySelectorAll('.dslot');
+  var done = 0;
+
+  PROMPTS.forEach(function (p, i) {
+    var card = document.createElement('div');
+    card.className = 'pcard';
+    card.innerHTML =
+      '<div class="pcard-head"><div class="pcard-num">' + (i + 1) + '</div><h3>' + p.title + '</h3></div>' +
+      '<div class="pcard-sub">' + p.sub + '</div>' +
+      '<div class="pcard-prompt"><span class="lbl">Save this prompt</span>' + p.prompt + '</div>' +
+      '<button class="reveal-btn">▶ Run &amp; reveal prompt</button>';
+    pcards.appendChild(card);
+    var btn = card.querySelector('.reveal-btn');
+    var promptEl = card.querySelector('.pcard-prompt');
+    btn.addEventListener('click', function () {
+      if (btn.disabled) return;
+      btn.disabled = true;
+      btn.textContent = '✓ Saved & run';
+      promptEl.classList.add('show');
+      var slot = slots[p.slot];
+      slot.classList.add('filled');
+      slot.querySelector('.dslot-body').innerHTML = p.fill + '<span class="verify-flag">⚠ ' + p.flag + '</span>';
+      done++;
+      dMeta.textContent = done + ' / 4 angles';
+      if (done === 4) { dMeta.textContent = '4 / 4 · dossier ready'; hook.classList.add('show'); }
+    });
+  });
+
+  // ── HOOK DECISION ──
+  var hopts = document.getElementById('hopts');
+  var hookFb = document.getElementById('hookFb');
+  var hdone = false;
+  hopts.querySelectorAll('.hopt').forEach(function (opt) {
+    opt.addEventListener('click', function () {
+      if (hdone) return;
+      hdone = true;
+      var ok = opt.dataset.correct === '1';
+      hopts.querySelectorAll('.hopt').forEach(function (o) {
+        o.disabled = true;
+        if (o.dataset.correct === '1') o.classList.add('correct');
+      });
+      if (!ok) opt.classList.add('wrong');
+      hookFb.innerHTML = (ok ? '<b>That’s the one.</b> ' : '<b>The specific one wins.</b> ') +
+        'It uses two real findings — the Series B and her podcast point — to land timely and personal in one sentence. Generic "industry-leading platform" and "how are you today" throw away every minute of research you just did.';
+      hookFb.classList.add('show');
+    });
+  });
+})();
+</script>
 
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Perplexity for sales: prospect research in 5 minutes flat\nTRACK: Perplexity Mastery\n\nLESSON CONTENT SUMMARY:\nPerplexity for sales: prospect research in 5 minutes flat \u2014 LearningGPT L LearningGPT \u2190 Perplexity Mastery Lesson 04 \u00b7 Perplexity Mastery Pro ~10 min read 4 saved prompts Perplexity for sales: 5-minute prospect prep. B2B sales reps are Perplexity's best-fit user base, and most of them haven't realized it yet. The four-prompt research routine below turns 45 minutes of LinkedIn-spelunking into a 5-minute briefing better than what most sales orgs train their reps to do. The mental model Sales research is repetitive \u2014 and that's why Perplexity wins. Every prospect needs the same 4-5 angles of research: company context, recent news, decision-maker background, competitive landscape, likely pain points. Save the prompts once; use them on every prospect forever. Workflow 01 Prompt 1: Company overview 1 The 60-second company brief Get the basic facts you need before any call. The prompt that works Save this prompt Give me a 60-second briefing on [Company]. Include: what they do, approximate size and revenue if known, key markets, biggest products or services, and notable recent moves in the past 6 months. Best use cases Pre-call prep on every new prospect Account research for QBRs Quick context before a referral intro Always verify revenue and size estimates \u2014 Perplexity sometimes pulls from outdated sources for private companies. Time savings: 30-45 min of LinkedIn/website scrolling: 1 min. Workflow 02 Prompt 2: Recent news scan 2 What's happened recently that matters News from the last 90 days \u2014 funding, leadership changes, launches, controversies. The prompt that works Save this prompt What's the news on [Company] in the past 90 days? Cover: funding events, leadership changes, new products or pivots, partnerships, lawsuits or controversies. Cite sources. Best use cases Pre-call freshness check Identifying conversation hooks for outreach Spotting good timing for follow-up News scan won't catch private rumors or internal moves. Combine with LinkedIn for full picture. Time savings: Mention recent news on calls: prep ratio shifts dramatically. Workflow 03 Prompt 3: Decision-maker background 3 Know who you're meeting Build a quick profile of the person before the call. The prompt that works Save this prompt Give me a background on [Person] who works at [Company] as [Title]. Cover: career path, where they came from, what they've said publicly, any podcasts or interviews, and shared connections with [your company] if known. Best use cases Pre-call prep for any meeting Building rapport with personalization Finding warm-intro paths Verify with LinkedIn before relying on details \u2014 Perplexity's profile data can be stale or incomplete. Time savings: Awkward \"so tell me about yourself\" first 5 minutes: gone. Workflow 04 Prompt 4: Competitive context 4 Who else are they considering What competitors they're using or evaluating, what trade-offs they care about. The prompt that works Save this prompt What's [Company]'s current stack for [your product category]? What co\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Perplexity for sales: prospect research in 5 minutes flat\nTRACK: Perplexity Mastery (Lesson 04, Pro)\n\nLESSON CONTENT SUMMARY:\nB2B sales reps are Perplexity's best-fit users. Sales research is repetitive — every prospect needs the same handful of angles — so you save the prompts ONCE and reuse them on every account forever. The four-prompt routine turns ~45 minutes of LinkedIn-spelunking into a ~5-minute pre-call briefing.\n\nThe four saved prompts: (1) COMPANY OVERVIEW — 'Give me a 60-second briefing on [Company]: what they do, approximate size and revenue if known, key markets, biggest products/services, notable moves in the past 6 months.' (2) RECENT NEWS SCAN — 'What's the news on [Company] in the past 90 days? Cover funding, leadership changes, new products/pivots, partnerships, controversies. Cite sources.' Use it for conversation hooks and follow-up timing. (3) DECISION-MAKER BACKGROUND — 'Give me a background on [Person], [Title] at [Company]: career path, where they came from, anything they've said publicly (talks, podcasts, interviews), shared connections with [your company].' Kills the awkward 'so tell me about yourself.' (4) COMPETITIVE CONTEXT — 'What's [Company]'s current stack for [your category]? Which competitors are they likely evaluating, and what public hints have they given about priorities (cost, integration, security, ease of use)?' For late-stage deal prep, differentiation, anticipating objections.\n\nTurning research into action: the best cold opener uses a specific, timely finding (e.g. 'saw you just closed your Series B, congrats — teams scaling ops at that stage usually hit a wall on X, which I heard you mention on the podcast') rather than generic 'our industry-leading platform' or filler 'how are you today.' Specific + timely beats generic every time.\n\nVerification (important): Perplexity pulls from public sources, so time-sensitive and private-company data drifts — verify revenue/size estimates, news, and profile details against LinkedIn or filings before quoting a number or name on a live call. News scans miss private/internal moves; competitive intel from public sources is a starting point, not the answer.\n\nPractical: save the four prompts in a Space (Lesson 02) so they're one click; most reps finish the full briefing in under 5 minutes.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more\n- Be practical — give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only — no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -236,27 +368,21 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -265,7 +391,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -274,7 +399,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

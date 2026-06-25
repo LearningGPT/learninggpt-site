@@ -3,285 +3,260 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Use AI without getting burned — LearningGPT</title>
-<meta name="description" content="Use AI safely: what you should never paste, where your data actually goes, the hidden risk of shadow AI, and the simple personal rules that keep you and your data protected." />
+<title>Use AI safely — what not to paste — LearningGPT</title>
+<meta name="description" content="The simple habits that keep you and your company safe with AI: what is risky to share, how to spot AI-powered scams, and the rules that prevent most mistakes. No code." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#ef4444" />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
-
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/ai-security/use-ai-safely" />
-<meta property="og:title" content="Use AI without getting burned" />
-<meta property="og:description" content="Two questions keep you safe: what am I sharing, and where does it go? Plus your personal never-paste list." />
+<meta property="og:title" content="Use AI safely — what not to paste, and why" />
+<meta property="og:description" content="The habits that keep you safe: what's risky to share, how to spot AI-powered scams, and the rules that prevent mistakes." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
-
 <style>
-:root {
-  --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a;
-  --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14);
-  --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85;
-  --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4;
-  --warn: #ffb547; --danger: #ff6b8a;
-  --radius: 14px; --radius-lg: 20px;
-  --container: 820px;
-  --track: #ef4444;
-  --track-2: #7c5cff;
-}
-* { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
-body {
-  font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif;
-  background: var(--bg); color: var(--text);
-  line-height: 1.7; -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
-a { color: var(--brand-2); text-decoration: none; }
-a:hover { color: var(--text); }
-
-.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
-.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #ef4444; }
-.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
-
-.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
-
-nav.top {
-  position: sticky; top: 0; z-index: 100;
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  background: rgba(10,10,26,0.85);
-  border-bottom: 1px solid var(--line);
-}
-.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
-.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
-.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
-.nav-back { font-size: 13px; color: var(--text-dim); }
-.nav-back:hover { color: var(--text); }
-
-.lesson { padding: 50px 0 100px; }
-.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
-.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(239,68,68,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(239,68,68,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-.lesson-meta .chip-free { border-color: rgba(68,224,164,0.4); color: var(--accent); background: rgba(68,224,164,0.1); }
-.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.45); color: var(--brand); background: rgba(124,92,255,0.12); }
-.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.45); color: var(--warn); background: rgba(255,181,71,0.12); }
-.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
-
-.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #ef4444 0%, #7c5cff 50%, #44e0a4 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
-.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
-.lesson strong { font-weight: 700; color: var(--text); }
-.lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; }
-.lesson li { margin-bottom: 8px; color: var(--text); }
-
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(239,68,68,0.10), rgba(124,92,255,0.06)); border: 1px solid rgba(91,141,239,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #ef4444, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-
-.step-box { margin: 26px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.step-box h3 { margin-top: 0; }
-.step-box ol { padding-left: 22px; }
-.step-box ol li { margin-bottom: 12px; font-size: 15.5px; }
-.step-box code { background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 4px; font-size: 13px; color: var(--accent); font-family: 'SFMono-Regular', Consolas, monospace; }
-
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.35); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; }
-.savings strong { color: var(--accent); font-weight: 700; }
-
-.limitations { margin: 36px 0; background: rgba(255,107,138,0.04); border: 1px solid rgba(255,107,138,0.2); border-radius: var(--radius-lg); padding: 26px 28px; }
-.limitations h3 { margin-top: 0; color: var(--text); }
-.limitations ul li { font-size: 14.5px; }
-
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(239,68,68,0.18), rgba(124,92,255,0.1)); border: 1px solid rgba(239,68,68,0.3); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #ef4444, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(239,68,68,0.35); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
-.checklist h3 { margin-top: 0; font-size: 18px; }
-.checklist ul { list-style: none; padding: 0; margin: 0; }
-.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
-.checklist li:first-child { border-top: none; padding-top: 0; }
-.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
-.checklist li:first-child::before { top: 4px; }
-
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
-.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
-.next-up h3 { margin: 0 0 8px; font-size: 20px; }
-.next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
-.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
-
-footer { border-top: 1px solid var(--line); padding: 30px 0; }
-.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
-@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
-
-/* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
-.coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
-.coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
-.coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
-.coach-head-info { flex: 1; }
-.coach-head-name { font-weight: 700; font-size: 14px; }
-.coach-head-sub { font-size: 11px; color: #44e0a4; }
-.coach-close { background: none; border: none; color: #6b6b85; font-size: 18px; padding: 4px; line-height: 1; cursor: pointer; }
-.coach-close:hover { color: #f5f5fa; }
-.coach-messages { flex: 1; overflow-y: auto; padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth; }
-.coach-messages::-webkit-scrollbar { width: 4px; }
-.coach-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.14); border-radius: 4px; }
-.msg { max-width: 88%; font-size: 13.5px; line-height: 1.6; }
-.msg-coach { align-self: flex-start; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px 14px 14px 4px; padding: 10px 14px; color: #f5f5fa; }
-.msg-user { align-self: flex-end; background: linear-gradient(135deg, rgba(124,92,255,0.25), rgba(91,141,239,0.25)); border: 1px solid rgba(124,92,255,0.3); border-radius: 14px 14px 4px 14px; padding: 10px 14px; color: #f5f5fa; }
-.msg-thinking { align-self: flex-start; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px 14px 14px 4px; padding: 10px 14px; display: flex; align-items: center; gap: 6px; color: #6b6b85; font-size: 13px; }
-.thinking-dot { width: 6px; height: 6px; border-radius: 50%; background: #44e0a4; animation: coachPulse 1.2s ease-in-out infinite; }
-.thinking-dot:nth-child(2) { animation-delay: .2s; }
-.thinking-dot:nth-child(3) { animation-delay: .4s; }
-@keyframes coachPulse { 0%,100%{opacity:.3;transform:scale(.8)} 50%{opacity:1;transform:scale(1)} }
-.coach-limit { padding: 10px 18px; font-size: 11px; color: #6b6b85; text-align: center; border-top: 1px solid rgba(255,255,255,0.08); display: none; }
-.coach-limit.visible { display: block; }
-.coach-limit a { color: #5b8def; }
-.coach-input-row { padding: 12px 18px 16px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; gap: 8px; align-items: flex-end; }
-.coach-input { flex: 1; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); color: #f5f5fa; border-radius: 10px; padding: 9px 12px; font-size: 13px; font-family: inherit; resize: none; max-height: 100px; line-height: 1.5; }
-.coach-input:focus { outline: none; border-color: #44e0a4; }
-.coach-input::placeholder { color: #6b6b85; }
-.coach-send { width: 34px; height: 34px; border-radius: 9px; border: none; flex-shrink: 0; background: linear-gradient(135deg, #44e0a4, #7c5cff); color: white; font-size: 15px; display: grid; place-items: center; cursor: pointer; transition: opacity .15s; }
-.coach-send:hover { opacity: 0.85; }
-.coach-send:disabled { opacity: 0.4; cursor: default; }
-@media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
+  :root{
+    --bg:#0a0a1a;--bg-2:#0f0f23;--bg-soft:#14142b;--surface:#1a1a3a;
+    --line:rgba(255,255,255,.08);--line-strong:rgba(255,255,255,.14);
+    --text:#f5f5fa;--text-dim:#a8a8c0;--text-mute:#6b6b85;
+    --track:#ef4444;--track-2:#dc2626;--accent:#44e0a4;--warn:#ffb547;--danger:#ff6b8a;
+    --radius:14px;--radius-lg:20px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;background:radial-gradient(1000px 560px at 75% -10%,rgba(239,68,68,.18),transparent 60%),var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;line-height:1.6}
+  a{text-decoration:none;color:inherit}
+  .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--line)}
+  .logo{display:flex;align-items:center;gap:9px;font-weight:700;font-size:17px}
+  .logo .mark{width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,#ef4444,#dc2626 60%,#44e0a4);display:grid;place-items:center;font-size:14px;color:#fff;font-weight:800}
+  .nav-r{display:flex;gap:18px;align-items:center;font-size:14px;color:var(--text-dim)}
+  .nav-r a:hover{color:var(--text)}
+  .btn{font-family:inherit;font-weight:600;font-size:14.5px;border-radius:10px;padding:11px 18px;cursor:pointer;border:1px solid transparent;display:inline-flex;align-items:center;gap:8px;transition:.15s;color:#fff;background:linear-gradient(135deg,#ef4444,#dc2626);box-shadow:0 8px 22px -10px rgba(239,68,68,.8)}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-ghost{background:transparent;border-color:var(--line-strong);color:var(--text);box-shadow:none}
+  .btn-ghost:hover{background:rgba(255,255,255,.05)}
+  .btn-block{width:100%;justify-content:center}
+  .lesson{max-width:740px;margin:34px auto 60px}
+  .l-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;font-size:12.5px;flex-wrap:wrap;gap:6px}
+  .l-tag{font-weight:600;color:var(--track)}
+  .l-meta{color:var(--text-mute)}
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px}
+  .pill.free{background:rgba(68,224,164,.14);color:var(--accent);border:1px solid rgba(68,224,164,.3)}
+  .pill.pro{background:rgba(239,68,68,.16);color:var(--track);border:1px solid rgba(239,68,68,.32)}
+  .pill.proplus{background:rgba(255,181,71,.16);color:var(--warn);border:1px solid rgba(255,181,71,.32)}
+  h1.title{font-size:34px;line-height:1.12;letter-spacing:-.02em;margin:14px 0 16px;font-weight:800}
+  .lede{color:var(--text-dim);font-size:17px;margin-bottom:14px}
+  .section{margin:30px 0}
+  h2.sec{font-size:13px;text-transform:uppercase;letter-spacing:.09em;color:var(--track);font-weight:700;margin-bottom:10px}
+  p{color:var(--text-dim);margin-bottom:14px;font-size:15.5px}
+  p strong{color:var(--text);font-weight:600}
+  em.k{color:var(--track);font-style:normal;font-weight:600}
+  .mm{background:linear-gradient(135deg,rgba(239,68,68,.12),rgba(68,224,164,.06));border:1px solid rgba(239,68,68,.25);border-radius:var(--radius);padding:18px 20px;margin-bottom:16px}
+  .mm h3{font-size:18px;color:var(--text);margin-bottom:8px;font-weight:700}
+  .callout{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.22);border-left:3px solid var(--track);border-radius:0 var(--radius) var(--radius) 0;padding:14px 16px;margin-bottom:16px;font-size:14.5px;color:var(--text-dim);line-height:1.65}
+  .callout b{color:var(--text)}
+  .warn{background:rgba(255,181,71,.08);border:1px solid rgba(255,181,71,.25);border-left:3px solid var(--warn);border-radius:0 var(--radius) var(--radius) 0;padding:13px 16px;margin-bottom:16px;font-size:14px;color:var(--text-dim)}
+  .warn b{color:var(--text)}
+  .reframe{background:rgba(255,181,71,.08);border:1px solid rgba(255,181,71,.25);border-radius:var(--radius);padding:13px 16px;margin-bottom:16px;font-size:14.5px;color:var(--text-dim)}
+  .reframe .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--warn);font-weight:700;display:block;margin-bottom:5px}
+  .reframe b{color:var(--text)}
+  .promptcard{background:var(--bg-soft);border:1px solid var(--line);border-left:3px solid var(--track);border-radius:0 var(--radius) var(--radius) 0;padding:14px 16px;margin-bottom:16px;font-size:14px;color:var(--text);line-height:1.6}
+  .promptcard .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-mute);display:block;margin-bottom:6px}
+  /* chips / builder */
+  .builder{background:var(--bg-soft);border:1px solid var(--line-strong);border-radius:var(--radius);padding:16px;margin-bottom:12px}
+  .brow{margin-bottom:14px} .brow:last-child{margin-bottom:0}
+  .brow .q{font-size:13px;font-weight:700;color:var(--text);margin-bottom:7px}
+  .brow .q small{font-weight:400;color:var(--text-mute);font-size:12px}
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{font-size:12.5px;padding:7px 12px;font-family:inherit;color:var(--text-dim);background:var(--surface);border:1px solid var(--line-strong);border-radius:99px;cursor:pointer;transition:.15s}
+  .chip:hover{color:var(--text);border-color:var(--track)}
+  .chip.on{background:rgba(239,68,68,.16);color:var(--text);border-color:var(--track)}
+  .meter{margin:14px 0 4px;font-size:13px;color:var(--text-dim);display:flex;align-items:center;gap:10px}
+  .meter-bar{flex:1;height:6px;background:var(--surface);border-radius:99px;overflow:hidden}
+  .meter-fill{height:100%;width:0;background:linear-gradient(90deg,var(--track),var(--accent));border-radius:99px;transition:width .4s ease}
+  .promptout{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--radius);padding:15px 16px;font-size:13.5px;line-height:1.65;color:var(--text);white-space:pre-wrap;min-height:56px}
+  .promptout .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-mute);display:block;margin-bottom:8px}
+  .promptout em{color:var(--track);font-style:normal;font-weight:600}
+  .reveal{display:none;margin-top:14px;padding:14px 16px;background:rgba(68,224,164,.07);border:1px solid rgba(68,224,164,.3);border-radius:var(--radius);font-size:14px;color:var(--text-dim);line-height:1.6}
+  .reveal.show{display:block} .reveal b{color:var(--text)}
+  /* option benches / classifiers */
+  .opts{display:grid;gap:9px;margin-bottom:6px}
+  .opt{text-align:left;background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:13px 15px;cursor:pointer;transition:.15s;font-family:inherit;color:var(--text);font-size:14px;line-height:1.5}
+  .opt:hover:not(:disabled){border-color:var(--track)}
+  .opt:disabled{cursor:default}
+  .opt.right{border-color:var(--accent);background:rgba(68,224,164,.1)}
+  .opt.wrong{border-color:var(--danger);background:rgba(255,107,138,.08);opacity:.7}
+  .fb{display:none;margin-top:10px;padding:11px 14px;border-radius:var(--radius);font-size:13.5px;line-height:1.6}
+  .fb.show{display:block}
+  .fb.good{background:rgba(68,224,164,.1);border:1px solid rgba(68,224,164,.35);color:#bdebd6}
+  .fb.bad{background:rgba(255,181,71,.1);border:1px solid rgba(255,181,71,.32);color:#ffe2b0}
+  .scoreline{font-size:12.5px;color:var(--text-mute);margin-top:8px}
+  /* sortable / classifier item with verdict tag */
+  .clsitem{text-align:left;background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:12px 14px;cursor:pointer;transition:.15s;font-family:inherit;color:var(--text);font-size:13.5px;display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+  .clsitem:hover:not(.locked){border-color:var(--track)}
+  .clsitem.locked{cursor:default}
+  .clsitem .verdict{font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;opacity:0;transition:.15s;white-space:nowrap}
+  .clsitem.show-good .verdict{opacity:1;background:rgba(68,224,164,.16);color:var(--accent);border:1px solid rgba(68,224,164,.35)}
+  .clsitem.show-bad .verdict{opacity:1;background:rgba(255,107,138,.16);color:var(--danger);border:1px solid rgba(255,107,138,.35)}
+  .clsitem.show-warn .verdict{opacity:1;background:rgba(255,181,71,.16);color:var(--warn);border:1px solid rgba(255,181,71,.35)}
+  /* toggle/console cards */
+  .cards{display:grid;gap:10px;margin-bottom:8px}
+  .tcard{display:flex;align-items:flex-start;gap:11px;text-align:left;background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:13px 15px;cursor:pointer;transition:.15s;font-family:inherit;color:var(--text)}
+  .tcard:hover{border-color:var(--track)}
+  .tcard.on{border-color:var(--track);background:rgba(239,68,68,.1)}
+  .tcard .box{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--line-strong);flex-shrink:0;display:grid;place-items:center;font-size:13px;color:transparent;transition:.15s;margin-top:1px}
+  .tcard.on .box{background:var(--track);border-color:var(--track);color:#fff}
+  .tcard .t{font-weight:700;font-size:14px;margin-bottom:2px}
+  .tcard .d{font-size:12.5px;color:var(--text-mute);line-height:1.5}
+  /* checklist runner */
+  .runner{background:var(--bg-soft);border:1px solid var(--line-strong);border-radius:var(--radius);padding:16px;margin-bottom:12px}
+  .citem{display:flex;align-items:flex-start;gap:11px;padding:11px 0;border-bottom:1px solid var(--line);cursor:pointer}
+  .citem:last-of-type{border-bottom:none}
+  .citem .box{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--line-strong);flex-shrink:0;display:grid;place-items:center;font-size:13px;color:transparent;transition:.15s;margin-top:1px}
+  .citem.done .box{background:var(--accent);border-color:var(--accent);color:#08231a}
+  .citem .ct{font-size:14px;color:var(--text);line-height:1.45}
+  .citem.done .ct{color:var(--text-mute);text-decoration:line-through}
+  .citem .cd{font-size:12.5px;color:var(--text-mute);line-height:1.45}
+  .rungo{display:none;margin-top:14px;padding:13px 16px;border-radius:var(--radius);background:rgba(68,224,164,.1);border:1px solid rgba(68,224,164,.35);font-size:14px;color:#bdebd6;text-align:center;font-weight:600}
+  .rungo.show{display:block}
+  /* run console / log */
+  .console{background:#08081a;border:1px solid var(--line-strong);border-radius:var(--radius);padding:14px 16px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;line-height:1.8;color:var(--text-dim);min-height:70px}
+  .console .ln{opacity:0;transform:translateY(4px);transition:.3s}
+  .console .ln.show{opacity:1;transform:none}
+  .console .ok{color:var(--accent)} .console .wt{color:var(--warn)} .console .mut{color:var(--text-mute)}
+  ul.clean{list-style:none;margin:6px 0 14px}
+  ul.clean li{position:relative;padding-left:26px;margin-bottom:9px;font-size:14.5px;color:var(--text-dim);line-height:1.5}
+  ul.clean li::before{content:'';position:absolute;left:0;top:3px;width:16px;height:16px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E");background-size:contain;background-repeat:no-repeat}
+  ul.clean li strong{color:var(--text)}
+  ol.list{margin:6px 0 14px 18px;color:var(--text-dim);font-size:14.5px}
+  ol.list li{margin-bottom:8px} ol.list li strong{color:var(--text)}
+  .challenge{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin:24px 0}
+  .challenge h3{font-size:17px;margin-bottom:10px;color:var(--text)}
+  ol.steps{margin:0 0 0 18px;color:var(--text-dim);font-size:14.5px}
+  ol.steps li{margin-bottom:7px}
+  .done{background:linear-gradient(135deg,rgba(239,68,68,.14),rgba(68,224,164,.07));border:1px solid rgba(239,68,68,.3);border-radius:var(--radius);padding:22px;text-align:center;margin:26px 0}
+  .done .check{width:50px;height:50px;border-radius:50%;background:rgba(68,224,164,.14);color:var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:24px;border:1px solid rgba(68,224,164,.4)}
+  .done h3{margin-bottom:8px}
+  .upnext{background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:14px 0;text-align:left}
+  .upnext .lbl{font-size:11px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.06em}
+  .upnext p{margin:3px 0 0;font-weight:600;color:var(--text)}
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+  footer{border-top:1px solid var(--line);padding:30px 0;font-size:13px;color:var(--text-mute);text-align:center}
+  .coach-fab{position:fixed;bottom:28px;right:28px;z-index:999;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#ef4444,#7c5cff);border:none;box-shadow:0 8px 28px rgba(239,68,68,.4);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;transition:transform .2s,box-shadow .2s}
+  .coach-fab:hover{transform:scale(1.08)}
+  .coach-fab .coach-fab-badge{position:absolute;top:-4px;right:-4px;background:#dc2626;color:#fff;font-size:9px;font-weight:700;padding:2px 5px;border-radius:999px;border:2px solid #0a0a1a;line-height:1.2}
+  .coach-drawer{position:fixed;bottom:90px;right:28px;z-index:998;width:360px;max-height:520px;background:#13132a;border:1px solid rgba(239,68,68,.25);border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.5);display:flex;flex-direction:column;transform:scale(.92) translateY(16px);opacity:0;pointer-events:none;transition:transform .25s cubic-bezier(.34,1.56,.64,1),opacity .2s}
+  .coach-drawer.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
+  .coach-drawer-head{padding:16px 18px 14px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px}
+  .coach-avatar{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#ef4444,#7c5cff);display:grid;place-items:center;font-size:16px;flex-shrink:0}
+  .coach-head-info{flex:1}
+  .coach-head-name{font-weight:700;font-size:14px}
+  .coach-head-sub{font-size:11px;color:var(--track)}
+  .coach-close{background:none;border:none;color:#6b6b85;font-size:18px;padding:4px;line-height:1;cursor:pointer}
+  .coach-close:hover{color:#f5f5fa}
+  .coach-messages{flex:1;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}
+  .coach-messages::-webkit-scrollbar{width:4px}
+  .coach-messages::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:4px}
+  .msg{max-width:88%;font-size:13.5px;line-height:1.6}
+  .msg-coach{align-self:flex-start;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:14px 14px 14px 4px;padding:10px 14px;color:#f5f5fa}
+  .msg-user{align-self:flex-end;background:rgba(239,68,68,.22);border:1px solid rgba(239,68,68,.3);border-radius:14px 14px 4px 14px;padding:10px 14px;color:#f5f5fa}
+  .msg-thinking{align-self:flex-start;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px 14px 14px 4px;padding:10px 14px;display:flex;align-items:center;gap:6px;color:#6b6b85;font-size:13px}
+  .thinking-dot{width:6px;height:6px;border-radius:50%;background:var(--track);animation:coachPulse 1.2s ease-in-out infinite}
+  .thinking-dot:nth-child(2){animation-delay:.2s}
+  .thinking-dot:nth-child(3){animation-delay:.4s}
+  @keyframes coachPulse{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}
+  .coach-limit{padding:10px 18px;font-size:11px;color:#6b6b85;text-align:center;border-top:1px solid rgba(255,255,255,.08);display:none}
+  .coach-limit.visible{display:block}
+  .coach-limit a{color:var(--track)}
+  .coach-input-row{padding:12px 18px 16px;border-top:1px solid rgba(255,255,255,.08);display:flex;gap:8px;align-items:flex-end}
+  .coach-input{flex:1;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.08);color:#f5f5fa;border-radius:10px;padding:9px 12px;font-size:13px;font-family:inherit;resize:none;max-height:100px;line-height:1.5}
+  .coach-input:focus{outline:none;border-color:var(--track)}
+  .coach-input::placeholder{color:#6b6b85}
+  .coach-send{width:34px;height:34px;border-radius:9px;border:none;flex-shrink:0;background:linear-gradient(135deg,#ef4444,#7c5cff);color:#fff;font-size:15px;display:grid;place-items:center;cursor:pointer;transition:opacity .15s}
+  .coach-send:hover{opacity:.85}
+  .coach-send:disabled{opacity:.4;cursor:default}
+  @media(max-width:480px){.coach-drawer{width:calc(100vw - 32px);right:16px;bottom:80px}.coach-fab{right:16px;bottom:16px}h1.title{font-size:28px}}
 </style>
 </head>
 <body>
+<div class="sr-only">Interactive Secure Your AI Use Lesson 1: sort what's safe to paste from what isn't and spot AI-powered scams, with an AI Coach.</div>
+<div class="wrap">
+  <nav>
+    <a href="/" class="logo"><span class="mark">L</span> LearningGPT</a>
+    <div class="nav-r">
+      <a href="/lessons/ai-security/">← Secure Your AI Use</a>
+      <a href="/playground">Playground</a>
+    </div>
+  </nav>
+  <main class="lesson">
+    <div class="l-top"><span class="l-tag">Secure Your AI Use · Lesson 1</span><span class="l-meta"><span class="pill free">Free</span> &nbsp;~12 min · No code</span></div>
+    <h1 class="title">Use AI safely — <span class="serif">what not to paste, and why.</span></h1>
+    <p class="lede">AI is powerful and easy to use carelessly. This lesson is the simple habits that keep you and your company safe: what's risky to share, how to spot AI-powered scams, and the rules that prevent most mistakes. No code.</p>
+    <div class="section"><h2 class="sec">The mental model</h2>
+      <div class="mm"><h3>Most AI risk isn't exotic hacking — it's a few avoidable habits. Fix those and you're ahead of most organizations.</h3>
+      <p style="margin-bottom:0">The two biggest risks are simple: pasting sensitive or customer data into the wrong tool, and getting fooled by AI-powered scams. Neither needs a security background to avoid — just a couple of habits applied every time.</p></div>
+      <div class="reframe"><span class="lbl">The reframe</span><b>Treat a chat box like a postcard.</b> Assume anything you paste could be seen or stored somewhere you don't control. If you wouldn't write it on a postcard, don't paste it into a tool you haven't vetted.</div></div>
+    <div class="section"><h2 class="sec">Step 01 · Paste it, or don't?</h2>
+      <p>The single most common mistake is pasting the wrong thing. Tap each — safe to share with a general AI tool, or keep it out?</p>
+      <div id="cls">
+        <button class="clsitem" data-g="1" onclick="cls(this)"><span>A draft blog post you're editing for tone</span><span class="verdict"></span></button>
+        <button class="clsitem" data-g="0" onclick="cls(this)"><span>A customer list with names, emails, and order history</span><span class="verdict"></span></button>
+        <button class="clsitem" data-g="1" onclick="cls(this)"><span>A general question about how a contract clause usually works</span><span class="verdict"></span></button>
+        <button class="clsitem" data-g="0" onclick="cls(this)"><span>Your company's unreleased financials or a password</span><span class="verdict"></span></button>
+        <button class="clsitem" data-g="0" onclick="cls(this)"><span>A patient's or client's record with identifying details</span><span class="verdict"></span></button>
+      </div>
+      <div class="callout" style="margin-top:14px"><b>The rule:</b> keep it general, or use a tool your company has approved with the right data protections. When in doubt, strip the names and numbers and ask about the situation in the abstract.</div></div>
+    <div class="section"><h2 class="sec">Step 02 · Spot the AI-powered scam</h2>
+      <p>AI makes scams cheaper and more convincing — fake voices, perfect phishing, deepfakes. Tap each message: legit, or a scam to verify first?</p>
+      <div id="cls2">
+        <button class="clsitem" data-g="0" onclick="cls2(this)"><span>"It's me, your CEO — wire $9k now, I'm in a meeting, can't talk." (urgent, unusual)</span><span class="verdict"></span></button>
+        <button class="clsitem" data-g="0" onclick="cls2(this)"><span>A voicemail in a colleague's voice asking for a gift-card purchase</span><span class="verdict"></span></button>
+        <button class="clsitem" data-g="1" onclick="cls2(this)"><span>A normal email you confirm by calling the person on a known number</span><span class="verdict"></span></button>
+      </div>
+      <div class="warn"><b>Urgency + an unusual request + a new payment path = verify before you act, every time.</b> AI can fake a voice or a writing style perfectly. Confirm on a separate, trusted channel — a known phone number, in person — never by replying to the suspicious message itself.</div></div>
+    <div class="section"><h2 class="sec">Step 03 · The habits that prevent most mistakes</h2>
+      <ul class="clean"><li><strong>Keep it general</strong> — strip names, numbers, and identifiers before you paste.</li><li><strong>Use approved tools</strong> for anything sensitive — know which your company has vetted.</li><li><strong>Verify on a second channel</strong> for any urgent money or data request.</li><li><strong>Slow down</strong> — urgency is the scammer's main weapon; a 60-second check defeats most attacks.</li></ul></div>
+    <div class="challenge"><h3>Your challenge: tighten your habits</h3>
+      <ol class="steps"><li>List the three most sensitive things you've been tempted to paste — and how to ask in the abstract instead.</li><li>Find out which AI tools your company has actually approved.</li><li>Set one rule: verify any urgent money/data request on a known number.</li><li>Share these habits with one colleague.</li></ol></div>
+    <div class="done"><div class="check">✓</div><h3>Lesson complete</h3>
+      <p style="max-width:480px;margin:0 auto">You know what's risky to share with AI and what's fine, can spot AI-powered scams and fakes, and have the simple habits that prevent most mistakes.</p>
+      <div class="upnext"><span class="lbl">Up next</span><p>Lesson 2 · An AI policy your team will actually follow</p></div>
+      <div class="cta-row"><a class="btn btn-block" href="/lessons/ai-security/ai-policy">Continue to Lesson 2 →</a></div>
+      <div class="cta-row"><a class="btn btn-ghost" href="/playground" target="_blank" rel="noopener">Open the Playground</a><a class="btn btn-ghost" href="/lessons/ai-security/">Back to Secure Your AI Use</a></div></div>
+  </main>
+</div>
+<footer>© 2026 LearningGPT · Independent. Not affiliated with OpenAI, Anthropic, Microsoft, Google, or xAI.</footer>
 
-<div class="bg-orb one"></div>
-<div class="bg-orb two"></div>
-
-<nav class="top">
-  <div class="nav-inner">
-    <a href="/" class="logo">
-      <div class="logo-mark">L</div>
-      LearningGPT
-    </a>
-    <a href="/lessons/ai-security/" class="nav-back">← Secure Your AI Use</a>
-  </div>
-</nav>
-
-<article class="lesson">
-  <div class="container">
-
-    <div class="lesson-meta"><span class="chip">Secure Your AI Use · Lesson 1</span><span class="chip chip-free">Free</span><span>~12 min read</span><span class="dot"></span><span>Essential for everyone</span><span class="dot"></span><span>Your never-paste list by the end</span></div>
-
-    <h1>Use AI <span class="grad serif">without getting burned.</span></h1>
-
-    <p class="deck">AI is a force multiplier and a data leak waiting to happen if you’re careless. This lesson is the safety basics everyone should have: what you must never paste, where your data actually goes, the quiet risk of “shadow AI,” and a few simple rules that keep you protected without slowing you down.</p>
-
-    <h2><span class="num">The mental model</span></h2><h3>AI is powerful but leaky. Safety comes down to two questions: what am I sharing, and where does it go?</h3><p>Every time you paste something into an AI, you’re sending it to someone else’s computer. Often that’s fine. Sometimes it’s a serious problem. The whole of personal AI safety is learning to tell the difference before you hit enter — because once something’s sent, you can’t pull it back.</p><div class="callout"><span class="lbl">The Reframe</span><p><strong>Treat the prompt box like a public postcard.</strong> Before pasting, ask: would I be comfortable if this ended up somewhere I didn’t control? If not, don’t paste it as-is.</p></div><h2><span class="num">Step 01</span> What never to paste</h2><p>Keep these out of any AI tool unless you’ve confirmed it’s approved and protected for that use:</p><ul><li><strong>Secrets and credentials</strong> — passwords, API keys, access tokens.</li><li><strong>Personal data (PII)</strong> — names with sensitive details, IDs, financial or health info.</li><li><strong>Customer and confidential data</strong> — anything covered by a contract or NDA.</li><li><strong>Regulated data</strong> — anything under rules like HIPAA, GDPR, or similar.</li></ul><h2><span class="num">Step 02</span> Know where your data goes</h2><p>Not all AI tools treat your data the same. Before trusting one with anything sensitive, check:</p><div class="step-box"><h3>The “is it private?” check</h3><ol><li><strong>Does it train on your inputs?</strong> Many consumer tiers may; many business/enterprise tiers don’t.</li><li><strong>Consumer vs business tier.</strong> Business and enterprise plans usually add data protections and admin controls.</li><li><strong>Is there a clear policy?</strong> If you can’t tell what happens to your data, treat it as not private.</li></ol></div><h2><span class="num">Step 03</span> The shadow-AI risk</h2><p>“Shadow AI” is employees quietly using random AI tools with company data — no approval, no protections. It’s usually well-intentioned and genuinely risky: confidential data flowing into tools nobody vetted. Naming it is the first step to fixing it.</p><h2><span class="num">Step 04</span> Simple personal rules</h2><ul><li><strong>Run the postcard check</strong> before pasting anything sensitive.</li><li><strong>Use approved tools</strong> for work data — not whatever’s handy.</li><li><strong>Anonymize</strong> — strip names and identifiers when the AI doesn’t need them.</li></ul><div class="gotcha">The convenience trap gets careful people: pasting a whole customer email or a full contract for a “quick summary” leaks every detail inside it. The fix is usually easy — remove the sensitive parts, or use an approved tool — but you have to catch yourself before you paste, because there’s no undo.</div>
-
-    <div class="challenge"><h2 style="margin-top:0;">Your challenge: audit your own habits</h2><p>Take an honest look at how you use AI. Then:</p><ol><li>List the AI tools you currently paste work into.</li><li>For each, check whether it trains on inputs and what tier you’re on.</li><li>Write your personal “never paste” list of data types.</li><li>Pick one safer habit to adopt this week (anonymizing, an approved tool).</li></ol><p>That’s the difference between using AI and getting burned by it. Next, turn personal safety into a business AI policy your whole team can follow — that’s Lesson 2.</p><div class="btn-row"><a href="/lessons/ai-security/ai-policy" class="btn">Next: an AI policy for your business →</a><a href="/lessons/ai-security/" class="btn ghost">Back to Secure Your AI Use</a></div></div>
-
-    <div class="checklist"><h3>What you can do now</h3><ul><li>Ask “what am I sharing and where does it go” before pasting</li><li>Recognize the data types you must never paste</li><li>Check whether a tool trains on inputs and is private</li><li>Understand and name the shadow-AI risk</li><li>Adopt simple personal rules that keep your data safe</li></ul></div>
-
-    <div class="next-up"><span class="pro-tag">Pro</span><div class="lbl" style="margin-top:14px;">Up next in Secure Your AI Use</div><h3>Lesson 2 · An AI policy for your business</h3><p>Pick safe tools, write rules everyone can actually follow, classify your data, and train your team — so safe AI use scales past just you. <a href="/lessons/ai-security/ai-policy">Go to Lesson 2 →</a></p></div>
-
-  </div>
-</article>
-
-<footer>
-  <div class="footer-inner">
-    <div>© 2026 LearningGPT, Inc. · Independent.</div>
-    <a href="/lessons/website-builder/" style="color: var(--text-dim);">← Back to Build a Website</a>
-  </div>
-</footer>
-
-
-<!-- ── AI COACH FAB ── -->
-<button class="coach-fab" id="coachFab" title="Ask the AI Coach">
-  🎓
-  <span class="coach-fab-badge">AI</span>
-</button>
-
-<!-- ── AI COACH DRAWER ── -->
+<button class="coach-fab" id="coachFab" title="Ask the AI Coach">🎓<span class="coach-fab-badge">AI</span></button>
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
     <div class="coach-avatar">🎓</div>
-    <div class="coach-head-info">
-      <div class="coach-head-name">AI Coach</div>
-      <div class="coach-head-sub">Ask anything about this lesson</div>
-    </div>
+    <div class="coach-head-info"><div class="coach-head-name">AI Coach</div><div class="coach-head-sub">Ask anything about this lesson</div></div>
     <button class="coach-close" id="coachClose">✕</button>
   </div>
   <div class="coach-messages" id="coachMessages">
-    <div class="msg msg-coach">Hey! I’m your AI Coach for this lesson. Ask me anything about using AI safely — what not to paste, how to tell if a tool is private, or shadow AI. What’s on your mind?</div>
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about using AI safely — what's risky to paste, spotting scams, or the habits that prevent mistakes. What's on your mind?</div>
   </div>
-  <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
-  </div>
+  <div class="coach-limit" id="coachLimit">Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.</div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
     <button class="coach-send" id="coachSend">➤</button>
   </div>
 </div>
 
-
+<script id="lessonScript">
+  function cls(b){ if(b.classList.contains('locked'))return; b.classList.add('locked'); var g=b.dataset.g==='1'; b.classList.add(g?'show-good':'show-bad'); b.querySelector('.verdict').textContent=g?'Safe ✓':'Keep it out'; }
+  function cls2(b){ if(b.classList.contains('locked'))return; b.classList.add('locked'); var g=b.dataset.g==='1'; b.classList.add(g?'show-good':'show-bad'); b.querySelector('.verdict').textContent=g?'Legit ✓':'Verify first'; }
+</script>
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Use AI without getting burned (Secure Your AI Use, Lesson 1, Free)\nTRACK: Secure Your AI Use (a cross-tool 'What can you do with AI' build)\n\nLESSON CONTENT SUMMARY:\nThis free essential lesson teaches safe personal AI use. Mental model: AI is powerful but leaky - pasting sends data to someone else computer; safety is two questions, what am I sharing and where does it go, decided before hitting enter because there is no undo. Reframe: treat the prompt box like a public postcard - would I be comfortable if this ended up somewhere I do not control. Step 1 what never to paste unless confirmed approved and protected: secrets and credentials (passwords, API keys, tokens), PII (names with sensitive details, IDs, financial or health info), customer and confidential data (under contract or NDA), and regulated data (HIPAA, GDPR, similar). Step 2 know where your data goes: does the tool train on inputs (many consumer tiers may, business/enterprise often do not), consumer vs business tier (business adds protections and admin controls), and if you cannot tell what happens to data treat it as not private. Step 3 shadow AI: employees quietly using unvetted AI tools with company data - well-intentioned and risky; naming it is the first fix. Step 4 simple rules: run the postcard check, use approved tools for work data, anonymize by stripping identifiers the AI does not need. Gotcha: the convenience trap - pasting a whole customer email or contract for a quick summary leaks everything; remove sensitive parts or use an approved tool, and catch yourself before pasting since there is no undo. The challenge: audit your AI habits and write a personal never-paste list.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise - 2-4 sentences unless more is genuinely needed\n- Be practical with real examples\n- If asked about company-wide policy or using AI for defensive security, briefly answer and point to Lesson 2 (Pro) or Lesson 3 (Pro+) of this build\n- Never invent tools or features that don't exist\n- Plain conversational text only, no markdown symbols\n- Do not start with \"Great question!\" or similar filler";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Use AI safely \u2014 what not to paste, and why\nTRACK: Secure Your AI Use (Lesson 01, Free)\n\nLESSON CONTENT SUMMARY:\nAI is powerful and easy to use carelessly; this is the simple habits that keep you and your company safe. Mental model: most AI risk isn't exotic hacking \u2014 it's a few avoidable habits; the two biggest are pasting sensitive/customer data into the wrong tool and getting fooled by AI-powered scams. Reframe: treat a chat box like a POSTCARD \u2014 assume anything you paste could be seen or stored somewhere you don't control; if you wouldn't write it on a postcard, don't paste it into an unvetted tool.\n\nPaste it or don't \u2014 SAFE to share with a general tool: a draft you're editing, a general question about how something works. KEEP OUT: a customer list with names/emails/orders, unreleased financials, passwords, a patient's or client's identifying record. The rule: keep it general, or use a company-approved tool with the right data protections; when in doubt, strip names and numbers and ask in the abstract.\n\nSpot AI-powered scams \u2014 AI makes scams cheaper and more convincing (fake voices, perfect phishing, deepfakes). The pattern to verify: URGENCY + an UNUSUAL REQUEST + a NEW PAYMENT PATH (the 'CEO' wiring $9k now, a voicemail in a colleague's voice asking for gift cards). Confirm on a separate trusted channel \u2014 a known phone number, in person \u2014 never by replying to the suspicious message.\n\nHabits that prevent most mistakes: keep it general (strip identifiers), use approved tools for anything sensitive, verify urgent money/data requests on a second channel, and SLOW DOWN \u2014 urgency is the scammer's main weapon; a 60-second check defeats most attacks. NOTE: this is a sensitive safety topic; if someone seems to be facing an actual scam or breach, encourage them to verify on trusted channels and involve their IT/security team.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences unless more is genuinely needed\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where to learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler";
   var MAX_FREE = 3;
-  var count = 0;
-  var isThinking = false;
-  var history = [];
-
+  var count = 0, isThinking = false, history = [];
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -289,81 +264,32 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
-  fab.addEventListener('click', function() { toggle(true); });
-  closeBtn.addEventListener('click', function() { toggle(false); });
-
-  function toggle(open) {
-    drawer.classList.toggle('open', open);
-    if (open) setTimeout(function() { input.focus(); }, 300);
-  }
-
-  input.addEventListener('input', function() {
-    input.style.height = 'auto';
-    input.style.height = Math.min(input.scrollHeight, 100) + 'px';
-  });
-
-  input.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
-  });
+  if (!fab) return;
+  fab.addEventListener('click', function(){ toggle(true); });
+  closeBtn.addEventListener('click', function(){ toggle(false); });
+  function toggle(open){ drawer.classList.toggle('open', open); if(open) setTimeout(function(){ input.focus(); }, 300); }
+  input.addEventListener('input', function(){ input.style.height='auto'; input.style.height=Math.min(input.scrollHeight,100)+'px'; });
+  input.addEventListener('keydown', function(e){ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); send(); } });
   sendBtn.addEventListener('click', send);
-
-  function addMsg(text, type) {
-    var d = document.createElement('div');
-    d.className = 'msg msg-' + type;
-    d.textContent = text;
-    msgs.appendChild(d);
-    msgs.scrollTop = msgs.scrollHeight;
-    return d;
-  }
-
-  function addThinking() {
-    var d = document.createElement('div');
-    d.className = 'msg-thinking';
-    d.innerHTML = '<div class="thinking-dot"></div><div class="thinking-dot"></div><div class="thinking-dot"></div>';
-    msgs.appendChild(d);
-    msgs.scrollTop = msgs.scrollHeight;
-    return d;
-  }
-
-  async function send() {
+  function addMsg(text, type){ var d=document.createElement('div'); d.className='msg msg-'+type; d.textContent=text; msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight; return d; }
+  function addThinking(){ var d=document.createElement('div'); d.className='msg-thinking'; d.innerHTML='<div class="thinking-dot"></div><div class="thinking-dot"></div><div class="thinking-dot"></div>'; msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight; return d; }
+  async function send(){
     var text = input.value.trim();
-    if (!text || isThinking) return;
-    if (count >= MAX_FREE) {
-      limitBar.classList.add('visible');
-      input.disabled = true;
-      sendBtn.disabled = true;
-      return;
-    }
+    if(!text || isThinking) return;
+    if(count >= MAX_FREE){ limitBar.classList.add('visible'); input.disabled=true; sendBtn.disabled=true; return; }
     count++;
-    if (count >= MAX_FREE) limitBar.classList.add('visible');
-    addMsg(text, 'user');
-    history.push({ role: 'user', content: text });
-    input.value = '';
-    input.style.height = 'auto';
-    isThinking = true;
-    sendBtn.disabled = true;
+    if(count >= MAX_FREE) limitBar.classList.add('visible');
+    addMsg(text,'user'); history.push({role:'user',content:text});
+    input.value=''; input.style.height='auto'; isThinking=true; sendBtn.disabled=true;
     var thinking = addThinking();
-    try {
-      var res = await fetch('/api/playground', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ coach: true, lessonCoach: true, lessonContext: LESSON_CONTEXT, history: history })
-      });
+    try{
+      var res = await fetch('/api/playground', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ coach:true, lessonCoach:true, lessonContext:LESSON_CONTEXT, history:history }) });
       thinking.remove();
       var data = await res.json();
       var reply = (data && data.coach) ? data.coach : "Sorry, something went wrong. Try again in a moment.";
-      addMsg(reply, 'coach');
-      history.push({ role: 'assistant', content: reply });
-    } catch(err) {
-      thinking.remove();
-      addMsg("Something went wrong — try again in a moment.", 'coach');
-    } finally {
-      isThinking = false;
-      sendBtn.disabled = count >= MAX_FREE;
-    }
+      addMsg(reply,'coach'); history.push({role:'assistant',content:reply});
+    } catch(err){ thinking.remove(); addMsg("Something went wrong — try again in a moment.",'coach'); }
+    finally{ isThinking=false; sendBtn.disabled = count >= MAX_FREE; }
   }
 })();
 </script>

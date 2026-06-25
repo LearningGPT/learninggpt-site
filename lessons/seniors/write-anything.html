@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Write anything | AI for Seniors | LearningGPT</title>
-<meta name="description" content="Use AI to write letters, emails, thank-you notes, and messages to companies or your doctor - clear, polite, and in your own voice." />
+<meta name="description" content="Let AI help you write letters, emails, and notes in your own voice — from a few details. For seniors, the easy way." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#2dd4a7" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +13,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/seniors/write-anything" />
 <meta property="og:title" content="Write anything" />
-<meta property="og:description" content="Use AI to write letters, emails, thank-you notes, and messages to companies or your doctor - clear, polite, and in your own voice." />
+<meta property="og:description" content="Let AI help you write letters, emails, and notes in your own voice — from a few details." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -33,9 +33,7 @@ nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(18
 .lesson{padding:46px 0 100px;}
 .lesson-meta{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:15px;color:var(--text-mute);margin-bottom:22px;}
 .lesson-meta .chip{padding:5px 13px;border:1px solid rgba(45,212,167,0.4);border-radius:999px;font-size:13px;color:var(--track);background:rgba(45,212,167,0.12);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;}
-.lesson-meta .chip-free{border-color:rgba(68,224,164,0.45);color:#44e0a4;background:rgba(68,224,164,0.12);}
 .lesson-meta .chip-pro{border-color:rgba(124,92,255,0.5);color:#b9a6ff;background:rgba(124,92,255,0.14);}
-.lesson-meta .chip-pro-plus{border-color:rgba(255,181,71,0.5);color:#ffce82;background:rgba(255,181,71,0.14);}
 .lesson-meta .dot{width:5px;height:5px;border-radius:50%;background:var(--text-mute);}
 .lesson h1{font-size:clamp(30px,4.6vw,44px);font-weight:800;line-height:1.18;letter-spacing:-0.01em;margin:0 0 20px;}
 .lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;background:linear-gradient(135deg,#2dd4a7 0%,#5b8def 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;padding-right:0.12em;}
@@ -53,9 +51,26 @@ nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(18
 .prompt .lbl{display:block;font-size:13px;letter-spacing:0.4px;text-transform:uppercase;color:var(--track);font-weight:700;margin-bottom:8px;}
 .note{background:rgba(255,181,71,0.08);border:1px solid rgba(255,181,71,0.3);border-radius:12px;padding:18px 20px;margin:18px 0;font-size:17.5px;line-height:1.75;}
 .note b{color:var(--warn);}
+
+/* ── DRAFT DEMO ── */
+.writer{margin:24px 0;border:1px solid rgba(45,212,167,0.3);border-radius:18px;overflow:hidden;background:var(--surface);}
+.wr-head{padding:15px 18px;border-bottom:1px solid var(--line);font-size:16px;font-weight:700;background:rgba(45,212,167,0.06);}
+.wr-pick{padding:16px 18px;}
+.wr-lbl{font-size:15px;color:var(--text-dim);margin-bottom:11px;}
+.wrbtn{display:block;width:100%;text-align:left;font-family:inherit;font-size:16.5px;font-weight:600;color:var(--text);padding:15px 18px;margin-bottom:10px;border-radius:13px;border:1.5px solid var(--line-strong);background:rgba(255,255,255,0.04);cursor:pointer;transition:all .15s;line-height:1.4;}
+.wrbtn:hover:not(:disabled){border-color:var(--track);background:rgba(45,212,167,0.08);}
+.wrbtn:disabled{opacity:0.45;cursor:default;}
+.wrbtn .em{color:var(--track);margin-right:8px;}
+.wr-page{margin:0 18px 18px;border:1px solid var(--line);border-radius:13px;background:rgba(0,0,0,0.22);padding:18px 20px;display:none;}
+.wr-page.show{display:block;animation:fadeIn .35s ease;}
+.wr-page .pg-lbl{font-size:13px;letter-spacing:0.5px;text-transform:uppercase;color:var(--track);font-weight:700;margin-bottom:10px;}
+.wr-page .pg-body{font-size:17px;line-height:1.7;color:#eaeaf5;white-space:pre-wrap;}
+.wr-page .pg-tip{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);font-size:15px;color:#bdf5e2;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
 .challenge{margin:50px 0 36px;background:linear-gradient(135deg,rgba(45,212,167,0.14),rgba(91,141,239,0.1));border:1px solid rgba(45,212,167,0.3);border-radius:var(--radius-lg);padding:32px;}
 .challenge h2{margin-top:0;}
-.challenge .btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#2dd4a7,#5b8def);color:white;padding:14px 26px;border-radius:11px;font-weight:700;font-size:16px;}
+.challenge .btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#2dd4a7,#5b8def);color:white;padding:15px 28px;border-radius:11px;font-weight:700;font-size:17px;text-decoration:none;}
 .challenge .btn:hover{color:white;}
 .challenge .btn.ghost{background:rgba(255,255,255,0.06);border:1px solid var(--line-strong);}
 .challenge .btn-row{margin-top:22px;display:flex;gap:12px;flex-wrap:wrap;}
@@ -71,8 +86,6 @@ nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(18
 .next-up h3{margin:0 0 8px;font-size:21px;}.next-up p{margin:0 0 14px;color:var(--text-dim);font-size:17px;}
 .next-up .tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:0.5px;padding:4px 12px;border-radius:999px;}
 .tag-pro{background:rgba(124,92,255,0.18);color:#b9a6ff;border:1px solid rgba(124,92,255,0.35);}
-.tag-pro-plus{background:rgba(255,181,71,0.18);color:#ffce82;border:1px solid rgba(255,181,71,0.35);}
-.tag-free{background:rgba(68,224,164,0.16);color:#44e0a4;border:1px solid rgba(68,224,164,0.35);}
 footer{border-top:1px solid var(--line);padding:30px 0;}
 .footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;font-size:15px;color:var(--text-mute);flex-wrap:wrap;gap:12px;}
 @media(max-width:600px){.footer-inner{flex-direction:column;text-align:center;}}
@@ -105,14 +118,38 @@ footer{border-top:1px solid var(--line);padding:30px 0;}
 <div class="lesson-meta"><span class="chip">AI for Seniors</span><span class="chip chip-pro">Pro</span><span>~7 min</span><span class="dot"></span><span>Easy read</span></div>
 <h1>Write anything &mdash; <span class='serif'>and sound just like you.</span></h1>
 <p class="deck">Staring at a blank page is the hardest part of writing. AI removes it. You tell it roughly what you want to say, and it gives you a polished draft to adjust &mdash; in your words, the way you mean it.</p>
-<h2><span class="num">The idea</span></h2><h3>You're the author. AI is the typist.</h3><p>You bring the heart and the facts; AI handles the wording and the polish. It will never know your story &mdash; so always read its draft and change anything that doesn't sound like you. The goal is to help you say what you already mean, faster and with less frustration.</p>
-<h2><span class="num">Step 1</span>Tell it who it's for and what to say</h2><p>The more you tell it, the better the result. Say who you're writing to, what you want to say, and how you'd like it to feel (warm, formal, firm).</p><div class="prompt"><span class="lbl">Try typing this</span>Help me write a warm thank-you note to my neighbor who drove me to my appointment. Keep it short, friendly, and genuine.</div><h2><span class="num">Step 2</span>Make it firmer or softer</h2><p>If you're writing to a company about a problem, you can ask for a polite-but-firm tone. AI is very good at being clear without being rude.</p><div class="prompt"><span class="lbl">Try typing this</span>Help me write a polite but firm email to my phone company. I was charged twice this month and I'd like a refund. Keep it calm and clear.</div><h2><span class="num">Step 3</span>Fix it up until it's right</h2><p>The first draft is a starting point. Just tell it what to change in plain words &mdash; shorter, kinder, add a detail &mdash; and it will rewrite it.</p><div class="prompt"><span class="lbl">Try typing this</span>That's good, but please make it a little shorter and add a sentence asking them to call me if they have questions.</div>
+
+<h2><span class="num">The idea</span></h2>
+<h3>You're the author. AI is the typist.</h3>
+<p>You bring the heart and the facts; AI handles the wording and the polish. It will never know your story &mdash; so always read its draft and change anything that doesn't sound like you. The goal is to help you say what you already mean, faster and with less frustration.</p>
+
+<h2><span class="num">Try it</span>Watch a note get written</h2>
+<p>Tap one of these and you'll see the kind of draft AI gives you &mdash; ready to adjust into your own words.</p>
+<div class="writer">
+  <div class="wr-head">✍️ A few details in, a polished draft out</div>
+  <div class="wr-pick">
+    <div class="wr-lbl">Tap what you'd like to write:</div>
+    <div id="wrBtns"></div>
+  </div>
+  <div class="wr-page" id="wrPage"></div>
+</div>
+
+<h2><span class="num">The trick</span>Set who it's for, and the tone</h2>
+<p>The more you tell it, the better the result. Say who you're writing to, what you want to say, and how you'd like it to feel &mdash; warm, formal, or polite-but-firm. AI is very good at being clear without being rude.</p>
+<div class="prompt"><span class="lbl">Try typing this</span>Help me write a polite but firm email to my phone company. I was charged twice this month and I'd like a refund. Keep it calm and clear.</div>
+<p>The first draft is a starting point. Just tell it what to change in plain words &mdash; shorter, kinder, add a detail &mdash; and it will rewrite it.</p>
+<div class="prompt"><span class="lbl">Try typing this</span>That's good, but please make it a little shorter and add a sentence asking them to call me if they have questions.</div>
+
 <div class="note"><b>Good to know:</b> Always read the final draft out loud before you send it. AI can occasionally add something you didn't mean or get a detail wrong. It's your name on it, so make sure every word is true and sounds like you.</div>
+
 <div class="challenge"><h2 style="margin-top:0;">Write one real note today</h2><p>Pick something you've been meaning to write:</p><ol><li>Choose a real note &mdash; a thank-you, an email, a message to a company.</li><li>Tell AI who it's for, what to say, and how it should feel.</li><li>Ask for one change to make it more 'you.'</li><li>Read it out loud, then send it.</li></ol><div class="btn-row"><a href="/seniors" class="btn ghost">Back to AI for Seniors</a></div></div>
+
 <div class="checklist"><h3>What you can do now</h3><ul><li>Ask AI to draft letters, emails, and notes from a few details</li><li>Set the tone &mdash; warm, formal, or polite-but-firm</li><li>Revise a draft with plain-English requests</li><li>Always read it out loud and make it sound like you before sending</li></ul></div>
+
 <div class="next-up"><span class="tag tag-pro">Pro</span><div class="lbl" style="margin-top:12px;">Up next</div><h3>Ask anything, in plain words</h3><p>Get clear answers to anything, in plain simple words.</p><a href="/lessons/seniors/ask-in-plain-words">Go to the next lesson &rarr;</a></div>
 </div></article>
-<footer><div class="footer-inner"><div>&copy; 2026 LearningGPT, Inc. &middot; Independent.</div><a href="/seniors" style="color:var(--text-dim);">&larr; Back to AI for Seniors</a></div></footer>
+<footer><div class="footer-inner"><div>&copy; 2026 LearningGPT &middot; Independent.</div><a href="/seniors" style="color:var(--text-dim);">&larr; Back to AI for Seniors</a></div></footer>
+
 <button class="coach-fab" id="coachFab" title="Ask the AI Coach">&#127891;<span class="coach-fab-badge">AI</span></button>
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head"><div class="coach-avatar">&#127891;</div><div><div class="coach-head-name">Your AI Helper</div><div class="coach-head-sub">Ask me anything &mdash; no question is too small</div></div><button class="coach-close" id="coachClose">&times;</button></div>
@@ -120,6 +157,38 @@ footer{border-top:1px solid var(--line);padding:30px 0;}
   <div class="coach-limit" id="coachLimit">Free lessons include 3 questions with your helper. <a href="/pricing">Go Pro</a> for unlimited help on every lesson.</div>
   <div class="coach-input-row"><textarea class="coach-input" id="coachInput" placeholder="Type your question here..." rows="1"></textarea><button class="coach-send" id="coachSend">&#10148;</button></div>
 </div>
+
+<script id="lessonScript">
+(function(){
+  var DRAFTS = [
+    { label: 'A warm thank-you note to a neighbor', drafts:
+      "Dear Margaret,\n\nThank you so much for driving me to my appointment on Tuesday. It meant more than you know — I was a little nervous, and your company made the whole morning easier. I'm lucky to have a neighbor as kind as you.\n\nWith gratitude,\n[Your name]",
+      tip: '💡 Now make it yours: change the name, add a detail only you would know, and read it aloud before sending.' },
+    { label: 'A polite-but-firm note about a double charge', drafts:
+      "Hello,\n\nI noticed my account was charged twice this month for the same service. I'd appreciate your help in refunding the duplicate charge. Could you please look into it and let me know what you find? You're welcome to call me if any questions come up.\n\nThank you for your time,\n[Your name]",
+      tip: '💡 Calm and clear, not angry — that gets faster help. Add your account number, then read it through once more.' },
+    { label: 'A short invitation to Sunday dinner', drafts:
+      "Hi everyone,\n\nI'd love to have you over for dinner this Sunday at 5 o'clock. Nothing fancy — just good food and time together. Let me know if you can make it, and if there's anything you'd like me to cook.\n\nLove,\n[Your name]",
+      tip: '💡 Swap in the real day and time, add who\'s invited, and it\'s ready to send to the family.' }
+  ];
+  var btns = document.getElementById('wrBtns');
+  var page = document.getElementById('wrPage');
+  DRAFTS.forEach(function(d){
+    var b = document.createElement('button');
+    b.className = 'wrbtn';
+    b.innerHTML = '<span class="em">✎</span>' + d.label;
+    btns.appendChild(b);
+    b.addEventListener('click', function(){
+      page.className = 'wr-page show';
+      page.innerHTML = '<div class="pg-lbl">Here\'s a draft to start from</div>' +
+        '<div class="pg-body">' + d.drafts + '</div>' +
+        '<div class="pg-tip">' + d.tip + '</div>';
+      page.scrollIntoView({behavior:'smooth', block:'nearest'});
+    });
+  });
+})();
+</script>
+
 <script>
 (function(){
   var LESSON_CONTEXT = "You are a kind, patient AI learning coach inside a lesson on LearningGPT.ai, helping a senior who may be new to technology.\n\nLESSON: Write anything (AI for Seniors, Pro)\n\nWHAT THIS LESSON COVERS:\nThis Pro lesson helps seniors write letters, emails, thank-you notes, and messages to companies or their doctor. Key idea: the person is the author, AI is the typist - bring the heart and facts, AI polishes the wording; always read and edit so it sounds like them. Tell AI who it's for, what to say, and the tone (warm, formal, polite-but-firm). Iterate with plain requests (shorter, kinder, add a detail). Always read the final draft aloud and verify details before sending.\n\nYOUR ROLE:\n- Be warm, patient, and encouraging. Never make them feel silly. No question is too basic.\n- Use plain, simple words. Short sentences. No jargon. Explain any technical word.\n- Keep answers short - 2 to 4 sentences unless they ask for more.\n- For anything about health, money, or legal matters, gently remind them to confirm with a doctor, the bank, or a trusted person.\n- If a message looks like a possible scam, warn them clearly and kindly.\n- Plain conversational text only - no markdown symbols.\n- Do not start with 'Great question!' or similar filler.";

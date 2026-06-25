@@ -34,8 +34,6 @@ nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(18
 .lesson-meta{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:15px;color:var(--text-mute);margin-bottom:22px;}
 .lesson-meta .chip{padding:5px 13px;border:1px solid rgba(45,212,167,0.4);border-radius:999px;font-size:13px;color:var(--track);background:rgba(45,212,167,0.12);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;}
 .lesson-meta .chip-free{border-color:rgba(68,224,164,0.45);color:#44e0a4;background:rgba(68,224,164,0.12);}
-.lesson-meta .chip-pro{border-color:rgba(124,92,255,0.5);color:#b9a6ff;background:rgba(124,92,255,0.14);}
-.lesson-meta .chip-pro-plus{border-color:rgba(255,181,71,0.5);color:#ffce82;background:rgba(255,181,71,0.14);}
 .lesson-meta .dot{width:5px;height:5px;border-radius:50%;background:var(--text-mute);}
 .lesson h1{font-size:clamp(30px,4.6vw,44px);font-weight:800;line-height:1.18;letter-spacing:-0.01em;margin:0 0 20px;}
 .lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;background:linear-gradient(135deg,#2dd4a7 0%,#5b8def 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;padding-right:0.12em;}
@@ -53,9 +51,31 @@ nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(18
 .prompt .lbl{display:block;font-size:13px;letter-spacing:0.4px;text-transform:uppercase;color:var(--track);font-weight:700;margin-bottom:8px;}
 .note{background:rgba(255,181,71,0.08);border:1px solid rgba(255,181,71,0.3);border-radius:12px;padding:18px 20px;margin:18px 0;font-size:17.5px;line-height:1.75;}
 .note b{color:var(--warn);}
+
+/* ── TRY-IT CHAT ── */
+.trychat{margin:24px 0;border:1px solid rgba(45,212,167,0.3);border-radius:18px;overflow:hidden;background:linear-gradient(180deg,#16162f,#101024);box-shadow:0 14px 40px rgba(0,0,0,0.35);}
+.tc-head{display:flex;align-items:center;gap:11px;padding:15px 18px;border-bottom:1px solid var(--line);background:rgba(45,212,167,0.06);}
+.tc-av{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#2dd4a7,#5b8def);display:grid;place-items:center;font-size:19px;flex-shrink:0;}
+.tc-title{font-size:16px;font-weight:700;}.tc-sub{font-size:13.5px;color:var(--track);}
+.tc-msgs{padding:18px;display:flex;flex-direction:column;gap:13px;min-height:120px;}
+.tcb{max-width:88%;font-size:17px;line-height:1.6;padding:12px 16px;border-radius:16px;}
+.tcb.helper{align-self:flex-start;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.09);border-bottom-left-radius:5px;}
+.tcb.you{align-self:flex-end;background:linear-gradient(135deg,rgba(45,212,167,0.22),rgba(91,141,239,0.22));border:1px solid rgba(45,212,167,0.3);border-bottom-right-radius:5px;}
+.tcb.typing{align-self:flex-start;color:var(--text-mute);font-size:15px;}
+.tc-suggest{padding:6px 18px 18px;}
+.tc-suggest .sg-lbl{font-size:15px;color:var(--text-dim);margin-bottom:10px;}
+.sgbtn{display:block;width:100%;text-align:left;font-family:inherit;font-size:17px;font-weight:600;color:var(--text);padding:15px 18px;margin-bottom:10px;border-radius:13px;border:1.5px solid var(--line-strong);background:rgba(255,255,255,0.04);cursor:pointer;transition:all .15s;line-height:1.45;}
+.sgbtn:hover:not(:disabled){border-color:var(--track);background:rgba(45,212,167,0.08);}
+.sgbtn:disabled{opacity:0.45;cursor:default;}
+.sgbtn .ic{color:var(--track);margin-right:8px;font-weight:800;}
+.tc-win{margin-top:6px;padding:15px 18px;border-top:1px solid var(--line);background:rgba(68,224,164,0.08);font-size:17px;color:#bdf5e2;display:none;}
+.tc-win.show{display:block;animation:fadeIn .35s ease;}
+.tc-win b{color:#fff;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
 .challenge{margin:50px 0 36px;background:linear-gradient(135deg,rgba(45,212,167,0.14),rgba(91,141,239,0.1));border:1px solid rgba(45,212,167,0.3);border-radius:var(--radius-lg);padding:32px;}
 .challenge h2{margin-top:0;}
-.challenge .btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#2dd4a7,#5b8def);color:white;padding:14px 26px;border-radius:11px;font-weight:700;font-size:16px;}
+.challenge .btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#2dd4a7,#5b8def);color:white;padding:15px 28px;border-radius:11px;font-weight:700;font-size:17px;text-decoration:none;}
 .challenge .btn:hover{color:white;}
 .challenge .btn.ghost{background:rgba(255,255,255,0.06);border:1px solid var(--line-strong);}
 .challenge .btn-row{margin-top:22px;display:flex;gap:12px;flex-wrap:wrap;}
@@ -70,8 +90,6 @@ nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(18
 .next-up .lbl{font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--text-mute);font-weight:700;margin-bottom:10px;}
 .next-up h3{margin:0 0 8px;font-size:21px;}.next-up p{margin:0 0 14px;color:var(--text-dim);font-size:17px;}
 .next-up .tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:0.5px;padding:4px 12px;border-radius:999px;}
-.tag-pro{background:rgba(124,92,255,0.18);color:#b9a6ff;border:1px solid rgba(124,92,255,0.35);}
-.tag-pro-plus{background:rgba(255,181,71,0.18);color:#ffce82;border:1px solid rgba(255,181,71,0.35);}
 .tag-free{background:rgba(68,224,164,0.16);color:#44e0a4;border:1px solid rgba(68,224,164,0.35);}
 footer{border-top:1px solid var(--line);padding:30px 0;}
 .footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;font-size:15px;color:var(--text-mute);flex-wrap:wrap;gap:12px;}
@@ -105,14 +123,46 @@ footer{border-top:1px solid var(--line);padding:30px 0;}
 <div class="lesson-meta"><span class="chip">AI for Seniors</span><span class="chip chip-free">Free</span><span>~6 min</span><span class="dot"></span><span>Easy read</span></div>
 <h1>Your very first chat with AI &mdash; <span class='serif'>nothing to be afraid of.</span></h1>
 <p class="deck">If you can send a text message, you can use AI. It's just a friendly helper you talk to by typing. Let's take the very first step together &mdash; slowly, and with nothing to worry about.</p>
-<h2><span class="num">The idea</span></h2><h3>AI is a helper you talk to in plain words.</h3><p>Think of it like a patient assistant who has read a great deal and is happy to help. You type a question or a request, and it writes an answer back, the same way a knowledgeable friend might. You don't need any special words or buttons &mdash; just type the way you'd speak.</p><div class="callout"><span class="lbl">Remember</span><p>You truly cannot break it. There is no wrong question, and nothing bad happens if you make a typo or ask something simple. Take your time.</p></div>
-<h2><span class="num">Step 1</span>Open a free AI helper</h2><p>The most common one is called ChatGPT, and there's a free version. You can open it in your web browser at chatgpt.com, or our own playground right here. You'll see a box at the bottom that says something like 'Message' or 'Ask anything.'</p><h2><span class="num">Step 2</span>Type a question, just like talking</h2><p>Click in that box and type a real question in your own words. Then press Enter (or tap the arrow). In a few seconds, an answer appears. That's it &mdash; that's a 'chat.'</p><div class="prompt"><span class="lbl">Try typing this</span>Hello! I'm new to this. Can you explain what you can help me with, in simple terms?</div><h2><span class="num">Step 3</span>Keep the conversation going</h2><p>You don't start over each time. You can reply to what it said, just like a back-and-forth conversation. If an answer is confusing, ask it to explain more simply.</p><div class="prompt"><span class="lbl">If something's unclear, type</span>That was a little confusing. Can you explain it again, more simply, like I'm brand new to this?</div>
+
+<h2><span class="num">The idea</span></h2>
+<h3>AI is a helper you talk to in plain words.</h3>
+<p>Think of it like a patient assistant who has read a great deal and is happy to help. You type a question or a request, and it writes an answer back, the same way a knowledgeable friend might. You don't need any special words or buttons &mdash; just type the way you'd speak.</p>
+<div class="callout"><span class="lbl">Remember</span><p>You truly cannot break it. There is no wrong question, and nothing bad happens if you make a typo or ask something simple. Take your time.</p></div>
+
+<h2><span class="num">Try it</span>Have a little chat, right here</h2>
+<p>No need to sign up for anything yet. Just tap one of the questions below and watch what happens &mdash; this is exactly what a real chat looks like.</p>
+<div class="trychat">
+  <div class="tc-head"><div class="tc-av">&#129302;</div><div><div class="tc-title">A friendly AI helper</div><div class="tc-sub">Tap a question to begin</div></div></div>
+  <div class="tc-msgs" id="tcMsgs">
+    <div class="tcb helper">Hello there! I'm happy to help. Tap one of the questions below and I'll answer &mdash; there's no wrong choice.</div>
+  </div>
+  <div class="tc-suggest" id="tcSuggest">
+    <div class="sg-lbl">Tap a question:</div>
+  </div>
+  <div class="tc-win" id="tcWin"></div>
+</div>
+
+<h2><span class="num">Step 1</span>Open a free AI helper</h2>
+<p>The most common one is called ChatGPT, and there's a free version. You can open it in your web browser at chatgpt.com, or our own playground right here. You'll see a box at the bottom that says something like 'Message' or 'Ask anything.'</p>
+
+<h2><span class="num">Step 2</span>Type a question, just like talking</h2>
+<p>Click in that box and type a real question in your own words. Then press Enter (or tap the arrow). In a few seconds, an answer appears. That's it &mdash; that's a 'chat.'</p>
+<div class="prompt"><span class="lbl">Try typing this</span>Hello! I'm new to this. Can you explain what you can help me with, in simple terms?</div>
+
+<h2><span class="num">Step 3</span>Keep the conversation going</h2>
+<p>You don't start over each time. You can reply to what it said, just like a back-and-forth conversation. If an answer is confusing, ask it to explain more simply.</p>
+<div class="prompt"><span class="lbl">If something's unclear, type</span>That was a little confusing. Can you explain it again, more simply, like I'm brand new to this?</div>
+
 <div class="note"><b>Good to know:</b> AI can sometimes get things wrong &mdash; it's confident even when it shouldn't be. For anything important (health, money, legal), always double-check with a real person you trust. We'll cover staying safe in the very next lesson.</div>
+
 <div class="challenge"><h2 style="margin-top:0;">Your first try</h2><p>Let's get one real chat under your belt. There's no wrong way to do this:</p><ol><li>Open a free AI helper.</li><li>Type: 'Tell me one interesting fact about [something you like].'</li><li>Read the answer, then type 'Tell me more.' and watch it continue.</li><li>That's it &mdash; you've used AI.</li></ol><div class="btn-row"><a href="/seniors" class="btn ghost">Back to AI for Seniors</a></div></div>
+
 <div class="checklist"><h3>What you can do now</h3><ul><li>Understand that AI is a helper you talk to by typing</li><li>Open a free AI helper and find the typing box</li><li>Ask a question in your own plain words</li><li>Keep a conversation going and ask for simpler explanations</li></ul></div>
+
 <div class="next-up"><span class="tag tag-free">Free</span><div class="lbl" style="margin-top:12px;">Up next</div><h3>Spot the scam and stay safe</h3><p>The most important lesson here: catch scams before they catch you.</p><a href="/lessons/seniors/spot-the-scam">Go to the next lesson &rarr;</a></div>
 </div></article>
-<footer><div class="footer-inner"><div>&copy; 2026 LearningGPT, Inc. &middot; Independent.</div><a href="/seniors" style="color:var(--text-dim);">&larr; Back to AI for Seniors</a></div></footer>
+<footer><div class="footer-inner"><div>&copy; 2026 LearningGPT &middot; Independent.</div><a href="/seniors" style="color:var(--text-dim);">&larr; Back to AI for Seniors</a></div></footer>
+
 <button class="coach-fab" id="coachFab" title="Ask the AI Coach">&#127891;<span class="coach-fab-badge">AI</span></button>
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head"><div class="coach-avatar">&#127891;</div><div><div class="coach-head-name">Your AI Helper</div><div class="coach-head-sub">Ask me anything &mdash; no question is too small</div></div><button class="coach-close" id="coachClose">&times;</button></div>
@@ -120,6 +170,56 @@ footer{border-top:1px solid var(--line);padding:30px 0;}
   <div class="coach-limit" id="coachLimit">Free lessons include 3 questions with your helper. <a href="/pricing">Go Pro</a> for unlimited help on every lesson.</div>
   <div class="coach-input-row"><textarea class="coach-input" id="coachInput" placeholder="Type your question here..." rows="1"></textarea><button class="coach-send" id="coachSend">&#10148;</button></div>
 </div>
+
+<script id="lessonScript">
+(function(){
+  var QA = [
+    { q: "Hello! What can you help me with?", a: "Lots of things! I can answer questions, help you write a letter or email, explain something confusing in simple words, suggest recipes or hobby ideas, and more. Just ask in your own words — like you're talking to a helpful friend." },
+    { q: "Tell me a fun fact about gardening.", a: "Here's one: marigolds aren't just pretty — many gardeners plant them next to tomatoes because their scent helps keep certain pests away. A cheerful little helper in the vegetable patch! Would you like another?" },
+    { q: "That was lovely. Can you tell me more?", a: "Of course. Sunflowers do something clever too — young ones turn to follow the sun across the sky during the day, then face east again by morning. Nature has a wonderful sense of timing. See? You can just keep the conversation going." }
+  ];
+  var msgs = document.getElementById('tcMsgs');
+  var suggest = document.getElementById('tcSuggest');
+  var win = document.getElementById('tcWin');
+  var firstDone = false;
+
+  QA.forEach(function(item, i){
+    var b = document.createElement('button');
+    b.className = 'sgbtn';
+    b.innerHTML = '<span class="ic">›</span>' + item.q;
+    suggest.appendChild(b);
+    b.addEventListener('click', function(){
+      if (b.disabled) return;
+      b.disabled = true;
+      // your message
+      var you = document.createElement('div');
+      you.className = 'tcb you';
+      you.textContent = item.q;
+      msgs.appendChild(you);
+      // typing
+      var typing = document.createElement('div');
+      typing.className = 'tcb typing';
+      typing.textContent = 'The helper is typing…';
+      msgs.appendChild(typing);
+      msgs.scrollTop = msgs.scrollHeight;
+      setTimeout(function(){
+        typing.remove();
+        var help = document.createElement('div');
+        help.className = 'tcb helper';
+        help.textContent = item.a;
+        msgs.appendChild(help);
+        msgs.scrollTop = msgs.scrollHeight;
+        if (!firstDone){
+          firstDone = true;
+          win.classList.add('show');
+          win.innerHTML = '<b>You just had a chat with AI — that’s all there is to it!</b> Nothing broke, nothing went wrong. Tap another question, or move on whenever you’re ready.';
+        }
+      }, 750);
+    });
+  });
+})();
+</script>
+
 <script>
 (function(){
   var LESSON_CONTEXT = "You are a kind, patient AI learning coach inside a lesson on LearningGPT.ai, helping a senior who may be new to technology.\n\nLESSON: Your very first chat with AI (AI for Seniors, Free)\n\nWHAT THIS LESSON COVERS:\nThis free beginner lesson removes the fear. AI is a helper you talk to in plain words by typing; you cannot break it and no question is too simple. Open a free helper (ChatGPT at chatgpt.com or the LearningGPT playground), type a question in the box, press enter, read the reply. It's a back-and-forth conversation - you can reply and ask for simpler explanations. Gentle warning: AI can be wrong, so verify anything important with a trusted person; safety is covered in the next lesson.\n\nYOUR ROLE:\n- Be warm, patient, and encouraging. Never make them feel silly. No question is too basic.\n- Use plain, simple words. Short sentences. No jargon. Explain any technical word.\n- Keep answers short - 2 to 4 sentences unless they ask for more.\n- For anything about health, money, or legal matters, gently remind them to confirm with a doctor, the bank, or a trusted person.\n- If a message looks like a possible scam, warn them clearly and kindly.\n- Plain conversational text only - no markdown symbols.\n- Do not start with 'Great question!' or similar filler.";

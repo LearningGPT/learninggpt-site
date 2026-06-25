@@ -3,285 +3,262 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Connected support — tickets, CRM & deflection — LearningGPT</title>
-<meta name="description" content="Connect a support bot to your help desk and customer data (safely), give personalized answers to verified customers, and measure how many tickets it actually deflects." />
+<title>Connected support — your tools & live data — LearningGPT</title>
+<meta name="description" content="Connect a support bot to your real systems so it can give accurate, up-to-date answers and take useful actions — safely, starting read-only." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#38bdf8" />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
-
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/support-chatbot/connected-support" />
-<meta property="og:title" content="Connected support — tickets, CRM & deflection" />
-<meta property="og:description" content="Tickets, customer data done safely, and a deflection number that proves the bot is working." />
+<meta property="og:title" content="Connected support — your tools & live data" />
+<meta property="og:description" content="Connect the bot to your real systems so it gives accurate, current answers — kept honest and scoped." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
-
 <style>
-:root {
-  --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a;
-  --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14);
-  --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85;
-  --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4;
-  --warn: #ffb547; --danger: #ff6b8a;
-  --radius: 14px; --radius-lg: 20px;
-  --container: 820px;
-  --track: #38bdf8;
-  --track-2: #7c5cff;
-}
-* { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
-body {
-  font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif;
-  background: var(--bg); color: var(--text);
-  line-height: 1.7; -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
-a { color: var(--brand-2); text-decoration: none; }
-a:hover { color: var(--text); }
-
-.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
-.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #38bdf8; }
-.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
-
-.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
-
-nav.top {
-  position: sticky; top: 0; z-index: 100;
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  background: rgba(10,10,26,0.85);
-  border-bottom: 1px solid var(--line);
-}
-.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
-.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
-.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
-.nav-back { font-size: 13px; color: var(--text-dim); }
-.nav-back:hover { color: var(--text); }
-
-.lesson { padding: 50px 0 100px; }
-.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
-.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(56,189,248,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(56,189,248,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-.lesson-meta .chip-free { border-color: rgba(68,224,164,0.4); color: var(--accent); background: rgba(68,224,164,0.1); }
-.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.45); color: var(--brand); background: rgba(124,92,255,0.12); }
-.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.45); color: var(--warn); background: rgba(255,181,71,0.12); }
-.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
-
-.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #38bdf8 0%, #7c5cff 50%, #44e0a4 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
-.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
-.lesson strong { font-weight: 700; color: var(--text); }
-.lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; }
-.lesson li { margin-bottom: 8px; color: var(--text); }
-
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(56,189,248,0.10), rgba(124,92,255,0.06)); border: 1px solid rgba(91,141,239,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #38bdf8, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-
-.step-box { margin: 26px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.step-box h3 { margin-top: 0; }
-.step-box ol { padding-left: 22px; }
-.step-box ol li { margin-bottom: 12px; font-size: 15.5px; }
-.step-box code { background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 4px; font-size: 13px; color: var(--accent); font-family: 'SFMono-Regular', Consolas, monospace; }
-
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(56,189,248,0.15); border: 1px solid rgba(56,189,248,0.35); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; }
-.savings strong { color: var(--accent); font-weight: 700; }
-
-.limitations { margin: 36px 0; background: rgba(255,107,138,0.04); border: 1px solid rgba(255,107,138,0.2); border-radius: var(--radius-lg); padding: 26px 28px; }
-.limitations h3 { margin-top: 0; color: var(--text); }
-.limitations ul li { font-size: 14.5px; }
-
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(56,189,248,0.18), rgba(124,92,255,0.1)); border: 1px solid rgba(56,189,248,0.3); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #38bdf8, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(56,189,248,0.35); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
-.checklist h3 { margin-top: 0; font-size: 18px; }
-.checklist ul { list-style: none; padding: 0; margin: 0; }
-.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
-.checklist li:first-child { border-top: none; padding-top: 0; }
-.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
-.checklist li:first-child::before { top: 4px; }
-
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
-.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
-.next-up h3 { margin: 0 0 8px; font-size: 20px; }
-.next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
-.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
-
-footer { border-top: 1px solid var(--line); padding: 30px 0; }
-.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
-@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
-
-/* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
-.coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
-.coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
-.coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
-.coach-head-info { flex: 1; }
-.coach-head-name { font-weight: 700; font-size: 14px; }
-.coach-head-sub { font-size: 11px; color: #44e0a4; }
-.coach-close { background: none; border: none; color: #6b6b85; font-size: 18px; padding: 4px; line-height: 1; cursor: pointer; }
-.coach-close:hover { color: #f5f5fa; }
-.coach-messages { flex: 1; overflow-y: auto; padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth; }
-.coach-messages::-webkit-scrollbar { width: 4px; }
-.coach-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.14); border-radius: 4px; }
-.msg { max-width: 88%; font-size: 13.5px; line-height: 1.6; }
-.msg-coach { align-self: flex-start; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px 14px 14px 4px; padding: 10px 14px; color: #f5f5fa; }
-.msg-user { align-self: flex-end; background: linear-gradient(135deg, rgba(124,92,255,0.25), rgba(91,141,239,0.25)); border: 1px solid rgba(124,92,255,0.3); border-radius: 14px 14px 4px 14px; padding: 10px 14px; color: #f5f5fa; }
-.msg-thinking { align-self: flex-start; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px 14px 14px 4px; padding: 10px 14px; display: flex; align-items: center; gap: 6px; color: #6b6b85; font-size: 13px; }
-.thinking-dot { width: 6px; height: 6px; border-radius: 50%; background: #44e0a4; animation: coachPulse 1.2s ease-in-out infinite; }
-.thinking-dot:nth-child(2) { animation-delay: .2s; }
-.thinking-dot:nth-child(3) { animation-delay: .4s; }
-@keyframes coachPulse { 0%,100%{opacity:.3;transform:scale(.8)} 50%{opacity:1;transform:scale(1)} }
-.coach-limit { padding: 10px 18px; font-size: 11px; color: #6b6b85; text-align: center; border-top: 1px solid rgba(255,255,255,0.08); display: none; }
-.coach-limit.visible { display: block; }
-.coach-limit a { color: #5b8def; }
-.coach-input-row { padding: 12px 18px 16px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; gap: 8px; align-items: flex-end; }
-.coach-input { flex: 1; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); color: #f5f5fa; border-radius: 10px; padding: 9px 12px; font-size: 13px; font-family: inherit; resize: none; max-height: 100px; line-height: 1.5; }
-.coach-input:focus { outline: none; border-color: #44e0a4; }
-.coach-input::placeholder { color: #6b6b85; }
-.coach-send { width: 34px; height: 34px; border-radius: 9px; border: none; flex-shrink: 0; background: linear-gradient(135deg, #44e0a4, #7c5cff); color: white; font-size: 15px; display: grid; place-items: center; cursor: pointer; transition: opacity .15s; }
-.coach-send:hover { opacity: 0.85; }
-.coach-send:disabled { opacity: 0.4; cursor: default; }
-@media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
+  :root{
+    --bg:#0a0a1a;--bg-2:#0f0f23;--bg-soft:#14142b;--surface:#1a1a3a;
+    --line:rgba(255,255,255,.08);--line-strong:rgba(255,255,255,.14);
+    --text:#f5f5fa;--text-dim:#a8a8c0;--text-mute:#6b6b85;
+    --track:#38bdf8;--track-2:#1ea3e0;--accent:#44e0a4;--warn:#ffb547;--danger:#ff6b8a;
+    --radius:14px;--radius-lg:20px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;background:radial-gradient(1000px 560px at 75% -10%,rgba(56,189,248,.18),transparent 60%),var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;line-height:1.6}
+  a{text-decoration:none;color:inherit}
+  .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--line)}
+  .logo{display:flex;align-items:center;gap:9px;font-weight:700;font-size:17px}
+  .logo .mark{width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,#38bdf8,#1ea3e0 60%,#44e0a4);display:grid;place-items:center;font-size:14px;color:#fff;font-weight:800}
+  .nav-r{display:flex;gap:18px;align-items:center;font-size:14px;color:var(--text-dim)}
+  .nav-r a:hover{color:var(--text)}
+  .btn{font-family:inherit;font-weight:600;font-size:14.5px;border-radius:10px;padding:11px 18px;cursor:pointer;border:1px solid transparent;display:inline-flex;align-items:center;gap:8px;transition:.15s;color:#04222e;background:linear-gradient(135deg,#38bdf8,#1ea3e0);box-shadow:0 8px 22px -10px rgba(56,189,248,.8)}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-ghost{background:transparent;border-color:var(--line-strong);color:var(--text);box-shadow:none}
+  .btn-ghost:hover{background:rgba(255,255,255,.05)}
+  .btn-block{width:100%;justify-content:center}
+  .lesson{max-width:740px;margin:34px auto 60px}
+  .l-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;font-size:12.5px;flex-wrap:wrap;gap:6px}
+  .l-tag{font-weight:600;color:var(--track)}
+  .l-meta{color:var(--text-mute)}
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px}
+  .pill.free{background:rgba(68,224,164,.14);color:var(--accent);border:1px solid rgba(68,224,164,.3)}
+  .pill.pro{background:rgba(56,189,248,.16);color:var(--track);border:1px solid rgba(56,189,248,.32)}
+  .pill.proplus{background:rgba(255,181,71,.16);color:var(--warn);border:1px solid rgba(255,181,71,.32)}
+  h1.title{font-size:34px;line-height:1.12;letter-spacing:-.02em;margin:14px 0 16px;font-weight:800}
+  .lede{color:var(--text-dim);font-size:17px;margin-bottom:14px}
+  .section{margin:30px 0}
+  h2.sec{font-size:13px;text-transform:uppercase;letter-spacing:.09em;color:var(--track);font-weight:700;margin-bottom:10px}
+  p{color:var(--text-dim);margin-bottom:14px;font-size:15.5px}
+  p strong{color:var(--text);font-weight:600}
+  em.k{color:var(--track);font-style:normal;font-weight:600}
+  .mm{background:linear-gradient(135deg,rgba(56,189,248,.12),rgba(68,224,164,.06));border:1px solid rgba(56,189,248,.25);border-radius:var(--radius);padding:18px 20px;margin-bottom:16px}
+  .mm h3{font-size:18px;color:var(--text);margin-bottom:8px;font-weight:700}
+  .callout{background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.22);border-left:3px solid var(--track);border-radius:0 var(--radius) var(--radius) 0;padding:14px 16px;margin-bottom:16px;font-size:14.5px;color:var(--text-dim);line-height:1.65}
+  .callout b{color:var(--text)}
+  .warn{background:rgba(255,181,71,.08);border:1px solid rgba(255,181,71,.25);border-left:3px solid var(--warn);border-radius:0 var(--radius) var(--radius) 0;padding:13px 16px;margin-bottom:16px;font-size:14px;color:var(--text-dim)}
+  .warn b{color:var(--text)}
+  .reframe{background:rgba(255,181,71,.08);border:1px solid rgba(255,181,71,.25);border-radius:var(--radius);padding:13px 16px;margin-bottom:16px;font-size:14.5px;color:var(--text-dim)}
+  .reframe .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--warn);font-weight:700;display:block;margin-bottom:5px}
+  .reframe b{color:var(--text)}
+  .promptcard{background:var(--bg-soft);border:1px solid var(--line);border-left:3px solid var(--track);border-radius:0 var(--radius) var(--radius) 0;padding:14px 16px;margin-bottom:16px;font-size:14px;color:var(--text);line-height:1.6}
+  .promptcard .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-mute);display:block;margin-bottom:6px}
+  /* chips / builder */
+  .builder{background:var(--bg-soft);border:1px solid var(--line-strong);border-radius:var(--radius);padding:16px;margin-bottom:12px}
+  .brow{margin-bottom:14px} .brow:last-child{margin-bottom:0}
+  .brow .q{font-size:13px;font-weight:700;color:var(--text);margin-bottom:7px}
+  .brow .q small{font-weight:400;color:var(--text-mute);font-size:12px}
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{font-size:12.5px;padding:7px 12px;font-family:inherit;color:var(--text-dim);background:var(--surface);border:1px solid var(--line-strong);border-radius:99px;cursor:pointer;transition:.15s}
+  .chip:hover{color:var(--text);border-color:var(--track)}
+  .chip.on{background:rgba(56,189,248,.16);color:var(--text);border-color:var(--track)}
+  .meter{margin:14px 0 4px;font-size:13px;color:var(--text-dim);display:flex;align-items:center;gap:10px}
+  .meter-bar{flex:1;height:6px;background:var(--surface);border-radius:99px;overflow:hidden}
+  .meter-fill{height:100%;width:0;background:linear-gradient(90deg,var(--track),var(--accent));border-radius:99px;transition:width .4s ease}
+  .promptout{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--radius);padding:15px 16px;font-size:13.5px;line-height:1.65;color:var(--text);white-space:pre-wrap;min-height:56px}
+  .promptout .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-mute);display:block;margin-bottom:8px}
+  .promptout em{color:var(--track);font-style:normal;font-weight:600}
+  .reveal{display:none;margin-top:14px;padding:14px 16px;background:rgba(68,224,164,.07);border:1px solid rgba(68,224,164,.3);border-radius:var(--radius);font-size:14px;color:var(--text-dim);line-height:1.6}
+  .reveal.show{display:block} .reveal b{color:var(--text)}
+  /* option benches / classifiers */
+  .opts{display:grid;gap:9px;margin-bottom:6px}
+  .opt{text-align:left;background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:13px 15px;cursor:pointer;transition:.15s;font-family:inherit;color:var(--text);font-size:14px;line-height:1.5}
+  .opt:hover:not(:disabled){border-color:var(--track)}
+  .opt:disabled{cursor:default}
+  .opt.right{border-color:var(--accent);background:rgba(68,224,164,.1)}
+  .opt.wrong{border-color:var(--danger);background:rgba(255,107,138,.08);opacity:.7}
+  .fb{display:none;margin-top:10px;padding:11px 14px;border-radius:var(--radius);font-size:13.5px;line-height:1.6}
+  .fb.show{display:block}
+  .fb.good{background:rgba(68,224,164,.1);border:1px solid rgba(68,224,164,.35);color:#bdebd6}
+  .fb.bad{background:rgba(255,181,71,.1);border:1px solid rgba(255,181,71,.32);color:#ffe2b0}
+  .scoreline{font-size:12.5px;color:var(--text-mute);margin-top:8px}
+  /* sortable / classifier item with verdict tag */
+  .clsitem{text-align:left;background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:12px 14px;cursor:pointer;transition:.15s;font-family:inherit;color:var(--text);font-size:13.5px;display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+  .clsitem:hover:not(.locked){border-color:var(--track)}
+  .clsitem.locked{cursor:default}
+  .clsitem .verdict{font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;opacity:0;transition:.15s;white-space:nowrap}
+  .clsitem.show-good .verdict{opacity:1;background:rgba(68,224,164,.16);color:var(--accent);border:1px solid rgba(68,224,164,.35)}
+  .clsitem.show-bad .verdict{opacity:1;background:rgba(255,107,138,.16);color:var(--danger);border:1px solid rgba(255,107,138,.35)}
+  .clsitem.show-warn .verdict{opacity:1;background:rgba(255,181,71,.16);color:var(--warn);border:1px solid rgba(255,181,71,.35)}
+  /* toggle/console cards */
+  .cards{display:grid;gap:10px;margin-bottom:8px}
+  .tcard{display:flex;align-items:flex-start;gap:11px;text-align:left;background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:13px 15px;cursor:pointer;transition:.15s;font-family:inherit;color:var(--text)}
+  .tcard:hover{border-color:var(--track)}
+  .tcard.on{border-color:var(--track);background:rgba(56,189,248,.1)}
+  .tcard .box{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--line-strong);flex-shrink:0;display:grid;place-items:center;font-size:13px;color:transparent;transition:.15s;margin-top:1px}
+  .tcard.on .box{background:var(--track);border-color:var(--track);color:#fff}
+  .tcard .t{font-weight:700;font-size:14px;margin-bottom:2px}
+  .tcard .d{font-size:12.5px;color:var(--text-mute);line-height:1.5}
+  /* checklist runner */
+  .runner{background:var(--bg-soft);border:1px solid var(--line-strong);border-radius:var(--radius);padding:16px;margin-bottom:12px}
+  .citem{display:flex;align-items:flex-start;gap:11px;padding:11px 0;border-bottom:1px solid var(--line);cursor:pointer}
+  .citem:last-of-type{border-bottom:none}
+  .citem .box{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--line-strong);flex-shrink:0;display:grid;place-items:center;font-size:13px;color:transparent;transition:.15s;margin-top:1px}
+  .citem.done .box{background:var(--accent);border-color:var(--accent);color:#08231a}
+  .citem .ct{font-size:14px;color:var(--text);line-height:1.45}
+  .citem.done .ct{color:var(--text-mute);text-decoration:line-through}
+  .citem .cd{font-size:12.5px;color:var(--text-mute);line-height:1.45}
+  .rungo{display:none;margin-top:14px;padding:13px 16px;border-radius:var(--radius);background:rgba(68,224,164,.1);border:1px solid rgba(68,224,164,.35);font-size:14px;color:#bdebd6;text-align:center;font-weight:600}
+  .rungo.show{display:block}
+  /* run console / log */
+  .console{background:#08081a;border:1px solid var(--line-strong);border-radius:var(--radius);padding:14px 16px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;line-height:1.8;color:var(--text-dim);min-height:70px}
+  .console .ln{opacity:0;transform:translateY(4px);transition:.3s}
+  .console .ln.show{opacity:1;transform:none}
+  .console .ok{color:var(--accent)} .console .wt{color:var(--warn)} .console .mut{color:var(--text-mute)}
+  ul.clean{list-style:none;margin:6px 0 14px}
+  ul.clean li{position:relative;padding-left:26px;margin-bottom:9px;font-size:14.5px;color:var(--text-dim);line-height:1.5}
+  ul.clean li::before{content:'';position:absolute;left:0;top:3px;width:16px;height:16px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E");background-size:contain;background-repeat:no-repeat}
+  ul.clean li strong{color:var(--text)}
+  ol.list{margin:6px 0 14px 18px;color:var(--text-dim);font-size:14.5px}
+  ol.list li{margin-bottom:8px} ol.list li strong{color:var(--text)}
+  .challenge{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin:24px 0}
+  .challenge h3{font-size:17px;margin-bottom:10px;color:var(--text)}
+  ol.steps{margin:0 0 0 18px;color:var(--text-dim);font-size:14.5px}
+  ol.steps li{margin-bottom:7px}
+  .done{background:linear-gradient(135deg,rgba(56,189,248,.14),rgba(68,224,164,.07));border:1px solid rgba(56,189,248,.3);border-radius:var(--radius);padding:22px;text-align:center;margin:26px 0}
+  .done .check{width:50px;height:50px;border-radius:50%;background:rgba(68,224,164,.14);color:var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:24px;border:1px solid rgba(68,224,164,.4)}
+  .done h3{margin-bottom:8px}
+  .upnext{background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:14px 0;text-align:left}
+  .upnext .lbl{font-size:11px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.06em}
+  .upnext p{margin:3px 0 0;font-weight:600;color:var(--text)}
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+  footer{border-top:1px solid var(--line);padding:30px 0;font-size:13px;color:var(--text-mute);text-align:center}
+  .coach-fab{position:fixed;bottom:28px;right:28px;z-index:999;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#38bdf8,#7c5cff);border:none;box-shadow:0 8px 28px rgba(56,189,248,.4);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;transition:transform .2s,box-shadow .2s}
+  .coach-fab:hover{transform:scale(1.08)}
+  .coach-fab .coach-fab-badge{position:absolute;top:-4px;right:-4px;background:#1ea3e0;color:#fff;font-size:9px;font-weight:700;padding:2px 5px;border-radius:999px;border:2px solid #0a0a1a;line-height:1.2}
+  .coach-drawer{position:fixed;bottom:90px;right:28px;z-index:998;width:360px;max-height:520px;background:#13132a;border:1px solid rgba(56,189,248,.25);border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.5);display:flex;flex-direction:column;transform:scale(.92) translateY(16px);opacity:0;pointer-events:none;transition:transform .25s cubic-bezier(.34,1.56,.64,1),opacity .2s}
+  .coach-drawer.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
+  .coach-drawer-head{padding:16px 18px 14px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px}
+  .coach-avatar{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#38bdf8,#7c5cff);display:grid;place-items:center;font-size:16px;flex-shrink:0}
+  .coach-head-info{flex:1}
+  .coach-head-name{font-weight:700;font-size:14px}
+  .coach-head-sub{font-size:11px;color:var(--track)}
+  .coach-close{background:none;border:none;color:#6b6b85;font-size:18px;padding:4px;line-height:1;cursor:pointer}
+  .coach-close:hover{color:#f5f5fa}
+  .coach-messages{flex:1;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}
+  .coach-messages::-webkit-scrollbar{width:4px}
+  .coach-messages::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:4px}
+  .msg{max-width:88%;font-size:13.5px;line-height:1.6}
+  .msg-coach{align-self:flex-start;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:14px 14px 14px 4px;padding:10px 14px;color:#f5f5fa}
+  .msg-user{align-self:flex-end;background:rgba(56,189,248,.22);border:1px solid rgba(56,189,248,.3);border-radius:14px 14px 4px 14px;padding:10px 14px;color:#f5f5fa}
+  .msg-thinking{align-self:flex-start;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px 14px 14px 4px;padding:10px 14px;display:flex;align-items:center;gap:6px;color:#6b6b85;font-size:13px}
+  .thinking-dot{width:6px;height:6px;border-radius:50%;background:var(--track);animation:coachPulse 1.2s ease-in-out infinite}
+  .thinking-dot:nth-child(2){animation-delay:.2s}
+  .thinking-dot:nth-child(3){animation-delay:.4s}
+  @keyframes coachPulse{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}
+  .coach-limit{padding:10px 18px;font-size:11px;color:#6b6b85;text-align:center;border-top:1px solid rgba(255,255,255,.08);display:none}
+  .coach-limit.visible{display:block}
+  .coach-limit a{color:var(--track)}
+  .coach-input-row{padding:12px 18px 16px;border-top:1px solid rgba(255,255,255,.08);display:flex;gap:8px;align-items:flex-end}
+  .coach-input{flex:1;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.08);color:#f5f5fa;border-radius:10px;padding:9px 12px;font-size:13px;font-family:inherit;resize:none;max-height:100px;line-height:1.5}
+  .coach-input:focus{outline:none;border-color:var(--track)}
+  .coach-input::placeholder{color:#6b6b85}
+  .coach-send{width:34px;height:34px;border-radius:9px;border:none;flex-shrink:0;background:linear-gradient(135deg,#38bdf8,#7c5cff);color:#fff;font-size:15px;display:grid;place-items:center;cursor:pointer;transition:opacity .15s}
+  .coach-send:hover{opacity:.85}
+  .coach-send:disabled{opacity:.4;cursor:default}
+  @media(max-width:480px){.coach-drawer{width:calc(100vw - 32px);right:16px;bottom:80px}.coach-fab{right:16px;bottom:16px}h1.title{font-size:28px}}
 </style>
 </head>
 <body>
+<div class="sr-only">Interactive Support Chatbot Lesson 3: watch a live-data lookup answer an order question and make the safe connection decisions, with an AI Coach.</div>
+<div class="wrap">
+  <nav>
+    <a href="/" class="logo"><span class="mark">L</span> LearningGPT</a>
+    <div class="nav-r">
+      <a href="/lessons/support-chatbot/">← Support Chatbot</a>
+      <a href="/playground">Playground</a>
+    </div>
+  </nav>
+  <main class="lesson">
+    <div class="l-top"><span class="l-tag">Support Chatbot · Lesson 3</span><span class="l-meta"><span class="pill proplus">Pro+</span> &nbsp;~16 min · Advanced</span></div>
+    <h1 class="title">Connected support — <span class="serif">your tools &amp; live data.</span></h1>
+    <p class="lede">A bot that only knows your docs can answer "what's your return policy?" but not "where's my order?" This lesson connects it to your live systems so it gives accurate, current answers and takes useful actions — safely.</p>
+    <div class="section"><h2 class="sec">The mental model</h2>
+      <div class="mm"><h3>Static docs answer general questions; live connections answer "about me" questions.</h3>
+      <p style="margin-bottom:0">The jump to real usefulness is connecting the bot to the systems that hold current truth — orders, accounts, tickets. Now it can answer "where's order 1042?" with the real status, not a guess. Same honesty rule applies: only state what the system actually returns.</p></div>
+      <div class="reframe"><span class="lbl">The reframe</span><b>Read first, act later.</b> Let it look up live info (read-only) long before you let it change anything. A bot that can cancel orders is a much bigger trust decision than one that reports status.</div></div>
+    <div class="section"><h2 class="sec">Step 01 · Watch a connected answer</h2>
+      <p>Connected, the bot can pull live status instead of guessing. Press run on "Where's my order 1042?":</p>
+      <div class="console" id="con">
+        <div class="ln" data-i="0"><span class="mut">customer</span> &nbsp;"Where's my order #1042?" <span class="ok">✓</span></div>
+        <div class="ln" data-i="1"><span class="mut">lookup</span> &nbsp;query order system (read-only) <span class="ok">✓</span></div>
+        <div class="ln" data-i="2"><span class="mut">live data</span> &nbsp;status: shipped, arrives Thu, tracking #ZX91 <span class="ok">✓</span></div>
+        <div class="ln" data-i="3"><span class="mut">reply</span> &nbsp;"Your order shipped and arrives Thursday — tracking ZX91." <span class="ok">✓</span></div>
+      </div>
+      <div class="cta-row"><button class="btn" id="runBtn" onclick="run()">▶ Run the lookup</button></div>
+      <div class="reveal" id="rev">That's a real answer from real data — not a guess. The bot only said what the system actually returned. If the lookup had failed, the honest move is "I can't reach the order system right now — let me connect you to a person."</div></div>
+    <div class="section"><h2 class="sec">Step 02 · Connect safely</h2>
+      <p>Make the safe call when wiring the bot to live systems:</p>
+      <div class="builder">
+        <div class="brow"><div class="q">What access does it get first?</div><div class="opts" data-d="a">
+          <button class="opt" data-c="1" onclick="dec(this,'a')">Read-only lookups (order status, account info) before any write actions</button>
+          <button class="opt" data-c="0" onclick="dec(this,'a')">Full access to cancel, refund, and edit orders right away</button></div><div class="fb" id="fb-a"></div></div>
+        <div class="brow"><div class="q">When the system is down?</div><div class="opts" data-d="b">
+          <button class="opt" data-c="0" onclick="dec(this,'b')">Guess a plausible status so the customer isn't left waiting</button>
+          <button class="opt" data-c="1" onclick="dec(this,'b')">Say it can't reach the system and hand off to a human</button></div><div class="fb" id="fb-b"></div></div>
+      </div>
+      <div class="warn"><b>A connected bot is a real attack surface and a real liability.</b> It can leak one customer's data to another or take a costly action on a bad request. Scope it to the specific data it needs, start read-only, log every action, and confirm before anything irreversible — see the Secure Your AI Use build.</div></div>
+    <div class="challenge"><h3>Your challenge: connect it to live data</h3>
+      <ol class="steps"><li>Connect one live source read-only (orders, accounts, or tickets).</li><li>Test an "about me" question and confirm it uses real data.</li><li>Test a system-down case and confirm it escalates honestly.</li><li>Scope access tightly and log what it looks up.</li></ol></div>
+    <div class="done"><div class="check">✓</div><h3>Build a Support Chatbot — complete</h3>
+      <p style="max-width:480px;margin:0 auto">You can build a bot from your own content, make it genuinely helpful with handoff and capture, and connect it to live systems for accurate answers — kept honest and scoped. Ready for the next one?</p>
+      <div class="upnext"><span class="lbl">Next build</span><p>Run Deep Research — briefs and reports you can trust</p></div>
+      <div class="cta-row"><a class="btn btn-block" href="/lessons/deep-research/">Start Deep Research →</a></div>
+      <div class="cta-row"><a class="btn btn-ghost" href="/lessons/">All builds</a><a class="btn btn-ghost" href="/lessons/support-chatbot/">Back to Support Chatbot</a></div></div>
+  </main>
+</div>
+<footer>© 2026 LearningGPT · Independent. Not affiliated with OpenAI, Anthropic, Microsoft, Google, or xAI.</footer>
 
-<div class="bg-orb one"></div>
-<div class="bg-orb two"></div>
-
-<nav class="top">
-  <div class="nav-inner">
-    <a href="/" class="logo">
-      <div class="logo-mark">L</div>
-      LearningGPT
-    </a>
-    <a href="/lessons/support-chatbot/" class="nav-back">← Support Chatbot</a>
-  </div>
-</nav>
-
-<article class="lesson">
-  <div class="container">
-
-    <div class="lesson-meta"><span class="chip">Support Chatbot · Lesson 3</span><span class="chip chip-pro-plus">Pro+</span><span>~16 min read</span><span class="dot"></span><span>Tickets + data + metrics</span><span class="dot"></span><span>Advanced</span></div>
-
-    <h1>Connected support — <span class="grad serif">tickets, data, and proof it works.</span></h1>
-
-    <p class="deck">A standalone bot answers in a vacuum; a connected one acts on real context. This lesson wires your bot into your help desk and customer data — carefully — so it creates tickets and gives personalized answers, and measures the one number that proves its worth: deflection.</p>
-
-    <h2><span class="num">The mental model</span></h2><h3>A connected bot plugs into your tools — tickets and customer data — and you measure the one number that matters: deflection.</h3><p>A standalone bot answers in a vacuum. A connected one creates tickets, looks up an order, and acts on real customer context — then you measure how many questions it resolved so a human didn’t have to. That number is how you know it’s working.</p><h2><span class="num">Step 01</span> Connect your help desk</h2><p>Wire the bot into your ticketing so it can create a ticket when it escalates, attach the conversation, and (where safe) look up things like order status. The handoff becomes seamless instead of a restart.</p><h2><span class="num">Step 02</span> Connect customer data — carefully</h2><p>With authenticated access, the bot can give personalized answers (“your order ships Tuesday”). This is powerful and sensitive: it must only ever show a customer their own data.</p><div class="prompt-example"><span class="label">Connection prompt</span>Connect to [help desk / order system], read-only except creating tickets. Only ever show a customer information tied to their own verified account. If identity isn’t verified, don’t reveal any account details — escalate instead. Tell me what to authorize and how to scope it tightly.</div><h2><span class="num">Step 03</span> Measure deflection</h2><p>Deflection = the share of questions resolved without a human. Track it, plus satisfaction, and review where the bot fails so you can feed those gaps back into its docs.</p><h2><span class="num">Step 04</span> Keep it current and safe</h2><ul><li><strong>Review transcripts</strong> — find new questions and bad answers, improve weekly.</li><li><strong>Update docs</strong> — when policies change, change the source.</li><li><strong>Guardrails</strong> — keep its boundaries and never-promise list enforced.</li></ul><div class="gotcha">Connecting a bot to customer data is a serious security responsibility: the cardinal sin is exposing one customer’s information to another. Require verified identity before revealing anything personal, scope access tightly, and treat this like any system handling PII. The Secure Your AI Use build covers doing this properly.</div>
-
-    <div class="challenge"><h2 style="margin-top:0;">Your challenge: connect and measure</h2><p>Take your helpful bot and make it connected:</p><ol><li>Connect it to your help desk to create tickets on escalation.</li><li>Add customer-data lookups gated behind verified identity.</li><li>Set up deflection and satisfaction tracking.</li><li>Schedule a weekly transcript review to improve it.</li></ol><p>That’s a support bot that does real work and proves it. You’ve finished the Build a Support Chatbot track.</p><div class="btn-row"><a href="/lessons/deep-research/" class="btn">Next build: Run Deep Research →</a><a href="/lessons/support-chatbot/" class="btn ghost">Back to Support Chatbot</a></div></div>
-
-    <div class="checklist"><h3>What you can do now</h3><ul><li>Connect a bot to your help desk to create tickets</li><li>Add personalized answers behind verified identity, safely</li><li>Measure deflection and satisfaction</li><li>Improve the bot from transcript reviews</li><li>Protect customer data and never expose one customer to another</li></ul></div>
-
-    <div class="next-up"><div class="lbl">You’ve finished this build</div><h3>Build a Support Chatbot — complete</h3><p>You can launch an FAQ bot, make it genuinely helpful, and connect it to your tools with deflection you can measure. Ready for the next one? <a href="/lessons/deep-research/">Run Deep Research →</a> or see <a href="/lessons/">all builds</a>.</p></div>
-
-  </div>
-</article>
-
-<footer>
-  <div class="footer-inner">
-    <div>© 2026 LearningGPT, Inc. · Independent.</div>
-    <a href="/lessons/website-builder/" style="color: var(--text-dim);">← Back to Build a Website</a>
-  </div>
-</footer>
-
-
-<!-- ── AI COACH FAB ── -->
-<button class="coach-fab" id="coachFab" title="Ask the AI Coach">
-  🎓
-  <span class="coach-fab-badge">AI</span>
-</button>
-
-<!-- ── AI COACH DRAWER ── -->
+<button class="coach-fab" id="coachFab" title="Ask the AI Coach">🎓<span class="coach-fab-badge">AI</span></button>
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
     <div class="coach-avatar">🎓</div>
-    <div class="coach-head-info">
-      <div class="coach-head-name">AI Coach</div>
-      <div class="coach-head-sub">Ask anything about this lesson</div>
-    </div>
+    <div class="coach-head-info"><div class="coach-head-name">AI Coach</div><div class="coach-head-sub">Ask anything about this lesson</div></div>
     <button class="coach-close" id="coachClose">✕</button>
   </div>
   <div class="coach-messages" id="coachMessages">
-    <div class="msg msg-coach">Hey! I’m your AI Coach for this lesson. Ask me anything about connecting your bot to a help desk or customer data, doing it safely, or measuring deflection. What’s on your mind?</div>
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about connecting your bot to live data, doing it safely, or handling system failures honestly. What's on your mind?</div>
   </div>
-  <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
-  </div>
+  <div class="coach-limit" id="coachLimit">Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.</div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
     <button class="coach-send" id="coachSend">➤</button>
   </div>
 </div>
 
-
+<script id="lessonScript">
+  function run(){ var b=document.getElementById('runBtn'); b.disabled=true; b.textContent='Looking up…'; var lns=document.querySelectorAll('#con .ln'); var i=0; (function s(){ if(i<lns.length){ lns[i].classList.add('show'); i++; setTimeout(s,650);} else { b.textContent='Answered from live data ✓'; document.getElementById('rev').classList.add('show'); } })(); }
+  var m={a:{good:"Right — read-only lookups first. A bot that can cancel or refund on day one is a big liability; earn write access later.",bad:"Too much, too soon — full write access invites costly mistakes on bad requests. Start with read-only lookups."},b:{good:"Right — when the system is down, the honest move is to say so and hand off. Never invent a status.",bad:"Never guess a status — a wrong 'it shipped' destroys trust. Say it can't reach the system and hand off to a person."}};
+  function dec(btn,d){ var g=btn.closest('.opts'); if(g.dataset.l)return; g.dataset.l='1'; var c=btn.dataset.c==='1'; g.querySelectorAll('.opt').forEach(function(b){b.disabled=true; if(b.dataset.c==='1')b.classList.add('right'); else if(b===btn)b.classList.add('wrong');}); var fb=document.getElementById('fb-'+d); fb.className='fb show good'; fb.textContent=(c?'':'The other one is safer. ')+m[d][c?'good':'bad']; }
+</script>
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Connected support - tickets, CRM and deflection (Support Chatbot, Lesson 3, Pro+)\nTRACK: Support Chatbot (a cross-tool 'What can you do with AI' build)\n\nLESSON CONTENT SUMMARY:\nThis Pro+ lesson connects a support bot to tools and measures deflection. Mental model: a connected bot creates tickets, looks up orders, and acts on real customer context, and you measure deflection - the share of questions resolved without a human. Step 1 connect the help desk so it creates tickets on escalation, attaches the conversation, and looks up safe things like order status. Step 2 connect customer data carefully: authenticated access enables personalized answers but it must only ever show a customer their own data. Step 3 measure deflection plus satisfaction and review failures to feed gaps back into docs. Step 4 keep it current and safe: review transcripts weekly, update docs when policies change, and keep guardrails and the never-promise list enforced. Gotcha: connecting to customer data is a serious security responsibility - never expose one customer to another; require verified identity before revealing anything personal, scope access tightly, treat it like any PII system; the Secure Your AI Use build covers this. The challenge: connect to a help desk, add identity-gated lookups, set up deflection measurement, and a weekly transcript review.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise - 2-4 sentences unless more is genuinely needed\n- Be practical with real examples\n- Strongly emphasize customer-data security and verified identity; point to the Secure Your AI Use build\n- Never invent tools or features that don't exist\n- Plain conversational text only, no markdown symbols\n- Do not start with \"Great question!\" or similar filler";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Connected support \u2014 your tools & live data\nTRACK: Build a Support Chatbot (Lesson 03, Pro+, track finale)\n\nLESSON CONTENT SUMMARY:\nA bot that only knows your docs can answer 'what's your return policy?' but not 'where's my order?' Connect it to live systems so it gives accurate, current answers and takes useful actions, safely. Mental model: static docs answer GENERAL questions; live connections answer 'ABOUT ME' questions (orders, accounts, tickets) \u2014 now it can answer 'where's order 1042?' with the real status, not a guess; same honesty rule, only state what the system actually returns. Reframe: read first, act later \u2014 let it look up live info (read-only) long before you let it change anything; a bot that can cancel orders is a much bigger trust decision than one that reports status.\n\nA connected answer: customer asks \u2192 bot does a read-only lookup \u2192 gets live data (status: shipped, arrives Thursday, tracking) \u2192 replies with the real answer. If the lookup fails, the honest move is 'I can't reach the order system right now \u2014 let me connect you to a person,' never a guessed status.\n\nConnect safely: READ-ONLY lookups (order status, account info) before any write actions; when the system is DOWN, say it can't reach the system and hand off \u2014 never guess. A connected bot is a real ATTACK SURFACE and liability \u2014 it can leak one customer's data to another or take a costly action on a bad request; scope it to the specific data it needs, start read-only, log every action, confirm before anything irreversible (see the Secure Your AI Use build). This completes the Support Chatbot track; next build is Run Deep Research.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences unless more is genuinely needed\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where to learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler";
   var MAX_FREE = 3;
-  var count = 0;
-  var isThinking = false;
-  var history = [];
-
+  var count = 0, isThinking = false, history = [];
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -289,81 +266,32 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
-  fab.addEventListener('click', function() { toggle(true); });
-  closeBtn.addEventListener('click', function() { toggle(false); });
-
-  function toggle(open) {
-    drawer.classList.toggle('open', open);
-    if (open) setTimeout(function() { input.focus(); }, 300);
-  }
-
-  input.addEventListener('input', function() {
-    input.style.height = 'auto';
-    input.style.height = Math.min(input.scrollHeight, 100) + 'px';
-  });
-
-  input.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
-  });
+  if (!fab) return;
+  fab.addEventListener('click', function(){ toggle(true); });
+  closeBtn.addEventListener('click', function(){ toggle(false); });
+  function toggle(open){ drawer.classList.toggle('open', open); if(open) setTimeout(function(){ input.focus(); }, 300); }
+  input.addEventListener('input', function(){ input.style.height='auto'; input.style.height=Math.min(input.scrollHeight,100)+'px'; });
+  input.addEventListener('keydown', function(e){ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); send(); } });
   sendBtn.addEventListener('click', send);
-
-  function addMsg(text, type) {
-    var d = document.createElement('div');
-    d.className = 'msg msg-' + type;
-    d.textContent = text;
-    msgs.appendChild(d);
-    msgs.scrollTop = msgs.scrollHeight;
-    return d;
-  }
-
-  function addThinking() {
-    var d = document.createElement('div');
-    d.className = 'msg-thinking';
-    d.innerHTML = '<div class="thinking-dot"></div><div class="thinking-dot"></div><div class="thinking-dot"></div>';
-    msgs.appendChild(d);
-    msgs.scrollTop = msgs.scrollHeight;
-    return d;
-  }
-
-  async function send() {
+  function addMsg(text, type){ var d=document.createElement('div'); d.className='msg msg-'+type; d.textContent=text; msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight; return d; }
+  function addThinking(){ var d=document.createElement('div'); d.className='msg-thinking'; d.innerHTML='<div class="thinking-dot"></div><div class="thinking-dot"></div><div class="thinking-dot"></div>'; msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight; return d; }
+  async function send(){
     var text = input.value.trim();
-    if (!text || isThinking) return;
-    if (count >= MAX_FREE) {
-      limitBar.classList.add('visible');
-      input.disabled = true;
-      sendBtn.disabled = true;
-      return;
-    }
+    if(!text || isThinking) return;
+    if(count >= MAX_FREE){ limitBar.classList.add('visible'); input.disabled=true; sendBtn.disabled=true; return; }
     count++;
-    if (count >= MAX_FREE) limitBar.classList.add('visible');
-    addMsg(text, 'user');
-    history.push({ role: 'user', content: text });
-    input.value = '';
-    input.style.height = 'auto';
-    isThinking = true;
-    sendBtn.disabled = true;
+    if(count >= MAX_FREE) limitBar.classList.add('visible');
+    addMsg(text,'user'); history.push({role:'user',content:text});
+    input.value=''; input.style.height='auto'; isThinking=true; sendBtn.disabled=true;
     var thinking = addThinking();
-    try {
-      var res = await fetch('/api/playground', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ coach: true, lessonCoach: true, lessonContext: LESSON_CONTEXT, history: history })
-      });
+    try{
+      var res = await fetch('/api/playground', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ coach:true, lessonCoach:true, lessonContext:LESSON_CONTEXT, history:history }) });
       thinking.remove();
       var data = await res.json();
       var reply = (data && data.coach) ? data.coach : "Sorry, something went wrong. Try again in a moment.";
-      addMsg(reply, 'coach');
-      history.push({ role: 'assistant', content: reply });
-    } catch(err) {
-      thinking.remove();
-      addMsg("Something went wrong — try again in a moment.", 'coach');
-    } finally {
-      isThinking = false;
-      sendBtn.disabled = count >= MAX_FREE;
-    }
+      addMsg(reply,'coach'); history.push({role:'assistant',content:reply});
+    } catch(err){ thinking.remove(); addMsg("Something went wrong — try again in a moment.",'coach'); }
+    finally{ isThinking=false; sendBtn.disabled = count >= MAX_FREE; }
   }
 })();
 </script>

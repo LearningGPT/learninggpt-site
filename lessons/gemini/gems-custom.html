@@ -4,16 +4,16 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Gems — build custom Gemini agents — LearningGPT</title>
-<meta name="description" content="Gems are Gemini's custom-agent feature. Build agents that know your Workspace data and your voice. The patterns that work, the traps that don't." />
+<meta name="description" content="Gems are Gemini's custom-agent feature — agents that know your Workspace data and your voice. The four-section instruction pattern, wiring Workspace triggers, and sharing without traps." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#4285f4" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/gemini/gems-custom" />
 <meta property="og:title" content="Gems — build custom Gemini agents" />
-<meta property="og:description" content="Gems are Gemini's custom-agent feature. Build agents that know your Workspace data and your voice. The patterns that work, the traps that don't." />
+<meta property="og:description" content="The four-section instruction pattern, wiring Workspace triggers, and sharing Gems without traps." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -23,7 +23,7 @@ body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; bac
 a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
 .bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
 .bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #4285f4; }
-.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #d96570; opacity: 0.2; }
 .container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
 nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
@@ -33,87 +33,105 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .lesson { padding: 50px 0 100px; }
 .lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
 .lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(66,133,244,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(66,133,244,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
 .lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
 .lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #4285f4 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .grad { background: linear-gradient(135deg, #4285f4 0%, #9b72cb 50%, #d96570 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 24px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.sec { margin: 46px 0 0; }
+.sec-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.lesson h2 { font-size: 27px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; }
 .lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
 .lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(66,133,244,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(66,133,244,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #4285f4, #7c5cff); border-radius: 2px 0 0 2px; }
+
+/* ── COMPARE ── */
+.vs2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 22px 0; }
+@media (max-width: 560px){ .vs2 { grid-template-columns: 1fr; } }
+.vs2 .c { border-radius: var(--radius); padding: 16px 18px; border: 1px solid var(--line); background: var(--surface); }
+.vs2 .c .h { font-size: 14.5px; font-weight: 700; margin-bottom: 4px; }
+.vs2 .c.gpt .h { color: #c9aef0; }
+.vs2 .c.gem .h { color: #9cc0fb; }
+.vs2 .c p { font-size: 13.5px; margin: 0; color: var(--text-dim); }
+
+/* ── 4-SECTION REFERENCE ── */
+.fourref { margin: 18px 0; border: 1px solid var(--line); border-radius: var(--radius-lg); background: linear-gradient(180deg, var(--surface), var(--bg-soft)); overflow: hidden; }
+.fourref-h { padding: 12px 16px; border-bottom: 1px solid var(--line); font-size: 12.5px; font-weight: 600; color: var(--text-dim); display: flex; align-items: center; gap: 8px; }
+.fsec { padding: 12px 16px; border-bottom: 1px solid var(--line); }
+.fsec:last-child { border-bottom: none; }
+.fsec .fl { font-family: 'SFMono-Regular', Consolas, monospace; font-size: 12.5px; color: var(--track); font-weight: 700; }
+.fsec p { font-size: 13.5px; margin: 4px 0 0; color: var(--text-dim); }
+
+/* ── TRIGGER WIRING ── */
+.wire { margin: 22px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden; background: #0d0d20; }
+.wire-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--line); background: linear-gradient(90deg, rgba(66,133,244,0.07), rgba(217,101,112,0.05)); }
+.wire-bar .t { font-size: 12.5px; font-weight: 600; color: var(--text-dim); }
+.wire-bar .ct { font-size: 11.5px; font-weight: 700; color: var(--track); }
+.wrow { padding: 14px 16px; border-bottom: 1px solid var(--line); }
+.wrow:last-of-type { border-bottom: none; }
+.wrow-trig { font-size: 14.5px; margin-bottom: 10px; }
+.wrow-trig b { color: #c9aef0; }
+.wrow-btns { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+@media (max-width: 600px){ .wrow-btns { grid-template-columns: repeat(2, 1fr); } }
+.wbtn { font-size: 12px; font-weight: 700; font-family: inherit; padding: 9px 8px; border-radius: 8px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); color: var(--text-dim); cursor: pointer; transition: all .15s; }
+.wbtn:hover:not(:disabled) { border-color: var(--track); color: var(--text); }
+.wbtn:disabled { cursor: default; }
+.wbtn.right { background: rgba(68,224,164,0.16); border-color: var(--accent); color: #b6f4dc; }
+.wbtn.wrong { background: rgba(255,107,138,0.12); border-color: var(--danger); color: #ffb0c1; }
+.wrow-fb { margin-top: 10px; font-size: 13px; color: var(--text-dim); display: none; }
+.wrow-fb.show { display: block; }
+.wrow-fb b { color: var(--track); }
+.wire-done { padding: 14px 16px; font-size: 13.5px; background: rgba(66,133,244,0.08); border-top: 1px solid var(--line); display: none; }
+.wire-done.show { display: block; animation: fadeIn .4s ease; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(6px);} to{opacity:1;transform:none;} }
+
+/* ── JUDGE ── */
+.judge { margin: 16px 0; }
+.jrow { padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); margin-bottom: 10px; }
+.jrow-scn { font-size: 13.5px; color: var(--text-mute); margin-bottom: 10px; }
+.jrow-scn b { color: var(--text); }
+.jrow-btns { display: flex; flex-direction: column; gap: 8px; }
+.jbtn { font-size: 13px; font-weight: 600; font-family: inherit; padding: 10px 13px; border-radius: 8px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); color: var(--text-dim); cursor: pointer; transition: all .15s; text-align: left; }
+.jbtn:hover:not(:disabled) { border-color: var(--track); color: var(--text); }
+.jbtn:disabled { cursor: default; }
+.jbtn.right { background: rgba(68,224,164,0.16); border-color: var(--accent); color: #b6f4dc; }
+.jbtn.wrong { background: rgba(255,107,138,0.12); border-color: var(--danger); color: #ffb0c1; }
+.jrow-fb { margin-top: 10px; font-size: 13px; color: var(--text-dim); display: none; }
+.jrow-fb.show { display: block; }
+.jrow-fb b { color: var(--track); }
+.callout { margin: 18px 0; padding: 18px 22px; background: linear-gradient(135deg, rgba(66,133,244,0.10), rgba(124,92,255,0.05)); border: 1px solid rgba(66,133,244,0.25); border-radius: var(--radius-lg); }
 .callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(66,133,244,0.1); border: 1px solid rgba(66,133,244,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(66,133,244,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(66,133,244,0.25); border-radius: var(--radius-lg); padding: 36px; }
+.callout p { margin: 0; font-size: 14.5px; color: var(--text-dim); }
+.callout b { color: var(--text); }
+
+.challenge { margin: 46px 0 30px; background: linear-gradient(135deg, rgba(66,133,244,0.16), rgba(155,114,203,0.1)); border: 1px solid rgba(66,133,244,0.3); border-radius: var(--radius-lg); padding: 32px; }
 .challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #4285f4, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
 .challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #4285f4, #9b72cb); color: white; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: inherit; box-shadow: 0 6px 24px rgba(66,133,244,0.28); transition: transform .15s; text-decoration: none; }
+.btn:hover { transform: translateY(-1px); color: white; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.checklist { margin: 30px 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
 .checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
 .checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
 .checklist li:first-child { border-top: none; padding-top: 0; }
 .checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up { margin: 40px 0 0; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
 .next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
 .next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
-.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
 .next-up .pro-plus-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(255,181,71,0.18); color: var(--warn); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,181,71,0.35); }
-footer { border-top: 1px solid var(--line); padding: 30px 0; }
+footer { border-top: 1px solid var(--line); padding: 30px 0; margin-top: 40px; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -142,7 +160,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
@@ -154,83 +171,100 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <a href="/lessons/gemini/" class="nav-back">← Gemini Mastery</a>
   </div>
 </nav>
+
 <article class="lesson">
   <div class="container">
     <div class="lesson-meta">
-      <span class="chip">Agents · Lesson 02</span>
+      <span class="chip">Lesson 11 · Gemini Mastery</span>
       <span class="chip chip-pro-plus">Pro+</span>
-      <span>~12 min read</span>
+      <span>~12 min</span>
       <span class="dot"></span>
       <span>Build + share</span>
     </div>
     <h1>Gems: <span class="grad serif">agents with Workspace in their bones.</span></h1>
-    <p class="deck">Gems are Google's answer to Custom GPTs. They're custom Gemini agents with system prompts, instructions, and access to your Workspace data. Where Custom GPTs are tools you bolt onto ChatGPT, Gems are tools that live inside the Google ecosystem — and that integration is the main reason to build them.</p>
-    <h2><span class="num">Workflow 01</span> Build your first Gem</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">1</div><h3>The four-section instruction pattern that works</h3></div><p>Like Custom GPTs, the difference between a useful Gem and a useless one is the quality of the system instructions. The pattern below is dependable.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Gem instructions</span>Gem instructions for an &#x27;Email triage Gem&#x27;:
+    <p class="deck">Gems are Google's answer to Custom GPTs — custom agents with system prompts, instructions, and access to your Workspace data. A Custom GPT is a tool you bolt onto ChatGPT; a Gem lives inside the Google ecosystem. Building a good one is two things: sharp instructions, and telling it <em>when</em> to reach into Workspace.</p>
 
-## Identity
-You are an email triage assistant. Your job is to help me decide what to do with each email without me having to read it in full.
-
-## What you do
-When I paste an email or summarize one:
-1. Categorize: [Action], [Reply], [Read], [Skip]
-2. If [Action] or [Reply], suggest the next step (specific, not &#x27;follow up&#x27;)
-3. If [Reply], draft a 3-5 sentence response in my voice (see references)
-4. Flag any deadlines or commitments mentioned
-
-## Voice for drafts
-[Paste 2-3 examples of your real email replies]
-
-Match this voice — direct, short sentences, no AI tells.
-
-## What you don&#x27;t do
-- Don&#x27;t pad with &#x27;I&#x27;d be happy to help&#x27; or &#x27;Hope this finds you well&#x27;
-- Don&#x27;t suggest meetings unless the email explicitly requests one
-- Don&#x27;t reply on my behalf — drafts only</div><h4>Best use cases</h4><ul><li>Email triage (your inbox, your voice)</li><li>Document review in a specific style</li><li>Research synthesis for your domain</li><li>Customer-facing draft generation</li></ul><div class="gotcha">Gems with vague instructions produce vague output. Be specific about what to do AND what not to do.</div><div class="savings"><strong>Time savings:</strong> A well-built Gem: 5 min/use × 20 uses/week = 100 min/week saved.</div></div><h2><span class="num">Workflow 02</span> Workspace-connected Gems</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">2</div><h3>Connect Gems to your Drive, Gmail, and Calendar</h3></div><p>The Gems advantage over Custom GPTs: native Workspace access. A Gem can search your Drive, read your Gmail, check your calendar — without separate connector setup.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Workspace-aware Gem</span>Configure a Gem with Workspace access:
-
-1. In Gem settings, enable: Drive search, Gmail read, Calendar read
-2. Specify which folders or accounts (don&#x27;t give it access to everything — scope it)
-3. In the instructions, tell the Gem WHEN to use Workspace context:
-   - &#x27;When I mention a person, look up our most recent emails to understand context&#x27;
-   - &#x27;When I ask about a project, search Drive for related docs before answering&#x27;
-   - &#x27;When I ask about my schedule, check the calendar before responding&#x27;
-
-This turns a generic Gem into something that knows your life — without you having to paste context every time.</div><h4>Best use cases</h4><ul><li>Personal meeting-prep Gem (always pulls recent emails and calendar)</li><li>Project status Gem (knows where your project docs live)</li><li>Customer-context Gem (pulls account history per question)</li><li>Daily standup Gem (summarizes calendar + open tasks)</li></ul><div class="gotcha">Workspace permissions are powerful — be careful about Gems you share with others. Their Workspace access travels with the Gem instructions but applies to whoever runs it.</div><div class="savings"><strong>Time savings:</strong> Auto-context: 2-3 min per query of pasting in.</div></div><h2><span class="num">Workflow 03</span> Sharing Gems with your team</h2><div class="workflow"><div class="workflow-head"><div class="workflow-num">3</div><h3>Internal Gems for shared workflows</h3></div><p>Gems can be shared inside a Workspace org. Useful for team-wide patterns: shared support drafters, shared sales templates, shared report builders.</p><h4>The prompt that works</h4><div class="prompt-example"><span class="label">Team Gems</span>Sharing patterns that work:
-
-• **Team email drafter** — shared Gem matched to the team&#x27;s customer-facing voice. Everyone produces consistent drafts.
-• **Onboarding helper** — shared Gem new hires can ask about company info, processes, where to find things
-• **Sales context Gem** — shared Gem that knows your competitive landscape, common objections, ICP
-• **Code review Gem** — for engineering teams, encoded with your style guide and patterns
-
-When sharing:
-- Use clear naming (&#x27;Acme Sales Gem v2&#x27; not &#x27;mySalesGem&#x27;)
-- Document who owns it and when it was last updated
-- Set a quarterly review reminder — outdated team Gems mislead people</div><h4>Best use cases</h4><ul><li>Department-wide drafting consistency</li><li>Onboarding new team members</li><li>Cross-team alignment on standards</li><li>Company-wide AI literacy tooling</li></ul><div class="gotcha">Team Gems without an owner go stale fast. Always assign an owner who's responsible for quarterly review.</div><div class="savings"><strong>Time savings:</strong> Team consistency: hours of inconsistency cleanup avoided.</div></div>
-    <div class="challenge">
-      <h2 style="margin-top: 0;">Build one Gem you'll use this week</h2>
-      <p>Pick a repetitive task you do at least 3x/week. Build a Gem using the four-section pattern. Connect Workspace if relevant. Use it 5 times this week and refine the instructions based on what's not working.</p>
-      <div class="btn-row">
-        <a href="/lessons/gemini/" class="btn">Back to Gemini Mastery →</a>
-        <a href="/playground" class="btn ghost">Try a prompt in the playground →</a>
+    <!-- mental model -->
+    <div class="sec">
+      <span class="sec-eyebrow">The mental model</span>
+      <h2>Instructions, plus knowing when to look.</h2>
+      <p>The difference between a useful Gem and a useless one is the same as a Custom GPT — instruction quality. But Gems add a second lever Custom GPTs don't have: native Workspace access. The skill is wiring it so the Gem pulls context exactly when it helps, and not when it doesn't.</p>
+      <div class="vs2">
+        <div class="c gpt"><div class="h">🧩 Custom GPT</div><p>A tool you bolt onto ChatGPT. Knows only what you upload.</p></div>
+        <div class="c gem"><div class="h">💎 Gem</div><p>Lives in Workspace. Can search Drive, read Gmail, check Calendar — when you tell it to.</p></div>
       </div>
     </div>
+
+    <!-- 4-section reference -->
+    <div class="sec">
+      <span class="sec-eyebrow">The instruction pattern</span>
+      <h2>Four sections that hold up.</h2>
+      <p>Same dependable shape as a strong Custom GPT prompt. Here's an "Email triage" Gem in the pattern:</p>
+      <div class="fourref">
+        <div class="fourref-h">💎 Email triage Gem · instructions</div>
+        <div class="fsec"><span class="fl">## Identity</span><p>You triage email so I never have to read one in full.</p></div>
+        <div class="fsec"><span class="fl">## What you do</span><p>Categorize [Action]/[Reply]/[Read]/[Skip]; suggest a specific next step; draft a 3–5 sentence reply in my voice; flag deadlines.</p></div>
+        <div class="fsec"><span class="fl">## Voice</span><p>[2–3 of my real replies] — direct, short sentences, no AI tells.</p></div>
+        <div class="fsec"><span class="fl">## What you don't do</span><p>No "Hope this finds you well"; don't suggest meetings unless asked; drafts only — never reply on my behalf.</p></div>
+      </div>
+    </div>
+
+    <!-- SIGNATURE: trigger wiring -->
+    <div class="sec">
+      <span class="sec-eyebrow">Do it · wire the Workspace triggers</span>
+      <h2>Tell it when to reach into Workspace.</h2>
+      <p>This is what makes a Gem more than a Custom GPT: instructions that say <em>when</em> to pull context. For each trigger, pick the source the Gem should reach — and notice when the answer is "don't reach at all."</p>
+
+      <div class="wire">
+        <div class="wire-bar"><span class="t">💎 Gem · context rules</span><span class="ct" id="wireCt">0 / 4 wired</span></div>
+        <div id="wires"></div>
+        <div class="wire-done" id="wireDone">
+          <strong>That's the lever.</strong> Wiring triggers to sources turns a generic Gem into one that knows your life — and not fetching when it doesn't need to keeps it fast and on-point. Scope the access too: name the folders and accounts, not "all of Drive."
+        </div>
+      </div>
+    </div>
+
+    <!-- judge -->
+    <div class="sec">
+      <span class="sec-eyebrow">Your call · sharper instruction</span>
+      <h2>Vague Gem, vague output.</h2>
+      <p>For each section, pick the line that makes a sharper Gem — specific about what to do, and what <em>not</em> to.</p>
+      <div class="judge" id="judge"></div>
+      <div class="callout">
+        <span class="lbl">When you share it</span>
+        <p><b>Scope access narrowly</b> — specific folders/accounts, not everything. And every team Gem needs an <b>owner with a quarterly review</b>; an ownerless shared Gem goes stale and starts misleading people. Name it clearly ("Acme Sales Gem v2") and note who owns it.</p>
+      </div>
+    </div>
+
+    <div class="challenge">
+      <h2 style="margin-top:0;">Build one Gem you'll use this week</h2>
+      <p>Pick a task you do 3+ times a week. Write it with the four-section pattern, wire 1–2 Workspace triggers (scoped narrowly), and use it five times this week — refining the instructions based on what's not working, not theory.</p>
+      <div class="btn-row">
+        <a href="/playground" class="btn">Try a prompt in the playground →</a>
+        <a href="/lessons/gemini/" class="btn ghost">Back to Gemini Mastery</a>
+      </div>
+    </div>
+
     <div class="checklist">
       <h3>What you can do now</h3>
       <ul>
-        <li>Use the four-section instruction pattern (Identity, What you do, Voice, What you don't do)</li>
-        <li>Scope Workspace access narrowly — folders and accounts, not 'all of Drive'</li>
-        <li>For team Gems, assign an owner with quarterly review responsibility</li>
-        <li>Iterate on Gem instructions based on real use, not theory</li>
-        <li>Replace shared Custom GPTs with Workspace-native Gems when possible</li>
+        <li>Use the four-section pattern: Identity, What you do, Voice, What you don't do</li>
+        <li>Wire Workspace triggers — and skip the lookup when general knowledge is enough</li>
+        <li>Scope Workspace access to specific folders/accounts, not all of Drive</li>
+        <li>Give every team Gem an owner with a quarterly review</li>
+        <li>Iterate on instructions from real use, not theory</li>
       </ul>
     </div>
+
     <div class="next-up">
-      <span class="pro-tag">Pro</span>
-      <div class="lbl" style="margin-top: 14px;">Up next in Gemini Mastery</div>
-      <h3>Lesson 03 · Deep Research — Gemini's analyst mode</h3>
-      <p>Deep Research is Gemini's long-running research agent. Multi-step plans, iterative refinement, citation-rich output. The pattern for substantive research work. <a href="/lessons/gemini/">See the track →</a></p>
+      <span class="pro-plus-tag">Pro+</span>
+      <div class="lbl" style="margin-top:14px;">Up next in Gemini Mastery</div>
+      <h3>Lesson 12 · Workspace agents — Gemini in Docs, Sheets, Gmail</h3>
+      <p>Gemini's integration across Workspace is broad but uneven — some apps got real agentic capability, others got "help me write" buttons. How to tell them apart. <a href="/lessons/gemini/workspace-agents">Start lesson 12 →</a></p>
     </div>
   </div>
 </article>
+
 <footer>
   <div class="footer-inner">
     <div>© 2026 LearningGPT · Independent. Not affiliated with Google.</div>
@@ -243,7 +277,6 @@ When sharing:
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -258,7 +291,7 @@ When sharing:
     <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -266,15 +299,91 @@ When sharing:
   </div>
 </div>
 
+<script id="lessonScript">
+(function () {
+  // ── TRIGGER WIRING ──
+  var SRC = ['📧 Gmail', '📁 Drive', '📅 Calendar', '— No lookup'];
+  var WIRES = [
+    { trig: 'When I mention a person, understand our context before answering.', correct: '📧 Gmail',
+      why: 'Look up your most recent emails with that person — Gmail is where the relationship context lives.' },
+    { trig: 'When I ask about a project, ground the answer in what we\'ve decided.', correct: '📁 Drive',
+      why: 'Search Drive for related docs first, so it builds on decisions instead of guessing.' },
+    { trig: 'When I ask what my week looks like, answer from reality.', correct: '📅 Calendar',
+      why: 'Check the Calendar before responding — otherwise it\'s inventing your schedule.' },
+    { trig: 'When I ask for the definition of an industry term.', correct: '— No lookup',
+      why: 'General knowledge — no Workspace fetch needed. Over-fetching just makes the Gem slower and noisier.' }
+  ];
+  var wires = document.getElementById('wires');
+  var wireCt = document.getElementById('wireCt');
+  var wireDone = document.getElementById('wireDone');
+  var wired = 0;
+
+  WIRES.forEach(function (w) {
+    var row = document.createElement('div');
+    row.className = 'wrow';
+    var btns = SRC.map(function (s) { return '<button class="wbtn" data-s="' + s + '">' + s + '</button>'; }).join('');
+    row.innerHTML = '<div class="wrow-trig"><b>"' + w.trig + '"</b></div><div class="wrow-btns">' + btns + '</div><div class="wrow-fb"></div>';
+    wires.appendChild(row);
+    var fb = row.querySelector('.wrow-fb');
+    var wbtns = row.querySelectorAll('.wbtn');
+    var done = false;
+    wbtns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (done) return;
+        done = true;
+        var ok = b.dataset.s === w.correct;
+        wbtns.forEach(function (x) { x.disabled = true; if (x.dataset.s === w.correct) x.classList.add('right'); });
+        if (!ok) b.classList.add('wrong');
+        fb.innerHTML = (ok ? '' : '<b>' + w.correct + '.</b> ') + w.why;
+        fb.classList.add('show');
+        wired++;
+        wireCt.textContent = wired + ' / ' + WIRES.length + ' wired';
+        if (wired === WIRES.length) wireDone.classList.add('show');
+      });
+    });
+  });
+
+  // ── JUDGE: sharper instruction ──
+  var J = [
+    { sec: '## Identity', opts: ['You help with email.', 'You triage email so I never have to read one in full.'], correct: 1,
+      why: 'A clear, narrow job ("triage so I don\'t read in full") shapes behavior; "help with email" is a shrug.' },
+    { sec: '## What you do', opts: ['Reply to emails for me.', 'Categorize Action/Reply/Read/Skip, draft a 3-5 sentence reply in my voice, and flag deadlines.'], correct: 1,
+      why: 'Specific steps beat a vague verb — and notice it says draft, not send.' },
+    { sec: "## What you don't do", opts: ['Be helpful and professional.', 'No "Hope this finds you well"; drafts only — never reply on my behalf.'], correct: 1,
+      why: 'A real Gem names what NOT to do. "Be helpful" constrains nothing; explicit don\'ts keep it on the rails.' }
+  ];
+  var judge = document.getElementById('judge');
+  J.forEach(function (it) {
+    var row = document.createElement('div');
+    row.className = 'jrow';
+    var btns = it.opts.map(function (o, i) { return '<button class="jbtn" data-i="' + i + '">' + o + '</button>'; }).join('');
+    row.innerHTML = '<div class="jrow-scn">Section <b>' + it.sec + '</b> — which line?</div><div class="jrow-btns">' + btns + '</div><div class="jrow-fb"></div>';
+    judge.appendChild(row);
+    var fb = row.querySelector('.jrow-fb');
+    var jbtns = row.querySelectorAll('.jbtn');
+    var done = false;
+    jbtns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (done) return;
+        done = true;
+        var ok = +b.dataset.i === it.correct;
+        jbtns.forEach(function (x, xi) { x.disabled = true; if (xi === it.correct) x.classList.add('right'); });
+        if (!ok) b.classList.add('wrong');
+        fb.innerHTML = (ok ? '<b>Right.</b> ' : '<b>The sharper one wins.</b> ') + it.why;
+        fb.classList.add('show');
+      });
+    });
+  });
+})();
+</script>
 
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Gems \u2014 build custom Gemini agents\nTRACK: Gemini Mastery\n\nLESSON CONTENT SUMMARY:\nGems \u2014 build custom Gemini agents \u2014 LearningGPT L LearningGPT \u2190 Gemini Mastery Agents \u00b7 Lesson 02 Pro+ ~12 min read Build + share Gems: agents with Workspace in their bones. Gems are Google's answer to Custom GPTs. They're custom Gemini agents with system prompts, instructions, and access to your Workspace data. Where Custom GPTs are tools you bolt onto ChatGPT, Gems are tools that live inside the Google ecosystem \u2014 and that integration is the main reason to build them. Workflow 01 Build your first Gem 1 The four-section instruction pattern that works Like Custom GPTs, the difference between a useful Gem and a useless one is the quality of the system instructions. The pattern below is dependable. The prompt that works Gem instructions Gem instructions for an &#x27;Email triage Gem&#x27;: ## Identity You are an email triage assistant. Your job is to help me decide what to do with each email without me having to read it in full. ## What you do When I paste an email or summarize one: 1. Categorize: [Action], [Reply], [Read], [Skip] 2. If [Action] or [Reply], suggest the next step (specific, not &#x27;follow up&#x27;) 3. If [Reply], draft a 3-5 sentence response in my voice (see references) 4. Flag any deadlines or commitments mentioned ## Voice for drafts [Paste 2-3 examples of your real email replies] Match this voice \u2014 direct, short sentences, no AI tells. ## What you don&#x27;t do - Don&#x27;t pad with &#x27;I&#x27;d be happy to help&#x27; or &#x27;Hope this finds you well&#x27; - Don&#x27;t suggest meetings unless the email explicitly requests one - Don&#x27;t reply on my behalf \u2014 drafts only Best use cases Email triage (your inbox, your voice) Document review in a specific style Research synthesis for your domain Customer-facing draft generation Gems with vague instructions produce vague output. Be specific about what to do AND what not to do. Time savings: A well-built Gem: 5 min/use \u00d7 20 uses/week = 100 min/week saved. Workflow 02 Workspace-connected Gems 2 Connect Gems to your Drive, Gmail, and Calendar The Gems advantage over Custom GPTs: native Workspace access. A Gem can search your Drive, read your Gmail, check your calendar \u2014 without separate connector setup. The prompt that works Workspace-aware Gem Configure a Gem with Workspace access: 1. In Gem settings, enable: Drive search, Gmail read, Calendar read 2. Specify which folders or accounts (don&#x27;t give it access to everything \u2014 scope it) 3. In the instructions, tell the Gem WHEN to use Workspace context: - &#x27;When I mention a person, look up our most recent emails to understand context&#x27; - &#x27;When I ask about a project, search Drive for related docs before answering&#x27; - &#x27;When I ask about my schedule, check the calendar before responding&#x27; This turns a generic Gem into something that knows your life \u2014 without you having to paste context every time. Best use cases Personal meeting-prep Gem (always pulls recent emails and calendar) Project status Gem (knows whe\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Gems — build custom Gemini agents\nTRACK: Gemini Mastery (Lesson 11, Pro+)\n\nLESSON CONTENT SUMMARY:\nGems are Google's answer to Custom GPTs — custom Gemini agents with system prompts, instructions, and access to your Workspace data. A Custom GPT is bolted onto ChatGPT and knows only what you upload; a Gem lives in the Google ecosystem and can natively search Drive, read Gmail, and check Calendar. Building a good Gem is two things: sharp instructions, and telling it WHEN to reach into Workspace.\n\nThe four-section instruction pattern (same dependable shape as a strong Custom GPT prompt): ## Identity (the narrow job, e.g. 'you triage email so I never read one in full'); ## What you do (specific steps — categorize Action/Reply/Read/Skip, suggest a specific next step, draft a 3-5 sentence reply in my voice, flag deadlines); ## Voice (paste 2-3 of your real replies — direct, short, no AI tells); ## What you don't do (no 'Hope this finds you well,' don't suggest meetings unless asked, drafts only — never reply on my behalf). Gotcha: vague instructions produce vague output — be specific about what to do AND what NOT to do.\n\nWorkspace-connected Gems (the advantage over Custom GPTs): enable Drive search / Gmail read / Calendar read, SCOPE it to specific folders/accounts (not all of Drive), and in the instructions tell the Gem WHEN to use Workspace context — e.g., 'when I mention a person, look up our recent emails' (Gmail); 'when I ask about a project, search Drive for related docs first' (Drive); 'when I ask about my schedule, check the calendar' (Calendar). And when general knowledge is enough (e.g., defining a term), it should NOT fetch — over-fetching just makes it slower and noisier.\n\nSharing: scope access narrowly; give every team Gem an OWNER responsible for a quarterly review (ownerless shared Gems go stale and mislead people); name them clearly ('Acme Sales Gem v2') and document who owns it. Workspace access travels with the Gem but applies to whoever runs it, so be careful what you share. Iterate on instructions from real use, not theory.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more\n- Be practical — give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only — no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -282,27 +391,21 @@ When sharing:
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -311,7 +414,6 @@ When sharing:
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -320,7 +422,6 @@ When sharing:
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

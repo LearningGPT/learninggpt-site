@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Talk to your doctor | AI for Seniors | LearningGPT</title>
-<meta name="description" content="Use AI to understand medical terms, prepare questions before an appointment, and make sense of your notes after - while always confirming with your doctor." />
+<meta name="description" content="Use AI to understand medical terms, prepare questions, and make sense of a visit — while your doctor stays the final word." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#2dd4a7" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +13,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/seniors/talk-to-your-doctor" />
 <meta property="og:title" content="Talk to your doctor" />
-<meta property="og:description" content="Use AI to understand medical terms, prepare questions before an appointment, and make sense of your notes after - while always confirming with your doctor." />
+<meta property="og:description" content="Use AI to understand medical terms, prepare questions, and make sense of a visit — while your doctor stays the final word." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -33,9 +33,7 @@ nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(18
 .lesson{padding:46px 0 100px;}
 .lesson-meta{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:15px;color:var(--text-mute);margin-bottom:22px;}
 .lesson-meta .chip{padding:5px 13px;border:1px solid rgba(45,212,167,0.4);border-radius:999px;font-size:13px;color:var(--track);background:rgba(45,212,167,0.12);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;}
-.lesson-meta .chip-free{border-color:rgba(68,224,164,0.45);color:#44e0a4;background:rgba(68,224,164,0.12);}
 .lesson-meta .chip-pro{border-color:rgba(124,92,255,0.5);color:#b9a6ff;background:rgba(124,92,255,0.14);}
-.lesson-meta .chip-pro-plus{border-color:rgba(255,181,71,0.5);color:#ffce82;background:rgba(255,181,71,0.14);}
 .lesson-meta .dot{width:5px;height:5px;border-radius:50%;background:var(--text-mute);}
 .lesson h1{font-size:clamp(30px,4.6vw,44px);font-weight:800;line-height:1.18;letter-spacing:-0.01em;margin:0 0 20px;}
 .lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;background:linear-gradient(135deg,#2dd4a7 0%,#5b8def 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;padding-right:0.12em;}
@@ -53,9 +51,22 @@ nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(18
 .prompt .lbl{display:block;font-size:13px;letter-spacing:0.4px;text-transform:uppercase;color:var(--track);font-weight:700;margin-bottom:8px;}
 .note{background:rgba(255,181,71,0.08);border:1px solid rgba(255,181,71,0.3);border-radius:12px;padding:18px 20px;margin:18px 0;font-size:17.5px;line-height:1.75;}
 .note b{color:var(--warn);}
+
+/* ── TERM TRANSLATOR ── */
+.terms{margin:24px 0;}
+.tterm{border:1px solid var(--line);border-radius:15px;background:var(--surface);margin-bottom:12px;overflow:hidden;}
+.tt-q{width:100%;text-align:left;font-family:inherit;font-size:18px;font-weight:700;color:var(--text);padding:17px 20px;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.tt-q:hover{color:#bdf5e2;}
+.tt-q .arr{color:var(--track);font-size:16px;flex-shrink:0;transition:transform .2s;}
+.tt-q.open .arr{transform:rotate(90deg);}
+.tt-a{display:none;padding:0 20px 18px;font-size:17px;line-height:1.7;color:#eaeaf5;}
+.tt-a.show{display:block;animation:fadeIn .25s ease;}
+.tt-a .conf{display:block;margin-top:10px;font-size:14.5px;color:#bdf5e2;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
 .challenge{margin:50px 0 36px;background:linear-gradient(135deg,rgba(45,212,167,0.14),rgba(91,141,239,0.1));border:1px solid rgba(45,212,167,0.3);border-radius:var(--radius-lg);padding:32px;}
 .challenge h2{margin-top:0;}
-.challenge .btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#2dd4a7,#5b8def);color:white;padding:14px 26px;border-radius:11px;font-weight:700;font-size:16px;}
+.challenge .btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#2dd4a7,#5b8def);color:white;padding:15px 28px;border-radius:11px;font-weight:700;font-size:17px;text-decoration:none;}
 .challenge .btn:hover{color:white;}
 .challenge .btn.ghost{background:rgba(255,255,255,0.06);border:1px solid var(--line-strong);}
 .challenge .btn-row{margin-top:22px;display:flex;gap:12px;flex-wrap:wrap;}
@@ -71,8 +82,6 @@ nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(18
 .next-up h3{margin:0 0 8px;font-size:21px;}.next-up p{margin:0 0 14px;color:var(--text-dim);font-size:17px;}
 .next-up .tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:0.5px;padding:4px 12px;border-radius:999px;}
 .tag-pro{background:rgba(124,92,255,0.18);color:#b9a6ff;border:1px solid rgba(124,92,255,0.35);}
-.tag-pro-plus{background:rgba(255,181,71,0.18);color:#ffce82;border:1px solid rgba(255,181,71,0.35);}
-.tag-free{background:rgba(68,224,164,0.16);color:#44e0a4;border:1px solid rgba(68,224,164,0.35);}
 footer{border-top:1px solid var(--line);padding:30px 0;}
 .footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;font-size:15px;color:var(--text-mute);flex-wrap:wrap;gap:12px;}
 @media(max-width:600px){.footer-inner{flex-direction:column;text-align:center;}}
@@ -105,14 +114,30 @@ footer{border-top:1px solid var(--line);padding:30px 0;}
 <div class="lesson-meta"><span class="chip">AI for Seniors</span><span class="chip chip-pro">Pro</span><span>~7 min</span><span class="dot"></span><span>Easy read</span></div>
 <h1>Talk to your doctor &mdash; <span class='serif'>feel prepared and understood.</span></h1>
 <p class="deck">Doctor's visits can feel rushed and full of words you don't quite catch. AI can help you walk in prepared and walk out understanding what was said &mdash; as long as your doctor remains the final word.</p>
-<h2><span class="num">The idea</span></h2><h3>AI helps you prepare and understand. Your doctor decides.</h3><p>Use AI to turn confusing medical language into plain English and to organize your thoughts. But never act on medical advice from AI alone &mdash; it can be wrong, and it doesn't know your history. Bring its help to your doctor; don't replace your doctor with it.</p><div class="callout"><span class="lbl">Remember</span><p>Never share your full name, birth date, and detailed medical record together in an AI chat. Keep it general &mdash; ask about a term or a topic, not a file full of your personal details.</p></div>
-<h2><span class="num">Step 1</span>Understand the words</h2><p>If your doctor or a letter uses a term you don't know, ask AI to explain it simply.</p><div class="prompt"><span class="lbl">Try typing this</span>In plain, simple terms, what does '[the medical term]' mean? Keep it short and easy to understand.</div><h2><span class="num">Step 2</span>Prepare your questions</h2><p>Walk in ready. Ask AI to help you build a short list of good questions so you don't forget anything in the moment.</p><div class="prompt"><span class="lbl">Try typing this</span>I have a check-up about [topic] next week. Help me write a short list of clear questions to ask my doctor so I don't forget anything.</div><h2><span class="num">Step 3</span>Make sense of it afterward</h2><p>After the visit, if you're unsure what something meant, ask AI &mdash; then confirm anything important with your doctor's office.</p><div class="prompt"><span class="lbl">Try typing this</span>My doctor told me to [what they said]. Can you explain in simple terms what that generally means and why it might matter? I'll confirm the details with them.</div>
+
+<h2><span class="num">The idea</span></h2>
+<h3>AI helps you prepare and understand. Your doctor decides.</h3>
+<p>Use AI to turn confusing medical language into plain English and to organize your thoughts. But never act on medical advice from AI alone &mdash; it can be wrong, and it doesn't know your history. Bring its help to your doctor; don't replace your doctor with it.</p>
+<div class="callout"><span class="lbl">Remember</span><p>Never share your full name, birth date, and detailed medical record together in an AI chat. Keep it general &mdash; ask about a term or a topic, not a file full of your personal details.</p></div>
+
+<h2><span class="num">Try it</span>Turn the big words into plain English</h2>
+<p>Here are some terms doctors use a lot. Tap any one to see a simple, general meaning. (Your doctor or pharmacist always confirms what's true for <em>you</em>.)</p>
+<div class="terms" id="terms"></div>
+
+<h2><span class="num">The other half</span>Walk in with your questions ready</h2>
+<p>Ask AI to help you build a short list of clear questions so you don't forget anything in the moment &mdash; and after the visit, to make sense of what was said.</p>
+<div class="prompt"><span class="lbl">Try typing this</span>I have a check-up about [topic] next week. Help me write a short list of clear questions to ask my doctor so I don't forget anything.</div>
+
 <div class="note"><b>Important:</b> AI is not a doctor and can be wrong. Never start, stop, or change a medicine or treatment based on what AI says. Always confirm with your doctor or pharmacist. Use AI to understand and prepare &mdash; not to diagnose or treat.</div>
+
 <div class="challenge"><h2 style="margin-top:0;">Prepare for your next visit</h2><p>Walk in feeling ready:</p><ol><li>Think of an upcoming or recent appointment.</li><li>Ask AI to explain one term you weren't sure about.</li><li>Have it help you write 3-4 questions to ask.</li><li>Bring the list with you &mdash; and let your doctor have the final say.</li></ol><div class="btn-row"><a href="/seniors" class="btn ghost">Back to AI for Seniors</a></div></div>
+
 <div class="checklist"><h3>What you can do now</h3><ul><li>Turn confusing medical terms into plain English</li><li>Prepare a clear list of questions before an appointment</li><li>Make better sense of instructions after a visit</li><li>Always confirm medical matters with your doctor or pharmacist</li></ul></div>
+
 <div class="next-up"><span class="tag tag-pro">Pro</span><div class="lbl" style="margin-top:12px;">Up next</div><h3>Tech help on demand</h3><p>A patient guide for your phone, email, and photos &mdash; any time.</p><a href="/lessons/seniors/tech-help">Go to the next lesson &rarr;</a></div>
 </div></article>
-<footer><div class="footer-inner"><div>&copy; 2026 LearningGPT, Inc. &middot; Independent.</div><a href="/seniors" style="color:var(--text-dim);">&larr; Back to AI for Seniors</a></div></footer>
+<footer><div class="footer-inner"><div>&copy; 2026 LearningGPT &middot; Independent.</div><a href="/seniors" style="color:var(--text-dim);">&larr; Back to AI for Seniors</a></div></footer>
+
 <button class="coach-fab" id="coachFab" title="Ask the AI Coach">&#127891;<span class="coach-fab-badge">AI</span></button>
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head"><div class="coach-avatar">&#127891;</div><div><div class="coach-head-name">Your AI Helper</div><div class="coach-head-sub">Ask me anything &mdash; no question is too small</div></div><button class="coach-close" id="coachClose">&times;</button></div>
@@ -120,9 +145,35 @@ footer{border-top:1px solid var(--line);padding:30px 0;}
   <div class="coach-limit" id="coachLimit">Free lessons include 3 questions with your helper. <a href="/pricing">Go Pro</a> for unlimited help on every lesson.</div>
   <div class="coach-input-row"><textarea class="coach-input" id="coachInput" placeholder="Type your question here..." rows="1"></textarea><button class="coach-send" id="coachSend">&#10148;</button></div>
 </div>
+
+<script id="lessonScript">
+(function(){
+  var TERMS = [
+    { q: 'Hypertension', a: 'It simply means high blood pressure — when the force of blood pushing through your vessels stays higher than it should over time.', conf: 'Your doctor confirms your own numbers and what they mean for you.' },
+    { q: '"Take as needed"', a: 'It means take the medicine only when you actually have the symptom it\'s for (like a headache) — not on a fixed schedule every day.', conf: 'Always follow the exact instructions on your label, and ask your pharmacist if unsure.' },
+    { q: 'Generic medicine', a: 'A generic has the same active ingredient as the brand-name version and is made to work the same way — it\'s usually just less expensive.', conf: 'Your pharmacist can confirm a generic is right for your particular prescription.' },
+    { q: '"Fasting" before a test', a: 'It usually means not eating or drinking anything except water for a set number of hours before a blood test, so the results are accurate.', conf: 'Follow your doctor\'s exact instructions on how many hours and whether water is allowed.' }
+  ];
+  var wrap = document.getElementById('terms');
+  TERMS.forEach(function(t){
+    var box = document.createElement('div');
+    box.className = 'tterm';
+    box.innerHTML = '<button class="tt-q">' + t.q + ' <span class="arr">▸</span></button>' +
+      '<div class="tt-a">' + t.a + '<span class="conf">✓ ' + t.conf + '</span></div>';
+    wrap.appendChild(box);
+    var q = box.querySelector('.tt-q');
+    var a = box.querySelector('.tt-a');
+    q.addEventListener('click', function(){
+      var open = a.classList.toggle('show');
+      q.classList.toggle('open', open);
+    });
+  });
+})();
+</script>
+
 <script>
 (function(){
-  var LESSON_CONTEXT = "You are a kind, patient AI learning coach inside a lesson on LearningGPT.ai, helping a senior who may be new to technology.\n\nLESSON: Talk to your doctor (AI for Seniors, Pro)\n\nWHAT THIS LESSON COVERS:\nThis Pro lesson helps seniors prepare for and understand doctor visits using AI: explain medical terms in plain language, build a list of questions before an appointment, and make sense of notes afterward. CRITICAL framing: AI is not a doctor and can be wrong; never start/stop/change any medicine or treatment based on AI; always confirm with the doctor or pharmacist. Also advise keeping personal medical details general in chats, not sharing a full identifiable medical record. Be careful and safety-first.\n\nYOUR ROLE:\n- Be warm, patient, and encouraging. Never make them feel silly. No question is too basic.\n- Use plain, simple words. Short sentences. No jargon. Explain any technical word.\n- Keep answers short - 2 to 4 sentences unless they ask for more.\n- For anything about health, money, or legal matters, gently remind them to confirm with a doctor, the bank, or a trusted person.\n- If a message looks like a possible scam, warn them clearly and kindly.\n- Plain conversational text only - no markdown symbols.\n- Do not start with 'Great question!' or similar filler.";
+  var LESSON_CONTEXT = "You are a kind, patient AI learning coach inside a lesson on LearningGPT.ai, helping a senior who may be new to technology.\n\nLESSON: Talk to your doctor (AI for Seniors, Pro)\n\nWHAT THIS LESSON COVERS:\nThis Pro lesson helps seniors prepare for and understand doctor visits using AI: explain medical terms in plain language, build a list of questions before an appointment, and make sense of notes afterward. CRITICAL framing: AI is not a doctor and can be wrong; never start/stop/change any medicine or treatment based on AI; always confirm with the doctor or pharmacist. Also advise keeping personal medical details general in chats, not sharing a full identifiable medical record. Be careful and safety-first.\n\nYOUR ROLE:\n- Be warm, patient, and encouraging. Never make them feel silly. No question is too basic.\n- Use plain, simple words. Short sentences. No jargon. Explain any technical word.\n- Keep answers short - 2 to 4 sentences unless they ask for more.\n- For anything about health, money, or legal matters, gently remind them to confirm with a doctor, the bank, or a trusted person. For medicines or treatment, always say to confirm with the doctor or pharmacist and never to change anything based on AI alone.\n- If a message looks like a possible scam, warn them clearly and kindly.\n- Plain conversational text only - no markdown symbols.\n- Do not start with 'Great question!' or similar filler.";
   var MAX_FREE=3,count=0,isThinking=false,history=[];
   var fab=document.getElementById('coachFab'),drawer=document.getElementById('coachDrawer'),closeBtn=document.getElementById('coachClose'),msgs=document.getElementById('coachMessages'),input=document.getElementById('coachInput'),sendBtn=document.getElementById('coachSend'),limitBar=document.getElementById('coachLimit');
   if(!fab)return;

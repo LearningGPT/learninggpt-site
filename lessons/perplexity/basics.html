@@ -3,21 +3,19 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Perplexity basics: the AI for research-first work — LearningGPT</title>
-<meta name="description" content="A hands-on Perplexity lesson: when to use it instead of ChatGPT, the prompt patterns that get the best research output, reading citations, and the workflows that turn 30-minute research into 3 minutes." />
+<title>Perplexity basics: how it's different from ChatGPT and why that matters — LearningGPT</title>
+<meta name="description" content="A hands-on Perplexity lesson: when to reach for it instead of a chat AI, how to read its citations like a researcher, and the follow-up habit that turns one query into a research session." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#20808d" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/perplexity/basics" />
-<meta property="og:title" content="Perplexity basics: the AI for research-first work" />
-<meta property="og:description" content="Free LearningGPT lesson. Why Perplexity beats ChatGPT for research, and the 5 workflows that justify the swap." />
+<meta property="og:title" content="Perplexity basics: how it's different from ChatGPT and why that matters" />
+<meta property="og:description" content="Free LearningGPT lesson. When to reach for Perplexity, how to read citations, and the follow-up habit that turns one query into a research session." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
-
 <style>
 :root {
   --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a;
@@ -27,7 +25,7 @@
   --warn: #ffb547; --danger: #ff6b8a;
   --radius: 14px; --radius-lg: 20px;
   --container: 820px;
-  --track: #20808d;
+  --track: #2ea6b4;
 }
 * { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
 body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
@@ -43,93 +41,150 @@ nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) sa
 .nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
 .lesson { padding: 50px 0 100px; }
 .lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
-.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(32,128,141,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(32,128,141,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(46,166,180,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(46,166,180,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
 .lesson-meta .chip-free { border-color: rgba(68,224,164,0.4); color: var(--accent); background: rgba(68,224,164,0.1); }
 .lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
-.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #20808d 0%, #44e0a4 50%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 { font-size: clamp(30px, 4.4vw, 44px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
+.lesson h1 .grad { background: linear-gradient(135deg, #2ea6b4 0%, #44e0a4 50%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
-.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
-.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(32,128,141,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(32,128,141,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #20808d, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(32,128,141,0.15); border: 1px solid rgba(32,128,141,0.35); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
-.compare > div { padding: 18px 20px; border-radius: var(--radius); border: 1px solid var(--line); }
-.compare .perplex { background: rgba(32,128,141,0.08); border-color: rgba(32,128,141,0.3); }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 28px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+
+/* ── STEPPER ── */
+.stepper { margin: 30px 0; }
+.prog { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+.prog-track { flex: 1; height: 6px; background: rgba(255,255,255,0.07); border-radius: 99px; overflow: hidden; }
+.prog-fill { height: 100%; width: 20%; background: linear-gradient(90deg, #20808d, #44e0a4); border-radius: 99px; transition: width .4s cubic-bezier(.4,0,.2,1); }
+.prog-label { font-size: 12px; font-weight: 600; color: var(--text-mute); white-space: nowrap; }
+.step { display: none; animation: stepIn .35s ease; }
+.step.active { display: block; }
+@keyframes stepIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.step-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin-bottom: 10px; }
+.step h2 { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 14px; line-height: 1.25; }
+.step h3 { font-size: 18px; font-weight: 600; margin: 22px 0 10px; }
+.step p { font-size: 16.5px; color: var(--text); margin: 0 0 16px; line-height: 1.7; }
+.step strong { font-weight: 700; } .step em { font-style: italic; }
+.step ol, .step ul { padding-left: 22px; margin: 0 0 16px; } .step li { margin-bottom: 9px; }
+.step code { background: rgba(46,166,180,0.14); color: #7fe0d0; padding: 1px 6px; border-radius: 5px; font-size: 0.88em; font-family: 'SFMono-Regular', Consolas, monospace; }
+.step-nav { display: flex; justify-content: space-between; gap: 12px; margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--line); }
+.snav-btn { font-family: inherit; font-size: 14.5px; font-weight: 600; padding: 11px 22px; border-radius: 10px; cursor: pointer; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.04); color: var(--text-dim); transition: all .15s; }
+.snav-btn:hover:not(:disabled) { color: var(--text); border-color: var(--track); }
+.snav-btn:disabled { opacity: 0.35; cursor: default; }
+.snav-btn.primary { background: linear-gradient(135deg, #20808d, #2ea6b4); color: white; border: none; box-shadow: 0 5px 18px rgba(32,128,141,0.32); }
+.snav-btn.primary:hover { transform: translateY(-1px); color: white; }
+
+/* predict */
+.predict { margin: 18px 0; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); padding: 20px 22px; }
+.predict .q { font-size: 15.5px; font-weight: 600; margin-bottom: 14px; }
+.opts { display: grid; gap: 9px; }
+.opt { text-align: left; font-family: inherit; font-size: 14.5px; color: var(--text); padding: 12px 15px; border-radius: 10px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); cursor: pointer; transition: all .15s; }
+.opt:hover:not(:disabled) { border-color: var(--track); }
+.opt:disabled { cursor: default; }
+.opt.correct { background: rgba(68,224,164,0.15); border-color: var(--accent); color: #b6f4dc; }
+.opt.wrong { background: rgba(255,107,138,0.12); border-color: var(--danger); color: #ffb0c1; }
+.reveal { margin-top: 14px; font-size: 14px; color: var(--text-dim); padding: 13px 15px; border-radius: 10px; background: rgba(46,166,180,0.08); border-left: 2px solid var(--track); display: none; }
+.reveal.show { display: block; animation: stepIn .3s ease; }
+.reveal b { color: var(--text); }
+
+/* compare */
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 18px 0; }
+.compare > div { padding: 16px 18px; border-radius: var(--radius); border: 1px solid var(--line); }
+.compare .perplex { background: rgba(46,166,180,0.09); border-color: rgba(46,166,180,0.3); }
 .compare .chatgpt { background: rgba(255,255,255,0.03); }
-.compare h4 { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-mute); margin: 0 0 8px; font-weight: 600; }
-.compare p { font-size: 13.5px; margin: 0; }
+.compare h4 { font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-mute); margin: 0 0 8px; font-weight: 700; }
+.compare .perplex h4 { color: #7fe0d0; }
+.compare p { font-size: 13.5px; margin: 0; color: var(--text-dim); }
 @media (max-width: 600px) { .compare { grid-template-columns: 1fr; } }
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(32,128,141,0.18), rgba(124,92,255,0.1)); border: 1px solid rgba(32,128,141,0.3); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #20808d, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(32,128,141,0.35); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+
+.callout { margin: 18px 0; padding: 18px 22px; background: linear-gradient(135deg, rgba(46,166,180,0.12), rgba(124,92,255,0.05)); border: 1px solid rgba(46,166,180,0.25); border-radius: var(--radius-lg); }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.callout p { margin: 0; font-size: 14.5px; color: var(--text-dim); } .callout b { color: var(--text); }
+
+/* ── TOOL ROUTER ── */
+.router { margin: 18px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden; background: #0d0d20; }
+.router-bar { display: flex; align-items: center; justify-content: space-between; padding: 11px 16px; border-bottom: 1px solid var(--line); background: linear-gradient(90deg, rgba(46,166,180,0.08), rgba(124,92,255,0.05)); font-size: 12.5px; font-weight: 600; color: var(--text-dim); }
+.router-bar .ct { color: var(--track); font-weight: 700; }
+.rcard { padding: 15px 16px; border-bottom: 1px solid var(--line); }
+.rcard:last-of-type { border-bottom: none; }
+.rcard-task { font-size: 14.5px; margin-bottom: 11px; }
+.rcard-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.rbtn { font-size: 12.5px; font-weight: 700; font-family: inherit; padding: 10px 8px; border-radius: 9px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); color: var(--text-dim); cursor: pointer; transition: all .15s; }
+.rbtn:hover:not(:disabled) { border-color: var(--track); color: var(--text); }
+.rbtn:disabled { cursor: default; }
+.rbtn.perplex.right { background: rgba(46,166,180,0.18); border-color: var(--track); color: #9fe6e0; }
+.rbtn.chat.right { background: rgba(124,92,255,0.18); border-color: var(--brand); color: #cdbcff; }
+.rbtn.wrong { background: rgba(255,107,138,0.12); border-color: var(--danger); color: #ffb0c1; }
+.rcard-fb { margin-top: 10px; font-size: 13px; color: var(--text-dim); display: none; }
+.rcard-fb.show { display: block; }
+.rcard-fb b { color: var(--text); }
+
+/* ── PROGRESSION BUILDER ── */
+.prog2 { margin: 18px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden; background: #0d0d20; }
+.prog2-bar { padding: 11px 16px; border-bottom: 1px solid var(--line); background: linear-gradient(90deg, rgba(46,166,180,0.08), rgba(124,92,255,0.05)); font-size: 12.5px; font-weight: 600; color: var(--text-dim); }
+.qchain { padding: 14px 16px 4px; }
+.qbubble { display: flex; gap: 10px; margin-bottom: 12px; align-items: flex-start; animation: stepIn .3s ease; }
+.qbubble .qn { width: 26px; height: 26px; flex-shrink: 0; border-radius: 7px; background: rgba(46,166,180,0.16); border: 1px solid rgba(46,166,180,0.35); display: grid; place-items: center; font-size: 11px; font-weight: 700; color: var(--track); }
+.qbubble .qt { font-size: 14px; color: var(--text); padding-top: 3px; }
+.qbubble .qt .qans { display: block; font-size: 12.5px; color: var(--text-mute); margin-top: 3px; font-style: italic; }
+.qpick { padding: 4px 16px 16px; }
+.qpick-lbl { font-size: 12px; font-weight: 600; color: var(--text-dim); margin-bottom: 9px; }
+.qopts { display: grid; gap: 8px; }
+.qopt { text-align: left; font-family: inherit; font-size: 13.5px; color: var(--text); padding: 11px 14px; border-radius: 9px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); cursor: pointer; transition: all .15s; }
+.qopt:hover:not(:disabled) { border-color: var(--track); }
+.qopt:disabled { cursor: default; }
+.qopt.correct { background: rgba(46,166,180,0.16); border-color: var(--track); color: #9fe6e0; }
+.qopt.wrong { background: rgba(255,107,138,0.12); border-color: var(--danger); color: #ffb0c1; }
+.qfb { margin-top: 10px; font-size: 12.5px; color: var(--text-dim); display: none; padding: 10px 13px; border-radius: 9px; background: rgba(46,166,180,0.07); border-left: 2px solid var(--track); }
+.qfb.show { display: block; }
+.prog2-done { padding: 15px 16px; font-size: 13.5px; background: rgba(46,166,180,0.08); border-top: 1px solid var(--line); display: none; }
+.prog2-done.show { display: block; animation: stepIn .35s ease; }
+.prog2-done b { color: var(--text); }
+
+/* focus chips + workflow recap */
+.focus-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0; }
+@media (max-width: 560px) { .focus-grid { grid-template-columns: 1fr; } }
+.focus-chip { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: 12px 14px; }
+.focus-chip .fn { font-size: 13.5px; font-weight: 700; color: #7fe0d0; margin-bottom: 2px; }
+.focus-chip .fd { font-size: 12.5px; color: var(--text-dim); }
+.recap { margin: 16px 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: 6px 18px; }
+.recap-row { display: grid; grid-template-columns: 24px 1fr; gap: 10px; padding: 10px 0; border-top: 1px solid var(--line); font-size: 13.5px; color: var(--text-dim); }
+.recap-row:first-child { border-top: none; }
+.recap-row .rn { color: var(--track); font-weight: 700; }
+.recap-row b { color: var(--text); }
+
+.completion { text-align: center; padding: 30px 24px; border: 1px solid rgba(46,166,180,0.3); border-radius: var(--radius-lg); background: linear-gradient(135deg, rgba(46,166,180,0.12), rgba(124,92,255,0.08)); }
+.completion .big { font-size: 38px; margin-bottom: 8px; }
+.completion h3 { font-size: 21px; margin: 0 0 10px; }
+.completion p { font-size: 14.5px; color: var(--text-dim); margin: 0 auto 18px; max-width: 480px; }
+
+.challenge { margin: 40px 0 30px; background: linear-gradient(135deg, rgba(46,166,180,0.16), rgba(124,92,255,0.1)); border: 1px solid rgba(46,166,180,0.3); border-radius: var(--radius-lg); padding: 32px; }
+.challenge h2 { margin-top: 0; font-size: 24px; }
+.challenge ol { padding-left: 22px; } .challenge li { margin-bottom: 8px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #20808d, #7c5cff); color: white; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: inherit; box-shadow: 0 6px 24px rgba(32,128,141,0.3); transition: transform .15s; text-decoration: none; }
+.btn:hover { transform: translateY(-1px); color: white; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 30px 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
 .checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
 .checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
 .checklist li:first-child { border-top: none; padding-top: 0; }
 .checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
 .checklist li:first-child::before { top: 4px; }
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up { margin: 40px 0 0; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
 .next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
 .next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
 .next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
-footer { border-top: 1px solid var(--line); padding: 30px 0; }
+footer { border-top: 1px solid var(--line); padding: 30px 0; margin-top: 40px; }
 .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
 @media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
 /* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
 .coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
 .coach-head-info { flex: 1; }
 .coach-head-name { font-weight: 700; font-size: 14px; }
@@ -158,143 +213,162 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
 </style>
 </head>
 <body>
-
 <div class="bg-orb one"></div>
 <div class="bg-orb two"></div>
-
 <nav class="top">
   <div class="nav-inner">
     <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
     <a href="/lessons/perplexity/" class="nav-back">← Perplexity Mastery</a>
   </div>
 </nav>
-
 <article class="lesson">
   <div class="container">
-
     <div class="lesson-meta">
-      <span class="chip">Lesson 1 · Perplexity Mastery</span>
+      <span class="chip">Lesson 01 · Perplexity Mastery</span>
       <span class="chip chip-free">Free</span>
-      <span>~10 min read</span>
+      <span>~10 min</span>
       <span class="dot"></span>
-      <span>5 workflows</span>
+      <span>Hands-on</span>
       <span class="dot"></span>
       <span>Free Perplexity account is enough</span>
     </div>
+    <h1>Perplexity basics: <span class="grad serif">how it's different from ChatGPT —</span> and why that matters.</h1>
+    <p class="deck">Perplexity isn't trying to be ChatGPT. It's the thing you reach for when you'd otherwise open Google — but with answers grounded in real sources, citations included. For anyone who does research (sales prep, market analysis, competitive intel, fact-checking), it quietly replaces most of your Google use. Let's build the instinct for when to reach for it, how to read its output, and the habit that turns one query into a research session.</p>
 
-    <h1>Perplexity basics: <span class="grad serif">the AI for research-first work.</span></h1>
-
-    <p class="deck">Perplexity isn't trying to be ChatGPT. It's trying to be the thing you reach for when you'd otherwise open Google — but with answers grounded in real sources, citations included. For knowledge workers who do any kind of research (sales prep, market analysis, competitive intel, fact-checking), Perplexity quietly replaces 80% of your Google use. This lesson explains when to reach for it, how to read its output, and five workflows that justify the switch.</p>
-
-    <h2><span class="num">The mental model</span></h2>
-    <h3>Perplexity answers; ChatGPT writes.</h3>
-
-    <p>The clearest way to think about it: every other AI generates content from a model. Perplexity searches the web in real time, reads the top results, and synthesizes an answer <em>with citations</em>. The output looks like a chat reply, but it's actually a structured research summary.</p>
-
-    <div class="compare">
-      <div class="chatgpt">
-        <h4>ChatGPT (and Claude, Gemini)</h4>
-        <p>Best for: drafting, brainstorming, explaining concepts, working with content you provide. Sources are baked into the model weights — you can't see them, and they can be out of date.</p>
+    <div class="stepper">
+      <div class="prog">
+        <div class="prog-track"><div class="prog-fill" id="prog"></div></div>
+        <div class="prog-label" id="progLabel">Step 1 of 5</div>
       </div>
-      <div class="perplex">
-        <h4>Perplexity</h4>
-        <p>Best for: factual research, current events, sourcing claims, finding sources you can cite. Every claim links to a real source you can verify in 5 seconds.</p>
-      </div>
-    </div>
 
-    <div class="callout">
-      <span class="lbl">The Reframe</span>
-      <p><strong>When the answer needs to be "right" (not just plausible), use Perplexity.</strong> When the answer needs to be "good" (well-written, creative, on-brand), use ChatGPT or Claude. The two tools are complementary — most professionals end up using both daily.</p>
-    </div>
+      <!-- STEP 1 -->
+      <section class="step active" data-step="1">
+        <span class="step-eyebrow">The mental model</span>
+        <h2>Perplexity answers. ChatGPT writes.</h2>
+        <p>Every other AI generates content from a model. Perplexity searches the web in real time, reads the top results, and synthesizes an answer <em>with citations</em>. The output looks like a chat reply, but it's really a structured research summary.</p>
+        <div class="compare">
+          <div class="chatgpt"><h4>ChatGPT · Claude · Gemini</h4><p>Best for drafting, brainstorming, explaining, working with content you provide. Sources are baked into the model — you can't see them, and they can be stale.</p></div>
+          <div class="perplex"><h4>Perplexity</h4><p>Best for factual research, current events, sourcing claims, finding things you can cite. Every claim links to a real source you can verify in seconds.</p></div>
+        </div>
+        <div class="predict">
+          <div class="q">You need a market-size stat you'll put in a client proposal. It has to be <em>correct</em> and sourceable. Which tool?</div>
+          <div class="opts" data-q="1">
+            <button class="opt" data-correct="1">Perplexity — it'll give the figure with a citation I can verify</button>
+            <button class="opt">ChatGPT — it'll write the number into a polished paragraph</button>
+          </div>
+          <div class="reveal" data-r="1"><b>Right tool, right job.</b> When the answer must be <b>right</b> (not just plausible), use Perplexity — the citation is the whole point. When it must be <b>good</b> (well-written, on-brand), use a chat AI. Most professionals use both daily.</div>
+        </div>
+        <div class="step-nav">
+          <button class="snav-btn" disabled>← Back</button>
+          <button class="snav-btn primary" data-go="2">Next: Right or Good? →</button>
+        </div>
+      </section>
 
-    <h2><span class="num">Workflow 01</span> The 5-minute sales prospect briefing</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">1</div><h3>Walk into every sales call prepared</h3></div>
-      <p>The single most popular Perplexity use case for B2B professionals. Before any meeting with a prospect, run:</p>
-      <div class="prompt-example">
-        <span class="label">Sales prospect briefing</span>
-        Give me a briefing on [Company Name]. Include: industry and what they do, approximate size and growth, recent news in the past 90 days, key competitors, and likely pain points relevant to [your product category]. Cite sources.
-      </div>
-      <p>You get a structured briefing in 30-60 seconds with every claim linked to a source. Read it on the way to the call. Walk in knowing more about their business than they expect.</p>
-      <div class="savings"><strong>Time savings:</strong> 30-60 min of manual research → 5 min total (including reading).</div>
-    </div>
+      <!-- STEP 2 -->
+      <section class="step" data-step="2">
+        <span class="step-eyebrow">Do it · the router</span>
+        <h2>Right, or good?</h2>
+        <p>That one distinction routes almost every task. For each job below, send it to the tool that fits — <strong>Perplexity</strong> when the answer must be grounded and sourced, a <strong>chat AI</strong> when it must be generated and polished.</p>
+        <div class="router">
+          <div class="router-bar"><span>Route each task</span><span class="ct" id="routeCt">0 / 5</span></div>
+          <div id="routeDeck"></div>
+        </div>
+        <div class="step-nav">
+          <button class="snav-btn" data-go="1">← Back</button>
+          <button class="snav-btn primary" data-go="3">Next: read the citations →</button>
+        </div>
+      </section>
 
-    <h2><span class="num">Workflow 02</span> Fact-checking your own writing</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">2</div><h3>Don't ship claims you can't source</h3></div>
-      <p>If you're publishing anything externally — a blog post, a proposal, an op-ed, a sales deck — every factual claim should be sourceable. Perplexity is the fastest way to verify or update a claim.</p>
-      <div class="prompt-example">
-        <span class="label">Fact-check prompts</span>
-        Is it accurate that 71% of knowledge workers use AI weekly? What's the current best source for that statistic?
-        ---
-        What's the most recent quarterly revenue for [Company]? Cite the earnings release.
-        ---
-        Has [policy/regulation] actually been signed into law as of today, or is it still pending?
-      </div>
-      <div class="gotcha">Perplexity isn't infallible — it can still cite low-quality sources or misinterpret them. Click through to the source before publishing anything that matters. The citations are the feature; use them.</div>
-      <div class="savings"><strong>Time savings:</strong> What used to take 10 min of Googling and skimming articles takes 30 seconds.</div>
-    </div>
+      <!-- STEP 3 -->
+      <section class="step" data-step="3">
+        <span class="step-eyebrow">The power-user skill</span>
+        <h2>Read citations like a researcher.</h2>
+        <p>Perplexity's answers include numbered citations like <code>[1]</code>, <code>[2]</code> linking to its sources. Most people skim past them. This is the skill that separates "uses Perplexity" from "power user." Three habits:</p>
+        <ol>
+          <li><strong>Check the source domains.</strong> A claim from Reuters, the NYT, or an SEC filing beats one from a random Medium post or a vendor's own marketing page. Glance at the list before you trust anything.</li>
+          <li><strong>Click through on claims that matter.</strong> Especially anything you'll repeat externally — confirm the source actually says what Perplexity says it does. It can paraphrase inaccurately.</li>
+          <li><strong>Use the "Related" suggestions.</strong> Below most answers, Perplexity proposes the follow-ups you'd ask next — often a faster path to depth than typing your own.</li>
+        </ol>
+        <div class="predict">
+          <div class="q">Four sources back the same revenue figure. You're publishing it. Which citation do you trust <em>most</em>?</div>
+          <div class="opts" data-q="3">
+            <button class="opt" data-correct="1">The company's official SEC earnings filing</button>
+            <button class="opt">A Medium post summarizing the quarter</button>
+            <button class="opt">The vendor's own "Why we're #1" landing page</button>
+          </div>
+          <div class="reveal" data-r="3"><b>Go to the primary source.</b> An SEC filing is the company under legal obligation to be accurate. A blog can be wrong or out of date; a marketing page is selling something. Same number, very different trust.</div>
+        </div>
+        <div class="step-nav">
+          <button class="snav-btn" data-go="2">← Back</button>
+          <button class="snav-btn primary" data-go="4">Next: build a research session →</button>
+        </div>
+      </section>
 
-    <h2><span class="num">Workflow 03</span> Reading citations like a researcher</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">3</div><h3>The skill that separates "uses Perplexity" from "Perplexity power user"</h3></div>
-      <p>Perplexity's answers include numbered citations like <code>[1]</code>, <code>[2]</code> linking to the sources it pulled from. Most users skim past them. Power users do these three things:</p>
-      <ol>
-        <li><strong>Check the source domains.</strong> A claim cited from Reuters, NYT, or an SEC filing is more trustworthy than one from a Medium blog or marketing site. Glance at the source list before trusting a claim.</li>
-        <li><strong>Click through on important claims.</strong> Especially anything you'll repeat externally. Confirm the source actually says what Perplexity says it says — sometimes it paraphrases inaccurately.</li>
-        <li><strong>Use the "Related" suggestions.</strong> Below most answers, Perplexity suggests follow-up queries that often surface what you'd ask next. They're a faster path to depth than typing your own follow-ups.</li>
-      </ol>
-    </div>
+      <!-- STEP 4 -->
+      <section class="step" data-step="4">
+        <span class="step-eyebrow">Do it · the follow-up habit</span>
+        <h2>One question is never enough.</h2>
+        <p>Perplexity is conversational — every answer becomes context for the next question. Power users almost never stop at the first answer; they drill from broad to specific. Build the chain: at each step, pick the follow-up that sharpens the research.</p>
+        <div class="prog2">
+          <div class="prog2-bar">🔎 Research session · drill from market → competitor positioning</div>
+          <div class="qchain" id="qchain"></div>
+          <div class="qpick" id="qpick"></div>
+          <div class="prog2-done" id="prog2Done"><b>That's a competitive landscape briefing</b> — four questions, about five minutes. The same depth by hand is 90 minutes of tabs. Each answer feeds the next; that's the whole game.</div>
+        </div>
+        <div class="step-nav">
+          <button class="snav-btn" data-go="3">← Back</button>
+          <button class="snav-btn primary" data-go="5">Last: focus modes + recap →</button>
+        </div>
+      </section>
 
-    <h2><span class="num">Workflow 04</span> Use Focus modes for specialized queries</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">4</div><h3>Tell Perplexity what kind of sources to use</h3></div>
-      <p>Below the search bar, Perplexity offers Focus modes: <strong>Web, Academic, Social, Math, Writing, Video</strong>, and more. Each restricts Perplexity to a specific type of source.</p>
-      <ul>
-        <li><strong>Academic</strong> — for any time you need peer-reviewed sources (medicine, hard science, formal claims)</li>
-        <li><strong>Social</strong> — for current opinions, X/Reddit/forum sentiment on a topic</li>
-        <li><strong>Video</strong> — for finding YouTube content on a topic (useful for tutorials)</li>
-        <li><strong>Writing</strong> — for creative output (turns off web search, behaves like ChatGPT)</li>
-      </ul>
-      <p>Most users never touch these and miss huge gains. If your query is "what's the latest evidence on intermittent fasting," Academic mode is 10x better than default Web mode.</p>
-      <div class="savings"><strong>Time savings:</strong> Skipping low-quality sources at the search level instead of filtering after.</div>
-    </div>
-
-    <h2><span class="num">Workflow 05</span> The follow-up question habit</h2>
-    <div class="workflow">
-      <div class="workflow-head"><div class="workflow-num">5</div><h3>One question is never enough</h3></div>
-      <p>Perplexity is conversational — every answer becomes the context for the next question. Power users almost never stop at the first answer.</p>
-      <div class="prompt-example">
-        <span class="label">A research progression</span>
-        Q1: What's the size of the AI training market in 2026?
-        ---
-        Q2 (after seeing answer): What's the breakdown between B2B and B2C?
-        ---
-        Q3: Who are the top 5 players in the B2B segment specifically?
-        ---
-        Q4: For each of those 5, what's their differentiated positioning?
-      </div>
-      <p>Four questions = a real competitive landscape briefing. Each question takes 30 seconds. The whole research session is 5 minutes of work that would take 90 minutes manually.</p>
-      <div class="savings"><strong>Time savings:</strong> Compounds. A few hours of research-heavy work compresses to minutes.</div>
+      <!-- STEP 5 -->
+      <section class="step" data-step="5">
+        <span class="step-eyebrow">Bonus + recap</span>
+        <h2>Focus modes, and the five workflows.</h2>
+        <p>Below the search bar, <strong>Focus modes</strong> restrict Perplexity to a kind of source. Most people never touch them and miss huge gains:</p>
+        <div class="focus-grid">
+          <div class="focus-chip"><div class="fn">Academic</div><div class="fd">Peer-reviewed sources — medicine, science, formal claims.</div></div>
+          <div class="focus-chip"><div class="fn">Social</div><div class="fd">Live opinion and sentiment from X, Reddit, forums.</div></div>
+          <div class="focus-chip"><div class="fn">Video</div><div class="fd">Find YouTube tutorials and walkthroughs on a topic.</div></div>
+          <div class="focus-chip"><div class="fn">Writing</div><div class="fd">Turns off web search — behaves like a chat AI.</div></div>
+        </div>
+        <p>Asking "latest evidence on intermittent fasting"? Academic mode is far better than default Web. Here's the whole lesson as a workflow cheat-sheet:</p>
+        <div class="recap">
+          <div class="recap-row"><span class="rn">01</span><span><b>5-min prospect briefing</b> — "Brief me on [Company]: what they do, size, news in 90 days, competitors, pain points. Cite sources."</span></div>
+          <div class="recap-row"><span class="rn">02</span><span><b>Fact-check your writing</b> — verify every external claim; click the citation before you publish.</span></div>
+          <div class="recap-row"><span class="rn">03</span><span><b>Read citations skeptically</b> — check domains, click through, use Related.</span></div>
+          <div class="recap-row"><span class="rn">04</span><span><b>Focus modes</b> — pick the source type at search time instead of filtering after.</span></div>
+          <div class="recap-row"><span class="rn">05</span><span><b>Follow-up drill-down</b> — one query becomes a research session.</span></div>
+        </div>
+        <div class="completion">
+          <div class="big">🔎</div>
+          <h3>You've got the Perplexity instinct.</h3>
+          <p>You know when to reach for it, how to read its output, and how to turn a single question into a briefing. Now make it a habit.</p>
+          <a href="/playground" class="btn">Try a research prompt in the playground →</a>
+        </div>
+        <div class="step-nav">
+          <button class="snav-btn" data-go="4">← Back</button>
+          <button class="snav-btn" disabled>Done ✓</button>
+        </div>
+      </section>
     </div>
 
     <div class="challenge">
-      <h2 style="margin-top: 0;">Final challenge: replace 80% of your Google searches for one week</h2>
-      <p>Set Perplexity as your default browser homepage. For one work week, every time you'd reach for Google, reach for Perplexity instead. Track:</p>
+      <h2>Challenge: replace 80% of your Google searches for one week</h2>
+      <p>For one work week, every time you'd reach for Google, reach for Perplexity instead. Track:</p>
       <ol>
-        <li>How often you needed to fall back to Google (and why)</li>
-        <li>How often the citations actually checked out when you clicked through</li>
-        <li>Whether your research feels faster or slower</li>
-        <li>At least one moment where Perplexity surfaced something you wouldn't have found via Google</li>
+        <li>How often you fell back to Google (and why)</li>
+        <li>How often the citations checked out when you clicked through</li>
+        <li>Whether your research felt faster or slower</li>
+        <li>One moment Perplexity surfaced something you wouldn't have found on Google</li>
       </ol>
-      <p>Most professional users don't go back after this experiment. Perplexity becomes default for research; Google stays for navigation (finding a specific website).</p>
+      <p>Most professionals don't go back. Perplexity becomes default for research; Google stays for navigation — finding a specific website.</p>
       <div class="btn-row">
         <a href="/lessons/perplexity/" class="btn">Back to Perplexity Mastery →</a>
-        <a href="/#pricing" class="btn ghost">See Pro membership →</a>
+        <a href="/pricing" class="btn ghost">See Pro membership →</a>
       </div>
     </div>
 
@@ -302,38 +376,34 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
       <h3>What you can do now</h3>
       <ul>
         <li>Know exactly when to reach for Perplexity vs. a chat AI</li>
-        <li>Generate a 5-minute sales-prospect briefing for any company</li>
+        <li>Generate a 5-minute prospect briefing for any company</li>
         <li>Fact-check your own writing with sourced answers</li>
-        <li>Read Perplexity's citations skeptically and click through when it matters</li>
-        <li>Switch Focus modes for specialized queries (Academic, Social, etc.)</li>
-        <li>Use follow-up questions to turn one query into a research session</li>
+        <li>Read citations skeptically — check domains and click through when it matters</li>
+        <li>Switch Focus modes for specialized queries (Academic, Social, Video)</li>
+        <li>Use follow-ups to turn one query into a full research session</li>
       </ul>
     </div>
 
     <div class="next-up">
       <span class="pro-tag">Pro</span>
       <div class="lbl" style="margin-top: 14px;">Up next in Perplexity Mastery</div>
-      <h3>Lesson 2 · Spaces: organize ongoing research like a pro</h3>
-      <p>Setting up Spaces for recurring topics, sharing with teams, integrating documents, customizing search depth. The workflow for serious researchers. <a href="/#pricing">Become a Pro member →</a></p>
+      <h3>Lesson 02 · Spaces: organize your research like a pro</h3>
+      <p>Setting up Spaces for recurring topics, sharing with teams, integrating documents, customizing search depth. The workflow for serious researchers. <a href="/pricing">Become a Pro member →</a></p>
     </div>
-
   </div>
 </article>
-
 <footer>
   <div class="footer-inner">
-    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Perplexity.</div>
+    <div>© 2026 LearningGPT · Independent. Not affiliated with Perplexity.</div>
     <a href="/lessons/perplexity/" style="color: var(--text-dim);">← All Perplexity lessons</a>
   </div>
 </footer>
-
 
 <!-- ── AI COACH FAB ── -->
 <button class="coach-fab" id="coachFab" title="Ask the AI Coach">
   🎓
   <span class="coach-fab-badge">AI</span>
 </button>
-
 <!-- ── AI COACH DRAWER ── -->
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
@@ -348,7 +418,7 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about what you just read — concepts, examples, how to apply it to your work. What's on your mind?</div>
   </div>
   <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/#waitlist">Upgrade to Pro</a> for unlimited coaching on every lesson.
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
   </div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
@@ -356,15 +426,171 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   </div>
 </div>
 
+<script id="lessonScript">
+(function () {
+  var TOTAL = 5;
+  var prog = document.getElementById('prog');
+  var progLabel = document.getElementById('progLabel');
+  var steps = document.querySelectorAll('.step');
+  function go(n) {
+    steps.forEach(function (s) { s.classList.toggle('active', +s.dataset.step === n); });
+    prog.style.width = (n / TOTAL * 100) + '%';
+    progLabel.textContent = 'Step ' + n + ' of ' + TOTAL;
+    var top = document.querySelector('.stepper');
+    if (top) { var y = top.getBoundingClientRect().top + window.scrollY - 80; window.scrollTo({ top: y, behavior: 'smooth' }); }
+  }
+  document.querySelectorAll('[data-go]').forEach(function (b) {
+    b.addEventListener('click', function () { go(+b.dataset.go); });
+  });
+
+  // predict blocks
+  document.querySelectorAll('.opts').forEach(function (grp) {
+    var q = grp.dataset.q;
+    var reveal = document.querySelector('.reveal[data-r="' + q + '"]');
+    var done = false;
+    grp.querySelectorAll('.opt').forEach(function (opt) {
+      opt.addEventListener('click', function () {
+        if (done) return;
+        done = true;
+        var ok = opt.dataset.correct === '1';
+        grp.querySelectorAll('.opt').forEach(function (o) {
+          o.disabled = true;
+          if (o.dataset.correct === '1') o.classList.add('correct');
+        });
+        if (!ok) opt.classList.add('wrong');
+        if (reveal) reveal.classList.add('show');
+      });
+    });
+  });
+
+  // ── ROUTER ──
+  var TASKS = [
+    { task: 'Pull the latest quarterly revenue for a public company, with a source', a: 'perplex', why: 'Factual, current, must be sourced — Perplexity, straight to the earnings release.' },
+    { task: 'Draft a warm, on-brand intro email to a new client', a: 'chat', why: 'Generative and stylistic — a chat AI writes a better paragraph.' },
+    { task: 'Find out what changed in a regulation as of this week', a: 'perplex', why: 'Current events — a chat AI\'s training data may be stale. Perplexity reads today\'s web.' },
+    { task: 'Brainstorm 20 names for a new product line', a: 'chat', why: 'Pure creative generation — no sources needed. Chat AI.' },
+    { task: 'Build a sourced briefing on a prospect before a sales call', a: 'perplex', why: 'Research with citations you can verify on the way to the meeting — Perplexity.' }
+  ];
+  var routeDeck = document.getElementById('routeDeck');
+  var routeCt = document.getElementById('routeCt');
+  var routed = 0;
+  TASKS.forEach(function (t) {
+    var card = document.createElement('div');
+    card.className = 'rcard';
+    card.innerHTML =
+      '<div class="rcard-task">' + t.task + '</div>' +
+      '<div class="rcard-btns">' +
+        '<button class="rbtn perplex" data-a="perplex">🔎 Perplexity</button>' +
+        '<button class="rbtn chat" data-a="chat">💬 Chat AI</button>' +
+      '</div><div class="rcard-fb"></div>';
+    routeDeck.appendChild(card);
+    var fb = card.querySelector('.rcard-fb');
+    var btns = card.querySelectorAll('.rbtn');
+    var done = false;
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (done) return;
+        done = true;
+        var ok = b.dataset.a === t.a;
+        btns.forEach(function (x) {
+          x.disabled = true;
+          if (x.dataset.a === t.a) x.classList.add('right');
+        });
+        if (!ok) b.classList.add('wrong');
+        fb.innerHTML = (ok ? '' : '<b>' + (t.a === 'perplex' ? 'Perplexity.' : 'Chat AI.') + '</b> ') + t.why;
+        fb.classList.add('show');
+        routed++;
+        routeCt.textContent = routed + ' / ' + TASKS.length;
+      });
+    });
+  });
+
+  // ── PROGRESSION BUILDER ──
+  var Q1 = 'What\'s the size of the AI training market in 2026?';
+  var A1 = 'Answer: roughly $X billion, growing fast.';
+  var STEPS = [
+    { ans: 'Answer: B2B is the larger and faster-growing share.',
+      lbl: 'You have the market size. What sharpens it?',
+      opts: [
+        { t: 'What\'s the split between B2B and B2C?', ok: true },
+        { t: 'Tell me more about AI in general.', ok: false },
+        { t: 'Is AI good or bad for society?', ok: false }
+      ],
+      why: 'Narrowing the market into segments is the next real cut. The others wander off the research thread.' },
+    { ans: 'Answer: five vendors dominate the B2B segment.',
+      lbl: 'B2B is the bigger half. Now what?',
+      opts: [
+        { t: 'Who are the top 5 players in B2B specifically?', ok: true },
+        { t: 'What\'s the weather like for conferences?', ok: false },
+        { t: 'Restate the total market size.', ok: false }
+      ],
+      why: 'Go from segment to the specific players in it. Restating what you know wastes the turn.' },
+    { ans: 'Answer: each of the five has a distinct positioning.',
+      lbl: 'You have the five names. Final drill:',
+      opts: [
+        { t: 'For each of those 5, what\'s their differentiated positioning?', ok: true },
+        { t: 'List 50 more companies in any market.', ok: false },
+        { t: 'Write me a poem about AI.', ok: false }
+      ],
+      why: 'Positioning per player turns a list into a competitive briefing. Breadth-for-breadth\'s-sake or a tangent kills the depth you built.' }
+  ];
+  var qchain = document.getElementById('qchain');
+  var qpick = document.getElementById('qpick');
+  var prog2Done = document.getElementById('prog2Done');
+  var idx = 0;
+
+  function bubble(n, text, ans) {
+    var b = document.createElement('div');
+    b.className = 'qbubble';
+    b.innerHTML = '<div class="qn">Q' + n + '</div><div class="qt">' + text + '<span class="qans">' + ans + '</span></div>';
+    qchain.appendChild(b);
+  }
+  function renderPick() {
+    if (idx >= STEPS.length) {
+      qpick.innerHTML = '';
+      prog2Done.classList.add('show');
+      return;
+    }
+    var s = STEPS[idx];
+    var opts = s.opts.map(function (o, i) { return '<button class="qopt" data-i="' + i + '">' + o.t + '</button>'; }).join('');
+    qpick.innerHTML = '<div class="qpick-lbl">' + s.lbl + '</div><div class="qopts">' + opts + '</div><div class="qfb"></div>';
+    var fb = qpick.querySelector('.qfb');
+    var btns = qpick.querySelectorAll('.qopt');
+    var done = false;
+    btns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (done) return;
+        done = true;
+        var pick = s.opts[+btn.dataset.i];
+        btns.forEach(function (x, xi) {
+          x.disabled = true;
+          if (s.opts[xi].ok) x.classList.add('correct');
+        });
+        if (!pick.ok) btn.classList.add('wrong');
+        fb.innerHTML = pick.ok ? '<b>Sharp.</b> ' + s.why : '<b>That breaks the thread.</b> ' + s.why;
+        fb.classList.add('show');
+        // advance after a beat: append the chosen-correct question to the chain
+        var chosen = s.opts.find(function (o) { return o.ok; });
+        setTimeout(function () {
+          bubble(idx + 2, chosen.t, s.ans);
+          idx++;
+          renderPick();
+        }, 650);
+      });
+    });
+  }
+  bubble(1, Q1, A1);
+  renderPick();
+})();
+</script>
 
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Perplexity basics: the AI for research-first work\nTRACK: Perplexity Mastery\n\nLESSON CONTENT SUMMARY:\nPerplexity basics: the AI for research-first work \u2014 LearningGPT L LearningGPT \u2190 Perplexity Mastery Lesson 1 \u00b7 Perplexity Mastery Free ~10 min read 5 workflows Free Perplexity account is enough Perplexity basics: the AI for research-first work. Perplexity isn't trying to be ChatGPT. It's trying to be the thing you reach for when you'd otherwise open Google \u2014 but with answers grounded in real sources, citations included. For knowledge workers who do any kind of research (sales prep, market analysis, competitive intel, fact-checking), Perplexity quietly replaces 80% of your Google use. This lesson explains when to reach for it, how to read its output, and five workflows that justify the switch. The mental model Perplexity answers; ChatGPT writes. The clearest way to think about it: every other AI generates content from a model. Perplexity searches the web in real time, reads the top results, and synthesizes an answer with citations . The output looks like a chat reply, but it's actually a structured research summary. ChatGPT (and Claude, Gemini) Best for: drafting, brainstorming, explaining concepts, working with content you provide. Sources are baked into the model weights \u2014 you can't see them, and they can be out of date. Perplexity Best for: factual research, current events, sourcing claims, finding sources you can cite. Every claim links to a real source you can verify in 5 seconds. The Reframe When the answer needs to be \"right\" (not just plausible), use Perplexity. When the answer needs to be \"good\" (well-written, creative, on-brand), use ChatGPT or Claude. The two tools are complementary \u2014 most professionals end up using both daily. Workflow 01 The 5-minute sales prospect briefing 1 Walk into every sales call prepared The single most popular Perplexity use case for B2B professionals. Before any meeting with a prospect, run: Sales prospect briefing Give me a briefing on [Company Name]. Include: industry and what they do, approximate size and growth, recent news in the past 90 days, key competitors, and likely pain points relevant to [your product category]. Cite sources. You get a structured briefing in 30-60 seconds with every claim linked to a source. Read it on the way to the call. Walk in knowing more about their business than they expect. Time savings: 30-60 min of manual research \u2192 5 min total (including reading). Workflow 02 Fact-checking your own writing 2 Don't ship claims you can't source If you're publishing anything externally \u2014 a blog post, a proposal, an op-ed, a sales deck \u2014 every factual claim should be sourceable. Perplexity is the fastest way to verify or update a claim. Fact-check prompts Is it accurate that 71% of knowledge workers use AI weekly? What's the current best source for that statistic? --- What's the most recent quarterly revenue for [Company]? Cite the earnings release. --- Has [policy/regulation] actually been signed into law as of today, or is it still pending? Perplexity isn't infallible \u2014 it can still cite l\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences per answer unless the question genuinely needs more\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Perplexity basics: how it's different from ChatGPT and why that matters\nTRACK: Perplexity Mastery (Lesson 01, Free)\n\nLESSON CONTENT SUMMARY:\nPerplexity isn't trying to be ChatGPT — it's what you reach for instead of opening Google, but with answers grounded in real sources and citations included. For anyone who does research (sales prep, market analysis, competitive intel, fact-checking) it replaces most Google use.\n\nThe mental model: PERPLEXITY ANSWERS; CHATGPT WRITES. Chat AIs (ChatGPT, Claude, Gemini) generate from a model — sources are baked into the weights, invisible and possibly stale; best for drafting, brainstorming, explaining, working with content you provide. Perplexity searches the web live, reads top results, and synthesizes an answer WITH citations; best for factual research, current events, sourcing claims. THE REFRAME: when the answer must be RIGHT (correct, sourceable) use Perplexity; when it must be GOOD (well-written, creative, on-brand) use a chat AI. They're complementary — most pros use both daily.\n\nReading citations like a researcher (the power-user skill): (1) check the source DOMAINS — Reuters / NYT / an SEC filing beats a random Medium post or a vendor's own marketing page; (2) CLICK THROUGH on claims that matter, especially anything you'll repeat externally — Perplexity can paraphrase inaccurately; (3) use the 'Related' follow-up suggestions below answers. The citations are the feature — use them. Perplexity isn't infallible; it can cite low-quality sources or misinterpret them.\n\nThe follow-up habit: Perplexity is conversational — each answer is context for the next question. Drill from broad to specific, e.g. Q1 market size → Q2 B2B vs B2C split → Q3 top 5 players in B2B → Q4 each player's differentiated positioning. Four questions, ~5 minutes, = a competitive landscape briefing that would take ~90 minutes by hand.\n\nFocus modes (below the search bar) restrict Perplexity to a source type: Academic (peer-reviewed — medicine, science, formal claims), Social (X/Reddit/forum sentiment), Video (YouTube), Writing (turns off web search, behaves like a chat AI), plus Web and Math. Pick the source type at search time instead of filtering after — e.g. 'latest evidence on intermittent fasting' is far better in Academic than default Web.\n\nThe five workflows: (1) 5-minute prospect briefing — 'Brief me on [Company]: what they do, size, news in 90 days, competitors, pain points. Cite sources.' (30-60 min of research → 5 min); (2) fact-check your own writing before publishing; (3) read citations skeptically; (4) Focus modes for specialized queries; (5) follow-up drill-down. Challenge: replace 80% of your Google searches for a week.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more\n- Be practical — give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where they can learn more\n- Never make up features that don't exist\n- Plain conversational text only — no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
   var MAX_FREE = 3;
   var count = 0;
   var isThinking = false;
   var history = [];
-
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -372,27 +598,21 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
+  if (!fab) return;
   fab.addEventListener('click', function() { toggle(true); });
   closeBtn.addEventListener('click', function() { toggle(false); });
-
   function toggle(open) {
     drawer.classList.toggle('open', open);
     if (open) setTimeout(function() { input.focus(); }, 300);
   }
-
   input.addEventListener('input', function() {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 100) + 'px';
   });
-
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
   sendBtn.addEventListener('click', send);
-
   function addMsg(text, type) {
     var d = document.createElement('div');
     d.className = 'msg msg-' + type;
@@ -401,7 +621,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   function addThinking() {
     var d = document.createElement('div');
     d.className = 'msg-thinking';
@@ -410,7 +629,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     msgs.scrollTop = msgs.scrollHeight;
     return d;
   }
-
   async function send() {
     var text = input.value.trim();
     if (!text || isThinking) return;

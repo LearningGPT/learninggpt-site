@@ -3,285 +3,260 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AI for security — LearningGPT</title>
-<meta name="description" content="Use AI as a defensive security ally: spot phishing and scams, draft policies and incident-response plans, and triage noisy alerts and logs — with humans firmly in charge and strictly for defense." />
+<title>AI for security — spot threats & respond faster — LearningGPT</title>
+<meta name="description" content="Turn AI into a security ally: review configs and emails for risks, understand confusing alerts in plain English, and respond to threats faster — while you keep the judgment." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#ef4444" />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
-
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/ai-security/ai-for-security" />
-<meta property="og:title" content="AI for security" />
-<meta property="og:description" content="A tireless defensive analyst — phishing checks, security docs, and alert triage, with humans deciding." />
+<meta property="og:title" content="AI for security — spot threats & respond faster" />
+<meta property="og:description" content="Turn AI into a security ally: review for risks, understand alerts, and respond to threats faster." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
-
 <style>
-:root {
-  --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a;
-  --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14);
-  --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85;
-  --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4;
-  --warn: #ffb547; --danger: #ff6b8a;
-  --radius: 14px; --radius-lg: 20px;
-  --container: 820px;
-  --track: #ef4444;
-  --track-2: #7c5cff;
-}
-* { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
-body {
-  font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif;
-  background: var(--bg); color: var(--text);
-  line-height: 1.7; -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
-a { color: var(--brand-2); text-decoration: none; }
-a:hover { color: var(--text); }
-
-.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
-.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #ef4444; }
-.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
-
-.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
-
-nav.top {
-  position: sticky; top: 0; z-index: 100;
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  background: rgba(10,10,26,0.85);
-  border-bottom: 1px solid var(--line);
-}
-.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
-.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
-.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
-.nav-back { font-size: 13px; color: var(--text-dim); }
-.nav-back:hover { color: var(--text); }
-
-.lesson { padding: 50px 0 100px; }
-.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
-.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(239,68,68,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(239,68,68,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-.lesson-meta .chip-free { border-color: rgba(68,224,164,0.4); color: var(--accent); background: rgba(68,224,164,0.1); }
-.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.45); color: var(--brand); background: rgba(124,92,255,0.12); }
-.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.45); color: var(--warn); background: rgba(255,181,71,0.12); }
-.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
-
-.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #ef4444 0%, #7c5cff 50%, #44e0a4 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
-.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
-.lesson strong { font-weight: 700; color: var(--text); }
-.lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; }
-.lesson li { margin-bottom: 8px; color: var(--text); }
-
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(239,68,68,0.10), rgba(124,92,255,0.06)); border: 1px solid rgba(91,141,239,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #ef4444, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-
-.step-box { margin: 26px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.step-box h3 { margin-top: 0; }
-.step-box ol { padding-left: 22px; }
-.step-box ol li { margin-bottom: 12px; font-size: 15.5px; }
-.step-box code { background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 4px; font-size: 13px; color: var(--accent); font-family: 'SFMono-Regular', Consolas, monospace; }
-
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.35); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; }
-.savings strong { color: var(--accent); font-weight: 700; }
-
-.limitations { margin: 36px 0; background: rgba(255,107,138,0.04); border: 1px solid rgba(255,107,138,0.2); border-radius: var(--radius-lg); padding: 26px 28px; }
-.limitations h3 { margin-top: 0; color: var(--text); }
-.limitations ul li { font-size: 14.5px; }
-
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(239,68,68,0.18), rgba(124,92,255,0.1)); border: 1px solid rgba(239,68,68,0.3); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #ef4444, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(239,68,68,0.35); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
-.checklist h3 { margin-top: 0; font-size: 18px; }
-.checklist ul { list-style: none; padding: 0; margin: 0; }
-.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
-.checklist li:first-child { border-top: none; padding-top: 0; }
-.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
-.checklist li:first-child::before { top: 4px; }
-
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
-.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
-.next-up h3 { margin: 0 0 8px; font-size: 20px; }
-.next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
-.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
-
-footer { border-top: 1px solid var(--line); padding: 30px 0; }
-.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
-@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
-
-/* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
-.coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
-.coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
-.coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
-.coach-head-info { flex: 1; }
-.coach-head-name { font-weight: 700; font-size: 14px; }
-.coach-head-sub { font-size: 11px; color: #44e0a4; }
-.coach-close { background: none; border: none; color: #6b6b85; font-size: 18px; padding: 4px; line-height: 1; cursor: pointer; }
-.coach-close:hover { color: #f5f5fa; }
-.coach-messages { flex: 1; overflow-y: auto; padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth; }
-.coach-messages::-webkit-scrollbar { width: 4px; }
-.coach-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.14); border-radius: 4px; }
-.msg { max-width: 88%; font-size: 13.5px; line-height: 1.6; }
-.msg-coach { align-self: flex-start; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px 14px 14px 4px; padding: 10px 14px; color: #f5f5fa; }
-.msg-user { align-self: flex-end; background: linear-gradient(135deg, rgba(124,92,255,0.25), rgba(91,141,239,0.25)); border: 1px solid rgba(124,92,255,0.3); border-radius: 14px 14px 4px 14px; padding: 10px 14px; color: #f5f5fa; }
-.msg-thinking { align-self: flex-start; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px 14px 14px 4px; padding: 10px 14px; display: flex; align-items: center; gap: 6px; color: #6b6b85; font-size: 13px; }
-.thinking-dot { width: 6px; height: 6px; border-radius: 50%; background: #44e0a4; animation: coachPulse 1.2s ease-in-out infinite; }
-.thinking-dot:nth-child(2) { animation-delay: .2s; }
-.thinking-dot:nth-child(3) { animation-delay: .4s; }
-@keyframes coachPulse { 0%,100%{opacity:.3;transform:scale(.8)} 50%{opacity:1;transform:scale(1)} }
-.coach-limit { padding: 10px 18px; font-size: 11px; color: #6b6b85; text-align: center; border-top: 1px solid rgba(255,255,255,0.08); display: none; }
-.coach-limit.visible { display: block; }
-.coach-limit a { color: #5b8def; }
-.coach-input-row { padding: 12px 18px 16px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; gap: 8px; align-items: flex-end; }
-.coach-input { flex: 1; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); color: #f5f5fa; border-radius: 10px; padding: 9px 12px; font-size: 13px; font-family: inherit; resize: none; max-height: 100px; line-height: 1.5; }
-.coach-input:focus { outline: none; border-color: #44e0a4; }
-.coach-input::placeholder { color: #6b6b85; }
-.coach-send { width: 34px; height: 34px; border-radius: 9px; border: none; flex-shrink: 0; background: linear-gradient(135deg, #44e0a4, #7c5cff); color: white; font-size: 15px; display: grid; place-items: center; cursor: pointer; transition: opacity .15s; }
-.coach-send:hover { opacity: 0.85; }
-.coach-send:disabled { opacity: 0.4; cursor: default; }
-@media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
+  :root{
+    --bg:#0a0a1a;--bg-2:#0f0f23;--bg-soft:#14142b;--surface:#1a1a3a;
+    --line:rgba(255,255,255,.08);--line-strong:rgba(255,255,255,.14);
+    --text:#f5f5fa;--text-dim:#a8a8c0;--text-mute:#6b6b85;
+    --track:#ef4444;--track-2:#dc2626;--accent:#44e0a4;--warn:#ffb547;--danger:#ff6b8a;
+    --radius:14px;--radius-lg:20px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;background:radial-gradient(1000px 560px at 75% -10%,rgba(239,68,68,.18),transparent 60%),var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;line-height:1.6}
+  a{text-decoration:none;color:inherit}
+  .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--line)}
+  .logo{display:flex;align-items:center;gap:9px;font-weight:700;font-size:17px}
+  .logo .mark{width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,#ef4444,#dc2626 60%,#44e0a4);display:grid;place-items:center;font-size:14px;color:#fff;font-weight:800}
+  .nav-r{display:flex;gap:18px;align-items:center;font-size:14px;color:var(--text-dim)}
+  .nav-r a:hover{color:var(--text)}
+  .btn{font-family:inherit;font-weight:600;font-size:14.5px;border-radius:10px;padding:11px 18px;cursor:pointer;border:1px solid transparent;display:inline-flex;align-items:center;gap:8px;transition:.15s;color:#fff;background:linear-gradient(135deg,#ef4444,#dc2626);box-shadow:0 8px 22px -10px rgba(239,68,68,.8)}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-ghost{background:transparent;border-color:var(--line-strong);color:var(--text);box-shadow:none}
+  .btn-ghost:hover{background:rgba(255,255,255,.05)}
+  .btn-block{width:100%;justify-content:center}
+  .lesson{max-width:740px;margin:34px auto 60px}
+  .l-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;font-size:12.5px;flex-wrap:wrap;gap:6px}
+  .l-tag{font-weight:600;color:var(--track)}
+  .l-meta{color:var(--text-mute)}
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px}
+  .pill.free{background:rgba(68,224,164,.14);color:var(--accent);border:1px solid rgba(68,224,164,.3)}
+  .pill.pro{background:rgba(239,68,68,.16);color:var(--track);border:1px solid rgba(239,68,68,.32)}
+  .pill.proplus{background:rgba(255,181,71,.16);color:var(--warn);border:1px solid rgba(255,181,71,.32)}
+  h1.title{font-size:34px;line-height:1.12;letter-spacing:-.02em;margin:14px 0 16px;font-weight:800}
+  .lede{color:var(--text-dim);font-size:17px;margin-bottom:14px}
+  .section{margin:30px 0}
+  h2.sec{font-size:13px;text-transform:uppercase;letter-spacing:.09em;color:var(--track);font-weight:700;margin-bottom:10px}
+  p{color:var(--text-dim);margin-bottom:14px;font-size:15.5px}
+  p strong{color:var(--text);font-weight:600}
+  em.k{color:var(--track);font-style:normal;font-weight:600}
+  .mm{background:linear-gradient(135deg,rgba(239,68,68,.12),rgba(68,224,164,.06));border:1px solid rgba(239,68,68,.25);border-radius:var(--radius);padding:18px 20px;margin-bottom:16px}
+  .mm h3{font-size:18px;color:var(--text);margin-bottom:8px;font-weight:700}
+  .callout{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.22);border-left:3px solid var(--track);border-radius:0 var(--radius) var(--radius) 0;padding:14px 16px;margin-bottom:16px;font-size:14.5px;color:var(--text-dim);line-height:1.65}
+  .callout b{color:var(--text)}
+  .warn{background:rgba(255,181,71,.08);border:1px solid rgba(255,181,71,.25);border-left:3px solid var(--warn);border-radius:0 var(--radius) var(--radius) 0;padding:13px 16px;margin-bottom:16px;font-size:14px;color:var(--text-dim)}
+  .warn b{color:var(--text)}
+  .reframe{background:rgba(255,181,71,.08);border:1px solid rgba(255,181,71,.25);border-radius:var(--radius);padding:13px 16px;margin-bottom:16px;font-size:14.5px;color:var(--text-dim)}
+  .reframe .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--warn);font-weight:700;display:block;margin-bottom:5px}
+  .reframe b{color:var(--text)}
+  .promptcard{background:var(--bg-soft);border:1px solid var(--line);border-left:3px solid var(--track);border-radius:0 var(--radius) var(--radius) 0;padding:14px 16px;margin-bottom:16px;font-size:14px;color:var(--text);line-height:1.6}
+  .promptcard .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-mute);display:block;margin-bottom:6px}
+  /* chips / builder */
+  .builder{background:var(--bg-soft);border:1px solid var(--line-strong);border-radius:var(--radius);padding:16px;margin-bottom:12px}
+  .brow{margin-bottom:14px} .brow:last-child{margin-bottom:0}
+  .brow .q{font-size:13px;font-weight:700;color:var(--text);margin-bottom:7px}
+  .brow .q small{font-weight:400;color:var(--text-mute);font-size:12px}
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{font-size:12.5px;padding:7px 12px;font-family:inherit;color:var(--text-dim);background:var(--surface);border:1px solid var(--line-strong);border-radius:99px;cursor:pointer;transition:.15s}
+  .chip:hover{color:var(--text);border-color:var(--track)}
+  .chip.on{background:rgba(239,68,68,.16);color:var(--text);border-color:var(--track)}
+  .meter{margin:14px 0 4px;font-size:13px;color:var(--text-dim);display:flex;align-items:center;gap:10px}
+  .meter-bar{flex:1;height:6px;background:var(--surface);border-radius:99px;overflow:hidden}
+  .meter-fill{height:100%;width:0;background:linear-gradient(90deg,var(--track),var(--accent));border-radius:99px;transition:width .4s ease}
+  .promptout{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--radius);padding:15px 16px;font-size:13.5px;line-height:1.65;color:var(--text);white-space:pre-wrap;min-height:56px}
+  .promptout .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-mute);display:block;margin-bottom:8px}
+  .promptout em{color:var(--track);font-style:normal;font-weight:600}
+  .reveal{display:none;margin-top:14px;padding:14px 16px;background:rgba(68,224,164,.07);border:1px solid rgba(68,224,164,.3);border-radius:var(--radius);font-size:14px;color:var(--text-dim);line-height:1.6}
+  .reveal.show{display:block} .reveal b{color:var(--text)}
+  /* option benches / classifiers */
+  .opts{display:grid;gap:9px;margin-bottom:6px}
+  .opt{text-align:left;background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:13px 15px;cursor:pointer;transition:.15s;font-family:inherit;color:var(--text);font-size:14px;line-height:1.5}
+  .opt:hover:not(:disabled){border-color:var(--track)}
+  .opt:disabled{cursor:default}
+  .opt.right{border-color:var(--accent);background:rgba(68,224,164,.1)}
+  .opt.wrong{border-color:var(--danger);background:rgba(255,107,138,.08);opacity:.7}
+  .fb{display:none;margin-top:10px;padding:11px 14px;border-radius:var(--radius);font-size:13.5px;line-height:1.6}
+  .fb.show{display:block}
+  .fb.good{background:rgba(68,224,164,.1);border:1px solid rgba(68,224,164,.35);color:#bdebd6}
+  .fb.bad{background:rgba(255,181,71,.1);border:1px solid rgba(255,181,71,.32);color:#ffe2b0}
+  .scoreline{font-size:12.5px;color:var(--text-mute);margin-top:8px}
+  /* sortable / classifier item with verdict tag */
+  .clsitem{text-align:left;background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:12px 14px;cursor:pointer;transition:.15s;font-family:inherit;color:var(--text);font-size:13.5px;display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+  .clsitem:hover:not(.locked){border-color:var(--track)}
+  .clsitem.locked{cursor:default}
+  .clsitem .verdict{font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;opacity:0;transition:.15s;white-space:nowrap}
+  .clsitem.show-good .verdict{opacity:1;background:rgba(68,224,164,.16);color:var(--accent);border:1px solid rgba(68,224,164,.35)}
+  .clsitem.show-bad .verdict{opacity:1;background:rgba(255,107,138,.16);color:var(--danger);border:1px solid rgba(255,107,138,.35)}
+  .clsitem.show-warn .verdict{opacity:1;background:rgba(255,181,71,.16);color:var(--warn);border:1px solid rgba(255,181,71,.35)}
+  /* toggle/console cards */
+  .cards{display:grid;gap:10px;margin-bottom:8px}
+  .tcard{display:flex;align-items:flex-start;gap:11px;text-align:left;background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:13px 15px;cursor:pointer;transition:.15s;font-family:inherit;color:var(--text)}
+  .tcard:hover{border-color:var(--track)}
+  .tcard.on{border-color:var(--track);background:rgba(239,68,68,.1)}
+  .tcard .box{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--line-strong);flex-shrink:0;display:grid;place-items:center;font-size:13px;color:transparent;transition:.15s;margin-top:1px}
+  .tcard.on .box{background:var(--track);border-color:var(--track);color:#fff}
+  .tcard .t{font-weight:700;font-size:14px;margin-bottom:2px}
+  .tcard .d{font-size:12.5px;color:var(--text-mute);line-height:1.5}
+  /* checklist runner */
+  .runner{background:var(--bg-soft);border:1px solid var(--line-strong);border-radius:var(--radius);padding:16px;margin-bottom:12px}
+  .citem{display:flex;align-items:flex-start;gap:11px;padding:11px 0;border-bottom:1px solid var(--line);cursor:pointer}
+  .citem:last-of-type{border-bottom:none}
+  .citem .box{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--line-strong);flex-shrink:0;display:grid;place-items:center;font-size:13px;color:transparent;transition:.15s;margin-top:1px}
+  .citem.done .box{background:var(--accent);border-color:var(--accent);color:#08231a}
+  .citem .ct{font-size:14px;color:var(--text);line-height:1.45}
+  .citem.done .ct{color:var(--text-mute);text-decoration:line-through}
+  .citem .cd{font-size:12.5px;color:var(--text-mute);line-height:1.45}
+  .rungo{display:none;margin-top:14px;padding:13px 16px;border-radius:var(--radius);background:rgba(68,224,164,.1);border:1px solid rgba(68,224,164,.35);font-size:14px;color:#bdebd6;text-align:center;font-weight:600}
+  .rungo.show{display:block}
+  /* run console / log */
+  .console{background:#08081a;border:1px solid var(--line-strong);border-radius:var(--radius);padding:14px 16px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;line-height:1.8;color:var(--text-dim);min-height:70px}
+  .console .ln{opacity:0;transform:translateY(4px);transition:.3s}
+  .console .ln.show{opacity:1;transform:none}
+  .console .ok{color:var(--accent)} .console .wt{color:var(--warn)} .console .mut{color:var(--text-mute)}
+  ul.clean{list-style:none;margin:6px 0 14px}
+  ul.clean li{position:relative;padding-left:26px;margin-bottom:9px;font-size:14.5px;color:var(--text-dim);line-height:1.5}
+  ul.clean li::before{content:'';position:absolute;left:0;top:3px;width:16px;height:16px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E");background-size:contain;background-repeat:no-repeat}
+  ul.clean li strong{color:var(--text)}
+  ol.list{margin:6px 0 14px 18px;color:var(--text-dim);font-size:14.5px}
+  ol.list li{margin-bottom:8px} ol.list li strong{color:var(--text)}
+  .challenge{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin:24px 0}
+  .challenge h3{font-size:17px;margin-bottom:10px;color:var(--text)}
+  ol.steps{margin:0 0 0 18px;color:var(--text-dim);font-size:14.5px}
+  ol.steps li{margin-bottom:7px}
+  .done{background:linear-gradient(135deg,rgba(239,68,68,.14),rgba(68,224,164,.07));border:1px solid rgba(239,68,68,.3);border-radius:var(--radius);padding:22px;text-align:center;margin:26px 0}
+  .done .check{width:50px;height:50px;border-radius:50%;background:rgba(68,224,164,.14);color:var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:24px;border:1px solid rgba(68,224,164,.4)}
+  .done h3{margin-bottom:8px}
+  .upnext{background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:14px 0;text-align:left}
+  .upnext .lbl{font-size:11px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.06em}
+  .upnext p{margin:3px 0 0;font-weight:600;color:var(--text)}
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+  footer{border-top:1px solid var(--line);padding:30px 0;font-size:13px;color:var(--text-mute);text-align:center}
+  .coach-fab{position:fixed;bottom:28px;right:28px;z-index:999;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#ef4444,#7c5cff);border:none;box-shadow:0 8px 28px rgba(239,68,68,.4);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;transition:transform .2s,box-shadow .2s}
+  .coach-fab:hover{transform:scale(1.08)}
+  .coach-fab .coach-fab-badge{position:absolute;top:-4px;right:-4px;background:#dc2626;color:#fff;font-size:9px;font-weight:700;padding:2px 5px;border-radius:999px;border:2px solid #0a0a1a;line-height:1.2}
+  .coach-drawer{position:fixed;bottom:90px;right:28px;z-index:998;width:360px;max-height:520px;background:#13132a;border:1px solid rgba(239,68,68,.25);border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.5);display:flex;flex-direction:column;transform:scale(.92) translateY(16px);opacity:0;pointer-events:none;transition:transform .25s cubic-bezier(.34,1.56,.64,1),opacity .2s}
+  .coach-drawer.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
+  .coach-drawer-head{padding:16px 18px 14px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px}
+  .coach-avatar{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#ef4444,#7c5cff);display:grid;place-items:center;font-size:16px;flex-shrink:0}
+  .coach-head-info{flex:1}
+  .coach-head-name{font-weight:700;font-size:14px}
+  .coach-head-sub{font-size:11px;color:var(--track)}
+  .coach-close{background:none;border:none;color:#6b6b85;font-size:18px;padding:4px;line-height:1;cursor:pointer}
+  .coach-close:hover{color:#f5f5fa}
+  .coach-messages{flex:1;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}
+  .coach-messages::-webkit-scrollbar{width:4px}
+  .coach-messages::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:4px}
+  .msg{max-width:88%;font-size:13.5px;line-height:1.6}
+  .msg-coach{align-self:flex-start;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:14px 14px 14px 4px;padding:10px 14px;color:#f5f5fa}
+  .msg-user{align-self:flex-end;background:rgba(239,68,68,.22);border:1px solid rgba(239,68,68,.3);border-radius:14px 14px 4px 14px;padding:10px 14px;color:#f5f5fa}
+  .msg-thinking{align-self:flex-start;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px 14px 14px 4px;padding:10px 14px;display:flex;align-items:center;gap:6px;color:#6b6b85;font-size:13px}
+  .thinking-dot{width:6px;height:6px;border-radius:50%;background:var(--track);animation:coachPulse 1.2s ease-in-out infinite}
+  .thinking-dot:nth-child(2){animation-delay:.2s}
+  .thinking-dot:nth-child(3){animation-delay:.4s}
+  @keyframes coachPulse{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}
+  .coach-limit{padding:10px 18px;font-size:11px;color:#6b6b85;text-align:center;border-top:1px solid rgba(255,255,255,.08);display:none}
+  .coach-limit.visible{display:block}
+  .coach-limit a{color:var(--track)}
+  .coach-input-row{padding:12px 18px 16px;border-top:1px solid rgba(255,255,255,.08);display:flex;gap:8px;align-items:flex-end}
+  .coach-input{flex:1;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.08);color:#f5f5fa;border-radius:10px;padding:9px 12px;font-size:13px;font-family:inherit;resize:none;max-height:100px;line-height:1.5}
+  .coach-input:focus{outline:none;border-color:var(--track)}
+  .coach-input::placeholder{color:#6b6b85}
+  .coach-send{width:34px;height:34px;border-radius:9px;border:none;flex-shrink:0;background:linear-gradient(135deg,#ef4444,#7c5cff);color:#fff;font-size:15px;display:grid;place-items:center;cursor:pointer;transition:opacity .15s}
+  .coach-send:hover{opacity:.85}
+  .coach-send:disabled{opacity:.4;cursor:default}
+  @media(max-width:480px){.coach-drawer{width:calc(100vw - 32px);right:16px;bottom:80px}.coach-fab{right:16px;bottom:16px}h1.title{font-size:28px}}
 </style>
 </head>
 <body>
+<div class="sr-only">Interactive Secure Your AI Use Lesson 3: watch AI triage a security alert to a recommendation you confirm, and sort sound uses from steps too far, with an AI Coach.</div>
+<div class="wrap">
+  <nav>
+    <a href="/" class="logo"><span class="mark">L</span> LearningGPT</a>
+    <div class="nav-r">
+      <a href="/lessons/ai-security/">← Secure Your AI Use</a>
+      <a href="/playground">Playground</a>
+    </div>
+  </nav>
+  <main class="lesson">
+    <div class="l-top"><span class="l-tag">Secure Your AI Use · Lesson 3</span><span class="l-meta"><span class="pill proplus">Pro+</span> &nbsp;~16 min · Advanced</span></div>
+    <h1 class="title">AI for security — <span class="serif">spot threats &amp; respond faster.</span></h1>
+    <p class="lede">You've used AI safely and set the rules. Now flip it around: turn AI into a security ally that reviews for risks, makes sense of alerts, and helps you respond to threats faster — without handing it the keys.</p>
+    <div class="section"><h2 class="sec">The mental model</h2>
+      <div class="mm"><h3>AI is a tireless junior analyst: fast at triage and explanation, but it needs your judgment on the call.</h3>
+      <p style="margin-bottom:0">AI won't replace security expertise, but it dramatically speeds the grunt work — reading a confusing alert, spotting risky patterns, drafting a response plan. You stay the decision-maker; AI does the first pass so you act faster on what matters.</p></div>
+      <div class="reframe"><span class="lbl">The reframe</span><b>AI explains and drafts; you decide and act.</b> Let it turn an intimidating log or alert into plain English — then verify before you act on anything that blocks, deletes, or notifies.</div></div>
+    <div class="section"><h2 class="sec">Step 01 · Watch AI triage an alert</h2>
+      <p>A confusing security alert comes in. Press run to watch AI make sense of it — note that it ends with a recommendation for <em class="k">you</em> to confirm:</p>
+      <div class="console" id="con">
+        <div class="ln" data-i="0"><span class="mut">alert</span> &nbsp;47 failed logins for one account, then 1 success, new country <span class="ok">✓</span></div>
+        <div class="ln" data-i="1"><span class="mut">plain english</span> &nbsp;looks like a brute-force that may have succeeded <span class="ok">✓</span></div>
+        <div class="ln" data-i="2"><span class="mut">risk</span> &nbsp;account likely compromised — elevated <span class="wt">HIGH</span></div>
+        <div class="ln" data-i="3"><span class="wt">recommend</span> &nbsp;lock the account + force reset — <span class="wt">your call to confirm ⏸</span></div>
+      </div>
+      <div class="cta-row"><button class="btn" id="runBtn" onclick="run()">▶ Run the triage</button></div>
+      <div class="reveal" id="rev">AI turned a wall of log noise into a clear read and a recommendation — in seconds. But it <b>stopped at the recommendation</b>: locking an account is your decision, made on verified facts, not AI's say-so.</div>
+      <div class="promptcard" style="margin-top:14px"><span class="lbl">Triage prompt</span>Explain this alert/log in plain English: what likely happened, how serious, and what I should check to confirm. Suggest a response, but flag what I must verify myself before acting. Don't assume — tell me what's uncertain.</div></div>
+    <div class="section"><h2 class="sec">Step 02 · Use AI as an ally — safely</h2>
+      <p>AI can review a config, a contract, or a phishing email for risks, and draft an incident response plan. Tap each use — sound, or a step too far?</p>
+      <div id="cls">
+        <button class="clsitem" data-g="1" onclick="cls(this)"><span>Ask AI to review a draft config for obvious security gaps</span><span class="verdict"></span></button>
+        <button class="clsitem" data-g="0" onclick="cls(this)"><span>Paste live production secrets and access keys for it to "check"</span><span class="verdict"></span></button>
+        <button class="clsitem" data-g="1" onclick="cls(this)"><span>Have it explain a suspicious email and why it's likely phishing</span><span class="verdict"></span></button>
+        <button class="clsitem" data-g="0" onclick="cls(this)"><span>Let it auto-block IPs or delete accounts with no human confirm</span><span class="verdict"></span></button>
+      </div>
+      <div class="warn"><b>AI accelerates security; it doesn't own it.</b> Never paste live secrets or credentials into it, never let it take destructive actions unattended, and always verify its read before you act — a confident wrong diagnosis can cause the very incident you're trying to prevent. It's a force multiplier for your judgment, not a replacement for it.</div></div>
+    <div class="challenge"><h3>Your challenge: put AI on your side</h3>
+      <ol class="steps"><li>Take a real (sanitized) alert or log and have AI explain it in plain English.</li><li>Ask it what you must verify before acting on its recommendation.</li><li>Have it review one config or email for risks — keys and secrets removed.</li><li>Write a rule: AI advises, a human confirms anything destructive.</li></ol></div>
+    <div class="done"><div class="check">✓</div><h3>Secure Your AI Use — complete</h3>
+      <p style="max-width:480px;margin:0 auto">You can use AI safely, set a policy your team follows, and turn AI into a security ally — triaging alerts and reviewing for risks while you keep the judgment. That's the full set of builds.</p>
+      <div class="upnext"><span class="lbl">Keep building</span><p>You've finished all 12 builds — explore the full catalog</p></div>
+      <div class="cta-row"><a class="btn btn-block" href="/lessons/">Explore all builds →</a></div>
+      <div class="cta-row"><a class="btn btn-ghost" href="/playground" target="_blank" rel="noopener">Open the Playground</a><a class="btn btn-ghost" href="/lessons/ai-security/">Back to Secure Your AI Use</a></div></div>
+  </main>
+</div>
+<footer>© 2026 LearningGPT · Independent. Not affiliated with OpenAI, Anthropic, Microsoft, Google, or xAI.</footer>
 
-<div class="bg-orb one"></div>
-<div class="bg-orb two"></div>
-
-<nav class="top">
-  <div class="nav-inner">
-    <a href="/" class="logo">
-      <div class="logo-mark">L</div>
-      LearningGPT
-    </a>
-    <a href="/lessons/ai-security/" class="nav-back">← Secure Your AI Use</a>
-  </div>
-</nav>
-
-<article class="lesson">
-  <div class="container">
-
-    <div class="lesson-meta"><span class="chip">Secure Your AI Use · Lesson 3</span><span class="chip chip-pro-plus">Pro+</span><span>~16 min read</span><span class="dot"></span><span>Defensive use · humans in charge</span><span class="dot"></span><span>Advanced</span></div>
-
-    <h1>AI for security — <span class="grad serif">your defensive analyst.</span></h1>
-
-    <p class="deck">The same AI you protect data from can strengthen your defenses. Used carefully and strictly for defense, it’s a tireless junior analyst — checking suspicious messages, drafting the security documents you never have time for, and making sense of noisy alerts. Throughout: AI assists, humans decide, and none of this is ever used to attack.</p>
-
-    <h2><span class="num">The mental model</span></h2><h3>Flip the script: AI isn’t just a risk to manage — it’s a defensive ally that spots threats, drafts your security docs, and helps you make sense of alerts.</h3><p>The same AI you’re protecting data from can strengthen your defenses. Used carefully and defensively, it’s a tireless junior analyst — checking suspicious messages, drafting the policies and plans you never have time for, and explaining confusing security signals. The rule throughout: AI assists, humans decide, and none of this is ever used to attack.</p><div class="callout"><span class="lbl">The Reframe</span><p><strong>AI is the analyst, you are the decision-maker.</strong> It can surface, summarize, and suggest. It should never be the final word on a security decision — and these skills are for defending only.</p></div><h2><span class="num">Step 01</span> Spot phishing and scams</h2><p>One of the most practical wins: have AI examine a suspicious message and explain the red flags, so you and your team get sharper at catching them.</p><div class="prompt-example"><span class="label">Phishing-check prompt</span>Here’s a suspicious email I received: [paste the message — not any real credentials]. Is this likely phishing? Point out the specific red flags (sender, links, urgency, language, requests) and tell me what I should do. Don’t click or follow anything in it.</div><h2><span class="num">Step 02</span> Draft your security documents</h2><p>The documents that protect you are the ones nobody has time to write. AI can draft them for your review:</p><ul><li><strong>Policies</strong> — acceptable use, password, data handling.</li><li><strong>Incident response plans</strong> — who does what when something goes wrong.</li><li><strong>Awareness training</strong> — short, plain materials your team will actually absorb.</li><li><strong>Checklists</strong> — onboarding/offboarding, vendor review, backup verification.</li></ul><h2><span class="num">Step 03</span> Make sense of alerts and logs</h2><p>Security tools produce more signals than anyone can read. AI can summarize a noisy log, explain a confusing entry in plain English, and help prioritize what looks worth a human’s attention — turning overwhelm into a shortlist.</p><h2><span class="num">Step 04</span> Keep humans in charge</h2><ul><li><strong>AI assists, you decide</strong> — never act on a security call from AI alone.</li><li><strong>Verify</strong> — AI can be confidently wrong in both directions (missing a real threat, flagging a fake one).</li><li><strong>Protect the inputs</strong> — don’t paste real credentials, secrets, or sensitive logs into consumer AI; use approved tools (Lesson 2).</li></ul><div class="gotcha">Two hard limits. First, never use any of this offensively — these techniques are strictly for defending your own organization, not probing others. Second, don’t over-trust it: AI giving a confident “this is safe” can be as dangerous as the threat itself. It sharpens human judgment; it never replaces it, and a real incident needs real professionals.</div>
-
-    <div class="challenge"><h2 style="margin-top:0;">Your challenge: put AI to work defending</h2><p>Try AI as a security ally on something real and safe:</p><ol><li>Take a suspicious email you’ve received and have AI flag the red flags.</li><li>Draft one short phishing-awareness tip to share with your team.</li><li>Have AI draft the outline of one security document (e.g., an incident response plan).</li><li>Write your rule for when a human must verify AI’s security output.</li></ol><p>That’s AI making your defenses stronger — as an assistant, never the decision-maker, and only ever for defense. You’ve finished the Secure Your AI Use track — and all twelve builds.</p><div class="btn-row"><a href="/lessons/" class="btn">See all builds →</a><a href="/lessons/ai-security/" class="btn ghost">Back to Secure Your AI Use</a></div></div>
-
-    <div class="checklist"><h3>What you can do now</h3><ul><li>Use AI to spot phishing red flags and coach your team</li><li>Draft security policies, plans, and checklists for review</li><li>Summarize and triage noisy alerts and logs</li><li>Keep humans deciding and verify AI’s security output</li><li>Use these skills defensively only, never to attack</li></ul></div>
-
-    <div class="next-up"><div class="lbl">You’ve finished this build</div><h3>Secure Your AI Use — complete</h3><p>You can use AI safely, set a policy your team follows, and turn AI into a defensive security ally. That’s all twelve builds. <a href="/lessons/">Browse every build →</a></p></div>
-
-  </div>
-</article>
-
-<footer>
-  <div class="footer-inner">
-    <div>© 2026 LearningGPT, Inc. · Independent.</div>
-    <a href="/lessons/website-builder/" style="color: var(--text-dim);">← Back to Build a Website</a>
-  </div>
-</footer>
-
-
-<!-- ── AI COACH FAB ── -->
-<button class="coach-fab" id="coachFab" title="Ask the AI Coach">
-  🎓
-  <span class="coach-fab-badge">AI</span>
-</button>
-
-<!-- ── AI COACH DRAWER ── -->
+<button class="coach-fab" id="coachFab" title="Ask the AI Coach">🎓<span class="coach-fab-badge">AI</span></button>
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
     <div class="coach-avatar">🎓</div>
-    <div class="coach-head-info">
-      <div class="coach-head-name">AI Coach</div>
-      <div class="coach-head-sub">Ask anything about this lesson</div>
-    </div>
+    <div class="coach-head-info"><div class="coach-head-name">AI Coach</div><div class="coach-head-sub">Ask anything about this lesson</div></div>
     <button class="coach-close" id="coachClose">✕</button>
   </div>
   <div class="coach-messages" id="coachMessages">
-    <div class="msg msg-coach">Hey! I’m your AI Coach for this lesson. Ask me anything about using AI defensively — spotting phishing, drafting security docs, or triaging alerts. What’s on your mind?</div>
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about using AI as a security ally — triaging alerts, reviewing for risks, or keeping a human in the loop. What's on your mind?</div>
   </div>
-  <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
-  </div>
+  <div class="coach-limit" id="coachLimit">Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.</div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
     <button class="coach-send" id="coachSend">➤</button>
   </div>
 </div>
 
-
+<script id="lessonScript">
+  function run(){ var b=document.getElementById('runBtn'); b.disabled=true; b.textContent='Triaging…'; var lns=document.querySelectorAll('#con .ln'); var i=0; (function s(){ if(i<lns.length){ lns[i].classList.add('show'); i++; setTimeout(s,650);} else { b.textContent='Recommendation ready ✓'; document.getElementById('rev').classList.add('show'); } })(); }
+  function cls(b){ if(b.classList.contains('locked'))return; b.classList.add('locked'); var g=b.dataset.g==='1'; b.classList.add(g?'show-good':'show-bad'); b.querySelector('.verdict').textContent=g?'Sound ✓':'Too far'; }
+</script>
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: AI for security (Secure Your AI Use, Lesson 3, Pro+)\nTRACK: Secure Your AI Use (a cross-tool 'What can you do with AI' build)\n\nLESSON CONTENT SUMMARY:\nThis Pro+ lesson uses AI as a DEFENSIVE security ally, never offensively. Mental model: the same AI you protect data from can strengthen defenses - a tireless junior analyst that checks suspicious messages, drafts security documents, and explains confusing signals; AI assists, humans decide, and none of this is used to attack. Reframe: AI is the analyst, you are the decision-maker; it surfaces, summarizes, suggests, never the final word, and is for defending only. Step 1 spot phishing and scams: have AI examine a suspicious message and explain red flags (sender, links, urgency, language, requests) without clicking anything, sharpening the team. Step 2 draft security documents for review: policies (acceptable use, password, data handling), incident response plans, awareness training, and checklists. Step 3 make sense of alerts and logs: summarize a noisy log, explain a confusing entry, and prioritize what merits human attention. Step 4 keep humans in charge: AI assists you decide, verify because AI is confidently wrong in both directions, and protect inputs - never paste real credentials, secrets, or sensitive logs into consumer AI, use approved tools from Lesson 2. Gotcha: two hard limits - never use any of this offensively (defending your own organization only, not probing others), and do not over-trust - a confident this-is-safe can be as dangerous as the threat; AI sharpens judgment, never replaces it, and a real incident needs real professionals. The challenge: have AI flag a real suspicious email, draft a phishing-awareness tip, outline one security document, and set a human-verification rule.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise - 2-4 sentences unless more is genuinely needed\n- Be practical with real examples\n- Always keep it defensive only; if asked anything offensive, decline and redirect to defense. Emphasize humans deciding, verification, and not pasting real secrets/credentials into consumer AI\n- Never invent tools or features that don't exist\n- Plain conversational text only, no markdown symbols\n- Do not start with \"Great question!\" or similar filler";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: AI for security \u2014 spot threats & respond faster\nTRACK: Secure Your AI Use (Lesson 03, Pro+, track finale and final build in the catalog)\n\nLESSON CONTENT SUMMARY:\nAfter using AI safely and setting rules, flip it around: turn AI into a security ally that reviews for risks, makes sense of alerts, and helps you respond faster \u2014 without handing it the keys. Mental model: AI is a tireless JUNIOR ANALYST \u2014 fast at triage and explanation, but it needs your judgment on the call; it won't replace security expertise but dramatically speeds the grunt work (reading a confusing alert, spotting risky patterns, drafting a response plan); you stay the decision-maker. Reframe: AI explains and drafts; you decide and act \u2014 let it turn an intimidating log/alert into plain English, then verify before acting on anything that blocks, deletes, or notifies.\n\nAI triage of an alert: it reads the log, explains in plain English what likely happened, rates severity, and ends with a RECOMMENDATION for you to confirm (not an automatic action). Triage prompt: 'Explain this alert/log in plain English: what likely happened, how serious, what I should check to confirm. Suggest a response but flag what I must verify myself before acting. Don't assume \u2014 tell me what's uncertain.'\n\nUse AI as an ally safely: SOUND = review a draft config for security gaps, explain why an email is likely phishing, draft an incident response plan; TOO FAR = paste live production secrets/access keys, let it auto-block IPs or delete accounts with no human confirm. AI ACCELERATES security, it doesn't OWN it \u2014 never paste live secrets/credentials, never let it take destructive actions unattended, always verify its read before acting; a confident wrong diagnosis can cause the very incident you're preventing. It's a force multiplier for your judgment, not a replacement. This is the final build in the catalog \u2014 all 12 are complete.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences unless more is genuinely needed\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where to learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler";
   var MAX_FREE = 3;
-  var count = 0;
-  var isThinking = false;
-  var history = [];
-
+  var count = 0, isThinking = false, history = [];
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -289,81 +264,32 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
-  fab.addEventListener('click', function() { toggle(true); });
-  closeBtn.addEventListener('click', function() { toggle(false); });
-
-  function toggle(open) {
-    drawer.classList.toggle('open', open);
-    if (open) setTimeout(function() { input.focus(); }, 300);
-  }
-
-  input.addEventListener('input', function() {
-    input.style.height = 'auto';
-    input.style.height = Math.min(input.scrollHeight, 100) + 'px';
-  });
-
-  input.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
-  });
+  if (!fab) return;
+  fab.addEventListener('click', function(){ toggle(true); });
+  closeBtn.addEventListener('click', function(){ toggle(false); });
+  function toggle(open){ drawer.classList.toggle('open', open); if(open) setTimeout(function(){ input.focus(); }, 300); }
+  input.addEventListener('input', function(){ input.style.height='auto'; input.style.height=Math.min(input.scrollHeight,100)+'px'; });
+  input.addEventListener('keydown', function(e){ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); send(); } });
   sendBtn.addEventListener('click', send);
-
-  function addMsg(text, type) {
-    var d = document.createElement('div');
-    d.className = 'msg msg-' + type;
-    d.textContent = text;
-    msgs.appendChild(d);
-    msgs.scrollTop = msgs.scrollHeight;
-    return d;
-  }
-
-  function addThinking() {
-    var d = document.createElement('div');
-    d.className = 'msg-thinking';
-    d.innerHTML = '<div class="thinking-dot"></div><div class="thinking-dot"></div><div class="thinking-dot"></div>';
-    msgs.appendChild(d);
-    msgs.scrollTop = msgs.scrollHeight;
-    return d;
-  }
-
-  async function send() {
+  function addMsg(text, type){ var d=document.createElement('div'); d.className='msg msg-'+type; d.textContent=text; msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight; return d; }
+  function addThinking(){ var d=document.createElement('div'); d.className='msg-thinking'; d.innerHTML='<div class="thinking-dot"></div><div class="thinking-dot"></div><div class="thinking-dot"></div>'; msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight; return d; }
+  async function send(){
     var text = input.value.trim();
-    if (!text || isThinking) return;
-    if (count >= MAX_FREE) {
-      limitBar.classList.add('visible');
-      input.disabled = true;
-      sendBtn.disabled = true;
-      return;
-    }
+    if(!text || isThinking) return;
+    if(count >= MAX_FREE){ limitBar.classList.add('visible'); input.disabled=true; sendBtn.disabled=true; return; }
     count++;
-    if (count >= MAX_FREE) limitBar.classList.add('visible');
-    addMsg(text, 'user');
-    history.push({ role: 'user', content: text });
-    input.value = '';
-    input.style.height = 'auto';
-    isThinking = true;
-    sendBtn.disabled = true;
+    if(count >= MAX_FREE) limitBar.classList.add('visible');
+    addMsg(text,'user'); history.push({role:'user',content:text});
+    input.value=''; input.style.height='auto'; isThinking=true; sendBtn.disabled=true;
     var thinking = addThinking();
-    try {
-      var res = await fetch('/api/playground', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ coach: true, lessonCoach: true, lessonContext: LESSON_CONTEXT, history: history })
-      });
+    try{
+      var res = await fetch('/api/playground', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ coach:true, lessonCoach:true, lessonContext:LESSON_CONTEXT, history:history }) });
       thinking.remove();
       var data = await res.json();
       var reply = (data && data.coach) ? data.coach : "Sorry, something went wrong. Try again in a moment.";
-      addMsg(reply, 'coach');
-      history.push({ role: 'assistant', content: reply });
-    } catch(err) {
-      thinking.remove();
-      addMsg("Something went wrong — try again in a moment.", 'coach');
-    } finally {
-      isThinking = false;
-      sendBtn.disabled = count >= MAX_FREE;
-    }
+      addMsg(reply,'coach'); history.push({role:'assistant',content:reply});
+    } catch(err){ thinking.remove(); addMsg("Something went wrong — try again in a moment.",'coach'); }
+    finally{ isThinking=false; sendBtn.disabled = count >= MAX_FREE; }
   }
 })();
 </script>

@@ -4,284 +4,262 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>From spreadsheet to answers — LearningGPT</title>
-<meta name="description" content="Ask your spreadsheet questions in plain English with AI — no formulas required. Get your data ready, upload it, ask good questions, and verify the answers so you can trust them." />
+<meta name="description" content="Drop a messy spreadsheet into AI and ask real questions in plain English. Clean the data, find what changed, and trust the numbers — no formulas, no code." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#eab308" />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
-
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://learninggpt.ai/lessons/analyze-your-data/spreadsheet-to-answers" />
-<meta property="og:title" content="From spreadsheet to answers — just ask" />
-<meta property="og:description" content="Interview your data in plain English — then verify the answers so you can act on them." />
+<meta property="og:title" content="From spreadsheet to answers" />
+<meta property="og:description" content="Drop in a spreadsheet and get real answers in plain English — no formulas, with the reasoning shown." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
-
 <style>
-:root {
-  --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a;
-  --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14);
-  --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85;
-  --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4;
-  --warn: #ffb547; --danger: #ff6b8a;
-  --radius: 14px; --radius-lg: 20px;
-  --container: 820px;
-  --track: #eab308;
-  --track-2: #7c5cff;
-}
-* { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
-body {
-  font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif;
-  background: var(--bg); color: var(--text);
-  line-height: 1.7; -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
-a { color: var(--brand-2); text-decoration: none; }
-a:hover { color: var(--text); }
-
-.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
-.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #eab308; }
-.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
-
-.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
-
-nav.top {
-  position: sticky; top: 0; z-index: 100;
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  background: rgba(10,10,26,0.85);
-  border-bottom: 1px solid var(--line);
-}
-.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
-.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
-.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
-.nav-back { font-size: 13px; color: var(--text-dim); }
-.nav-back:hover { color: var(--text); }
-
-.lesson { padding: 50px 0 100px; }
-.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
-.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(234,179,8,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(234,179,8,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-.lesson-meta .chip-free { border-color: rgba(68,224,164,0.4); color: var(--accent); background: rgba(68,224,164,0.1); }
-.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.45); color: var(--brand); background: rgba(124,92,255,0.12); }
-.lesson-meta .chip-pro-plus { border-color: rgba(255,181,71,0.45); color: var(--warn); background: rgba(255,181,71,0.12); }
-.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
-
-.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
-.lesson h1 .grad { background: linear-gradient(135deg, #eab308 0%, #7c5cff 50%, #44e0a4 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-
-.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-
-.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
-.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
-.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
-.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
-.lesson strong { font-weight: 700; color: var(--text); }
-.lesson em { font-style: italic; color: var(--text); }
-.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; }
-.lesson li { margin-bottom: 8px; color: var(--text); }
-
-.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(234,179,8,0.10), rgba(124,92,255,0.06)); border: 1px solid rgba(91,141,239,0.25); border-radius: var(--radius-lg); position: relative; }
-.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #eab308, #7c5cff); border-radius: 2px 0 0 2px; }
-.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
-.callout p:last-child { margin-bottom: 0; }
-
-.step-box { margin: 26px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.step-box h3 { margin-top: 0; }
-.step-box ol { padding-left: 22px; }
-.step-box ol li { margin-bottom: 12px; font-size: 15.5px; }
-.step-box code { background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 4px; font-size: 13px; color: var(--accent); font-family: 'SFMono-Regular', Consolas, monospace; }
-
-.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
-.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(234,179,8,0.15); border: 1px solid rgba(234,179,8,0.35); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
-.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
-.workflow p { font-size: 15px; margin: 0 0 14px; }
-.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
-
-.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; }
-.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-
-.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
-.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
-
-.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
-.savings::before { content: '⏱'; font-size: 14px; }
-.savings strong { color: var(--accent); font-weight: 700; }
-
-.limitations { margin: 36px 0; background: rgba(255,107,138,0.04); border: 1px solid rgba(255,107,138,0.2); border-radius: var(--radius-lg); padding: 26px 28px; }
-.limitations h3 { margin-top: 0; color: var(--text); }
-.limitations ul li { font-size: 14.5px; }
-
-.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(234,179,8,0.18), rgba(124,92,255,0.1)); border: 1px solid rgba(234,179,8,0.3); border-radius: var(--radius-lg); padding: 36px; }
-.challenge h2 { margin-top: 0; }
-.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #eab308, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(234,179,8,0.35); transition: transform .15s; }
-.challenge a.btn:hover { transform: translateY(-1px); color: white; }
-.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
-.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
-
-.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
-.checklist h3 { margin-top: 0; font-size: 18px; }
-.checklist ul { list-style: none; padding: 0; margin: 0; }
-.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
-.checklist li:first-child { border-top: none; padding-top: 0; }
-.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
-.checklist li:first-child::before { top: 4px; }
-
-.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
-.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
-.next-up h3 { margin: 0 0 8px; font-size: 20px; }
-.next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
-.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
-
-footer { border-top: 1px solid var(--line); padding: 30px 0; }
-.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
-@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
-
-/* ── AI COACH WIDGET ── */
-.coach-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #44e0a4, #7c5cff);
-  border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
-.coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
-.coach-fab .coach-fab-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #7c5cff; color: white;
-  font-size: 9px; font-weight: 700; padding: 2px 5px;
-  border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2;
-}
-.coach-drawer {
-  position: fixed; bottom: 90px; right: 28px; z-index: 998;
-  width: 360px; max-height: 520px;
-  background: #13132a; border: 1px solid rgba(68,224,164,0.25);
-  border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
-  transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
-}
-.coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-.coach-drawer-head {
-  padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
-}
-.coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
-.coach-head-info { flex: 1; }
-.coach-head-name { font-weight: 700; font-size: 14px; }
-.coach-head-sub { font-size: 11px; color: #44e0a4; }
-.coach-close { background: none; border: none; color: #6b6b85; font-size: 18px; padding: 4px; line-height: 1; cursor: pointer; }
-.coach-close:hover { color: #f5f5fa; }
-.coach-messages { flex: 1; overflow-y: auto; padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth; }
-.coach-messages::-webkit-scrollbar { width: 4px; }
-.coach-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.14); border-radius: 4px; }
-.msg { max-width: 88%; font-size: 13.5px; line-height: 1.6; }
-.msg-coach { align-self: flex-start; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px 14px 14px 4px; padding: 10px 14px; color: #f5f5fa; }
-.msg-user { align-self: flex-end; background: linear-gradient(135deg, rgba(124,92,255,0.25), rgba(91,141,239,0.25)); border: 1px solid rgba(124,92,255,0.3); border-radius: 14px 14px 4px 14px; padding: 10px 14px; color: #f5f5fa; }
-.msg-thinking { align-self: flex-start; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px 14px 14px 4px; padding: 10px 14px; display: flex; align-items: center; gap: 6px; color: #6b6b85; font-size: 13px; }
-.thinking-dot { width: 6px; height: 6px; border-radius: 50%; background: #44e0a4; animation: coachPulse 1.2s ease-in-out infinite; }
-.thinking-dot:nth-child(2) { animation-delay: .2s; }
-.thinking-dot:nth-child(3) { animation-delay: .4s; }
-@keyframes coachPulse { 0%,100%{opacity:.3;transform:scale(.8)} 50%{opacity:1;transform:scale(1)} }
-.coach-limit { padding: 10px 18px; font-size: 11px; color: #6b6b85; text-align: center; border-top: 1px solid rgba(255,255,255,0.08); display: none; }
-.coach-limit.visible { display: block; }
-.coach-limit a { color: #5b8def; }
-.coach-input-row { padding: 12px 18px 16px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; gap: 8px; align-items: flex-end; }
-.coach-input { flex: 1; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); color: #f5f5fa; border-radius: 10px; padding: 9px 12px; font-size: 13px; font-family: inherit; resize: none; max-height: 100px; line-height: 1.5; }
-.coach-input:focus { outline: none; border-color: #44e0a4; }
-.coach-input::placeholder { color: #6b6b85; }
-.coach-send { width: 34px; height: 34px; border-radius: 9px; border: none; flex-shrink: 0; background: linear-gradient(135deg, #44e0a4, #7c5cff); color: white; font-size: 15px; display: grid; place-items: center; cursor: pointer; transition: opacity .15s; }
-.coach-send:hover { opacity: 0.85; }
-.coach-send:disabled { opacity: 0.4; cursor: default; }
-@media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
-
+  :root{
+    --bg:#0a0a1a;--bg-2:#0f0f23;--bg-soft:#14142b;--surface:#1a1a3a;
+    --line:rgba(255,255,255,.08);--line-strong:rgba(255,255,255,.14);
+    --text:#f5f5fa;--text-dim:#a8a8c0;--text-mute:#6b6b85;
+    --track:#eab308;--track-2:#ca8a04;--accent:#44e0a4;--warn:#ffb547;--danger:#ff6b8a;
+    --radius:14px;--radius-lg:20px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;background:radial-gradient(1000px 560px at 75% -10%,rgba(234,179,8,.18),transparent 60%),var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;line-height:1.6}
+  a{text-decoration:none;color:inherit}
+  .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--line)}
+  .logo{display:flex;align-items:center;gap:9px;font-weight:700;font-size:17px}
+  .logo .mark{width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,#eab308,#ca8a04 60%,#44e0a4);display:grid;place-items:center;font-size:14px;color:#fff;font-weight:800}
+  .nav-r{display:flex;gap:18px;align-items:center;font-size:14px;color:var(--text-dim)}
+  .nav-r a:hover{color:var(--text)}
+  .btn{font-family:inherit;font-weight:600;font-size:14.5px;border-radius:10px;padding:11px 18px;cursor:pointer;border:1px solid transparent;display:inline-flex;align-items:center;gap:8px;transition:.15s;color:#1a1500;background:linear-gradient(135deg,#eab308,#ca8a04);box-shadow:0 8px 22px -10px rgba(234,179,8,.8)}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-ghost{background:transparent;border-color:var(--line-strong);color:var(--text);box-shadow:none}
+  .btn-ghost:hover{background:rgba(255,255,255,.05)}
+  .btn-block{width:100%;justify-content:center}
+  .lesson{max-width:740px;margin:34px auto 60px}
+  .l-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;font-size:12.5px;flex-wrap:wrap;gap:6px}
+  .l-tag{font-weight:600;color:var(--track)}
+  .l-meta{color:var(--text-mute)}
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px}
+  .pill.free{background:rgba(68,224,164,.14);color:var(--accent);border:1px solid rgba(68,224,164,.3)}
+  .pill.pro{background:rgba(234,179,8,.16);color:var(--track);border:1px solid rgba(234,179,8,.32)}
+  .pill.proplus{background:rgba(255,181,71,.16);color:var(--warn);border:1px solid rgba(255,181,71,.32)}
+  h1.title{font-size:34px;line-height:1.12;letter-spacing:-.02em;margin:14px 0 16px;font-weight:800}
+  .lede{color:var(--text-dim);font-size:17px;margin-bottom:14px}
+  .section{margin:30px 0}
+  h2.sec{font-size:13px;text-transform:uppercase;letter-spacing:.09em;color:var(--track);font-weight:700;margin-bottom:10px}
+  p{color:var(--text-dim);margin-bottom:14px;font-size:15.5px}
+  p strong{color:var(--text);font-weight:600}
+  em.k{color:var(--track);font-style:normal;font-weight:600}
+  .mm{background:linear-gradient(135deg,rgba(234,179,8,.12),rgba(68,224,164,.06));border:1px solid rgba(234,179,8,.25);border-radius:var(--radius);padding:18px 20px;margin-bottom:16px}
+  .mm h3{font-size:18px;color:var(--text);margin-bottom:8px;font-weight:700}
+  .callout{background:rgba(234,179,8,.08);border:1px solid rgba(234,179,8,.22);border-left:3px solid var(--track);border-radius:0 var(--radius) var(--radius) 0;padding:14px 16px;margin-bottom:16px;font-size:14.5px;color:var(--text-dim);line-height:1.65}
+  .callout b{color:var(--text)}
+  .warn{background:rgba(255,181,71,.08);border:1px solid rgba(255,181,71,.25);border-left:3px solid var(--warn);border-radius:0 var(--radius) var(--radius) 0;padding:13px 16px;margin-bottom:16px;font-size:14px;color:var(--text-dim)}
+  .warn b{color:var(--text)}
+  .reframe{background:rgba(255,181,71,.08);border:1px solid rgba(255,181,71,.25);border-radius:var(--radius);padding:13px 16px;margin-bottom:16px;font-size:14.5px;color:var(--text-dim)}
+  .reframe .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--warn);font-weight:700;display:block;margin-bottom:5px}
+  .reframe b{color:var(--text)}
+  .promptcard{background:var(--bg-soft);border:1px solid var(--line);border-left:3px solid var(--track);border-radius:0 var(--radius) var(--radius) 0;padding:14px 16px;margin-bottom:16px;font-size:14px;color:var(--text);line-height:1.6}
+  .promptcard .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-mute);display:block;margin-bottom:6px}
+  /* chips / builder */
+  .builder{background:var(--bg-soft);border:1px solid var(--line-strong);border-radius:var(--radius);padding:16px;margin-bottom:12px}
+  .brow{margin-bottom:14px} .brow:last-child{margin-bottom:0}
+  .brow .q{font-size:13px;font-weight:700;color:var(--text);margin-bottom:7px}
+  .brow .q small{font-weight:400;color:var(--text-mute);font-size:12px}
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{font-size:12.5px;padding:7px 12px;font-family:inherit;color:var(--text-dim);background:var(--surface);border:1px solid var(--line-strong);border-radius:99px;cursor:pointer;transition:.15s}
+  .chip:hover{color:var(--text);border-color:var(--track)}
+  .chip.on{background:rgba(234,179,8,.16);color:var(--text);border-color:var(--track)}
+  .meter{margin:14px 0 4px;font-size:13px;color:var(--text-dim);display:flex;align-items:center;gap:10px}
+  .meter-bar{flex:1;height:6px;background:var(--surface);border-radius:99px;overflow:hidden}
+  .meter-fill{height:100%;width:0;background:linear-gradient(90deg,var(--track),var(--accent));border-radius:99px;transition:width .4s ease}
+  .promptout{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--radius);padding:15px 16px;font-size:13.5px;line-height:1.65;color:var(--text);white-space:pre-wrap;min-height:56px}
+  .promptout .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-mute);display:block;margin-bottom:8px}
+  .promptout em{color:var(--track);font-style:normal;font-weight:600}
+  .reveal{display:none;margin-top:14px;padding:14px 16px;background:rgba(68,224,164,.07);border:1px solid rgba(68,224,164,.3);border-radius:var(--radius);font-size:14px;color:var(--text-dim);line-height:1.6}
+  .reveal.show{display:block} .reveal b{color:var(--text)}
+  /* option benches / classifiers */
+  .opts{display:grid;gap:9px;margin-bottom:6px}
+  .opt{text-align:left;background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:13px 15px;cursor:pointer;transition:.15s;font-family:inherit;color:var(--text);font-size:14px;line-height:1.5}
+  .opt:hover:not(:disabled){border-color:var(--track)}
+  .opt:disabled{cursor:default}
+  .opt.right{border-color:var(--accent);background:rgba(68,224,164,.1)}
+  .opt.wrong{border-color:var(--danger);background:rgba(255,107,138,.08);opacity:.7}
+  .fb{display:none;margin-top:10px;padding:11px 14px;border-radius:var(--radius);font-size:13.5px;line-height:1.6}
+  .fb.show{display:block}
+  .fb.good{background:rgba(68,224,164,.1);border:1px solid rgba(68,224,164,.35);color:#bdebd6}
+  .fb.bad{background:rgba(255,181,71,.1);border:1px solid rgba(255,181,71,.32);color:#ffe2b0}
+  .scoreline{font-size:12.5px;color:var(--text-mute);margin-top:8px}
+  /* sortable / classifier item with verdict tag */
+  .clsitem{text-align:left;background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:12px 14px;cursor:pointer;transition:.15s;font-family:inherit;color:var(--text);font-size:13.5px;display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+  .clsitem:hover:not(.locked){border-color:var(--track)}
+  .clsitem.locked{cursor:default}
+  .clsitem .verdict{font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;opacity:0;transition:.15s;white-space:nowrap}
+  .clsitem.show-good .verdict{opacity:1;background:rgba(68,224,164,.16);color:var(--accent);border:1px solid rgba(68,224,164,.35)}
+  .clsitem.show-bad .verdict{opacity:1;background:rgba(255,107,138,.16);color:var(--danger);border:1px solid rgba(255,107,138,.35)}
+  .clsitem.show-warn .verdict{opacity:1;background:rgba(255,181,71,.16);color:var(--warn);border:1px solid rgba(255,181,71,.35)}
+  /* toggle/console cards */
+  .cards{display:grid;gap:10px;margin-bottom:8px}
+  .tcard{display:flex;align-items:flex-start;gap:11px;text-align:left;background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:13px 15px;cursor:pointer;transition:.15s;font-family:inherit;color:var(--text)}
+  .tcard:hover{border-color:var(--track)}
+  .tcard.on{border-color:var(--track);background:rgba(234,179,8,.1)}
+  .tcard .box{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--line-strong);flex-shrink:0;display:grid;place-items:center;font-size:13px;color:transparent;transition:.15s;margin-top:1px}
+  .tcard.on .box{background:var(--track);border-color:var(--track);color:#fff}
+  .tcard .t{font-weight:700;font-size:14px;margin-bottom:2px}
+  .tcard .d{font-size:12.5px;color:var(--text-mute);line-height:1.5}
+  /* checklist runner */
+  .runner{background:var(--bg-soft);border:1px solid var(--line-strong);border-radius:var(--radius);padding:16px;margin-bottom:12px}
+  .citem{display:flex;align-items:flex-start;gap:11px;padding:11px 0;border-bottom:1px solid var(--line);cursor:pointer}
+  .citem:last-of-type{border-bottom:none}
+  .citem .box{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--line-strong);flex-shrink:0;display:grid;place-items:center;font-size:13px;color:transparent;transition:.15s;margin-top:1px}
+  .citem.done .box{background:var(--accent);border-color:var(--accent);color:#08231a}
+  .citem .ct{font-size:14px;color:var(--text);line-height:1.45}
+  .citem.done .ct{color:var(--text-mute);text-decoration:line-through}
+  .citem .cd{font-size:12.5px;color:var(--text-mute);line-height:1.45}
+  .rungo{display:none;margin-top:14px;padding:13px 16px;border-radius:var(--radius);background:rgba(68,224,164,.1);border:1px solid rgba(68,224,164,.35);font-size:14px;color:#bdebd6;text-align:center;font-weight:600}
+  .rungo.show{display:block}
+  /* run console / log */
+  .console{background:#08081a;border:1px solid var(--line-strong);border-radius:var(--radius);padding:14px 16px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;line-height:1.8;color:var(--text-dim);min-height:70px}
+  .console .ln{opacity:0;transform:translateY(4px);transition:.3s}
+  .console .ln.show{opacity:1;transform:none}
+  .console .ok{color:var(--accent)} .console .wt{color:var(--warn)} .console .mut{color:var(--text-mute)}
+  ul.clean{list-style:none;margin:6px 0 14px}
+  ul.clean li{position:relative;padding-left:26px;margin-bottom:9px;font-size:14.5px;color:var(--text-dim);line-height:1.5}
+  ul.clean li::before{content:'';position:absolute;left:0;top:3px;width:16px;height:16px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E");background-size:contain;background-repeat:no-repeat}
+  ul.clean li strong{color:var(--text)}
+  ol.list{margin:6px 0 14px 18px;color:var(--text-dim);font-size:14.5px}
+  ol.list li{margin-bottom:8px} ol.list li strong{color:var(--text)}
+  .challenge{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin:24px 0}
+  .challenge h3{font-size:17px;margin-bottom:10px;color:var(--text)}
+  ol.steps{margin:0 0 0 18px;color:var(--text-dim);font-size:14.5px}
+  ol.steps li{margin-bottom:7px}
+  .done{background:linear-gradient(135deg,rgba(234,179,8,.14),rgba(68,224,164,.07));border:1px solid rgba(234,179,8,.3);border-radius:var(--radius);padding:22px;text-align:center;margin:26px 0}
+  .done .check{width:50px;height:50px;border-radius:50%;background:rgba(68,224,164,.14);color:var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:24px;border:1px solid rgba(68,224,164,.4)}
+  .done h3{margin-bottom:8px}
+  .upnext{background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:14px 0;text-align:left}
+  .upnext .lbl{font-size:11px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.06em}
+  .upnext p{margin:3px 0 0;font-weight:600;color:var(--text)}
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+  footer{border-top:1px solid var(--line);padding:30px 0;font-size:13px;color:var(--text-mute);text-align:center}
+  .coach-fab{position:fixed;bottom:28px;right:28px;z-index:999;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#eab308,#7c5cff);border:none;box-shadow:0 8px 28px rgba(234,179,8,.4);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;transition:transform .2s,box-shadow .2s}
+  .coach-fab:hover{transform:scale(1.08)}
+  .coach-fab .coach-fab-badge{position:absolute;top:-4px;right:-4px;background:#ca8a04;color:#fff;font-size:9px;font-weight:700;padding:2px 5px;border-radius:999px;border:2px solid #0a0a1a;line-height:1.2}
+  .coach-drawer{position:fixed;bottom:90px;right:28px;z-index:998;width:360px;max-height:520px;background:#13132a;border:1px solid rgba(234,179,8,.25);border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.5);display:flex;flex-direction:column;transform:scale(.92) translateY(16px);opacity:0;pointer-events:none;transition:transform .25s cubic-bezier(.34,1.56,.64,1),opacity .2s}
+  .coach-drawer.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
+  .coach-drawer-head{padding:16px 18px 14px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px}
+  .coach-avatar{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#eab308,#7c5cff);display:grid;place-items:center;font-size:16px;flex-shrink:0}
+  .coach-head-info{flex:1}
+  .coach-head-name{font-weight:700;font-size:14px}
+  .coach-head-sub{font-size:11px;color:var(--track)}
+  .coach-close{background:none;border:none;color:#6b6b85;font-size:18px;padding:4px;line-height:1;cursor:pointer}
+  .coach-close:hover{color:#f5f5fa}
+  .coach-messages{flex:1;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}
+  .coach-messages::-webkit-scrollbar{width:4px}
+  .coach-messages::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:4px}
+  .msg{max-width:88%;font-size:13.5px;line-height:1.6}
+  .msg-coach{align-self:flex-start;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:14px 14px 14px 4px;padding:10px 14px;color:#f5f5fa}
+  .msg-user{align-self:flex-end;background:rgba(234,179,8,.22);border:1px solid rgba(234,179,8,.3);border-radius:14px 14px 4px 14px;padding:10px 14px;color:#f5f5fa}
+  .msg-thinking{align-self:flex-start;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px 14px 14px 4px;padding:10px 14px;display:flex;align-items:center;gap:6px;color:#6b6b85;font-size:13px}
+  .thinking-dot{width:6px;height:6px;border-radius:50%;background:var(--track);animation:coachPulse 1.2s ease-in-out infinite}
+  .thinking-dot:nth-child(2){animation-delay:.2s}
+  .thinking-dot:nth-child(3){animation-delay:.4s}
+  @keyframes coachPulse{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}
+  .coach-limit{padding:10px 18px;font-size:11px;color:#6b6b85;text-align:center;border-top:1px solid rgba(255,255,255,.08);display:none}
+  .coach-limit.visible{display:block}
+  .coach-limit a{color:var(--track)}
+  .coach-input-row{padding:12px 18px 16px;border-top:1px solid rgba(255,255,255,.08);display:flex;gap:8px;align-items:flex-end}
+  .coach-input{flex:1;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.08);color:#f5f5fa;border-radius:10px;padding:9px 12px;font-size:13px;font-family:inherit;resize:none;max-height:100px;line-height:1.5}
+  .coach-input:focus{outline:none;border-color:var(--track)}
+  .coach-input::placeholder{color:#6b6b85}
+  .coach-send{width:34px;height:34px;border-radius:9px;border:none;flex-shrink:0;background:linear-gradient(135deg,#eab308,#7c5cff);color:#fff;font-size:15px;display:grid;place-items:center;cursor:pointer;transition:opacity .15s}
+  .coach-send:hover{opacity:.85}
+  .coach-send:disabled{opacity:.4;cursor:default}
+  @media(max-width:480px){.coach-drawer{width:calc(100vw - 32px);right:16px;bottom:80px}.coach-fab{right:16px;bottom:16px}h1.title{font-size:28px}}
 </style>
 </head>
 <body>
+<div class="sr-only">Interactive Analyze Your Data Lesson 1: ask a tiny sales sheet real questions and see AI answer with its reasoning shown, with an AI Coach.</div>
+<div class="wrap">
+  <nav>
+    <a href="/" class="logo"><span class="mark">L</span> LearningGPT</a>
+    <div class="nav-r">
+      <a href="/lessons/analyze-your-data/">← Analyze Your Data</a>
+      <a href="/playground">Playground</a>
+    </div>
+  </nav>
+  <main class="lesson">
+    <div class="l-top"><span class="l-tag">Analyze Your Data · Lesson 1</span><span class="l-meta"><span class="pill free">Free</span> &nbsp;~12 min · No code</span></div>
+    <h1 class="title">From spreadsheet <span class="serif">to answers.</span></h1>
+    <p class="lede">You don't need to be an Excel wizard. This lesson drops a messy spreadsheet into AI and gets real answers in plain English — clean the data, ask real questions, and get answers with the reasoning shown so you can trust them. No formulas, no code.</p>
+    <div class="section"><h2 class="sec">The mental model</h2>
+      <div class="mm"><h3>AI turns a spreadsheet into a conversation. You ask in plain English; it does the formulas and shows its work.</h3>
+      <p style="margin-bottom:0">You used to need the right formula to ask a question of your data. Now you describe the question and AI writes the analysis, returns the answer, and explains how it got there. The skill that gets you ahead isn't being technical — it's knowing what to ask for.</p></div>
+      <div class="reframe"><span class="lbl">The reframe</span><b>Make it show its work.</b> An answer with the reasoning shown is one you can check; a number with no explanation is one you have to take on faith. Always ask how it got there.</div></div>
+    <div class="section"><h2 class="sec">Step 01 · Clean the messy sheet first</h2>
+      <p>Real spreadsheets are messy — blank rows, mixed date formats, "N/A" vs empty, totals stuck in the data. Ask AI to clean before it analyzes:</p>
+      <div class="promptcard"><span class="lbl">Clean prompt</span>Here's my spreadsheet. Before analyzing, clean it: flag and handle blank rows, inconsistent date or number formats, duplicates, and any totals mixed into the data. Tell me what you changed and why, and ask me before deleting anything.</div></div>
+    <div class="section"><h2 class="sec">Step 02 · Ask it real questions</h2>
+      <p>Here's a tiny sales sheet. Tap a question — watch AI answer in plain English, with its reasoning shown:</p>
+      <div class="builder" style="background:var(--bg-2)">
+        <div class="console" style="min-height:auto;margin-bottom:14px">
+          <div class="ln show"><span class="mut">Month</span> &nbsp; Jan 42k · Feb 38k · Mar 51k · Apr 47k · May 63k · Jun 59k</div>
+        </div>
+        <div class="opts">
+          <button class="opt" onclick="ask(this,'Which month was strongest, and by how much?')">Which month was strongest?</button>
+          <button class="opt" onclick="ask(this,'Whats the trend over the half-year?')">What's the trend?</button>
+          <button class="opt" onclick="ask(this,'Did anything look unusual?')">Anything unusual?</button>
+        </div>
+        <div class="fb" id="ansfb"></div>
+      </div></div>
+    <div class="section"><h2 class="sec">Step 03 · Trust the numbers</h2>
+      <p>AI is fast but not infallible with data — it can misread a column, average the wrong thing, or quietly drop rows. Spot-check before you act:</p>
+      <div class="warn"><b>Verify one number by hand before you trust the rest.</b> Pick a figure you can check (a single month's total) and confirm AI got it right. If the easy one is correct and the reasoning is sound, you can trust the harder ones. And keep sensitive data general — don't paste names, account numbers, or anything you wouldn't email.</div></div>
+    <div class="challenge"><h3>Your challenge: answer one real question</h3>
+      <ol class="steps"><li>Drop a real (non-sensitive) spreadsheet into an AI that handles data.</li><li>Ask it to clean the sheet and tell you what it changed.</li><li>Ask two real questions in plain English, reasoning shown.</li><li>Hand-check one number before you trust the rest.</li></ol></div>
+    <div class="done"><div class="check">✓</div><h3>Lesson complete</h3>
+      <p style="max-width:480px;margin:0 auto">You can clean messy data without formulas, ask a spreadsheet questions in plain English, get answers with the reasoning shown, and verify the output before trusting it.</p>
+      <div class="upnext"><span class="lbl">Up next</span><p>Lesson 2 · Insights &amp; charts that tell the story</p></div>
+      <div class="cta-row"><a class="btn btn-block" href="/lessons/analyze-your-data/insights-and-charts">Continue to Lesson 2 →</a></div>
+      <div class="cta-row"><a class="btn btn-ghost" href="/playground" target="_blank" rel="noopener">Open the Playground</a><a class="btn btn-ghost" href="/lessons/analyze-your-data/">Back to Analyze Your Data</a></div></div>
+  </main>
+</div>
+<footer>© 2026 LearningGPT · Independent. Not affiliated with OpenAI, Anthropic, Microsoft, Google, or xAI.</footer>
 
-<div class="bg-orb one"></div>
-<div class="bg-orb two"></div>
-
-<nav class="top">
-  <div class="nav-inner">
-    <a href="/" class="logo">
-      <div class="logo-mark">L</div>
-      LearningGPT
-    </a>
-    <a href="/lessons/analyze-your-data/" class="nav-back">← Analyze Your Data</a>
-  </div>
-</nav>
-
-<article class="lesson">
-  <div class="container">
-
-    <div class="lesson-meta"><span class="chip">Analyze Your Data · Lesson 1</span><span class="chip chip-free">Free</span><span>~12 min read</span><span class="dot"></span><span>No code required</span><span class="dot"></span><span>Five questions answered by the end</span></div>
-
-    <h1>From spreadsheet <span class="grad serif">to answers, just by asking.</span></h1>
-
-    <p class="deck">Your spreadsheets are full of answers you don’t have time to dig out — and the formulas to get them are exactly what most people never learned. This lesson removes that wall: you’ll upload real data, ask it questions in plain English, and learn to verify the answers so you can trust them.</p>
-
-    <h2><span class="num">The mental model</span></h2><h3>You don’t need formulas or a stats class. You ask your data questions in plain English, and AI does the work.</h3><p>Spreadsheets hide their answers behind formulas most people never learned. AI removes that wall: you upload your data and ask, “which month was best?” or “what stands out here?” and it analyzes and explains. The skill isn’t spreadsheet syntax anymore — it’s asking good questions and checking the answers.</p><div class="callout"><span class="lbl">The Reframe</span><p><strong>Interview your data.</strong> Treat your spreadsheet like an expert you can question. Start broad (“what’s interesting here?”), then drill into whatever it surfaces.</p></div><h2><span class="num">Step 01</span> Get your data ready</h2><p>AI reads tidy data far better. Quick prep:</p><ul><li><strong>Headers on top</strong> — one clear label per column.</li><li><strong>One record per row</strong> — no merged cells or stacked tables.</li><li><strong>Consistent formats</strong> — dates as dates, numbers as numbers.</li></ul><h2><span class="num">Step 02</span> Upload and ask</h2><p>Upload the file to a tool that reads data (ChatGPT or Claude with file upload, or the AI built into Sheets/Excel) and ask in plain language.</p><div class="prompt-example"><span class="label">Starter questions</span>Here’s my [sales] data. Give me a quick overview: totals, the trend over time, the top and bottom performers, and anything that stands out or looks unusual. Explain what each number means in plain English.</div><h2><span class="num">Step 03</span> Ask better questions</h2><p>The good ones go beyond totals: trends over time, top and bottom, comparisons between segments, and the open-ended “what stands out” that surfaces things you didn’t think to ask.</p><h2><span class="num">Step 04</span> Verify before you trust</h2><p>Spot-check at least one number against the raw data, and make sure it read the right columns. An answer you haven’t sanity-checked is a guess with confidence.</p><div class="gotcha">AI can miscount, misread a column, or quietly choke on messy data — and still answer confidently. Always verify a key figure against the source, and clean obvious mess first. A wrong number that looks authoritative is worse than no answer.</div>
-
-    <div class="challenge"><h2 style="margin-top:0;">Your challenge: interview a real spreadsheet</h2><p>Grab a spreadsheet you actually use. Then:</p><ol><li>Tidy it: headers on top, one record per row, consistent formats.</li><li>Upload it and ask for a plain-English overview.</li><li>Ask five real questions, including one open-ended “what stands out.”</li><li>Verify at least one number against the raw data.</li></ol><p>That’s answers out of a spreadsheet without a single formula. Next, go from answering questions to producing real analysis — cleaning data, finding patterns, and making charts — that’s Lesson 2.</p><div class="btn-row"><a href="/lessons/analyze-your-data/insights-and-charts" class="btn">Next: insights, charts & summaries →</a><a href="/lessons/analyze-your-data/" class="btn ghost">Back to Analyze Your Data</a></div></div>
-
-    <div class="checklist"><h3>What you can do now</h3><ul><li>Ask a spreadsheet questions in plain English</li><li>Prepare data so AI reads it correctly</li><li>Ask question types that surface real answers</li><li>Use open-ended questions to find the unexpected</li><li>Verify AI’s numbers before trusting them</li></ul></div>
-
-    <div class="next-up"><span class="pro-tag">Pro</span><div class="lbl" style="margin-top:14px;">Up next in Analyze Your Data</div><h3>Lesson 2 · Insights, charts & summaries</h3><p>Clean messy data, find real patterns, build the right charts, and summarize analysis for people who’ll never open the spreadsheet. <a href="/lessons/analyze-your-data/insights-and-charts">Go to Lesson 2 →</a></p></div>
-
-  </div>
-</article>
-
-<footer>
-  <div class="footer-inner">
-    <div>© 2026 LearningGPT, Inc. · Independent.</div>
-    <a href="/lessons/website-builder/" style="color: var(--text-dim);">← Back to Build a Website</a>
-  </div>
-</footer>
-
-
-<!-- ── AI COACH FAB ── -->
-<button class="coach-fab" id="coachFab" title="Ask the AI Coach">
-  🎓
-  <span class="coach-fab-badge">AI</span>
-</button>
-
-<!-- ── AI COACH DRAWER ── -->
+<button class="coach-fab" id="coachFab" title="Ask the AI Coach">🎓<span class="coach-fab-badge">AI</span></button>
 <div class="coach-drawer" id="coachDrawer">
   <div class="coach-drawer-head">
     <div class="coach-avatar">🎓</div>
-    <div class="coach-head-info">
-      <div class="coach-head-name">AI Coach</div>
-      <div class="coach-head-sub">Ask anything about this lesson</div>
-    </div>
+    <div class="coach-head-info"><div class="coach-head-name">AI Coach</div><div class="coach-head-sub">Ask anything about this lesson</div></div>
     <button class="coach-close" id="coachClose">✕</button>
   </div>
   <div class="coach-messages" id="coachMessages">
-    <div class="msg msg-coach">Hey! I’m your AI Coach for this lesson. Ask me anything about analyzing a spreadsheet with AI — prepping data, asking good questions, or verifying answers. What’s on your mind?</div>
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about cleaning data, asking a spreadsheet questions, or trusting the answers. What's on your mind?</div>
   </div>
-  <div class="coach-limit" id="coachLimit">
-    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
-  </div>
+  <div class="coach-limit" id="coachLimit">Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.</div>
   <div class="coach-input-row">
     <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
     <button class="coach-send" id="coachSend">➤</button>
   </div>
 </div>
 
-
+<script id="lessonScript">
+  var A={
+    'Which month was strongest, and by how much?':'May at 63k was the strongest — 4k (about 7%) above June, the next highest. (I compared all six monthly totals and took the max.)',
+    'Whats the trend over the half-year?':'Upward overall: 42k → 59k, roughly +40% across the half, with a dip in February. (I looked at first-to-last and the month-to-month direction.)',
+    'Did anything look unusual?':'February (38k) breaks the rising pattern — the only month below the one before it. Worth asking what happened that month. (I flagged the single down-month against the trend.)'
+  };
+  function ask(btn,q){ var g=btn.closest('.opts'); g.querySelectorAll('.opt').forEach(function(b){b.classList.remove('right');}); btn.classList.add('right'); var fb=document.getElementById('ansfb'); fb.className='fb show good'; fb.textContent='AI: '+A[q]; }
+</script>
 <script id="coachScript">
 (function() {
-  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: From spreadsheet to answers (Analyze Your Data, Lesson 1, Free)\nTRACK: Analyze Your Data (a cross-tool 'What can you do with AI' build)\n\nLESSON CONTENT SUMMARY:\nThis free beginner lesson teaches asking your data questions in plain English with AI, no formulas or stats. Mental model: spreadsheets hide answers behind formulas most never learned; AI removes that wall - upload data and ask which month was best or what stands out; the skill is asking good questions and checking answers. Reframe: interview your data like an expert, starting broad then drilling in. Step 1 get data ready: headers on top, one record per row, consistent formats (dates as dates, numbers as numbers). Step 2 upload and ask using a tool that reads data (ChatGPT or Claude file upload, or AI in Sheets/Excel) with plain questions for an overview, trend, top and bottom, and anything unusual, explained plainly. Step 3 ask better questions: trends over time, top and bottom, segment comparisons, and open-ended what-stands-out. Step 4 verify before trusting - spot-check a number against raw data and confirm it read the right columns. Gotcha: AI can miscount, misread a column, or choke on messy data while answering confidently; always verify a key figure and clean obvious mess; a confident wrong number is worse than none. The challenge: interview a real spreadsheet with five questions and verify one number.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise - 2-4 sentences unless more is genuinely needed\n- Be practical with real examples\n- If asked about cleaning data, charts, forecasting, or dashboards, briefly answer and point to Lesson 2 (Pro) or Lesson 3 (Pro+) of this build\n- Never invent tools or features that don't exist\n- Plain conversational text only, no markdown symbols\n- Do not start with \"Great question!\" or similar filler";
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: From spreadsheet to answers\nTRACK: Analyze Your Data (Lesson 01, Free)\n\nLESSON CONTENT SUMMARY:\nYou don't need to be an Excel wizard \u2014 drop a messy spreadsheet into AI and get real answers in plain English. Mental model: AI turns a spreadsheet into a CONVERSATION \u2014 you ask in plain English, it does the formulas, returns the answer, and shows its work; the skill that gets you ahead isn't being technical, it's knowing what to ask for. Reframe: make it SHOW ITS WORK \u2014 an answer with reasoning shown is one you can check; a number with no explanation is one you take on faith.\n\nClean the messy sheet FIRST \u2014 real spreadsheets have blank rows, mixed date/number formats, 'N/A' vs empty, duplicates, totals stuck in the data; ask AI to clean before analyzing, tell you what it changed and why, and ask before deleting anything. Then ask real questions in plain English (which month was strongest, what's the trend, anything unusual) and have it explain how it got the answer.\n\nTrust the numbers \u2014 AI is fast but not infallible with data: it can misread a column, average the wrong thing, or quietly drop rows. VERIFY one number by hand before trusting the rest (pick a figure you can check, like a single month's total); if the easy one is right and the reasoning is sound, you can trust the harder ones. Keep sensitive data general \u2014 don't paste names, account numbers, or anything you wouldn't email; privacy is part of this.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise \u2014 2-4 sentences unless more is genuinely needed\n- Be practical \u2014 give real work examples when helpful\n- If asked about something not in this lesson, briefly answer and point to where to learn more\n- Never make up features that don't exist\n- Plain conversational text only \u2014 no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler";
   var MAX_FREE = 3;
-  var count = 0;
-  var isThinking = false;
-  var history = [];
-
+  var count = 0, isThinking = false, history = [];
   var fab = document.getElementById('coachFab');
   var drawer = document.getElementById('coachDrawer');
   var closeBtn = document.getElementById('coachClose');
@@ -289,81 +267,32 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
   var input = document.getElementById('coachInput');
   var sendBtn = document.getElementById('coachSend');
   var limitBar = document.getElementById('coachLimit');
-
-  if (!fab) return; // safety check
-
-  fab.addEventListener('click', function() { toggle(true); });
-  closeBtn.addEventListener('click', function() { toggle(false); });
-
-  function toggle(open) {
-    drawer.classList.toggle('open', open);
-    if (open) setTimeout(function() { input.focus(); }, 300);
-  }
-
-  input.addEventListener('input', function() {
-    input.style.height = 'auto';
-    input.style.height = Math.min(input.scrollHeight, 100) + 'px';
-  });
-
-  input.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
-  });
+  if (!fab) return;
+  fab.addEventListener('click', function(){ toggle(true); });
+  closeBtn.addEventListener('click', function(){ toggle(false); });
+  function toggle(open){ drawer.classList.toggle('open', open); if(open) setTimeout(function(){ input.focus(); }, 300); }
+  input.addEventListener('input', function(){ input.style.height='auto'; input.style.height=Math.min(input.scrollHeight,100)+'px'; });
+  input.addEventListener('keydown', function(e){ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); send(); } });
   sendBtn.addEventListener('click', send);
-
-  function addMsg(text, type) {
-    var d = document.createElement('div');
-    d.className = 'msg msg-' + type;
-    d.textContent = text;
-    msgs.appendChild(d);
-    msgs.scrollTop = msgs.scrollHeight;
-    return d;
-  }
-
-  function addThinking() {
-    var d = document.createElement('div');
-    d.className = 'msg-thinking';
-    d.innerHTML = '<div class="thinking-dot"></div><div class="thinking-dot"></div><div class="thinking-dot"></div>';
-    msgs.appendChild(d);
-    msgs.scrollTop = msgs.scrollHeight;
-    return d;
-  }
-
-  async function send() {
+  function addMsg(text, type){ var d=document.createElement('div'); d.className='msg msg-'+type; d.textContent=text; msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight; return d; }
+  function addThinking(){ var d=document.createElement('div'); d.className='msg-thinking'; d.innerHTML='<div class="thinking-dot"></div><div class="thinking-dot"></div><div class="thinking-dot"></div>'; msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight; return d; }
+  async function send(){
     var text = input.value.trim();
-    if (!text || isThinking) return;
-    if (count >= MAX_FREE) {
-      limitBar.classList.add('visible');
-      input.disabled = true;
-      sendBtn.disabled = true;
-      return;
-    }
+    if(!text || isThinking) return;
+    if(count >= MAX_FREE){ limitBar.classList.add('visible'); input.disabled=true; sendBtn.disabled=true; return; }
     count++;
-    if (count >= MAX_FREE) limitBar.classList.add('visible');
-    addMsg(text, 'user');
-    history.push({ role: 'user', content: text });
-    input.value = '';
-    input.style.height = 'auto';
-    isThinking = true;
-    sendBtn.disabled = true;
+    if(count >= MAX_FREE) limitBar.classList.add('visible');
+    addMsg(text,'user'); history.push({role:'user',content:text});
+    input.value=''; input.style.height='auto'; isThinking=true; sendBtn.disabled=true;
     var thinking = addThinking();
-    try {
-      var res = await fetch('/api/playground', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ coach: true, lessonCoach: true, lessonContext: LESSON_CONTEXT, history: history })
-      });
+    try{
+      var res = await fetch('/api/playground', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ coach:true, lessonCoach:true, lessonContext:LESSON_CONTEXT, history:history }) });
       thinking.remove();
       var data = await res.json();
       var reply = (data && data.coach) ? data.coach : "Sorry, something went wrong. Try again in a moment.";
-      addMsg(reply, 'coach');
-      history.push({ role: 'assistant', content: reply });
-    } catch(err) {
-      thinking.remove();
-      addMsg("Something went wrong — try again in a moment.", 'coach');
-    } finally {
-      isThinking = false;
-      sendBtn.disabled = count >= MAX_FREE;
-    }
+      addMsg(reply,'coach'); history.push({role:'assistant',content:reply});
+    } catch(err){ thinking.remove(); addMsg("Something went wrong — try again in a moment.",'coach'); }
+    finally{ isThinking=false; sendBtn.disabled = count >= MAX_FREE; }
   }
 })();
 </script>

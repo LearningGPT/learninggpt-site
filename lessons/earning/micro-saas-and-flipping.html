@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Micro-SaaS & flipping: a tiny AI tool with a real moat — built solo, sold or scaled — LearningGPT</title>
+<meta name="description" content="Micro-SaaS is the small, fast cousin of SaaS: one narrow tool, often a wrapper on AI, with a real moat — built solo in weeks. Why the moat (not the AI) is the business, how to build fast, and the build-to-flip and buy-and-grow plays. Pro+ lesson." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#2fcf86" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/earning/micro-saas-and-flipping" />
+<meta property="og:title" content="Micro-SaaS & flipping: a tiny AI tool with a real moat" />
+<meta property="og:description" content="One narrow tool with a real moat, built solo. Why the moat is the business, how to build fast, and how to flip or scale it." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/earning/micro-saas-and-flipping" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"Micro-SaaS & flipping: a tiny AI tool with a real moat — built solo, sold or scaled","author":{"@type":"Person","name":"Dan Allen","url":"https://learninggpt.ai/about"},"publisher":{"@type":"Organization","name":"LearningGPT","url":"https://learninggpt.ai/"},"datePublished":"2026-06-26","image":"https://learninggpt.ai/og-image.png"}
+</script>
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --danger:#ff6b8a; --radius:14px; --radius-lg:20px; --container:820px; --track:#2fcf86; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+button{font-family:inherit;cursor:pointer;}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:var(--track);}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.22;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(47,207,134,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(47,207,134,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-pro-plus{border-color:rgba(255,181,71,0.5);color:#ffce82;background:rgba(255,181,71,0.12);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 24px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#2fcf86 0%,#44e0a4 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.15em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:52px 0 14px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(47,207,134,0.12),rgba(124,92,255,0.06));border:1px solid rgba(47,207,134,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,#2fcf86,#7c5cff);border-radius:2px 0 0 2px;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.cost-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;}
+.cost-table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--line-strong);color:var(--text-dim);font-size:11.5px;text-transform:uppercase;letter-spacing:0.6px;}
+.cost-table td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.cost-table td:first-child{font-weight:700;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:14px 0;font-size:14.5px;}
+.gotcha::before{content:'⚠ The hype trap: ';color:var(--warn);font-weight:700;}
+.qblock{margin:26px 0;padding:20px 22px;border:1px solid var(--line-strong);border-radius:var(--radius);background:var(--bg-soft);}
+.eyebrow-do{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;color:var(--track);margin-bottom:8px;}
+.qblock p{font-size:15.5px;margin:0 0 14px;}
+.opts{display:flex;flex-direction:column;gap:10px;}
+.opt{text-align:left;padding:13px 15px;line-height:1.5;font-size:14.5px;font-family:inherit;color:var(--text);background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);cursor:pointer;transition:.15s;}
+.opt:hover:not(:disabled){border-color:var(--track);background:#16223a;}
+.opt:disabled{cursor:default;}
+.fb{display:none;margin-top:14px;padding:12px 14px;border-radius:var(--radius);font-size:14px;line-height:1.6;}
+.fb.good{background:rgba(68,224,164,.1);border:1px solid rgba(68,224,164,.35);color:#a7efd2;}
+.fb.bad{background:rgba(124,92,255,.1);border:1px solid rgba(124,92,255,.3);color:#cfc4ff;}
+.picker{margin:26px 0;padding:22px 24px;border:1px solid rgba(47,207,134,0.3);border-radius:var(--radius-lg);background:linear-gradient(135deg,rgba(47,207,134,0.08),rgba(124,92,255,0.05));}
+.pick-opts{display:flex;flex-direction:column;gap:10px;}
+.pick-opt{text-align:left;padding:13px 15px;font-size:14.5px;font-family:inherit;color:var(--text);background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);cursor:pointer;transition:.15s;line-height:1.5;}
+.pick-opt:hover{border-color:var(--track);background:#16223a;}
+.pick-opt.sel{border-color:var(--track);background:rgba(47,207,134,0.12);}
+.pick-result{display:none;margin-top:16px;padding:16px 18px;border-radius:var(--radius);background:var(--surface);border:1px solid var(--track);}
+.pick-result .rn{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--track);font-weight:700;margin-bottom:6px;}
+.pick-result .rt{font-size:17px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.pick-result .rb{font-size:14px;color:var(--text-dim);line-height:1.6;}
+.challenge{margin:52px 0 40px;background:linear-gradient(135deg,rgba(47,207,134,0.14),rgba(124,92,255,0.1));border:1px solid rgba(47,207,134,0.28);border-radius:var(--radius-lg);padding:34px;}
+.challenge h2{margin-top:0;} .challenge .btn-row{display:flex;gap:12px;flex-wrap:wrap;}
+.challenge a.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#2fcf86,#7c5cff);color:white;padding:13px 24px;border-radius:10px;font-weight:600;font-size:15px;}
+.challenge a.btn:hover{transform:translateY(-1px);color:white;}
+.checklist{margin:40px 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);}
+.checklist h3{margin-top:0;font-size:18px;} .checklist ul{list-style:none;padding:0;margin:0;}
+.checklist li{padding:10px 0 10px 30px;position:relative;font-size:15px;border-top:1px solid var(--line);}
+.checklist li:first-child{border-top:none;padding-top:0;}
+.checklist li::before{content:'✓';position:absolute;left:0;color:var(--accent);font-weight:700;}
+.next-up{margin:50px 0 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.next-up .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:10px;}
+.next-up h3{margin:0 0 8px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:14.5px;}
+footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);}
+.coach-fab{position:fixed;bottom:28px;right:28px;z-index:999;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#2fcf86,#7c5cff);border:none;box-shadow:0 8px 28px rgba(47,207,134,0.4);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;}
+.coach-fab .coach-fab-badge{position:absolute;top:-4px;right:-4px;background:#7c5cff;color:white;font-size:9px;font-weight:700;padding:2px 5px;border-radius:999px;border:2px solid #0a0a1a;line-height:1.2;}
+.coach-drawer{position:fixed;bottom:90px;right:28px;z-index:998;width:360px;max-height:520px;background:#13132a;border:1px solid rgba(47,207,134,0.25);border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,0.5);display:flex;flex-direction:column;transform:scale(0.92) translateY(16px);opacity:0;pointer-events:none;transition:transform .25s cubic-bezier(.34,1.56,.64,1),opacity .2s;}
+.coach-drawer.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all;}
+.coach-drawer-head{padding:16px 18px 14px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:10px;}
+.coach-avatar{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#2fcf86,#7c5cff);display:grid;place-items:center;font-size:16px;flex-shrink:0;}
+.coach-head-info{flex:1;} .coach-head-name{font-weight:700;font-size:14px;} .coach-head-sub{font-size:11px;color:#2fcf86;}
+.coach-close{background:none;border:none;color:#6b6b85;font-size:18px;padding:4px;line-height:1;cursor:pointer;} .coach-close:hover{color:#f5f5fa;}
+.coach-messages{flex:1;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:12px;}
+.coach-messages::-webkit-scrollbar{width:4px;} .coach-messages::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.14);border-radius:4px;}
+.msg{max-width:88%;font-size:13.5px;line-height:1.6;}
+.msg-coach{align-self:flex-start;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:14px 14px 14px 4px;padding:10px 14px;color:#f5f5fa;}
+.msg-user{align-self:flex-end;background:linear-gradient(135deg,rgba(124,92,255,0.25),rgba(91,141,239,0.25));border:1px solid rgba(124,92,255,0.3);border-radius:14px 14px 4px 14px;padding:10px 14px;color:#f5f5fa;}
+.msg-thinking{align-self:flex-start;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px 14px 14px 4px;padding:10px 14px;display:flex;align-items:center;gap:6px;color:#6b6b85;font-size:13px;}
+.thinking-dot{width:6px;height:6px;border-radius:50%;background:#2fcf86;animation:coachPulse 1.2s ease-in-out infinite;}
+.thinking-dot:nth-child(2){animation-delay:.2s;} .thinking-dot:nth-child(3){animation-delay:.4s;}
+@keyframes coachPulse{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}
+.coach-limit{padding:10px 18px;font-size:11px;color:#6b6b85;text-align:center;border-top:1px solid rgba(255,255,255,0.08);display:none;} .coach-limit.visible{display:block;} .coach-limit a{color:#5b8def;}
+.coach-input-row{padding:12px 18px 16px;border-top:1px solid rgba(255,255,255,0.08);display:flex;gap:8px;align-items:flex-end;}
+.coach-input{flex:1;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.08);color:#f5f5fa;border-radius:10px;padding:9px 12px;font-size:13px;font-family:inherit;resize:none;max-height:100px;line-height:1.5;}
+.coach-input:focus{outline:none;border-color:#2fcf86;} .coach-input::placeholder{color:#6b6b85;}
+.coach-send{width:34px;height:34px;border-radius:9px;border:none;flex-shrink:0;background:linear-gradient(135deg,#2fcf86,#7c5cff);color:white;font-size:15px;display:grid;place-items:center;cursor:pointer;} .coach-send:disabled{opacity:0.4;cursor:default;}
+@media (max-width:480px){.coach-drawer{width:calc(100vw - 32px);right:16px;bottom:80px;}.coach-fab{right:16px;bottom:16px;}}
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top"><div class="nav-inner">
+  <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+  <a href="/lessons/earning/" class="nav-back">← Earning with AI</a>
+</div></nav>
+<article class="lesson"><div class="container">
+  <div class="lesson-meta">
+    <span class="chip">Earning with AI</span>
+    <span class="chip chip-pro-plus">Pro+</span>
+    <span>~15 min · hands-on</span>
+    <span class="dot"></span>
+    <span>Build solo, sell or scale</span>
+  </div>
+  <h1>A tiny tool with a <span class="grad serif">real moat.</span></h1>
+  <p class="deck">Micro-SaaS is vertical SaaS's small, fast cousin: a tiny product that solves one narrow problem for one specific audience — often a simple "wrapper" around an AI model — that one person can build in weeks and run alone. The catch everyone gets wrong: anyone can wrap an API, so <strong>the AI is never the business. The moat is.</strong> Get the moat right and a micro-SaaS is a real, low-overhead income stream — and a sellable asset you can flip on a marketplace. Here's how it actually works.</p>
+
+  <h2><span class="num">01</span> What micro-SaaS is</h2>
+  <p>One feature. One audience. Low overhead. Run solo. Instead of a sprawling platform, you build a sharp tool that does <em>one job</em> brilliantly — "turn a Zoom recording into a formatted client recap for therapists," "rewrite Etsy listings for SEO," "generate code-compliant electrical estimates." Small enough to build and maintain alone, specific enough that the right people will pay $10–$50/month without thinking about it. The whole appeal is the asymmetry: tiny effort to run, real recurring revenue.</p>
+
+  <h2><span class="num">02</span> The "thin wrapper" truth</h2>
+  <p>Critics sneer "it's just a wrapper on ChatGPT" — and they're missing the point. <strong>A wrapper with a real moat is a real business; a wrapper without one is dead on arrival.</strong> The model is a commodity anyone can call. What's <em>not</em> a commodity, and what you actually sell, is one of these moats:</p>
+  <div style="overflow-x:auto;"><table class="cost-table">
+    <tr><th>Moat</th><th>Why it defends you</th></tr>
+    <tr><td>A reachable niche audience</td><td>You own a specific group's attention; competitors can't easily reach them</td></tr>
+    <tr><td>A workflow that saves real time</td><td>You wrap the model in the exact steps a job needs, not a blank prompt box</td></tr>
+    <tr><td>Proprietary data or integrations</td><td>Connected to tools/data a generic chatbot can't touch</td></tr>
+    <tr><td>Distribution / first-mover</td><td>You got to the niche first and built the brand and the audience</td></tr>
+  </table></div>
+  <div class="callout">
+    <span class="lbl">The one question that decides it</span>
+    <p>Before you build anything, answer: <strong>"Why would they pay me instead of just using ChatGPT themselves?"</strong> If the only answer is "convenience," it's fragile. If it's "because it's built for exactly my job, plugged into my tools, and I found it where I already hang out" — that's a moat, and a business. Don't build the wrapper; build the moat, and let the wrapper be how you deliver it.</p>
+  </div>
+
+  <h2><span class="num">03</span> Build it fast, charge early</h2>
+  <p>This is where AI-assisted development shines: a focused micro-SaaS is genuinely a weeks-not-months build, and no-code/low-code tools can get a paid v1 live even faster. Ship the smallest version that solves the one problem, <strong>charge from day one</strong> (free tools attract freeloaders, not customers), and let real users tell you what to add. Resist scope creep — the discipline of "one tool, one job" is the entire advantage.</p>
+
+  <h2><span class="num">04</span> The meta-play: flip it or buy it</h2>
+  <p>Here's what makes this a Pro+ play and not just a side project — micro-SaaS products are <strong>tradable assets:</strong></p>
+  <ul>
+    <li><strong>Build to flip.</strong> A profitable micro-SaaS sells on marketplaces (Acquire, Flippa, and similar) for roughly <strong>2–4× its annual profit</strong>. Build, grow to steady revenue, sell the asset, repeat — a faster path to a lump sum than nursing one product for a decade.</li>
+    <li><strong>Buy and grow.</strong> The flip side: acquire an underpriced, neglected micro-SaaS with real users, apply better marketing or a few features, and grow its value. You skip the riskiest part — finding product-market fit — by buying something that already has it.</li>
+  </ul>
+
+  <h2><span class="num">05</span> The honest part</h2>
+  <div class="gotcha">"spin up 50 AI wrappers and let one hit" is a content-creator fantasy, not a strategy. Most micro-SaaS makes little or nothing, and a pile of moat-less wrappers is a pile of zeros. The winners are few and they're not random: they solve a <em>real, recurring</em> pain for a <em>reachable</em> niche, with a moat and actual distribution. Build one good one with a clear answer to "why me," get it to real revenue, and only then consider whether to scale it, flip it, or build the next.</div>
+  <div class="qblock">
+    <div class="eyebrow-do">Quick check</div>
+    <p>Which "wrapper" micro-SaaS has a defensible moat?</p>
+    <div class="opts">
+      <button class="opt" data-c="0" onclick="pick(this,'q1')">A general "chat with AI" site with a nicer logo</button>
+      <button class="opt" data-c="1" onclick="pick(this,'q1')">A tool built for bookkeepers that turns bank statements into categorized reports, integrated with their software</button>
+      <button class="opt" data-c="0" onclick="pick(this,'q1')">A box that passes your prompt straight to ChatGPT for $5/mo</button>
+    </div>
+    <div class="fb" id="fb-q1"></div>
+  </div>
+
+  <h2><span class="num">06</span> Which approach fits you?</h2>
+  <div class="picker">
+    <div class="eyebrow-do">Pick your move</div>
+    <div class="pick-opts" id="mv-opts">
+      <button class="pick-opt" onclick="mvPick(this,0)">Build a new one around a niche I know</button>
+      <button class="pick-opt" onclick="mvPick(this,1)">Build deliberately to flip</button>
+      <button class="pick-opt" onclick="mvPick(this,2)">Buy an existing one and grow it</button>
+    </div>
+    <div class="pick-result" id="mv-result">
+      <div class="rn">Your move</div>
+      <div class="rt" id="mv-title"></div>
+      <div class="rb" id="mv-body"></div>
+    </div>
+  </div>
+
+  <div class="challenge">
+    <h2 style="margin-top:0;">Your move this week</h2>
+    <p>Pick one narrow audience you can reach and one repetitive task they do. Write down your answer to <strong>"why would they pay me instead of using ChatGPT themselves?"</strong> in one sentence. If you can't answer it convincingly, keep hunting — that sentence is your moat, and no amount of building substitutes for it. When you've got a real one, scope the smallest paid v1 and price it from day one.</p>
+    <div class="btn-row">
+      <a href="/lessons/earning/niche-sites-and-programmatic-seo" class="btn">Next: niche &amp; programmatic SEO sites →</a>
+    </div>
+  </div>
+
+  <div class="checklist">
+    <h3>What you can do now</h3>
+    <ul>
+      <li>Build one narrow tool for one audience — small enough to run solo, specific enough to pay for</li>
+      <li>Know the AI is a commodity; sell the moat (niche audience, workflow, data, distribution)</li>
+      <li>Answer "why pay me instead of ChatGPT?" before building anything</li>
+      <li>Ship a paid v1 fast with AI-assisted dev/no-code; charge from day one and resist scope creep</li>
+      <li>Treat it as a tradable asset — build to flip (~2–4× annual profit) or buy and grow; ignore the "50 wrappers" fantasy</li>
+    </ul>
+  </div>
+
+  <div class="next-up">
+    <div class="lbl">Last in Earning with AI · Pro+</div>
+    <h3>Niche &amp; programmatic SEO sites — content assets that earn while you sleep</h3>
+    <p>The domain-investor's favorite AI play. <a href="/lessons/earning/niche-sites-and-programmatic-seo">Open the lesson →</a></p>
+  </div>
+</div></article>
+<footer><div class="footer-inner">
+  <div>© 2026 LearningGPT, Inc. · Independent. Don't build the wrapper — build the moat.</div>
+  <a href="/lessons/earning/" style="color:var(--text-dim);">← All Earning lessons</a>
+</div></footer>
+<button class="coach-fab" id="coachFab" title="Ask the AI Coach">🎓<span class="coach-fab-badge">AI</span></button>
+<div class="coach-drawer" id="coachDrawer">
+  <div class="coach-drawer-head"><div class="coach-avatar">🎓</div><div class="coach-head-info"><div class="coach-head-name">AI Coach</div><div class="coach-head-sub">Ask anything about this lesson</div></div><button class="coach-close" id="coachClose">✕</button></div>
+  <div class="coach-messages" id="coachMessages"><div class="msg msg-coach">Hey! Tell me a niche audience you can reach and a repetitive task they do, and I'll help you pressure-test the moat ('why pay you, not ChatGPT?') and scope a paid v1. What are you thinking?</div></div>
+  <div class="coach-limit" id="coachLimit">Coaching limit reached. <a href="/pricing">Upgrade</a> for unlimited coaching.</div>
+  <div class="coach-input-row"><textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea><button class="coach-send" id="coachSend">➤</button></div>
+</div>
+<script>
+  var MSG={ q1:{ good:"Right. Built for bookkeepers, doing their exact workflow, integrated with their software — that's a moat (niche + workflow + integration). A bookkeeper won't replicate that in raw ChatGPT. The other two are commodities anyone can copy or do themselves.", bad:"That one has no moat — a prettier ChatGPT or a pass-through box is trivially replaced. The defensible one is built for a specific audience's exact workflow and integrated with their tools, so raw ChatGPT can't match it. Moat, not model." } };
+  function pick(btn,key){ var opts=btn.parentNode; opts.querySelectorAll('.opt').forEach(function(b){b.disabled=true;b.style.opacity='0.55';}); btn.style.opacity='1'; var c=btn.dataset.c==='1'; btn.style.borderColor=c?'var(--accent)':'var(--danger)'; var fb=document.getElementById('fb-'+key); fb.className='fb '+(c?'good':'bad'); fb.textContent=MSG[key][c?'good':'bad']; fb.style.display='block'; }
+  var MV=[
+    {t:"Build a new one in a niche you know",b:"The best starting move: your knowledge of the audience and their workflow is the moat that makes the wrapper defensible. Find the one repetitive task, ship a paid v1 fast with AI dev/no-code, charge day one, and grow from real feedback. Lowest risk because you can actually reach and understand the customer."},
+    {t:"Build deliberately to flip",b:"Build with the exit in mind: clean code/docs, transferable systems, and clear, growing revenue — that's what buyers pay 2-4x annual profit for. Faster path to a lump sum than holding forever, but you still have to reach real product-market fit first; you can't flip something nobody pays for. Best if you enjoy building and selling more than operating."},
+    {t:"Buy an existing one and grow it",b:"You skip the riskiest part — finding product-market fit — by acquiring something with real users (marketplaces like Acquire/Flippa). Look for neglected products with steady revenue and obvious upside (poor marketing, missing features). Needs some capital and due-diligence care, but it's the most reliable path to owning a cash-flowing micro-SaaS."}
+  ];
+  function mvPick(btn,i){ document.querySelectorAll('#mv-opts .pick-opt').forEach(function(b){b.classList.remove('sel');}); btn.classList.add('sel'); document.getElementById('mv-title').textContent=MV[i].t; document.getElementById('mv-body').textContent=MV[i].b; document.getElementById('mv-result').style.display='block'; }
+</script>
+<script id="coachScript">
+(function() {
+  var LESSON_CONTEXT = `You are an AI learning coach embedded in a lesson on LearningGPT.ai.
+LESSON TITLE: Micro-SaaS and flipping — a tiny AI tool with a real moat, built solo, sold or scaled (Pro+ lesson, Earning with AI track)
+TRACK: Earning with AI (Pro+)
+LESSON CONTENT SUMMARY:
+Micro-SaaS is vertical SaaS's small fast cousin: a tiny product solving one narrow problem for one specific audience, often a wrapper around an AI model, buildable solo in weeks. Anyone can wrap an API, so the AI is never the business — the moat is. With a moat it's a low-overhead income stream and a sellable asset you can flip.
+- What it is: one feature, one audience, low overhead, run solo. A sharp tool doing one job ("Zoom recording -> formatted client recap for therapists," "rewrite Etsy listings for SEO," "code-compliant electrical estimates"). Small to build/maintain alone, specific enough the right people pay $10-50/mo. Appeal = asymmetry: tiny to run, real recurring revenue.
+- The "thin wrapper" truth: a wrapper WITH a moat is a real business; without one it's dead on arrival. The model is a commodity; the moat you sell is one of: a reachable niche audience, a workflow that saves real time (wrap the model in the exact steps, not a blank prompt box), proprietary data/integrations, distribution/first-mover. The deciding question before building: "Why would they pay me instead of using ChatGPT themselves?" If only "convenience," it's fragile; if "built for my exact job, plugged into my tools, found where I hang out," that's a moat.
+- Build fast, charge early: AI-assisted dev makes a focused micro-SaaS a weeks-not-months build; no-code gets a paid v1 faster. Ship the smallest version, charge from day one (free attracts freeloaders), let users guide additions, resist scope creep ("one tool, one job" is the advantage).
+- The meta-play (tradable assets): build to flip (profitable micro-SaaS sells on Acquire/Flippa etc. for ~2-4x annual profit; build, grow, sell, repeat) or buy and grow (acquire an underpriced neglected one with real users, improve marketing/features — skip the riskiest part, finding product-market fit).
+- Honest part: "spin up 50 AI wrappers and let one hit" is a fantasy. Most micro-SaaS makes little; moat-less wrappers are zeros. Winners solve a real recurring pain for a reachable niche, with a moat and distribution. Build one good one with a clear "why me," get it to real revenue, then decide to scale/flip/build next.
+- Approaches: build new in a niche you know (best, your knowledge is the moat); build to flip (clean/transferable + growing revenue, but still need product-market fit); buy and grow (skip PM-fit risk, needs capital + due diligence).
+YOUR ROLE:
+- Help the learner pressure-test the moat ("why pay you, not ChatGPT?"), scope a paid v1, or evaluate build-vs-buy/flip
+- Be concise (2-4 sentences), practical, honest; never promise income/exit multiples as guaranteed; always center the moat, real demand, and charging early
+- If asked outside this lesson, answer briefly and point to the Earning with AI track
+- Plain text only, no markdown symbols; don't open with "Great question!"`;
+  var MAX_FREE=8,count=0,isThinking=false,history=[];
+  var fab=document.getElementById('coachFab'),drawer=document.getElementById('coachDrawer'),closeBtn=document.getElementById('coachClose'),msgs=document.getElementById('coachMessages'),input=document.getElementById('coachInput'),sendBtn=document.getElementById('coachSend'),limitBar=document.getElementById('coachLimit');
+  if(!fab) return;
+  fab.addEventListener('click',function(){toggle(true);}); closeBtn.addEventListener('click',function(){toggle(false);});
+  function toggle(open){drawer.classList.toggle('open',open); if(open) setTimeout(function(){input.focus();},300);}
+  input.addEventListener('input',function(){input.style.height='auto';input.style.height=Math.min(input.scrollHeight,100)+'px';});
+  input.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}});
+  sendBtn.addEventListener('click',send);
+  function addMsg(t,ty){var d=document.createElement('div');d.className='msg msg-'+ty;d.textContent=t;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;return d;}
+  function addThinking(){var d=document.createElement('div');d.className='msg-thinking';d.innerHTML='<div class="thinking-dot"></div><div class="thinking-dot"></div><div class="thinking-dot"></div>';msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;return d;}
+  async function send(){var text=input.value.trim();if(!text||isThinking)return;if(count>=MAX_FREE){limitBar.classList.add('visible');input.disabled=true;sendBtn.disabled=true;return;}count++;if(count>=MAX_FREE)limitBar.classList.add('visible');addMsg(text,'user');history.push({role:'user',content:text});input.value='';input.style.height='auto';isThinking=true;sendBtn.disabled=true;var thinking=addThinking();try{var res=await fetch('/api/playground',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({coach:true,lessonCoach:true,lessonContext:LESSON_CONTEXT,history:history})});thinking.remove();var data=await res.json();var reply=(data&&data.coach)?data.coach:"Sorry, something went wrong. Try again in a moment.";addMsg(reply,'coach');history.push({role:'assistant',content:reply});}catch(err){thinking.remove();addMsg("Something went wrong — try again in a moment.",'coach');}finally{isThinking=false;sendBtn.disabled=count>=MAX_FREE;}}
+})();
+</script>
+<script src="/gate.js"></script>
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<!--
+  about.html  —  LearningGPT founder / about page
+  ---------------------------------------------------------------------------
+  NOTE: team.html is already taken (it's the "Manage your team" account page),
+  so this lives at /about. The byline and footer links point to /about.
+
+  CONFIRM BEFORE PUBLISHING:
+    • Wording assumes EX-Microsoft (you've left). If you still work there,
+      change "Ex-Microsoft" / "spent five years at Microsoft" to present tense
+      and revisit the site's "Not affiliated with Microsoft" line.
+    • Add a real headshot at /author-dan.jpg.
+    • Replace the LinkedIn URL in the JSON-LD with your real profile.
+    • If you have a shared nav/footer include (site-nav.js), feel free to swap
+      this page's static header/footer for your standard one so it's identical
+      sitewide. The content section (.about-wrap) is what matters.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Dan Allen — LearningGPT</title>
+  <meta name="description" content="LearningGPT is built by Dan Allen — five years at Microsoft and 3+ years deploying Microsoft 365 Copilot across enterprise, government, healthcare, and small business. Independent, vendor-neutral AI training." />
+  <link rel="canonical" href="https://learninggpt.ai/about" />
+  <meta name="theme-color" content="#7c5cff" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="profile" />
+  <meta property="og:title" content="About Dan Allen — LearningGPT" />
+  <meta property="og:description" content="Five years at Microsoft, 3+ years deploying Microsoft 365 Copilot in the field. The independent expert behind LearningGPT." />
+  <meta property="og:url" content="https://learninggpt.ai/about" />
+  <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Author (Person) schema — fully supported, strong E-E-A-T signal -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Dan Allen",
+    "jobTitle": "Founder, LearningGPT; Microsoft 365 Copilot specialist",
+    "description": "Former Microsoft employee (five years) and Microsoft 365 Copilot specialist with 3+ years deploying Copilot across enterprise, government, healthcare, and small-business environments.",
+    "url": "https://learninggpt.ai/about",
+    "image": "https://learninggpt.ai/author-dan.jpg",
+    "worksFor": {"@type": "Organization", "name": "LearningGPT", "url": "https://learninggpt.ai/"},
+    "alumniOf": {"@type": "Organization", "name": "Microsoft", "url": "https://www.microsoft.com/"},
+    "knowsAbout": ["Microsoft 365 Copilot","Microsoft Copilot Studio","Microsoft 365","Azure","AI adoption","Enterprise AI deployment"],
+    "hasCredential": [
+      {"@type":"EducationalOccupationalCredential","credentialCategory":"certification","name":"Microsoft Certified: AI Business Professional (AB-730)","recognizedBy":{"@type":"Organization","name":"Microsoft"}},
+      {"@type":"EducationalOccupationalCredential","credentialCategory":"certification","name":"Microsoft Certified: Azure Administrator Associate (AZ-104)","recognizedBy":{"@type":"Organization","name":"Microsoft"}},
+      {"@type":"EducationalOccupationalCredential","credentialCategory":"certification","name":"Microsoft Certified: Azure Fundamentals (AZ-900)","recognizedBy":{"@type":"Organization","name":"Microsoft"}},
+      {"@type":"EducationalOccupationalCredential","credentialCategory":"certification","name":"Microsoft 365 Certified: Fundamentals (MS-900)","recognizedBy":{"@type":"Organization","name":"Microsoft"}},
+      {"@type":"EducationalOccupationalCredential","credentialCategory":"certification","name":"Microsoft Certified: Security, Compliance, and Identity Fundamentals (SC-900)","recognizedBy":{"@type":"Organization","name":"Microsoft"}},
+      {"@type":"EducationalOccupationalCredential","credentialCategory":"certification","name":"Microsoft Certified: Dynamics 365 Fundamentals (MB-910)","recognizedBy":{"@type":"Organization","name":"Microsoft"}}
+    ],
+    "sameAs": ["https://www.linkedin.com/in/REPLACE-WITH-YOUR-LINKEDIN"]
+  }
+  </script>
+
+  <style>
+    :root{
+      --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a;
+      --brand:#2c7be5; --brand-2:#7c5cff;
+      --text:#f5f5fa; --muted:#c7c7d6; --muted-2:#a8a8c0;
+      --line:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.14);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+    a{color:var(--brand);text-decoration:none}
+    a:hover{color:var(--text)}
+
+    /* decorative background orbs (matches site aesthetic) */
+    .bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:.28}
+    .bg-orb.one{width:480px;height:480px;top:-120px;left:-120px;background:#2c7be5}
+    .bg-orb.two{width:560px;height:560px;top:40%;right:-200px;background:#7c5cff;opacity:.2}
+
+    /* nav */
+    nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);background:rgba(10,10,26,.72);border-bottom:1px solid var(--line)}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto}
+    .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px;color:var(--text)}
+    .logo .mark{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,var(--brand),var(--brand-2));display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff;font-weight:800}
+    .nav-links{display:flex;align-items:center;gap:22px}
+    .nav-links a{font-size:14.5px;color:var(--muted);font-weight:500}
+    .nav-links a:hover{color:var(--text)}
+    .nav-cta{background:var(--brand);color:#fff !important;padding:9px 16px;border-radius:9px;font-weight:700;font-size:14px}
+    @media(max-width:720px){.nav-links a:not(.nav-cta){display:none}}
+
+    /* content */
+    .about-wrap{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:64px 24px 40px}
+    .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.09em;font-weight:700;color:var(--brand);margin-bottom:12px}
+    h1{font-size:38px;line-height:1.1;letter-spacing:-.025em;font-weight:800;margin:0 0 28px;color:var(--text)}
+    @media(max-width:560px){h1{font-size:30px}}
+    .person{display:flex;align-items:center;gap:18px;margin:0 0 30px;padding-bottom:28px;border-bottom:1px solid var(--line)}
+    .person img{width:88px;height:88px;border-radius:50%;object-fit:cover;border:1px solid var(--line-strong);background:#0a0a1a;flex-shrink:0}
+    .av-fallback{display:none;width:88px;height:88px;border-radius:50%;flex-shrink:0;align-items:center;justify-content:center;font-size:30px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--brand),var(--brand-2));border:1px solid var(--line-strong)}
+    .person .pn{font-size:22px;font-weight:800;color:var(--text);line-height:1.15}
+    .person .pr{font-size:14px;color:var(--brand);font-weight:600;margin-top:5px}
+    .about-wrap p{font-size:16px;line-height:1.78;color:var(--muted);margin:0 0 18px}
+    .about-wrap p strong{color:var(--text);font-weight:600}
+    .certs-h{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;color:var(--muted-2);margin:32px 0 14px}
+    .certs{display:flex;flex-wrap:wrap;gap:9px}
+    .certs span{font-size:12px;font-weight:600;color:#dfe3ee;background:rgba(44,123,229,.14);border:1px solid rgba(44,123,229,.32);border-radius:999px;padding:6px 12px}
+    .cta{margin-top:34px;display:flex;gap:12px;flex-wrap:wrap}
+    .cta a{font-size:15px;font-weight:700;padding:12px 20px;border-radius:11px}
+    .cta .primary{background:var(--brand);color:#fff}
+    .cta .ghost{border:1px solid var(--line-strong);color:var(--text)}
+
+    /* footer */
+    footer{position:relative;z-index:1;border-top:1px solid var(--line);margin-top:48px;padding:40px 24px;background:rgba(10,10,26,.6)}
+    .foot-inner{max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between}
+    .foot-brand{max-width:280px}
+    .foot-brand .logo{margin-bottom:10px}
+    .foot-brand p{font-size:13.5px;color:var(--muted-2);line-height:1.6}
+    .foot-col h4{font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted-2);margin:0 0 12px;font-weight:700}
+    .foot-col ul{list-style:none;margin:0;padding:0}
+    .foot-col li{margin-bottom:9px}
+    .foot-col a{font-size:13.5px;color:var(--muted)}
+    .foot-col a:hover{color:var(--text)}
+    .foot-legal{max-width:1180px;margin:28px auto 0;padding-top:20px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted-2)}
+  </style>
+</head>
+<body>
+  <div class="bg-orb one"></div>
+  <div class="bg-orb two"></div>
+
+  <!-- NAV (swap for your shared include if you have one) -->
+  <nav class="top">
+    <div class="nav-inner">
+      <a class="logo" href="/"><span class="mark">L</span> LearningGPT</a>
+      <div class="nav-links">
+        <a href="/lessons/">Lessons</a>
+        <a href="/playground">Playground</a>
+        <a href="/pricing">Pricing</a>
+        <a href="/business">For business</a>
+        <a class="nav-cta" href="/auth/signup">Start free</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="about-wrap">
+    <div class="eyebrow">About</div>
+    <h1>Who's behind LearningGPT</h1>
+
+    <div class="person">
+      <img src="/author-dan.jpg" alt="Dan Allen" width="88" height="88" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+      <div class="av-fallback" aria-hidden="true">DA</div>
+      <div>
+        <div class="pn">Dan Allen</div>
+        <div class="pr">Founder, LearningGPT · Ex-Microsoft · Microsoft 365 Copilot specialist</div>
+      </div>
+    </div>
+
+    <p>LearningGPT is built and run by <strong>Dan Allen</strong>. Dan spent
+    <strong>five years at Microsoft</strong> and has <strong>3+ years deploying
+    Microsoft 365 Copilot in the field</strong> — across large enterprises with
+    500+ seats, government and public-sector tenants, healthcare and other
+    regulated industries, and small and mid-size businesses.</p>
+
+    <p>Rolling Copilot out across environments that different is where the
+    practical knowledge on this site comes from: what genuinely saves people
+    time, what quietly goes wrong, and where another tool is honestly the better
+    call. It's the stuff the product demos skip.</p>
+
+    <p>That field experience is backed by formal credentials — Dan is a
+    <strong>Microsoft Certified: AI Business Professional</strong> and an
+    <strong>Azure Administrator Associate</strong> — and he also advises
+    nonprofits on practical AI adoption, from funding and program management to
+    volunteer coordination.</p>
+
+    <p>The independence is the whole point. Microsoft will tell you Copilot is
+    all you need; OpenAI will tell you ChatGPT is. LearningGPT is built by
+    someone who has deployed these tools for real, with no vendor paying for the
+    verdict — so the site can tell you when each tool actually wins, and when
+    none of them is the right answer.</p>
+
+    <div class="certs-h">Certifications</div>
+    <div class="certs">
+      <span>Microsoft Certified: AI Business Professional (AB-730)</span>
+      <span>Azure Administrator Associate (AZ-104)</span>
+      <span>Azure Fundamentals (AZ-900)</span>
+      <span>Microsoft 365 Fundamentals (MS-900)</span>
+      <span>Security, Compliance &amp; Identity Fundamentals (SC-900)</span>
+      <span>Dynamics 365 Fundamentals (MB-910)</span>
+    </div>
+
+    <div class="cta">
+      <a class="primary" href="/lessons/">Explore the lessons</a>
+      <a class="ghost" href="/playground">Try the Playground</a>
+    </div>
+  </main>
+
+  <!-- FOOTER (swap for your shared include if you have one) -->
+  <footer>
+    <div class="foot-inner">
+      <div class="foot-brand">
+        <a class="logo" href="/"><span class="mark">L</span> LearningGPT</a>
+        <p>The neutral, hands-on platform for learning every AI tool that matters.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="/lessons/">All lessons</a></li>
+          <li><a href="/playground">Playground</a></li>
+          <li><a href="/pricing">Pricing</a></li>
+          <li><a href="/business">For business</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="/about">About / Meet the founder</a></li>
+          <li><a href="mailto:dan@learninggpt.ai?subject=LearningGPT%20question">Contact</a></li>
+          <li><a href="/business">For business</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="/privacy">Privacy</a></li>
+          <li><a href="/terms">Terms</a></li>
+          <li><a href="/refund">Refunds</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-legal">© 2026 LearningGPT, Inc. · Independent. Not affiliated with OpenAI, Anthropic, Microsoft, Google, Perplexity, or xAI.</div>
+  </footer>
+</body>
+</html>

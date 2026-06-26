@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Custom chatbot & RAG deployments: the AI retainer that prints — LearningGPT</title>
+<meta name="description" content="Build knowledge-grounded chatbots for businesses (RAG) and charge a setup fee plus a monthly hosting and maintenance retainer. What RAG is in plain English, the build, pricing (with a calculator), and the guardrails that keep clients. Pro+ lesson." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#2fcf86" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/earning/custom-chatbot-rag" />
+<meta property="og:title" content="Custom chatbot & RAG deployments: the AI retainer that prints" />
+<meta property="og:description" content="Build knowledge-grounded chatbots for businesses, charge setup + a monthly hosting retainer. The build, the pricing, the guardrails." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/earning/custom-chatbot-rag" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"Custom chatbot & RAG deployments: the AI retainer that prints","author":{"@type":"Person","name":"Dan Allen","url":"https://learninggpt.ai/about"},"publisher":{"@type":"Organization","name":"LearningGPT","url":"https://learninggpt.ai/"},"datePublished":"2026-06-26","image":"https://learninggpt.ai/og-image.png"}
+</script>
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --danger:#ff6b8a; --radius:14px; --radius-lg:20px; --container:820px; --track:#2fcf86; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+button{font-family:inherit;cursor:pointer;}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:var(--track);}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.22;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(47,207,134,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(47,207,134,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-pro-plus{border-color:rgba(255,181,71,0.5);color:#ffce82;background:rgba(255,181,71,0.12);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.byline{font-size:13.5px;color:var(--text-dim);margin:0 0 22px;}
+.byline a{color:var(--brand-2);font-weight:600;}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#2fcf86 0%,#44e0a4 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.15em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:52px 0 14px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(47,207,134,0.12),rgba(124,92,255,0.06));border:1px solid rgba(47,207,134,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,#2fcf86,#7c5cff);border-radius:2px 0 0 2px;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.cost-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;}
+.cost-table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--line-strong);color:var(--text-dim);font-size:11.5px;text-transform:uppercase;letter-spacing:0.6px;}
+.cost-table td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.cost-table td:first-child{font-weight:700;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:14px 0;font-size:14.5px;}
+.gotcha::before{content:'⚠ Set expectations: ';color:var(--warn);font-weight:700;}
+.qblock{margin:26px 0;padding:20px 22px;border:1px solid var(--line-strong);border-radius:var(--radius);background:var(--bg-soft);}
+.eyebrow-do{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;color:var(--track);margin-bottom:8px;}
+.qblock p{font-size:15.5px;margin:0 0 14px;}
+.opts{display:flex;flex-direction:column;gap:10px;}
+.opt{text-align:left;padding:13px 15px;line-height:1.5;font-size:14.5px;font-family:inherit;color:var(--text);background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);cursor:pointer;transition:.15s;}
+.opt:hover:not(:disabled){border-color:var(--track);background:#16223a;}
+.opt:disabled{cursor:default;}
+.fb{display:none;margin-top:14px;padding:12px 14px;border-radius:var(--radius);font-size:14px;line-height:1.6;}
+.fb.good{background:rgba(68,224,164,.1);border:1px solid rgba(68,224,164,.35);color:#a7efd2;}
+.fb.bad{background:rgba(124,92,255,.1);border:1px solid rgba(124,92,255,.3);color:#cfc4ff;}
+.calc{margin:26px 0;padding:22px 24px;border:1px solid var(--line-strong);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.calc-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px;}
+.calc-row .clbl{font-size:13px;color:var(--text-dim);min-width:108px;font-weight:600;}
+.calc-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.calc-btn{padding:8px 14px;font-size:13.5px;font-family:inherit;color:var(--text-dim);background:var(--surface);border:1px solid var(--line-strong);border-radius:99px;cursor:pointer;transition:.15s;}
+.calc-btn:hover{color:var(--text);border-color:var(--track);}
+.calc-btn.on{background:rgba(47,207,134,0.16);color:#bff3da;border-color:var(--track);}
+.calc-out{margin-top:6px;padding:18px;border-radius:var(--radius);background:var(--surface);border:1px solid var(--track);display:flex;gap:24px;flex-wrap:wrap;}
+.calc-fig{flex:1;min-width:150px;}
+.calc-fig .cf-lbl{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-mute);font-weight:600;margin-bottom:4px;}
+.calc-fig .cf-val{font-size:22px;font-weight:800;color:var(--accent);letter-spacing:-.01em;}
+.calc-note{font-size:12.5px;color:var(--text-mute);margin-top:12px;line-height:1.5;}
+.challenge{margin:52px 0 40px;background:linear-gradient(135deg,rgba(47,207,134,0.14),rgba(124,92,255,0.1));border:1px solid rgba(47,207,134,0.28);border-radius:var(--radius-lg);padding:34px;}
+.challenge h2{margin-top:0;} .challenge .btn-row{display:flex;gap:12px;flex-wrap:wrap;}
+.challenge a.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#2fcf86,#7c5cff);color:white;padding:13px 24px;border-radius:10px;font-weight:600;font-size:15px;}
+.challenge a.btn:hover{transform:translateY(-1px);color:white;}
+.checklist{margin:40px 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);}
+.checklist h3{margin-top:0;font-size:18px;} .checklist ul{list-style:none;padding:0;margin:0;}
+.checklist li{padding:10px 0 10px 30px;position:relative;font-size:15px;border-top:1px solid var(--line);}
+.checklist li:first-child{border-top:none;padding-top:0;}
+.checklist li::before{content:'✓';position:absolute;left:0;color:var(--accent);font-weight:700;}
+.next-up{margin:50px 0 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.next-up .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:10px;}
+.next-up h3{margin:0 0 8px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:14.5px;}
+footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);}
+.coach-fab{position:fixed;bottom:28px;right:28px;z-index:999;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#2fcf86,#7c5cff);border:none;box-shadow:0 8px 28px rgba(47,207,134,0.4);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;}
+.coach-fab .coach-fab-badge{position:absolute;top:-4px;right:-4px;background:#7c5cff;color:white;font-size:9px;font-weight:700;padding:2px 5px;border-radius:999px;border:2px solid #0a0a1a;line-height:1.2;}
+.coach-drawer{position:fixed;bottom:90px;right:28px;z-index:998;width:360px;max-height:520px;background:#13132a;border:1px solid rgba(47,207,134,0.25);border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,0.5);display:flex;flex-direction:column;transform:scale(0.92) translateY(16px);opacity:0;pointer-events:none;transition:transform .25s cubic-bezier(.34,1.56,.64,1),opacity .2s;}
+.coach-drawer.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all;}
+.coach-drawer-head{padding:16px 18px 14px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:10px;}
+.coach-avatar{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#2fcf86,#7c5cff);display:grid;place-items:center;font-size:16px;flex-shrink:0;}
+.coach-head-info{flex:1;} .coach-head-name{font-weight:700;font-size:14px;} .coach-head-sub{font-size:11px;color:#2fcf86;}
+.coach-close{background:none;border:none;color:#6b6b85;font-size:18px;padding:4px;line-height:1;cursor:pointer;} .coach-close:hover{color:#f5f5fa;}
+.coach-messages{flex:1;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:12px;}
+.coach-messages::-webkit-scrollbar{width:4px;} .coach-messages::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.14);border-radius:4px;}
+.msg{max-width:88%;font-size:13.5px;line-height:1.6;}
+.msg-coach{align-self:flex-start;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:14px 14px 14px 4px;padding:10px 14px;color:#f5f5fa;}
+.msg-user{align-self:flex-end;background:linear-gradient(135deg,rgba(124,92,255,0.25),rgba(91,141,239,0.25));border:1px solid rgba(124,92,255,0.3);border-radius:14px 14px 4px 14px;padding:10px 14px;color:#f5f5fa;}
+.msg-thinking{align-self:flex-start;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px 14px 14px 4px;padding:10px 14px;display:flex;align-items:center;gap:6px;color:#6b6b85;font-size:13px;}
+.thinking-dot{width:6px;height:6px;border-radius:50%;background:#2fcf86;animation:coachPulse 1.2s ease-in-out infinite;}
+.thinking-dot:nth-child(2){animation-delay:.2s;} .thinking-dot:nth-child(3){animation-delay:.4s;}
+@keyframes coachPulse{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}
+.coach-limit{padding:10px 18px;font-size:11px;color:#6b6b85;text-align:center;border-top:1px solid rgba(255,255,255,0.08);display:none;} .coach-limit.visible{display:block;} .coach-limit a{color:#5b8def;}
+.coach-input-row{padding:12px 18px 16px;border-top:1px solid rgba(255,255,255,0.08);display:flex;gap:8px;align-items:flex-end;}
+.coach-input{flex:1;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.08);color:#f5f5fa;border-radius:10px;padding:9px 12px;font-size:13px;font-family:inherit;resize:none;max-height:100px;line-height:1.5;}
+.coach-input:focus{outline:none;border-color:#2fcf86;} .coach-input::placeholder{color:#6b6b85;}
+.coach-send{width:34px;height:34px;border-radius:9px;border:none;flex-shrink:0;background:linear-gradient(135deg,#2fcf86,#7c5cff);color:white;font-size:15px;display:grid;place-items:center;cursor:pointer;} .coach-send:disabled{opacity:0.4;cursor:default;}
+@media (max-width:480px){.coach-drawer{width:calc(100vw - 32px);right:16px;bottom:80px;}.coach-fab{right:16px;bottom:16px;}}
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top"><div class="nav-inner">
+  <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+  <a href="/lessons/earning/" class="nav-back">← Earning with AI</a>
+</div></nav>
+<article class="lesson"><div class="container">
+  <div class="lesson-meta">
+    <span class="chip">Earning with AI</span>
+    <span class="chip chip-pro-plus">Pro+</span>
+    <span>~16 min · hands-on</span>
+    <span class="dot"></span>
+    <span>Build + host retainer</span>
+  </div>
+  <h1>The chatbot retainer that <span class="grad serif">prints.</span></h1>
+  <p class="byline">By <a href="/about">Dan Allen</a> — ex-Microsoft, Microsoft Certified: AI Business Professional</p>
+  <p class="deck">Every business has the same wish: a chatbot that actually answers questions about <em>their</em> business — their products, their policies, their docs — instead of generic nonsense. That's RAG, and modern tools let you build one without a computer-science degree. The model is the same one that makes the automation agency great: a <strong>setup fee to build it, then a monthly retainer to host and maintain it</strong> — recurring revenue for something a business can't easily take in-house.</p>
+
+  <h2><span class="num">01</span> RAG in plain English</h2>
+  <p>A normal chatbot answers from what the model already knows — which means it knows nothing about <em>this</em> business and will confidently make things up. <strong>RAG (retrieval-augmented generation)</strong> fixes that: before answering, the bot <em>retrieves</em> the relevant pieces from the client's own documents and answers <em>from those.</em> Feed it their help docs, product manuals, policies, and FAQs, and it becomes an expert on their business specifically — grounded, accurate, and far less likely to hallucinate. That grounding is the entire value you're selling.</p>
+
+  <h2><span class="num">02</span> What you actually sell</h2>
+  <p>Two parts, and the second is the business:</p>
+  <ul>
+    <li><strong>Setup fee</strong> — build the bot, ingest and clean their documents, tune the prompts and guardrails, and deploy it on their website or support tool.</li>
+    <li><strong>Monthly retainer</strong> — host it, keep the knowledge current as their docs change, monitor answers, and improve it. Their content changes constantly, so this isn't busywork — it's the reason the bot keeps working.</li>
+  </ul>
+  <div class="callout">
+    <span class="lbl">Common use cases that sell</span>
+    <p><strong>Customer-support bots</strong> (deflect repetitive tickets), <strong>website FAQ/sales assistants</strong> (answer buyers 24/7 and capture leads), and <strong>internal knowledge bots</strong> (let staff ask the policy/manual instead of bugging a manager). Support deflection has the clearest ROI — "this answers the 40% of tickets that are the same five questions" is a number a business feels instantly.</p>
+  </div>
+
+  <h2><span class="num">03</span> How it's built now</h2>
+  <p>You don't write a vector database from scratch. A whole layer of tools handles the hard parts — you ingest documents, connect a model, set guardrails, and embed a widget. Options range from <strong>no-code/low-code chatbot platforms</strong> (fastest to ship), to <strong>Microsoft Copilot Studio</strong> for businesses in the M365 world, to <strong>custom builds</strong> on frameworks when a client needs something specific. Start with the simplest tool that does the job; move up only when a client's needs force it.</p>
+
+  <h2><span class="num">04</span> Price it — setup + retainer</h2>
+  <p>Drag the inputs to see a realistic 2026 deal shape:</p>
+  <div class="calc">
+    <div class="calc-row">
+      <span class="clbl">Bot type</span>
+      <div class="calc-btns" id="bt-btns">
+        <button class="calc-btn on" data-v="faq" onclick="setBt(this,'faq')">FAQ / sales</button>
+        <button class="calc-btn" data-v="support" onclick="setBt(this,'support')">Support</button>
+        <button class="calc-btn" data-v="internal" onclick="setBt(this,'internal')">Internal KB</button>
+      </div>
+    </div>
+    <div class="calc-row">
+      <span class="clbl">Knowledge size</span>
+      <div class="calc-btns" id="sz-btns">
+        <button class="calc-btn on" data-v="s" onclick="setSz(this,'s')">Small</button>
+        <button class="calc-btn" data-v="m" onclick="setSz(this,'m')">Medium</button>
+        <button class="calc-btn" data-v="l" onclick="setSz(this,'l')">Large</button>
+      </div>
+    </div>
+    <div class="calc-out">
+      <div class="calc-fig"><div class="cf-lbl">One-time setup</div><div class="cf-val" id="setup-val">—</div></div>
+      <div class="calc-fig"><div class="cf-lbl">Monthly retainer</div><div class="cf-val" id="ret-val">—</div></div>
+      <div class="calc-fig"><div class="cf-lbl">Year one (1 client)</div><div class="cf-val" id="yr-val">—</div></div>
+    </div>
+    <div class="calc-note">Honest 2026 ranges. Setup covers the build, document ingestion, and deployment; the retainer covers hosting, keeping the knowledge current, and monitoring. Pass through model/API costs or build them into the retainer — don't eat them.</div>
+  </div>
+
+  <h2><span class="num">05</span> The guardrails that keep clients</h2>
+  <div class="gotcha">no RAG bot is perfect, and promising "it'll never be wrong" guarantees an angry client. Build in guardrails and say so up front: tell the bot to <strong>answer only from the provided documents and say "I'm not sure, let me connect you to someone" when it doesn't know</strong>, always offer a human fallback, and keep the docs current (a bot citing last year's pricing is worse than no bot). Sell it as "accurate on what it knows, honest about what it doesn't" — that's both the truth and the thing that earns the renewal.</div>
+  <div class="qblock">
+    <div class="eyebrow-do">Quick check</div>
+    <p>A client's support bot occasionally gets asked something not in the docs. Best design?</p>
+    <div class="opts">
+      <button class="opt" data-c="0" onclick="pick(this,'q1')">Let it answer from general knowledge so it always has a reply</button>
+      <button class="opt" data-c="1" onclick="pick(this,'q1')">Have it say it's not sure and hand off to a human</button>
+      <button class="opt" data-c="0" onclick="pick(this,'q1')">Have it make a best guess and add a disclaimer</button>
+    </div>
+    <div class="fb" id="fb-q1"></div>
+  </div>
+
+  <div class="challenge">
+    <h2 style="margin-top:0;">Your move this week</h2>
+    <p>Build a <strong>demo bot on your own knowledge base</strong> — your résumé, a product's help docs you can find publicly, anything. Get it answering accurately and admitting when it doesn't know. That working demo is your entire sales pitch: show a business "here's yours, trained on your docs," and the setup-plus-retainer close gets easy.</p>
+    <div class="btn-row">
+      <a href="/lessons/earning/ai-voice-agents" class="btn">Next: AI voice agents →</a>
+    </div>
+  </div>
+
+  <div class="checklist">
+    <h3>What you can do now</h3>
+    <ul>
+      <li>Explain RAG simply: a bot that answers from the client's own documents, grounded and accurate</li>
+      <li>Sell a setup fee (build + ingest + deploy) plus a monthly hosting/maintenance retainer</li>
+      <li>Lead with support deflection — the clearest, most felt ROI</li>
+      <li>Build with the simplest tool that works (no-code platform, Copilot Studio, or custom)</li>
+      <li>Bake in guardrails and a human fallback, keep docs current, and never promise perfection</li>
+    </ul>
+  </div>
+
+  <div class="next-up">
+    <div class="lbl">Next in Earning with AI · Pro+</div>
+    <h3>AI voice agents — answer phones and book appointments 24/7</h3>
+    <p>High-ticket, underserved, and recurring. <a href="/lessons/earning/ai-voice-agents">Open the lesson →</a></p>
+  </div>
+</div></article>
+<footer><div class="footer-inner">
+  <div>© 2026 LearningGPT, Inc. · Independent. Accurate on what it knows, honest about what it doesn't.</div>
+  <a href="/lessons/earning/" style="color:var(--text-dim);">← All Earning lessons</a>
+</div></footer>
+<button class="coach-fab" id="coachFab" title="Ask the AI Coach">🎓<span class="coach-fab-badge">AI</span></button>
+<div class="coach-drawer" id="coachDrawer">
+  <div class="coach-drawer-head"><div class="coach-avatar">🎓</div><div class="coach-head-info"><div class="coach-head-name">AI Coach</div><div class="coach-head-sub">Ask anything about this lesson</div></div><button class="coach-close" id="coachClose">✕</button></div>
+  <div class="coach-messages" id="coachMessages"><div class="msg msg-coach">Hey! Tell me a type of business you'd target and I'll help you pick the right bot use case (support, sales FAQ, internal KB), shape the setup + retainer pricing, and design the guardrails that keep the client happy. Who would you build for?</div></div>
+  <div class="coach-limit" id="coachLimit">Coaching limit reached. <a href="/pricing">Upgrade</a> for unlimited coaching.</div>
+  <div class="coach-input-row"><textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea><button class="coach-send" id="coachSend">➤</button></div>
+</div>
+<script>
+  var MSG={ q1:{ good:"Right. A grounded bot should say 'I'm not sure' and hand off to a human when the answer isn't in the docs. That honesty is the product — it's what keeps the bot trustworthy and the client renewing. Confident guesses are how you lose both.", bad:"That's how you get an angry client. Letting it answer from general knowledge or guess invites confident wrong answers about their business. The right design admits uncertainty and hands off to a human — accurate on what it knows, honest about what it doesn't." } };
+  function pick(btn,key){ var opts=btn.parentNode; opts.querySelectorAll('.opt').forEach(function(b){b.disabled=true;b.style.opacity='0.55';}); btn.style.opacity='1'; var c=btn.dataset.c==='1'; btn.style.borderColor=c?'var(--accent)':'var(--danger)'; var fb=document.getElementById('fb-'+key); fb.className='fb '+(c?'good':'bad'); fb.textContent=MSG[key][c?'good':'bad']; fb.style.display='block'; }
+  var st={bt:'faq',sz:'s'};
+  var SETUP={faq:[1500,3000],support:[3000,6000],internal:[4000,8000]};
+  var RET={faq:[200,400],support:[400,800],internal:[600,1200]};
+  var MULT={s:1,m:1.3,l:1.7};
+  function money(n){ return '$'+(Math.round(n/50)*50).toLocaleString(); }
+  function calc(){
+    var s=SETUP[st.bt],r=RET[st.bt],m=MULT[st.sz];
+    var setLo=s[0]*m,setHi=s[1]*m,retLo=r[0]*m,retHi=r[1]*m;
+    var yrLo=setLo+retLo*12,yrHi=setHi+retHi*12;
+    document.getElementById('setup-val').textContent=money(setLo)+'–'+money(setHi);
+    document.getElementById('ret-val').textContent=money(retLo)+'–'+money(retHi);
+    document.getElementById('yr-val').textContent=money(yrLo)+'–'+money(yrHi);
+  }
+  function setBt(b,v){ st.bt=v; document.querySelectorAll('#bt-btns .calc-btn').forEach(function(x){x.classList.remove('on');}); b.classList.add('on'); calc(); }
+  function setSz(b,v){ st.sz=v; document.querySelectorAll('#sz-btns .calc-btn').forEach(function(x){x.classList.remove('on');}); b.classList.add('on'); calc(); }
+  calc();
+</script>
+<script id="coachScript">
+(function() {
+  var LESSON_CONTEXT = `You are an AI learning coach embedded in a lesson on LearningGPT.ai.
+LESSON TITLE: Custom chatbot and RAG deployments — the AI retainer that prints (Pro+ lesson, Earning with AI track)
+TRACK: Earning with AI (Pro+)
+LESSON CONTENT SUMMARY:
+Businesses want a chatbot that answers about THEIR business (products, policies, docs), not generic nonsense. That's RAG, and modern tools let you build one without a CS degree. Model: a setup fee to build it + a monthly retainer to host and maintain — recurring revenue for something hard to take in-house.
+- RAG in plain English: a normal bot answers from what the model already knows (nothing about this business, and it makes things up). RAG (retrieval-augmented generation) retrieves the relevant pieces from the client's own documents and answers from those. Feed it help docs, manuals, policies, FAQs and it becomes grounded, accurate, far less likely to hallucinate. That grounding is the value.
+- What you sell: setup fee (build the bot, ingest/clean documents, tune prompts and guardrails, deploy on their site/support tool) + monthly retainer (host it, keep knowledge current as docs change, monitor answers, improve). The retainer is the business because their content changes constantly.
+- Use cases that sell: customer-support bots (deflect repetitive tickets — clearest ROI, "answers the 40% of tickets that are the same five questions"), website FAQ/sales assistants (answer buyers 24/7, capture leads), internal knowledge bots (staff ask the policy/manual instead of a manager).
+- How it's built now: don't build a vector DB from scratch. Tools handle the hard parts: no-code/low-code chatbot platforms (fastest), Microsoft Copilot Studio (for M365 businesses), or custom builds on frameworks when needed. Start with the simplest tool; move up only when forced.
+- Pricing (2026 ranges; scale by bot type and knowledge size): FAQ/sales setup ~$1.5-3k, retainer ~$200-400/mo; support setup ~$3-6k, retainer ~$400-800/mo; internal KB setup ~$4-8k, retainer ~$600-1,200/mo; larger knowledge bases multiply up. Pass through or build in model/API costs — don't eat them.
+- Guardrails that keep clients: no RAG bot is perfect; promising "never wrong" guarantees an angry client. Tell the bot to answer ONLY from the provided documents and say "I'm not sure, let me connect you to someone" when it doesn't know; always offer a human fallback; keep docs current (a bot citing old pricing is worse than none). Sell it as "accurate on what it knows, honest about what it doesn't."
+YOUR ROLE:
+- Help the learner pick a target business and use case, shape setup + retainer pricing, choose a build approach, and design guardrails
+- Be concise (2-4 sentences), practical, honest; never promise income or perfect accuracy; always stress grounding, guardrails, human fallback, and current docs
+- If asked outside this lesson, answer briefly and point to the Earning with AI track
+- Plain text only, no markdown symbols; don't open with "Great question!"`;
+  var MAX_FREE=8,count=0,isThinking=false,history=[];
+  var fab=document.getElementById('coachFab'),drawer=document.getElementById('coachDrawer'),closeBtn=document.getElementById('coachClose'),msgs=document.getElementById('coachMessages'),input=document.getElementById('coachInput'),sendBtn=document.getElementById('coachSend'),limitBar=document.getElementById('coachLimit');
+  if(!fab) return;
+  fab.addEventListener('click',function(){toggle(true);}); closeBtn.addEventListener('click',function(){toggle(false);});
+  function toggle(open){drawer.classList.toggle('open',open); if(open) setTimeout(function(){input.focus();},300);}
+  input.addEventListener('input',function(){input.style.height='auto';input.style.height=Math.min(input.scrollHeight,100)+'px';});
+  input.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}});
+  sendBtn.addEventListener('click',send);
+  function addMsg(t,ty){var d=document.createElement('div');d.className='msg msg-'+ty;d.textContent=t;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;return d;}
+  function addThinking(){var d=document.createElement('div');d.className='msg-thinking';d.innerHTML='<div class="thinking-dot"></div><div class="thinking-dot"></div><div class="thinking-dot"></div>';msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;return d;}
+  async function send(){var text=input.value.trim();if(!text||isThinking)return;if(count>=MAX_FREE){limitBar.classList.add('visible');input.disabled=true;sendBtn.disabled=true;return;}count++;if(count>=MAX_FREE)limitBar.classList.add('visible');addMsg(text,'user');history.push({role:'user',content:text});input.value='';input.style.height='auto';isThinking=true;sendBtn.disabled=true;var thinking=addThinking();try{var res=await fetch('/api/playground',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({coach:true,lessonCoach:true,lessonContext:LESSON_CONTEXT,history:history})});thinking.remove();var data=await res.json();var reply=(data&&data.coach)?data.coach:"Sorry, something went wrong. Try again in a moment.";addMsg(reply,'coach');history.push({role:'assistant',content:reply});}catch(err){thinking.remove();addMsg("Something went wrong — try again in a moment.",'coach');}finally{isThinking=false;sendBtn.disabled=count>=MAX_FREE;}}
+})();
+</script>
+<script src="/gate.js"></script>
+</body>
+</html>

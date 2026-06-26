@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Claude Tag for Slack — a teammate you @mention — LearningGPT</title>
+<meta name="description" content="Anthropic's Claude Tag puts a persistent @Claude into your Slack channels — one shared instance the whole team can delegate to, with memory and optional proactive updates. What it does, how it differs from the old Slack app, and how to use it well. Free interactive lesson." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#e0825c" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/claude/claude-tag-for-slack" />
+<meta property="og:title" content="Claude Tag for Slack — a teammate you @mention" />
+<meta property="og:description" content="One shared @Claude in your channel, with memory and optional proactive updates. What Claude Tag does, how it differs from the old Slack app, and how to use it without it becoming noise." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/claude/claude-tag-for-slack" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Claude Tag for Slack — a teammate you @mention",
+  "description": "An honest explainer on Anthropic's Claude Tag: a persistent shared @Claude in Slack channels with memory and optional proactive behavior, how it differs from the old Claude in Slack app, and how to use it well.",
+  "author": {"@type": "Person", "name": "Dan Allen", "url": "https://learninggpt.ai/about"},
+  "publisher": {"@type": "Organization", "name": "LearningGPT", "url": "https://learninggpt.ai/"},
+  "datePublished": "2026-06-26",
+  "image": "https://learninggpt.ai/og-image.png"
+}
+</script>
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --danger:#ff6b8a; --radius:14px; --radius-lg:20px; --container:820px; --track:#e0825c; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+button{font-family:inherit;cursor:pointer;}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:var(--track);}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.22;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(224,130,92,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(224,130,92,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.byline{font-size:13.5px;color:var(--text-dim);margin:0 0 22px;}
+.byline a{color:var(--brand-2);font-weight:600;}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#e0825c 0%,#ffb547 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.15em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:52px 0 14px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson h3{font-size:18px;font-weight:600;margin:28px 0 8px;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(224,130,92,0.12),rgba(124,92,255,0.06));border:1px solid rgba(224,130,92,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,#e0825c,#7c5cff);border-radius:2px 0 0 2px;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.cost-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;}
+.cost-table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--line-strong);color:var(--text-dim);font-size:11.5px;text-transform:uppercase;letter-spacing:0.6px;}
+.cost-table td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.cost-table td:first-child{font-weight:700;}
+.cost-table .fast{color:var(--accent);font-weight:600;} .cost-table .slow{color:var(--warn);font-weight:600;} .cost-table .hot{color:#ff6b8a;font-weight:600;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:14px 0;font-size:14.5px;}
+.gotcha::before{content:'⚠ The honest check: ';color:var(--warn);font-weight:700;}
+.qblock{margin:26px 0;padding:20px 22px;border:1px solid var(--line-strong);border-radius:var(--radius);background:var(--bg-soft);}
+.eyebrow-do{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;color:var(--track);margin-bottom:8px;}
+.qblock p{font-size:15.5px;margin:0 0 14px;}
+.opts{display:flex;flex-direction:column;gap:10px;}
+.opt{text-align:left;padding:13px 15px;line-height:1.5;font-size:14.5px;font-family:inherit;color:var(--text);background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);cursor:pointer;transition:.15s;}
+.opt:hover:not(:disabled){border-color:var(--track);background:#241c1a;}
+.opt:disabled{cursor:default;}
+.fb{display:none;margin-top:14px;padding:12px 14px;border-radius:var(--radius);font-size:14px;line-height:1.6;}
+.fb.good{background:rgba(68,224,164,.1);border:1px solid rgba(68,224,164,.35);color:#a7efd2;}
+.fb.bad{background:rgba(124,92,255,.1);border:1px solid rgba(124,92,255,.3);color:#cfc4ff;}
+.matcher{margin:26px 0;padding:22px 24px;border:1px solid rgba(224,130,92,0.3);border-radius:var(--radius-lg);background:linear-gradient(135deg,rgba(224,130,92,0.08),rgba(124,92,255,0.05));}
+.match-opts{display:flex;flex-direction:column;gap:10px;}
+.match-opt{text-align:left;padding:13px 15px;font-size:14.5px;font-family:inherit;color:var(--text);background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);cursor:pointer;transition:.15s;line-height:1.5;}
+.match-opt:hover{border-color:var(--track);background:#241c1a;}
+.match-opt.sel{border-color:var(--track);background:rgba(224,130,92,0.12);}
+.match-result{display:none;margin-top:16px;padding:16px 18px;border-radius:var(--radius);background:var(--surface);border:1px solid var(--track);}
+.match-result .rn{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--track);font-weight:700;margin-bottom:6px;}
+.match-result .rt{font-size:17px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.match-result .rb{font-size:14px;color:var(--text-dim);line-height:1.6;}
+.challenge{margin:52px 0 40px;background:linear-gradient(135deg,rgba(224,130,92,0.14),rgba(124,92,255,0.1));border:1px solid rgba(224,130,92,0.28);border-radius:var(--radius-lg);padding:34px;}
+.challenge h2{margin-top:0;}
+.challenge a.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#e0825c,#7c5cff);color:white;padding:13px 24px;border-radius:10px;font-weight:600;font-size:15px;}
+.challenge a.btn:hover{transform:translateY(-1px);color:white;}
+.checklist{margin:40px 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);}
+.checklist h3{margin-top:0;font-size:18px;} .checklist ul{list-style:none;padding:0;margin:0;}
+.checklist li{padding:10px 0 10px 30px;position:relative;font-size:15px;border-top:1px solid var(--line);}
+.checklist li:first-child{border-top:none;padding-top:0;}
+.checklist li::before{content:'✓';position:absolute;left:0;color:var(--accent);font-weight:700;}
+.next-up{margin:50px 0 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.next-up .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:10px;}
+.next-up h3{margin:0 0 8px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:14.5px;}
+footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);}
+.coach-fab{position:fixed;bottom:28px;right:28px;z-index:999;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#e0825c,#7c5cff);border:none;box-shadow:0 8px 28px rgba(224,130,92,0.4);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;transition:transform .2s,box-shadow .2s;}
+.coach-fab:hover{transform:scale(1.08);box-shadow:0 12px 36px rgba(224,130,92,0.5);}
+.coach-fab .coach-fab-badge{position:absolute;top:-4px;right:-4px;background:#7c5cff;color:white;font-size:9px;font-weight:700;padding:2px 5px;border-radius:999px;border:2px solid #0a0a1a;line-height:1.2;}
+.coach-drawer{position:fixed;bottom:90px;right:28px;z-index:998;width:360px;max-height:520px;background:#13132a;border:1px solid rgba(224,130,92,0.25);border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,0.5);display:flex;flex-direction:column;transform:scale(0.92) translateY(16px);opacity:0;pointer-events:none;transition:transform .25s cubic-bezier(.34,1.56,.64,1),opacity .2s;}
+.coach-drawer.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all;}
+.coach-drawer-head{padding:16px 18px 14px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:10px;}
+.coach-avatar{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#e0825c,#7c5cff);display:grid;place-items:center;font-size:16px;flex-shrink:0;}
+.coach-head-info{flex:1;}
+.coach-head-name{font-weight:700;font-size:14px;}
+.coach-head-sub{font-size:11px;color:#e0825c;}
+.coach-close{background:none;border:none;color:#6b6b85;font-size:18px;padding:4px;line-height:1;cursor:pointer;}
+.coach-close:hover{color:#f5f5fa;}
+.coach-messages{flex:1;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth;}
+.coach-messages::-webkit-scrollbar{width:4px;}
+.coach-messages::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.14);border-radius:4px;}
+.msg{max-width:88%;font-size:13.5px;line-height:1.6;}
+.msg-coach{align-self:flex-start;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:14px 14px 14px 4px;padding:10px 14px;color:#f5f5fa;}
+.msg-user{align-self:flex-end;background:linear-gradient(135deg,rgba(124,92,255,0.25),rgba(91,141,239,0.25));border:1px solid rgba(124,92,255,0.3);border-radius:14px 14px 4px 14px;padding:10px 14px;color:#f5f5fa;}
+.msg-thinking{align-self:flex-start;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px 14px 14px 4px;padding:10px 14px;display:flex;align-items:center;gap:6px;color:#6b6b85;font-size:13px;}
+.thinking-dot{width:6px;height:6px;border-radius:50%;background:#e0825c;animation:coachPulse 1.2s ease-in-out infinite;}
+.thinking-dot:nth-child(2){animation-delay:.2s;}
+.thinking-dot:nth-child(3){animation-delay:.4s;}
+@keyframes coachPulse{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}
+.coach-limit{padding:10px 18px;font-size:11px;color:#6b6b85;text-align:center;border-top:1px solid rgba(255,255,255,0.08);display:none;}
+.coach-limit.visible{display:block;}
+.coach-limit a{color:#5b8def;}
+.coach-input-row{padding:12px 18px 16px;border-top:1px solid rgba(255,255,255,0.08);display:flex;gap:8px;align-items:flex-end;}
+.coach-input{flex:1;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.08);color:#f5f5fa;border-radius:10px;padding:9px 12px;font-size:13px;font-family:inherit;resize:none;max-height:100px;line-height:1.5;}
+.coach-input:focus{outline:none;border-color:#e0825c;}
+.coach-input::placeholder{color:#6b6b85;}
+.coach-send{width:34px;height:34px;border-radius:9px;border:none;flex-shrink:0;background:linear-gradient(135deg,#e0825c,#7c5cff);color:white;font-size:15px;display:grid;place-items:center;cursor:pointer;transition:opacity .15s;}
+.coach-send:hover{opacity:0.85;}
+.coach-send:disabled{opacity:0.4;cursor:default;}
+@media (max-width:480px){.coach-drawer{width:calc(100vw - 32px);right:16px;bottom:80px;}.coach-fab{right:16px;bottom:16px;}}
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top"><div class="nav-inner">
+  <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+  <a href="/lessons/claude/" class="nav-back">← Claude Mastery</a>
+</div></nav>
+<article class="lesson"><div class="container">
+  <div class="lesson-meta">
+    <span class="chip">Claude Mastery</span>
+    <span class="chip chip-free">Free</span>
+    <span>~9 min · interactive</span>
+    <span class="dot"></span>
+    <span>What's new · June 2026</span>
+  </div>
+  <h1>Claude Tag — the teammate you <span class="grad serif">@mention.</span></h1>
+  <p class="deck">In June 2026 Anthropic replaced its old "Claude in Slack" app with <strong>Claude Tag</strong>: a persistent @Claude that lives in a channel, remembers context, and can be handed work by anyone on the team. It's a real shift from "a chatbot I DM" to "a coworker the whole channel shares." Here's what it actually does, how it's different from what came before, and how to use it without it turning into noise.</p>
+
+  <h2><span class="num">01</span> The core idea: one Claude per channel</h2>
+  <p>The old Slack app was basically you, privately, talking to Claude. Claude Tag is different in a way that matters: <strong>it's one shared Claude instance per channel</strong>, visible to and usable by everyone in it. You @mention <code>@Claude</code>, hand it a task, and go back to your own work while it runs. Anyone else in the channel can do the same, and they're all talking to the same teammate — not separate private copies.</p>
+  <div class="callout">
+    <span class="lbl">Why "shared" changes things</span>
+    <p>Because it's one instance in a shared space, Claude can <strong>build context from the channel itself</strong> — remembering relevant information from the conversations it sits in, and planning tasks to do later. That's what turns it from a vending machine you query into something closer to a team member who already knows what you're working on.</p>
+  </div>
+
+  <h2><span class="num">02</span> What it can actually do</h2>
+  <div style="overflow-x:auto;"><table class="cost-table">
+    <tr><th>Capability</th><th>What it means in practice</th></tr>
+    <tr><td>Delegation</td><td>@mention Claude with a task and keep working; it handles it async and replies in-thread</td></tr>
+    <tr><td>Shared context &amp; memory</td><td>Remembers relevant info from the channels it's in, so you don't re-explain every time</td></tr>
+    <tr><td>Tool &amp; data connections</td><td>Can connect to your tools, data, and codebases to actually do the work, not just chat</td></tr>
+    <tr><td>Proactive updates (optional)</td><td>If ambient behavior is on, it flags things it thinks you'll need and follows up on stalled threads</td></tr>
+  </table></div>
+  <p>That last one is the most double-edged, so it gets its own honest note.</p>
+  <div class="gotcha">"Proactive" can become "noisy." Ambient behavior — where Claude jumps in with updates and chases unresolved threads on its own — is genuinely useful in a focused channel, and genuinely annoying in a busy one. Treat it as a dial, not a default. Turn it on in a channel with a clear job; leave it off where people are just talking.</div>
+
+  <h2><span class="num">03</span> How it's different from the old Slack app</h2>
+  <div style="overflow-x:auto;"><table class="cost-table">
+    <tr><th></th><th>Old "Claude in Slack"</th><th>Claude Tag</th></tr>
+    <tr><td>Shape</td><td>A bot you mostly DM, one-to-one</td><td>A shared teammate in the channel</td></tr>
+    <tr><td>Memory</td><td>Largely per-conversation</td><td>Builds context from the channels it's in</td></tr>
+    <tr><td>Working style</td><td>Answers when asked</td><td>Delegated tasks, async work, optional proactive follow-ups</td></tr>
+    <tr><td>Who it serves</td><td>You</td><td>Everyone in the channel</td></tr>
+  </table></div>
+  <p>If your org already used the old app, note the migration: <strong>Claude Tag replaces it, and administrators have 30 days to opt in.</strong> It's available in <em>beta</em> for Claude Enterprise and Team customers — so it's a workspace-admin decision, not something an individual flips on alone.</p>
+  <div class="qblock">
+    <div class="eyebrow-do">Quick check</div>
+    <p>What's the single biggest change from the old Slack app to Claude Tag?</p>
+    <div class="opts">
+      <button class="opt" data-c="0" onclick="pick(this,'q1')">It's faster at answering individual questions</button>
+      <button class="opt" data-c="1" onclick="pick(this,'q1')">It's a shared teammate in the channel, not a private bot you DM</button>
+      <button class="opt" data-c="0" onclick="pick(this,'q1')">It works without any admin setup</button>
+    </div>
+    <div class="fb" id="fb-q1"></div>
+  </div>
+
+  <h2><span class="num">04</span> The honest read</h2>
+  <p>Anthropic isn't shy that this is how <em>they</em> work now — they say tagging @Claude is one of the main ways the company gets things done, and that a large share of one product team's code is written by their internal version of it. Take the specific number with a grain of salt (it's a vendor's self-report), but the direction is real: chat-style AI is moving toward <strong>delegation</strong> — you hand off a task and check the result — rather than turn-by-turn Q&amp;A.</p>
+  <p>The skill that matters is the same one good managers have: <strong>writing a clear hand-off.</strong> A vague @mention gets a vague result. "@Claude summarize this thread into three decisions and owners, and post it here by EOD" gets something useful.</p>
+
+  <h2><span class="num">05</span> Where should you actually use it?</h2>
+  <div class="matcher">
+    <div class="eyebrow-do">Pick your channel</div>
+    <div class="match-opts" id="match-opts">
+      <button class="match-opt" onclick="matchPick(this,0)">A focused project channel with a clear, repeating job</button>
+      <button class="match-opt" onclick="matchPick(this,1)">A busy all-hands / general channel</button>
+      <button class="match-opt" onclick="matchPick(this,2)">An engineering channel tied to a codebase</button>
+    </div>
+    <div class="match-result" id="match-result">
+      <div class="rn">How to set it up</div>
+      <div class="rt" id="match-title"></div>
+      <div class="rb" id="match-body"></div>
+    </div>
+  </div>
+
+  <div class="challenge">
+    <h2 style="margin-top:0;">Your move</h2>
+    <p>Pick one channel with a recurring chore — a standup summary, a triage queue, a weekly digest — and write the hand-off you'd give a new teammate to own it. That exact wording is your first @Claude task. If you can't write a clear hand-off, that's worth knowing too: the task may be fuzzier than you thought.</p>
+    <a href="/lessons/claude/" class="btn">More Claude lessons →</a>
+  </div>
+
+  <div class="checklist">
+    <h3>What you can do now</h3>
+    <ul>
+      <li>Understand the shift: Claude Tag is one shared @Claude per channel, not a private DM bot</li>
+      <li>Delegate like a manager — write clear, specific hand-offs with the output and deadline you want</li>
+      <li>Treat proactive/ambient updates as a dial: on in focused channels, off in noisy ones</li>
+      <li>Remember it's beta for Enterprise and Team; an admin opts in (30 days to migrate from the old app)</li>
+      <li>Don't over-trust vendor stats — judge it on the work it returns in your channels</li>
+    </ul>
+  </div>
+
+  <div class="next-up">
+    <div class="lbl">More in Claude Mastery</div>
+    <h3>Projects, Artifacts, and the rest of the Claude toolkit</h3>
+    <p>Where Claude Tag fits alongside Projects, MCP connections, and Claude Code in real team workflows. <a href="/lessons/claude/">Browse the Claude track →</a></p>
+  </div>
+</div></article>
+<footer><div class="footer-inner">
+  <div>© 2026 LearningGPT, Inc. · Independent and vendor-neutral. Reflects Anthropic's June 2026 Claude Tag beta; features and availability can change.</div>
+  <a href="/lessons/claude/" style="color:var(--text-dim);">← All Claude lessons</a>
+</div></footer>
+<button class="coach-fab" id="coachFab" title="Ask the AI Coach">🎓<span class="coach-fab-badge">AI</span></button>
+<div class="coach-drawer" id="coachDrawer">
+  <div class="coach-drawer-head">
+    <div class="coach-avatar">🎓</div>
+    <div class="coach-head-info">
+      <div class="coach-head-name">AI Coach</div>
+      <div class="coach-head-sub">Ask anything about this lesson</div>
+    </div>
+    <button class="coach-close" id="coachClose">✕</button>
+  </div>
+  <div class="coach-messages" id="coachMessages">
+    <div class="msg msg-coach">Hi! I'm your AI Coach for this lesson on Claude Tag. Want help writing a clean @Claude hand-off, or deciding which channel to try it in first? Tell me what your team's channel is for.</div>
+  </div>
+  <div class="coach-limit" id="coachLimit">
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
+  </div>
+  <div class="coach-input-row">
+    <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
+    <button class="coach-send" id="coachSend">➤</button>
+  </div>
+</div>
+<script>
+  var MSG = {
+    q1:{ good:"Exactly. The headline change is that Claude Tag is a shared teammate sitting in the channel that anyone can delegate to, with memory of the channel's context — not a private bot you DM one-to-one. Speed and setup are secondary to that shift.",
+         bad:"Not the main thing. The defining change is that Claude Tag is one shared @Claude in the channel that the whole team can delegate to, with context memory — versus the old private, one-to-one DM bot. (And it does need an admin to opt in.)" }
+  };
+  function pick(btn, key){
+    var opts = btn.parentNode;
+    opts.querySelectorAll('.opt').forEach(function(b){ b.disabled=true; b.style.opacity='0.5'; });
+    btn.style.opacity='1';
+    var correct = btn.dataset.c === '1';
+    btn.style.borderColor = correct ? 'var(--accent)' : 'var(--danger)';
+    var fb = document.getElementById('fb-'+key);
+    fb.className = 'fb ' + (correct ? 'good' : 'bad');
+    fb.textContent = MSG[key][correct ? 'good' : 'bad'];
+    fb.style.display='block';
+  }
+  var MATCH = [
+    { t:"Great fit — turn proactive on", b:"A focused channel with a repeating job is the ideal home. Connect the tools it needs, write a clear standing hand-off, and consider enabling ambient updates so it follows up on stalled threads. This is where Claude Tag feels like a real teammate." },
+    { t:"Use it, but keep ambient off", b:"In a busy general channel, on-demand delegation is great but proactive updates will read as noise. Leave ambient behavior off and @mention Claude only when you have a specific task. You get the help without the interruptions." },
+    { t:"Connect the codebase, delegate precisely", b:"Tie Claude Tag to the repo and treat it like a junior dev: give it scoped, well-specified tasks and review the output. Anthropic says much of one product team's code runs through their internal version — useful, but your review step still matters." }
+  ];
+  function matchPick(btn, i){
+    document.querySelectorAll('.match-opt').forEach(function(b){ b.classList.remove('sel'); });
+    btn.classList.add('sel');
+    document.getElementById('match-title').textContent = MATCH[i].t;
+    document.getElementById('match-body').textContent = MATCH[i].b;
+    document.getElementById('match-result').style.display='block';
+  }
+</script>
+<script id="coachScript">
+(function() {
+  var LESSON_CONTEXT = `You are an AI learning coach embedded in a lesson on LearningGPT.ai.
+LESSON TITLE: Claude Tag — the teammate you @mention (free "what's new" lesson in the Claude Mastery track)
+TRACK: Claude Mastery
+LESSON CONTENT SUMMARY:
+An honest explainer of Anthropic's Claude Tag, launched in public beta June 23, 2026, replacing the old "Claude in Slack" app.
+- Core idea: Claude Tag is ONE shared Claude instance per channel, visible to and usable by everyone in it (not a private per-user DM bot). You @mention @Claude, delegate a task, and it works async and replies in thread. Anyone in the channel talks to the same teammate.
+- Capabilities: delegation (hand off tasks, keep working); shared context and memory (remembers relevant info from the channels it's in, can plan tasks for later); tool/data/codebase connections (can actually do work, not just chat); optional proactive/"ambient" behavior (flags info it thinks you need, follows up on stalled/unresolved threads).
+- Honest note on ambient behavior: useful in a focused channel, noisy in a busy one. Treat it as a dial — on where there's a clear job, off in general chat.
+- Difference vs old Slack app: old = private one-to-one DM bot, per-conversation memory, answers when asked, serves you. Claude Tag = shared teammate in the channel, channel-level context, delegated async work + optional proactive follow-ups, serves everyone in the channel.
+- Availability: beta for Claude Enterprise and Team customers; it replaces "Claude in Slack" and admins have 30 days to opt in. It's an admin decision, not an individual toggle.
+- Anthropic self-reports that tagging @Claude is now a main way they work and that a large share of one product team's code is written by their internal version — treat specific vendor stats with healthy skepticism, but the direction (AI moving from turn-by-turn Q&A to delegation) is real.
+- Key skill: writing a clear hand-off, like briefing a new teammate. Vague @mention = vague result; specific task with desired output and deadline = useful result.
+YOUR ROLE:
+- Help the learner write a clean @Claude hand-off, choose which channel to try it in, and decide when to enable ambient/proactive behavior.
+- Be concise, 2-4 sentences unless more is needed; practical and honest, never hypey.
+- Be accurate about availability: beta for Enterprise and Team, admin opt-in, replaces the old Slack app.
+- If asked about something outside this lesson, answer briefly and point to the Claude Mastery track.
+- Plain conversational text only, no markdown symbols like ** or ##.
+- Do not start responses with "Great question!" or similar filler.`;
+  var MAX_FREE = 3;
+  var count = 0, isThinking = false, history = [];
+  var fab = document.getElementById('coachFab');
+  var drawer = document.getElementById('coachDrawer');
+  var closeBtn = document.getElementById('coachClose');
+  var msgs = document.getElementById('coachMessages');
+  var input = document.getElementById('coachInput');
+  var sendBtn = document.getElementById('coachSend');
+  var limitBar = document.getElementById('coachLimit');
+  if (!fab) return;
+  fab.addEventListener('click', function(){ toggle(true); });
+  closeBtn.addEventListener('click', function(){ toggle(false); });
+  function toggle(open){ drawer.classList.toggle('open', open); if(open) setTimeout(function(){ input.focus(); },300); }
+  input.addEventListener('input', function(){ input.style.height='auto'; input.style.height=Math.min(input.scrollHeight,100)+'px'; });
+  input.addEventListener('keydown', function(e){ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); send(); } });
+  sendBtn.addEventListener('click', send);
+  function addMsg(text, type){ var d=document.createElement('div'); d.className='msg msg-'+type; d.textContent=text; msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight; return d; }
+  function addThinking(){ var d=document.createElement('div'); d.className='msg-thinking'; d.innerHTML='<div class="thinking-dot"></div><div class="thinking-dot"></div><div class="thinking-dot"></div>'; msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight; return d; }
+  async function send(){
+    var text = input.value.trim();
+    if(!text || isThinking) return;
+    if(count >= MAX_FREE){ limitBar.classList.add('visible'); input.disabled=true; sendBtn.disabled=true; return; }
+    count++;
+    if(count >= MAX_FREE) limitBar.classList.add('visible');
+    addMsg(text,'user'); history.push({role:'user',content:text});
+    input.value=''; input.style.height='auto'; isThinking=true; sendBtn.disabled=true;
+    var thinking = addThinking();
+    try {
+      var res = await fetch('/api/playground', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ coach:true, lessonCoach:true, lessonContext:LESSON_CONTEXT, history:history }) });
+      thinking.remove();
+      var data = await res.json();
+      var reply = (data && data.coach) ? data.coach : "Sorry, something went wrong. Try again in a moment.";
+      addMsg(reply,'coach'); history.push({role:'assistant',content:reply});
+    } catch(err){ thinking.remove(); addMsg("Something went wrong — try again in a moment.",'coach'); }
+    finally { isThinking=false; sendBtn.disabled = count >= MAX_FREE; }
+  }
+})();
+</script>
+<script src="/gate.js"></script>
+</body>
+</html>

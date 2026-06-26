@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Microsoft Scout and Copilot Cowork — what's real now, what's coming — LearningGPT</title>
+<meta name="description" content="Microsoft's move from Copilot to 'Autopilot,' explained honestly. What Copilot Cowork (now generally available) actually does, what Microsoft Scout (still private preview) does, and which one you can use today. Free interactive lesson." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#45b6fe" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/copilot/microsoft-scout-and-cowork" />
+<meta property="og:title" content="Microsoft Scout and Copilot Cowork — what's real now, what's coming" />
+<meta property="og:description" content="The honest read on Microsoft's 'Autopilot' shift: what Copilot Cowork can do today, what Scout will do later, and what's still a demo." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/copilot/microsoft-scout-and-cowork" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Microsoft Scout and Copilot Cowork — what's real now, what's coming",
+  "description": "An honest explainer on Microsoft's Autopilot agents: what Copilot Cowork does at general availability, what Microsoft Scout does in private preview, and which to use today.",
+  "author": {"@type": "Person", "name": "Dan Allen", "url": "https://learninggpt.ai/about"},
+  "publisher": {"@type": "Organization", "name": "LearningGPT", "url": "https://learninggpt.ai/"},
+  "datePublished": "2026-06-26",
+  "image": "https://learninggpt.ai/og-image.png"
+}
+</script>
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --danger:#ff6b8a; --radius:14px; --radius-lg:20px; --container:820px; --track:#45b6fe; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+button{font-family:inherit;cursor:pointer;}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:var(--track);}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.22;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(69,182,254,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(69,182,254,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.byline{font-size:13.5px;color:var(--text-dim);margin:0 0 22px;}
+.byline a{color:var(--brand-2);font-weight:600;}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#45b6fe 0%,#5b8def 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.15em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:52px 0 14px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson h3{font-size:18px;font-weight:600;margin:28px 0 8px;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(69,182,254,0.12),rgba(124,92,255,0.06));border:1px solid rgba(69,182,254,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,#45b6fe,#7c5cff);border-radius:2px 0 0 2px;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.cost-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;}
+.cost-table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--line-strong);color:var(--text-dim);font-size:11.5px;text-transform:uppercase;letter-spacing:0.6px;}
+.cost-table td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.cost-table td:first-child{font-weight:700;}
+.cost-table .fast{color:var(--accent);font-weight:600;} .cost-table .slow{color:var(--warn);font-weight:600;} .cost-table .hot{color:#ff6b8a;font-weight:600;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:14px 0;font-size:14.5px;}
+.gotcha::before{content:'⚠ The hype check: ';color:var(--warn);font-weight:700;}
+.qblock{margin:26px 0;padding:20px 22px;border:1px solid var(--line-strong);border-radius:var(--radius);background:var(--bg-soft);}
+.eyebrow-do{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;color:var(--track);margin-bottom:8px;}
+.qblock p{font-size:15.5px;margin:0 0 14px;}
+.opts{display:flex;flex-direction:column;gap:10px;}
+.opt{text-align:left;padding:13px 15px;line-height:1.5;font-size:14.5px;font-family:inherit;color:var(--text);background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);cursor:pointer;transition:.15s;}
+.opt:hover:not(:disabled){border-color:var(--track);background:#16223a;}
+.opt:disabled{cursor:default;}
+.fb{display:none;margin-top:14px;padding:12px 14px;border-radius:var(--radius);font-size:14px;line-height:1.6;}
+.fb.good{background:rgba(68,224,164,.1);border:1px solid rgba(68,224,164,.35);color:#a7efd2;}
+.fb.bad{background:rgba(124,92,255,.1);border:1px solid rgba(124,92,255,.3);color:#cfc4ff;}
+.matcher{margin:26px 0;padding:22px 24px;border:1px solid rgba(69,182,254,0.3);border-radius:var(--radius-lg);background:linear-gradient(135deg,rgba(69,182,254,0.08),rgba(124,92,255,0.05));}
+.match-opts{display:flex;flex-direction:column;gap:10px;}
+.match-opt{text-align:left;padding:13px 15px;font-size:14.5px;font-family:inherit;color:var(--text);background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);cursor:pointer;transition:.15s;line-height:1.5;}
+.match-opt:hover{border-color:var(--track);background:#16223a;}
+.match-opt.sel{border-color:var(--track);background:rgba(69,182,254,0.12);}
+.match-result{display:none;margin-top:16px;padding:16px 18px;border-radius:var(--radius);background:var(--surface);border:1px solid var(--track);}
+.match-result .rn{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--track);font-weight:700;margin-bottom:6px;}
+.match-result .rt{font-size:17px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.match-result .rb{font-size:14px;color:var(--text-dim);line-height:1.6;}
+.challenge{margin:52px 0 40px;background:linear-gradient(135deg,rgba(69,182,254,0.14),rgba(124,92,255,0.1));border:1px solid rgba(69,182,254,0.28);border-radius:var(--radius-lg);padding:34px;}
+.challenge h2{margin-top:0;}
+.challenge a.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#45b6fe,#7c5cff);color:white;padding:13px 24px;border-radius:10px;font-weight:600;font-size:15px;}
+.challenge a.btn:hover{transform:translateY(-1px);color:white;}
+.checklist{margin:40px 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);}
+.checklist h3{margin-top:0;font-size:18px;} .checklist ul{list-style:none;padding:0;margin:0;}
+.checklist li{padding:10px 0 10px 30px;position:relative;font-size:15px;border-top:1px solid var(--line);}
+.checklist li:first-child{border-top:none;padding-top:0;}
+.checklist li::before{content:'✓';position:absolute;left:0;color:var(--accent);font-weight:700;}
+.next-up{margin:50px 0 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.next-up .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:10px;}
+.next-up h3{margin:0 0 8px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:14.5px;}
+footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);}
+.coach-fab{position:fixed;bottom:28px;right:28px;z-index:999;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#45b6fe,#7c5cff);border:none;box-shadow:0 8px 28px rgba(69,182,254,0.4);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;transition:transform .2s,box-shadow .2s;}
+.coach-fab:hover{transform:scale(1.08);box-shadow:0 12px 36px rgba(69,182,254,0.5);}
+.coach-fab .coach-fab-badge{position:absolute;top:-4px;right:-4px;background:#7c5cff;color:white;font-size:9px;font-weight:700;padding:2px 5px;border-radius:999px;border:2px solid #0a0a1a;line-height:1.2;}
+.coach-drawer{position:fixed;bottom:90px;right:28px;z-index:998;width:360px;max-height:520px;background:#13132a;border:1px solid rgba(69,182,254,0.25);border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,0.5);display:flex;flex-direction:column;transform:scale(0.92) translateY(16px);opacity:0;pointer-events:none;transition:transform .25s cubic-bezier(.34,1.56,.64,1),opacity .2s;}
+.coach-drawer.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all;}
+.coach-drawer-head{padding:16px 18px 14px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:10px;}
+.coach-avatar{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#45b6fe,#7c5cff);display:grid;place-items:center;font-size:16px;flex-shrink:0;}
+.coach-head-info{flex:1;}
+.coach-head-name{font-weight:700;font-size:14px;}
+.coach-head-sub{font-size:11px;color:#45b6fe;}
+.coach-close{background:none;border:none;color:#6b6b85;font-size:18px;padding:4px;line-height:1;cursor:pointer;}
+.coach-close:hover{color:#f5f5fa;}
+.coach-messages{flex:1;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth;}
+.coach-messages::-webkit-scrollbar{width:4px;}
+.coach-messages::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.14);border-radius:4px;}
+.msg{max-width:88%;font-size:13.5px;line-height:1.6;}
+.msg-coach{align-self:flex-start;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:14px 14px 14px 4px;padding:10px 14px;color:#f5f5fa;}
+.msg-user{align-self:flex-end;background:linear-gradient(135deg,rgba(124,92,255,0.25),rgba(91,141,239,0.25));border:1px solid rgba(124,92,255,0.3);border-radius:14px 14px 4px 14px;padding:10px 14px;color:#f5f5fa;}
+.msg-thinking{align-self:flex-start;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px 14px 14px 4px;padding:10px 14px;display:flex;align-items:center;gap:6px;color:#6b6b85;font-size:13px;}
+.thinking-dot{width:6px;height:6px;border-radius:50%;background:#45b6fe;animation:coachPulse 1.2s ease-in-out infinite;}
+.thinking-dot:nth-child(2){animation-delay:.2s;}
+.thinking-dot:nth-child(3){animation-delay:.4s;}
+@keyframes coachPulse{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}
+.coach-limit{padding:10px 18px;font-size:11px;color:#6b6b85;text-align:center;border-top:1px solid rgba(255,255,255,0.08);display:none;}
+.coach-limit.visible{display:block;}
+.coach-limit a{color:#5b8def;}
+.coach-input-row{padding:12px 18px 16px;border-top:1px solid rgba(255,255,255,0.08);display:flex;gap:8px;align-items:flex-end;}
+.coach-input{flex:1;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.08);color:#f5f5fa;border-radius:10px;padding:9px 12px;font-size:13px;font-family:inherit;resize:none;max-height:100px;line-height:1.5;}
+.coach-input:focus{outline:none;border-color:#45b6fe;}
+.coach-input::placeholder{color:#6b6b85;}
+.coach-send{width:34px;height:34px;border-radius:9px;border:none;flex-shrink:0;background:linear-gradient(135deg,#45b6fe,#7c5cff);color:white;font-size:15px;display:grid;place-items:center;cursor:pointer;transition:opacity .15s;}
+.coach-send:hover{opacity:0.85;}
+.coach-send:disabled{opacity:0.4;cursor:default;}
+@media (max-width:480px){.coach-drawer{width:calc(100vw - 32px);right:16px;bottom:80px;}.coach-fab{right:16px;bottom:16px;}}
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top"><div class="nav-inner">
+  <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+  <a href="/lessons/copilot/" class="nav-back">← Copilot Mastery</a>
+</div></nav>
+<article class="lesson"><div class="container">
+  <div class="lesson-meta">
+    <span class="chip">Copilot Mastery</span>
+    <span class="chip chip-free">Free</span>
+    <span>~9 min · interactive</span>
+    <span class="dot"></span>
+    <span>What's new · June 2026</span>
+  </div>
+  <h1>From Copilot to <span class="grad serif">Autopilot.</span></h1>
+  <p class="deck">At Build 2026 Microsoft introduced a new word — <em>Autopilot</em> — for agents that work on their own in the background instead of waiting for you to prompt them. Two things came out of it: <strong>Copilot Cowork</strong>, which you can use today, and <strong>Microsoft Scout</strong>, which you mostly can't yet. Here's the honest split: what each actually does, what's generally available, and what's still a preview demo — so you know what to try and what to just keep an eye on.</p>
+
+  <h2><span class="num">01</span> What "Autopilot" actually means</h2>
+  <p>The name change is the whole story. <strong>Copilot</strong> assists while <em>you</em> drive — you ask, it answers, it drafts, you steer. <strong>Autopilot</strong> flips that: the agent runs in the background, understands how your work moves across apps, and takes action <em>without being prompted each time</em>, operating under its own identity and the policies your organization sets.</p>
+  <div class="callout">
+    <span class="lbl">The shift in one line</span>
+    <p>Copilot answers when asked. An Autopilot <strong>keeps working when you're not looking</strong> — on a schedule, with its own permissions, across your files and apps. That's a genuine capability jump, and also a genuine governance question. Both things are true at once, which is exactly why it's worth understanding before you switch anything on.</p>
+  </div>
+
+  <h2><span class="num">02</span> Copilot Cowork — the one you can use today</h2>
+  <p>Copilot Cowork reached <strong>general availability</strong> at Build 2026. It takes on longer, multi-step tasks that span several apps and runs them in a secure, <em>cloud-hosted</em> environment. The practical payoff: the task keeps going even when your laptop is closed, and your files aren't sitting on the local device while it works.</p>
+  <p>Think of it as the difference between asking Copilot to draft one email and handing it a small project — "pull the figures from these three files, build the summary deck, and draft the update" — then walking away while it runs.</p>
+  <div class="qblock">
+    <div class="eyebrow-do">Gut check</div>
+    <p>Which of these is the kind of job Cowork is actually built for?</p>
+    <div class="opts">
+      <button class="opt" data-c="0" onclick="pick(this,'q1')">Fix a typo in the paragraph you're staring at right now</button>
+      <button class="opt" data-c="1" onclick="pick(this,'q1')">Gather data from several files and assemble a draft report over the next 20 minutes</button>
+      <button class="opt" data-c="0" onclick="pick(this,'q1')">Answer one quick question about a cell formula</button>
+    </div>
+    <div class="fb" id="fb-q1"></div>
+  </div>
+
+  <h2><span class="num">03</span> Microsoft Scout — powerful, but still behind glass</h2>
+  <p>Scout is Microsoft's first true Autopilot, and on paper it's a big step. It's a desktop agent (Windows 11+ or macOS 12+) that reads and writes your files, runs shell commands, drives a browser with Playwright, queries your entire Microsoft 365 account, and keeps working in the background on a schedule — all under its own Microsoft Entra identity. You interact with it through Teams.</p>
+  <p>Here's the part most write-ups bury:</p>
+  <div class="gotcha">Scout is <strong>not generally available.</strong> As of June 2026 it's in Microsoft's <em>Frontier</em> private preview — an experimental release. Getting in requires Frontier enrollment, Intune policy configuration, an opt-in attestation, and a GitHub Copilot license. An insider beta is planned for late 2026, with general availability likely <strong>2027.</strong> So for almost everyone, Scout is something to understand and watch, not deploy.</div>
+  <p>That's not a knock on it — it's a reason to calibrate. The capability is real; the access isn't, yet. If a vendor or post tells you to "roll out Scout to your team" right now, they're ahead of what Microsoft has actually shipped.</p>
+
+  <h2><span class="num">04</span> The honest scoreboard</h2>
+  <div style="overflow-x:auto;"><table class="cost-table">
+    <tr><th>Feature</th><th>What it does</th><th>Status today</th><th>Who should care now</th></tr>
+    <tr><td>Copilot Cowork</td><td>Long multi-step tasks across apps, cloud-hosted, runs while you're away</td><td class="fast">Generally available</td><td>Anyone with a Copilot license doing multi-app work</td></tr>
+    <tr><td>Microsoft Scout</td><td>Always-on desktop agent: files, shell, browser, full M365, own identity</td><td class="slow">Private preview (GA ~2027)</td><td>IT/governance teams planning ahead</td></tr>
+  </table></div>
+  <p>The reason this matters for how you spend your time: <strong>Cowork is where the usable value is this year.</strong> Scout is where the strategic planning is — especially the identity and permissions questions, because an agent that acts under its own Entra identity is a real change to how access and auditing work.</p>
+
+  <h2><span class="num">05</span> So what should you actually do?</h2>
+  <p>Pick the line that sounds most like you:</p>
+  <div class="matcher">
+    <div class="eyebrow-do">Your next move</div>
+    <div class="match-opts" id="match-opts">
+      <button class="match-opt" onclick="matchPick(this,0)">I'm an everyday Copilot user who wants more done for me</button>
+      <button class="match-opt" onclick="matchPick(this,1)">I run IT, security, or governance for my org</button>
+      <button class="match-opt" onclick="matchPick(this,2)">I just want to understand where this is all heading</button>
+    </div>
+    <div class="match-result" id="match-result">
+      <div class="rn">Start here</div>
+      <div class="rt" id="match-title"></div>
+      <div class="rb" id="match-body"></div>
+    </div>
+  </div>
+
+  <div class="challenge">
+    <h2 style="margin-top:0;">Your move</h2>
+    <p>This week, try one real Cowork task — give it a job that spans at least two apps and would normally take you 15+ minutes — and judge it on the result, not the demo. Then write one sentence on what you'd <em>need to trust</em> before letting an agent like Scout act under its own identity in your tenant. That sentence is your readiness checklist for 2027.</p>
+    <a href="/lessons/copilot/" class="btn">More Copilot lessons →</a>
+  </div>
+
+  <div class="checklist">
+    <h3>What you can do now</h3>
+    <ul>
+      <li>Use the right word: Copilot assists on demand; Autopilot works in the background under its own identity</li>
+      <li>Try Copilot Cowork for a multi-step, multi-app task — it's generally available today</li>
+      <li>Treat Microsoft Scout as preview-only: it's in private Frontier preview, GA likely 2027</li>
+      <li>If you own governance, start mapping the identity/permission implications of agents acting on their own</li>
+      <li>Ignore anyone telling you to "deploy Scout" company-wide right now — it isn't shippable yet</li>
+    </ul>
+  </div>
+
+  <div class="next-up">
+    <div class="lbl">More in Copilot Mastery</div>
+    <h3>The named Copilot agents — Researcher, Analyst, Facilitator and the rest</h3>
+    <p>What each built-in agent is actually for, and when to reach for one instead of plain Copilot chat. <a href="/lessons/copilot/">Browse the Copilot track →</a></p>
+  </div>
+</div></article>
+<footer><div class="footer-inner">
+  <div>© 2026 LearningGPT, Inc. · Independent and vendor-neutral. Availability reflects Microsoft's June 2026 Build announcements and can change.</div>
+  <a href="/lessons/copilot/" style="color:var(--text-dim);">← All Copilot lessons</a>
+</div></footer>
+<button class="coach-fab" id="coachFab" title="Ask the AI Coach">🎓<span class="coach-fab-badge">AI</span></button>
+<div class="coach-drawer" id="coachDrawer">
+  <div class="coach-drawer-head">
+    <div class="coach-avatar">🎓</div>
+    <div class="coach-head-info">
+      <div class="coach-head-name">AI Coach</div>
+      <div class="coach-head-sub">Ask anything about this lesson</div>
+    </div>
+    <button class="coach-close" id="coachClose">✕</button>
+  </div>
+  <div class="coach-messages" id="coachMessages">
+    <div class="msg msg-coach">Hi! I'm your AI Coach for this lesson on Microsoft Scout and Copilot Cowork. Want help deciding whether Cowork fits a task you have in mind, or what to plan for before Scout arrives? Ask away.</div>
+  </div>
+  <div class="coach-limit" id="coachLimit">
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
+  </div>
+  <div class="coach-input-row">
+    <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
+    <button class="coach-send" id="coachSend">➤</button>
+  </div>
+</div>
+<script>
+  var MSG = {
+    q1:{ good:"Right. Cowork earns its keep on longer, multi-step jobs that span apps and run in the background — exactly the kind of thing you'd hand off and walk away from. The quick one-line fixes are still plain Copilot's job.",
+         bad:"Not quite. Those are one-shot, in-the-moment tasks that plain Copilot handles instantly. Cowork is for the longer multi-step, multi-app jobs that run in the background while you do something else — like pulling data from several files and assembling a draft report." }
+  };
+  function pick(btn, key){
+    var opts = btn.parentNode;
+    opts.querySelectorAll('.opt').forEach(function(b){ b.disabled=true; b.style.opacity='0.5'; });
+    btn.style.opacity='1';
+    var correct = btn.dataset.c === '1';
+    btn.style.borderColor = correct ? 'var(--accent)' : 'var(--danger)';
+    var fb = document.getElementById('fb-'+key);
+    fb.className = 'fb ' + (correct ? 'good' : 'bad');
+    fb.textContent = MSG[key][correct ? 'good' : 'bad'];
+    fb.style.display='block';
+  }
+  var MATCH = [
+    { t:"Lean into Cowork now", b:"Pick one recurring multi-step task — say, compiling a weekly status from a few files — and hand it to Copilot Cowork. Judge it on the finished output. It's generally available, so this is real value you can capture this year without waiting on Scout." },
+    { t:"Start the governance work early", b:"Scout acts under its own Entra identity, which changes how access, auditing, and least-privilege work. Begin mapping what an autonomous agent would be allowed to touch, how you'd review its actions, and what your attestation/Intune posture needs to be — well before GA in 2027." },
+    { t:"Watch the direction, not the demo", b:"The trend is clear: assistants are becoming background workers with their own identities. You don't need to act today. Track which capabilities actually ship (Cowork did; Scout is still preview) and let general availability — not announcements — trigger real adoption." }
+  ];
+  function matchPick(btn, i){
+    document.querySelectorAll('.match-opt').forEach(function(b){ b.classList.remove('sel'); });
+    btn.classList.add('sel');
+    document.getElementById('match-title').textContent = MATCH[i].t;
+    document.getElementById('match-body').textContent = MATCH[i].b;
+    document.getElementById('match-result').style.display='block';
+  }
+</script>
+<script id="coachScript">
+(function() {
+  var LESSON_CONTEXT = `You are an AI learning coach embedded in a lesson on LearningGPT.ai.
+LESSON TITLE: From Copilot to Autopilot — Microsoft Scout and Copilot Cowork (free "what's new" lesson in the Copilot Mastery track)
+TRACK: Copilot Mastery
+LESSON CONTENT SUMMARY:
+An honest explainer of Microsoft's "Autopilot" announcements at Build 2026.
+- "Autopilot" vs "Copilot": Copilot assists on demand (you drive, it answers). An Autopilot works in the background without being prompted each time, on a schedule, under its own identity and org policies. Capability jump and a governance question at the same time.
+- Copilot Cowork: GENERALLY AVAILABLE as of Build 2026. Handles longer, multi-step tasks spanning several apps in a secure cloud-hosted environment, so tasks keep running when your laptop is closed and files aren't stored on the device. Good for multi-step/multi-app jobs you hand off and walk away from; not for one-line in-the-moment fixes (that's plain Copilot).
+- Microsoft Scout: Microsoft's first Autopilot. Desktop agent (Windows 11+ / macOS 12+) that reads/writes files, runs shell commands, drives a browser via Playwright, queries the full Microsoft 365 account, runs in the background on a schedule, and operates under its own Microsoft Entra identity; you interact via Teams. IMPORTANT: NOT generally available — it's in Microsoft's Frontier private preview as of June 2026. Access needs Frontier enrollment, Intune policy config, an opt-in attestation, and a GitHub Copilot license. Insider beta planned late 2026; GA likely 2027. For most people: understand and watch, do not deploy.
+- Honest takeaway: Cowork is where usable value is this year; Scout is where strategic/governance planning is, especially identity and permissions because an agent acting under its own Entra identity changes access and auditing.
+YOUR ROLE:
+- Help the learner decide whether Cowork fits a specific task, or what to plan for before Scout reaches GA.
+- Be concise, 2-4 sentences unless more is needed; practical and honest, never hypey.
+- Be accurate about availability: Cowork = GA; Scout = private preview, GA ~2027. Correct anyone who thinks Scout is deployable now.
+- If asked about something outside this lesson, answer briefly and point to the Copilot Mastery track.
+- Plain conversational text only, no markdown symbols like ** or ##.
+- Do not start responses with "Great question!" or similar filler.`;
+  var MAX_FREE = 3;
+  var count = 0, isThinking = false, history = [];
+  var fab = document.getElementById('coachFab');
+  var drawer = document.getElementById('coachDrawer');
+  var closeBtn = document.getElementById('coachClose');
+  var msgs = document.getElementById('coachMessages');
+  var input = document.getElementById('coachInput');
+  var sendBtn = document.getElementById('coachSend');
+  var limitBar = document.getElementById('coachLimit');
+  if (!fab) return;
+  fab.addEventListener('click', function(){ toggle(true); });
+  closeBtn.addEventListener('click', function(){ toggle(false); });
+  function toggle(open){ drawer.classList.toggle('open', open); if(open) setTimeout(function(){ input.focus(); },300); }
+  input.addEventListener('input', function(){ input.style.height='auto'; input.style.height=Math.min(input.scrollHeight,100)+'px'; });
+  input.addEventListener('keydown', function(e){ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); send(); } });
+  sendBtn.addEventListener('click', send);
+  function addMsg(text, type){ var d=document.createElement('div'); d.className='msg msg-'+type; d.textContent=text; msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight; return d; }
+  function addThinking(){ var d=document.createElement('div'); d.className='msg-thinking'; d.innerHTML='<div class="thinking-dot"></div><div class="thinking-dot"></div><div class="thinking-dot"></div>'; msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight; return d; }
+  async function send(){
+    var text = input.value.trim();
+    if(!text || isThinking) return;
+    if(count >= MAX_FREE){ limitBar.classList.add('visible'); input.disabled=true; sendBtn.disabled=true; return; }
+    count++;
+    if(count >= MAX_FREE) limitBar.classList.add('visible');
+    addMsg(text,'user'); history.push({role:'user',content:text});
+    input.value=''; input.style.height='auto'; isThinking=true; sendBtn.disabled=true;
+    var thinking = addThinking();
+    try {
+      var res = await fetch('/api/playground', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ coach:true, lessonCoach:true, lessonContext:LESSON_CONTEXT, history:history }) });
+      thinking.remove();
+      var data = await res.json();
+      var reply = (data && data.coach) ? data.coach : "Sorry, something went wrong. Try again in a moment.";
+      addMsg(reply,'coach'); history.push({role:'assistant',content:reply});
+    } catch(err){ thinking.remove(); addMsg("Something went wrong — try again in a moment.",'coach'); }
+    finally { isThinking=false; sendBtn.disabled = count >= MAX_FREE; }
+  }
+})();
+</script>
+<script src="/gate.js"></script>
+</body>
+</html>

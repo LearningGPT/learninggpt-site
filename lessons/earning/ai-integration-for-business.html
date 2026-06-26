@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Enterprise AI integration: make companies' AI tools actually deliver (high-ticket) — LearningGPT</title>
+<meta name="description" content="Companies buy Copilot and ChatGPT Enterprise and get a fraction of the value because nobody integrated AI into their real workflows. That deployment-and-adoption gap is a high-ticket B2B service: assessments, integrations, custom agents, training, and governance. The offers, pricing, and the real hard part. Pro+ lesson." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#2fcf86" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/earning/ai-integration-for-business" />
+<meta property="og:title" content="Enterprise AI integration: make companies' AI tools actually deliver" />
+<meta property="og:description" content="The deployment-and-adoption gap is a high-ticket B2B service. The offers, the pricing, and the real hard part." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/earning/ai-integration-for-business" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"Enterprise AI integration: make companies' AI tools actually deliver","author":{"@type":"Person","name":"Dan Allen","url":"https://learninggpt.ai/about"},"publisher":{"@type":"Organization","name":"LearningGPT","url":"https://learninggpt.ai/"},"datePublished":"2026-06-26","image":"https://learninggpt.ai/og-image.png"}
+</script>
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --danger:#ff6b8a; --radius:14px; --radius-lg:20px; --container:820px; --track:#2fcf86; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+button{font-family:inherit;cursor:pointer;}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:var(--track);}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.22;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(47,207,134,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(47,207,134,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-pro-plus{border-color:rgba(255,181,71,0.5);color:#ffce82;background:rgba(255,181,71,0.12);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 24px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#2fcf86 0%,#44e0a4 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.15em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:52px 0 14px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(47,207,134,0.12),rgba(124,92,255,0.06));border:1px solid rgba(47,207,134,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,#2fcf86,#7c5cff);border-radius:2px 0 0 2px;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.cost-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;}
+.cost-table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--line-strong);color:var(--text-dim);font-size:11.5px;text-transform:uppercase;letter-spacing:0.6px;}
+.cost-table td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.cost-table td:first-child{font-weight:700;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:14px 0;font-size:14.5px;}
+.gotcha::before{content:'⚠ The real hard part: ';color:var(--warn);font-weight:700;}
+.qblock{margin:26px 0;padding:20px 22px;border:1px solid var(--line-strong);border-radius:var(--radius);background:var(--bg-soft);}
+.eyebrow-do{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;color:var(--track);margin-bottom:8px;}
+.qblock p{font-size:15.5px;margin:0 0 14px;}
+.opts{display:flex;flex-direction:column;gap:10px;}
+.opt{text-align:left;padding:13px 15px;line-height:1.5;font-size:14.5px;font-family:inherit;color:var(--text);background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);cursor:pointer;transition:.15s;}
+.opt:hover:not(:disabled){border-color:var(--track);background:#16223a;}
+.opt:disabled{cursor:default;}
+.fb{display:none;margin-top:14px;padding:12px 14px;border-radius:var(--radius);font-size:14px;line-height:1.6;}
+.fb.good{background:rgba(68,224,164,.1);border:1px solid rgba(68,224,164,.35);color:#a7efd2;}
+.fb.bad{background:rgba(124,92,255,.1);border:1px solid rgba(124,92,255,.3);color:#cfc4ff;}
+.picker{margin:26px 0;padding:22px 24px;border:1px solid rgba(47,207,134,0.3);border-radius:var(--radius-lg);background:linear-gradient(135deg,rgba(47,207,134,0.08),rgba(124,92,255,0.05));}
+.pick-opts{display:flex;flex-direction:column;gap:10px;}
+.pick-opt{text-align:left;padding:13px 15px;font-size:14.5px;font-family:inherit;color:var(--text);background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);cursor:pointer;transition:.15s;line-height:1.5;}
+.pick-opt:hover{border-color:var(--track);background:#16223a;}
+.pick-opt.sel{border-color:var(--track);background:rgba(47,207,134,0.12);}
+.pick-result{display:none;margin-top:16px;padding:16px 18px;border-radius:var(--radius);background:var(--surface);border:1px solid var(--track);}
+.pick-result .rn{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--track);font-weight:700;margin-bottom:6px;}
+.pick-result .rt{font-size:17px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.pick-result .rb{font-size:14px;color:var(--text-dim);line-height:1.6;}
+.challenge{margin:52px 0 40px;background:linear-gradient(135deg,rgba(47,207,134,0.14),rgba(124,92,255,0.1));border:1px solid rgba(47,207,134,0.28);border-radius:var(--radius-lg);padding:34px;}
+.challenge h2{margin-top:0;} .challenge .btn-row{display:flex;gap:12px;flex-wrap:wrap;}
+.challenge a.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#2fcf86,#7c5cff);color:white;padding:13px 24px;border-radius:10px;font-weight:600;font-size:15px;}
+.challenge a.btn:hover{transform:translateY(-1px);color:white;}
+.checklist{margin:40px 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);}
+.checklist h3{margin-top:0;font-size:18px;} .checklist ul{list-style:none;padding:0;margin:0;}
+.checklist li{padding:10px 0 10px 30px;position:relative;font-size:15px;border-top:1px solid var(--line);}
+.checklist li:first-child{border-top:none;padding-top:0;}
+.checklist li::before{content:'✓';position:absolute;left:0;color:var(--accent);font-weight:700;}
+.next-up{margin:50px 0 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.next-up .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:10px;}
+.next-up h3{margin:0 0 8px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:14.5px;}
+footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);}
+.coach-fab{position:fixed;bottom:28px;right:28px;z-index:999;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#2fcf86,#7c5cff);border:none;box-shadow:0 8px 28px rgba(47,207,134,0.4);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;}
+.coach-fab .coach-fab-badge{position:absolute;top:-4px;right:-4px;background:#7c5cff;color:white;font-size:9px;font-weight:700;padding:2px 5px;border-radius:999px;border:2px solid #0a0a1a;line-height:1.2;}
+.coach-drawer{position:fixed;bottom:90px;right:28px;z-index:998;width:360px;max-height:520px;background:#13132a;border:1px solid rgba(47,207,134,0.25);border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,0.5);display:flex;flex-direction:column;transform:scale(0.92) translateY(16px);opacity:0;pointer-events:none;transition:transform .25s cubic-bezier(.34,1.56,.64,1),opacity .2s;}
+.coach-drawer.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all;}
+.coach-drawer-head{padding:16px 18px 14px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:10px;}
+.coach-avatar{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#2fcf86,#7c5cff);display:grid;place-items:center;font-size:16px;flex-shrink:0;}
+.coach-head-info{flex:1;} .coach-head-name{font-weight:700;font-size:14px;} .coach-head-sub{font-size:11px;color:#2fcf86;}
+.coach-close{background:none;border:none;color:#6b6b85;font-size:18px;padding:4px;line-height:1;cursor:pointer;} .coach-close:hover{color:#f5f5fa;}
+.coach-messages{flex:1;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:12px;}
+.coach-messages::-webkit-scrollbar{width:4px;} .coach-messages::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.14);border-radius:4px;}
+.msg{max-width:88%;font-size:13.5px;line-height:1.6;}
+.msg-coach{align-self:flex-start;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:14px 14px 14px 4px;padding:10px 14px;color:#f5f5fa;}
+.msg-user{align-self:flex-end;background:linear-gradient(135deg,rgba(124,92,255,0.25),rgba(91,141,239,0.25));border:1px solid rgba(124,92,255,0.3);border-radius:14px 14px 4px 14px;padding:10px 14px;color:#f5f5fa;}
+.msg-thinking{align-self:flex-start;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px 14px 14px 4px;padding:10px 14px;display:flex;align-items:center;gap:6px;color:#6b6b85;font-size:13px;}
+.thinking-dot{width:6px;height:6px;border-radius:50%;background:#2fcf86;animation:coachPulse 1.2s ease-in-out infinite;}
+.thinking-dot:nth-child(2){animation-delay:.2s;} .thinking-dot:nth-child(3){animation-delay:.4s;}
+@keyframes coachPulse{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}
+.coach-limit{padding:10px 18px;font-size:11px;color:#6b6b85;text-align:center;border-top:1px solid rgba(255,255,255,0.08);display:none;} .coach-limit.visible{display:block;} .coach-limit a{color:#5b8def;}
+.coach-input-row{padding:12px 18px 16px;border-top:1px solid rgba(255,255,255,0.08);display:flex;gap:8px;align-items:flex-end;}
+.coach-input{flex:1;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.08);color:#f5f5fa;border-radius:10px;padding:9px 12px;font-size:13px;font-family:inherit;resize:none;max-height:100px;line-height:1.5;}
+.coach-input:focus{outline:none;border-color:#2fcf86;} .coach-input::placeholder{color:#6b6b85;}
+.coach-send{width:34px;height:34px;border-radius:9px;border:none;flex-shrink:0;background:linear-gradient(135deg,#2fcf86,#7c5cff);color:white;font-size:15px;display:grid;place-items:center;cursor:pointer;} .coach-send:disabled{opacity:0.4;cursor:default;}
+@media (max-width:480px){.coach-drawer{width:calc(100vw - 32px);right:16px;bottom:80px;}.coach-fab{right:16px;bottom:16px;}}
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top"><div class="nav-inner">
+  <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+  <a href="/lessons/earning/" class="nav-back">← Earning with AI</a>
+</div></nav>
+<article class="lesson"><div class="container">
+  <div class="lesson-meta">
+    <span class="chip">Earning with AI</span>
+    <span class="chip chip-pro-plus">Pro+</span>
+    <span>~17 min · hands-on</span>
+    <span class="dot"></span>
+    <span>High-ticket B2B</span>
+  </div>
+  <h1>The gap between buying AI and <span class="grad serif">getting value.</span></h1>
+  <p class="deck">Companies have spent fortunes on Copilot, ChatGPT Enterprise, and AI add-ons — and most are getting maybe <strong>10% of the value</strong>, because they bought software and nobody wired it into how the business actually works. That gap between "we have AI" and "AI is saving us real money" is the most lucrative, least-crowded opportunity in this whole track. You're not selling AI; you're making the AI they already paid for finally deliver. It's a high-ticket B2B service: assessments, integrations, custom agents, training, and governance.</p>
+
+  <h2><span class="num">01</span> The opportunity is deployment, not software</h2>
+  <p>Microsoft and OpenAI sold the licenses. What they didn't sell — and what almost nobody delivers well — is the part that creates the value: <strong>integrating AI into real workflows, connecting it to the company's own systems and data, getting people to actually use it, and keeping it governed and safe.</strong> A business with 200 Copilot seats where everyone only knows "draft an email" is leaving enormous money on the table. You're the person who turns those dormant licenses into measured productivity. That's worth a great deal, and the budget already exists.</p>
+
+  <h2><span class="num">02</span> What the work actually is</h2>
+  <ul>
+    <li><strong>Assessment</strong> — map their workflows, find where AI saves the most time, and quantify the opportunity.</li>
+    <li><strong>Integration</strong> — connect AI to the systems they live in: M365/Copilot, their CRM, their document stores and data, with the right permissions.</li>
+    <li><strong>Custom agents &amp; automations</strong> — build the specific tools that do their specific jobs (e.g. in Copilot Studio or similar), not generic demos.</li>
+    <li><strong>Enablement</strong> — train the team so they actually adopt it; build prompt libraries and playbooks per role.</li>
+    <li><strong>Governance</strong> — security, data boundaries, compliance, cost controls, and policy — the part that lets a serious company say yes.</li>
+  </ul>
+
+  <h2><span class="num">03</span> Why it's high-ticket (and less crowded)</h2>
+  <p>This sits at the intersection of <strong>technical skill, business understanding, and change management</strong> — and very few people credibly span all three. That scarcity, plus enterprise budgets and clearly measurable ROI ("we cut the monthly close from 5 days to 2"), is exactly why projects run from five to six figures. It's the opposite of the crowded $50-gig market: harder to enter, far better paid, and stickier.</p>
+  <div class="callout">
+    <span class="lbl">The unfair advantage if you have it</span>
+    <p>If you've worked inside a company's tech stack — especially the Microsoft 365 / Copilot ecosystem — you already have the rarest half of this skill set. Deep familiarity with how these tools really behave in a real tenant (the gotchas, the permissions, the governance levers) is worth more than any prompt trick, because it's what lets an enterprise trust you with production. Lead with that credibility; it's the moat.</p>
+  </div>
+
+  <h2><span class="num">04</span> Pricing &amp; the engagement shape</h2>
+  <div style="overflow-x:auto;"><table class="cost-table">
+    <tr><th>Phase</th><th>What it is</th><th>Range</th></tr>
+    <tr><td>Assessment / pilot</td><td>Audit + a proof-of-value on one workflow</td><td>$5,000–$25,000</td></tr>
+    <tr><td>Implementation</td><td>Roll it out across teams: integrations, agents, training</td><td>$15,000–$100,000+</td></tr>
+    <tr><td>Managed retainer</td><td>Ongoing optimization, new use cases, governance</td><td>$3,000–$15,000/mo</td></tr>
+  </table></div>
+  <p>The winning shape is <strong>land small, expand big:</strong> start with a paid assessment or a single high-ROI pilot, prove a number the CFO can feel, then expand into the full rollout and the retainer. One proven workflow is the wedge into a six-figure relationship.</p>
+
+  <h2><span class="num">05</span> The part the demos skip</h2>
+  <div class="gotcha">the technology is the easy 30%. The hard 70% is <strong>adoption and governance</strong> — getting busy people to change how they work, and satisfying security, data-privacy, and compliance requirements. A brilliant integration nobody uses is a failure; a clever agent that leaks data is a disaster. Sell yourself as the person who handles the messy human and risk side, not just the tech. That's what enterprises are truly buying, and it's why they pay real money for someone who gets it.</div>
+  <div class="qblock">
+    <div class="eyebrow-do">Quick check</div>
+    <p>A 300-person firm bought Copilot but "isn't seeing results." What's the most valuable first engagement?</p>
+    <div class="opts">
+      <button class="opt" data-c="0" onclick="pick(this,'q1')">Tell them to buy more AI tools</button>
+      <button class="opt" data-c="1" onclick="pick(this,'q1')">A paid assessment + one high-ROI pilot workflow with a measured result</button>
+      <button class="opt" data-c="0" onclick="pick(this,'q1')">Run a one-hour generic prompting webinar and leave</button>
+    </div>
+    <div class="fb" id="fb-q1"></div>
+  </div>
+
+  <h2><span class="num">06</span> Where to start</h2>
+  <div class="picker">
+    <div class="eyebrow-do">Your entry engagement</div>
+    <div class="pick-opts" id="en-opts">
+      <button class="pick-opt" onclick="enPick(this,0)">An AI readiness / opportunity assessment</button>
+      <button class="pick-opt" onclick="enPick(this,1)">One high-ROI workflow pilot</button>
+      <button class="pick-opt" onclick="enPick(this,2)">Enablement + governance setup</button>
+    </div>
+    <div class="pick-result" id="en-result">
+      <div class="rn">Your entry</div>
+      <div class="rt" id="en-title"></div>
+      <div class="rb" id="en-body"></div>
+    </div>
+  </div>
+
+  <div class="challenge">
+    <h2 style="margin-top:0;">Your move this week</h2>
+    <p>Write a <strong>one-page "AI value assessment" offer</strong>: what you examine (workflows, current tool usage, data/governance), what they get (a prioritized roadmap with quantified ROI and one pilot recommendation), and the price. Then take it to one mid-sized business that already pays for Copilot or ChatGPT Enterprise. The pitch writes itself: "you're paying for it — let's make it pay you back."</p>
+    <div class="btn-row">
+      <a href="/lessons/earning/vertical-ai-saas" class="btn">Next: vertical AI SaaS →</a>
+    </div>
+  </div>
+
+  <div class="checklist">
+    <h3>What you can do now</h3>
+    <ul>
+      <li>Sell the deployment-and-adoption gap, not more software — make the AI they bought finally deliver</li>
+      <li>Do the real work: assess, integrate with their systems, build custom agents, train, and govern</li>
+      <li>Lean on any insider tech-stack/M365 experience — it's the rare, trusted half of this skill set</li>
+      <li>Land small (assessment/pilot) and expand to implementation + a managed retainer</li>
+      <li>Own the hard 70% — adoption and governance — because that's what enterprises actually pay for</li>
+    </ul>
+  </div>
+
+  <div class="next-up">
+    <div class="lbl">Next in Earning with AI · Pro+</div>
+    <h3>Vertical AI SaaS — the equity play with the highest ceiling</h3>
+    <p>Build software for one industry, deep — and own an asset. <a href="/lessons/earning/vertical-ai-saas">Open the lesson →</a></p>
+  </div>
+</div></article>
+<footer><div class="footer-inner">
+  <div>© 2026 LearningGPT, Inc. · Independent. You're paying for it — let's make it pay you back.</div>
+  <a href="/lessons/earning/" style="color:var(--text-dim);">← All Earning lessons</a>
+</div></footer>
+<button class="coach-fab" id="coachFab" title="Ask the AI Coach">🎓<span class="coach-fab-badge">AI</span></button>
+<div class="coach-drawer" id="coachDrawer">
+  <div class="coach-drawer-head"><div class="coach-avatar">🎓</div><div class="coach-head-info"><div class="coach-head-name">AI Coach</div><div class="coach-head-sub">Ask anything about this lesson</div></div><button class="coach-close" id="coachClose">✕</button></div>
+  <div class="coach-messages" id="coachMessages"><div class="msg msg-coach">Hey! Tell me your background (especially any enterprise/M365/Copilot experience) and the kind of company you'd target, and I'll help you shape the assessment offer, the pilot, and the land-and-expand path. Where do you want to start?</div></div>
+  <div class="coach-limit" id="coachLimit">Coaching limit reached. <a href="/pricing">Upgrade</a> for unlimited coaching.</div>
+  <div class="coach-input-row"><textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea><button class="coach-send" id="coachSend">➤</button></div>
+</div>
+<script>
+  var MSG={ q1:{ good:"Right. A paid assessment plus one high-ROI pilot with a measured result is the land-and-expand wedge — it proves a number the CFO feels and opens the door to the full rollout and retainer. Don't sell more tools; make the ones they have deliver.", bad:"Buying more tools or a generic webinar misses the point — they already own AI and aren't getting value. The high-value move is a paid assessment plus one measured pilot, then expand. Prove a number, then scale." } };
+  function pick(btn,key){ var opts=btn.parentNode; opts.querySelectorAll('.opt').forEach(function(b){b.disabled=true;b.style.opacity='0.55';}); btn.style.opacity='1'; var c=btn.dataset.c==='1'; btn.style.borderColor=c?'var(--accent)':'var(--danger)'; var fb=document.getElementById('fb-'+key); fb.className='fb '+(c?'good':'bad'); fb.textContent=MSG[key][c?'good':'bad']; fb.style.display='block'; }
+  var EN=[
+    {t:"AI readiness / opportunity assessment",b:"The ideal opener: low-risk for the client, it positions you as the strategist, and it produces the roadmap that justifies everything after. Price it as a real paid engagement ($5-25k) so it's taken seriously, and make the deliverable a quantified plan plus one pilot recommendation. Almost every enterprise relationship should start here."},
+    {t:"One high-ROI workflow pilot",b:"Best when you can point to an obvious painful workflow (the monthly close, support triage, proposal generation). Build one integration/agent that delivers a measurable win, fast. It's proof over promises — a single 'we cut this from 5 days to 2' result unlocks the full rollout. Lead here if you have the technical chops to ship quickly."},
+    {t:"Enablement + governance setup",b:"For companies that already have tools deployed but low adoption and nervous IT/security. You drive usage (training, prompt libraries, role playbooks) and lock down governance (data boundaries, policy, cost controls). Less flashy, but it's the exact pain of big regulated orgs — and the part competitors avoid because it's hard."}
+  ];
+  function enPick(btn,i){ document.querySelectorAll('#en-opts .pick-opt').forEach(function(b){b.classList.remove('sel');}); btn.classList.add('sel'); document.getElementById('en-title').textContent=EN[i].t; document.getElementById('en-body').textContent=EN[i].b; document.getElementById('en-result').style.display='block'; }
+</script>
+<script id="coachScript">
+(function() {
+  var LESSON_CONTEXT = `You are an AI learning coach embedded in a lesson on LearningGPT.ai.
+LESSON TITLE: Enterprise AI integration — make companies' AI tools actually deliver (Pro+ lesson, Earning with AI track)
+TRACK: Earning with AI (Pro+)
+LESSON CONTENT SUMMARY:
+Companies bought Copilot, ChatGPT Enterprise, and AI add-ons but get ~10% of the value because nobody wired AI into how the business works. That deployment-and-adoption gap is the most lucrative, least-crowded play here. You're not selling AI — you make the AI they already paid for deliver. High-ticket B2B: assessments, integrations, custom agents, training, governance.
+- Opportunity is deployment, not software: vendors sold licenses; the value comes from integrating AI into real workflows, connecting it to the company's systems/data, getting people to actually use it, and keeping it governed/safe. 200 Copilot seats where everyone only knows "draft an email" is money on the table; you turn dormant licenses into measured productivity, and the budget already exists.
+- The work: assessment (map workflows, find highest-time-savings, quantify), integration (connect AI to M365/Copilot, CRM, document stores/data with right permissions), custom agents & automations (Copilot Studio etc., their specific jobs not demos), enablement (train for adoption, prompt libraries/playbooks per role), governance (security, data boundaries, compliance, cost controls, policy).
+- Why high-ticket and less crowded: intersection of technical skill + business understanding + change management; few span all three. Plus enterprise budgets and measurable ROI ("cut the monthly close from 5 days to 2") = five-to-six-figure projects. Opposite of the crowded $50-gig market.
+- Unfair advantage: insider experience with a company's tech stack, especially Microsoft 365/Copilot — knowing how the tools really behave in a real tenant (gotchas, permissions, governance levers) is worth more than prompt tricks; it's what lets an enterprise trust you with production. Lead with that credibility.
+- Pricing/shape: assessment/pilot $5-25k; implementation $15-100k+; managed retainer $3-15k/mo. Land small, expand big: paid assessment or single high-ROI pilot, prove a number the CFO feels, then expand to rollout + retainer.
+- The part demos skip: technology is the easy 30%; the hard 70% is adoption (getting busy people to change how they work) and governance (security, privacy, compliance). A brilliant integration nobody uses is a failure; a clever agent that leaks data is a disaster. Sell yourself as the person who handles the human + risk side. That's what enterprises buy.
+YOUR ROLE:
+- Help the learner shape an assessment/pilot offer, lean on any relevant enterprise/M365 experience, and design the land-and-expand path
+- Be concise (2-4 sentences), practical, honest; never promise income/contract sizes; stress adoption, governance/security, and measurable ROI
+- If asked outside this lesson, answer briefly and point to the Earning with AI track
+- Plain text only, no markdown symbols; don't open with "Great question!"`;
+  var MAX_FREE=8,count=0,isThinking=false,history=[];
+  var fab=document.getElementById('coachFab'),drawer=document.getElementById('coachDrawer'),closeBtn=document.getElementById('coachClose'),msgs=document.getElementById('coachMessages'),input=document.getElementById('coachInput'),sendBtn=document.getElementById('coachSend'),limitBar=document.getElementById('coachLimit');
+  if(!fab) return;
+  fab.addEventListener('click',function(){toggle(true);}); closeBtn.addEventListener('click',function(){toggle(false);});
+  function toggle(open){drawer.classList.toggle('open',open); if(open) setTimeout(function(){input.focus();},300);}
+  input.addEventListener('input',function(){input.style.height='auto';input.style.height=Math.min(input.scrollHeight,100)+'px';});
+  input.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}});
+  sendBtn.addEventListener('click',send);
+  function addMsg(t,ty){var d=document.createElement('div');d.className='msg msg-'+ty;d.textContent=t;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;return d;}
+  function addThinking(){var d=document.createElement('div');d.className='msg-thinking';d.innerHTML='<div class="thinking-dot"></div><div class="thinking-dot"></div><div class="thinking-dot"></div>';msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;return d;}
+  async function send(){var text=input.value.trim();if(!text||isThinking)return;if(count>=MAX_FREE){limitBar.classList.add('visible');input.disabled=true;sendBtn.disabled=true;return;}count++;if(count>=MAX_FREE)limitBar.classList.add('visible');addMsg(text,'user');history.push({role:'user',content:text});input.value='';input.style.height='auto';isThinking=true;sendBtn.disabled=true;var thinking=addThinking();try{var res=await fetch('/api/playground',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({coach:true,lessonCoach:true,lessonContext:LESSON_CONTEXT,history:history})});thinking.remove();var data=await res.json();var reply=(data&&data.coach)?data.coach:"Sorry, something went wrong. Try again in a moment.";addMsg(reply,'coach');history.push({role:'assistant',content:reply});}catch(err){thinking.remove();addMsg("Something went wrong — try again in a moment.",'coach');}finally{isThinking=false;sendBtn.disabled=count>=MAX_FREE;}}
+})();
+</script>
+<script src="/gate.js"></script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gemini Spark: Google's 24/7 AI Agent, Used Properly — LearningGPT</title>
+<meta name="description" content="Gemini Spark turns Gemini from a chatbot into a 24/7 agent that does multi-step work across your Google apps on a schedule. How Tasks, Skills and Schedules fit together, the workflows worth setting up, and what it costs." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#4285f4" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/gemini/gemini-spark" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/gemini/gemini-spark" />
+<meta property="og:title" content="Gemini Spark: Google's 24/7 AI agent, used properly" />
+<meta property="og:description" content="Tasks, Skills and Schedules — how to turn Gemini Spark into an agent that actually does your work." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"What is Gemini Spark?","acceptedAnswer":{"@type":"Answer","text":"Gemini Spark is a 24/7 personal AI agent built into the Gemini app. Instead of only answering prompts, it takes proactive, multi-step action on your behalf across your apps and on a schedule, running in the cloud so it keeps working even when your laptop is closed. It runs on Gemini 3.5."}},
+    {"@type":"Question","name":"How is Gemini Spark different from regular Gemini?","acceptedAnswer":{"@type":"Answer","text":"Regular Gemini waits for a prompt and answers. Spark is agentic: you give it a goal, it plans and executes multi-step tasks across connected apps, and it can run on a schedule or trigger automatically. Think of standard Gemini as an assistant and Spark as a worker you delegate to."}},
+    {"@type":"Question","name":"What can Gemini Spark connect to?","acceptedAnswer":{"@type":"Answer","text":"Natively it connects to Google apps — Gmail, Calendar, Drive, Docs, Sheets, Slides, YouTube and Maps. It also has MCP connections to third-party apps including Canva, OpenTable and Instacart at launch, with more partners being added."}},
+    {"@type":"Question","name":"Do I need AI Ultra for Gemini Spark, and what does it cost?","acceptedAnswer":{"@type":"Answer","text":"At launch Spark is in beta and limited to US Google AI Ultra subscribers, which is about $100/month for basic Spark features. Availability and pricing are expanding over time, so check Google's current plans."}},
+    {"@type":"Question","name":"What are Tasks, Skills and Schedules in Gemini Spark?","acceptedAnswer":{"@type":"Answer","text":"Tasks connect Spark to your Workspace apps and put it to work on a job. Skills define exactly how you want Spark to handle things you do often, so it acts consistently. Schedules automate the work with time-based or conditional triggers, so tasks run exactly when you need them. Together they turn one-off requests into repeatable automation."}},
+    {"@type":"Question","name":"Is it safe to let Gemini Spark act on my behalf?","acceptedAnswer":{"@type":"Answer","text":"Spark acts under your direction and within the permissions you grant, but it is a cloud agent with access to your email and files, so treat that access seriously. Start with low-risk, read-and-draft tasks, review anything it sends or changes, grant the minimum connections needed, and keep regulated data out of prompts unless it has been cleared."}}
+  ]
+}
+</script>
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --danger:#ff6b8a; --radius-lg:20px; --container:820px; --track:#4285f4; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:#4285f4;}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.25;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;box-shadow:0 4px 16px rgba(124,92,255,0.5);}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(66,133,244,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(66,133,244,0.12);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-pro{border-color:rgba(124,92,255,0.45);color:var(--brand);background:rgba(124,92,255,0.12);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#4285f4 0%,#5b8def 50%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.12em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:50px 0 16px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson h3{font-size:18px;font-weight:600;margin:26px 0 8px;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul,.lesson ol{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.blocks{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:24px 0;}
+@media (max-width:600px){.blocks{grid-template-columns:1fr;}}
+.block{background:linear-gradient(180deg,var(--surface),var(--bg-soft));border:1px solid var(--line);border-radius:16px;padding:20px;}
+.block .bn{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--track);font-weight:700;margin-bottom:8px;}
+.block p{font-size:14px;color:var(--text-dim);margin:0;line-height:1.55;}
+.workflow{margin:20px 0;background:linear-gradient(180deg,var(--surface),var(--bg-soft));border:1px solid var(--line);border-radius:var(--radius-lg);padding:22px 26px;}
+.workflow h3{margin-top:0;font-size:18px;} .workflow p{font-size:15px;margin:0;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:18px 0;font-size:14.5px;}
+.gotcha::before{content:'\26A0  Reality check: ';color:var(--warn);font-weight:700;}
+.lgpt-faq{margin:48px 0 8px;}
+.lgpt-faq .faq-eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.09em;font-weight:700;color:var(--track);margin-bottom:8px;}
+.lgpt-faq h2{font-size:27px;line-height:1.15;letter-spacing:-.02em;font-weight:800;margin:0 0 18px;}
+.lgpt-faq details{border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#14142b;margin-bottom:10px;overflow:hidden;}
+.lgpt-faq details[open]{border-color:rgba(66,133,244,.45);}
+.lgpt-faq summary{list-style:none;cursor:pointer;padding:15px 18px;font-size:15.5px;font-weight:600;color:#f5f5fa;display:flex;justify-content:space-between;align-items:center;gap:14px;}
+.lgpt-faq summary::-webkit-details-marker{display:none;}
+.lgpt-faq summary .chev{flex-shrink:0;width:18px;height:18px;border-right:2px solid #4285f4;border-bottom:2px solid #4285f4;transform:rotate(45deg);transition:transform .2s;margin-top:-4px;}
+.lgpt-faq details[open] summary .chev{transform:rotate(-135deg);margin-top:4px;}
+.lgpt-faq .faq-a{padding:0 18px 16px;font-size:14.5px;line-height:1.7;color:#c7c7d6;}
+.lgpt-faq .faq-a strong{color:#f5f5fa;font-weight:600;} .lgpt-faq .faq-a a{color:#5b8def;font-weight:600;}
+footer{border-top:1px solid var(--line);padding:30px 0;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--text-mute);}
+@media (max-width:600px){.footer-inner{flex-direction:column;gap:12px;text-align:center;}}
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/gemini/" class="nav-back">← Gemini Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Lesson 15 · Gemini Mastery</span>
+      <span class="chip chip-pro">Pro+</span>
+      <span>~9 min read</span>
+      <span class="dot"></span>
+      <span>New · members first</span>
+    </div>
+    <h1>Gemini Spark: <span class="grad serif">Google's 24/7 AI agent, used properly.</span></h1>
+    <p class="deck">Spark is the moment the Gemini app stops being a chatbot and starts being a <em>worker</em>. Give it a goal and it plans, acts across your Google apps, and runs on a schedule — in the cloud, even while your laptop's shut. The power is real, and so is the responsibility. This lesson is the mental model and the workflows that make it pay off.</p>
+
+    <h2><span class="num">01</span> What Spark actually is</h2>
+    <p>Standard Gemini answers questions. <strong>Spark takes action.</strong> It's a 24/7 agent that completes multi-step tasks on your behalf, under your direction, running on <strong>Gemini 3.5</strong> in the cloud — so it keeps working in the background after you close the laptop or lock the phone. The shift in mindset: stop asking it <em>how</em> to do something and start handing it <em>the thing to get done</em>.</p>
+
+    <h2><span class="num">02</span> The three building blocks</h2>
+    <p>Everything in Spark is made of three pieces that stack together:</p>
+    <div class="blocks">
+      <div class="block"><div class="bn">Tasks</div><p>Connect Spark to your Workspace and put it to work on an actual job — "triage my inbox," "turn these notes into a report."</p></div>
+      <div class="block"><div class="bn">Skills</div><p>Define exactly how you want Spark to handle things you do often, so it acts your way every time instead of guessing.</p></div>
+      <div class="block"><div class="bn">Schedules</div><p>Time-based or conditional triggers that run tasks automatically — every weekday at 8am, or whenever a condition is met.</p></div>
+    </div>
+    <p>A one-off request is a Task. A Task you've taught it to do <em>your</em> way is a Skill. A Skill that runs on its own is a Schedule. That progression — Task → Skill → Schedule — is how you go from "neat demo" to "this quietly runs my mornings."</p>
+
+    <h2><span class="num">03</span> What it plugs into</h2>
+    <p>Natively: <strong>Gmail, Calendar, Drive, Docs, Sheets, Slides, YouTube, and Maps</strong>. Beyond Google, it uses MCP connections to third-party apps — <strong>Canva, OpenTable, and Instacart</strong> at launch, with more partners being added. The native Workspace reach is where the day-to-day value lives; the MCP connectors are where it starts to act out in the wider world on your behalf.</p>
+
+    <h2><span class="num">04</span> Workflows worth setting up</h2>
+    <div class="workflow"><h3>The morning inbox pass</h3><p>A scheduled Task that sorts overnight mail by priority, extracts action items from long threads, and drafts replies for you to approve — so you start the day with decisions, not a pile.</p></div>
+    <div class="workflow"><h3>Notes to report to email</h3><p>Point Spark at meeting notes across chats and emails; it produces a polished Google Doc and drafts the email to send it along with — one Task spanning three apps.</p></div>
+    <div class="workflow"><h3>The standing digest</h3><p>A Schedule that compiles whatever you keep checking manually — calendar + open threads + a tracked sheet — into a single brief at a set time each day.</p></div>
+
+    <h2><span class="num">05</span> Before you turn it loose</h2>
+    <div class="gotcha">Spark is a cloud agent with access to your email and files. Start with <strong>read-and-draft</strong> tasks where it proposes and you approve; grant the <strong>minimum</strong> connections a task needs; review anything it sends or changes until you trust a given Skill; and keep regulated data out of prompts unless it's been cleared. Delegation is the point — but earn the trust one workflow at a time.</div>
+
+    <h2><span class="num">06</span> Availability &amp; cost</h2>
+    <p>At launch Spark is in <strong>beta</strong> and limited to <strong>US Google AI Ultra</strong> subscribers — roughly <strong>$100/month</strong> for basic Spark features. Access and pricing are expanding over time, so treat those as today's snapshot and check Google's current plans. If you're weighing it against other AI spend, our <a href="/ai-cost-calculator">cost calculator</a> puts the numbers side by side.</p>
+
+    <section class="lgpt-faq" aria-labelledby="faqh">
+      <div class="faq-eyebrow">Frequently asked</div>
+      <h2 id="faqh">Gemini Spark — your questions, answered</h2>
+      <details>
+        <summary><span>What is Gemini Spark?</span><span class="chev"></span></summary>
+        <div class="faq-a">A <strong>24/7 personal AI agent</strong> in the Gemini app. Rather than only answering prompts, it takes proactive, multi-step action across your apps and on a schedule, running in the cloud so it keeps working when your devices are off. It runs on Gemini 3.5.</div>
+      </details>
+      <details>
+        <summary><span>How is it different from regular Gemini?</span><span class="chev"></span></summary>
+        <div class="faq-a">Regular Gemini waits and answers; Spark <strong>plans and executes</strong>. You give it a goal and it carries out multi-step tasks across connected apps, optionally on a schedule. Assistant vs. worker.</div>
+      </details>
+      <details>
+        <summary><span>What can it connect to?</span><span class="chev"></span></summary>
+        <div class="faq-a">Natively to <strong>Gmail, Calendar, Drive, Docs, Sheets, Slides, YouTube and Maps</strong>, plus MCP connections to <strong>Canva, OpenTable and Instacart</strong> at launch, with more partners coming.</div>
+      </details>
+      <details>
+        <summary><span>Do I need AI Ultra, and what does it cost?</span><span class="chev"></span></summary>
+        <div class="faq-a">At launch it's <strong>beta, US AI Ultra only</strong> — about <strong>$100/month</strong> for basic Spark features. Availability and pricing are expanding; check Google's current plans.</div>
+      </details>
+      <details>
+        <summary><span>What are Tasks, Skills and Schedules?</span><span class="chev"></span></summary>
+        <div class="faq-a"><strong>Tasks</strong> put Spark to work via your Workspace apps; <strong>Skills</strong> define how you want recurring things done; <strong>Schedules</strong> trigger tasks automatically by time or condition. Together they turn one-offs into automation.</div>
+      </details>
+      <details>
+        <summary><span>Is it safe to let it act for me?</span><span class="chev"></span></summary>
+        <div class="faq-a">It acts within the permissions you grant, but it's a cloud agent touching your email and files — so start with low-risk draft tasks, review what it sends, grant minimum access, and keep regulated data out of prompts unless cleared.</div>
+      </details>
+    </section>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Google.</div>
+    <a href="/lessons/gemini/" style="color: var(--text-dim);">← All Gemini Mastery lessons</a>
+  </div>
+</footer>
+<script src="/gate.js"></script>
+</body>
+</html>
+    

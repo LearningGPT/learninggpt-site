@@ -31,6 +31,7 @@
       { href: '/pricing',   label: 'Pricing' },
       { href: '/testimonials', label: 'Testimonials' },
       { href: '/business',  label: 'For business' },
+      { href: '/advisory',  label: 'Advisory' },
       { href: '/seniors',   label: 'AI for Seniors', senior: true }
     ];
 

@@ -1,6 +1,6 @@
 // Vercel serverless function for the LearningGPT playground
 // Three modes:
-//   POST { prompt, models }                          → runs all 5 models
+//   POST { prompt, models }                          → runs all models (up to 6)
 //   POST { prompt, results, coach: true }            → playground coach analysis
 //   POST { coach: true, lessonCoach: true, ... }     → per-lesson AI tutor
 //
@@ -176,7 +176,7 @@ Under 120 words. Direct and specific. Plain text only, no markdown symbols.`;
   const { prompt, models } = body;
   if (!prompt || typeof prompt !== 'string') return res.status(400).json({ error: 'Missing prompt' });
   if (prompt.length > 4000) return res.status(400).json({ error: 'Prompt too long' });
-  if (!Array.isArray(models) || models.length === 0 || models.length > 5) return res.status(400).json({ error: 'Invalid models array' });
+  if (!Array.isArray(models) || models.length === 0 || models.length > 6) return res.status(400).json({ error: 'Invalid models array' });
   try {
     const promises = models.map(async (model) => {
       const startTime = Date.now();

@@ -129,3 +129,19 @@
     build();
   }
 })();
+// ─────────────────────────────────────────────────────────────────────────────
+// Google Analytics 4 — loaded on every page via this shared file.
+// Property: learninggpt.ai · Measurement ID G-9LW4HXHQBF
+// ─────────────────────────────────────────────────────────────────────────────
+(function () {
+  try {
+    var ga = document.createElement('script');
+    ga.async = true;
+    ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-9LW4HXHQBF';
+    document.head.appendChild(ga);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || function () { dataLayer.push(arguments); };
+    gtag('js', new Date());
+    gtag('config', 'G-9LW4HXHQBF');
+  } catch (e) {}
+})();

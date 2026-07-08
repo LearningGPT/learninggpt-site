@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Claude in Copilot Chat: what it means and how to use it (July 2026) — LearningGPT</title>
+<meta name="description" content="Anthropic's Claude is now a selectable model inside Microsoft 365 Copilot Chat. How to try it, when to pick Claude over the default, and the admin switch that turns it on. Free lesson." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#2c7be5" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/copilot/claude-in-copilot" />
+<meta property="og:title" content="Claude is now inside Copilot Chat — LearningGPT" />
+<meta property="og:description" content="Anthropic's Claude is now a selectable model inside Microsoft 365 Copilot Chat. How to try it, when to pick Claude over the default, and the admin switch that turns it on. Free lesson." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --radius:14px; --radius-lg:20px; --container:820px; --track:#2c7be5; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:var(--track);}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.25;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(44,123,229,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(44,123,229,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#2c7be5 0%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.15em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:52px 0 14px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson h3{font-size:18px;font-weight:600;margin:28px 0 8px;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(44,123,229,0.12),rgba(124,92,255,0.06));border:1px solid rgba(44,123,229,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,#2c7be5,#7c5cff);border-radius:2px 0 0 2px;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.cost-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;}
+.cost-table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--line-strong);color:var(--text-dim);font-size:11.5px;text-transform:uppercase;letter-spacing:0.6px;}
+.cost-table td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.cost-table td:first-child{font-weight:700;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:14px 0;font-size:14.5px;}
+.gotcha::before{content:'⚠ Watch out: ';color:var(--warn);font-weight:700;}
+.tryit{margin:28px 0;padding:22px;background:rgba(68,224,164,0.06);border:1px solid rgba(68,224,164,0.25);border-radius:var(--radius);}
+.tryit .lbl{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.tryit p{margin:0 0 14px;font-size:15.5px;}
+.tryit a.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#44e0a4,#5b8def);color:white;padding:12px 22px;border-radius:9px;font-weight:600;font-size:14px;}
+.tryit a.btn:hover{transform:translateY(-1px);color:white;}
+.challenge{margin:52px 0 40px;background:linear-gradient(135deg,rgba(44,123,229,0.14),rgba(124,92,255,0.1));border:1px solid rgba(44,123,229,0.28);border-radius:var(--radius-lg);padding:34px;}
+.challenge h2{margin-top:0;}
+.challenge a.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#2c7be5,#7c5cff);color:white;padding:13px 24px;border-radius:10px;font-weight:600;font-size:15px;}
+.challenge a.btn:hover{transform:translateY(-1px);color:white;}
+.checklist{margin:40px 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);}
+.checklist h3{margin-top:0;font-size:18px;} .checklist ul{list-style:none;padding:0;margin:0;}
+.checklist li{padding:10px 0 10px 30px;position:relative;font-size:15px;border-top:1px solid var(--line);}
+.checklist li:first-child{border-top:none;padding-top:0;}
+.checklist li::before{content:'✓';position:absolute;left:0;color:var(--accent);font-weight:700;}
+.next-up{margin:50px 0 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.next-up .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:10px;}
+.next-up h3{margin:0 0 8px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:14.5px;}
+footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is Claude really available inside Microsoft 365 Copilot?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Per Microsoft's July 2026 release notes, Anthropic's Claude is available as a selectable model in Copilot Chat on Windows, Mac, web, iOS, and Android, positioned for complex analysis, document understanding, and structured content generation."}}, {"@type": "Question", "name": "Why don't I see Claude in my Copilot Chat?", "acceptedAnswer": {"@type": "Answer", "text": "Access is controlled by your IT admin. Admins enable Anthropic as a model provider for specific users and groups in the Microsoft 365 admin center. If you don't see the option, ask your admin whether Anthropic models are enabled for your group."}}, {"@type": "Question", "name": "When should I pick Claude instead of the default model in Copilot?", "acceptedAnswer": {"@type": "Answer", "text": "Pick Claude for long-document analysis, structured writing like outlines and plans, and breaking down complex topics. Keep the default OpenAI models for quick drafts and lookups grounded in your Microsoft 365 data."}}, {"@type": "Question", "name": "Does using Claude in Copilot change where my data goes?", "acceptedAnswer": {"@type": "Answer", "text": "Copilot's governance still runs through your Microsoft 365 tenant and its admin controls. The model selection changes which AI generates the response, not your organization's data controls."}}]}</script>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top"><div class="nav-inner">
+  <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+  <a href="/lessons/copilot/" class="nav-back">← Copilot Mastery</a>
+</div></nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Copilot Mastery</span>
+      <span class="chip chip-free">Free</span>
+      <span>~8 min read</span>
+      <span class="dot"></span>
+      <span>New · July 2026</span>
+    </div>
+    <h1>Claude is now inside <span class="grad serif">Copilot Chat.</span></h1>
+    <p>Microsoft's July 2026 release notes contain a line that would have sounded absurd two years ago: <strong>Anthropic's Claude is now a model you can pick inside Microsoft 365 Copilot Chat</strong> — on Windows, Mac, web, iOS, and Android. Same Copilot window, same tenant, different brain. Here's what actually changed, how to try it, and when picking Claude is the right call.</p>
+
+    <h2><span class="num">01</span> What changed</h2>
+    <p>Copilot Chat now has a <strong>model option</strong>. Alongside the default OpenAI models, you can select Claude for a conversation. Microsoft's own guidance positions Claude for <strong>complex analysis, document understanding, and structured content generation</strong> — and that matches what Claude has been known for all along: long documents, careful reasoning, structured writing.</p>
+    <p>This isn't a side app or a plugin. It's the same Copilot Chat that ships with your Microsoft 365 license — your files, your permissions, Microsoft's governance — with a choice of which frontier model does the thinking. Microsoft has been heading here for a while: Copilot Studio already lets builders choose Anthropic and xAI models per agent. Now the everyday chat surface gets the same flexibility.</p>
+
+    <h2><span class="num">02</span> How to try it</h2>
+    <div class="tryit">
+      <p><strong>Open Copilot Chat</strong> (the app or microsoft365.com), start a new chat, and look for the <strong>model selector</strong>. If your admin has enabled Anthropic models, Claude appears as an option. Then run Microsoft's own three suggested tests:</p>
+      <ul>
+        <li>Hand it a <strong>long document</strong> and ask for an analysis — structure, gaps, risks.</li>
+        <li>Ask it to <strong>break down a complex topic</strong> you actually need to explain to someone this week.</li>
+        <li>Request a <strong>multi-step plan or structured outline</strong> for a real project.</li>
+      </ul>
+    </div>
+    <div class="callout"><strong>Don't see Claude?</strong> That's an admin switch, not a missing feature. Access to Anthropic (and xAI) models is controlled per user and group in the Microsoft 365 admin center — see section 04.</div>
+
+    <h2><span class="num">03</span> When to pick Claude (honestly)</h2>
+    <table class="cost-table">
+      <tr><th>The job</th><th>Reach for…</th></tr>
+      <tr><td>Long-document analysis — contracts, reports, policies</td><td><strong>Claude</strong> — this is its home turf</td></tr>
+      <tr><td>Structured writing — outlines, plans, specs, careful prose</td><td><strong>Claude</strong> — noticeably steadier structure</td></tr>
+      <tr><td>Breaking down genuinely complex topics</td><td><strong>Claude</strong> — Microsoft's own recommendation</td></tr>
+      <tr><td>Everyday drafts, quick answers, M365-grounded lookups</td><td><strong>Default OpenAI models</strong> — fast and deeply wired into Graph</td></tr>
+      <tr><td>Agents that need live X / web spice</td><td><strong>Grok in Copilot Studio</strong> — <a href="/lessons/copilot/grok-in-copilot-studio">separate lesson</a></td></tr>
+    </table>
+    <p>The honest caveat: model choice inside Copilot is new, and Microsoft will keep tuning which model handles what behind the scenes. Treat the selector as a tool for the jobs above, not a religion. Run your own A/B on your real work — the difference shows up most on long inputs and structured outputs.</p>
+
+    <h2><span class="num">04</span> For admins: turning it on</h2>
+    <p>IT admins can enable Anthropic as a model provider for <strong>specific users and groups</strong> from the admin center (xAI models are US-only for now, via Copilot Studio). Practical rollout pattern:</p>
+    <div class="checklist">
+      <h3>Admin quick list</h3>
+      <ul>
+        <li>Review the Anthropic model provider setting in the Microsoft 365 admin center</li>
+        <li>Enable for a pilot group first — the analysts and writers who benefit most</li>
+        <li>Update your internal AI usage documentation to reflect the new model options</li>
+        <li>Note: data governance still runs through your tenant — the model changes, the controls don't</li>
+      </ul>
+    </div>
+
+    <h2><span class="num">05</span> Why this matters</h2>
+    <p>Microsoft bundling Copilot into Business plans (from July 1) while opening the model menu to its biggest AI rival tells you where this market is going: <strong>the assistant is the product, the model is a component</strong>. For you, that means the skill that compounds isn't loyalty to one model — it's knowing which brain to hand which job. That's exactly the skill this track teaches.</p>
+
+    <div class="challenge">
+      <h2 style="margin-top:0;">This week's challenge</h2>
+      <p>Pick one real document over 20 pages. Run the same three prompts — summary, risk list, action plan — once on the default model and once on Claude. Compare side by side. You'll know in 15 minutes which jobs deserve the selector click.</p>
+    </div>
+
+    <div class="next-up">
+      <div class="lbl">Up next in Copilot Mastery</div>
+      <h3>Using Grok in Copilot Studio — multi-model agents</h3>
+      <p>The other half of Microsoft's multi-model story: choosing a model per agent in Copilot Studio. <a href="/lessons/copilot/grok-in-copilot-studio">Read the lesson →</a></p>
+    </div>
+  </div>
+</article>
+<footer><div class="footer-inner">
+  <div>© 2026 LearningGPT, Inc. · Pricing as of June 2026 — verify current rates with Microsoft.</div>
+  <a href="/lessons/copilot/" style="color:var(--text-dim);">← All Copilot lessons</a>
+</div></footer>
+<script src="/gate.js"></script>
+</body>
+</html>

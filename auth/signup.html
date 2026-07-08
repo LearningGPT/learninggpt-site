@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9LW4HXHQBF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9LW4HXHQBF');</script>
+<script defer src="/_vercel/insights/script.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Create account — LearningGPT</title>
@@ -186,6 +189,7 @@ submitBtn.addEventListener('click', async function() {
 
     // Funnel tracking: signup completed
     if (window.va) { window.va('event', { name: 'signup_complete', plan: data.plan || 'free' }); }
+    try { if (typeof gtag === 'function') gtag('event', 'sign_up', { method: 'email', plan: data.plan || 'free' }); } catch (e) {}
 
     // Send the welcome email (fire-and-forget). keepalive lets the request
     // finish even though we navigate away to checkout / lessons right after.

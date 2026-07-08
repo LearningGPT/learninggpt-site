@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Your First Character.AI Conversation, Done Right — LearningGPT</title>
+<meta name="description" content="Finding characters worth talking to, steering a conversation, using swipes and Charms wisely, and the star ratings that train your experience." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#9b5cff" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/character-ai/first-conversation" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/character-ai/first-conversation" />
+<meta property="og:title" content="Your First Character.AI Conversation, Done Right" />
+<meta property="og:description" content="Finding characters worth talking to, steering a conversation, using swipes and Charms wisely, and the star ratings that train your experience." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I find good characters?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Search topics you care about, then check chat counts and greeting quality \u2014 millions of chats and a rich greeting usually mean a well-crafted character."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are Charms?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The free tier\u2019s virtual currency in 2026 \u2014 spent on things like swiping for alternate responses. c.ai+ removes the friction."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I talk out of character?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes \u2014 parentheses are the convention: \"(shorter replies please)\" steers the AI without breaking the scene."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I undo part of a conversation?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes \u2014 edit or remove recent messages and continue differently. Conversations are yours to steer and re-steer."
+      }
+    }
+  ]
+}
+</script>
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --danger:#ff6b8a; --radius-lg:20px; --container:820px; --track:#9b5cff; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:#9b5cff;}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.22;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;box-shadow:0 4px 16px rgba(124,92,255,0.5);}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(155,92,255,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(155,92,255,0.12);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .chip-pro{border-color:rgba(124,92,255,0.45);color:var(--brand);background:rgba(124,92,255,0.12);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(31px,4.5vw,44px);font-weight:800;line-height:1.14;letter-spacing:-0.02em;margin:0 0 18px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#9b5cff 0%,#c084fc 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.12em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 32px;padding-bottom:26px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:26px;font-weight:700;letter-spacing:-0.01em;margin:46px 0 14px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson h3{font-size:18px;font-weight:600;margin:24px 0 8px;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 16px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul,.lesson ol{padding-left:24px;margin:0 0 16px;} .lesson li{margin-bottom:8px;}
+.callout{margin:26px 0;padding:20px 24px;background:linear-gradient(135deg,rgba(155,92,255,0.12),rgba(124,92,255,0.06));border:1px solid rgba(155,92,255,0.25);border-radius:var(--radius-lg);}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.steps{counter-reset:st;margin:22px 0;padding:0;list-style:none;}
+.steps li{position:relative;padding:0 0 16px 44px;margin:0;}
+.steps li::before{counter-increment:st;content:counter(st);position:absolute;left:0;top:-2px;width:30px;height:30px;border-radius:8px;background:rgba(155,92,255,0.14);border:1px solid rgba(155,92,255,0.32);color:var(--track);font-weight:700;font-size:14px;display:grid;place-items:center;}
+.steps li:not(:last-child)::after{content:'';position:absolute;left:15px;top:30px;bottom:2px;width:1px;background:var(--line);}
+.workflow{margin:20px 0;background:linear-gradient(180deg,var(--surface),var(--bg-soft));border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 24px;}
+.workflow h3{margin-top:0;} .workflow p:last-child{margin-bottom:0;}
+.prompt-example{background:rgba(0,0,0,0.3);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:8px 0 18px;font-family:'SFMono-Regular',Consolas,monospace;font-size:13.5px;color:var(--text);line-height:1.6;white-space:pre-wrap;}
+.prompt-example .label{display:block;font-family:'Inter',sans-serif;font-size:10.5px;color:var(--text-mute);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.8px;font-weight:600;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:16px 0;font-size:14.5px;}
+.gotcha::before{content:'\26A0  ';color:var(--warn);font-weight:700;}
+.lgpt-faq{margin:46px 0 8px;}
+.lgpt-faq .faq-eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.09em;font-weight:700;color:var(--track);margin-bottom:8px;}
+.lgpt-faq h2{font-size:26px;line-height:1.15;letter-spacing:-.02em;font-weight:800;margin:0 0 18px;}
+.lgpt-faq details{border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#14142b;margin-bottom:10px;overflow:hidden;}
+.lgpt-faq details[open]{border-color:rgba(155,92,255,.45);}
+.lgpt-faq summary{list-style:none;cursor:pointer;padding:15px 18px;font-size:15.5px;font-weight:600;color:#f5f5fa;display:flex;justify-content:space-between;align-items:center;gap:14px;}
+.lgpt-faq summary::-webkit-details-marker{display:none;}
+.lgpt-faq summary .chev{flex-shrink:0;width:18px;height:18px;border-right:2px solid #9b5cff;border-bottom:2px solid #9b5cff;transform:rotate(45deg);transition:transform .2s;margin-top:-4px;}
+.lgpt-faq details[open] summary .chev{transform:rotate(-135deg);margin-top:4px;}
+.lgpt-faq .faq-a{padding:0 18px 16px;font-size:14.5px;line-height:1.7;color:#c7c7d6;}
+.lgpt-faq .faq-a strong{color:#f5f5fa;font-weight:600;} .lgpt-faq .faq-a a{color:var(--brand-2);font-weight:600;}
+.nextup{margin:46px 0 0;padding:22px 24px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.nextup .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:8px;}
+.nextup a{font-weight:600;}
+footer{border-top:1px solid var(--line);padding:30px 0;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--text-mute);}
+@media (max-width:600px){.footer-inner{flex-direction:column;gap:12px;text-align:center;}}
+.lesson-meta .chip-pro-plus{border-color:rgba(255,181,71,0.45);color:var(--warn);background:rgba(255,181,71,0.1);}
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/character-ai/" class="nav-back">← Character.AI Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Character.AI Mastery</span>
+      <span class="chip chip-pro">Pro</span>
+      <span>~8 min read</span>
+      <span class="dot"></span>
+      <span>Updated July 2026</span>
+    </div>
+    <h1>Your first conversation: <span class="grad serif">finding the good ones.</span></h1>
+    <p class="deck">The difference between "this is silly" and "oh, I get it now" is usually the first character you pick and knowing three controls: swipes, ratings, and steering. Ten minutes here sets up everything else.</p>
+<h2><span class="num">01</span>Pick a character with depth</h2>
+<p>Search for something you actually care about — a book you love, a skill you’re building, a language you’re learning. Check two signals before committing: the <strong>chat count</strong> (millions of chats usually means a well-built character) and the <strong>greeting</strong> — a rich, specific greeting signals a creator who wrote real example dialogue.</p>
+<h2><span class="num">02</span>The three controls that matter</h2>
+<p><strong>Swipe</strong> (arrows on a response) generates alternative replies — on the free tier this spends Charms, so use it when a reply misses, not compulsively. <strong>Star ratings</strong> train the character toward what you enjoy. <strong>Steering in plain text</strong> works better than people expect: parentheses talk to the AI out of character.</p>
+<div class="prompt-example"><span class="label">Out-of-character steering</span>(Let’s slow down — describe the scene in more detail, and keep your responses to a paragraph so I can respond.)</div>
+<h2><span class="num">03</span>Make it yours from message one</h2>
+<p>Characters mirror your energy. Write two sentences, get two sentences; write vividly, get vivid back. If a conversation drifts somewhere you don’t like, you can rewind: delete or edit recent messages and take the scene a different direction — nothing is locked in.</p>
+<div class="callout"><span class="lbl">Free-tier reality</span><p>Mid-chat ads and Charm limits are part of free in 2026. If you find yourself here daily, the costs lesson does the honest math on c.ai+.</p></div>
+    <section class="lgpt-faq" aria-labelledby="faqh">
+      <div class="faq-eyebrow">Frequently asked</div>
+      <h2 id="faqh">First conversations — FAQs</h2>
+      <details><summary><span>How do I find good characters?</span><span class="chev"></span></summary><div class="faq-a">Search topics you care about, then check <strong>chat counts and greeting quality</strong> — millions of chats and a rich greeting usually mean a well-crafted character.</div></details>
+      <details><summary><span>What are Charms?</span><span class="chev"></span></summary><div class="faq-a">The free tier’s virtual currency in 2026 — spent on things like swiping for alternate responses. c.ai+ removes the friction.</div></details>
+      <details><summary><span>Can I talk out of character?</span><span class="chev"></span></summary><div class="faq-a">Yes — <strong>parentheses are the convention</strong>: "(shorter replies please)" steers the AI without breaking the scene.</div></details>
+      <details><summary><span>Can I undo part of a conversation?</span><span class="chev"></span></summary><div class="faq-a">Yes — edit or remove recent messages and continue differently. Conversations are yours to steer and re-steer.</div></details>
+    </section>
+    <div class="nextup"><div class="lbl">Up next</div><a href="/lessons/character-ai/create-a-character">Create your first character →</a></div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Character.AI.</div>
+    <a href="/lessons/character-ai/" style="color: var(--text-dim);">← All Character.AI Mastery lessons</a>
+  </div>
+</footer>
+<script src="/gate.js"></script>
+</body>
+</html>

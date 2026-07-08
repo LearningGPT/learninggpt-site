@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GPT-Live and GPT-5.6 (Sol, Terra, Luna) explained — LearningGPT</title>
+<meta name="description" content="OpenAI's July 2026 double-drop: GPT-Live full-duplex voice rolling out to everyone, and the GPT-5.6 Sol/Terra/Luna family in limited preview. What's real today, what's coming, and what to ignore. Free lesson." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#10a37f" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/chatgpt/gpt-live-and-gpt-56" />
+<meta property="og:title" content="GPT-Live is here — and GPT-5.6 is coming — LearningGPT" />
+<meta property="og:description" content="OpenAI's July 2026 double-drop: GPT-Live full-duplex voice rolling out to everyone, and the GPT-5.6 Sol/Terra/Luna family in limited preview. What's real today, what's coming, and what to ignore. Free lesson." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --radius:14px; --radius-lg:20px; --container:820px; --track:#10a37f; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:var(--track);}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.25;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(16,163,127,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(16,163,127,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#10a37f 0%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.15em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:52px 0 14px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(16,163,127,0.12),rgba(124,92,255,0.06));border:1px solid rgba(16,163,127,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,#10a37f,#7c5cff);border-radius:2px 0 0 2px;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.cost-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;}
+.cost-table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--line-strong);color:var(--text-dim);font-size:11.5px;text-transform:uppercase;letter-spacing:0.6px;}
+.cost-table td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.cost-table td:first-child{font-weight:700;}
+.tryit{margin:28px 0;padding:22px;background:rgba(68,224,164,0.06);border:1px solid rgba(68,224,164,0.25);border-radius:var(--radius);}
+.tryit .lbl{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.tryit p{margin:0 0 14px;font-size:15.5px;}
+.tryit a.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#44e0a4,#5b8def);color:white;padding:12px 22px;border-radius:9px;font-weight:600;font-size:14px;}
+.tryit a.btn:hover{transform:translateY(-1px);color:white;}
+.challenge{margin:52px 0 40px;background:linear-gradient(135deg,rgba(16,163,127,0.14),rgba(124,92,255,0.1));border:1px solid rgba(16,163,127,0.28);border-radius:var(--radius-lg);padding:34px;}
+.challenge h2{margin-top:0;}
+.challenge a.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#10a37f,#7c5cff);color:white;padding:13px 24px;border-radius:10px;font-weight:600;font-size:15px;}
+.challenge a.btn:hover{transform:translateY(-1px);color:white;}
+.checklist{margin:40px 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);}
+.checklist h3{margin-top:0;font-size:18px;} .checklist ul{list-style:none;padding:0;margin:0;}
+.checklist li{padding:10px 0 10px 30px;position:relative;font-size:15px;border-top:1px solid var(--line);}
+.checklist li:first-child{border-top:none;padding-top:0;}
+.checklist li::before{content:'✓';position:absolute;left:0;color:var(--accent);font-weight:700;}
+.next-up{margin:50px 0 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.next-up .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:10px;}
+.next-up h3{margin:0 0 8px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:14.5px;}
+footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is GPT-Live?", "acceptedAnswer": {"@type": "Answer", "text": "GPT-Live is OpenAI's new generation of voice models announced July 8, 2026. It uses a full-duplex architecture, meaning it can listen and speak at the same time, enabling natural back-and-forth conversation. For harder questions it delegates to a frontier model (GPT-5.5 at launch) behind the scenes."}}, {"@type": "Question", "name": "Who gets GPT-Live and when?", "acceptedAnswer": {"@type": "Answer", "text": "GPT-Live-1 is becoming the default voice model for paid ChatGPT tiers (Go, Plus, Pro), and GPT-Live-1 mini serves free users. Both are rolling out globally across iOS, Android, and chatgpt.com starting July 8, 2026."}}, {"@type": "Question", "name": "Is GPT-5.6 available in ChatGPT?", "acceptedAnswer": {"@type": "Answer", "text": "No. As of early July 2026, GPT-5.6 (Sol, Terra, and Luna) is a limited preview for selected API and Codex partners only. It is not available in ChatGPT during the preview."}}, {"@type": "Question", "name": "What's the difference between GPT-5.6 Sol, Terra, and Luna?", "acceptedAnswer": {"@type": "Answer", "text": "Sol is the most powerful, designed for deep reasoning work like programming, biological analysis, and cybersecurity. Terra offers the best balance of performance and cost. Luna is built for speed."}}, {"@type": "Question", "name": "What is ChatGPT Lockdown Mode?", "acceptedAnswer": {"@type": "Answer", "text": "Lockdown Mode is an optional, opt-in security setting now available to all logged-in ChatGPT users. When enabled it restricts network-enabled capabilities such as live web browsing, deep research, agent mode, and file downloads — designed for users with elevated security needs."}}]}</script>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top"><div class="nav-inner">
+  <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+  <a href="/lessons/chatgpt/" class="nav-back">← ChatGPT Mastery</a>
+</div></nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">ChatGPT Mastery</span>
+      <span class="chip chip-free">Free</span>
+      <span>~8 min read</span>
+      <span class="dot"></span>
+      <span>New · July 2026</span>
+    </div>
+    <h1>GPT-Live is here — and <span class="grad serif">GPT-5.6 is coming.</span></h1>
+    <p>OpenAI shipped two announcements in one week. One you can use today: <strong>GPT-Live</strong>, a new generation of voice models rolling out to everyone. One you can't yet: <strong>GPT-5.6</strong>, a three-model family in limited preview. Here's what each actually is, what's real today, and what to ignore until it ships.</p>
+
+    <h2><span class="num">01</span> GPT-Live: voice that finally converses</h2>
+    <p>Announced July 8, GPT-Live is built on a <strong>full-duplex architecture</strong> — it listens and speaks <em>at the same time</em>, like a person on a phone call. In practice that means it can react while you're mid-sentence ("mhmm," "yeah"), handle quick back-and-forth without the walkie-talkie pauses, and — the underrated part — <strong>stay quiet when you need a moment to think</strong>.</p>
+    <p>It's also the smartest voice model OpenAI has shipped, with a trick: for questions needing web search or deeper reasoning, GPT-Live <strong>delegates to a frontier model behind the scenes</strong> (GPT-5.5 at launch) and folds the answer back into the conversation.</p>
+    <table class="cost-table">
+      <tr><th>Version</th><th>Who gets it</th><th>Status</th></tr>
+      <tr><td><strong>GPT-Live-1</strong></td><td>Default voice model for paid tiers (Go, Plus, Pro)</td><td>Rolling out globally now</td></tr>
+      <tr><td><strong>GPT-Live-1 mini</strong></td><td>Free tier</td><td>Rolling out globally now</td></tr>
+    </table>
+    <div class="tryit">
+      <p><strong>Try it today:</strong> open voice mode in the ChatGPT app (iOS, Android, or chatgpt.com) and interrupt it mid-answer — then ask a question that needs current web info and notice the "let me check" delegation. If your voice mode still feels walkie-talkie, the rollout hasn't reached you yet; it's arriving over days, not months. Our <a href="/lessons/chatgpt/voice-mode">voice mode lesson</a> covers the workflows once you have it.</p>
+    </div>
+
+    <h2><span class="num">02</span> GPT-5.6: Sol, Terra, and Luna — decoded</h2>
+    <p>GPT-5.6 introduces a naming scheme worth learning now, because you'll be choosing between these soon:</p>
+    <table class="cost-table">
+      <tr><th>Model</th><th>Built for</th><th>Think of it as</th></tr>
+      <tr><td><strong>Sol</strong></td><td>Deep reasoning — programming, biological analysis, cybersecurity</td><td>The heavyweight</td></tr>
+      <tr><td><strong>Terra</strong></td><td>Best balance of performance and cost</td><td>The daily driver</td></tr>
+      <tr><td><strong>Luna</strong></td><td>Speed</td><td>The sprinter</td></tr>
+    </table>
+    <div class="callout"><strong>The honest status line:</strong> as of this writing, GPT-5.6 is a <strong>limited preview for selected API and Codex partners only</strong>. It is <em>not</em> in ChatGPT. Anyone selling you "GPT-5.6 prompts" today is selling vapor. We'll update this lesson the day availability changes — that's the deal on this site.</div>
+
+    <h2><span class="num">03</span> The quieter ships worth knowing</h2>
+    <p>Two smaller July updates that change real workflows:</p>
+    <p><strong>Memory doubled.</strong> Plus and Pro users now get roughly <strong>2x memory capacity</strong> — ChatGPT can hold more durable context about you and your work. If you set up memory ages ago and hit the cap, it's worth a pruning pass now that there's room. (How to do that well: <a href="/lessons/chatgpt/memory-instructions">memory &amp; custom instructions</a>.)</p>
+    <p><strong>Lockdown Mode.</strong> An opt-in security setting now available to all logged-in users. It restricts network-enabled capabilities — live browsing, deep research, agent mode, file downloads — for people whose threat model demands it (journalists, executives, anyone handling sensitive material). Most users shouldn't turn it on; the right users really should.</p>
+
+    <h2><span class="num">04</span> What to actually do with this</h2>
+    <div class="checklist">
+      <h3>What you can do now</h3>
+      <ul>
+        <li>Test GPT-Live in voice mode — interrupt it, let it pause, push a web question at it</li>
+        <li>Learn the Sol / Terra / Luna split now; choose nothing until it's actually in ChatGPT</li>
+        <li>Revisit your saved memories — the cap just doubled for Plus/Pro</li>
+        <li>Know Lockdown Mode exists; enable it only if your threat model calls for it</li>
+        <li>Ignore anyone claiming GPT-5.6 access inside ChatGPT this week</li>
+      </ul>
+    </div>
+
+    <div class="challenge">
+      <h2 style="margin-top:0;">This week's challenge</h2>
+      <p>Run one full commute (or a 15-minute walk) as a GPT-Live working session: brief it on a real problem out loud, let it push back, and ask for a written summary at the end. Compare that summary against what a typed session gives you. Voice stopped being a demo this week — find out if it earns a slot in your routine.</p>
+    </div>
+
+    <div class="next-up">
+      <div class="lbl">Up next in ChatGPT Mastery</div>
+      <h3>Voice mode: real-world use cases</h3>
+      <p>The use cases that go beyond the demo videos — now supercharged by GPT-Live. <a href="/lessons/chatgpt/voice-mode">Read the lesson →</a></p>
+    </div>
+  </div>
+</article>
+<footer><div class="footer-inner">
+  <div>© 2026 LearningGPT, Inc. · Pricing as of June 2026 — verify current rates with OpenAI.</div>
+  <a href="/lessons/chatgpt/" style="color:var(--text-dim);">← All ChatGPT lessons</a>
+</div></footer>
+<script src="/gate.js"></script>
+</body>
+</html>

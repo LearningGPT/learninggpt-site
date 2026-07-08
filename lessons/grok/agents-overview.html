@@ -3,498 +3,160 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Grok Mastery — LearningGPT</title>
-<meta name="description" content="Master Grok in 2026: the real-time X firehose, Think mode and the model lineup, DeepSearch, Grok Imagine images and video, voice cloning, Connectors, the API — taught honestly by an independent platform. 12 lessons, first two free." />
+<title>Grok in 2026 — Everything It Can Do, Explained — LearningGPT</title>
+<meta name="description" content="The full Grok tour: models and modes, DeepSearch, real-time X intelligence, Imagine images and video, voice, Connectors, Agent Mode — and how the pricing ladder actually works." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#9da0b0" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/grok/agents-overview" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
-
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://learninggpt.ai/lessons/grok/" />
-<meta property="og:title" content="Grok Mastery — LearningGPT" />
-<meta property="og:description" content="The real-time X firehose, DeepSearch, Imagine, voice, Connectors, and the API — Grok taught honestly. 12 lessons, first two free." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/grok/agents-overview" />
+<meta property="og:title" content="Grok in 2026 — everything it can do, explained" />
+<meta property="og:description" content="The full Grok tour: models and modes, DeepSearch, real-time X intelligence, Imagine images and video, voice, Connectors, Agent Mode — and how the pricing ladder actually works." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
-
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is Grok?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Grok is xAI's assistant, built into X and available as its own app and site. Its signature strength is real-time intelligence from X's live feed, alongside frontier reasoning, DeepSearch research, image and video generation, and voice."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Grok free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "There is a free tier with limits, and a ladder of paid tiers through X Premium and SuperGrok plans. Most people are well served below the top tier \u2014 the costs lesson decodes the ladder."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is Grok best at?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Anything that benefits from right-now information: news, trends, live sentiment, sports, markets chatter. No other assistant has X's live feed. For long private-document work or the most careful writing, other tools often fit better."
+      }
+    }
+  ]
+}
+</script>
 <style>
-:root {
-  --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a;
-  --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14);
-  --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85;
-  --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4;
-  --warn: #ffb547;
-  --radius: 14px; --radius-lg: 20px;
-  --container: 880px;
-  --track-color: #9da0b0;
-  --track-gradient: linear-gradient(135deg, #71717a, #3f3f46);
-}
-* { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
-body {
-  font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif;
-  background: var(--bg); color: var(--text);
-  line-height: 1.6; -webkit-font-smoothing: antialiased;
-  overflow-x: hidden; min-height: 100vh;
-}
-a { color: inherit; text-decoration: none; }
-
-.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.35; }
-.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #71717a; }
-.bg-orb.two { width: 600px; height: 600px; top: 40%; right: -200px; background: #7c5cff; opacity: 0.3; }
-
-.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
-
-nav.top {
-  position: sticky; top: 0; z-index: 100;
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  background: rgba(10,10,26,0.85);
-  border-bottom: 1px solid var(--line);
-}
-.nav-inner {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 24px; max-width: 1180px; margin: 0 auto;
-}
-.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
-.logo-mark {
-  width: 30px; height: 30px; border-radius: 7px;
-  background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4);
-  display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white;
-  box-shadow: 0 4px 16px rgba(124,92,255,0.5);
-}
-.nav-back { font-size: 13px; color: var(--text-dim); }
-.nav-back:hover { color: var(--text); }
-
-.track-header { padding: 70px 0 40px; }
-.breadcrumb { font-size: 13px; color: var(--text-mute); margin-bottom: 18px; }
-.breadcrumb a { color: var(--text-dim); }
-.breadcrumb a:hover { color: var(--text); }
-.breadcrumb .sep { margin: 0 8px; opacity: 0.6; }
-
-.track-head-row { display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap; }
-.track-icon-lg {
-  width: 72px; height: 72px; border-radius: 16px;
-  background: var(--track-gradient);
-  display: grid; place-items: center; font-size: 32px; color: white; font-weight: 800;
-  flex-shrink: 0; box-shadow: 0 8px 30px rgba(113,113,122,0.4);
-}
-.track-head-text { flex: 1; min-width: 280px; }
-.track-status-pill {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 5px 12px; border-radius: 999px;
-  font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;
-  background: rgba(68,224,164,0.15); color: var(--accent);
-  border: 1px solid rgba(68,224,164,0.35);
-  margin-bottom: 12px;
-}
-.track-status-pill .dot {
-  width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
-  animation: pulse 1.6s infinite;
-}
-@keyframes pulse { 0%,100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.2); } }
-.track-head-text h1 {
-  font-size: clamp(34px, 5vw, 48px); font-weight: 800;
-  letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 14px;
-}
-.track-head-text h1 .serif {
-  font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400;
-  padding-right: 0.15em;
-  color: var(--track-color);
-}
-.track-head-text p { font-size: 17px; color: var(--text-dim); margin: 0; max-width: 580px; }
-
-.track-meta {
-  display: flex; gap: 28px; flex-wrap: wrap;
-  margin: 32px 0 0; padding: 18px 0;
-  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
-  font-size: 13.5px; color: var(--text-dim);
-}
-.track-meta-item { display: flex; flex-direction: column; gap: 2px; }
-.track-meta-item .lbl { font-size: 10.5px; color: var(--text-mute); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
-.track-meta-item .val { color: var(--text); font-weight: 600; font-size: 14px; }
-
-.lessons-section { padding: 50px 0 80px; }
-.lessons-section h2 {
-  font-size: 24px; font-weight: 700; letter-spacing: -0.01em;
-  margin: 0 0 8px;
-}
-.lessons-section .sub { font-size: 14.5px; color: var(--text-dim); margin: 0 0 28px; }
-
-.lesson-row {
-  display: block;
-  background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%);
-  border: 1px solid var(--line); border-radius: var(--radius);
-  padding: 22px 24px; margin-bottom: 12px;
-  transition: transform .15s, border-color .15s;
-}
-.lesson-row:hover { transform: translateX(4px); border-color: rgba(157,160,176,0.35); }
-
-.lesson-row-inner { display: flex; gap: 18px; align-items: center; }
-.lesson-num {
-  width: 36px; height: 36px; border-radius: 8px;
-  background: rgba(157,160,176,0.12);
-  border: 1px solid rgba(157,160,176,0.25);
-  display: grid; place-items: center;
-  font-size: 14px; font-weight: 700; color: var(--track-color);
-  flex-shrink: 0;
-}
-.lesson-body { flex: 1; min-width: 0; }
-.lesson-title {
-  font-size: 16px; font-weight: 600; color: var(--text);
-  margin: 0 0 4px; line-height: 1.35;
-}
-.lesson-desc {
-  font-size: 13.5px; color: var(--text-dim); margin: 0;
-  line-height: 1.5;
-}
-.lesson-meta-row {
-  font-size: 11.5px; color: var(--text-mute);
-  margin-top: 6px; display: flex; gap: 14px; flex-wrap: wrap;
-}
-.lesson-meta-row span b { color: var(--text-dim); font-weight: 600; }
-
-.lesson-status {
-  font-size: 11px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase;
-  padding: 4px 10px; border-radius: 999px; white-space: nowrap;
-}
-.lesson-status.live { background: rgba(68,224,164,0.18); color: var(--accent); border: 1px solid rgba(68,224,164,0.35); }
-.lesson-status.free { background: rgba(68,224,164,0.12); color: var(--accent); border: 1px solid rgba(68,224,164,0.3); }
-.lesson-status.pro { background: rgba(124,92,255,0.18); color: var(--brand); border: 1px solid rgba(124,92,255,0.35); }
-.lesson-status.pro-plus { background: rgba(255,181,71,0.18); color: var(--warn); border: 1px solid rgba(255,181,71,0.4); }
-.lesson-status-group { display: flex; gap: 4px; flex-shrink: 0; }
-.lesson-status-group .lesson-status { padding: 3px 7px; font-size: 10px; }
-
-.honest-band {
-  margin: 0 0 36px;
-  background: rgba(255,181,71,0.06);
-  border: 1px solid rgba(255,181,71,0.22);
-  border-radius: var(--radius-lg);
-  padding: 22px 26px;
-  font-size: 14.5px; color: var(--text-dim); line-height: 1.65;
-}
-.honest-band b { color: var(--text); }
-.honest-band .lbl {
-  display: block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px;
-  text-transform: uppercase; color: var(--warn); margin-bottom: 8px;
-}
-
-.cta-band {
-  margin: 60px 0 80px;
-  background: linear-gradient(135deg, rgba(124,92,255,0.15), rgba(113,113,122,0.12));
-  border: 1px solid rgba(124,92,255,0.25);
-  border-radius: var(--radius-lg);
-  padding: 40px; text-align: center;
-}
-.cta-band h2 { font-size: 24px; font-weight: 700; margin: 0 0 12px; letter-spacing: -0.01em; }
-.cta-band h2 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
-.cta-band p { font-size: 15px; color: var(--text-dim); max-width: 520px; margin: 0 auto 20px; }
-.cta-band a.btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: linear-gradient(135deg, #7c5cff, #5b8def); color: white;
-  padding: 12px 22px; border-radius: 10px; font-weight: 600; font-size: 14px;
-  box-shadow: 0 6px 24px rgba(124,92,255,0.35);
-  transition: transform .15s;
-}
-.cta-band a.btn:hover { transform: translateY(-1px); }
-
-footer { border-top: 1px solid var(--line); padding: 30px 0; }
-.footer-inner {
-  max-width: var(--container); margin: 0 auto; padding: 0 24px;
-  display: flex; justify-content: space-between; align-items: center;
-  font-size: 13px; color: var(--text-mute);
-}
-@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
-
-.featured-lesson {
-  display: block; text-decoration: none; color: inherit;
-  margin: 0 0 16px;
-  background: linear-gradient(135deg, rgba(157,160,176,0.15), rgba(124,92,255,0.08));
-  border: 1px solid rgba(157,160,176,0.35);
-  border-radius: 18px;
-  padding: 28px 32px;
-  position: relative; overflow: hidden;
-  transition: transform .15s ease, border-color .2s ease;
-}
-.featured-lesson:hover { transform: translateY(-2px); border-color: rgba(157,160,176,0.6); }
-.featured-lesson::before {
-  content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 4px;
-  background: linear-gradient(180deg, #9da0b0, #7c5cff);
-}
-.featured-badge {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: 11px; font-weight: 700; letter-spacing: 1.2px;
-  color: var(--accent); margin-bottom: 12px;
-}
-.featured-dot {
-  width: 7px; height: 7px; border-radius: 50%; background: var(--accent);
-  box-shadow: 0 0 0 3px rgba(68,224,164,0.2);
-}
-.featured-title {
-  font-size: 22px; font-weight: 700; letter-spacing: -0.015em;
-  margin: 0 0 10px; color: var(--text);
-}
-.featured-desc { font-size: 15px; color: var(--text-dim); margin: 0 0 16px; line-height: 1.6; }
-.featured-meta {
-  display: flex; gap: 14px; align-items: center; font-size: 13px; color: var(--text-mute);
-}
-.featured-meta b { color: var(--text); font-weight: 600; }
-.featured-arrow { margin-left: auto; color: var(--brand-2); font-weight: 600; font-size: 14px; }
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --danger:#ff6b8a; --radius-lg:20px; --container:820px; --track:#9da0b0; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:#9da0b0;}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.22;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;box-shadow:0 4px 16px rgba(124,92,255,0.5);}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(157,160,176,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(157,160,176,0.12);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .chip-pro{border-color:rgba(124,92,255,0.45);color:var(--brand);background:rgba(124,92,255,0.12);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(31px,4.5vw,44px);font-weight:800;line-height:1.14;letter-spacing:-0.02em;margin:0 0 18px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#9da0b0 0%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.12em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 32px;padding-bottom:26px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:26px;font-weight:700;letter-spacing:-0.01em;margin:46px 0 14px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson h3{font-size:18px;font-weight:600;margin:24px 0 8px;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 16px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul,.lesson ol{padding-left:24px;margin:0 0 16px;} .lesson li{margin-bottom:8px;}
+.callout{margin:26px 0;padding:20px 24px;background:linear-gradient(135deg,rgba(157,160,176,0.12),rgba(124,92,255,0.06));border:1px solid rgba(157,160,176,0.25);border-radius:var(--radius-lg);}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.steps{counter-reset:st;margin:22px 0;padding:0;list-style:none;}
+.steps li{position:relative;padding:0 0 16px 44px;margin:0;}
+.steps li::before{counter-increment:st;content:counter(st);position:absolute;left:0;top:-2px;width:30px;height:30px;border-radius:8px;background:rgba(157,160,176,0.14);border:1px solid rgba(157,160,176,0.32);color:var(--track);font-weight:700;font-size:14px;display:grid;place-items:center;}
+.steps li:not(:last-child)::after{content:'';position:absolute;left:15px;top:30px;bottom:2px;width:1px;background:var(--line);}
+.workflow{margin:20px 0;background:linear-gradient(180deg,var(--surface),var(--bg-soft));border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 24px;}
+.workflow h3{margin-top:0;} .workflow p:last-child{margin-bottom:0;}
+.prompt-example{background:rgba(0,0,0,0.3);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:8px 0 18px;font-family:'SFMono-Regular',Consolas,monospace;font-size:13.5px;color:var(--text);line-height:1.6;white-space:pre-wrap;}
+.prompt-example .label{display:block;font-family:'Inter',sans-serif;font-size:10.5px;color:var(--text-mute);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.8px;font-weight:600;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:16px 0;font-size:14.5px;}
+.gotcha::before{content:'\26A0  ';color:var(--warn);font-weight:700;}
+.lgpt-faq{margin:46px 0 8px;}
+.lgpt-faq .faq-eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.09em;font-weight:700;color:var(--track);margin-bottom:8px;}
+.lgpt-faq h2{font-size:26px;line-height:1.15;letter-spacing:-.02em;font-weight:800;margin:0 0 18px;}
+.lgpt-faq details{border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#14142b;margin-bottom:10px;overflow:hidden;}
+.lgpt-faq details[open]{border-color:rgba(157,160,176,.45);}
+.lgpt-faq summary{list-style:none;cursor:pointer;padding:15px 18px;font-size:15.5px;font-weight:600;color:#f5f5fa;display:flex;justify-content:space-between;align-items:center;gap:14px;}
+.lgpt-faq summary::-webkit-details-marker{display:none;}
+.lgpt-faq summary .chev{flex-shrink:0;width:18px;height:18px;border-right:2px solid #9da0b0;border-bottom:2px solid #9da0b0;transform:rotate(45deg);transition:transform .2s;margin-top:-4px;}
+.lgpt-faq details[open] summary .chev{transform:rotate(-135deg);margin-top:4px;}
+.lgpt-faq .faq-a{padding:0 18px 16px;font-size:14.5px;line-height:1.7;color:#c7c7d6;}
+.lgpt-faq .faq-a strong{color:#f5f5fa;font-weight:600;} .lgpt-faq .faq-a a{color:var(--brand-2);font-weight:600;}
+.nextup{margin:46px 0 0;padding:22px 24px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.nextup .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:8px;}
+.nextup a{font-weight:600;}
+footer{border-top:1px solid var(--line);padding:30px 0;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--text-mute);}
+@media (max-width:600px){.footer-inner{flex-direction:column;gap:12px;text-align:center;}}
 </style>
 </head>
 <body>
-
 <div class="bg-orb one"></div>
 <div class="bg-orb two"></div>
-
 <nav class="top">
   <div class="nav-inner">
-    <a href="/" class="logo">
-      <div class="logo-mark">L</div>
-      LearningGPT
-    </a>
-    <a href="/lessons/" class="nav-back">← All lessons</a>
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/grok/" class="nav-back">← Grok Mastery</a>
   </div>
 </nav>
-
-<section class="track-header">
+<article class="lesson">
   <div class="container">
-
-    <div class="breadcrumb">
-      <a href="/">Home</a><span class="sep">/</span><a href="/lessons/">Lessons</a><span class="sep">/</span><span>Grok Mastery</span>
+    <div class="lesson-meta">
+      <span class="chip">Grok Mastery</span>
+      <span class="chip chip-free">Free</span>
+      <span>~9 min read</span>
+      <span class="dot"></span>
+      <span>Updated July 2026</span>
     </div>
-
-    <div class="track-head-row">
-      <div class="track-icon-lg">✦</div>
-      <div class="track-head-text">
-        <span class="track-status-pill"><span class="dot"></span> All 12 lessons live · First two free</span>
-        <h1>Grok <span class="serif">the firehose, mastered honestly</span></h1>
-        <p>The only AI with a live feed of X's 500 million daily posts — plus frontier reasoning, image and video generation, voice cloning, and a fast-growing work layer. We teach the capability AND the judgment, because nobody selling it will.</p>
-      </div>
-    </div>
-
-    <div class="track-meta">
-      <div class="track-meta-item">
-        <span class="lbl">Lessons</span>
-        <span class="val">12 · all live</span>
-      </div>
-      <div class="track-meta-item">
-        <span class="lbl">Time</span>
-        <span class="val">~2 hours total</span>
-      </div>
-      <div class="track-meta-item">
-        <span class="lbl">Level</span>
-        <span class="val">All levels</span>
-      </div>
-      <div class="track-meta-item">
-        <span class="lbl">First two lessons</span>
-        <span class="val">Free</span>
-      </div>
-    </div>
-
+    <h1>Grok in 2026: <span class="grad serif">everything it can do, explained.</span></h1>
+    <p class="deck">Grok grew from "the chatbot inside X" into a full platform: frontier models, live-feed intelligence no competitor has, a research agent, image and video generation, voice, connectors into your tools, and an agent mode that works while you don't. Here is the whole map — and the honest read on each piece.</p>
+<h2><span class="num">01</span>The one unfair advantage</h2>
+<p>Every AI assistant can summarize an article. Only Grok sits on top of <strong>X's live feed</strong> — hundreds of millions of posts a day, searchable and analyzable in real time. Breaking news, market chatter, public sentiment, what people are saying about your industry <em>right now</em>: this is Grok's home turf, and the realtime-intelligence lesson turns it into a skill.</p>
+<div class="callout"><span class="lbl">The honest framing</span><p>Real-time is the moat. For the rest — careful long-form writing, private document analysis, enterprise controls — Grok is competitive but not uniquely best. We teach when to reach for it and when not to; that judgment is the whole game.</p></div>
+<h2><span class="num">02</span>The capability map</h2>
+<p><strong>Models &amp; modes:</strong> fast everyday responses or deeper "think" reasoning on hard problems. <strong>DeepSearch:</strong> the research agent that reads dozens of sources and returns a cited brief. <strong>Imagine:</strong> image generation, and video with sound. <strong>Voice:</strong> natural spoken conversation with distinct personalities. <strong>Connectors &amp; Canvas:</strong> hooks into files and tools, plus a workspace for building alongside the chat. <strong>Agent Mode:</strong> hand Grok a multi-step task and let it run. Each has a dedicated lesson on this track.</p>
+<h2><span class="num">03</span>The pricing ladder, decoded</h2>
+<p>Grok's pricing is a ladder: a limited <strong>free tier</strong>, access bundled with <strong>X Premium</strong> subscriptions, and dedicated <strong>SuperGrok</strong> plans topping out at a heavy-usage tier priced for professionals who lean on it all day. The honest rule: most people should start free or low, upgrade only when they hit real limits — and very few need the top rung. <a href="/lessons/grok/what-grok-costs">What Grok costs</a> walks the ladder dollar by dollar.</p>
+<div class="gotcha">Grok answers with confidence and personality — including when it is wrong. The same verification habits we teach everywhere apply doubly on a platform wired into social media.</div>
+<h2><span class="num">04</span>Where to start</h2>
+<p>Begin with <a href="/lessons/grok/grok-basics">Grok basics</a> (free) to get hands-on, then follow the track in order: costs, DeepSearch, real-time intelligence, and on into images, video, voice, and the work tools. By the end you will know both halves — what Grok can do, and when it is the right tool for the job.</p>
+    <section class="lgpt-faq" aria-labelledby="faqh">
+      <div class="faq-eyebrow">Frequently asked</div>
+      <h2 id="faqh">Grok — your questions, answered</h2>
+      <details><summary><span>What is Grok?</span><span class="chev"></span></summary><div class="faq-a"><strong>xAI's assistant</strong>, built into X and available standalone — frontier reasoning plus the only live feed of X in any AI. Real-time intelligence is its signature strength.</div></details>
+      <details><summary><span>Is Grok free?</span><span class="chev"></span></summary><div class="faq-a">A limited free tier exists, then a ladder through X Premium and SuperGrok plans. Most people belong on the lower rungs — <a href="/lessons/grok/what-grok-costs">the costs lesson</a> decodes it.</div></details>
+      <details><summary><span>What is Grok best at?</span><span class="chev"></span></summary><div class="faq-a"><strong>Right-now information</strong>: news, trends, live sentiment, markets chatter. For long private-document work or the most careful writing, other tools often fit better — and we say so.</div></details>
+    </section>
+    <div class="nextup"><div class="lbl">Up next</div><a href="/lessons/grok/grok-basics">Grok basics — your first real session →</a></div>
   </div>
-</section>
-
-<section class="lessons-section">
-  <div class="container">
-
-    <a href="/lessons/grok/agents-overview" class="featured-lesson">
-      <div class="featured-lesson-inner">
-        <div class="featured-badge">
-          <span class="featured-dot"></span>
-          START HERE · FREE OVERVIEW
-        </div>
-        <h3 class="featured-title">Grok in 2026 — everything it can do, explained</h3>
-        <p class="featured-desc">Models, DeepSearch, Imagine images + video, voice cloning, Connectors, Agent Mode — and the five-tier pricing ladder decoded, including why most people shouldn't buy Heavy.</p>
-        <div class="featured-meta">
-          <span><b>~9 min</b> read</span>
-          <span class="featured-arrow">Read free →</span>
-        </div>
-      </div>
-    </a>
-
-    <div class="honest-band">
-      <span class="lbl">The honest framing</span>
-      <b>Grok has one genuinely unfair advantage and the loosest product culture in frontier AI.</b> Most coverage picks a side — fan or critic. We teach both at once: the firehose workflows nobody else can run, and the evidence discipline, data dials, and "when NOT to use it" judgment that make them safe to rely on. Updated as xAI ships, which is constantly.
-    </div>
-
-    <h2>What's in the track</h2>
-    <p class="sub">Hands-on workflows with the judgment built in. All 12 live, updated as Grok changes.</p>
-
-    <a href="/lessons/grok/grok-basics" class="lesson-row">
-      <div class="lesson-row-inner">
-        <div class="lesson-num">01</div>
-        <div class="lesson-body">
-          <h3 class="lesson-title">Grok basics: how it's actually different</h3>
-          <p class="lesson-desc">The real-time X superpower and the class of work it serves, "truth-seeking" honestly assessed, free-tier reality, and three starter workflows with evidence-grading built in.</p>
-          <div class="lesson-meta-row">
-            <span><b>~10 min</b> read</span>
-            <span><b>3</b> workflows</span>
-          </div>
-        </div>
-        <span class="lesson-status live">Live · Free</span>
-      </div>
-    </a>
-
-    <a href="/lessons/grok/think-mode-models" class="lesson-row">
-      <div class="lesson-row-inner">
-        <div class="lesson-num">02</div>
-        <div class="lesson-body">
-          <h3 class="lesson-title">Think mode &amp; the model lineup</h3>
-          <p class="lesson-desc">Grok 4 vs 4.20 Reasoning vs 4.3, the one sorting question that survives every release, when Think mode earns its wait, and what Big Brain is for.</p>
-          <div class="lesson-meta-row">
-            <span><b>~9 min</b> read</span>
-          </div>
-        </div>
-        <span class="lesson-status-group"><span class="lesson-status pro">Pro</span><span class="lesson-status pro-plus">Pro+</span></span>
-      </div>
-    </a>
-
-    <a href="/lessons/grok/deepsearch" class="lesson-row">
-      <div class="lesson-row-inner">
-        <div class="lesson-num">03</div>
-        <div class="lesson-body">
-          <h3 class="lesson-title">DeepSearch &amp; DeeperSearch</h3>
-          <p class="lesson-desc">The research loop and how to steer it: the brief pattern, decision dossiers, claim autopsies — and the fair scorecard against Perplexity and ChatGPT research.</p>
-          <div class="lesson-meta-row">
-            <span><b>~10 min</b> read</span>
-            <span><b>3</b> research workflows</span>
-          </div>
-        </div>
-        <span class="lesson-status-group"><span class="lesson-status pro">Pro</span><span class="lesson-status pro-plus">Pro+</span></span>
-      </div>
-    </a>
-
-    <a href="/lessons/grok/realtime-x-intelligence" class="lesson-row">
-      <div class="lesson-row-inner">
-        <div class="lesson-num">04</div>
-        <div class="lesson-body">
-          <h3 class="lesson-title">The X firehose: real-time social intelligence</h3>
-          <p class="lesson-desc">The lesson only Grok can star in: brand monitoring, competitor sweeps, trend triage, breaking-news verification ladders — with the bias caveats that keep it honest.</p>
-          <div class="lesson-meta-row">
-            <span><b>~11 min</b> read</span>
-            <span><b>4</b> firehose workflows</span>
-          </div>
-        </div>
-        <span class="lesson-status-group"><span class="lesson-status pro">Pro</span><span class="lesson-status pro-plus">Pro+</span></span>
-      </div>
-    </a>
-
-    <a href="/lessons/grok/imagine-images" class="lesson-row">
-      <div class="lesson-row-inner">
-        <div class="lesson-num">05</div>
-        <div class="lesson-body">
-          <h3 class="lesson-title">Grok Imagine: images, practically</h3>
-          <p class="lesson-desc">The five-slot prompt pattern, single-variable iteration, the image-to-image workhorse loop — and the three-question judgment layer before anything ships.</p>
-          <div class="lesson-meta-row">
-            <span><b>~10 min</b> read</span>
-          </div>
-        </div>
-        <span class="lesson-status-group"><span class="lesson-status pro">Pro</span><span class="lesson-status pro-plus">Pro+</span></span>
-      </div>
-    </a>
-
-    <a href="/lessons/grok/imagine-video-agent-mode" class="lesson-row">
-      <div class="lesson-row-inner">
-        <div class="lesson-num">06</div>
-        <div class="lesson-body">
-          <h3 class="lesson-title">Imagine video + the Agent Mode canvas</h3>
-          <p class="lesson-desc">10-second clips with native audio, the still→motion ladder, directing the infinite canvas like a shot list — and the deepfake line, drawn clearly.</p>
-          <div class="lesson-meta-row">
-            <span><b>~10 min</b> read</span>
-          </div>
-        </div>
-        <span class="lesson-status-group"><span class="lesson-status pro">Pro</span><span class="lesson-status pro-plus">Pro+</span></span>
-      </div>
-    </a>
-
-    <a href="/lessons/grok/voice-modes-cloning" class="lesson-row">
-      <div class="lesson-row-inner">
-        <div class="lesson-num">07</div>
-        <div class="lesson-body">
-          <h3 class="lesson-title">Voice: modes, cloning, and the voice library</h3>
-          <p class="lesson-desc">Where voice genuinely wins, tier minute-meters, legitimate cloning uses — and the family code word that defeats voice-clone scams.</p>
-          <div class="lesson-meta-row">
-            <span><b>~9 min</b> read</span>
-          </div>
-        </div>
-        <span class="lesson-status-group"><span class="lesson-status pro">Pro</span><span class="lesson-status pro-plus">Pro+</span></span>
-      </div>
-    </a>
-
-    <a href="/lessons/grok/connectors-canvas" class="lesson-row">
-      <div class="lesson-row-inner">
-        <div class="lesson-num">08</div>
-        <div class="lesson-body">
-          <h3 class="lesson-title">Connectors &amp; Canvas: Grok meets your workday</h3>
-          <p class="lesson-desc">Email, calendar, docs, repos, MCP; Canvas in passes; Agent Mode briefed like a delegation — and the honest placement against Copilot and ChatGPT's work layers.</p>
-          <div class="lesson-meta-row">
-            <span><b>~10 min</b> read</span>
-          </div>
-        </div>
-        <span class="lesson-status-group"><span class="lesson-status pro">Pro</span><span class="lesson-status pro-plus">Pro+</span></span>
-      </div>
-    </a>
-
-    <a href="/lessons/grok/grok-for-work" class="lesson-row">
-      <div class="lesson-row-inner">
-        <div class="lesson-num">09</div>
-        <div class="lesson-body">
-          <h3 class="lesson-title">Grok for work: the daily workflows</h3>
-          <p class="lesson-desc">Drafting with the spice dialed deliberately, document interrogation with the Grok-only freshness pass, decision briefs — and the honest map of which daily jobs Grok wins.</p>
-          <div class="lesson-meta-row">
-            <span><b>~10 min</b> read</span>
-          </div>
-        </div>
-        <span class="lesson-status-group"><span class="lesson-status pro">Pro</span><span class="lesson-status pro-plus">Pro+</span></span>
-      </div>
-    </a>
-
-    <a href="/lessons/grok/api-and-grok-build" class="lesson-row">
-      <div class="lesson-row-inner">
-        <div class="lesson-num">10</div>
-        <div class="lesson-body">
-          <h3 class="lesson-title">The API &amp; Grok Build</h3>
-          <p class="lesson-desc">The cheap test of the top model, the $175/month free-credits data trade spelled out plainly, and the agentic coding model placed honestly against Claude Code and GitHub Copilot.</p>
-          <div class="lesson-meta-row">
-            <span><b>~9 min</b> read</span>
-          </div>
-        </div>
-        <span class="lesson-status-group"><span class="lesson-status pro">Pro</span><span class="lesson-status pro-plus">Pro+</span></span>
-      </div>
-    </a>
-
-    <a href="/lessons/grok/privacy-honest-assessment" class="lesson-row">
-      <div class="lesson-row-inner">
-        <div class="lesson-num">11</div>
-        <div class="lesson-body">
-          <h3 class="lesson-title">Privacy, data &amp; the honest assessment</h3>
-          <p class="lesson-desc">The data dials to set today, Grok's distinctive failure mode, the companions sideshow in exactly one paragraph, and the clear-eyed when-NOT-to-use-Grok list.</p>
-          <div class="lesson-meta-row">
-            <span><b>~10 min</b> read</span>
-            <span>The closer nobody else writes</span>
-          </div>
-        </div>
-        <span class="lesson-status-group"><span class="lesson-status pro">Pro</span><span class="lesson-status pro-plus">Pro+</span></span>
-      </div>
-    </a>
-
-    <div class="cta-band">
-      <h2>Every lesson, every track. <span class="serif">$9/mo founding pricing.</span></h2>
-      <p>All 12 Grok lessons are live today — plus every other tool track, the hands-on builds, and the playground. Founding pricing (vs $19 standard) locks in for life.</p>
-      <a href="/auth/signup" class="btn">Start free →</a>
-    </div>
-
-  </div>
-</section>
-
+</article>
 <footer>
   <div class="footer-inner">
     <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with xAI.</div>
-    <a href="/lessons/" style="color: var(--text-dim);">← All lessons</a>
+    <a href="/lessons/grok/" style="color: var(--text-dim);">← All Grok Mastery lessons</a>
   </div>
 </footer>
-<script src="/site-nav.js" defer></script>
+<script src="/gate.js"></script>
 </body>
 </html>

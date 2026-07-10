@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Claude Reflect: your AI habits on a dashboard, explained — LearningGPT</title>
+<meta name="description" content="Anthropic's Claude Reflect, launched July 9, 2026 in beta: a Settings dashboard showing what you use Claude for, when, and how well you collaborate — plus quiet hours, break nudges, and the privacy fine print. Free lesson." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#d97757" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/claude/claude-reflect" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/claude/claude-reflect" />
+<meta property="og:title" content="Claude Reflect: your AI habits, on a dashboard — LearningGPT" />
+<meta property="og:description" content="Anthropic's Claude Reflect, launched July 9, 2026 in beta: a Settings dashboard showing what you use Claude for, when, and how well you collaborate — plus quiet hours, break nudges, and the privacy fine print. Free lesson." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is Claude Reflect?", "acceptedAnswer": {"@type": "Answer", "text": "A beta dashboard launched July 9, 2026 that tracks and visualizes how you use Claude — key topics, usage patterns, and task types — over the past 1, 3, 6, or 12 months, with insights based on Anthropic's 4D AI Fluency Framework."}}, {"@type": "Question", "name": "Who can use Claude Reflect?", "acceptedAnswer": {"@type": "Answer", "text": "Free, Pro, and Max users who have Memory turned on. Open Settings in Claude on the web or desktop app and select the option to reflect on your usage. If you can't generate a report, check that Memory is enabled."}}, {"@type": "Question", "name": "Does Claude Reflect see all my conversations?", "acceptedAnswer": {"@type": "Answer", "text": "No. Incognito chats are excluded, underlying files from connected tools are excluded (a summary of your inbox may appear, the source emails will not), and conversations tied to health integrations are left out entirely. Sensitive topics appear only at a high level."}}, {"@type": "Question", "name": "Can Claude Reflect limit my usage?", "acceptedAnswer": {"@type": "Answer", "text": "Only if you choose. Quiet hours and break reminders are optional, self-set, and dismissible — Anthropic describes them as reminders of your own preferences, not enforced limits."}}, {"@type": "Question", "name": "Does Claude Reflect include Cowork sessions?", "acceptedAnswer": {"@type": "Answer", "text": "Not yet. Anthropic says reflecting on Cowork conversations will be available soon; the current report covers Claude chat activity."}}]}</script>
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --danger:#ff6b8a; --radius-lg:20px; --container:820px; --track:#d97757; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:#d97757;}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.25;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;box-shadow:0 4px 16px rgba(124,92,255,0.5);}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(217,119,87,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(217,119,87,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#d97757 0%,#c46343 50%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.12em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:50px 0 16px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul,.lesson ol{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(217,119,87,0.12),rgba(124,92,255,0.06));border:1px solid rgba(217,119,87,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.timeline{margin:24px 0;border-left:2px solid rgba(217,119,87,0.4);padding-left:22px;}
+.timeline .ti{margin-bottom:18px;} .timeline .ti:last-child{margin-bottom:0;}
+.timeline .td{font-size:12px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:var(--track);margin-bottom:4px;}
+.timeline .tt{font-size:15.5px;color:var(--text);line-height:1.6;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:18px 0;font-size:14.5px;}
+.gotcha::before{content:'\26A0  Note: ';color:var(--warn);font-weight:700;}
+.lgpt-faq{margin:48px 0 8px;}
+.lgpt-faq .faq-eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.09em;font-weight:700;color:var(--track);margin-bottom:8px;}
+.lgpt-faq h2{font-size:27px;line-height:1.15;letter-spacing:-.02em;font-weight:800;margin:0 0 18px;}
+.lgpt-faq details{border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#14142b;margin-bottom:10px;overflow:hidden;}
+.lgpt-faq details[open]{border-color:rgba(217,119,87,.4);}
+.lgpt-faq summary{list-style:none;cursor:pointer;padding:15px 18px;font-size:15.5px;font-weight:600;color:#f5f5fa;display:flex;justify-content:space-between;align-items:center;gap:14px;}
+.lgpt-faq summary::-webkit-details-marker{display:none;}
+.lgpt-faq summary .chev{flex-shrink:0;width:18px;height:18px;border-right:2px solid #d97757;border-bottom:2px solid #d97757;transform:rotate(45deg);transition:transform .2s;margin-top:-4px;}
+.lgpt-faq details[open] summary .chev{transform:rotate(-135deg);margin-top:4px;}
+.lgpt-faq .faq-a{padding:0 18px 16px;font-size:14.5px;line-height:1.7;color:#c7c7d6;}
+.lgpt-faq .faq-a strong{color:#f5f5fa;font-weight:600;} .lgpt-faq .faq-a a{color:#d97757;font-weight:600;}
+footer{border-top:1px solid var(--line);padding:30px 0;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--text-mute);}
+@media (max-width:600px){.footer-inner{flex-direction:column;gap:12px;text-align:center;}}
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/claude/" class="nav-back">← Claude Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Claude Mastery</span>
+      <span class="chip chip-free">Free</span>
+      <span>~6 min read</span>
+      <span class="dot"></span>
+      <span>New · July 10, 2026</span>
+    </div>
+    <h1>Claude Reflect: <span class="grad serif">your AI habits, on a dashboard.</span></h1>
+    <p class="deck">On July 9, 2026, Anthropic shipped something no other major AI company offers: a built-in dashboard that shows you how you actually use Claude — what you work on, when, and how you collaborate — and then asks whether that matches what you want. It's in beta for Free, Pro, and Max users. Here's how to turn it on, what's in the report, and the privacy fine print worth reading.</p>
+
+    <h2><span class="num">01</span> What it is</h2>
+    <p>Reflect is a <strong>reflection dashboard in Settings</strong> (Claude on the web or the desktop app). Generate a report and you get a summary of your Claude activity: the <strong>key topics</strong> you spent time on, your <strong>usage patterns</strong> — when you use Claude most — and the <strong>types of tasks</strong> you bring to it. You can look back over the past <strong>1, 3, 6, or 12 months</strong>. A view of total time spent is coming soon.</p>
+    <p>It also periodically asks questions most tools never would — like <em>"What's one thing you want to keep doing yourself, even if Claude could do it faster?"</em> — and lets you talk the answer through with Claude. There are optional <strong>quiet hours</strong> and <strong>break nudges</strong> you can set (and dismiss) from the same dashboard.</p>
+
+    <h2><span class="num">02</span> Turn it on in two minutes</h2>
+    <div class="timeline">
+      <div class="ti"><div class="td">Step 1</div><div class="tt">Open Claude on the <strong>web or desktop app</strong> (not mobile-only) and go to <strong>Settings</strong>.</div></div>
+      <div class="ti"><div class="td">Step 2</div><div class="tt">Check that <strong>Memory is turned on</strong> — Reflect requires it. No Memory, no report.</div></div>
+      <div class="ti"><div class="td">Step 3</div><div class="tt">Select the option to <strong>reflect on your usage</strong> and generate your report.</div></div>
+      <div class="ti"><div class="td">Step 4</div><div class="tt">Pick a lookback window (1–12 months) and read what it says about how you delegate.</div></div>
+    </div>
+    <div class="gotcha">Available in beta for <strong>Free, Pro, and Max</strong> plans — but only with Memory enabled. Cowork conversations aren't included yet; Anthropic says reflecting on Cowork activity is coming soon.</div>
+
+    <h2><span class="num">03</span> The 4D report: the actually useful part</h2>
+    <p>The dashboard grades your collaboration style against Anthropic's <strong>4D AI Fluency Framework</strong> — the same skills we teach across this track:</p>
+    <ul>
+      <li><strong>Delegation</strong> — deciding whether and how to hand a task to AI at all</li>
+      <li><strong>Description</strong> — how well you specify goals and context in your prompts</li>
+      <li><strong>Discernment</strong> — how you evaluate what comes back, instead of accepting it</li>
+      <li><strong>Diligence</strong> — taking responsibility for what you do with the output</li>
+    </ul>
+    <p>It cites examples from your own history — noting, say, that you rework email drafts into your own voice, or that you settle strategy yourself before delegating — and makes concrete suggestions, like moving a recurring context-dump into a <a href="/lessons/claude/projects-setup">Project</a>. It's the closest thing yet to a coach that has actually watched you work.</p>
+
+    <h2><span class="num">04</span> The privacy fine print</h2>
+    <p>Reflect analyzes your chat history, so the boundaries matter. What Anthropic states:</p>
+    <ul>
+      <li><strong>Incognito chats are excluded</strong> entirely.</li>
+      <li><strong>Source files from connected tools stay out.</strong> If Claude summarized your inbox, the summary may surface — the underlying emails won't.</li>
+      <li><strong>Health-integration conversations are excluded</strong> from insights completely.</li>
+      <li>Insights <strong>stay in your reflection</strong> — Anthropic says they aren't used for any other purpose.</li>
+      <li>Sensitive topics can appear, but only at a high level. Anthropic built the feature with wellbeing researchers at the MIT Media Lab, Boston Children's Hospital's Digital Wellness Lab, and the Family Online Safety Institute.</li>
+    </ul>
+    <div class="callout">
+      <span class="lbl">Why this matters</span>
+      <p>Every AI company can see engagement climbing. Anthropic is the first to hand users the mirror and a snooze button. Whatever you think of the execution, "is this time aligned with my goals?" is the right question — and it's the question this entire site exists to help you answer with skill instead of guesswork.</p>
+    </div>
+
+    <section class="lgpt-faq" aria-labelledby="faqh">
+      <div class="faq-eyebrow">Frequently asked</div>
+      <h2 id="faqh">Claude Reflect — your questions, answered</h2>
+      <details>
+        <summary><span>What is Claude Reflect?</span><span class="chev"></span></summary>
+        <div class="faq-a">A beta dashboard, launched July 9, 2026, that tracks and visualizes how you use Claude — key topics, usage patterns, task types — over the past 1 to 12 months, with insights based on Anthropic's 4D AI Fluency Framework.</div>
+      </details>
+      <details>
+        <summary><span>Who can use it?</span><span class="chev"></span></summary>
+        <div class="faq-a">Free, Pro, and Max users who have <strong>Memory turned on</strong>, via Settings in Claude on the web or desktop app. If you can't generate a report, check Memory first.</div>
+      </details>
+      <details>
+        <summary><span>Does it include everything I've ever typed?</span><span class="chev"></span></summary>
+        <div class="faq-a">No. Incognito chats are excluded, source files from connected tools are excluded, and conversations tied to health integrations are left out entirely. Sensitive topics appear only at a high level.</div>
+      </details>
+      <details>
+        <summary><span>Can it limit my usage?</span><span class="chev"></span></summary>
+        <div class="faq-a">Only if you ask it to. Quiet hours and break reminders are optional, self-set, and dismissible — they're reminders of your own preferences, not enforced caps.</div>
+      </details>
+      <details>
+        <summary><span>Does it cover Claude Cowork?</span><span class="chev"></span></summary>
+        <div class="faq-a">Not yet. Anthropic says reflecting on Cowork conversations is coming soon; for now the report covers your Claude chat activity.</div>
+      </details>
+    </section>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Anthropic.</div>
+    <a href="/lessons/claude/" style="color: var(--text-dim);">← All Claude Mastery lessons</a>
+  </div>
+</footer>
+<script src="/gate.js"></script>
+</body>
+</html>

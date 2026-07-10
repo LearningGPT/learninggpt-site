@@ -1,5 +1,8 @@
 {
   "cleanUrls": true,
+  "crons": [
+    { "path": "/api/drip", "schedule": "0 15 * * *" }
+  ],
   "redirects": [
     { "source": "/claude/:path*", "destination": "/lessons/claude/:path*", "permanent": true },
     { "source": "/chatgpt/:path*", "destination": "/lessons/chatgpt/:path*", "permanent": true },
@@ -11,9 +14,10 @@
   "functions": {
     "api/playground.js": { "maxDuration": 30 },
     "api/waitlist.js": { "maxDuration": 10 },
-    "api/webhooks/stripe.js": { "maxDuration": 10 }
+    "api/webhooks/stripe.js": { "maxDuration": 10 },
+    "api/drip.js": { "maxDuration": 60 }
   },
- "headers": [
+  "headers": [
     {
       "source": "/(.*).js",
       "headers": [{ "key": "Content-Type", "value": "application/javascript" }]

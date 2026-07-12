@@ -94,6 +94,38 @@ And if free is what fits right now — that's fine, truly. The free lessons stay
 <p style="font-size:14.5px;line-height:1.6;color:#444;margin:0;">— Dan, founder</p>`)
 });
 
+const CAP2 = () => ({
+  subject: 'How are the lessons going?',
+  html: shell(`
+<p style="font-size:16.5px;font-weight:700;margin:0 0 14px;">Hello again,</p>
+<p style="font-size:15px;line-height:1.65;color:#444;margin:0 0 16px;">
+A couple of days ago we sent you five free AI lessons. No homework, no quiz &mdash; I just wanted to check in the way a good teacher would.
+</p>
+<p style="font-size:15px;line-height:1.65;color:#444;margin:0 0 16px;">
+If you haven't started yet, begin with the one that matters most: <a href="https://learninggpt.ai/lessons/seniors/spot-the-scam?utm_source=email&utm_medium=drip&utm_campaign=cap2" style="color:#5b8def;font-weight:600;">Spot the scam &amp; stay safe</a>. Ten minutes, plain words, and you'll catch tricks that fool people half your age.
+</p>
+<p style="font-size:15px;line-height:1.65;color:#444;margin:0 0 16px;">
+One thing people miss: every lesson has a <strong>patient AI helper</strong> in the corner of the page. If anything is confusing, click it and ask &mdash; in your own words, as many times as you like. That's what it's for.
+</p>
+<p style="font-size:14.5px;line-height:1.6;color:#444;margin:0;">Stuck on anything at all? Just reply to this email &mdash; a real person reads every one.<br>&mdash; Dan</p>`)
+});
+
+const CAP4 = () => ({
+  subject: 'A little home for your progress (free)',
+  html: shell(`
+<p style="font-size:16.5px;font-weight:700;margin:0 0 14px;">Hello,</p>
+<p style="font-size:15px;line-height:1.65;color:#444;margin:0 0 16px;">
+One small suggestion, then I'll leave you be: if the lessons are working for you, it's worth creating a <strong>free account</strong>. It takes about a minute and it gives your learning a home &mdash; we remember which lessons you've finished and where you left off, so nothing gets lost between visits.
+</p>
+<p style="font-size:15px;line-height:1.65;color:#444;margin:0 0 20px;">
+Free stays free &mdash; no credit card, and the five lessons you have are yours regardless.
+</p>
+<div style="text-align:center;margin:0 0 24px;">
+<a href="https://learninggpt.ai/auth/signup?src=seniors-capture&utm_source=email&utm_medium=drip&utm_campaign=cap4" style="display:inline-block;background:linear-gradient(135deg,#2dd4a7,#5b8def);color:#ffffff;text-decoration:none;font-size:15px;font-weight:600;padding:14px 30px;border-radius:10px;">Create my free account &rarr;</a>
+</div>
+<p style="font-size:14.5px;line-height:1.6;color:#444;margin:0;">And if you'd rather keep things as they are &mdash; that's completely fine too. The lessons aren't going anywhere.<br>&mdash; Dan</p>`)
+});
+
 async function sendEmail(to, tpl) {
   const r = await fetch('https://api.resend.com/emails', {
     method: 'POST',
@@ -148,5 +180,32 @@ export default async function handler(req, res) {
     }
     report.steps[w.step] = { candidates: rows.length, results };
   }
+  // ── Email-capture follow-ups (no account; from /seniors free-5 form) ──
+  const capWindows = [
+    { step: 'cap2', from: iso(now - 3 * 864e5), to: iso(now - 2 * 864e5), tpl: CAP2 },
+    { step: 'cap4', from: iso(now - 6 * 864e5), to: iso(now - 4 * 864e5), tpl: CAP4 },
+  ];
+  for (const w of capWindows) {
+    const caps = await sbSelect(
+      `email_captures?select=id,email,created_at` +
+      `&created_at=gte.${encodeURIComponent(w.from)}&created_at=lt.${encodeURIComponent(w.to)}`
+    );
+    const rows = Array.isArray(caps) ? caps : [];
+    const results = [];
+    for (const c of rows) {
+      if (!c.email || !c.email.includes('@')) continue;
+      // If they created a real account, the main drip owns them — skip.
+      const prof = await sbSelect(`profiles?email=eq.${encodeURIComponent(c.email)}&select=id`);
+      if (Array.isArray(prof) && prof.length) { results.push({ email: c.email, skipped: 'has account' }); continue; }
+      const logged = await sbSelect(`drip_log?profile_id=eq.${encodeURIComponent(c.id)}&step=eq.${w.step}&select=id`);
+      if (Array.isArray(logged) && logged.length) { results.push({ email: c.email, skipped: 'already sent' }); continue; }
+      if (dry) { results.push({ email: c.email, wouldSend: true }); continue; }
+      const ok = await sendEmail(c.email, w.tpl());
+      if (ok) await sbInsert('drip_log', { profile_id: c.id, email: c.email, step: w.step });
+      results.push({ email: c.email, sent: ok });
+    }
+    report.steps[w.step] = { candidates: rows.length, results };
+  }
+
   return res.status(200).json(report);
 }

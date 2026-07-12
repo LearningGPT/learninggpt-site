@@ -5,6 +5,26 @@
 // Required Vercel environment variable: RESEND_API_KEY
 
 const SITE = 'https://learninggpt.ai';
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_SECRET_KEY = process.env.SUPABASE_SECRET_KEY;
+
+// Record the capture so the daily drip (api/drip.js) can follow up. Fire-and-forget.
+async function recordCapture(email, source) {
+  if (!SUPABASE_URL || !SUPABASE_SECRET_KEY) return;
+  try {
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/email_captures?on_conflict=email`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_SECRET_KEY,
+        'Authorization': `Bearer ${SUPABASE_SECRET_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal,resolution=ignore-duplicates',
+      },
+      body: JSON.stringify({ email: email.toLowerCase(), source }),
+    });
+    if (!r.ok) console.error('email_captures insert failed:', await r.text());
+  } catch (e) { console.error('email_captures insert error:', e); }
+}
 
 const FREE5_HTML = `
 <!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
@@ -78,6 +98,7 @@ export default async function handler(req, res) {
   // If this came from the seniors free-5 capture, send the subscriber their lessons.
   let subscriberSent = false;
   if (sourceLabel === 'seniors-free-5') {
+    await recordCapture(email, sourceLabel);
     try {
       const r = await fetch('https://api.resend.com/emails', {
         method: 'POST',

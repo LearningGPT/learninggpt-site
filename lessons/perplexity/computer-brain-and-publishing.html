@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Perplexity's Brain update: Computer gets memory, faster models, and one-click websites — LearningGPT</title>
+<meta name="description" content="Perplexity's July 13, 2026 Computer update, explained: Brain self-improving memory, Opus 4.8 fast mode, Claude Fable 5 as orchestrator, mid-task model switching, website publishing to pplx.app or your own domain, and private-company research. Free lesson." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#20808d" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/perplexity/computer-brain-and-publishing" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/perplexity/computer-brain-and-publishing" />
+<meta property="og:title" content="Perplexity's Brain update: Computer gets memory, faster models, and one-click websites — LearningGPT" />
+<meta property="og:description" content="Perplexity's July 13, 2026 Computer update, explained: Brain self-improving memory, Opus 4.8 fast mode, Claude Fable 5 as orchestrator, mid-task model switching, website publishing to pplx.app or your own domain, and private-company research. Free lesson." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is Brain in Perplexity Computer?", "acceptedAnswer": {"@type": "Answer", "text": "Self-improving memory, launched July 13, 2026. Brain builds a private context graph across your sessions, connectors, files, and past decisions, refreshes it overnight, and starts each new task already knowing what worked before. Every memory links back to its source, and you control what it keeps under Customize."}}, {"@type": "Question", "name": "Which models can orchestrate Computer tasks now?", "acceptedAnswer": {"@type": "Answer", "text": "The update added Claude Opus 4.8 in Fast mode (on web, mobile coming soon) and Claude Fable 5 as an orchestrator that plans work, routes subtasks, and stitches results together. You can also switch the orchestrator model mid-task between follow-up turns instead of starting over."}}, {"@type": "Question", "name": "Can Perplexity Computer publish websites?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Build a site with Computer and publish it to a Perplexity-hosted pplx.app address, or connect Vercel to deploy to your own custom domain. You choose who can see it — just you, specific people, your organization, or the public — and org admins can turn off public publishing entirely."}}, {"@type": "Question", "name": "What is private company research in Computer?", "acceptedAnswer": {"@type": "Answer", "text": "Computer can now research private companies — fundraising history, implied valuation, secondary pricing, public marks, and company profiles — using data sourced from Forge Global. It's available to all Computer users with no setup or Forge Global license required."}}, {"@type": "Question", "name": "Does Brain actually improve results?", "acceptedAnswer": {"@type": "Answer", "text": "Perplexity's own testing reports Brain lifted answer correctness 25% and recall 16% while cutting cost 13% on tasks with prior context. Those are vendor-reported numbers — directionally promising, but judge it on your own recurring tasks."}}]}</script>
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --danger:#ff6b8a; --radius-lg:20px; --container:820px; --track:#20808d; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:#20808d;}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.25;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;box-shadow:0 4px 16px rgba(124,92,255,0.5);}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(32,128,141,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(32,128,141,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#20808d 0%,#1a6671 50%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.12em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:50px 0 16px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul,.lesson ol{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(32,128,141,0.12),rgba(124,92,255,0.06));border:1px solid rgba(32,128,141,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.timeline{margin:24px 0;border-left:2px solid rgba(32,128,141,0.4);padding-left:22px;}
+.timeline .ti{margin-bottom:18px;} .timeline .ti:last-child{margin-bottom:0;}
+.timeline .td{font-size:12px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:var(--track);margin-bottom:4px;}
+.timeline .tt{font-size:15.5px;color:var(--text);line-height:1.6;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:18px 0;font-size:14.5px;}
+.gotcha::before{content:'\26A0  Note: ';color:var(--warn);font-weight:700;}
+.lgpt-faq{margin:48px 0 8px;}
+.lgpt-faq .faq-eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.09em;font-weight:700;color:var(--track);margin-bottom:8px;}
+.lgpt-faq h2{font-size:27px;line-height:1.15;letter-spacing:-.02em;font-weight:800;margin:0 0 18px;}
+.lgpt-faq details{border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#14142b;margin-bottom:10px;overflow:hidden;}
+.lgpt-faq details[open]{border-color:rgba(32,128,141,.4);}
+.lgpt-faq summary{list-style:none;cursor:pointer;padding:15px 18px;font-size:15.5px;font-weight:600;color:#f5f5fa;display:flex;justify-content:space-between;align-items:center;gap:14px;}
+.lgpt-faq summary::-webkit-details-marker{display:none;}
+.lgpt-faq summary .chev{flex-shrink:0;width:18px;height:18px;border-right:2px solid #20808d;border-bottom:2px solid #20808d;transform:rotate(45deg);transition:transform .2s;margin-top:-4px;}
+.lgpt-faq details[open] summary .chev{transform:rotate(-135deg);margin-top:4px;}
+.lgpt-faq .faq-a{padding:0 18px 16px;font-size:14.5px;line-height:1.7;color:#c7c7d6;}
+.lgpt-faq .faq-a strong{color:#f5f5fa;font-weight:600;} .lgpt-faq .faq-a a{color:#20808d;font-weight:600;}
+footer{border-top:1px solid var(--line);padding:30px 0;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--text-mute);}
+@media (max-width:600px){.footer-inner{flex-direction:column;gap:12px;text-align:center;}}
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/perplexity/" class="nav-back">← Perplexity Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Perplexity Mastery</span>
+      <span class="chip chip-free">Free</span>
+      <span>~6 min read</span>
+      <span class="dot"></span>
+      <span>New · July 14, 2026</span>
+    </div>
+    <h1>Perplexity's Brain update: <span class="grad serif">Computer now remembers how you work.</span></h1>
+    <p class="deck">On July 13, 2026, Perplexity shipped the biggest Computer update since the Microsoft 365 integration: a self-improving memory called Brain, two new Claude models to run your tasks, mid-task model switching, one-click website publishing, and private-company research. Here's what each piece does and how to put it to work.</p>
+
+    <h2><span class="num">01</span> Brain: memory that compounds</h2>
+    <p>Computer now <strong>learns from every task</strong>. Brain builds a private context graph across your sessions, connectors, files, and past decisions, then refreshes it overnight — so each new task starts already knowing what worked, what failed, and how you like things done. Two design choices matter:</p>
+    <ul>
+      <li><strong>Every memory links back to its source</strong> — you can trace any remembered fact to the session it came from.</li>
+      <li><strong>You control what it keeps.</strong> Open Customize to audit memories and remove anything you don't want retained.</li>
+    </ul>
+    <p>The prompt patterns that exploit it: <em>"Pull my weekly finance update using the same format, sources, and tickers as last time"</em> — or <em>"Pick up the project from two weeks ago using the decisions, files, and people already in context."</em> No recapping.</p>
+    <div class="gotcha">Perplexity's own testing reports Brain lifted answer correctness 25% and recall 16% while cutting cost 13% on tasks with prior context. Vendor-reported numbers — promising, but measure it on your own recurring work.</div>
+
+    <h2><span class="num">02</span> New engines — and switching mid-flight</h2>
+    <p>Three model changes landed together:</p>
+    <ul>
+      <li><strong>Claude Opus 4.8 in Fast mode</strong> — quicker responses for complex multi-step work. On web now; mobile coming soon.</li>
+      <li><strong>Claude Fable 5 as an orchestrator</strong> — pick it for your most involved tasks and it plans the work, routes subtasks to the right tools and models, and stitches the results together. Strongest fit: deep research synthesis and multi-source analysis.</li>
+      <li><strong>Mid-task model switching</strong> — change the orchestrator between follow-up turns in the same task. Start on a fast model, escalate to a heavier one for the hard follow-up, drop back down to iterate cheaply — without starting over.</li>
+    </ul>
+    <div class="callout">
+      <span class="lbl">The skill</span>
+      <p>Matching the model to the step is becoming a core AI skill, and Computer now lets you practice it inside one task instead of one conversation per model. Heavy planning → Fable 5. Fast drafting → Opus 4.8 fast mode. Cheap iteration → step back down.</p>
+    </div>
+
+    <h2><span class="num">03</span> Build a website, publish it in a click</h2>
+    <p>Computer could already build web pages; now it can <strong>put them online</strong>. Publish to a Perplexity-hosted <strong>pplx.app</strong> address, or connect Vercel and deploy to your own custom domain. Access control is built in: just you, specific people, your whole organization, or everyone on the web — with a request-and-grant flow for private sites, and an org-admin switch to disable public publishing entirely.</p>
+    <p>Practical uses: a landing page shipped from a single prompt, an internal dashboard shared org-only, or a client-facing one-pager on your own domain.</p>
+
+    <h2><span class="num">04</span> The rest of the drop</h2>
+    <ul>
+      <li><strong>Private company research.</strong> Fundraising history, implied valuation, secondary pricing, and public marks on private companies — sourced from Forge Global, available to all Computer users, no license or setup required. Try: <em>"Break down each Databricks funding round and explain what the cap table implies for IPO readiness."</em></li>
+      <li><strong>Usage analytics by model.</strong> See which models are doing your work and where credits go — for individuals and org admins, with an API to pull it into your BI tools.</li>
+      <li><strong>Mac account switcher.</strong> Swap between personal and work accounts without signing out; histories and settings stay separate.</li>
+      <li><strong>Streamlined homepage.</strong> Discover, Finance, Health, Patents, and Academic now live in a single menu.</li>
+    </ul>
+
+    <h2><span class="num">05</span> Where this fits</h2>
+    <p>Memory is the current front in the assistant wars — Claude has it, ChatGPT has it, and now Perplexity's agent has a version that's <strong>auditable and source-linked</strong>, which is the right way to build it. Combined with publishing, Computer is inching from "research agent" toward "does the whole job" territory. If you're new to Computer, start with <a href="/lessons/perplexity/perplexity-computer-and-deep-research">Computer and Deep Research</a>, then see <a href="/lessons/perplexity/perplexity-in-microsoft-365">Perplexity inside Microsoft 365</a> for the Office-side story.</p>
+
+    <section class="lgpt-faq" aria-labelledby="faqh">
+      <div class="faq-eyebrow">Frequently asked</div>
+      <h2 id="faqh">The Brain update — your questions, answered</h2>
+      <details>
+        <summary><span>What is Brain?</span><span class="chev"></span></summary>
+        <div class="faq-a">Self-improving memory for Computer, launched July 13, 2026. It builds a private context graph across sessions, connectors, files, and decisions, refreshes overnight, and starts new tasks already in context. Memories are source-linked and manageable under Customize.</div>
+      </details>
+      <details>
+        <summary><span>Which models orchestrate Computer now?</span><span class="chev"></span></summary>
+        <div class="faq-a">New in this drop: <strong>Claude Opus 4.8 in Fast mode</strong> (web now, mobile soon) and <strong>Claude Fable 5</strong> as an orchestrator for involved tasks — plus the ability to switch orchestrator models mid-task.</div>
+      </details>
+      <details>
+        <summary><span>Can Computer really publish websites?</span><span class="chev"></span></summary>
+        <div class="faq-a">Yes — to a Perplexity-hosted pplx.app address or, via Vercel, to your own custom domain, with visibility controls from private to public. Org admins can disable public publishing.</div>
+      </details>
+      <details>
+        <summary><span>What's private company research?</span><span class="chev"></span></summary>
+        <div class="faq-a">Financial research on private companies — funding history, implied valuation, secondary pricing, public marks — powered by Forge Global data. Included for all Computer users, no extra license.</div>
+      </details>
+      <details>
+        <summary><span>Are the Brain performance numbers trustworthy?</span><span class="chev"></span></summary>
+        <div class="faq-a">They're Perplexity's own testing figures (+25% correctness, +16% recall, −13% cost on tasks with prior context). Treat them as directional and verify on your own recurring tasks.</div>
+      </details>
+    </section>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Perplexity or Microsoft.</div>
+    <a href="/lessons/perplexity/" style="color: var(--text-dim);">← All Perplexity Mastery lessons</a>
+  </div>
+</footer>
+<script src="/gate.js"></script>
+</body>
+</html>

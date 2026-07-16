@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>OpenClaw 2026.7.1: the big July update, decoded — LearningGPT</title>
+<meta name="description" content="OpenClaw 2026.7.1 shipped July 13: GPT-5.6 becomes the new-setup default, Claude Sonnet 5 and Mythos 5 arrive, conversational onboarding, a Control UI overhaul, Apple Watch voice — and the security details worth re-checking after you update." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#f0544f" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/openclaw/openclaw-july-2026-update" />
+<meta property="og:title" content="OpenClaw 2026.7.1: the big July update, decoded" />
+<meta property="og:description" content="New default model, five new providers, conversational onboarding, Control UI overhaul — and what to re-check on your setup after updating." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #f0544f; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #f0544f; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+.lesson { padding: 50px 0 100px; }
+.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(240,84,79,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(240,84,79,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip-free { border-color: rgba(68,224,164,0.4); color: var(--accent); background: rgba(68,224,164,0.1); }
+.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
+.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
+.lesson h1 .grad { background: linear-gradient(135deg, #f0544f 0%, #ff8a4d 45%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 24px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.sec { margin: 46px 0 0; }
+.sec-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.lesson h2 { font-size: 27px; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 14px; }
+.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
+.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
+
+.callout { margin: 22px 0; padding: 18px 22px; background: linear-gradient(135deg, rgba(240,84,79,0.12), rgba(124,92,255,0.05)); border: 1px solid rgba(240,84,79,0.25); border-radius: var(--radius-lg); }
+.callout.warn { background: linear-gradient(135deg, rgba(255,181,71,0.10), rgba(124,92,255,0.04)); border-color: rgba(255,181,71,0.28); }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.callout.warn .lbl { color: var(--warn); }
+.callout p { margin: 0; font-size: 14.5px; color: var(--text-dim); } .callout b { color: var(--text); } .callout em { color: var(--text); font-style: italic; }
+
+/* ── FINDINGS BENCH ── */
+.findings { display: grid; gap: 12px; margin: 22px 0; }
+.finding { border: 1px solid var(--line); border-radius: var(--radius-lg); background: linear-gradient(180deg, var(--surface), var(--bg-soft)); overflow: hidden; }
+.finding-top { padding: 16px 18px; }
+.finding-h { display: flex; align-items: center; gap: 11px; margin-bottom: 10px; }
+.finding-n { width: 26px; height: 26px; flex-shrink: 0; border-radius: 7px; background: rgba(255,107,138,0.14); border: 1px solid rgba(255,107,138,0.3); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--danger); }
+.finding-h .ft { font-size: 16px; font-weight: 700; color: var(--text); }
+.finding-stat { display: inline-block; font-size: 12.5px; font-weight: 700; color: #ffb0c1; background: rgba(255,107,138,0.1); border: 1px solid rgba(255,107,138,0.28); border-radius: 999px; padding: 4px 12px; margin-bottom: 10px; }
+.finding-wrong { font-size: 13.5px; color: var(--text-dim); margin: 0 0 12px; }
+.finding-wrong b { color: var(--text); }
+.fixbtn { font-family: inherit; font-size: 12.5px; font-weight: 700; padding: 8px 16px; border-radius: 8px; border: 1px solid rgba(68,224,164,0.3); background: rgba(68,224,164,0.08); color: #b6f4dc; cursor: pointer; transition: all .15s; }
+.fixbtn:hover:not(:disabled){ background: rgba(68,224,164,0.16); }
+.fixbtn:disabled { cursor: default; }
+.finding-fix { display: none; padding: 13px 18px; border-top: 1px solid rgba(68,224,164,0.2); background: rgba(68,224,164,0.06); font-size: 13.5px; color: var(--text-dim); }
+.finding-fix.show { display: block; animation: fadeIn .3s ease; }
+.finding-fix .fl { font-weight: 700; color: var(--accent); }
+.finding-fix b { color: var(--text); }
+@keyframes fadeIn { from{opacity:0;transform:translateY(5px);} to{opacity:1;transform:none;} }
+
+/* ── DECISION TREE ── */
+.tree { margin: 22px 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden; background: #0d0d20; }
+.tree-bar { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--line); background: linear-gradient(90deg, rgba(240,84,79,0.08), rgba(124,92,255,0.05)); font-size: 13px; font-weight: 700; color: var(--text); }
+.tree-reset { font-family: inherit; font-size: 11px; font-weight: 700; color: var(--text-mute); background: none; border: none; cursor: pointer; display: none; }
+.tree-reset:hover { color: var(--text); }
+.tree-reset.show { display: inline; }
+.tree-body { padding: 18px 16px; }
+.tree-q { font-size: 15px; font-weight: 600; margin-bottom: 13px; }
+.tree-opts { display: grid; gap: 8px; }
+.topt { text-align: left; font-family: inherit; font-size: 13.5px; color: var(--text); padding: 12px 15px; border-radius: 10px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03); cursor: pointer; transition: all .15s; }
+.topt:hover { border-color: var(--track); }
+.verdict-card { animation: fadeIn .35s ease; }
+.verdict-card .vtag { display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase; padding: 4px 12px; border-radius: 999px; margin-bottom: 11px; }
+.verdict-card.green .vtag { background: rgba(68,224,164,0.16); color: #b6f4dc; border: 1px solid rgba(68,224,164,0.4); }
+.verdict-card.yellow .vtag { background: rgba(255,181,71,0.16); color: #ffe0ad; border: 1px solid rgba(255,181,71,0.4); }
+.verdict-card.red .vtag { background: rgba(255,107,138,0.16); color: #ffb0c1; border: 1px solid rgba(255,107,138,0.4); }
+.verdict-card .vtext { font-size: 14.5px; color: var(--text); line-height: 1.65; }
+.verdict-card .vtext b { color: var(--text); }
+.verdict-card .vnext { margin-top: 14px; }
+.vbtn { display: inline-flex; align-items: center; gap: 8px; font-family: inherit; font-size: 13px; font-weight: 700; padding: 10px 18px; border-radius: 9px; text-decoration: none; }
+.vbtn.go { background: linear-gradient(135deg, #f0544f, #7c5cff); color: white; }
+.vbtn.alt { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); color: var(--text-dim); }
+.vbtn.alt:hover { color: var(--text); }
+
+.challenge { margin: 46px 0 30px; background: linear-gradient(135deg, rgba(240,84,79,0.14), rgba(124,92,255,0.1)); border: 1px solid rgba(240,84,79,0.3); border-radius: var(--radius-lg); padding: 32px; }
+.challenge h2 { margin-top: 0; font-size: 24px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #f0544f, #7c5cff); color: white; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: inherit; box-shadow: 0 6px 24px rgba(240,84,79,0.3); transition: transform .15s; text-decoration: none; }
+.btn:hover { transform: translateY(-1px); color: white; }
+.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); }
+.btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 30px 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; padding-top: 0; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.checklist li:first-child::before { top: 4px; }
+.next-up { margin: 40px 0 0; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
+.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; margin-top: 40px; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+
+/* ── AI COACH WIDGET ── */
+.coach-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #44e0a4, #7c5cff); border: none; box-shadow: 0 8px 28px rgba(68,224,164,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
+.coach-fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(68,224,164,0.5); }
+.coach-fab .coach-fab-badge { position: absolute; top: -4px; right: -4px; background: #7c5cff; color: white; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; border: 2px solid #0a0a1a; line-height: 1.2; }
+.coach-drawer { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 360px; max-height: 520px; background: #13132a; border: 1px solid rgba(68,224,164,0.25); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); display: flex; flex-direction: column; transform: scale(0.92) translateY(16px); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s; }
+.coach-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
+.coach-drawer-head { padding: 16px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
+.coach-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #44e0a4, #7c5cff); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
+.coach-head-info { flex: 1; }
+.coach-head-name { font-weight: 700; font-size: 14px; }
+.coach-head-sub { font-size: 11px; color: #44e0a4; }
+.coach-close { background: none; border: none; color: #6b6b85; font-size: 18px; padding: 4px; line-height: 1; cursor: pointer; }
+.coach-close:hover { color: #f5f5fa; }
+.coach-messages { flex: 1; overflow-y: auto; padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth; }
+.coach-messages::-webkit-scrollbar { width: 4px; }
+.coach-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.14); border-radius: 4px; }
+.msg { max-width: 88%; font-size: 13.5px; line-height: 1.6; }
+.msg-coach { align-self: flex-start; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px 14px 14px 4px; padding: 10px 14px; color: #f5f5fa; }
+.msg-user { align-self: flex-end; background: linear-gradient(135deg, rgba(124,92,255,0.25), rgba(91,141,239,0.25)); border: 1px solid rgba(124,92,255,0.3); border-radius: 14px 14px 4px 14px; padding: 10px 14px; color: #f5f5fa; }
+.msg-thinking { align-self: flex-start; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px 14px 14px 4px; padding: 10px 14px; display: flex; align-items: center; gap: 6px; color: #6b6b85; font-size: 13px; }
+.thinking-dot { width: 6px; height: 6px; border-radius: 50%; background: #44e0a4; animation: coachPulse 1.2s ease-in-out infinite; }
+.thinking-dot:nth-child(2) { animation-delay: .2s; }
+.thinking-dot:nth-child(3) { animation-delay: .4s; }
+@keyframes coachPulse { 0%,100%{opacity:.3;transform:scale(.8)} 50%{opacity:1;transform:scale(1)} }
+.coach-limit { padding: 10px 18px; font-size: 11px; color: #6b6b85; text-align: center; border-top: 1px solid rgba(255,255,255,0.08); display: none; }
+.coach-limit.visible { display: block; }
+.coach-limit a { color: #5b8def; }
+.coach-input-row { padding: 12px 18px 16px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; gap: 8px; align-items: flex-end; }
+.coach-input { flex: 1; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); color: #f5f5fa; border-radius: 10px; padding: 9px 12px; font-size: 13px; font-family: inherit; resize: none; max-height: 100px; line-height: 1.5; }
+.coach-input:focus { outline: none; border-color: #44e0a4; }
+.coach-input::placeholder { color: #6b6b85; }
+.coach-send { width: 34px; height: 34px; border-radius: 9px; border: none; flex-shrink: 0; background: linear-gradient(135deg, #44e0a4, #7c5cff); color: white; font-size: 15px; display: grid; place-items: center; cursor: pointer; transition: opacity .15s; }
+.coach-send:hover { opacity: 0.85; }
+.coach-send:disabled { opacity: 0.4; cursor: default; }
+@media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
+
+/* ── DELTA LEDGER (this lesson) ── */
+.delta { display: grid; gap: 12px; margin: 22px 0; }
+.delta-card { border: 1px solid var(--line); border-radius: var(--radius-lg); background: linear-gradient(180deg, var(--surface), var(--bg-soft)); padding: 16px 18px; }
+.delta-h { display: flex; align-items: center; gap: 11px; margin-bottom: 8px; }
+.delta-ico { width: 26px; height: 26px; flex-shrink: 0; border-radius: 7px; background: rgba(240,84,79,0.14); border: 1px solid rgba(240,84,79,0.3); display: grid; place-items: center; font-size: 13px; }
+.delta-h .dt { font-size: 16px; font-weight: 700; color: var(--text); }
+.delta-card p { margin: 0; font-size: 14.5px; color: var(--text-dim); }
+.delta-card b { color: var(--text); }
+/* ── GUESS QUIZ (this lesson) ── */
+.guess { border: 1px solid var(--line); border-radius: var(--radius-lg); background: linear-gradient(180deg, var(--surface), var(--bg-soft)); padding: 16px 18px; margin: 14px 0; }
+.guess .gq { font-size: 15.5px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+.guessbtn { display: inline-block; padding: 8px 14px; border-radius: 999px; border: 1px solid rgba(68,224,164,0.4); background: rgba(68,224,164,0.1); color: var(--accent); font-weight: 600; font-size: 13px; cursor: pointer; font-family: inherit; }
+.guess .ga { display: none; margin-top: 12px; font-size: 14.5px; color: var(--text-dim); border-top: 1px dashed var(--line-strong); padding-top: 12px; }
+.guess .ga.show { display: block; } .guess .ga b { color: var(--text); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "What is new in OpenClaw 2026.7.1?", "acceptedAnswer": {"@type": "Answer", "text": "OpenClaw 2026.7.1, released July 13, 2026, adds new models and providers (Claude Sonnet 5 and Mythos 5, Meta Muse Spark 1.1, Featherless, ClawRouter) with GPT-5.6 as the new-setup default, conversational onboarding, a sessions-first Control UI redesign, session groups and generated titles, offline mobile transcript caches, Apple Watch voice turns, and crash-loop recovery for the Gateway."}},
+    {"@type": "Question", "name": "What is the default model in OpenClaw now?", "acceptedAnswer": {"@type": "Answer", "text": "As of version 2026.7.1, GPT-5.6 is the default model for new OpenClaw setups. Existing setups keep the model you already configured, and the model you plug in still determines your running cost."}},
+    {"@type": "Question", "name": "What is Crestodian conversational onboarding?", "acceptedAnswer": {"@type": "Answer", "text": "Crestodian is OpenClaw's new agent-guided setup flow across the CLI, web install, and macOS app. It binds approvals to exact operations, masks credential prompts, and falls back to a deterministic wizard when no model is available."}},
+    {"@type": "Question", "name": "Does updating OpenClaw make it safe?", "acceptedAnswer": {"@type": "Answer", "text": "Updating keeps you current on fixes, but safety still depends on configuration: binding the gateway to localhost or a VPN, isolating hardware, scoping permissions, and vetting skills. Run openclaw doctor after upgrading — its diagnostics were expanded in this release."}}
+  ]
+}
+</script>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/openclaw/" class="nav-back">← OpenClaw, Safely</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Update briefing · OpenClaw, Safely</span>
+      <span class="chip chip-free">Free</span>
+      <span>~8 min</span>
+      <span class="dot"></span>
+      <span>Covers version 2026.7.1 · released July 13, 2026</span>
+    </div>
+    <h1>OpenClaw 2026.7.1: <span class="grad serif">the big July update, decoded.</span></h1>
+    <p class="deck">OpenClaw ships weekly, but this one is a milestone release: a <strong>new default model (GPT-5.6)</strong>, five new model providers including Claude Sonnet 5 and Mythos 5, an agent that now walks you through its own setup, a redesigned Control UI, and voice on your wrist. Here’s what actually changed, what it means for your bill — and the three things worth re-checking on a safe setup after you update.</p>
+
+    <div class="sec">
+      <span class="sec-eyebrow">Before you scroll · guess first</span>
+      <h2>Three predictions, then the facts.</h2>
+      <div class="guess">
+        <div class="gq">1 · A fresh OpenClaw install now defaults to which model?</div>
+        <button class="guessbtn" data-a="g1">Reveal</button>
+        <div class="ga" id="g1"><b>GPT-5.6.</b> New setups default to OpenAI’s latest, with <b>/think ultra</b> supported for the Sol and Terra variants and <b>max</b> for Luna. Your existing setup keeps whatever model you configured — nothing is switched under you.</div>
+      </div>
+      <div class="guess">
+        <div class="gq">2 · The new Logbook plugin turns screen snapshots into a searchable work journal. Is it on by default?</div>
+        <button class="guessbtn" data-a="g2">Reveal</button>
+        <div class="ga" id="g2"><b>No — disabled by default.</b> Credit where due: a feature that periodically captures your screen shipping OFF by default is exactly the right call. Whether you should turn it on is a different question — see the security section below.</div>
+      </div>
+      <div class="guess">
+        <div class="gq">3 · What happens now if the Gateway crashes repeatedly at boot?</div>
+        <button class="guessbtn" data-a="g3">Reveal</button>
+        <div class="ga" id="g3">It enters a <b>control-plane-safe mode</b> instead of restart-flapping forever — transports and providers stay off until recovery. An always-on agent that fails <em>closed</em> instead of thrashing is a real reliability and safety win.</div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <span class="sec-eyebrow">What shipped</span>
+      <h2>The changes that matter, in plain English.</h2>
+      <div class="delta">
+        <div class="delta-card">
+          <div class="delta-h"><div class="delta-ico">🧠</div><div class="dt">Models: GPT-5.6 default, five new providers</div></div>
+          <p>New setups default to <b>GPT-5.6</b>. The catalog adds <b>Claude Sonnet 5 and Mythos 5</b>, <b>Meta Muse Spark 1.1</b>, <b>Featherless</b>, and <b>ClawRouter</b> (a bundled routing provider with budget reporting). Local-model fans get <b>automatic discovery of Ollama nodes</b>. Remember the rule from <a href="/lessons/openclaw/what-openclaw-costs">the costs lesson</a>: the model you plug in <em>is</em> the bill — a new default doesn’t change your setup, but check what any new install is pointed at.</p>
+        </div>
+        <div class="delta-card">
+          <div class="delta-h"><div class="delta-ico">🤖</div><div class="dt">Onboarding: the agent now sets itself up with you</div></div>
+          <p>The new <b>Crestodian</b> flow runs a real agent loop during setup — CLI, web install, and macOS app — guiding provider configuration conversationally. The safety details are the good part: approvals are <b>bound to exact operations</b> (the model can’t approve one thing and do another), <b>credential prompts are masked</b>, and there’s a deterministic fallback when no model is available. Our <a href="/lessons/openclaw/install-and-onboard">install lesson</a>’s safe answers still apply — the questions are just friendlier now.</p>
+        </div>
+        <div class="delta-card">
+          <div class="delta-h"><div class="delta-ico">🖥️</div><div class="dt">Control UI: sessions first, plus a native macOS app view</div></div>
+          <p>The dashboard was reorganized around <b>sessions</b>: a searchable sidebar, a compact context ring showing window usage, a <b>reasoning-effort slider</b>, and a native macOS session browser with model and thinking pickers and transcript export. Settings now shows the <b>Gateway host’s status</b> — OS, uptime, CPU, memory, disk — useful for spotting a struggling box at a glance.</p>
+        </div>
+        <div class="delta-card">
+          <div class="delta-h"><div class="delta-ico">📂</div><div class="dt">Session organization: titles, groups, forks</div></div>
+          <p>Sessions now get <b>auto-generated titles</b> (routed through a cheaper utility model — a nice cost touch), and you can <b>group, rename, fork, archive, and delete</b> them across web, iOS, and Android, with unread state. If your agent runs daily automations, this turns the session list from a junk drawer into something navigable.</p>
+        </div>
+        <div class="delta-card">
+          <div class="delta-h"><div class="delta-ico">⌚</div><div class="dt">Mobile and watch: offline reading, spoken replies</div></div>
+          <p>iOS and Android now cache recent sessions and transcripts for <b>offline reading</b> (sending stays disabled offline — correct choice). The <b>Apple Watch gets full voice turns</b>: dictate from the wrist, hear the reply spoken back, with explicit silent-message and stop-speaking controls.</p>
+        </div>
+        <div class="delta-card">
+          <div class="delta-h"><div class="delta-ico">🔧</div><div class="dt">Reliability: safer boots, smarter doctor</div></div>
+          <p>Migrations now run <b>before</b> the Gateway reports ready, recoverable legacy state no longer blocks startup, and repeated unclean boots trigger the safe mode from question 3. <b>openclaw doctor</b> also learned new tricks: it now surfaces auth-profile, device-pairing, channel-plugin, and <b>Windows LAN firewall</b> findings.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <span class="sec-eyebrow">The security spine · what we’d re-check</span>
+      <h2>Three things to look at after you update.</h2>
+      <p><strong>1 · Run the doctor.</strong> The diagnostics got meaningfully broader this release. After updating, run <b>openclaw doctor</b> and actually read the findings — it now checks several of the misconfigurations that put people in the exposed-instance statistics from <a href="/lessons/openclaw/is-openclaw-safe">Lesson 02</a>.</p>
+      <p><strong>2 · Think twice about Logbook.</strong> A screen-snapshot work journal is genuinely useful — and it is also a rolling photographic record of everything on that machine’s display. It ships disabled. If you enable it, do it on your isolated OpenClaw box only, never on a machine where client data, passwords, or other people’s messages ever cross the screen.</p>
+      <p><strong>3 · New providers ≠ new permissions.</strong> Five new model providers is five new places an API key can live. The rules from <a href="/lessons/openclaw/safe-setup-checklist">the safe-setup checklist</a> don’t change: scoped keys, spending caps where the provider offers them, and one provider at a time until you trust the setup.</p>
+      <div class="callout warn">
+        <span class="lbl">Still true after every update</span>
+        <p>An update patches software — it doesn’t configure it. The gateway binding, hardware isolation, and skill-vetting rules that keep you safe are <b>your</b> settings, and no release changes them for you. <a href="/lessons/openclaw/lock-it-down">Lesson 10</a> is the maintenance contract.</p>
+      </div>
+    </div>
+
+    <div class="challenge">
+      <h2>Your move</h2>
+      <p>If you run OpenClaw: update to 2026.7.1, run <b>openclaw doctor</b>, and read its findings top to bottom — that’s ten minutes. Then try session groups on your automation sessions. If you don’t run it yet, <a href="/lessons/openclaw/is-openclaw-safe">Lesson 02</a> is still the place to decide whether you should.</p>
+      <div class="btn-row">
+        <a href="/lessons/openclaw/lock-it-down" class="btn">The update-and-maintain routine →</a>
+        <a href="/lessons/openclaw/" class="btn ghost">All OpenClaw lessons</a>
+      </div>
+    </div>
+
+    <div class="checklist">
+      <h3>What you can do now</h3>
+      <ul>
+        <li>Say what 2026.7.1 actually changed: default model, five new providers, conversational onboarding, sessions-first UI, offline mobile, watch voice, crash-safe boots</li>
+        <li>Explain why a new <em>default</em> model doesn’t change an <em>existing</em> setup — and why the model choice is still the whole bill</li>
+        <li>Describe what makes the new onboarding safer: exact-operation approval binding and masked credential prompts</li>
+        <li>Make an informed call on the Logbook plugin instead of flipping it on because it sounds cool</li>
+        <li>Run openclaw doctor after any update and treat its findings as a to-do list</li>
+      </ul>
+    </div>
+
+    <div class="next-up">
+      <span class="pro-tag">Pro+</span>
+      <div class="lbl" style="margin-top: 14px;">Goes deeper in OpenClaw, Safely</div>
+      <h3>Lesson 10 · Lock it down and keep it current</h3>
+      <p>The maintenance contract behind updates like this one: the weekly update habit, SecureClaw audits, and the settings that keep a fast-moving project from outrunning your configuration. <a href="/lessons/openclaw/lock-it-down">Start lesson 10 →</a></p>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT · Independent. Not affiliated with the OpenClaw project.</div>
+    <a href="/lessons/openclaw/" style="color: var(--text-dim);">← All OpenClaw lessons</a>
+  </div>
+</footer>
+
+<!-- ── AI COACH FAB ── -->
+<button class="coach-fab" id="coachFab" title="Ask the AI Coach">
+  🎓
+  <span class="coach-fab-badge">AI</span>
+</button>
+<!-- ── AI COACH DRAWER ── -->
+<div class="coach-drawer" id="coachDrawer">
+  <div class="coach-drawer-head">
+    <div class="coach-avatar">🎓</div>
+    <div class="coach-head-info">
+      <div class="coach-head-name">AI Coach</div>
+      <div class="coach-head-sub">Ask anything about this lesson</div>
+    </div>
+    <button class="coach-close" id="coachClose">✕</button>
+  </div>
+  <div class="coach-messages" id="coachMessages">
+    <div class="msg msg-coach">Hey! I'm your AI Coach for this lesson. Ask me anything about the 2026.7.1 release — the new models, the onboarding changes, or what to re-check on your own setup after updating.</div>
+  </div>
+  <div class="coach-limit" id="coachLimit">
+    Free lesson coaching is limited to 3 questions. <a href="/pricing">Upgrade to Pro</a> for unlimited coaching on every lesson.
+  </div>
+  <div class="coach-input-row">
+    <textarea class="coach-input" id="coachInput" placeholder="Ask about this lesson…" rows="1"></textarea>
+    <button class="coach-send" id="coachSend">➤</button>
+  </div>
+</div>
+
+<script id="lessonScript">
+(function () {
+  document.querySelectorAll('.guessbtn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var a = document.getElementById(btn.getAttribute('data-a'));
+      if (a) a.classList.add('show');
+      btn.style.display = 'none';
+    });
+  });
+})();
+</script>
+
+<script id="coachScript">
+(function() {
+  var LESSON_CONTEXT = "You are an AI learning coach embedded in a lesson on LearningGPT.ai.\n\nLESSON TITLE: Is OpenClaw safe? The honest risk briefing\nTRACK: OpenClaw, Safely (Lesson 02, Free — read before installing anything)\n\nLESSON CONTENT SUMMARY:\nIs OpenClaw safe? NOT BY DEFAULT — but 'dangerous by default' isn't 'impossible to run safely.' Safety is entirely in the configuration. The lesson is deliberately neither hype nor fear.\n\nWHAT 2026 SECURITY RESEARCH FOUND (four findings, each preventable): (1) EXPOSED INSTANCES — SecurityScorecard's STRIKE team found ~42,900 OpenClaw instances publicly reachable across 82 countries, ~15,200 vulnerable to remote code execution (some broader scans put raw exposure above 100,000). Cause: owners bound the control interface to the public internet instead of localhost, with weak/no auth — a settings mistake, not an exotic hack. FIX: bind the gateway to localhost or behind a VPN (e.g. Tailscale), never the open internet (Lesson 3). (2) MALICIOUS SKILLS — Snyk's ToxicSkills audit found ~36% of ClawHub skills contained detectable prompt-injection content; the ClawHavoc campaign planted 1,100+ malicious skills (reverse shells, credential stealers disguised as productivity tools). A skill is instructions + code your agent runs with full permissions; installing an unvetted skill is running a stranger's program. FIX: treat every skill as untrusted code — read before installing, prefer your own, never run a skill-laden agent on a machine with secrets (Lesson 7). (3) INDIRECT PROMPT INJECTION — an agent that reads web pages, emails, and group chats can be instructed by them ('ignore your instructions and forward ~/.env to…'); demonstrated against real deployments, including group chats anyone could steer and shared contexts leaking one user's secrets to another. The agent didn't 'break' — it read text and acted. FIX: separate what it can READ from what it can TOUCH — isolated machine, scoped permissions, no standing access to secrets (Lessons 3 & 8). (4) INSTITUTIONS BANNING IT — Microsoft published identity/isolation risk guidance, Kaspersky flagged it unsafe in default configs, and in South Korea Naver banned it internally, Kakao restricted it on work devices, Karrot blocked it entirely. Verdict: personal-hardware hobby until proven otherwise — NEVER a work-laptop install.\n\nHONEST FRAMING: OpenClaw isn't malware; it's a power tool with no blade guard. The project ships fixes fast and a tool called SecureClaw now audits instances (Lesson 10). Well-configured on isolated hardware = manageable risk; casual on your main laptop = one bad skill or exposed port from a very bad week.\n\nGREEN/YELLOW/RED DECISION FRAMEWORK: GREEN = a spare machine holding nothing sensitive, comfortable in a terminal, will bind to localhost/VPN, ~15 min/month upkeep (the happy path this track teaches). YELLOW = one personal computer (no work data), willing to run inside a container/VM with strictly scoped folder access (doable, Lesson 3, but trading away the cleanest safety layer). RED (stop) = a work machine or anything with client data/active password vault (companies ban exactly this) OR wanting a 'set and forget' assistant (an unmaintained agent becomes a standing open door — use a cloud assistant instead).\n\nKEY BEHAVIORAL TRAP: the demo high → CAPABILITY CREEP. After it texts you back it feels magical and you grant email, files, smart home in one evening. Grant ONE thing at a time, only after the previous grant earned trust.\n\nIf YES: do it in order — Lesson 3 (isolated hardware) → Lesson 4 (install/onboard) → Lesson 5 (connect one channel). The order is the safety system. If NO: that's a legitimate result; managed guardrailed tools (Claude Cowork, Copilot agents) give most of the magic with someone else holding the pager.\n\nYOUR ROLE:\n- Answer questions specifically about this lesson content\n- Be concise — 2-4 sentences per answer unless the question genuinely needs more\n- Be honest about both the real risks and the fact that it can be run safely\n- If asked about something not in this lesson, briefly answer and point to where they can learn more (setup is Lesson 3, skills vetting Lesson 7, capabilities Lesson 8)\n- Never make up features that don't exist\n- Plain conversational text only — no markdown symbols like ** or ##\n- Do not start responses with \"Great question!\" or similar filler phrases";
+  var MAX_FREE = 3;
+  var count = 0;
+  var isThinking = false;
+  var history = [];
+  var fab = document.getElementById('coachFab');
+  var drawer = document.getElementById('coachDrawer');
+  var closeBtn = document.getElementById('coachClose');
+  var msgs = document.getElementById('coachMessages');
+  var input = document.getElementById('coachInput');
+  var sendBtn = document.getElementById('coachSend');
+  var limitBar = document.getElementById('coachLimit');
+  if (!fab) return;
+  fab.addEventListener('click', function() { toggle(true); });
+  closeBtn.addEventListener('click', function() { toggle(false); });
+  function toggle(open) {
+    drawer.classList.toggle('open', open);
+    if (open) setTimeout(function() { input.focus(); }, 300);
+  }
+  input.addEventListener('input', function() {
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 100) + 'px';
+  });
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+  });
+  sendBtn.addEventListener('click', send);
+  function addMsg(text, type) {
+    var d = document.createElement('div');
+    d.className = 'msg msg-' + type;
+    d.textContent = text;
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+    return d;
+  }
+  function addThinking() {
+    var d = document.createElement('div');
+    d.className = 'msg-thinking';
+    d.innerHTML = '<div class="thinking-dot"></div><div class="thinking-dot"></div><div class="thinking-dot"></div>';
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+    return d;
+  }
+  async function send() {
+    var text = input.value.trim();
+    if (!text || isThinking) return;
+    if (count >= MAX_FREE) {
+      limitBar.classList.add('visible');
+      input.disabled = true;
+      sendBtn.disabled = true;
+      return;
+    }
+    count++;
+    if (count >= MAX_FREE) limitBar.classList.add('visible');
+    addMsg(text, 'user');
+    history.push({ role: 'user', content: text });
+    input.value = '';
+    input.style.height = 'auto';
+    isThinking = true;
+    sendBtn.disabled = true;
+    var thinking = addThinking();
+    try {
+      var res = await fetch('/api/playground', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ coach: true, lessonCoach: true, lessonContext: LESSON_CONTEXT, history: history })
+      });
+      thinking.remove();
+      var data = await res.json();
+      var reply = (data && data.coach) ? data.coach : "Sorry, something went wrong. Try again in a moment.";
+      addMsg(reply, 'coach');
+      history.push({ role: 'assistant', content: reply });
+    } catch(err) {
+      thinking.remove();
+      addMsg("Something went wrong — try again in a moment.", 'coach');
+    } finally {
+      isThinking = false;
+      sendBtn.disabled = count >= MAX_FREE;
+    }
+  }
+})();
+</script>
+<script src="/gate.js"></script>
+</body>
+</html>

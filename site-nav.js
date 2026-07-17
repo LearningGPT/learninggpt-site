@@ -145,3 +145,25 @@
     gtag('config', 'G-9LW4HXHQBF');
   } catch (e) {}
 })();
+
+/* ── PWA bootstrap (added 2026-07-17): manifest + icons + service worker on every page ── */
+(function () {
+  try {
+    var h = document.head;
+    function tag(name, attrs) {
+      var el = document.createElement(name);
+      for (var k in attrs) el.setAttribute(k, attrs[k]);
+      h.appendChild(el);
+    }
+    if (!document.querySelector('link[rel="manifest"]')) tag('link', { rel: 'manifest', href: '/manifest.webmanifest' });
+    if (!document.querySelector('link[rel="apple-touch-icon"]')) tag('link', { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' });
+    tag('meta', { name: 'apple-mobile-web-app-capable', content: 'yes' });
+    tag('meta', { name: 'apple-mobile-web-app-title', content: 'LearningGPT' });
+    tag('meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' });
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('/sw.js').catch(function () {});
+      });
+    }
+  } catch (e) {}
+})();

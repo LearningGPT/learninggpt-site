@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Perplexity SPACE: the sandbox that makes Computer safer — LearningGPT</title>
+<meta name="description" content="Perplexity launched SPACE on July 15, 2026 — the sandbox platform now running under Computer for all users. Why where an agent runs matters, what pause/resume/branch means for your tasks, and the honest limits. Free lesson." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#20808d" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/perplexity/space-sandbox" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/perplexity/space-sandbox" />
+<meta property="og:title" content="Perplexity SPACE: the sandbox that makes Computer safer" />
+<meta property="og:description" content="Your AI agent now runs in a disposable, credential-free box that can pause, resume, and rewind a week. What SPACE changes for anyone using Perplexity Computer." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is Perplexity SPACE?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "SPACE is the sandbox platform Perplexity announced on July 15, 2026. It's the secure environment where Perplexity Computer's agents run code, work with files, and carry out long tasks. It's live in Computer for all users."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to turn SPACE on or pay for it?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. SPACE is infrastructure, not a feature toggle — it already runs underneath Perplexity Computer for all users. You benefit from it without doing anything."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does a sandbox matter for an AI agent?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Agents do real work — running code, editing files, signing into services. A sandbox contains that activity: each task runs in an isolated, disposable environment, so a misbehaving or compromised agent can't reach beyond the task it was given."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the agent see my passwords when it signs into my accounts?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Perplexity says credentials never pass into the sandbox. They're delivered from outside only at the moment they're needed — for example, SPACE can handle a Google sign-in flow without exposing the credentials inside the agent's environment."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are rolling snapshots?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "SPACE captures the full session state — live memory plus files — as often as every minute, and can go back up to a week. Practically, you can walk away mid-task, come back days later, and the agent resumes exactly where it paused."
+      }
+    }
+  ]
+}
+</script>
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --danger:#ff6b8a; --radius:14px; --radius-lg:20px; --container:820px; --track:#20808d; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+button{font-family:inherit;cursor:pointer;}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:#20808d;}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.25;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(32,128,141,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(32,128,141,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#20808d 0%,#1a6671 50%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.12em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:50px 0 16px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(32,128,141,0.12),rgba(124,92,255,0.06));border:1px solid rgba(32,128,141,0.25);border-radius:var(--radius-lg);}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.layers{margin:26px 0;display:flex;flex-direction:column;gap:0;}
+.layer{border:1px solid rgba(32,128,141,0.35);background:linear-gradient(135deg,rgba(32,128,141,0.1),rgba(20,20,43,0.6));padding:20px 24px;position:relative;}
+.layer:first-child{border-radius:16px 16px 0 0;}
+.layer:last-child{border-radius:0 0 16px 16px;}
+.layer + .layer{border-top:none;}
+.layer .ln{font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:6px;}
+.layer .lt{font-size:17px;font-weight:700;margin-bottom:6px;}
+.layer .lb{font-size:14.5px;color:var(--text-dim);line-height:1.65;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:18px 0;font-size:14.5px;}
+.gotcha::before{content:'⚠ The honest note: ';color:var(--warn);font-weight:700;}
+.qblock{margin:26px 0;padding:20px 22px;border:1px solid var(--line-strong);border-radius:var(--radius);background:var(--bg-soft);}
+.eyebrow-do{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;color:var(--track);margin-bottom:8px;}
+.qblock p{font-size:15.5px;margin:0 0 14px;}
+.opts{display:flex;flex-direction:column;gap:10px;}
+.opt{text-align:left;padding:13px 15px;line-height:1.5;font-size:14.5px;font-family:inherit;color:var(--text);background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);cursor:pointer;transition:.15s;}
+.opt:hover:not(:disabled){border-color:var(--track);background:#12283a;}
+.opt:disabled{cursor:default;}
+.fb{display:none;margin-top:14px;padding:12px 14px;border-radius:var(--radius);font-size:14px;line-height:1.6;}
+.fb.good{background:rgba(68,224,164,.1);border:1px solid rgba(68,224,164,.35);color:#a7efd2;}
+.fb.bad{background:rgba(124,92,255,.1);border:1px solid rgba(124,92,255,.3);color:#cfc4ff;}
+.lgpt-faq{margin:48px 0 8px;}
+.lgpt-faq .faq-eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.09em;font-weight:700;color:var(--track);margin-bottom:8px;}
+.lgpt-faq h2{font-size:27px;line-height:1.15;letter-spacing:-.02em;font-weight:800;margin:0 0 18px;}
+.lgpt-faq details{border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#14142b;margin-bottom:10px;overflow:hidden;}
+.lgpt-faq details[open]{border-color:rgba(32,128,141,.4);}
+.lgpt-faq summary{list-style:none;cursor:pointer;padding:15px 18px;font-size:15.5px;font-weight:600;color:#f5f5fa;display:flex;justify-content:space-between;align-items:center;gap:14px;}
+.lgpt-faq summary::-webkit-details-marker{display:none;}
+.lgpt-faq summary .chev{flex-shrink:0;width:18px;height:18px;border-right:2px solid #20808d;border-bottom:2px solid #20808d;transform:rotate(45deg);transition:transform .2s;margin-top:-4px;}
+.lgpt-faq details[open] summary .chev{transform:rotate(-135deg);margin-top:4px;}
+.lgpt-faq .faq-a{padding:0 18px 16px;font-size:14.5px;line-height:1.7;color:#c7c7d6;}
+.lgpt-faq .faq-a strong{color:#f5f5fa;font-weight:600;} .lgpt-faq .faq-a a{color:#20808d;font-weight:600;}
+.next-up{margin:50px 0 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.next-up .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:10px;}
+.next-up h3{margin:0 0 8px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:14.5px;}
+footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);}
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top"><div class="nav-inner">
+  <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+  <a href="/lessons/perplexity/" class="nav-back">← Perplexity Mastery</a>
+</div></nav>
+<article class="lesson"><div class="container">
+  <div class="lesson-meta">
+    <span class="chip">Perplexity Mastery</span>
+    <span class="chip chip-free">Free</span>
+    <span>~7 min read</span>
+    <span class="dot"></span>
+    <span>What's new · July 15, 2026</span>
+  </div>
+  <h1>SPACE: the sandbox that makes <span class="grad serif">Computer safer.</span></h1>
+  <p class="deck">On July 15, 2026, Perplexity introduced <strong>SPACE</strong> — the sandbox platform now running underneath Perplexity Computer for all users. It's infrastructure, so you'll never click a SPACE button. But if you're handing an AI agent your files, your sign-ins, and hours-long tasks, <em>where that agent runs</em> is the question that matters most. Here's what changed and what it means for how much you can trust Computer with.</p>
+
+  <h2><span class="num">01</span> Why "where an agent runs" is the real question</h2>
+  <p>Chatbots answer questions; agents <em>do things</em> — run code, edit files, sign into services, and work for hours on your behalf. That's useful precisely because it touches your real data, and risky for the same reason. The industry's answer is the <strong>sandbox</strong>: an isolated, disposable environment where the agent works, walled off from everything it wasn't given.</p>
+  <p>Perplexity's claim with SPACE is that existing sandbox tech forced a trade between functionality, efficiency, and security — and that Computer needed all three, so they built their own. Whether you buy the framing, the practical upgrades below are real and user-visible.</p>
+
+  <h2><span class="num">02</span> What SPACE actually does</h2>
+  <div class="layers">
+    <div class="layer">
+      <div class="ln">Disposable by default</div>
+      <div class="lt">Sandboxes live only as long as the task</div>
+      <div class="lb">Each task runs in its own environment — a fully isolated microVM with its own operating system. When the task finishes, the sandbox and everything in it is destroyed. Nothing inside can touch the host or another task running in parallel.</div>
+    </div>
+    <div class="layer">
+      <div class="ln">Credentials stay outside</div>
+      <div class="lt">The agent never holds your passwords</div>
+      <div class="lb">Perplexity says credentials never pass into the sandbox — they're delivered from outside only at the exact moment they're needed. A sign-in to your Google account happens without the credentials ever sitting inside the agent's environment, and a compromised agent has no path to them by default.</div>
+    </div>
+    <div class="layer">
+      <div class="ln">A built-in time machine</div>
+      <div class="lt">Pause, resume, branch — and rewind up to a week</div>
+      <div class="lb">SPACE takes rolling snapshots of the full session — live memory plus files — as often as every minute. You can walk away mid-task, come back days later, and the agent picks up exactly where it paused. Sessions can also branch into parallel sandboxes.</div>
+    </div>
+  </div>
+  <div class="callout">
+    <span class="lbl">The user-facing takeaway</span>
+    <p>The snapshot layer is the part you'll actually feel: long tasks in Computer survive restarts, interruptions, and multi-day gaps. "Start the research today, finish Thursday" becomes a normal way to work with an agent instead of a gamble.</p>
+  </div>
+  <div class="qblock">
+    <div class="eyebrow-do">Quick check</div>
+    <p>Computer is halfway through a long research task and you need to shut your laptop until tomorrow. What happens under SPACE?</p>
+    <div class="opts">
+      <button class="opt" data-c="0" onclick="pick(this,'q1')">The task dies — agents can't survive a disconnect</button>
+      <button class="opt" data-c="1" onclick="pick(this,'q1')">The session pauses with its state snapshotted; the agent resumes where it left off</button>
+      <button class="opt" data-c="0" onclick="pick(this,'q1')">The agent keeps your passwords in its sandbox so it can log back in later</button>
+    </div>
+    <div class="fb" id="fb-q1"></div>
+  </div>
+
+  <h2><span class="num">03</span> Do you need to do anything?</h2>
+  <p>No — and that's the point. SPACE is <strong>live in Computer for all users</strong> as of the announcement; there's no toggle, no tier gate mentioned, no setup. Perplexity says it has run millions of sandbox creations over the past week after two months of internal use. For enterprise buyers there's more underneath: bring-your-own encryption keys, and designs for on-prem and fully offline deployment.</p>
+  <div class="gotcha">These are Perplexity's own claims about Perplexity's own infrastructure — there's no independent audit cited in the announcement. Good architecture reduces risk; it doesn't erase it. The sensible posture with any agent, on any platform, stays the same: give it access to what the task needs, not everything you have, and keep truly sensitive data out of tools you haven't cleared for it.</div>
+
+  <section class="lgpt-faq" aria-labelledby="faqh">
+    <div class="faq-eyebrow">Frequently asked</div>
+    <h2 id="faqh">SPACE — your questions, answered</h2>
+    <details>
+      <summary><span>What is Perplexity SPACE?</span><span class="chev"></span></summary>
+      <div class="faq-a">The sandbox platform Perplexity announced on <strong>July 15, 2026</strong> — the secure environment where Computer's agents run code, work with files, and carry out long tasks. It's live in Computer for all users.</div>
+    </details>
+    <details>
+      <summary><span>Do I need to turn it on or pay for it?</span><span class="chev"></span></summary>
+      <div class="faq-a">No. SPACE is infrastructure, not a feature toggle — it already runs underneath Perplexity Computer for all users.</div>
+    </details>
+    <details>
+      <summary><span>Why does a sandbox matter for an AI agent?</span><span class="chev"></span></summary>
+      <div class="faq-a">Agents do real work — running code, editing files, signing into services. A sandbox contains that activity so a misbehaving or compromised agent <strong>can't reach beyond the task it was given</strong>.</div>
+    </details>
+    <details>
+      <summary><span>Does the agent see my passwords?</span><span class="chev"></span></summary>
+      <div class="faq-a">Perplexity says credentials <strong>never pass into the sandbox</strong> — they're delivered from outside only at the moment they're needed, so sign-in flows happen without exposing credentials inside the agent's environment.</div>
+    </details>
+    <details>
+      <summary><span>What are rolling snapshots?</span><span class="chev"></span></summary>
+      <div class="faq-a">Captures of the full session state — live memory plus files — as often as <strong>every minute</strong>, going back up to a week. Walk away mid-task, come back days later, and the agent resumes exactly where it paused.</div>
+    </details>
+  </section>
+
+  <div class="next-up">
+    <div class="lbl">More in Perplexity Mastery</div>
+    <h3>Put Computer to work</h3>
+    <p>What Perplexity Computer actually does day to day — and how Deep Research fits inside it. <a href="/lessons/perplexity/perplexity-computer-and-deep-research">Computer &amp; Deep Research →</a></p>
+  </div>
+</div></article>
+<footer><div class="footer-inner">
+  <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Perplexity. Reflects the July 15, 2026 announcement; details can change.</div>
+  <a href="/lessons/perplexity/" style="color:var(--text-dim);">← All Perplexity Mastery lessons</a>
+</div></footer>
+<script>
+  var MSG = {
+    q1:{ good:"Right. SPACE snapshots the full session state — memory and files — as often as every minute, so the session pauses and resumes where it left off, even days later. And credentials never live inside the sandbox at all.",
+         bad:"Not quite. Under SPACE the session pauses with its state snapshotted (memory plus files), and the agent resumes exactly where it stopped — up to a week back. Credentials never sit inside the sandbox; they're delivered from outside only when needed." }
+  };
+  function pick(btn, key){
+    var opts = btn.parentNode;
+    opts.querySelectorAll('.opt').forEach(function(b){ b.disabled=true; b.style.opacity='0.5'; });
+    btn.style.opacity='1';
+    var correct = btn.dataset.c === '1';
+    btn.style.borderColor = correct ? 'var(--accent)' : 'var(--danger)';
+    var fb = document.getElementById('fb-'+key);
+    fb.className = 'fb ' + (correct ? 'good' : 'bad');
+    fb.textContent = MSG[key][correct ? 'good' : 'bad'];
+    fb.style.display='block';
+  }
+</script>
+<script src="/gate.js"></script>
+</body>
+</html>

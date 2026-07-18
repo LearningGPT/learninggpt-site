@@ -68,8 +68,9 @@ export default async function handler(req, res) {
   try {
     switch (type) {
       case 'checkout.session.completed': {
-        if (isBusiness) await handleBusinessCheckout(obj, stripeKey);
-        else await handleIndividualCheckout(obj, stripeKey);
+        const isLive = !!(event && event.livemode);
+        if (isBusiness) await handleBusinessCheckout(obj, stripeKey, isLive);
+        else await handleIndividualCheckout(obj, stripeKey, isLive);
         break;
       }
       case 'customer.subscription.created':
@@ -122,7 +123,7 @@ export default async function handler(req, res) {
 // Self-sufficient: stores the Stripe ids AND sets the plan by looking up the
 // subscription's price directly, so access is granted even if this is the only
 // event that ever matches the profile.
-async function handleIndividualCheckout(session, stripeKey) {
+async function handleIndividualCheckout(session, stripeKey, isLive) {
   // Re-fetch from Stripe to confirm it's real (and to fill fields the event
   // payload may omit, like customer_details).
   let s = session;
@@ -162,6 +163,22 @@ async function handleIndividualCheckout(session, stripeKey) {
     matched = await patchCount('profiles', `stripe_customer_id=eq.${enc(customerId)}`, patch);
   }
   if (!matched) console.error('Individual checkout: no profile matched', email || '(no email)', customerId);
+
+  // Owner heads-up for every purchase (remove or quiet this once trust is earned).
+  const amount = typeof s.amount_total === 'number'
+    ? `$${(s.amount_total / 100).toFixed(2)} ${String(s.currency || 'usd').toUpperCase()}`
+    : 'n/a';
+  await notifyDan(
+    `${isLive ? '' : '[TEST] '}${matched ? '✅' : '🚨'} Purchase: ${patch.plan || 'plan?'} — ${email || '(no email)'}`,
+    [
+      `Customer: ${email || '(no email)'}`,
+      `Plan: ${patch.plan || 'UNKNOWN — check price ids in Vercel env!'}`,
+      `Amount: ${amount}`,
+      `Provisioned: ${matched ? `YES — profile updated to ${patch.plan || '?'}` : 'NO — NO PROFILE MATCHED. Fix manually in Supabase!'}`,
+      `Stripe customer: ${customerId || 'n/a'}`,
+      `Subscription: ${subscriptionId || 'n/a'}`,
+    ]
+  );
 }
 
 // Look up a Stripe customer's email (used when a profile has no customer id yet).
@@ -173,7 +190,7 @@ async function stripeCustomerEmail(customerId, stripeKey) {
 }
 
 // ── Business onboarding ────────────────────────────────────────────────────────
-async function handleBusinessCheckout(session, stripeKey) {
+async function handleBusinessCheckout(session, stripeKey, isLive) {
   // Re-fetch from Stripe to confirm it's real and paid.
   let s = session;
   if (stripeKey) {
@@ -244,6 +261,38 @@ async function handleBusinessCheckout(session, stripeKey) {
   });
 
   await sendAdminWelcome(adminEmail, adminName, companyName, link);
+
+  const amount = typeof s.amount_total === 'number'
+    ? `$${(s.amount_total / 100).toFixed(2)} ${String(s.currency || 'usd').toUpperCase()}`
+    : 'n/a';
+  await notifyDan(
+    `${isLive ? '' : '[TEST] '}✅ BUSINESS purchase: ${companyName} — ${plan} × ${seats} seats`,
+    [
+      `Company: ${companyName}`,
+      `Admin: ${adminName} <${adminEmail}>`,
+      `Plan: ${plan} · Seats: ${seats}`,
+      `Amount: ${amount}`,
+      `Stripe customer: ${customerId || 'n/a'}`,
+      `Subscription: ${subscriptionId || 'n/a'}`,
+    ]
+  );
+}
+
+// Owner purchase notification — plain and scannable.
+async function notifyDan(subject, lines) {
+  if (!RESEND_API_KEY) return;
+  const html = `<div style="font-family:ui-monospace,Consolas,monospace;font-size:14px;line-height:1.8;color:#14142b;">${lines.map(escapeHtml).join('<br>')}</div>`;
+  const r = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { 'Authorization': `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      from: 'LearningGPT <no-reply@send.learninggpt.ai>',
+      to: ['dan@learninggpt.ai'],
+      subject,
+      html,
+    }),
+  });
+  if (!r.ok) console.error('Purchase notification failed:', await r.text());
 }
 
 // When a business subscription is canceled, revoke everyone's access and mark

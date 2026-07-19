@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Unified search: find anything you&#x27;ve ever told ChatGPT — LearningGPT</title>
+<meta name="description" content="ChatGPT&#x27;s unified search covers your chat history, project files, and connected apps from one search box. The syntax, the habits, and how it changes what&#x27;s worth saving." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#10a37f" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/chatgpt/unified-search" />
+<meta property="og:title" content="Unified search: find anything you&#x27;ve ever told ChatGPT — LearningGPT" />
+<meta property="og:description" content="ChatGPT&#x27;s unified search covers your chat history, project files, and connected apps from one search box. The syntax, the habits, and how it changes what&#x27;s worth saving." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --radius:14px; --radius-lg:20px; --container:820px; --track:#10a37f; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:var(--track);}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.25;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(16,163,127,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(16,163,127,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#10a37f 0%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.15em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:52px 0 14px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(16,163,127,0.12),rgba(124,92,255,0.06));border:1px solid rgba(16,163,127,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,#10a37f,#7c5cff);border-radius:2px 0 0 2px;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.cost-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;}
+.cost-table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--line-strong);color:var(--text-dim);font-size:11.5px;text-transform:uppercase;letter-spacing:0.6px;}
+.cost-table td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.cost-table td:first-child{font-weight:700;}
+.tryit{margin:28px 0;padding:22px;background:rgba(68,224,164,0.06);border:1px solid rgba(68,224,164,0.25);border-radius:var(--radius);}
+.tryit .lbl{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.tryit p{margin:0 0 14px;font-size:15.5px;}
+.tryit a.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#44e0a4,#5b8def);color:white;padding:12px 22px;border-radius:9px;font-weight:600;font-size:14px;}
+.tryit a.btn:hover{transform:translateY(-1px);color:white;}
+.challenge{margin:52px 0 40px;background:linear-gradient(135deg,rgba(16,163,127,0.14),rgba(124,92,255,0.1));border:1px solid rgba(16,163,127,0.28);border-radius:var(--radius-lg);padding:34px;}
+.challenge h2{margin-top:0;}
+.challenge a.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#10a37f,#7c5cff);color:white;padding:13px 24px;border-radius:10px;font-weight:600;font-size:15px;}
+.challenge a.btn:hover{transform:translateY(-1px);color:white;}
+.checklist{margin:40px 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);}
+.checklist h3{margin-top:0;font-size:18px;} .checklist ul{list-style:none;padding:0;margin:0;}
+.checklist li{padding:10px 0 10px 30px;position:relative;font-size:15px;border-top:1px solid var(--line);}
+.checklist li:first-child{border-top:none;padding-top:0;}
+.checklist li::before{content:'✓';position:absolute;left:0;color:var(--accent);font-weight:700;}
+.next-up{margin:50px 0 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.next-up .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:10px;}
+.next-up h3{margin:0 0 8px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:14.5px;}
+footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);}
+.chip-pro { border-color: rgba(124,92,255,0.45); color: #b9a6ff; background: rgba(124,92,255,0.12); }
+.chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
+.steps{counter-reset:st;margin:20px 0;} .steps .step{position:relative;padding:14px 0 14px 54px;border-bottom:1px solid var(--line);} .steps .step::before{counter-increment:st;content:counter(st);position:absolute;left:0;top:12px;width:34px;height:34px;border-radius:50%;background:rgba(16,163,127,0.15);border:1px solid rgba(16,163,127,0.4);color:var(--track);font-weight:700;display:grid;place-items:center;font-size:14px;}
+.checklist{margin:24px 0;padding:22px 26px;background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius-lg);} .checklist h3{margin:0 0 10px;font-size:16px;} .checklist ul{margin:0;padding-left:22px;}
+.next-up{margin-top:56px;padding:24px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);} .next-up .lbl{font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);margin-bottom:8px;} .next-up h3{margin:0 0 6px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:15px;}
+.footer-inner{max-width:1180px;margin:0 auto;padding:26px 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);border-top:1px solid var(--line);}
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top"><div class="nav-inner">
+  <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+  <a href="/lessons/chatgpt/" class="nav-back">&larr; ChatGPT Mastery</a>
+</div></nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">ChatGPT Mastery</span>
+      <span class="chip chip-pro">Pro</span>
+      <span>~7 min read</span>
+      <span class="dot"></span>
+      <span>New &middot; July 2026</span>
+    </div>
+    <h1>Finding anything: <span class="grad serif">search that actually remembers.</span></h1>
+    <p class="deck">Six months of ChatGPT use creates hundreds of conversations holding real decisions, drafts, and research. Unified search makes that archive a second brain instead of a landfill — your history, files, and connected apps, one box.</p>
+
+    <h2><span class="num">01</span> What's in the index</h2>
+    <p>Search in ChatGPT now reaches across <strong>your conversation history</strong>, <strong>files in your Projects</strong>, and — if you've connected them — <strong>your linked apps</strong> like email and cloud drives. One query, all of it. The mental shift: everything you've worked through with ChatGPT is retrievable, which means a conversation is no longer disposable. It's a record.</p>
+    <h2><span class="num">02</span> Search like you talk</h2>
+    <p>This isn't keyword search from 2010. Describe what you remember, conversationally:</p>
+    <ul>
+      <li>"the chat where we priced the Henderson job"</li>
+      <li>"that draft about the return policy, sometime in May"</li>
+      <li>"the packing list from before the Denver trip"</li>
+    </ul>
+    <p>Partial memory works. Wrong words that <em>mean</em> the right thing work. The search understands intent, so search with intent, not exact phrases.</p>
+    <div class="callout"><span class="lbl">The power move</span><p>Don't just find — <strong>find and continue</strong>. Open the old chat and keep going with today's question: the accumulated context is the value. "Given everything we worked out here in March, here's the new wrinkle..."</p></div>
+    <h2><span class="num">03</span> Habits that make future-you grateful</h2>
+    <div class="steps">
+      <div class="step"><strong>Name the keepers.</strong> Rename any chat that produced a real decision or deliverable. Ten seconds now, findable forever.</div>
+      <div class="step"><strong>Say the magic words in-chat.</strong> Drop searchable phrases into important conversations: client names, project names, "final version." You're leaving handles for future-you to grab.</div>
+      <div class="step"><strong>Delete the noise.</strong> Trivia and dead-ends dilute results. A quick weekly cull keeps search sharp.</div>
+    </div>
+    <h2><span class="num">04</span> The honest limits</h2>
+    <p>Search finds what was <em>said</em> — it can't find what you never told it, and it's only as current as your last conversation. And if you've connected work apps, remember that search results can now surface work content: think before screensharing a search box in a meeting. (More on connector hygiene in the <a href="/lessons/chatgpt/connectors-and-plugins">connectors lesson</a>.)</p>
+    <div class="tryit"><span class="lbl">Try it now</span><p>Search for the oldest useful thing you can remember discussing with ChatGPT. Open it, read your past self's thinking, and continue the conversation with what you know now.</p><a class="btn" href="https://chatgpt.com" target="_blank" rel="noopener">Open ChatGPT &rarr;</a></div>
+
+    <div class="challenge">
+      <h2 style="margin-top:0;">This week's challenge</h2>
+      <p>Spend ten minutes renaming your ten most valuable past conversations with names future-you would search for. Then test: search for three of them using only what you'd naturally remember in a month. Adjust names until all three surface first try.</p>
+    </div>
+    <div class="next-up">
+      <div class="lbl">Up next in ChatGPT Mastery</div>
+      <h3>Writing with ChatGPT</h3>
+      <p>Drafting, rewriting, and tone control — the workflows for the thing most people use ChatGPT for most. <a href="/lessons/chatgpt/writing-editing-workflows">Read the lesson &rarr;</a></p>
+    </div>
+  </div>
+</article>
+<footer><div class="footer-inner">
+  <div>&copy; 2026 LearningGPT, Inc. &middot; Product details as of July 2026 &mdash; AI tools change fast; we update when they do.</div>
+  <a href="/lessons/chatgpt/" style="color:var(--text-dim);">&larr; All ChatGPT lessons</a>
+</div></footer>
+<script src="/gate.js"></script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Grok Automations: schedules, email triggers, and setup — LearningGPT</title>
+<meta name="description" content="SpaceXAI's Automations, launched July 16, 2026: Grok runs jobs on a schedule or when a matching email arrives, then reports back. How to build one, who gets what, and the inbox-access decision to make first. Free lesson." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#9da0b0" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/grok/grok-automations" />
+<meta property="og:title" content="Automations: Grok on a schedule — or watching your inbox — LearningGPT" />
+<meta property="og:description" content="SpaceXAI's Automations, launched July 16, 2026: Grok runs jobs on a schedule or when a matching email arrives, then reports back. How to build one, who gets what, and the inbox-access decision to make first. Free lesson." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #9da0b0; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #71717a; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+.lesson { padding: 50px 0 100px; }
+.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(157,160,176,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(157,160,176,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
+.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
+.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
+.lesson h1 .grad { background: linear-gradient(135deg, #c3c6d4 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
+.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
+.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
+.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
+.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(157,160,176,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(157,160,176,0.25); border-radius: var(--radius-lg); position: relative; }
+.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #9da0b0, #7c5cff); border-radius: 2px 0 0 2px; }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.callout p:last-child { margin-bottom: 0; }
+.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
+.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(157,160,176,0.1); border: 1px solid rgba(157,160,176,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
+.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
+.workflow p { font-size: 15px; margin: 0 0 14px; }
+.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
+.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
+.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
+.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
+.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
+.tier-table { width: 100%; border-collapse: collapse; margin: 20px 0 28px; font-size: 14px; }
+.tier-table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--line-strong); color: var(--text-dim); font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.8px; }
+.tier-table td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.tier-table td:first-child { font-weight: 600; }
+.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(157,160,176,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(157,160,176,0.25); border-radius: var(--radius-lg); padding: 36px; }
+.challenge h2 { margin-top: 0; }
+.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #71717a, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
+.challenge a.btn:hover { transform: translateY(-1px); color: white; }
+.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; padding-top: 0; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.checklist li:first-child::before { top: 4px; }
+.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
+.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+.chip-free { border-color: rgba(68,224,164,0.4); color: var(--accent); background: rgba(68,224,164,0.1); }
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What are Grok Automations?", "acceptedAnswer": {"@type": "Answer", "text": "Automations, launched July 16, 2026, are jobs Grok runs on its own. You describe the work once, choose a schedule or an email trigger, and Grok runs it and reports back by email, app notification, both, or neither. They are available on grok.com/automations and in the Grok iOS and Android apps."}}, {"@type": "Question", "name": "Are Grok Automations free?", "acceptedAnswer": {"@type": "Answer", "text": "Scheduled automations are available to everyone, including free accounts. Email-triggered automations are included with a SuperGrok subscription."}}, {"@type": "Question", "name": "What can trigger a Grok automation?", "acceptedAnswer": {"@type": "Answer", "text": "Two things: a schedule (once, daily, weekdays, weekly, monthly, or yearly at a time you choose in your timezone) or an incoming email that matches filters on sender, recipient, or subject. You can also start any automation manually with Run now."}}, {"@type": "Question", "name": "Can Grok Automations read my email?", "acceptedAnswer": {"@type": "Answer", "text": "Only if you set up an email trigger, which requires SuperGrok. When a matching email arrives, the automation fires with that email as context and Grok responds to the actual message. That means granting Grok access to your inbox, so it is worth making a deliberate privacy decision first."}}, {"@type": "Question", "name": "How do I create a Grok automation?", "acceptedAnswer": {"@type": "Answer", "text": "Go to grok.com/automations and create one, start from a suggested template, or simply ask Grok in chat — for example, 'check the news every morning and flag anything about pricing' — and it sets the automation up for you. Automations can be paused, resumed, edited, or deleted at any time."}}]}</script>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/grok/" class="nav-back">← Grok Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Grok Mastery</span>
+      <span class="chip chip-free">Free</span>
+      <span>~6 min read</span>
+      <span class="dot"></span>
+      <span>New · July 19, 2026</span>
+    </div>
+    <h1>Automations: <span class="grad serif">Grok on a schedule — or watching your inbox.</span></h1>
+    <p>On July 16, SpaceXAI shipped <strong>Automations</strong>: jobs Grok runs on its own. You describe the work once, choose when it runs — a fixed schedule or the moment a matching email lands — and Grok does it and reports back. It's on <a href="https://grok.com/automations" rel="noopener" target="_blank">grok.com</a> and in the iOS and Android apps now, and the scheduled kind is available to <strong>everyone, including free accounts</strong>. Here's how to build one, and the one part worth thinking twice about.</p>
+
+    <h2><span class="num">01</span> What shipped</h2>
+    <table class="tier-table">
+      <tr><th>Fact</th><th>Detail</th></tr>
+      <tr><td>Announced</td><td><strong>July 16, 2026</strong></td></tr>
+      <tr><td>What it is</td><td>Saved jobs Grok runs on its own — on a <strong>schedule</strong> or an <strong>email trigger</strong> — then reports back</td></tr>
+      <tr><td>Where</td><td><strong>grok.com/automations</strong> and the Grok app on iOS and Android</td></tr>
+      <tr><td>Who gets it</td><td>Scheduled automations: <strong>everyone</strong>. Email triggers: included with <strong>SuperGrok</strong></td></tr>
+      <tr><td>How it reports</td><td>Email, app notification, both — or neither, if you'd rather check the run history yourself</td></tr>
+    </table>
+
+    <h2><span class="num">02</span> Build one in five minutes</h2>
+    <p>The build screen is closer to writing a chat message than programming — that's the point.</p>
+    <ol>
+      <li><strong>Start it.</strong> Go to grok.com/automations and hit New Automation — or skip the form entirely and ask in chat: <em>"check the news every morning and flag anything about pricing."</em> Grok sets the automation up for you. There are also suggested templates to start from.</li>
+      <li><strong>Write the instructions</strong> like any prompt: describe the job, attach files for context, type <code>@</code> to mention a connector, add skills, pick a mode.</li>
+      <li><strong>Pick the trigger.</strong> Schedules run once, daily, weekdays, weekly, monthly, or yearly at a time you choose in your timezone. Or use an email trigger (more on that below).</li>
+      <li><strong>Choose how it reports back</strong> — email, app notification, both, or neither.</li>
+      <li><strong>Test it with Run now.</strong> Don't wait until 8am tomorrow to find out your prompt was vague.</li>
+    </ol>
+    <p>Two details that make this better than a reminder app: every run is a <strong>fresh request</strong> — same instructions, current data — and every run is a <strong>full conversation</strong> saved to the automation's history. Open any run, read the whole thread, and pick up where Grok left off. Automations can be paused, resumed, edited, or deleted anytime.</p>
+
+    <h2><span class="num">03</span> The email trigger is the interesting one</h2>
+    <p>Scheduled AI jobs aren't new — ChatGPT and Gemini have offered versions of them for a while. The part with real workflow value is the trigger: point an automation at your inbox with filters on <strong>sender, recipient, or subject</strong>, and when a matching email arrives, the automation fires <em>with that email as context</em> — Grok responds to the actual message, not a generic prompt. An invoice arrives and gets summarized into your task list. A specific client writes and you get a drafted reply waiting.</p>
+    <div class="callout"><strong>The honest read:</strong> an email trigger means Grok is connected to your inbox — reading real correspondence, on its own, while you're not watching. That's the product working as designed, but it's a real data decision, and it's the feature SpaceXAI put behind the SuperGrok paywall. Before you wire it up, know where you stand on <a href="/lessons/grok/privacy-honest-assessment">Grok and privacy</a> — and remember the pattern from <a href="/lessons/grok/what-grok-costs">what Grok actually costs</a>: with SpaceXAI, the cheap tier is often priced in data, not dollars.</div>
+
+    <div class="checklist">
+      <h3>Try it this week</h3>
+      <ul>
+        <li>Build one scheduled automation on a free account — a morning brief before you're up, or a weekly check on a topic you track</li>
+        <li>Use <strong>Run now</strong> immediately after saving; tighten the instructions until the output is worth reading</li>
+        <li>If you have SuperGrok and want email triggers: start with a narrow filter (one sender), and review the first week of runs before trusting it</li>
+      </ul>
+    </div>
+
+    <div class="challenge">
+      <h2 style="margin-top:0;">This week's challenge</h2>
+      <p>Pick one thing you look up manually every day — news on your industry, a competitor's pricing page, tomorrow's calendar squeeze. Turn it into a scheduled automation, run it for three days, then judge it like an employee: did it save you time, or did you re-check its work anyway? Keep it if it earns its spot. Delete it if it doesn't — automation you don't trust is just a second inbox.</p>
+    </div>
+
+    <div class="next-up">
+      <div class="lbl">Up next in Grok Mastery</div>
+      <h3>Connectors &amp; Canvas</h3>
+      <p>The integrations that make automations useful — what connects, and what it sees. <a href="/lessons/grok/connectors-canvas">Read the lesson →</a></p>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with xAI or Microsoft.</div>
+    <a href="/lessons/grok/" style="color: var(--text-dim);">← All Grok lessons</a>
+  </div>
+</footer>
+<script src="/gate.js"></script>
+</body>
+</html>

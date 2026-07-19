@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Perplexity daily driver: research habits for people who decide things — LearningGPT</title>
+<meta name="description" content="Perplexity as your everyday answer engine: the question patterns, follow-up threading, source-checking rhythm, and the five recurring workflows that replace an hour of googling a day." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#20808d" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/perplexity/space-sandbox" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/perplexity/perplexity-daily-workflows" />
+<meta property="og:title" content="The Perplexity daily driver: research habits for people who decide things — LearningGPT" />
+<meta property="og:description" content="Perplexity as your everyday answer engine: the question patterns, follow-up threading, source-checking rhythm, and the five recurring workflows that replace an hour of googling a day." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --danger:#ff6b8a; --radius:14px; --radius-lg:20px; --container:820px; --track:#20808d; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+button{font-family:inherit;cursor:pointer;}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:#20808d;}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.25;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(32,128,141,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(32,128,141,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#20808d 0%,#1a6671 50%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.12em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:50px 0 16px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(32,128,141,0.12),rgba(124,92,255,0.06));border:1px solid rgba(32,128,141,0.25);border-radius:var(--radius-lg);}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.layers{margin:26px 0;display:flex;flex-direction:column;gap:0;}
+.layer{border:1px solid rgba(32,128,141,0.35);background:linear-gradient(135deg,rgba(32,128,141,0.1),rgba(20,20,43,0.6));padding:20px 24px;position:relative;}
+.layer:first-child{border-radius:16px 16px 0 0;}
+.layer:last-child{border-radius:0 0 16px 16px;}
+.layer + .layer{border-top:none;}
+.layer .ln{font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:6px;}
+.layer .lt{font-size:17px;font-weight:700;margin-bottom:6px;}
+.layer .lb{font-size:14.5px;color:var(--text-dim);line-height:1.65;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:18px 0;font-size:14.5px;}
+.gotcha::before{content:'⚠ The honest note: ';color:var(--warn);font-weight:700;}
+.qblock{margin:26px 0;padding:20px 22px;border:1px solid var(--line-strong);border-radius:var(--radius);background:var(--bg-soft);}
+.eyebrow-do{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;color:var(--track);margin-bottom:8px;}
+.qblock p{font-size:15.5px;margin:0 0 14px;}
+.opts{display:flex;flex-direction:column;gap:10px;}
+.opt{text-align:left;padding:13px 15px;line-height:1.5;font-size:14.5px;font-family:inherit;color:var(--text);background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);cursor:pointer;transition:.15s;}
+.opt:hover:not(:disabled){border-color:var(--track);background:#12283a;}
+.opt:disabled{cursor:default;}
+.fb{display:none;margin-top:14px;padding:12px 14px;border-radius:var(--radius);font-size:14px;line-height:1.6;}
+.fb.good{background:rgba(68,224,164,.1);border:1px solid rgba(68,224,164,.35);color:#a7efd2;}
+.fb.bad{background:rgba(124,92,255,.1);border:1px solid rgba(124,92,255,.3);color:#cfc4ff;}
+.lgpt-faq{margin:48px 0 8px;}
+.lgpt-faq .faq-eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.09em;font-weight:700;color:var(--track);margin-bottom:8px;}
+.lgpt-faq h2{font-size:27px;line-height:1.15;letter-spacing:-.02em;font-weight:800;margin:0 0 18px;}
+.lgpt-faq details{border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#14142b;margin-bottom:10px;overflow:hidden;}
+.lgpt-faq details[open]{border-color:rgba(32,128,141,.4);}
+.lgpt-faq summary{list-style:none;cursor:pointer;padding:15px 18px;font-size:15.5px;font-weight:600;color:#f5f5fa;display:flex;justify-content:space-between;align-items:center;gap:14px;}
+.lgpt-faq summary::-webkit-details-marker{display:none;}
+.lgpt-faq summary .chev{flex-shrink:0;width:18px;height:18px;border-right:2px solid #20808d;border-bottom:2px solid #20808d;transform:rotate(45deg);transition:transform .2s;margin-top:-4px;}
+.lgpt-faq details[open] summary .chev{transform:rotate(-135deg);margin-top:4px;}
+.lgpt-faq .faq-a{padding:0 18px 16px;font-size:14.5px;line-height:1.7;color:#c7c7d6;}
+.lgpt-faq .faq-a strong{color:#f5f5fa;font-weight:600;} .lgpt-faq .faq-a a{color:#20808d;font-weight:600;}
+.next-up{margin:50px 0 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.next-up .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:10px;}
+.next-up h3{margin:0 0 8px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:14.5px;}
+footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);}
+.chip-pro { border-color: rgba(124,92,255,0.45); color: #b9a6ff; background: rgba(124,92,255,0.12); }
+.chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
+.steps{counter-reset:st;margin:20px 0;} .steps .step{position:relative;padding:14px 0 14px 54px;border-bottom:1px solid var(--line);} .steps .step::before{counter-increment:st;content:counter(st);position:absolute;left:0;top:12px;width:34px;height:34px;border-radius:50%;background:rgba(32,128,141,0.15);border:1px solid rgba(32,128,141,0.4);color:var(--track);font-weight:700;display:grid;place-items:center;font-size:14px;}
+.checklist{margin:24px 0;padding:22px 26px;background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius-lg);} .checklist h3{margin:0 0 10px;font-size:16px;} .checklist ul{margin:0;padding-left:22px;}
+.next-up{margin-top:56px;padding:24px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);} .next-up .lbl{font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);margin-bottom:8px;} .next-up h3{margin:0 0 6px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:15px;}
+.footer-inner{max-width:1180px;margin:0 auto;padding:26px 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);border-top:1px solid var(--line);}
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top"><div class="nav-inner">
+  <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+  <a href="/lessons/perplexity/" class="nav-back">&larr; Perplexity Mastery</a>
+</div></nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Perplexity Mastery</span>
+      <span class="chip chip-pro">Pro</span>
+      <span>~8 min read</span>
+      <span class="dot"></span>
+      <span>New &middot; July 2026</span>
+    </div>
+    <h1>The daily driver: <span class="grad serif">googling, retired.</span></h1>
+    <p class="deck">Perplexity's pitch is simple — answers with sources instead of links with ads. The skill is making it your reflex for the twenty questions a workday actually contains, with the verification rhythm that keeps you honest.</p>
+
+    <h2><span class="num">01</span> The reflex swap</h2>
+    <p>The habit change is small and total: questions that used to open ten tabs now get asked directly — <em>"what's the current lead time on [component] and what's driving it?"</em> — and answered with citations. The rule that makes it stick: <strong>if you'd have opened a search engine, open Perplexity instead</strong> for one full week. After that the reflex decides for itself. (New here? <a href="/lessons/perplexity/basics">Basics</a> first.)</p>
+    <h2><span class="num">02</span> Five recurring workflows</h2>
+    <div class="steps">
+      <div class="step"><strong>The pre-call brief:</strong> "Brief me on [company/person] — what they do, recent news, anything relevant to a [your service] conversation. Cited."</div>
+      <div class="step"><strong>The vendor check:</strong> "Current pricing and real-user complaints for [tool/vendor] — recent sources only."</div>
+      <div class="step"><strong>The reg question:</strong> "What are the current requirements for [permit/rule] in [state]? Official sources."</div>
+      <div class="step"><strong>The sanity check:</strong> "Is [claim someone just made] actually true? What do reliable sources say?" — run DURING the meeting, quietly.</div>
+      <div class="step"><strong>The what-changed sweep:</strong> "What changed in [my industry] in the last 30 days that a [your role] should know?" — weekly, ten minutes.</div>
+    </div>
+    <h2><span class="num">03</span> Thread, don't restart</h2>
+    <p>Follow-ups inherit context — drill into an answer ("expand on the second point; what's the counter-argument?") instead of composing a new mega-question. Threads are where Perplexity beats search engines most: interrogating an answer is the workflow, not repeating the query with different words.</p>
+    <div class="callout"><span class="lbl">The rhythm that keeps you honest</span><p><strong>One click per decision.</strong> Casual curiosity: read and move on. Anything you'll act on or repeat to someone: click the load-bearing citation, confirm the page says it. Perplexity makes verification a two-second habit — which is exactly why its users get to move fast without getting burned.</p></div>
+    <h2><span class="num">04</span> Where it hands off</h2>
+    <p>Quick-turn factual research is home turf. Multi-hour investigations belong in <a href="/lessons/perplexity/deep-research">Deep Research</a>; source-grounded work on your own documents belongs in <a href="/lessons/perplexity/spaces">Spaces</a>. Knowing the handoff points is what makes the daily driver a system rather than a habit.</p>
+    <div class="tryit"><span class="lbl">Try it now</span><p>Run tomorrow's pre-call brief tonight — two minutes. Then start the one-week reflex swap and count the tabs you don't open.</p><a class="btn" href="https://perplexity.ai" target="_blank" rel="noopener">Open Perplexity &rarr;</a></div>
+
+    <div class="challenge">
+      <h2 style="margin-top:0;">This week's challenge</h2>
+      <p>The full reflex-swap week: every would-be search goes to Perplexity, one-click verification on anything actionable, the what-changed sweep on Friday. Then check your browser history's search count, before versus after — that number is the lesson.</p>
+    </div>
+    <div class="next-up">
+      <div class="lbl">Up next in Perplexity Mastery</div>
+      <h3>Competitive intelligence</h3>
+      <p>A standing system for knowing what your competitors are doing — ethically, from public sources. <a href="/lessons/perplexity/competitive-intelligence">Read the lesson &rarr;</a></p>
+    </div>
+  </div>
+</article>
+<footer><div class="footer-inner">
+  <div>&copy; 2026 LearningGPT, Inc. &middot; Product details as of July 2026 &mdash; AI tools change fast; we update when they do.</div>
+  <a href="/lessons/perplexity/" style="color:var(--text-dim);">&larr; All Perplexity Mastery lessons</a>
+</div></footer>
+<script src="/gate.js"></script>
+</body>
+</html>

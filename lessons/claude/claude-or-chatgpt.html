@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Claude vs ChatGPT: which one for which job (honestly) — LearningGPT</title>
+<meta name="description" content="The honest Claude vs ChatGPT comparison: where Claude&#x27;s long-context reading and writing judgment win, where ChatGPT&#x27;s ecosystem wins, and how people actually use both. Free lesson." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#d97757" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/claude/claude-for-teachers" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/claude/claude-or-chatgpt" />
+<meta property="og:title" content="Claude vs ChatGPT: which one for which job (honestly) — LearningGPT" />
+<meta property="og:description" content="The honest Claude vs ChatGPT comparison: where Claude&#x27;s long-context reading and writing judgment win, where ChatGPT&#x27;s ecosystem wins, and how people actually use both. Free lesson." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --danger:#ff6b8a; --radius-lg:20px; --container:820px; --track:#d97757; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:#d97757;}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.25;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;box-shadow:0 4px 16px rgba(124,92,255,0.5);}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(217,119,87,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(217,119,87,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#d97757 0%,#c46343 50%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.12em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:50px 0 16px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul,.lesson ol{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(217,119,87,0.12),rgba(124,92,255,0.06));border:1px solid rgba(217,119,87,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.timeline{margin:24px 0;border-left:2px solid rgba(217,119,87,0.4);padding-left:22px;}
+.timeline .ti{margin-bottom:18px;} .timeline .ti:last-child{margin-bottom:0;}
+.timeline .td{font-size:12px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:var(--track);margin-bottom:4px;}
+.timeline .tt{font-size:15.5px;color:var(--text);line-height:1.6;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:18px 0;font-size:14.5px;}
+.gotcha::before{content:'\26A0  Note: ';color:var(--warn);font-weight:700;}
+.lgpt-faq{margin:48px 0 8px;}
+.lgpt-faq .faq-eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.09em;font-weight:700;color:var(--track);margin-bottom:8px;}
+.lgpt-faq h2{font-size:27px;line-height:1.15;letter-spacing:-.02em;font-weight:800;margin:0 0 18px;}
+.lgpt-faq details{border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#14142b;margin-bottom:10px;overflow:hidden;}
+.lgpt-faq details[open]{border-color:rgba(217,119,87,.4);}
+.lgpt-faq summary{list-style:none;cursor:pointer;padding:15px 18px;font-size:15.5px;font-weight:600;color:#f5f5fa;display:flex;justify-content:space-between;align-items:center;gap:14px;}
+.lgpt-faq summary::-webkit-details-marker{display:none;}
+.lgpt-faq summary .chev{flex-shrink:0;width:18px;height:18px;border-right:2px solid #d97757;border-bottom:2px solid #d97757;transform:rotate(45deg);transition:transform .2s;margin-top:-4px;}
+.lgpt-faq details[open] summary .chev{transform:rotate(-135deg);margin-top:4px;}
+.lgpt-faq .faq-a{padding:0 18px 16px;font-size:14.5px;line-height:1.7;color:#c7c7d6;}
+.lgpt-faq .faq-a strong{color:#f5f5fa;font-weight:600;} .lgpt-faq .faq-a a{color:#d97757;font-weight:600;}
+footer{border-top:1px solid var(--line);padding:30px 0;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--text-mute);}
+@media (max-width:600px){.footer-inner{flex-direction:column;gap:12px;text-align:center;}}
+.chip-pro { border-color: rgba(124,92,255,0.45); color: #b9a6ff; background: rgba(124,92,255,0.12); }
+.chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
+.steps{counter-reset:st;margin:20px 0;} .steps .step{position:relative;padding:14px 0 14px 54px;border-bottom:1px solid var(--line);} .steps .step::before{counter-increment:st;content:counter(st);position:absolute;left:0;top:12px;width:34px;height:34px;border-radius:50%;background:rgba(217,119,87,0.15);border:1px solid rgba(217,119,87,0.4);color:var(--track);font-weight:700;display:grid;place-items:center;font-size:14px;}
+.checklist{margin:24px 0;padding:22px 26px;background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius-lg);} .checklist h3{margin:0 0 10px;font-size:16px;} .checklist ul{margin:0;padding-left:22px;}
+.next-up{margin-top:56px;padding:24px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);} .next-up .lbl{font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);margin-bottom:8px;} .next-up h3{margin:0 0 6px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:15px;}
+.footer-inner{max-width:1180px;margin:0 auto;padding:26px 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);border-top:1px solid var(--line);}
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top"><div class="nav-inner">
+  <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+  <a href="/lessons/claude/" class="nav-back">&larr; Claude Mastery</a>
+</div></nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Claude Mastery</span>
+      <span class="chip chip-free">Free</span>
+      <span>~8 min read</span>
+      <span class="dot"></span>
+      <span>New &middot; July 2026</span>
+    </div>
+    <h1>Claude or ChatGPT? <span class="grad serif">Depends on the job. Here&#39;s the split.</span></h1>
+    <p class="deck">The internet wants a winner. Working professionals quietly use both — for different jobs. Here's the split as we see it from teaching both all day, with no licenses to sell for either side.</p>
+
+    <h2><span class="num">01</span> The one-sentence answer</h2>
+    <p><strong>Claude wins where depth and judgment carry the work; ChatGPT wins where breadth and ecosystem carry it.</strong> Elaboration follows.</p>
+    <h2><span class="num">02</span> Where Claude is genuinely better</h2>
+    <ul>
+      <li><strong>Long documents, truly read.</strong> Contracts, reports, books' worth of material in one conversation — Claude's <a href="/lessons/claude/long-context">long context</a> handling is the reference standard. If your work is reading-heavy, this alone decides many days.</li>
+      <li><strong>Writing that sounds like a person.</strong> Tone, nuance, the difficult email, prose that doesn't smell like AI — the most common reason people who try both keep Claude open.</li>
+      <li><strong>Pushback and honesty.</strong> Claude argues with you more readily — a real feature when you want an editor or critic rather than an enthusiastic assistant.</li>
+      <li><strong>Agentic depth for builders:</strong> Claude Code and <a href="/lessons/claude/cowork-basics">Cowork</a> are best-in-class for delegated work on files and code.</li>
+    </ul>
+    <h2><span class="num">03</span> Where ChatGPT is genuinely better</h2>
+    <ul>
+      <li><strong>The everything-app ecosystem:</strong> Custom GPTs, the Work agent, scheduled tasks, image generation, voice — the widest toolbox (our <a href="/lessons/chatgpt/">ChatGPT track</a> covers all of it).</li>
+      <li><strong>Ubiquity and integrations:</strong> it's the default AI of the world — more connectors, more third-party support, more colleagues who already speak it.</li>
+      <li><strong>Multimodal breadth:</strong> images in and out, live voice — day-to-day breadth Claude doesn't chase.</li>
+    </ul>
+    <h2><span class="num">04</span> The pattern that actually happens</h2>
+    <div class="callout"><span class="lbl">The two-tool split</span><p>People end up with: <strong>ChatGPT as the Swiss Army knife, Claude as the specialist</strong> — the serious document, the writing that matters, the decision worth thinking through carefully. (If your world is Microsoft 365, there's a three-way version — see <a href="/lessons/copilot/copilot-or-chatgpt">Copilot vs ChatGPT</a> for that triangle's third corner.)</p></div>
+    <h2><span class="num">05</span> If you can only pay for one</h2>
+    <p>Ask what fills your week. Mostly reading, writing, and judgment calls? Claude. Mostly a bit of everything plus automation and images? ChatGPT. Either way, both free tiers are real — run the same three tasks through both this week and let your own work pick the winner. It's a better judge than any comparison article, including this one.</p>
+    <div class="tryit"><span class="lbl">Try it now</span><p>The three-task test: one long document, one difficult email, one open question — both tools, same inputs. Note where you preferred each answer and why.</p><a class="btn" href="https://claude.ai" target="_blank" rel="noopener">Open Claude &rarr;</a></div>
+
+    <div class="challenge">
+      <h2 style="margin-top:0;">This week's challenge</h2>
+      <p>Run the three-task test honestly, then check your result against our one-sentence answer. If your work disagrees with our split, trust your work — and tell us; real usage reports make these comparisons better.</p>
+    </div>
+    <div class="next-up">
+      <div class="lbl">Up next in Claude Mastery</div>
+      <h3>Claude as your writing partner</h3>
+      <p>The signature strength, used properly — drafting, voice, and the editor pass. <a href="/lessons/claude/claude-writing-partner">Read the lesson &rarr;</a></p>
+    </div>
+  </div>
+</article>
+<footer><div class="footer-inner">
+  <div>&copy; 2026 LearningGPT, Inc. &middot; Product details as of July 2026 &mdash; AI tools change fast; we update when they do.</div>
+  <a href="/lessons/claude/" style="color:var(--text-dim);">&larr; All Claude lessons</a>
+</div></footer>
+<script src="/gate.js"></script>
+</body>
+</html>

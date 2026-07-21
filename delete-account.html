@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Delete your account — LearningGPT</title>
+<meta name="description" content="How to delete your LearningGPT account and all associated data — the steps, what gets deleted, and how long it takes." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#7c5cff" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --radius: 14px; --radius-lg: 20px; --container: 760px; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #7c5cff; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #5b8def; opacity: 0.22; }
+
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+
+.page { padding: 70px 0 80px; }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--brand-2); padding: 6px 12px; border: 1px solid rgba(91,141,239,0.3); border-radius: 999px; background: rgba(91,141,239,0.08); margin-bottom: 22px; }
+
+h1 { font-size: clamp(38px, 5vw, 54px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 16px; }
+h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; color: var(--accent); padding-right: 0.15em; }
+h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; margin: 40px 0 14px; }
+p.lead { font-size: 17px; color: var(--text-dim); margin: 0 0 32px; }
+p { font-size: 15.5px; color: var(--text); margin: 0 0 14px; }
+ul { padding-left: 24px; margin: 0 0 18px; }
+li { margin-bottom: 8px; font-size: 15.5px; }
+strong { font-weight: 700; }
+
+.email-card { background: linear-gradient(135deg, rgba(124,92,255,0.1), rgba(68,224,164,0.06)); border: 1px solid rgba(124,92,255,0.3); border-radius: var(--radius-lg); padding: 32px 28px; margin: 8px 0 36px; }
+.email-card .label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-mute); margin-bottom: 10px; }
+.email-card .addr { font-size: clamp(22px, 4vw, 30px); font-weight: 700; letter-spacing: -0.01em; color: var(--text); word-break: break-all; }
+.email-card .addr a { color: var(--text); }
+.email-card .addr a:hover { color: var(--brand-2); }
+.email-card .note { font-size: 13.5px; color: var(--text-dim); margin: 14px 0 0; }
+
+.reasons { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0 24px; }
+.reason { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; }
+.reason h3 { font-size: 14px; font-weight: 700; margin: 0 0 6px; }
+.reason p { font-size: 13.5px; color: var(--text-dim); margin: 0; }
+.reason a.btn-line { display: inline-block; margin-top: 10px; font-size: 13px; color: var(--brand-2); }
+@media (max-width: 560px) { .reasons { grid-template-columns: 1fr; } }
+
+.btn { display: inline-flex; align-items: center; gap: 8px; justify-content: center; padding: 12px 22px; border-radius: 10px; font-size: 14px; font-weight: 600; border: 1px solid transparent; transition: transform .15s ease, box-shadow .15s ease, background .2s ease; white-space: nowrap; cursor: pointer; }
+.btn-primary { background: linear-gradient(135deg, #7c5cff 0%, #5b8def 100%); color: white; box-shadow: 0 6px 24px rgba(124,92,255,0.4); }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 30px rgba(124,92,255,0.55); color: white; }
+.btn-ghost { background: rgba(255,255,255,0.05); border-color: var(--line-strong); color: var(--text); }
+.btn-ghost:hover { background: rgba(255,255,255,0.09); color: var(--text); }
+.btn-lg { padding: 16px 28px; font-size: 15px; }
+
+.based { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 22px; margin: 28px 0; font-size: 14px; color: var(--text-dim); }
+.based strong { color: var(--text); }
+
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+</style>
+</head>
+<body>
+
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/" class="nav-back">← Home</a>
+  </div>
+</nav>
+
+<article class="page">
+    <h1>Delete your <span class="serif">account.</span></h1>
+    <p class="sub">This page explains how to permanently delete your LearningGPT account (published by LearningGPT) and the data associated with it. It applies to accounts created on learninggpt.ai and in the LearningGPT mobile and desktop apps.</p>
+
+    <h2>How to request deletion</h2>
+    <ol>
+      <li>Email <a href="mailto:hello@learninggpt.ai?subject=Delete%20my%20account">hello@learninggpt.ai</a> with the subject &ldquo;Delete my account&rdquo;.</li>
+      <li>Send it from the address you signed up with (or include that address in the message).</li>
+      <li>We&#39;ll confirm the request and delete the account. No reason required.</li>
+    </ol>
+
+    <h2>What gets deleted</h2>
+    <ul>
+      <li>Your account (email address and login credentials)</li>
+      <li>Your profile and subscription records held by LearningGPT</li>
+      <li>Sign-in history and email-capture records associated with your address</li>
+    </ul>
+
+    <h2>What may be kept, and for how long</h2>
+    <p>Payment records processed by Stripe are retained as required by tax and accounting law (typically 7 years). Everything else is deleted within <strong>30 days</strong> of your request. If you only want some of your data removed &mdash; for example, unsubscribing from emails &mdash; without deleting the account, say so in your email and we&#39;ll do that instead.</p>
+
+    <p>Questions? See our <a href="/privacy">privacy policy</a> or write to <a href="mailto:hello@learninggpt.ai">hello@learninggpt.ai</a>.</p>
+</article>
+
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT</div>
+    <div><a href="/privacy" style="color: var(--text-dim);">Privacy</a> · <a href="/terms" style="color: var(--text-dim);">Terms</a> · <a href="/" style="color: var(--text-dim);">Home</a></div>
+  </div>
+</footer>
+<script src="/site-nav.js" defer></script>
+</body>
+</html>

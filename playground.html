@@ -236,6 +236,10 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
 .coach-send:hover { opacity: 0.85; }
 .coach-send:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 480px) { .coach-drawer { width: calc(100vw - 32px); right: 16px; bottom: 80px; } .coach-fab { right: 16px; bottom: 16px; } }
+.report-btn{display:block;margin:10px 14px 12px;padding:5px 10px;background:none;border:1px solid rgba(255,255,255,0.14);border-radius:8px;color:var(--text-mute,#8a8aa3);font-size:11.5px;cursor:pointer;font-family:inherit;}
+.report-btn:hover{color:#ffb547;border-color:rgba(255,181,71,0.4);}
+.report-btn:disabled{cursor:default;opacity:0.8;}
+.report-note{margin:14px 2px 0;font-size:12px;color:var(--text-mute,#8a8aa3);line-height:1.5;}
 </style>
 </head>
 <body>
@@ -519,20 +523,47 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 24px; position: rela
     }
     const body = isError ? '<div class="error">⚠️ ' + escapeHtml(r.error) + '</div>' : '<div class="response">' + escapeHtml(r.response) + '</div>';
     const pick = (blind && !isError) ? '<button class="pick-btn" data-model="' + r.modelId + '">Pick Model ' + letter + ' as winner</button>' : '';
-    return '<div class="result-col" id="col-' + safe(r.modelId) + '"><div class="result-head">' + head + '</div><div class="result-body">' + body + '</div>' + pick + '</div>';
+    const rep = !isError ? '<button class="report-btn" data-model="' + safe(r.modelId) + '" data-mid="' + r.modelId + '" title="Report inappropriate AI-generated content">\u2691 Report this response</button>' : '';
+    return '<div class="result-col" id="col-' + safe(r.modelId) + '"><div class="result-head">' + head + '</div><div class="result-body">' + body + '</div>' + pick + rep + '</div>';
   }
 
   function renderResults(results) {
     const blind = blindOn();
     const ordered = blind ? shuffled(results) : results.slice();
     displayOrder = ordered.map(r => r.modelId);
-    resultsContainer.innerHTML = '<div class="results-grid" id="resultsGrid">' + ordered.map((r, i) => colHtml(r, i, blind)).join('') + '</div>';
+    resultsContainer.innerHTML = '<div class="results-grid" id="resultsGrid">' + ordered.map((r, i) => colHtml(r, i, blind)).join('') + '</div>' + '<div class="report-note">AI-generated responses can be inaccurate or inappropriate. Use \u201c\u2691 Report this response\u201d under any output to flag it for review.</div>';
     if (blind) {
       resultsContainer.querySelectorAll('.pick-btn').forEach(b => {
         b.addEventListener('click', () => handlePick(b.getAttribute('data-model')));
       });
     }
   }
+
+  // 11.16: let users report inappropriate AI-generated content
+  resultsContainer.addEventListener('click', async function (e) {
+    const b = e.target.closest('.report-btn');
+    if (!b || b.disabled) return;
+    const reason = window.prompt('Report this AI-generated response.\nOptional: what was wrong? (inaccurate, offensive, unsafe, other)', '');
+    if (reason === null) return;
+    b.disabled = true; b.textContent = 'Reporting\u2026';
+    const rec = (lastResults || []).find(x => x.modelId === b.getAttribute('data-mid')) || {};
+    try {
+      const resp = await fetch('/api/report-ai-content', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: rec.modelName || b.getAttribute('data-mid') || 'unknown',
+          promptText: (lastPrompt || '').slice(0, 2000),
+          responseText: (rec.response || '').slice(0, 4000),
+          reason: (reason || '').slice(0, 500),
+          page: location.pathname
+        })
+      });
+      b.textContent = resp.ok ? '\u2713 Reported \u2014 thank you' : 'Could not send \u2014 email hello@learninggpt.ai';
+    } catch (_) {
+      b.textContent = 'Could not send \u2014 email hello@learninggpt.ai';
+    }
+  });
 
   // User picked a model in blind mode → reveal real identities, score it, show the coach
   function handlePick(modelId) {

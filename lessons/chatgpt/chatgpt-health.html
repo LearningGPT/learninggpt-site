@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Health in ChatGPT: it can now read your medical records &mdash; should you let it? &mdash; LearningGPT</title>
+<meta name="description" content="OpenAI launched Health in ChatGPT to US adults on every plan (July 23, 2026): connect Apple Health and medical records so ChatGPT answers with your real health context. What it does, the privacy fine print, and whether to connect it. Free lesson." />
+<link rel="canonical" href="https://learninggpt.ai/lessons/chatgpt/chatgpt-health" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#10a37f" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/chatgpt/chatgpt-health" />
+<meta property="og:title" content="Health in ChatGPT: your medical records, in the chat &mdash; explained" />
+<meta property="og:description" content="Health in ChatGPT is rolling out to all US adults: connect Apple Health and patient portals for answers grounded in your real health data. What it does and the privacy fine print. Free lesson." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --radius:14px; --radius-lg:20px; --container:820px; --track:#10a37f; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:var(--track);}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.25;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(16,163,127,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(16,163,127,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#10a37f 0%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.15em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:52px 0 14px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(16,163,127,0.12),rgba(124,92,255,0.06));border:1px solid rgba(16,163,127,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,#10a37f,#7c5cff);border-radius:2px 0 0 2px;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.cost-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;}
+.cost-table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--line-strong);color:var(--text-dim);font-size:11.5px;text-transform:uppercase;letter-spacing:0.6px;}
+.cost-table td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.cost-table td:first-child{font-weight:700;}
+.tryit{margin:28px 0;padding:22px;background:rgba(68,224,164,0.06);border:1px solid rgba(68,224,164,0.25);border-radius:var(--radius);}
+.tryit .lbl{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.tryit p{margin:0 0 14px;font-size:15.5px;}
+.tryit a.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#44e0a4,#5b8def);color:white;padding:12px 22px;border-radius:9px;font-weight:600;font-size:14px;}
+.tryit a.btn:hover{transform:translateY(-1px);color:white;}
+.challenge{margin:52px 0 40px;background:linear-gradient(135deg,rgba(16,163,127,0.14),rgba(124,92,255,0.1));border:1px solid rgba(16,163,127,0.28);border-radius:var(--radius-lg);padding:34px;}
+.challenge h2{margin-top:0;}
+.challenge a.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#10a37f,#7c5cff);color:white;padding:13px 24px;border-radius:10px;font-weight:600;font-size:15px;}
+.challenge a.btn:hover{transform:translateY(-1px);color:white;}
+.checklist{margin:40px 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);}
+.checklist h3{margin-top:0;font-size:18px;} .checklist ul{list-style:none;padding:0;margin:0;}
+.checklist li{padding:10px 0 10px 30px;position:relative;font-size:15px;border-top:1px solid var(--line);}
+.checklist li:first-child{border-top:none;padding-top:0;}
+.checklist li::before{content:'✓';position:absolute;left:0;color:var(--accent);font-weight:700;}
+.next-up{margin:50px 0 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.next-up .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:10px;}
+.next-up h3{margin:0 0 8px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:14.5px;}
+footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is Health in ChatGPT?","acceptedAnswer":{"@type":"Answer","text":"A feature OpenAI launched to US users on July 23, 2026 that lets you securely connect Apple Health and supported medical records so ChatGPT can answer health questions grounded in your own information — comparing lab results over time, summarizing visit notes in plain English, or factoring a medication into everyday advice."}},{"@type":"Question","name":"Who can use Health in ChatGPT?","acceptedAnswer":{"@type":"Answer","text":"Logged-in ChatGPT users in the US who are 18 or older, on web and iOS, across the Free, Go, Plus, and Pro plans. It is rolling out gradually, so it may take time to appear in your app. It is not available in Codex."}},{"@type":"Question","name":"Is my medical data used to train ChatGPT?","acceptedAnswer":{"@type":"Answer","text":"OpenAI states that connected medical records and Apple Health information — and the conversations that use them — are not used to train its foundation models or to target ads, regardless of your model-training settings. Connected health information also gets additional encryption on top of standard conversation encryption."}},{"@type":"Question","name":"Can I disconnect my health data later?","acceptedAnswer":{"@type":"Answer","text":"Yes. Disconnect any account in Health > Accounts, and data synced from that source is deleted from OpenAI's systems within 30 days. Information already in your saved conversations stays until you delete those conversations. By default ChatGPT also asks permission before using health data in any response."}},{"@type":"Question","name":"Should I trust ChatGPT's health answers?","acceptedAnswer":{"@type":"Answer","text":"Treat it as preparation, not diagnosis. OpenAI worked with hundreds of physicians on health training and testing, but says plainly that ChatGPT can make mistakes and does not replace qualified medical professionals. Connected records can also be stale — a stopped medication may still be listed — so verify important details against the original source and your doctor."}}]}</script>
+</head>
+
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top"><div class="nav-inner">
+  <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+  <a href="/lessons/chatgpt/" class="nav-back">&larr; ChatGPT Mastery</a>
+</div></nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">ChatGPT Mastery</span>
+      <span class="chip chip-free">Free</span>
+      <span>~8 min read</span>
+      <span class="dot"></span>
+      <span>New &middot; July 24, 2026</span>
+    </div>
+    <h1>ChatGPT can now read your medical records &mdash; <span class="grad serif">should you let it?</span></h1>
+    <p class="deck">On July 23, 2026, OpenAI switched on Health in ChatGPT for US users on every plan &mdash; including Free. Connect Apple Health and your patient portals, and ChatGPT stops giving generic health answers and starts answering about <em>you</em>: your labs, your medications, your sleep. This is one of the most useful things ChatGPT has ever shipped, and also the most personal data you will ever hand an AI. Here&rsquo;s exactly what it does, the privacy fine print in plain English, and a sane way to decide.</p>
+
+    <div class="callout"><span class="lbl">In one line</span><p>Every week 300 million people already ask ChatGPT health questions &mdash; now it can answer with your actual records in front of it, with permission asked at every step.</p></div>
+
+    <h2><span class="num">01</span> What actually launched</h2>
+    <p>Health is rolling out to <strong>logged-in US users 18 and older</strong>, on <strong>web and iOS</strong>, across <strong>Free, Go, Plus, and Pro</strong> plans. You&rsquo;ll find it in the left sidebar in ChatGPT (it&rsquo;s not in Codex). Earlier this year OpenAI tested a separate, dedicated health space with a limited group &mdash; and found that <strong>over 70% of health conversations happened outside it</strong>, mid-way through normal chats about meals, travel, or workouts. So the launch version works everywhere: once you connect your data, any conversation can use it, with your permission.</p>
+    <p>Two models power it. <strong>GPT&#8209;5.5 Instant</strong> handles health for Free users and, on OpenAI&rsquo;s hardest health evaluations, performed comparably to its frontier Thinking models at the time of evaluation. Paid plans get <strong>GPT&#8209;5.6 Sol</strong>, OpenAI&rsquo;s strongest health model, built with input from hundreds of physicians.</p>
+
+    <h2><span class="num">02</span> What you can connect</h2>
+    <table class="cost-table">
+      <tr><th>Source</th><th>What ChatGPT gets</th></tr>
+      <tr><td>Apple Health</td><td>Sleep, activity, workouts, heart data &mdash; plus anything your wearable or fitness app shares into Apple Health.</td></tr>
+      <tr><td>Patient portals</td><td>Supported US hospital systems: medications, conditions, lab results, visit notes.</td></tr>
+      <tr><td>One Medical</td><td>Primary-care records, synced directly.</td></tr>
+      <tr><td>Function Health</td><td>Lab testing results, synced directly.</td></tr>
+    </table>
+    <p>After connecting, you review what came in &mdash; remove conditions that no longer apply, add family history, correct anything stale. That review step matters: portals often still list a medication you stopped taking two years ago.</p>
+
+    <h2><span class="num">03</span> What it&rsquo;s actually good for</h2>
+    <ul>
+      <li><strong>Lab results in plain English</strong> &mdash; &ldquo;compare this cholesterol panel to my last three&rdquo; instead of squinting at reference ranges.</li>
+      <li><strong>Appointment prep</strong> &mdash; a one-page summary of what changed since your last visit, plus questions worth asking.</li>
+      <li><strong>Decoding visit notes</strong> &mdash; what the doctor&rsquo;s note actually says, without the Latin.</li>
+      <li><strong>Everyday context</strong> &mdash; meal plans that respect your allergy, weekend plans that respect your knee. This happens in normal chats, not a special health tab.</li>
+    </ul>
+    <p>You can also type <strong>@Health</strong> in any message to explicitly pull your health context into a conversation.</p>
+
+    <h2><span class="num">04</span> The privacy fine print, translated</h2>
+    <ul>
+      <li><strong>Not used for training or ads.</strong> Connected records, Apple Health data, and the conversations that use them are excluded from model training and ad targeting <em>regardless</em> of your data-control settings.</li>
+      <li><strong>Permission by default.</strong> ChatGPT asks before using health data in a response. You can approve once, always allow, or change it later in Settings &rarr; Plugins &rarr; Health.</li>
+      <li><strong>Reversible.</strong> Disconnect a source in Health &rarr; Accounts and its synced data is deleted from OpenAI&rsquo;s systems within 30 days. What&rsquo;s already in saved chats stays until you delete those chats.</li>
+      <li><strong>Memory stays in your lane.</strong> Memories aren&rsquo;t created directly from your connected records, and Temporary Chat skips memory entirely.</li>
+      <li><strong>Extra encryption</strong> on health data, on top of standard conversation encryption, plus safeguards before any action that would share health details through another connected app.</li>
+    </ul>
+
+    <div class="callout"><span class="lbl">The honest read</span><p>This is a real trade, not a trick. The privacy terms here are stronger than ChatGPT&rsquo;s defaults &mdash; but you are still placing your medical history inside a chat app. Start small: connect Apple Health only, live with it for two weeks, and add your medical records only if the answers are earning it. And treat every important answer as <strong>preparation for a conversation with your doctor, not a replacement for one</strong> &mdash; OpenAI itself says ChatGPT can make mistakes.</p></div>
+
+    <h2><span class="num">05</span> If you help an older parent with their health</h2>
+    <p>This feature may matter most for the person juggling <em>someone else&rsquo;s</em> health: adult children coordinating a parent&rsquo;s medications, appointments, and portals. A synced, plain-English picture of &ldquo;what changed since the last visit&rdquo; is genuinely valuable there &mdash; and so is the caution. Set it up together, review what synced, and keep the permission prompt set to ask every time. Our <a href="/lessons/seniors/">AI for Seniors track</a> covers safe setups like this step by step.</p>
+
+    <div class="checklist">
+      <h3>Set it up in 10 minutes</h3>
+      <ul>
+        <li>Open Health from the ChatGPT sidebar and choose Get started (US, 18+, web or iPhone).</li>
+        <li>Connect Apple Health first &mdash; if you use a wearable, check its app is sharing into Apple Health.</li>
+        <li>Review what synced: delete stale meds and conditions, add family history that&rsquo;s missing.</li>
+        <li>Leave the permission setting on &ldquo;ask every time&rdquo; for the first two weeks.</li>
+        <li>Ask one real question: &ldquo;Summarize how my labs changed over the past year, in plain English.&rdquo; Verify one fact against your portal before trusting the rest.</li>
+      </ul>
+    </div>
+
+    <div class="challenge">
+      <h2 style="margin-top:0;">This week&rsquo;s challenge</h2>
+      <p>Before your next appointment, ask ChatGPT: <em>&ldquo;Based on my connected records, what changed since my last visit, and what three questions should I ask my doctor?&rdquo;</em> Bring the list. That&rsquo;s the feature at its best &mdash; you, better prepared, still in charge.</p>
+    </div>
+
+    <div class="next-up">
+      <div class="lbl">Go deeper</div>
+      <h3>Decide what AI should never see</h3>
+      <p>Health data is the sharpest version of a question every AI user faces: what do you connect, and what do you keep out? <a href="/lessons/ai-security/">The Secure Your AI Use track</a> gives you the framework.</p>
+    </div>
+  </div>
+</article>
+<footer><div class="footer-inner">
+  <div>&copy; 2026 Allen Ventures LLC, d/b/a LearningGPT &middot; Details as of July 24, 2026, from OpenAI&rsquo;s Health in ChatGPT announcement &mdash; the rollout is gradual, so check your own app. Educational content, not medical advice.</div>
+  <a href="/lessons/chatgpt/" style="color:var(--text-dim);">&larr; All ChatGPT lessons</a>
+</div></footer>
+<script src="/gate.js"></script>
+</body>
+</html>

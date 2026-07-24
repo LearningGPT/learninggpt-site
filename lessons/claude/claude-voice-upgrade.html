@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Claude voice mode grew up: Opus, Sonnet, and your tools — by voice — LearningGPT</title>
+<meta name="description" content="Anthropic upgraded Claude voice mode on July 23, 2026: pick Opus, Sonnet, or Haiku mid-conversation, trigger actions in Gmail, Slack, Calendar and Canva by voice, and talk in 11 languages. What changed, the free-vs-paid split, and how to start. Free lesson." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#d97757" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/claude/claude-voice-upgrade" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/claude/claude-voice-upgrade" />
+<meta property="og:title" content="Claude voice mode grew up: Opus, Sonnet, and your tools — by voice" />
+<meta property="og:description" content="Anthropic upgraded Claude voice mode on July 23, 2026: pick Opus, Sonnet, or Haiku mid-conversation, trigger actions in Gmail, Slack, Calendar and Canva by voice, and talk in 11 languages. What changed, the free-vs-paid split, and how to start. Free lesson." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What changed in Claude voice mode in July 2026?","acceptedAnswer":{"@type":"Answer","text":"On July 23, 2026, Anthropic upgraded voice mode from Haiku-only to your choice of Claude Opus, Sonnet, or Haiku, switchable mid-conversation. Voice conversations can now also reach your connected tools — Gmail, Slack, Google Calendar, Canva and more — and speak 11 languages. It's in beta for all chat users on mobile, desktop, and web."}},{"@type":"Question","name":"Is the Claude voice mode upgrade free?","acceptedAnswer":{"@type":"Answer","text":"Partly. Free-plan users get Claude Haiku, one connected tool, and all available languages. Paid plans unlock the more capable models (Opus and Sonnet) and all connected tools. Voice conversations count toward your regular usage limits on every plan."}},{"@type":"Question","name":"Can Claude actually do things from a voice conversation?","acceptedAnswer":{"@type":"Answer","text":"Yes — after you decide something out loud, you can ask Claude to act on it: push a Google Calendar meeting back 30 minutes, turn the discussion into a Canva one-pager, or summarize today's email and draft replies. Claude asks permission before using any connected tool. Tools are connected in Settings > Connectors."}},{"@type":"Question","name":"Which languages does Claude voice mode support?","acceptedAnswer":{"@type":"Answer","text":"English, French, German, Hindi, Indonesian, Italian, Japanese, Korean, Brazilian Portuguese, and Spanish (both Latin America and Spain variants) — on every plan. Claude does not auto-detect your language: ask out loud to switch, or set it in the voice settings language picker. Voice language is set separately from your other language settings."}},{"@type":"Question","name":"How do I start a voice conversation with Claude?","acceptedAnswer":{"@type":"Answer","text":"Tap the sound-wave icon in the Claude mobile app — Anthropic says it works best from a phone, though it's available on desktop and web too. Voice mode defaults to the last model you used in text chat, and you can switch models from the model picker mid-conversation."}}]}</script>
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --danger:#ff6b8a; --radius-lg:20px; --container:820px; --track:#d97757; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:#d97757;}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.25;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;box-shadow:0 4px 16px rgba(124,92,255,0.5);}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(217,119,87,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(217,119,87,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#d97757 0%,#c46343 50%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.12em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:50px 0 16px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul,.lesson ol{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(217,119,87,0.12),rgba(124,92,255,0.06));border:1px solid rgba(217,119,87,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.timeline{margin:24px 0;border-left:2px solid rgba(217,119,87,0.4);padding-left:22px;}
+.timeline .ti{margin-bottom:18px;} .timeline .ti:last-child{margin-bottom:0;}
+.timeline .td{font-size:12px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:var(--track);margin-bottom:4px;}
+.timeline .tt{font-size:15.5px;color:var(--text);line-height:1.6;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:18px 0;font-size:14.5px;}
+.gotcha::before{content:'\26A0  Note: ';color:var(--warn);font-weight:700;}
+.lgpt-faq{margin:48px 0 8px;}
+.lgpt-faq .faq-eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.09em;font-weight:700;color:var(--track);margin-bottom:8px;}
+.lgpt-faq h2{font-size:27px;line-height:1.15;letter-spacing:-.02em;font-weight:800;margin:0 0 18px;}
+.lgpt-faq details{border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#14142b;margin-bottom:10px;overflow:hidden;}
+.lgpt-faq details[open]{border-color:rgba(217,119,87,.4);}
+.lgpt-faq summary{list-style:none;cursor:pointer;padding:15px 18px;font-size:15.5px;font-weight:600;color:#f5f5fa;display:flex;justify-content:space-between;align-items:center;gap:14px;}
+.lgpt-faq summary::-webkit-details-marker{display:none;}
+.lgpt-faq summary .chev{flex-shrink:0;width:18px;height:18px;border-right:2px solid #d97757;border-bottom:2px solid #d97757;transform:rotate(45deg);transition:transform .2s;margin-top:-4px;}
+.lgpt-faq details[open] summary .chev{transform:rotate(-135deg);margin-top:4px;}
+.lgpt-faq .faq-a{padding:0 18px 16px;font-size:14.5px;line-height:1.7;color:#c7c7d6;}
+.lgpt-faq .faq-a strong{color:#f5f5fa;font-weight:600;} .lgpt-faq .faq-a a{color:#d97757;font-weight:600;}
+footer{border-top:1px solid var(--line);padding:30px 0;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--text-mute);}
+@media (max-width:600px){.footer-inner{flex-direction:column;gap:12px;text-align:center;}}
+.chip-pro { border-color: rgba(124,92,255,0.45); color: #b9a6ff; background: rgba(124,92,255,0.12); }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/claude/" class="nav-back">← Claude Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Claude Mastery</span>
+      <span class="chip chip-free">Free</span>
+      <span>~7 min read</span>
+      <span class="dot"></span>
+      <span>New &middot; July 24, 2026</span>
+    </div>
+    <h1>Claude&rsquo;s voice mode <span class="grad serif">just grew up.</span></h1>
+    <p class="deck">Until this week, talking to Claude meant talking to Haiku — fast, but built for quick answers, not hard thinking. On July 23, 2026, Anthropic changed that: voice mode now runs <strong>Opus and Sonnet</strong> too, reaches into your connected tools, and speaks eleven languages. The result is less &ldquo;voice assistant,&rdquo; more &ldquo;thinking partner you can pace the room with.&rdquo; Here&rsquo;s what changed and how to use it.</p>
+
+    <div class="callout">
+      <span class="lbl">The headline</span>
+      <p>Voice mode is now in <strong>beta for every chat user</strong> on mobile, desktop, and web. Pick your model mid-conversation, let Claude act in tools like <strong>Gmail, Slack, Google Calendar, and Canva</strong> (with permission), and switch between 11 languages. Free plan: Haiku + one tool. Paid: all models + all your tools.</p>
+    </div>
+
+    <h2><span class="num">01</span> Why the model swap matters</h2>
+    <p>Anthropic originally put Haiku behind voice mode for one reason: speed. That kept conversations snappy — and shallow. People were already using voice sessions to work through real business problems out loud, and Haiku would keep up but not keep <em>depth</em>. Now the model picker works in voice: choose <strong>Opus or Sonnet</strong> for hard problems, and Claude uses the fastest version of whichever model you pick so the conversation still flows. It defaults to the last model you used in text chat, so switching between typing and talking doesn&rsquo;t reset anything.</p>
+    <p>One design choice worth knowing: Claude&rsquo;s voice mode <strong>takes turns</strong>. It listens, pauses to think, then responds. It feels different from assistants that fire back instantly — that pause is the more capable model actually working.</p>
+
+    <h2><span class="num">02</span> What a &ldquo;thinking out loud&rdquo; session looks like</h2>
+    <div class="timeline">
+      <div class="ti"><div class="td">Rehearse</div><div class="tt">Practice a pitch or a hard conversation out loud and ask Claude for feedback on your reasoning <em>and</em> your delivery.</div></div>
+      <div class="ti"><div class="td">Decide</div><div class="tt">Talking through two competing offers forces you to say what you actually value — Claude asks the follow-up questions instead of handing you an answer.</div></div>
+      <div class="ti"><div class="td">Poke holes</div><div class="tt">Walk through a client proposal and ask Claude to find the gaps in your logic before your client does.</div></div>
+      <div class="ti"><div class="td">Brainstorm</div><div class="tt">Roadmap ideas, video concepts, why the last one worked — messy, spoken, half-formed thinking is exactly what this is for.</div></div>
+    </div>
+
+    <h2><span class="num">03</span> From talking to doing</h2>
+    <p>The bigger shift: a voice conversation can now <strong>end in an action</strong>. Once you&rsquo;ve decided something out loud, ask Claude to do it in your connected tools:</p>
+    <ul>
+      <li>Running late? &ldquo;Push my 2pm on <strong>Google Calendar</strong> back 30 minutes.&rdquo;</li>
+      <li>Finished talking through the pitch? &ldquo;Turn that into a one-pager in <strong>Canva</strong>.&rdquo;</li>
+      <li>Walking to the office? &ldquo;Summarize today&rsquo;s <strong>email</strong> and draft replies to the critical ones.&rdquo;</li>
+    </ul>
+    <p>Claude asks permission before touching any connected tool. You connect tools in <strong>Settings &rarr; Connectors</strong> on mobile, desktop, or web.</p>
+    <div class="gotcha">An AI acting in your email and calendar from a spoken instruction is powerful and worth a beat of caution: keep the confirmation prompts on, and give Claude access only to tools you actually want it acting in. Our <a href="/lessons/ai-security/">Secure Your AI Use track</a> covers the habit set.</div>
+
+    <h2><span class="num">04</span> Eleven languages, one catch</h2>
+    <p>Voice mode now speaks English, French, German, Hindi, Indonesian, Italian, Japanese, Korean, Brazilian Portuguese, and Spanish in both Latin American and European variants — <strong>on every plan, including Free</strong>. You can switch mid-conversation.</p>
+    <div class="gotcha">Claude does <strong>not</strong> auto-detect your language. Ask out loud (&ldquo;switch to Spanish&rdquo;) or set it in the voice settings language picker — and note that voice language is set separately, so your existing language settings don&rsquo;t carry over.</div>
+
+    <h2><span class="num">05</span> Free vs. paid, and the fine print</h2>
+    <ul>
+      <li><strong>Free plan:</strong> Haiku in voice, one connected tool, all languages.</li>
+      <li><strong>Paid plans:</strong> Opus and Sonnet in voice, plus all your connected tools.</li>
+      <li><strong>Limits:</strong> voice conversations count toward your regular usage limits — a long Opus voice session spends the same budget as heavy Opus text use.</li>
+      <li><strong>Where:</strong> beta on mobile, desktop, and web; Anthropic says it works best from your phone. Tap the sound-wave icon in the mobile app to start.</li>
+    </ul>
+
+    <div class="callout">
+      <span class="lbl">Try this today</span>
+      <p>Take one decision you&rsquo;ve been chewing on, go for a ten-minute walk, and talk it through with Sonnet in voice mode. End with: <em>&ldquo;Summarize what I actually said I wanted.&rdquo;</em> That summary — your own reasoning, played back — is the feature&rsquo;s best trick.</p>
+    </div>
+
+    <section class="lgpt-faq" aria-labelledby="faqh">
+      <div class="faq-eyebrow">Frequently asked</div>
+      <h2 id="faqh">Claude voice mode, quick answers</h2>
+      <details><summary>Is the upgrade free? <span class="chev"></span></summary><div class="faq-a">Partly. Every plan gets voice mode in beta with all languages. Free gets <strong>Haiku plus one connected tool</strong>; paid plans unlock <strong>Opus, Sonnet, and all your connected tools</strong>. Voice counts toward your normal usage limits.</div></details>
+      <details><summary>Can I change models mid-conversation? <span class="chev"></span></summary><div class="faq-a">Yes — use the model picker without ending the session. Voice uses the fastest version of whichever model you choose, and defaults to the last model you used in text.</div></details>
+      <details><summary>Will Claude act in my apps without asking? <span class="chev"></span></summary><div class="faq-a">No — Claude asks permission before using a connected tool. You control which tools are connected at all in Settings &rarr; Connectors.</div></details>
+      <details><summary>Does it auto-detect my language? <span class="chev"></span></summary><div class="faq-a">No. Ask out loud to switch, or pick your language in voice settings — it&rsquo;s a separate setting from your general language preferences.</div></details>
+    </section>
+
+    <div class="next-up">
+      <div class="lbl">Go deeper</div>
+      <h3>Put Claude in your email and calendar properly</h3>
+      <p>Voice actions ride on the same connectors as everything else. <a href="/lessons/claude/cowork-email-calendar">Cowork with email &amp; calendar</a> shows the full setup.</p>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Anthropic.</div>
+    <a href="/lessons/claude/" style="color: var(--text-dim);">← All Claude Mastery lessons</a>
+  </div>
+</footer>
+<script src="/gate.js"></script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Claude Opus 5 is here: near-Fable 5 power at half the price — LearningGPT</title>
+<meta name="description" content="Anthropic released Claude Opus 5 on July 24, 2026: the new default model on Claude Max and the strongest model on Claude Pro. What changed vs Opus 4.8, the effort dial, Fast mode, new safety fallbacks, and when to still reach for Fable 5. Free lesson." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#d97757" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/claude/claude-opus-5" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/claude/claude-opus-5" />
+<meta property="og:title" content="Claude Opus 5 is here: near-Fable 5 power at half the price" />
+<meta property="og:description" content="Anthropic released Claude Opus 5 on July 24, 2026: the new default model on Claude Max and the strongest model on Claude Pro. What changed vs Opus 4.8, the effort dial, Fast mode, new safety fallbacks, and when to still reach for Fable 5. Free lesson." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is Claude Opus 5?","acceptedAnswer":{"@type":"Answer","text":"Claude Opus 5 is Anthropic's new mid-flagship model, released July 24, 2026. Anthropic says it comes close to Claude Fable 5's intelligence at half the API price, and it replaces Opus 4.8 as the Opus tier. It's the new default model on Claude Max and the strongest model available on Claude Pro."}},{"@type":"Question","name":"How much does Claude Opus 5 cost?","acceptedAnswer":{"@type":"Answer","text":"On the API, $5 per million input tokens and $25 per million output tokens — the same price as Opus 4.8 it replaces. A Fast mode runs about 2.5x quicker at twice the base price. For subscribers, it's included: Pro plan users get it as their strongest model, and Max users get it as the new default."}},{"@type":"Question","name":"Do I need to change anything to use Opus 5?","acceptedAnswer":{"@type":"Answer","text":"On Claude Max, no — Opus 5 is the new default model. On Claude Pro, pick it from the model picker if it isn't already selected. Developers use the model name claude-opus-5 on the Claude API."}},{"@type":"Question","name":"Should I use Opus 5 or Fable 5?","acceptedAnswer":{"@type":"Answer","text":"For most everyday work — writing, analysis, coding, agent tasks — Opus 5 is now the sensible default: near-Fable results, cheaper and often faster. Fable 5 remains Anthropic's most intelligent generally available model, so reach for it on the hardest reasoning problems where the last few percent matters."}},{"@type":"Question","name":"What are effort settings in Opus 5?","acceptedAnswer":{"@type":"Answer","text":"Opus 5 exposes an effort dial — how hard the model thinks before answering. Higher effort means better results on hard problems but more tokens and time; lower effort is faster and cheaper. Anthropic reports that even at low effort Opus 5 beats other models on some agentic benchmarks."}}]}</script>
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --danger:#ff6b8a; --radius-lg:20px; --container:820px; --track:#d97757; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:#d97757;}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.25;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;box-shadow:0 4px 16px rgba(124,92,255,0.5);}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(217,119,87,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(217,119,87,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#d97757 0%,#c46343 50%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.12em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:50px 0 16px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul,.lesson ol{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(217,119,87,0.12),rgba(124,92,255,0.06));border:1px solid rgba(217,119,87,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.timeline{margin:24px 0;border-left:2px solid rgba(217,119,87,0.4);padding-left:22px;}
+.timeline .ti{margin-bottom:18px;} .timeline .ti:last-child{margin-bottom:0;}
+.timeline .td{font-size:12px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:var(--track);margin-bottom:4px;}
+.timeline .tt{font-size:15.5px;color:var(--text);line-height:1.6;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:18px 0;font-size:14.5px;}
+.gotcha::before{content:'\26A0  Note: ';color:var(--warn);font-weight:700;}
+.lgpt-faq{margin:48px 0 8px;}
+.lgpt-faq .faq-eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.09em;font-weight:700;color:var(--track);margin-bottom:8px;}
+.lgpt-faq h2{font-size:27px;line-height:1.15;letter-spacing:-.02em;font-weight:800;margin:0 0 18px;}
+.lgpt-faq details{border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#14142b;margin-bottom:10px;overflow:hidden;}
+.lgpt-faq details[open]{border-color:rgba(217,119,87,.4);}
+.lgpt-faq summary{list-style:none;cursor:pointer;padding:15px 18px;font-size:15.5px;font-weight:600;color:#f5f5fa;display:flex;justify-content:space-between;align-items:center;gap:14px;}
+.lgpt-faq summary::-webkit-details-marker{display:none;}
+.lgpt-faq summary .chev{flex-shrink:0;width:18px;height:18px;border-right:2px solid #d97757;border-bottom:2px solid #d97757;transform:rotate(45deg);transition:transform .2s;margin-top:-4px;}
+.lgpt-faq details[open] summary .chev{transform:rotate(-135deg);margin-top:4px;}
+.lgpt-faq .faq-a{padding:0 18px 16px;font-size:14.5px;line-height:1.7;color:#c7c7d6;}
+.lgpt-faq .faq-a strong{color:#f5f5fa;font-weight:600;} .lgpt-faq .faq-a a{color:#d97757;font-weight:600;}
+footer{border-top:1px solid var(--line);padding:30px 0;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--text-mute);}
+@media (max-width:600px){.footer-inner{flex-direction:column;gap:12px;text-align:center;}}
+.chip-pro { border-color: rgba(124,92,255,0.45); color: #b9a6ff; background: rgba(124,92,255,0.12); }
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/claude/" class="nav-back">← Claude Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Claude Mastery</span>
+      <span class="chip chip-free">Free</span>
+      <span>~8 min read</span>
+      <span class="dot"></span>
+      <span>New &middot; July 25, 2026</span>
+    </div>
+    <h1>Claude Opus 5: <span class="grad serif">the flagship experience,</span> at half the price.</h1>
+    <p class="deck">On July 24, 2026, Anthropic released <strong>Claude Opus 5</strong> — and quietly rearranged what you get on every paid Claude plan. It replaces Opus 4.8, becomes the <strong>default model on Claude Max</strong>, and is now the <strong>strongest model on Claude Pro</strong>. Anthropic's pitch: intelligence close to its Fable 5 flagship, at half the API price. Here&rsquo;s what actually changed, and what to do about it.</p>
+
+    <div class="callout">
+      <span class="lbl">The headline</span>
+      <p>Opus 5 is available now on every Claude surface — apps, Claude Code, Cowork, and the API (<strong>claude-opus-5</strong>, $5/$25 per million tokens, unchanged from Opus 4.8). Anthropic says it's the new state of the art on coding and knowledge-work benchmarks like Frontier-Bench and GDPval-AA, an effort dial lets you trade cost against depth, and a Fast mode runs ~2.5&times; quicker at 2&times; the base price.</p>
+    </div>
+
+    <h2><span class="num">01</span> Where it lands in the lineup</h2>
+    <p>Anthropic's model family now reads like this: <strong>Fable 5</strong> stays the most intelligent generally available model. <strong>Opus 5</strong> sits just below it — Anthropic's own charts show it within a whisker of Fable 5 on several coding benchmarks — at half the price and built for everyday use. <strong>Sonnet 5</strong> remains the fast free-tier default, and Haiku handles the lightweight jobs.</p>
+    <div class="timeline">
+      <div class="ti"><div class="td">If you're on Claude Pro</div><div class="tt">Opus 5 is now the strongest model on your plan. That's the quiet upgrade of the year: Pro subscribers just gained a model that, on Anthropic's numbers, roughly doubles Opus 4.8 on its hardest coding benchmark.</div></div>
+      <div class="ti"><div class="td">If you're on Claude Max</div><div class="tt">Opus 5 is your new default. You don't need to change anything — but knowing the effort dial exists (below) helps you get more out of it.</div></div>
+      <div class="ti"><div class="td">If you build on the API</div><div class="tt">claude-opus-5, same $5/$25 pricing as Opus 4.8. Fast mode at 2&times; base price. No data-retention requirements for general access, consistent with prior Opus models.</div></div>
+    </div>
+
+    <h2><span class="num">02</span> The effort dial</h2>
+    <p>Opus 5 exposes an <strong>effort setting</strong>: how hard the model works before it answers. Crank it up for a gnarly analysis; keep it low for routine tasks and it answers faster while spending fewer tokens. Anthropic claims that even at the <em>lowest</em> effort, Opus 5 passes more tasks than any other model on Zapier's business-automation benchmark — which is the real story here: the floor got high.</p>
+    <p>The practical habit: stop treating "the best model" as one fixed thing. On hard problems, high-effort Opus 5 is a near-Fable experience. On everything else, low effort gets you a fast, cheap answer from the same brain.</p>
+
+    <h2><span class="num">03</span> It checks its own work</h2>
+    <p>The through-line in early reports is <strong>verification behavior</strong>: Opus 5 opens its own web pages to catch layout bugs, builds test harnesses when none exist, and pushes back (politely, with reasons) when your design idea has a flaw. In one of Anthropic's examples, the model was asked to rebuild a machine part from a drawing it couldn't view — so it wrote its own computer-vision pipeline to read the pixels, then built the part. That thoroughness is what "agentic" is supposed to mean, and it's why this release matters beyond benchmark charts.</p>
+
+    <h2><span class="num">04</span> The safety plumbing moved too</h2>
+    <p>Two routing changes worth knowing if you've followed our Fable 5 lessons:</p>
+    <ul>
+      <li><strong>Biology questions:</strong> requests blocked by Fable 5's safety classifiers now route to <strong>Opus 5</strong> (previously Opus 4.8) — so the fallback answers got smarter.</li>
+      <li><strong>Cybersecurity:</strong> Opus 5's own cyber classifiers are lighter-touch than Fable's (Anthropic expects ~85% fewer interventions), but flagged requests in the Claude apps still fall back to <strong>Opus 4.8</strong>.</li>
+    </ul>
+    <div class="gotcha">If you occasionally see &ldquo;this was answered by a different model&rdquo; notices, this is that system working. It's routing, not a bug — our <a href="/lessons/claude/fable-5-safeguards-data">Fable 5 safeguards lesson</a> explains the whole mechanism.</div>
+
+    <h2><span class="num">05</span> Opus 5 or Fable 5?</h2>
+    <ul>
+      <li><strong>Default to Opus 5</strong> for daily work: drafting, analysis, coding, agents, long documents. Near-flagship quality, faster and cheaper.</li>
+      <li><strong>Reach for Fable 5</strong> when the last few percent of reasoning matters — the hardest strategy, research, or debugging problems.</li>
+      <li><strong>Let Sonnet 5 keep the small stuff.</strong> Quick questions don't need a heavyweight.</li>
+    </ul>
+    <p>One honest caveat: the benchmark numbers above are Anthropic's own, published on launch day. Independent results will trickle in over the coming weeks — the pattern with Sonnet 5 and Fable 5 was that the headline claims held up directionally, with some gaps narrower than advertised.</p>
+
+    <div class="callout">
+      <span class="lbl">Try this today</span>
+      <p>Take a task you'd normally hand to Fable 5 — a real one from this week — and run it through Opus 5. Compare the answers side by side. If you can't tell the difference, you've just found out where your personal &ldquo;good enough&rdquo; line is, and it's cheaper than you thought.</p>
+    </div>
+
+    <section class="lgpt-faq" aria-labelledby="faqh">
+      <div class="faq-eyebrow">Frequently asked</div>
+      <h2 id="faqh">Claude Opus 5, quick answers</h2>
+      <details><summary>Is Opus 5 free to use? <span class="chev"></span></summary><div class="faq-a">It's included in paid plans — the strongest model on <strong>Pro</strong> and the default on <strong>Max</strong>. Free-plan users stay on Sonnet 5. On the API it's $5/$25 per million tokens, same as Opus 4.8.</div></details>
+      <details><summary>What happened to Opus 4.8? <span class="chev"></span></summary><div class="faq-a">Opus 5 replaces it as the Opus tier. Opus 4.8 still exists behind the scenes — it's the fallback model for cyber-flagged requests in the Claude apps.</div></details>
+      <details><summary>Is it actually as good as Fable 5? <span class="chev"></span></summary><div class="faq-a">Close, per Anthropic: within 0.5% of Fable 5's peak on one coding benchmark at half the cost, ahead of it on some agentic tests. Fable 5 is still the most intelligent generally available model. Treat launch-day numbers as claims until independent evals land.</div></details>
+      <details><summary>What's Fast mode? <span class="chev"></span></summary><div class="faq-a">An option that runs Opus 5 around <strong>2.5&times; faster at 2&times; the base price</strong> — for when latency matters more than cost. Available on the Claude Platform and via usage credits in Claude Code.</div></details>
+      <details><summary>Anything new for developers? <span class="chev"></span></summary><div class="faq-a">Two betas shipped alongside: <strong>mid-conversation tool changes</strong> without invalidating the prompt cache, and <strong>automatic fallbacks</strong> so safety-flagged API requests route to another model instead of erroring.</div></details>
+    </section>
+
+    <div class="next-up">
+      <div class="lbl">Go deeper</div>
+      <h3>Which Claude should you actually use?</h3>
+      <p>The full decision framework across Fable, Opus, and Sonnet — by task, speed, and cost — is in <a href="/lessons/claude/fable-5-which-claude">Which Claude, when</a>.</p>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Anthropic.</div>
+    <a href="/lessons/claude/" style="color: var(--text-dim);">← All Claude Mastery lessons</a>
+  </div>
+</footer>
+<script src="/gate.js"></script>
+</body>
+</html>

@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Fable 5's safeguards and your data: what actually changed — LearningGPT</title>
-<meta name="description" content="Claude Fable 5 added safety classifiers that route some requests to Opus 4.8, and a new 30-day data retention policy for business traffic. A plain, honest breakdown of what changed, why harmless requests sometimes get caught, and what it means for your company's AI policy." />
+<meta name="description" content="Claude Fable 5 added safety classifiers that route some requests to an Opus model, and a new 30-day data retention policy for business traffic. A plain, honest breakdown of what changed, why harmless requests sometimes get caught, and what it means for your company's AI policy." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#d97757" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -96,11 +96,11 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <h2><span class="num">Why this lesson exists</span></h2>
     <p>We're independent — not paid by Anthropic — so we'll tell you the parts a vendor wouldn't lead with. Neither of these changes is a scandal. But if you're putting real work, or your company's data, through Fable 5, you should understand them rather than discover them mid-task. Honesty about the tools is the whole point of learning them here.</p>
 
-    <h2><span class="num">01</span> Some requests get answered by Opus 4.8, not Fable</h2>
+    <h2><span class="num">01</span> Some requests get answered by an Opus model, not Fable</h2>
     <p>Fable 5 is a Mythos-class model, which means in the wrong hands its capabilities — especially in cybersecurity and biology — could genuinely help someone cause harm. To release it to the public safely, Anthropic added a layer of <strong>safety classifiers</strong>: separate systems that screen each request before Fable answers.</p>
-    <p>When a classifier flags a request as touching <strong>cybersecurity, biology/chemistry, or model "distillation"</strong> (attempts to copy the model's abilities), the request is automatically handled by <strong>Claude Opus 4.8</strong> instead — and you're told it happened. Opus 4.8 is a very capable model in its own right, so this is a fallback, not a refusal.</p>
+    <p>When a classifier flags a request as touching <strong>cybersecurity, biology/chemistry, or model "distillation"</strong> (attempts to copy the model's abilities), the request is automatically handled by another Opus model instead — since July 24, 2026, <strong>Opus 5</strong> for biology/chemistry and <strong>Opus 4.8</strong> for cyber and distillation — — and you're told it happened. Both are very capable models in their own right, so this is a fallback, not a refusal.</p>
     <h3>The catch: it sometimes catches harmless requests</h3>
-    <p>Anthropic deliberately tuned these classifiers broad so they could ship Fable quickly and safely, which means they err toward caution. Their own data says fewer than 5% of sessions hit a fallback at all — but if you work in security, biology, healthcare, or chemistry, you may bump into it on perfectly legitimate questions. If you ever see a "this was handled by Opus 4.8" notice on something innocent, now you know why: a conservative filter, not a judgment about you. Anthropic says it's working to narrow the false positives over time.</p>
+    <p>Anthropic deliberately tuned these classifiers broad so they could ship Fable quickly and safely, which means they err toward caution. Their own data says fewer than 5% of sessions hit a fallback at all — but if you work in security, biology, healthcare, or chemistry, you may bump into it on perfectly legitimate questions. If you ever see a "this was handled by a different model" notice on something innocent, now you know why: a conservative filter, not a judgment about you. Anthropic says it's working to narrow the false positives over time.</p>
     <div class="gotcha">If a fallback gets in the way of legitimate professional work, the practical move is to rephrase toward your actual goal and away from language that reads as offensive-security or wet-lab procedure. And know that the fallback model is still strong — you're not losing access, you're getting a slightly different answer.</div>
 
     <h2><span class="num">02</span> Business traffic is retained for 30 days</h2>
@@ -117,7 +117,7 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <h3>If you're an individual user</h3>
     <ul>
       <li>Keep treating any consumer AI as <strong>not the place for true secrets</strong> — passwords, unreleased financials, anything you'd be harmed by if it leaked. That was already good practice; it didn't change.</li>
-      <li>Don't be alarmed by an Opus 4.8 fallback. It's a different capable model answering, and you're told when it happens.</li>
+      <li>Don't be alarmed by an Opus fallback. It's a different capable model answering, and you're told when it happens.</li>
     </ul>
     <h3>If you own your team's AI policy</h3>
     <ul>
@@ -142,7 +142,7 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; }
     <div class="checklist">
       <h3>What you can do now</h3>
       <ul>
-        <li>Explain why Fable 5 routes some requests to Opus 4.8, and recognize it when it happens</li>
+        <li>Explain why Fable 5 routes some requests to an Opus model, and recognize it when it happens</li>
         <li>Know that the safeguards err broad, and why harmless requests sometimes trip them</li>
         <li>Understand the 30-day retention policy for business traffic — purpose and limits</li>
         <li>Decide what company data is and isn't allowed through Mythos-class models</li>

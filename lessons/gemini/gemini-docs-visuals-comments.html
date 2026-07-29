@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gemini in Google Docs: visuals on demand, comments handled — LearningGPT</title>
+<meta name="description" content="Two Gemini upgrades hit Google Docs on July 28, 2026: generate and edit images, diagrams, and infographics from your document's context, and let Gemini summarize, answer, and act on comments. Prompts to try and the rollout fine print. Free lesson." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#7aa2ff" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/gemini/gemini-docs-visuals-comments" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/gemini/gemini-docs-visuals-comments" />
+<meta property="og:title" content="Gemini in Google Docs: visuals on demand, comments handled" />
+<meta property="og:description" content="Google Docs can now generate infographics and diagrams from your doc — and Gemini can read, summarize, reply to, and act on your comment threads. What shipped July 28, and how to use it." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What did Google add to Docs on July 28, 2026?", "acceptedAnswer": {"@type": "Answer", "text": "Two Gemini capabilities: visual generation (create and edit images, diagrams, and infographics using your document’s context) and comment workflows (Gemini can summarize comment threads, answer questions about feedback, add comments, draft replies, and suggest edits based on reviewer feedback). Both started a gradual rollout on July 28, 2026."}}, {"@type": "Question", "name": "How do I use the new visuals feature?", "acceptedAnswer": {"@type": "Answer", "text": "In Google Docs on the web, use the bottom bar or the Gemini side panel and ask in plain language — for example “Create a rich infographic visually summarizing my doc” or “Add a diagram providing an overview of the proposal at the top of my doc.” You can refine results the same way: “Change the aspect ratio to 16:9.” It’s currently web-only."}}, {"@type": "Question", "name": "What can Gemini do with comments?", "acceptedAnswer": {"@type": "Answer", "text": "Summarize all comments or just one person’s, surface unresolved issues, insert comments on your behalf, draft contextually grounded replies to open threads, and generate suggested edits that address reviewer feedback — which you review and approve before they apply. You need edit access on the document."}}, {"@type": "Question", "name": "Who gets these features?", "acceptedAnswer": {"@type": "Answer", "text": "Workspace Business Standard and Plus, Enterprise Standard and Plus, Education Plus, and consumers on Google AI Pro or Ultra, plus certain education add-ons. Admins must have Gemini for Workspace enabled, and users need Workspace smart features turned on."}}, {"@type": "Question", "name": "I don’t see it yet — is something wrong?", "acceptedAnswer": {"@type": "Answer", "text": "Probably not. Google says the rollout is gradual, with up to 15 days for feature visibility from July 28, 2026. If it still doesn’t appear after that, check that smart features are enabled in your settings and that your plan is on the eligibility list."}}]}</script>
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --danger:#ff6b8a; --radius:14px; --radius-lg:20px; --container:820px; --track:#7aa2ff; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:var(--track);}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.22;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(122,162,255,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(122,162,255,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#7aa2ff 0%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.15em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:52px 0 14px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(122,162,255,0.12),rgba(124,92,255,0.06));border:1px solid rgba(122,162,255,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,#7aa2ff,#7c5cff);border-radius:2px 0 0 2px;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.cost-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;}
+.cost-table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--line-strong);color:var(--text-dim);font-size:11.5px;text-transform:uppercase;letter-spacing:0.6px;}
+.cost-table td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.cost-table td:first-child{font-weight:700;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:14px 0;font-size:14.5px;}
+.gotcha::before{content:'⚠ The honest note: ';color:var(--warn);font-weight:700;}
+.checklist{margin:40px 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);}
+.checklist h3{margin-top:0;font-size:18px;} .checklist ul{list-style:none;padding:0;margin:0;}
+.checklist li{padding:10px 0 10px 30px;position:relative;font-size:15px;border-top:1px solid var(--line);}
+.checklist li:first-child{border-top:none;padding-top:0;}
+.checklist li::before{content:'✓';position:absolute;left:0;color:var(--accent);font-weight:700;}
+.lgpt-faq{margin:48px 0 8px;}
+.lgpt-faq .faq-eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.09em;font-weight:700;color:var(--track);margin-bottom:8px;}
+.lgpt-faq h2{font-size:27px;line-height:1.15;letter-spacing:-.02em;font-weight:800;margin:0 0 18px;}
+.lgpt-faq details{border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#14142b;margin-bottom:10px;overflow:hidden;}
+.lgpt-faq details[open]{border-color:rgba(122,162,255,.4);}
+.lgpt-faq summary{list-style:none;cursor:pointer;padding:15px 18px;font-size:15.5px;font-weight:600;color:#f5f5fa;display:flex;justify-content:space-between;align-items:center;gap:14px;}
+.lgpt-faq summary::-webkit-details-marker{display:none;}
+.lgpt-faq summary .chev{flex-shrink:0;width:18px;height:18px;border-right:2px solid #7aa2ff;border-bottom:2px solid #7aa2ff;transform:rotate(45deg);transition:transform .2s;margin-top:-4px;}
+.lgpt-faq details[open] summary .chev{transform:rotate(-135deg);margin-top:4px;}
+.lgpt-faq .faq-a{padding:0 18px 16px;font-size:14.5px;line-height:1.7;color:#c7c7d6;}
+.lgpt-faq .faq-a strong{color:#f5f5fa;font-weight:600;} .lgpt-faq .faq-a a{color:#7aa2ff;font-weight:600;}
+.next-up{margin:50px 0 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.next-up .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:10px;}
+.next-up h3{margin:0 0 8px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:14.5px;}
+footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);}
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top"><div class="nav-inner">
+  <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+  <a href="/lessons/gemini/" class="nav-back">← Gemini Mastery</a>
+</div></nav>
+<article class="lesson"><div class="container">
+  <div class="lesson-meta">
+    <span class="chip">Gemini Mastery</span>
+    <span class="chip chip-free">Free</span>
+    <span>~6 min read</span>
+    <span class="dot"></span>
+    <span>What&#39;s new · July 28, 2026</span>
+  </div>
+  <h1>Docs gets a design desk — <span class="grad serif">and a comment handler.</span></h1>
+  <p class="deck">On July 28, 2026, Google shipped two Gemini upgrades to Google Docs at once. The first turns Docs into a place that can <strong>make its own visuals</strong> — images, diagrams, infographics — built from what your document actually says. The second points Gemini at the messiest part of collaboration: the <strong>comment thread</strong>. Both are rolling out now. Here&#39;s what each one does, the prompts to try, and the fine print on who sees it when.</p>
+
+  <h2><span class="num">01</span> Two upgrades, one minute</h2>
+  <div style="overflow-x:auto;"><table class="cost-table">
+    <tr><th>Feature</th><th>What it does</th><th>Where you&#39;ll find it</th></tr>
+    <tr><td>Visual generation</td><td>Creates and edits images, diagrams, and infographics using your document&#39;s context — no external design tool</td><td>Bottom bar or Gemini side panel in Docs — <strong>web only</strong> for now</td></tr>
+    <tr><td>Comment workflows</td><td>Summarizes and answers questions about comments, adds comments for you, drafts replies, and suggests edits based on feedback</td><td>Bottom bar or side panel — requires <strong>edit access</strong> on the doc</td></tr>
+  </table></div>
+
+  <h2><span class="num">02</span> Visuals that know what your doc says</h2>
+  <p>The point isn&#39;t that Docs can generate an image — plenty of tools do that. It&#39;s that the visuals are <strong>grounded in your document</strong>. Ask for &ldquo;a diagram providing an overview of the proposal at the top of my doc&rdquo; and Gemini reads the proposal to build it. Existing visuals can be refined in plain language, and you can update several at once — add an infographic to each key section, or restyle every visual to match.</p>
+  <div class="checklist">
+    <h3>Prompts to try this week</h3>
+    <ul>
+      <li>&ldquo;Create a rich infographic visually summarizing my doc&rdquo; — the fastest way to see what it can do</li>
+      <li>&ldquo;Add a diagram providing an overview of the proposal at the top of my doc&rdquo;</li>
+      <li>&ldquo;Change the aspect ratio to 16:9&rdquo; — refinement is natural language too</li>
+      <li>&ldquo;Make the style more aesthetic to match the rest of the document&rdquo;</li>
+      <li>&ldquo;Add an infographic to each key section&rdquo; — batch creation in one ask</li>
+    </ul>
+  </div>
+
+  <h2><span class="num">03</span> Gemini works the comment thread</h2>
+  <p>Comment workflows aim at the doc that comes back from review with forty comments. Gemini can now <strong>read and act on all of them</strong>: summarize what reviewers said, tell you which issues are still unresolved, draft replies grounded in the document, leave comments on your behalf, and — the strongest part — generate <strong>suggested edits</strong> that address a reviewer&#39;s feedback, which you approve before they touch the text. You may also see proactive nudges: a summary offer when you open a heavily commented doc, or a drafted reply when you click into a thread.</p>
+  <div class="checklist">
+    <h3>The comment prompts worth stealing</h3>
+    <ul>
+      <li>&ldquo;Summarize all comments from Sarah&rdquo; — one reviewer&#39;s feedback, digested</li>
+      <li>&ldquo;Based on the comments, what are the unresolved issues?&rdquo; — your pre-meeting triage</li>
+      <li>&ldquo;Reply to the thread confirming that we&#39;re approved to launch on April 1&rdquo;</li>
+      <li>&ldquo;Add a comment asking Roberta to verify the stats in the launch readiness section&rdquo;</li>
+      <li>&ldquo;Rewrite the introduction to address Roberta&#39;s feedback&rdquo; — produces suggested edits you review and apply</li>
+    </ul>
+  </div>
+  <div class="gotcha">Rollout is <strong>gradual — up to 15 days</strong> for the features to appear, starting July 28, 2026. Visual generation is <strong>web only</strong>, comment workflows need <strong>edit access</strong>, and both require Workspace smart features to be on (and, for work accounts, your admin to have Gemini for Workspace enabled). Not seeing it today doesn&#39;t mean you won&#39;t have it next week.</div>
+
+  <h2><span class="num">04</span> Who gets it</h2>
+  <div class="callout">
+    <span class="lbl">Eligibility</span>
+    <p><strong>Work:</strong> Business Standard and Plus, Enterprise Standard and Plus. <strong>School:</strong> Education Plus and certain education add-ons. <strong>Personal:</strong> Google AI Pro and Ultra subscribers. Basic/Starter Workspace tiers and free personal accounts aren&#39;t on the July 28 list — for what each Google plan includes, see <a href="/lessons/gemini/what-gemini-costs">what Gemini costs</a>.</p>
+  </div>
+  <p>Zoom out and the direction is clear: Google is making Docs a place where Gemini doesn&#39;t just write — it illustrates the doc and manages the review cycle around it. If your team lives in Docs, these two features cover a real slice of the daily grind. Our <a href="/lessons/gemini/docs-mastery">Docs mastery lesson</a> covers the full Gemini-in-Docs toolkit these land in.</p>
+
+  <section class="lgpt-faq" aria-labelledby="faqh">
+    <div class="faq-eyebrow">Frequently asked</div>
+    <h2 id="faqh">Gemini&#39;s new Docs powers — your questions, answered</h2>
+    <details>
+      <summary><span>What did Google add to Docs on July 28, 2026?</span><span class="chev"></span></summary>
+      <div class="faq-a">Two Gemini capabilities: visual generation (create and edit images, diagrams, and infographics using your document’s context) and comment workflows (Gemini can summarize comment threads, answer questions about feedback, add comments, draft replies, and suggest edits based on reviewer feedback). Both started a gradual rollout on July 28, 2026.</div>
+    </details>
+    <details>
+      <summary><span>How do I use the new visuals feature?</span><span class="chev"></span></summary>
+      <div class="faq-a">In Google Docs on the web, use the bottom bar or the Gemini side panel and ask in plain language — for example “Create a rich infographic visually summarizing my doc” or “Add a diagram providing an overview of the proposal at the top of my doc.” You can refine results the same way: “Change the aspect ratio to 16:9.” It’s currently web-only.</div>
+    </details>
+    <details>
+      <summary><span>What can Gemini do with comments?</span><span class="chev"></span></summary>
+      <div class="faq-a">Summarize all comments or just one person’s, surface unresolved issues, insert comments on your behalf, draft contextually grounded replies to open threads, and generate suggested edits that address reviewer feedback — which you review and approve before they apply. You need edit access on the document.</div>
+    </details>
+    <details>
+      <summary><span>Who gets these features?</span><span class="chev"></span></summary>
+      <div class="faq-a">Workspace Business Standard and Plus, Enterprise Standard and Plus, Education Plus, and consumers on Google AI Pro or Ultra, plus certain education add-ons. Admins must have Gemini for Workspace enabled, and users need Workspace smart features turned on.</div>
+    </details>
+    <details>
+      <summary><span>I don’t see it yet — is something wrong?</span><span class="chev"></span></summary>
+      <div class="faq-a">Probably not. Google says the rollout is gradual, with up to 15 days for feature visibility from July 28, 2026. If it still doesn’t appear after that, check that smart features are enabled in your settings and that your plan is on the eligibility list.</div>
+    </details>
+  </section>
+
+  <div class="next-up">
+    <div class="lbl">More in Gemini Mastery</div>
+    <h3>Master the whole Docs toolkit</h3>
+    <p>Drafting, rewriting, summarizing, and now visuals and comments — how to make Gemini in Docs a daily habit. <a href="/lessons/gemini/docs-mastery">Docs mastery →</a></p>
+  </div>
+</div></article>
+<footer><div class="footer-inner">
+  <div>© 2026 LearningGPT, Inc. · Independent and vendor-neutral. Reflects Google's July 21, 2026 announcement; rollout timing can change.</div>
+  <a href="/lessons/gemini/" style="color:var(--text-dim);">← All Gemini lessons</a>
+</div></footer>
+<script src="/gate.js"></script>
+</body>
+</html>

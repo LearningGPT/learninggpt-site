@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Grok Voice Think Fast 2.0: the voice model that thinks while it talks — LearningGPT</title>
+<meta name="description" content="SpaceXAI's Grok Voice Think Fast 2.0, announced July 29, 2026: a speech-to-speech model that reasons while it speaks, tops the Artificial Analysis voice index, and costs $0.08/min. What it means for Grok's voice mode and AI phone agents. Free lesson." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#9da0b0" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/grok/voice-think-fast-2" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/grok/voice-think-fast-2" />
+<meta property="og:title" content="Grok Voice Think Fast 2.0: the voice model that thinks while it talks — LearningGPT" />
+<meta property="og:description" content="SpaceXAI's Grok Voice Think Fast 2.0, announced July 29, 2026: reasons while it speaks, tops the voice benchmarks, $0.08/min. What it means for Grok voice and AI phone agents." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #9da0b0; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #71717a; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+.lesson { padding: 50px 0 100px; }
+.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(157,160,176,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(157,160,176,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
+.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
+.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
+.lesson h1 .grad { background: linear-gradient(135deg, #c3c6d4 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
+.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
+.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
+.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
+.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(157,160,176,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(157,160,176,0.25); border-radius: var(--radius-lg); position: relative; }
+.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #9da0b0, #7c5cff); border-radius: 2px 0 0 2px; }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.callout p:last-child { margin-bottom: 0; }
+.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
+.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(157,160,176,0.1); border: 1px solid rgba(157,160,176,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
+.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
+.workflow p { font-size: 15px; margin: 0 0 14px; }
+.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
+.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
+.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
+.savings { display: inline-flex; align-items: center; gap: 8px; background: rgba(68,224,164,0.10); border: 1px solid rgba(68,224,164,0.3); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; color: var(--text); margin-top: 6px; }
+.savings::before { content: '⏱'; font-size: 14px; } .savings strong { color: var(--accent); font-weight: 700; }
+.tier-table { width: 100%; border-collapse: collapse; margin: 20px 0 28px; font-size: 14px; }
+.tier-table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--line-strong); color: var(--text-dim); font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.8px; }
+.tier-table td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.tier-table td:first-child { font-weight: 600; }
+.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(157,160,176,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(157,160,176,0.25); border-radius: var(--radius-lg); padding: 36px; }
+.challenge h2 { margin-top: 0; }
+.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #71717a, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
+.challenge a.btn:hover { transform: translateY(-1px); color: white; }
+.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; padding-top: 0; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.checklist li:first-child::before { top: 4px; }
+.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
+.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+.chip-free { border-color: rgba(68,224,164,0.4); color: var(--accent); background: rgba(68,224,164,0.1); }
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is Grok Voice Think Fast 2.0?", "acceptedAnswer": {"@type": "Answer", "text": "SpaceXAI's next-generation speech-to-speech voice model, announced July 29, 2026. It listens and replies as audio directly, reasons while it speaks, and posted the top overall score (82.9%) on the Artificial Analysis Speech-to-Speech Quality Index, ahead of GPT-Realtime-2.1 and Gemini 3.1 Flash."}}, {"@type": "Question", "name": "How much does Grok Voice Think Fast 2.0 cost?", "acceptedAnswer": {"@type": "Answer", "text": "$0.08 per minute of audio through the SpaceXAI Voice API, with a free trial available in the API console. Talking to Grok by voice inside the Grok apps is part of your normal Grok plan."}}, {"@type": "Question", "name": "What happens on August 5, 2026?", "acceptedAnswer": {"@type": "Answer", "text": "The grok-voice-latest alias moves from Grok Voice Think Fast 1.0 to 2.0. Builders who want to stay on the old model must pin grok-voice-think-fast-1.0 before then; everyone else is upgraded automatically."}}, {"@type": "Question", "name": "How good is its transcription?", "acceptedAnswer": {"@type": "Answer", "text": "In SpaceXAI's evaluation across thousands of short phrases in 24 languages, it made 1.5 to 2 times fewer word errors than dedicated transcription models like Deepgram Nova 3 and ElevenLabs Scribe v2 — and the gap widened to roughly 10x in noisy, real-world settings like phone calls."}}, {"@type": "Question", "name": "Why does reasoning while speaking matter?", "acceptedAnswer": {"@type": "Answer", "text": "Most voice AIs either answer fast and shallow or think first and leave you waiting. Grok Voice Think Fast models reason in parallel with speech, so the model is substantially smarter with no added latency — 2.0 starts speaking in about 0.7 seconds and usually finishes tool calls before the end of its first sentence."}}]}</script>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/grok/" class="nav-back">← Grok Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Grok Mastery</span>
+      <span class="chip chip-free">Free</span>
+      <span>~6 min read</span>
+      <span class="dot"></span>
+      <span>New · July 30, 2026</span>
+    </div>
+    <h1>Voice Think Fast 2.0: <span class="grad serif">the voice that thinks while it talks.</span></h1>
+    <p class="deck">On July 29, SpaceXAI announced <strong>Grok Voice Think Fast 2.0</strong>, its next-generation speech-to-speech model — the kind of AI that listens to your actual voice and answers out loud, no typing anywhere in the loop. SpaceXAI says it's now the most capable voice model on the market, and the independent benchmark it cites agrees. Here's what changed, what it costs, and why the most interesting user of this model might be the phone line of a small business.</p>
+
+    <h2><span class="num">01</span> The scoreboard</h2>
+    <p>Voice AI has a public leaderboard — the <a href="https://artificialanalysis.ai/speech-to-speech" rel="noopener" target="_blank">Artificial Analysis Speech-to-Speech Quality Index</a> — and this release moves Grok to the top of it:</p>
+    <table class="tier-table">
+      <tr><th>Benchmark</th><th>Think Fast 2.0</th><th>Think Fast 1.0</th><th>GPT-Realtime-2.1</th><th>Gemini 3.1 Flash</th></tr>
+      <tr><td>Overall quality index</td><td><strong>82.9%</strong></td><td>75.7%</td><td>79.1%</td><td>69.5%</td></tr>
+      <tr><td>Conversational dynamics</td><td>95.1%</td><td>77.8%</td><td><strong>95.7%</strong></td><td>74.3%</td></tr>
+      <tr><td>Agentic performance (τ-voice)</td><td><strong>56.5%</strong></td><td>52.1%</td><td>45.7%</td><td>37.7%</td></tr>
+      <tr><td>Time to first audio</td><td><strong>0.70s</strong></td><td>1.25s</td><td>—</td><td>2.98s</td></tr>
+    </table>
+    <p>Two numbers are worth a second look. <strong>0.70 seconds to first audio</strong> is roughly the gap in human conversation — the model starts answering about when a person would. And the <strong>conversational dynamics</strong> jump from 77.8% to 95.1% measures the unglamorous stuff that makes voice AI feel human or robotic: knowing when to talk, when to stop, and how to handle being interrupted.</p>
+
+    <h2><span class="num">02</span> The trick: it reasons while it speaks</h2>
+    <p>Most voice assistants face a trade-off: answer instantly and shallowly, or think first and leave you hanging in silence. The Think Fast line splits the difference — <strong>it reasons in parallel with its own speech</strong>. While the model is saying its first sentence, it's already working through the harder parts of your request and firing off tool calls in the background. SpaceXAI says 2.0 does this with about <strong>60% fewer reasoning tokens</strong> than 1.0, which in practice means lookups and actions usually finish before the model reaches the end of its opening sentence.</p>
+    <p>It's also been trained — with reinforcement learning against patterns from real human conversations — to talk like a person: shorter sentences, one question at a time, no filler monologues.</p>
+
+    <h2><span class="num">03</span> It out-transcribes the transcription specialists</h2>
+    <p>The part that surprised us: SpaceXAI tested it against <em>dedicated</em> speech-to-text models — tools whose whole job is transcription — across thousands of short phrases in 24 languages. Think Fast 2.0 made <strong>1.5–2× fewer word errors</strong> than Deepgram Nova 3 and ElevenLabs Scribe v2, and the gap grew to <strong>roughly 10×</strong> in noisy conditions: background chatter, phone-line compression, the real world. If you've ever had a voice assistant confidently mishear a name, an address, or a part number, this is the metric that decides whether voice AI is usable for actual work.</p>
+
+    <h2><span class="num">04</span> Who this is actually for</h2>
+    <p>Be clear about what was announced: this is the model behind SpaceXAI's <strong>Voice API</strong> — the thing developers and businesses use to build talking agents. Two audiences should care:</p>
+    <p><strong>If you talk to Grok:</strong> this is the engine generation behind Grok's voice experiences, and the direction of travel for how the assistant sounds and listens. For what you can do with voice in the apps today — modes, cloning, the voice library — the standing lesson is <a href="/lessons/grok/voice-modes-cloning">Voice: modes, cloning, and the voice library</a>.</p>
+    <p><strong>If you run a business:</strong> this is the interesting one. At <strong>$0.08 per minute of audio</strong>, an AI that answers the phone, understands callers over shop noise, checks your calendar mid-sentence, and books the job costs about $4.80 an hour — and only for the minutes it's actually talking. SpaceXAI's own A/B test runs this model on the Starlink support and sales line, where it reports a significant lift in sales conversion and support containment. If you're a contractor, a shop, or anyone whose phone rings more than you can answer it, "AI receptionist" just got measurably better and stayed cheap.</p>
+    <div class="callout"><span class="lbl">Worth knowing</span><p><strong>The migration date matters if you've built anything on it.</strong> On <strong>August 5, 2026</strong>, the <code>grok-voice-latest</code> alias flips from 1.0 to 2.0 automatically. SpaceXAI says existing prompts should just work better — but if you want the old behavior, pin <code>grok-voice-think-fast-1.0</code> before that date.</p></div>
+
+    <h2><span class="num">05</span> The honest read</h2>
+    <div class="gotcha">The benchmark table comes from Artificial Analysis, an independent tracker — good — but the transcription and Starlink numbers are <strong>SpaceXAI's own evaluations</strong>, unpublished in detail. "Significant increase in sales conversion" on a company's own product line is marketing until a third party measures it. And GPT-Realtime-2.1 still edges Grok on pure conversational dynamics, so "best overall" is a weighted claim, not a sweep.</div>
+
+    <div class="checklist">
+      <h3>The 60-second version</h3>
+      <ul>
+        <li>Announced July 29, 2026: speech-to-speech model that reasons while it speaks — 0.70s to first audio.</li>
+        <li>Top overall score (82.9%) on the Artificial Analysis voice index, ahead of OpenAI and Google.</li>
+        <li>Transcription beats dedicated specialist models — by ~10× in noisy, phone-call conditions, per SpaceXAI.</li>
+        <li>$0.08/min via the Voice API; <code>grok-voice-latest</code> auto-upgrades August 5.</li>
+        <li>Consumer angle: better Grok voice. Business angle: cheap, competent AI phone agents.</li>
+      </ul>
+    </div>
+
+    <div class="challenge">
+      <h2>Hear the difference yourself</h2>
+      <p>Open Grok on your phone and hold a voice conversation about something with a real answer — "what's the best way to reseal a driveway, and what does it cost?" Interrupt it mid-sentence. Change the subject. Notice how it recovers. That recovery behavior is exactly what the conversational-dynamics benchmark measures — and where this generation moved most.</p>
+      <div class="btn-row">
+        <a class="btn" href="/lessons/grok/voice-modes-cloning">Master Grok's voice features</a>
+        <a class="btn ghost" href="/lessons/grok/">All Grok lessons</a>
+      </div>
+    </div>
+
+    <div class="next-up">
+      <div class="lbl">Up next in Grok Mastery</div>
+      <h3><a href="/lessons/grok/voice-modes-cloning">Voice: modes, cloning, and the voice library</a></h3>
+      <p>What you can actually do with Grok's voice today — the modes, the cloning feature, and the settings worth changing.</p>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with xAI or Microsoft.</div>
+    <a href="/lessons/grok/" style="color: var(--text-dim);">← All Grok lessons</a>
+  </div>
+</footer>
+<script src="/gate.js"></script>
+</body>
+</html>

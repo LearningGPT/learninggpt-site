@@ -170,7 +170,7 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; margin-top: 40px; }
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "mainEntity": [
+  "mainEntity": [{"@type": "Question", "name": "What is an OpenClaw extended-stable release?", "acceptedAnswer": {"@type": "Answer", "text": "Announced July 30, 2026, extended-stable releases are long-lived OpenClaw release channels cut once a month, with security and reliability fixes backported from later releases. The first is OpenClaw 2026.6.33, based on 2026.6.11. Install with npm install -g openclaw@extended-stable and persist the channel with openclaw update --channel extended-stable."}}, 
     {"@type": "Question", "name": "What is new in OpenClaw 2026.7.1?", "acceptedAnswer": {"@type": "Answer", "text": "OpenClaw 2026.7.1, released July 13, 2026, adds new models and providers (Claude Sonnet 5 and Mythos 5, Meta Muse Spark 1.1, Featherless, ClawRouter) with GPT-5.6 as the new-setup default, conversational onboarding, a sessions-first Control UI redesign, session groups and generated titles, offline mobile transcript caches, Apple Watch voice turns, and crash-loop recovery for the Gateway."}},
     {"@type": "Question", "name": "What is the default model in OpenClaw now?", "acceptedAnswer": {"@type": "Answer", "text": "As of version 2026.7.1, GPT-5.6 is the default model for new OpenClaw setups. Existing setups keep the model you already configured, and the model you plug in still determines your running cost."}},
     {"@type": "Question", "name": "What is Crestodian conversational onboarding?", "acceptedAnswer": {"@type": "Answer", "text": "Crestodian is OpenClaw's new agent-guided setup flow across the CLI, web install, and macOS app. It binds approvals to exact operations, masks credential prompts, and falls back to a deterministic wizard when no model is available."}},
@@ -260,6 +260,18 @@ footer { border-top: 1px solid var(--line); padding: 30px 0; margin-top: 40px; }
       <div class="callout warn">
         <span class="lbl">Still true after every update</span>
         <p>An update patches software — it doesn’t configure it. The gateway binding, hardware isolation, and skill-vetting rules that keep you safe are <b>your</b> settings, and no release changes them for you. <a href="/lessons/openclaw/lock-it-down">Lesson 10</a> is the maintenance contract.</p>
+      </div>
+    </div>
+
+    <div class="sec">
+      <span class="sec-eyebrow">Since this shipped &middot; announced July 30, 2026</span>
+      <h2>The follow-up: OpenClaw gets a slow lane.</h2>
+      <p>Two weeks after 2026.7.1, the project announced <strong>extended-stable releases</strong> &mdash; a long-lived release channel, cut once a month, that gets <em>security and reliability fixes backported</em> instead of a firehose of new features. The first one, <b>2026.6.33</b>, is based on June&rsquo;s 2026.6.11 plus backported fixes. Each month&rsquo;s line starts at <b>YYYY.M.33</b>, patch fixes bump the last digit, and a release is supported at least until the next monthly cut. The project describes it as a step toward proper LTS (long-term support) releases.</p>
+      <p>If the weekly release pace has been the thing keeping you (or your IT department) nervous, this is the answer: <b>npm install -g openclaw@extended-stable</b> to install it, then <b>openclaw update --channel extended-stable</b> to stay on that channel. You trade the newest features for a system that changes once a month instead of once a week &mdash; for an always-on agent touching your accounts, that is a trade many people should take.</p>
+      <p>Alongside it, OpenClaw published a <strong>maturity scorecard</strong>: a public inventory of every feature and how production-ready it is, scored on quality and completeness. Before you build a workflow on a shiny new capability, the scorecard is now the place to check whether that capability is considered stable &mdash; the project&rsquo;s stated goal is more than 90% end-to-end test coverage for stable features.</p>
+      <div class="callout warn">
+        <span class="lbl">Safe-setup angle</span>
+        <p>Backported <em>security</em> fixes on a slow channel means you no longer have to choose between &ldquo;update weekly and absorb the churn&rdquo; and &ldquo;freeze and miss security patches.&rdquo; If you run OpenClaw on the cautious settings this track teaches, extended-stable is the channel that matches your posture.</p>
       </div>
     </div>
 

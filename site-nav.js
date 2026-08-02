@@ -5,6 +5,17 @@
 // everywhere. Self-contained: injects its own styles, hides the page's old nav.
 // ─────────────────────────────────────────────────────────────────────────────
 (function () {
+  // ── iOS app compliance (Apple 3.1.1): hide ALL purchase UI in the iOS app only ──
+  try {
+    if (/LearningGPTiOS/i.test((navigator && navigator.userAgent) || '')) {
+      document.documentElement.classList.add('ios-app');
+      var _iosPath = window.location.pathname.replace(/\/+$/, '');
+      if (_iosPath === '/pricing') { window.location.replace('/'); }
+      var _iosStyle = document.createElement('style');
+      _iosStyle.textContent = '.ios-app a[href="/pricing"],.ios-app a[href^="/pricing/"],.ios-app a[href^="/pricing?"],.ios-app a[href^="/pricing#"],.ios-app a[href="https://learninggpt.ai/pricing"],.ios-app a[href^="https://learninggpt.ai/pricing"],.ios-app #coachLimit{display:none !important;}';
+      (document.head || document.documentElement).appendChild(_iosStyle);
+    }
+  } catch (e) {}
   // ── SEO: ensure every page has exactly one canonical URL ──
   // Strips query strings (?title=...) and trailing slashes so Google
   // consolidates duplicates. Skips pages that already declare a canonical

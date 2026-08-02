@@ -1,3 +1,4 @@
+var LGPT_IOS = /LearningGPTiOS/i.test((navigator && navigator.userAgent) || '');
 document.addEventListener('DOMContentLoaded', function() {
   // ── Retire old waitlist links: send them to /pricing instead. ──
   document.querySelectorAll('a[href="/#waitlist"], a[href="https://learninggpt.ai/#waitlist"]').forEach(function(a){
@@ -179,6 +180,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const container = hideContent(false);
     if (!container) return;
     const planLabel = required === 'pro_plus' ? 'Pro+' : 'Pro';
+    if (LGPT_IOS) {
+      insertWall(container, false, `
+      <div style="margin:48px 0;padding:48px 40px;background:linear-gradient(135deg,rgba(124,92,255,0.12),rgba(91,141,239,0.08));border:1px solid rgba(124,92,255,0.3);border-radius:20px;text-align:center;">
+        <div style="font-size:40px;margin-bottom:16px;">🔒</div>
+        <div style="display:inline-block;background:linear-gradient(135deg,#7c5cff,#5b8def);color:white;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:4px 14px;border-radius:100px;margin-bottom:20px;">${planLabel} lesson</div>
+        <h2 style="font-size:26px;font-weight:800;margin:0 0 12px;color:#f5f5fa;">This lesson is part of ${planLabel}</h2>
+        <p style="font-size:16px;color:#a8a8c0;margin:0 0 32px;max-width:420px;margin-left:auto;margin-right:auto;line-height:1.6;">Sign in with your LearningGPT account to access it.</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+          <a href="/auth/login?redirect=${encodeURIComponent(window.location.pathname)}" style="display:inline-flex;align-items:center;background:linear-gradient(135deg,#7c5cff,#5b8def);color:white;padding:14px 28px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none;">Sign in</a>
+        </div>
+      </div>`);
+      return;
+    }
     const planPrice = required === 'pro_plus' ? '$19/mo' : '$9/mo';
     insertWall(container, false, `
       <div style="margin:48px 0;padding:48px 40px;background:linear-gradient(135deg,rgba(124,92,255,0.12),rgba(91,141,239,0.08));border:1px solid rgba(124,92,255,0.3);border-radius:20px;text-align:center;">

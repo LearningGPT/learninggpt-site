@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // forced to before reading.) Logged-out readers get a soft, dismissible
   // signup nudge that hides no content.
   if (required === 'free') {
-    if (!token) showFreeSignupNudge();
+    if (!token) { showFreeSignupNudge(); showPromptPromo(); }
     return;
   }
 
@@ -235,6 +235,20 @@ document.addEventListener('DOMContentLoaded', function() {
       bar.remove();
       try { localStorage.setItem('lgpt_nudge_dismissed', '1'); } catch (e) {}
     });
+  }
+
+  function showPromptPromo() {
+    try {
+      var container = document.querySelector('article.lesson .container');
+      if (!container || document.getElementById('lgpt-prompt-promo')) return;
+      var bar = document.createElement('div');
+      bar.id = 'lgpt-prompt-promo';
+      bar.style.cssText = 'margin:44px 0 8px;padding:26px 28px;background:linear-gradient(135deg,rgba(124,92,255,0.12),rgba(68,224,164,0.06));border:1px solid rgba(124,92,255,0.3);border-radius:16px;text-align:center;';
+      bar.innerHTML = '<div style="font-size:19px;font-weight:800;color:#f5f5fa;margin:0 0 6px;">Get 25 free Copilot prompts</div>'
+        + '<div style="font-size:14.5px;color:#a8a8c0;margin:0 0 16px;line-height:1.55;">Copy-paste prompts that save an hour a day \u2014 free, no account needed.</div>'
+        + '<a href="/free/copilot-prompts?utm_source=lesson&utm_medium=promo" style="display:inline-block;background:linear-gradient(135deg,#7c5cff,#5b8def);color:#fff;text-decoration:none;font-size:14.5px;font-weight:600;padding:11px 26px;border-radius:10px;">Grab the prompts \u2192</a>';
+      container.appendChild(bar);
+    } catch (e) {}
   }
 });
 

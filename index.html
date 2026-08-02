@@ -550,6 +550,21 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
     </div>
   </div>
 </section>
+<!-- ============ LEAD MAGNET CAPTURE ============ -->
+<section id="prompt-pack" style="padding: 0 0 56px;">
+  <div class="container">
+    <div style="background:linear-gradient(135deg, rgba(124,92,255,0.16), rgba(91,141,239,0.08)); border:1px solid rgba(124,92,255,0.32); border-radius:22px; padding:36px 38px; text-align:center;">
+      <div style="display:inline-block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1.4px; color:#8fe3c4; background:rgba(68,224,164,0.14); padding:4px 11px; border-radius:999px; margin-bottom:14px;">Free &middot; No account needed</div>
+      <h2 style="font-size:28px; font-weight:800; margin:0 0 10px; line-height:1.15;">25 Copilot prompts that save you an hour a day</h2>
+      <p style="font-size:15.5px; color:#a8a8c0; margin:0 auto 22px; max-width:520px; line-height:1.6;">Copy-paste prompts for Outlook, Word, Excel &amp; Teams. Get them free &mdash; plus a fresh one each week.</p>
+      <form id="ppForm" style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; max-width:460px; margin:0 auto;">
+        <input type="email" id="ppEmail" placeholder="you@work.com" required autocomplete="email" style="flex:1; min-width:200px; background:#0d0d1a; border:1px solid #26263f; border-radius:10px; padding:13px 15px; color:#f5f5fa; font-size:15px;">
+        <button type="submit" id="ppBtn" class="btn btn-primary" style="padding:13px 26px;">Get the prompts &rarr;</button>
+      </form>
+      <p style="font-size:13px; color:#6b6b85; margin:14px 0 0;">Instant access. No spam. Unsubscribe anytime.</p>
+    </div>
+  </div>
+</section>
 <!-- ============ TRUST STRIP ============ -->
 <section class="trust-strip" style="padding: 0 0 56px;">
   <div class="container">
@@ -716,6 +731,17 @@ footer { border-top: 1px solid var(--line); padding: 60px 0 30px; margin-top: 30
     });
   } catch(e){}
 })();
+</script>
+<script>
+(function(){var f=document.getElementById('ppForm');if(!f)return;
+f.addEventListener('submit',function(e){e.preventDefault();
+var em=document.getElementById('ppEmail').value.trim();var b=document.getElementById('ppBtn');
+if(!em||em.indexOf('@')<0)return;b.disabled=true;b.textContent='Sending\u2026';
+fetch('/api/waitlist',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:em,source:'copilot-prompts'})})
+.then(function(r){return r.json().catch(function(){return{};});})
+.then(function(){try{if(window.gtag)gtag('event','generate_lead',{source:'copilot-prompts-home'});}catch(_){}
+window.location='/free/copilot-prompts';})
+.catch(function(){b.disabled=false;b.textContent='Get the prompts \u2192';});});})();
 </script>
 <script src="/site-nav.js" defer></script>
 </body>

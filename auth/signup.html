@@ -220,6 +220,18 @@ submitBtn.addEventListener('click', async function() {
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Enter') submitBtn.click();
 });
+
+// iOS app (App Store compliance 3.1.1): no external purchase paths in the app.
+// Hide the paid plan options and force free signup — paid upgrades happen only
+// through the native In-App Purchase on the lesson paywall.
+(function () {
+  if (/LearningGPTiOS/i.test((navigator && navigator.userAgent) || '')) {
+    var pg = document.getElementById('planGroup');
+    if (pg) pg.style.display = 'none';
+    var ps = document.getElementById('plan');
+    if (ps) ps.value = 'free';
+  }
+})();
 </script>
   <script defer src="/_vercel/insights/script.js"></script>
 </body>

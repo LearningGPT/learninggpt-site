@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!container) return;
     const planLabel = required === 'pro_plus' ? 'Pro+' : 'Pro';
     if (LGPT_IOS) {
-      const iapPrice = required === 'pro_plus' ? '$19/mo' : '$9/mo';
+      const iapPrice = required === 'pro_plus' ? '$18.99/mo' : '$8.99/mo';
       // Not signed in → they need an account first so the purchase attaches to it.
       if (!token) {
         insertWall(container, false, `

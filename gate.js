@@ -176,21 +176,86 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+  // ── Native IAP callbacks (called by the iOS app after a StoreKit event) ──
+  // Verifies the signed transaction server-side, then unlocks the account.
+  window.LGPT_onIAPTransaction = function (jws, plan) {
+    var token = localStorage.getItem('lgpt_token');
+    var s = document.getElementById('lgpt-iap-status');
+    if (!token || !jws) { if (s) s.textContent = 'Please sign in first, then subscribe.'; return; }
+    if (s) s.textContent = 'Confirming your subscription…';
+    fetch('/api/apple-iap', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'verify', token: token, jws: jws })
+    })
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      if (data && data.success && data.plan && data.plan !== 'free') {
+        localStorage.setItem('lgpt_plan', data.plan);
+        // Only force a reload if the user is actively on the paywall.
+        if (s) { s.textContent = 'Unlocked! Reloading…'; setTimeout(function () { location.reload(); }, 600); }
+      } else if (s) {
+        s.textContent = 'Purchase recorded but access could not be confirmed. Email hello@learninggpt.ai and we will sort it out.';
+      }
+    })
+    .catch(function () { if (s) s.textContent = 'Network hiccup confirming your purchase — it will sync automatically in a moment.'; });
+  };
+  window.LGPT_onIAPStatus = function (status, detail) {
+    var s = document.getElementById('lgpt-iap-status');
+    if (!s) return;
+    if (status === 'started') s.textContent = 'Opening the App Store…';
+    else if (status === 'cancelled') s.textContent = '';
+    else if (status === 'pending') s.textContent = 'Waiting for approval…';
+    else if (status === 'failed') s.textContent = 'Purchase did not go through' + (detail ? ': ' + detail : '') + '.';
+    else if (status === 'restoring') s.textContent = 'Restoring your purchases…';
+    else if (status === 'restore_empty') s.textContent = 'No active subscription found on this Apple ID.';
+  };
+
   function showPaywall(required) {
     const container = hideContent(false);
     if (!container) return;
     const planLabel = required === 'pro_plus' ? 'Pro+' : 'Pro';
     if (LGPT_IOS) {
+      const iapPrice = required === 'pro_plus' ? '$19/mo' : '$9/mo';
+      // Not signed in → they need an account first so the purchase attaches to it.
+      if (!token) {
+        insertWall(container, false, `
+        <div style="margin:48px 0;padding:48px 40px;background:linear-gradient(135deg,rgba(124,92,255,0.12),rgba(91,141,239,0.08));border:1px solid rgba(124,92,255,0.3);border-radius:20px;text-align:center;">
+          <div style="font-size:40px;margin-bottom:16px;">🔒</div>
+          <div style="display:inline-block;background:linear-gradient(135deg,#7c5cff,#5b8def);color:white;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:4px 14px;border-radius:100px;margin-bottom:20px;">${planLabel} lesson</div>
+          <h2 style="font-size:26px;font-weight:800;margin:0 0 12px;color:#f5f5fa;">This lesson is part of ${planLabel}</h2>
+          <p style="font-size:16px;color:#a8a8c0;margin:0 0 32px;max-width:420px;margin-left:auto;margin-right:auto;line-height:1.6;">Sign in or create a free account, then subscribe to unlock every ${planLabel} lesson.</p>
+          <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+            <a href="/auth/login?redirect=${encodeURIComponent(window.location.pathname)}" style="display:inline-flex;align-items:center;background:linear-gradient(135deg,#7c5cff,#5b8def);color:white;padding:14px 28px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none;">Sign in</a>
+            <a href="/auth/signup?redirect=${encodeURIComponent(window.location.pathname)}" style="display:inline-flex;align-items:center;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.14);color:#a8a8c0;padding:14px 28px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none;">Create free account</a>
+          </div>
+        </div>`);
+        return;
+      }
+      // Signed in → native StoreKit purchase (no external purchase links; App Store IAP only).
       insertWall(container, false, `
       <div style="margin:48px 0;padding:48px 40px;background:linear-gradient(135deg,rgba(124,92,255,0.12),rgba(91,141,239,0.08));border:1px solid rgba(124,92,255,0.3);border-radius:20px;text-align:center;">
         <div style="font-size:40px;margin-bottom:16px;">🔒</div>
         <div style="display:inline-block;background:linear-gradient(135deg,#7c5cff,#5b8def);color:white;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:4px 14px;border-radius:100px;margin-bottom:20px;">${planLabel} lesson</div>
-        <h2 style="font-size:26px;font-weight:800;margin:0 0 12px;color:#f5f5fa;">This lesson is part of ${planLabel}</h2>
-        <p style="font-size:16px;color:#a8a8c0;margin:0 0 32px;max-width:420px;margin-left:auto;margin-right:auto;line-height:1.6;">Sign in with your LearningGPT account to access it.</p>
+        <h2 style="font-size:26px;font-weight:800;margin:0 0 12px;color:#f5f5fa;">Unlock ${planLabel}</h2>
+        <p style="font-size:16px;color:#a8a8c0;margin:0 0 28px;max-width:420px;margin-left:auto;margin-right:auto;line-height:1.6;">Subscribe to ${planLabel} for <strong style="color:#f5f5fa;">${iapPrice}</strong> to open every ${planLabel} lesson, all tool tracks, and the playground.</p>
         <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-          <a href="/auth/login?redirect=${encodeURIComponent(window.location.pathname)}" style="display:inline-flex;align-items:center;background:linear-gradient(135deg,#7c5cff,#5b8def);color:white;padding:14px 28px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none;">Sign in</a>
+          <button id="lgpt-iap-buy" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#7c5cff,#5b8def);color:white;padding:14px 28px;border-radius:10px;font-size:15px;font-weight:600;border:none;cursor:pointer;box-shadow:0 6px 24px rgba(124,92,255,0.3);">Subscribe — ${iapPrice}</button>
         </div>
+        <p id="lgpt-iap-status" style="font-size:13.5px;color:#a8a8c0;margin:18px 0 0;min-height:18px;"></p>
+        <p style="font-size:13px;color:#6b6b85;margin:8px 0 0;">Already subscribed? <a id="lgpt-iap-restore" href="#" style="color:#7c5cff;">Restore purchases</a></p>
       </div>`);
+      var _buy = document.getElementById('lgpt-iap-buy');
+      var _restore = document.getElementById('lgpt-iap-restore');
+      if (_buy) _buy.addEventListener('click', function () {
+        var s = document.getElementById('lgpt-iap-status');
+        if (window.LGPTNative && window.LGPTNative.subscribe) { if (s) s.textContent = 'Opening the App Store…'; window.LGPTNative.subscribe(required); }
+        else if (s) { s.textContent = 'In-app purchase is unavailable. Please update the app.'; }
+      });
+      if (_restore) _restore.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (window.LGPTNative && window.LGPTNative.restore) { window.LGPTNative.restore(); }
+      });
       return;
     }
     const planPrice = required === 'pro_plus' ? '$19/mo' : '$9/mo';

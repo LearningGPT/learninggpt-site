@@ -18,6 +18,51 @@ document.addEventListener('DOMContentLoaded', function() {
     '.lesson h1 { overflow-wrap: break-word; word-break: break-word; } .lesson h1 .serif, .lesson h1 .grad { padding-right: 0.4em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }';
   document.head.appendChild(s);
 
+  // ── Consistent lesson navigation (Previous / All lessons / Next) on EVERY lesson.
+  //    Loads on web + the iOS/Android/PWA apps (all run gate.js), so one fix covers all.
+  //    Injected as a sibling AFTER <article> so the paywall never hides it. ──
+  (function initLessonNav() {
+    var m = location.pathname.match(/^\/lessons\/([a-z0-9-]+)\/([a-z0-9-]+)\/?$/);
+    if (!m) return;
+    var art = document.querySelector('article.lesson');
+    if (!art || document.getElementById('lgpt-lesson-nav')) return;
+    var track = m[1], slug = m[2];
+    var SMALL = { and:1, or:1, the:1, a:1, an:1, to:1, of:1, for:1, with:1, in:1, on:1, vs:1, your:1 };
+    function titleize(x) {
+      return x.split('-').map(function (w, i) {
+        return (i > 0 && SMALL[w]) ? w : w.charAt(0).toUpperCase() + w.slice(1);
+      }).join(' ');
+    }
+    function link(href, label, kind) {
+      var a = document.createElement('a');
+      a.href = href; a.innerHTML = label;
+      var base = 'display:inline-flex;align-items:center;gap:6px;padding:12px 20px;border-radius:10px;font-size:14.5px;font-weight:600;text-decoration:none;white-space:nowrap;max-width:100%;';
+      if (kind === 'next') a.style.cssText = base + 'background:linear-gradient(135deg,#7c5cff,#5b8def);color:#fff;box-shadow:0 6px 20px rgba(124,92,255,0.25);';
+      else if (kind === 'ghost') a.style.cssText = base + 'background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.14);color:#c9c9dc;';
+      else a.style.cssText = base + 'color:#a8a8c0;';
+      return a;
+    }
+    function build(prev, next) {
+      var trackName = titleize(track);
+      var wrap = document.createElement('nav');
+      wrap.id = 'lgpt-lesson-nav';
+      wrap.setAttribute('aria-label', 'Lesson navigation');
+      wrap.style.cssText = 'max-width:760px;margin:24px auto 64px;padding:20px;border-top:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;';
+      wrap.appendChild(prev ? link('/lessons/' + track + '/' + prev, '← Previous', 'ghost')
+                            : link('/lessons/' + track + '/', '← All ' + trackName, 'ghost'));
+      if (prev) wrap.appendChild(link('/lessons/' + track + '/', 'All lessons', 'plain'));
+      wrap.appendChild(next ? link('/lessons/' + track + '/' + next, 'Next: ' + titleize(next) + ' →', 'next')
+                            : link('/lessons/' + track + '/', 'Finish — back to ' + trackName + ' ✓', 'ghost'));
+      if (art.parentNode) art.parentNode.insertBefore(wrap, art.nextSibling);
+    }
+    fetch('/lessons/' + track + '/').then(function (r) { return r.text(); }).then(function (html) {
+      var re = new RegExp('/lessons/' + track + '/([a-z0-9-]+)', 'g'), mm, order = [], seen = {};
+      while ((mm = re.exec(html))) { var s2 = mm[1]; if (s2 !== 'index' && !seen[s2]) { seen[s2] = 1; order.push(s2); } }
+      var idx = order.indexOf(slug);
+      build(idx > 0 ? order[idx - 1] : null, (idx >= 0 && idx < order.length - 1) ? order[idx + 1] : null);
+    }).catch(function () { build(null, null); });
+  })();
+
   // ── Auto next/prev lesson navigation ──
   // Add a track here and every lesson in it gets prev/next buttons automatically.
   (function injectLessonNav() {

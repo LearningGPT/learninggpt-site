@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Muse Code: Meta's coding agent — and the 30-cent trade (August 2026) — LearningGPT</title>
+<meta name="description" content="Meta launched Muse Code on August 5, 2026: a terminal coding agent powered by Muse Spark 1.2, with persistent background agents, crash recovery — and a $0.30/1M-token contributor tier paid for with your code. What shipped, and the tradeoff to understand." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#0064e0" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/meta-ai/muse-code" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/meta-ai/muse-code" />
+<meta property="og:title" content="Muse Code: Meta's coding agent — and the 30-cent trade (August 2026) — LearningGPT" />
+<meta property="og:description" content="Meta's Muse Code is here: a terminal coding agent with background agents, crash recovery, and a $0.30/1M-token tier that trains on your code. The plain-English tour of the August 5 launch." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is Muse Code?", "acceptedAnswer": {"@type": "Answer", "text": "Muse Code is Meta's first AI coding agent, announced in beta by Mark Zuckerberg on August 5, 2026. It runs in the terminal and handles complete software engineering tasks — planning changes, writing code, and validating results — across large codebases. It is powered by Muse Spark 1.2, a coding-focused update to Meta's Muse Spark model."}}, {"@type": "Question", "name": "How much does Muse Code cost?", "acceptedAnswer": {"@type": "Answer", "text": "The launch headline is the contributor tier: $0.30 per million total tokens, in exchange for permission to use your code to train Meta's future models. Full standard-tier pricing wasn't published at launch, and beta pricing can change."}}, {"@type": "Question", "name": "What platforms does Muse Code run on?", "acceptedAnswer": {"@type": "Answer", "text": "macOS and Linux, installed with a single terminal command. It is a terminal tool in the same category as Anthropic's Claude Code and OpenAI's Codex."}}, {"@type": "Question", "name": "How is Muse Code different from Claude Code or Codex?", "acceptedAnswer": {"@type": "Answer", "text": "Three differentiators: persistent background agents that keep building knowledge of your codebase between tasks, a local event log that lets it resume after a crash, and a data-for-discount contributor pricing tier that rivals don't offer."}}, {"@type": "Question", "name": "Is it safe to use the Muse Code contributor tier for work code?", "acceptedAnswer": {"@type": "Answer", "text": "Only use the contributor tier for code you are genuinely free to share, like personal or open-source projects you own. Employer or client code should never go through a tier that grants training permission without explicit approval."}}]}</script>
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --danger:#ff6b8a; --radius-lg:20px; --container:820px; --track:#0064e0; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:#0064e0;}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.22;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;box-shadow:0 4px 16px rgba(124,92,255,0.5);}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(0,100,224,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(0,100,224,0.12);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(31px,4.5vw,44px);font-weight:800;line-height:1.14;letter-spacing:-0.02em;margin:0 0 18px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#0064e0 0%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.12em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 32px;padding-bottom:26px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:26px;font-weight:700;letter-spacing:-0.01em;margin:46px 0 14px;}
+.lesson h3{font-size:18px;font-weight:600;margin:24px 0 8px;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 16px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul,.lesson ol{padding-left:24px;margin:0 0 16px;} .lesson li{margin-bottom:8px;}
+.callout{margin:26px 0;padding:20px 24px;background:linear-gradient(135deg,rgba(0,100,224,0.12),rgba(124,92,255,0.06));border:1px solid rgba(0,100,224,0.25);border-radius:var(--radius-lg);}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.decoder{margin:22px 0;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;}
+.decoder .row{display:grid;grid-template-columns:1fr 1.6fr;border-bottom:1px solid var(--line);}
+.decoder .row:last-child{border-bottom:none;}
+.decoder .row.head{background:rgba(0,100,224,0.14);font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);}
+.decoder .cell{padding:13px 18px;font-size:14.5px;line-height:1.55;}
+.decoder .row:not(.head) .cell:first-child{color:var(--text-dim);font-weight:600;background:rgba(255,255,255,0.02);}
+.decoder .row:nth-child(odd):not(.head){background:rgba(255,255,255,0.015);}
+@media (max-width:600px){.decoder .row{grid-template-columns:1fr;}.decoder .row:not(.head) .cell:first-child{padding-bottom:2px;}.decoder .row:not(.head) .cell:last-child{padding-top:4px;}}
+.demo-spot{margin:26px 0;padding:20px 24px;background:linear-gradient(180deg,var(--surface),var(--bg-soft));border:1px solid var(--line);border-radius:var(--radius-lg);}
+.demo-spot .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.demo-spot p:last-child{margin-bottom:0;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:16px 0;font-size:14.5px;}
+.gotcha::before{content:'\26A0  ';color:var(--warn);font-weight:700;}
+.lgpt-faq{margin:46px 0 8px;}
+.lgpt-faq h2{font-size:26px;line-height:1.15;letter-spacing:-.02em;font-weight:800;margin:0 0 18px;}
+.lgpt-faq details{border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#14142b;margin-bottom:10px;overflow:hidden;}
+.lgpt-faq details[open]{border-color:rgba(0,100,224,.45);}
+.lgpt-faq summary{list-style:none;cursor:pointer;padding:15px 18px;font-size:15.5px;font-weight:600;color:#f5f5fa;display:flex;justify-content:space-between;align-items:center;gap:14px;}
+.lgpt-faq summary::-webkit-details-marker{display:none;}
+.lgpt-faq summary .chev{flex-shrink:0;width:18px;height:18px;border-right:2px solid #0064e0;border-bottom:2px solid #0064e0;transform:rotate(45deg);transition:transform .2s;margin-top:-4px;}
+.lgpt-faq details[open] summary .chev{transform:rotate(-135deg);margin-top:4px;}
+.lgpt-faq .faq-a{padding:0 18px 16px;font-size:14.5px;line-height:1.7;color:#c7c7d6;}
+.lgpt-faq .faq-a strong{color:#f5f5fa;font-weight:600;} .lgpt-faq .faq-a a{color:var(--brand-2);font-weight:600;}
+.nextup{margin:46px 0 0;padding:22px 24px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.nextup .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:8px;}
+.nextup a{font-weight:600;}
+footer{border-top:1px solid var(--line);padding:30px 0;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--text-mute);}
+@media (max-width:600px){.footer-inner{flex-direction:column;gap:12px;text-align:center;}}
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/meta-ai/" class="nav-back">← Meta AI Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Meta AI</span>
+      <span class="chip chip-free">Free</span>
+      <span>~6 min read</span>
+      <span class="dot"></span>
+      <span>New · August 6, 2026</span>
+    </div>
+    <h1>Meta just walked into the coding-agent race: <span class="grad serif">meet Muse Code.</span></h1>
+    <p class="deck">On <strong>August 5, 2026</strong>, Mark Zuckerberg announced <strong>Muse Code</strong> — Meta's first AI coding agent, now in beta. It lives in the terminal, takes on complete software-engineering tasks across large codebases, and is powered by <strong>Muse Spark 1.2</strong>, a coding-focused update to the model behind Meta AI. The launch puts Meta in direct competition with Anthropic's Claude Code and OpenAI's Codex. And it comes with the most interesting pricing decision of the year: a tier that costs almost nothing — <em>if you let Meta train on your code</em>. Here's what shipped, and the trade to understand before anyone on your team types the install command.</p>
+
+    <h2>First, what's a "coding agent"? (60 seconds)</h2>
+    <p>A coding agent is an AI you hand a <em>task</em>, not a question. Instead of suggesting a line of code, it plans the change, edits the files, runs the checks, and reports back — working across an entire project the way a contractor works across a whole job site, not one brick. Claude Code and Codex defined the category; Muse Code is Meta's entry. If nobody at your business writes software, you'll never touch it — but the pricing model it introduces is something every AI buyer should understand, which is why this lesson is free.</p>
+
+    <h2>What Muse Code actually does</h2>
+    <div class="decoder">
+      <div class="row head"><div class="cell">Meta says</div><div class="cell">In plain English</div></div>
+      <div class="row"><div class="cell">"Complete software engineering tasks across large repos"</div><div class="cell">Give it a goal — fix this bug, add this feature — and it plans the changes, writes the code, and validates the results across a big, real-world codebase.</div></div>
+      <div class="row"><div class="cell">Persistent background agents</div><div class="cell">Specialized helpers keep studying your codebase between tasks, so the agent starts every job already knowing the project instead of re-learning it from scratch.</div></div>
+      <div class="row"><div class="cell">Local event log</div><div class="cell">Everything it does is journaled on your machine. If it crashes mid-task, it picks up where it left off instead of starting over.</div></div>
+      <div class="row"><div class="cell">One-line install</div><div class="cell">A single terminal command sets it up, on macOS and Linux. There's no app or website — it's a tool that lives where developers already work.</div></div>
+    </div>
+    <p>Under the hood is <strong>Muse Spark 1.2</strong> — Meta's first coding-focused revision of the Muse Spark model family. That matters beyond this one tool: model improvements tend to flow back into the Meta AI assistant everyone else uses. The model story so far is in <a href="/lessons/meta-ai/muse-spark">Muse Spark 1.1, explained</a>.</p>
+
+    <h2>The 30-cent trade</h2>
+    <div class="gotcha"><strong>The headline price is the lesson.</strong> Muse Code's "contributor tier" charges just <strong>$0.30 per million total tokens</strong> — a fraction of what comparable agents cost — in exchange for <strong>permission to use your code to train Meta's future models</strong>. That's not a hidden clause; it's the deal, stated plainly. It's also the clearest example yet of a pattern worth teaching your whole team: <em>when an AI service is dramatically cheaper than its competitors, check what you're paying with instead.</em> For a hobby project, the trade may be fine. For your employer's codebase or a client's, it almost certainly is not yours to make — that code is confidential, and "the AI discount tier" is not an approved disclosure channel. Same instinct as <a href="/lessons/meta-ai/privacy">the Meta AI privacy lesson</a>: Meta's products are inexpensive because data is the business.</div>
+
+    <div class="demo-spot">
+      <span class="lbl">How to try it — or watch it</span>
+      <p>Developers: Muse Code is in <strong>beta</strong> on macOS and Linux, installed from the terminal with one line — details are in Meta's announcement and developer docs. Everyone else: the thing to watch is whether the contributor-tier model spreads. If "discount for training data" works here, expect other AI vendors to try it — and expect it to show up in tools your team uses. Beta caveat: features and pricing details can shift while Meta is still rolling this out.</p>
+    </div>
+
+    <section class="lgpt-faq" aria-labelledby="faqh">
+      <h2 id="faqh">Muse Code — quick answers</h2>
+      <details><summary><span>What is Muse Code?</span><span class="chev"></span></summary><div class="faq-a">Meta's first AI coding agent, announced in beta by Mark Zuckerberg on August 5, 2026. It runs in the terminal and handles complete software-engineering tasks — planning changes, writing code, validating results — across large codebases. It's powered by Muse Spark 1.2.</div></details>
+      <details><summary><span>How much does it cost?</span><span class="chev"></span></summary><div class="faq-a">The launch headline is the "contributor tier": $0.30 per million total tokens, in exchange for permission to use your code to train future Meta models. Meta hadn't published full standard-tier pricing at launch, and beta pricing can change.</div></details>
+      <details><summary><span>What platforms does it run on?</span><span class="chev"></span></summary><div class="faq-a">macOS and Linux, installed with a single terminal command. It's a terminal tool, not an app — the same territory as Claude Code and OpenAI's Codex CLI.</div></details>
+      <details><summary><span>How is it different from Claude Code or Codex?</span><span class="chev"></span></summary><div class="faq-a">Same category, three differentiators: persistent background agents that keep building knowledge of your codebase between tasks, a local event log that lets it resume after a crash, and the data-for-discount contributor pricing — which none of its rivals offer.</div></details>
+      <details><summary><span>Should I use the contributor tier?</span><span class="chev"></span></summary><div class="faq-a">Only for code you're genuinely free to share — personal projects, open source you own. Never for employer or client code without explicit permission: the discount is paid for with your codebase.</div></details>
+    </section>
+
+    <div class="nextup">
+      <div class="lbl">Up next in Meta AI</div>
+      <p>The model family behind it: <a href="/lessons/meta-ai/muse-spark">Muse Spark — Meta's agent model, explained</a>. And for what Meta's assistant now does for non-coders, see <a href="/lessons/meta-ai/meta-ai-acts">Meta AI now takes action</a>.</p>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Meta.</div>
+    <a href="/lessons/meta-ai/" style="color: var(--text-dim);">← All Meta AI Mastery lessons</a>
+  </div>
+</footer>
+<script src="/gate.js"></script>
+</body>
+</html>

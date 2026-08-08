@@ -97,8 +97,9 @@ export default async function handler(req, res) {
 
   // If this came from the seniors free-5 capture, send the subscriber their lessons.
   let subscriberSent = false;
+  // Store every signup in Supabase (deduped) so it's visible and the drip can follow up.
+  await recordCapture(email, sourceLabel);
   if (sourceLabel === 'seniors-free-5') {
-    await recordCapture(email, sourceLabel);
     try {
       const r = await fetch('https://api.resend.com/emails', {
         method: 'POST',
@@ -121,7 +122,7 @@ export default async function handler(req, res) {
       method: 'POST',
       headers: { 'Authorization': 'Bearer ' + apiKey, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        from: 'LearningGPT Waitlist <no-reply@send.learninggpt.ai>',
+        from: 'LearningGPT Signups <no-reply@send.learninggpt.ai>',
         to: ['dan@learninggpt.ai'],
         reply_to: email,
         subject: '🎉 New signup (' + sourceLabel + '): ' + email,

@@ -187,7 +187,8 @@ export default async function handler(req, res) {
   ];
   for (const w of capWindows) {
     const caps = await sbSelect(
-      `email_captures?select=id,email,created_at` +
+      `email_captures?select=id,email,source,created_at` +
+      `&source=eq.seniors-free-5` +
       `&created_at=gte.${encodeURIComponent(w.from)}&created_at=lt.${encodeURIComponent(w.to)}`
     );
     const rows = Array.isArray(caps) ? caps : [];

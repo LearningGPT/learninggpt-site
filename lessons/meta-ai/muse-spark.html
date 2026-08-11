@@ -17,6 +17,167 @@
 <meta property="og:description" content="Meta's Muse Spark 1.1 landed July 9: agentic, multimodal, 1M-token context, computer use — and Meta's first developer API for its frontier models. What it changes in the Meta AI app." />
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is Muse Spark 1.1?", "acceptedAnswer": {"@type": "Answer", "text": "Muse Spark 1.1 is the July 9, 2026 model from Meta Superintelligence Labs — a multimodal reasoning model built for agentic tasks, with major gains in tool use, computer use, coding, and multimodal understanding. It's the model behind Thinking mode in the Meta AI app."}}, {"@type": "Question", "name": "Where can I use Muse Spark 1.1?", "acceptedAnswer": {"@type": "Answer", "text": "It's available now in Thinking mode in the Meta AI app and on meta.ai. Developers can also access it through the new Meta Model API, launched in public preview alongside the model."}}, {"@type": "Question", "name": "Is Muse Spark 1.1 free to use?", "acceptedAnswer": {"@type": "Answer", "text": "Using it inside Meta AI is included, like the rest of the assistant. The Meta Model API for developers is a commercial product in public preview — current rates are on Meta's developer site."}}, {"@type": "Question", "name": "Is Muse Spark open source like Llama?", "acceptedAnswer": {"@type": "Answer", "text": "Not Muse Spark 1.1 itself — no open weights were published with it, so you reach it through Meta's apps or the Meta Model API. Meta did not abandon open weights, though: on August 10, 2026 it released Muse Glimmer, a 30-billion-parameter model distilled from Muse Spark, under an Apache 2.0 licence on Hugging Face."}}, {"@type": "Question", "name": "What is Muse Glimmer?", "acceptedAnswer": {"@type": "Answer", "text": "Muse Glimmer is Meta Superintelligence Labs' 30-billion-parameter open-weights agentic model, released August 10, 2026 under an Apache 2.0 licence and distilled from Muse Spark. Quantized to roughly 4-bit it needs under 20 GB, so it runs locally on a Mac or PC with a single consumer GPU. It is built for always-on local agent workflows, reliable tool calling, local coding, and interleaved text and image input, and works with agent scaffolds including OpenClaw."}}]}</script>
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --danger:#ff6b8a; --radius-lg:20px; --container:820px; --track:#0064e0; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:#0064e0;}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.22;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;box-shadow:0 4px 16px rgba(124,92,255,0.5);}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(0,100,224,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(0,100,224,0.12);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(31px,4.5vw,44px);font-weight:800;line-height:1.14;letter-spacing:-0.02em;margin:0 0 18px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#0064e0 0%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.12em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 32px;padding-bottom:26px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:26px;font-weight:700;letter-spacing:-0.01em;margin:46px 0 14px;}
+.lesson h3{font-size:18px;font-weight:600;margin:24px 0 8px;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 16px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul,.lesson ol{padding-left:24px;margin:0 0 16px;} .lesson li{margin-bottom:8px;}
+.callout{margin:26px 0;padding:20px 24px;background:linear-gradient(135deg,rgba(0,100,224,0.12),rgba(124,92,255,0.06));border:1px solid rgba(0,100,224,0.25);border-radius:var(--radius-lg);}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.decoder{margin:22px 0;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;}
+.decoder .row{display:grid;grid-template-columns:1fr 1.6fr;border-bottom:1px solid var(--line);}
+.decoder .row:last-child{border-bottom:none;}
+.decoder .row.head{background:rgba(0,100,224,0.14);font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);}
+.decoder .cell{padding:13px 18px;font-size:14.5px;line-height:1.55;}
+.decoder .row:not(.head) .cell:first-child{color:var(--text-dim);font-weight:600;background:rgba(255,255,255,0.02);}
+.decoder .row:nth-child(odd):not(.head){background:rgba(255,255,255,0.015);}
+@media (max-width:600px){.decoder .row{grid-template-columns:1fr;}.decoder .row:not(.head) .cell:first-child{padding-bottom:2px;}.decoder .row:not(.head) .cell:last-child{padding-top:4px;}}
+.demo-spot{margin:26px 0;padding:20px 24px;background:linear-gradient(180deg,var(--surface),var(--bg-soft));border:1px solid var(--line);border-radius:var(--radius-lg);}
+.demo-spot .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.demo-spot p:last-child{margin-bottom:0;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:16px 0;font-size:14.5px;}
+.gotcha::before{content:'\26A0  ';color:var(--warn);font-weight:700;}
+.lgpt-faq{margin:46px 0 8px;}
+.lgpt-faq h2{font-size:26px;line-height:1.15;letter-spacing:-.02em;font-weight:800;margin:0 0 18px;}
+.lgpt-faq details{border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#14142b;margin-bottom:10px;overflow:hidden;}
+.lgpt-faq details[open]{border-color:rgba(0,100,224,.45);}
+.lgpt-faq summary{list-style:none;cursor:pointer;padding:15px 18px;font-size:15.5px;font-weight:600;color:#f5f5fa;display:flex;justify-content:space-between;align-items:center;gap:14px;}
+.lgpt-faq summary::-webkit-details-marker{display:none;}
+.lgpt-faq summary .chev{flex-shrink:0;width:18px;height:18px;border-right:2px solid #0064e0;border-bottom:2px solid #0064e0;transform:rotate(45deg);transition:transform .2s;margin-top:-4px;}
+.lgpt-faq details[open] summary .chev{transform:rotate(-135deg);margin-top:4px;}
+.lgpt-faq .faq-a{padding:0 18px 16px;font-size:14.5px;line-height:1.7;color:#c7c7d6;}
+.lgpt-faq .faq-a strong{color:#f5f5fa;font-weight:600;} .lgpt-faq .faq-a a{color:var(--brand-2);font-weight:600;}
+.nextup{margin:46px 0 0;padding:22px 24px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.nextup .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:8px;}
+.nextup a{font-weight:600;}
+footer{border-top:1px solid var(--line);padding:30px 0;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--text-mute);}
+@media (max-width:600px){.footer-inner{flex-direction:column;gap:12px;text-align:center;}}
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/meta-ai/" class="nav-back">← Meta AI Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Meta AI</span>
+      <span class="chip chip-free">Free</span>
+      <span>~7 min read</span>
+      <span class="dot"></span>
+      <span>New · July 2026</span>
+    </div>
+    <h1>Muse Spark 1.1: the brain behind Meta AI just got <span class="grad serif">ambitious.</span></h1>
+    <p class="deck">On July 9 — two days after Muse Image — Meta Superintelligence Labs shipped <strong>Muse Spark 1.1</strong>, the model that powers Thinking mode in the Meta AI app. It's built for <em>agentic</em> work: planning multi-step tasks, using tools, operating a computer, and keeping track of huge amounts of context. And for the first time ever, Meta opened a developer API for one of its frontier models. Here's what actually changed, minus the press-release fog.</p>
+
+    <div class="callout"><strong>Update — August 5, 2026:</strong> Meta shipped <strong>Muse Spark 1.2</strong>, a coding-focused revision of this model, as the engine behind <strong>Muse Code</strong> — Meta's first terminal coding agent, launched the same day in beta with a $0.30/1M-token "contributor tier" that trains on your code. The launch, the tool, and the pricing trade are covered in <a href="/lessons/meta-ai/muse-code">Muse Code: Meta's coding agent — and the 30-cent trade</a>.</div>
+
+    <div class="callout"><strong>Update — August 10, 2026:</strong> Meta released <strong>Muse Glimmer</strong> — and put the weights up under a permissive <strong>Apache 2.0</strong> licence, which partly reverses the closed posture described further down this page. Glimmer is a <strong>30-billion-parameter</strong> agentic model <em>distilled from Muse Spark</em>: Meta trained it on Spark's own outputs, then tuned it for long-horizon tool use. The point is where it runs. Compressed to roughly 4-bit, the model drops <strong>under 20&nbsp;GB</strong> and fits — with room for its image encoder and a speed-up drafter — inside a <strong>24&nbsp;GB or 32&nbsp;GB</strong> budget: a MacBook M4/M5 Max, or one consumer GPU like an RTX&nbsp;5090. Weights are on Hugging Face now, with Ollama, LM&nbsp;Studio, llama.cpp, MLX and ExecuTorch support promised "in the coming days," and it is built to plug into agent scaffolds including OpenClaw. So Meta now runs both plays at once: a paid API for the frontier model, open weights for the small one you can keep offline. What "open weights" actually buys you is in <a href="/lessons/foundations/inkling-open-weights">Inkling: what it means when a lab gives away the model</a>.</div>
+
+
+    <h2>What shipped, in one paragraph</h2>
+    <p>Muse Spark 1.1 is a <strong>multimodal reasoning model built for agentic tasks</strong>, with what Meta calls major gains in tool use, computer use, coding, and multimodal understanding. It's live now in <strong>Thinking mode in the Meta AI app and on meta.ai</strong> — nothing to install, no waitlist. Alongside it, Meta launched the <strong>Meta Model API</strong> in public preview, so developers can build on the model directly for the first time.</p>
+
+    <h2>The announcement, decoded</h2>
+    <p>Model launches come wrapped in jargon. Here's Meta's language translated into what it means when you're the one typing:</p>
+    <div class="decoder">
+      <div class="row head"><div class="cell">Meta says</div><div class="cell">What it means for you</div></div>
+      <div class="row"><div class="cell">"Built for agentic tasks"</div><div class="cell">You can hand it a goal ("plan this," "organize that," "find and compare these") instead of a single question, and it works through the steps itself.</div></div>
+      <div class="row"><div class="cell">"1 million token context, actively managed"</div><div class="cell">It can hold roughly a dozen novels' worth of conversation and documents in mind — and it decides what to keep and what to compress, so long sessions don't fall apart.</div></div>
+      <div class="row"><div class="cell">"Computer use"</div><div class="cell">The model can operate apps and a browser on your behalf — clicking, typing, and switching between programs — and it chooses when to automate with a script versus click like a human.</div></div>
+      <div class="row"><div class="cell">"Orchestrates multi-agent systems"</div><div class="cell">On a big job, it splits itself into a coordinator plus parallel helpers, the way a project lead delegates to a team. You just see faster results.</div></div>
+      <div class="row"><div class="cell">"Multimodal understanding"</div><div class="cell">It reads images, video, and audio as fluently as text — and can act on what it sees, not just describe it.</div></div>
+    </div>
+
+    <div class="demo-spot">
+      <span class="lbl">Meta's own demo, worth knowing about</span>
+      <p><strong>The Marketplace agent.</strong> In Meta's launch demo, a user shoots a quick smartphone video of an item, and Muse Spark 1.1 pulls the useful frames as photos, reasons about what the product is, then <em>operates the browser itself</em> to create the Facebook Marketplace listing. That's the shape of what "agentic" means in practice: perception, judgment, and action in one loop — not a chatbot with better answers.</p>
+    </div>
+
+    <h2>The bigger story: Meta is selling model access now</h2>
+    <p>For years Meta's play was the opposite of OpenAI's and Anthropic's: give the models away as open-weights Llama and win on ubiquity. Muse Spark 1.1 breaks that pattern. <strong>No open weights shipped with it</strong> — you reach the model through Meta's apps or through the new <strong>Meta Model API</strong>, a commercial product now in public preview. (The pattern is now a split, not a reversal: on August 10 Meta open-sourced <strong>Muse Glimmer</strong>, a small model distilled <em>from</em> Spark, under Apache 2.0 — the frontier model stays paid, the laptop-sized one is free.) Launch coverage widely notes the API undercuts rival frontier models on price; check Meta's developer site for current rates rather than trusting any article's snapshot, ours included.</p>
+    <p>Why you should care even if you never touch an API: paid access means Meta now has a direct revenue reason to keep this model sharp, and early partners — including coding tools like Cline and Replit and the OpenClaw agent platform — are already wiring it in. Expect Muse Spark to start showing up in tools that have nothing to do with Meta's apps.</p>
+
+    <h2>Try it today — a 2-minute test drive</h2>
+    <p>Open the <strong>Meta AI app</strong> (or meta.ai), switch the conversation to <strong>Thinking</strong> mode, and give it a genuinely multi-step task instead of a question. A good first test: <em>"Plan a garage sale for the last Saturday of this month — make me a checklist, a pricing guide for typical items, and a short listing I can post."</em> Watch how it structures the work rather than dumping one long answer. That structured, plan-first behavior is the 1.1 difference.</p>
+
+    <h2>The honest part</h2>
+    <div class="gotcha"><strong>"Public preview" means moving parts.</strong> The API is days old, and Meta AI features have a track record of changing fast — Muse Image lost its @-mention feature three days after launch. The capability claims above are Meta's own evaluation numbers; independent testing takes weeks to catch up. And computer use inside consumer Meta AI is arriving unevenly — what you can trigger from the app today may differ from the demos. Treat this release as a direction, not a finished promise.</div>
+
+    <section class="lgpt-faq" aria-labelledby="faqh">
+      <h2 id="faqh">Muse Spark 1.1 — quick answers</h2>
+      <details><summary><span>What is Muse Spark 1.1?</span><span class="chev"></span></summary><div class="faq-a">Meta Superintelligence Labs' July 9, 2026 model — a multimodal reasoning model built for agentic tasks, with major gains in tool use, computer use, coding, and multimodal understanding. It powers Thinking mode in Meta AI.</div></details>
+      <details><summary><span>Where can I use it?</span><span class="chev"></span></summary><div class="faq-a">In <strong>Thinking mode</strong> in the Meta AI app and on meta.ai, available now. Developers can build with it via the new Meta Model API, in public preview.</div></details>
+      <details><summary><span>Is it free?</span><span class="chev"></span></summary><div class="faq-a">Inside Meta AI, yes — it's part of the assistant. The developer API is a commercial product; current pricing is on Meta's developer site.</div></details>
+      <details><summary><span>Is it open source like Llama?</span><span class="chev"></span></summary><div class="faq-a">Not Muse Spark 1.1 itself — no open weights were published, so access is through Meta's apps or the paid API. But Meta has not abandoned open weights: on <strong>August 10, 2026</strong> it released <strong>Muse Glimmer</strong>, a 30B model distilled from Spark, under Apache 2.0 on Hugging Face. Frontier model paid, small model free.</div></details>
+      <details><summary><span>What is Muse Glimmer?</span><span class="chev"></span></summary><div class="faq-a">Meta's 30-billion-parameter open-weights agentic model, released <strong>August 10, 2026</strong> under Apache 2.0 and distilled from Muse Spark. Compressed to about 4-bit it needs under 20&nbsp;GB, so it runs locally on a Mac or PC with a single consumer GPU — built for always-on local agents, tool calling, local coding and image-plus-text input.</div></details>
+    </section>
+
+    <div class="nextup">
+      <div class="lbl">Up next in Meta AI</div>
+      <p>The other half of Meta's big July: <a href="/lessons/meta-ai/muse-image">Muse Image — Meta's new image model, explained</a>. Spark plans, Image draws — they're designed to work together.</p>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Meta.</div>
+    <a href="/lessons/meta-ai/" style="color: var(--text-dim);">← All Meta AI Mastery lessons</a>
+  </div>
+</footer>
+<script src="/gate.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Muse Spark 1.1: Meta's agent model, explained (July 2026) — LearningGPT</title>
+<meta name="description" content="Meta's Muse Spark 1.1 landed July 9: an agentic, multimodal model with a 1M-token context, computer use, and Meta's first developer API for its frontier models. What it changes in the Meta AI app — in plain English." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#0064e0" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/meta-ai/muse-spark" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/meta-ai/muse-spark" />
+<meta property="og:title" content="Muse Spark 1.1: Meta's agent model, explained — LearningGPT" />
+<meta property="og:description" content="Meta's Muse Spark 1.1 landed July 9: agentic, multimodal, 1M-token context, computer use — and Meta's first developer API for its frontier models. What it changes in the Meta AI app." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is Muse Spark 1.1?", "acceptedAnswer": {"@type": "Answer", "text": "Muse Spark 1.1 is the July 9, 2026 model from Meta Superintelligence Labs — a multimodal reasoning model built for agentic tasks, with major gains in tool use, computer use, coding, and multimodal understanding. It's the model behind Thinking mode in the Meta AI app."}}, {"@type": "Question", "name": "Where can I use Muse Spark 1.1?", "acceptedAnswer": {"@type": "Answer", "text": "It's available now in Thinking mode in the Meta AI app and on meta.ai. Developers can also access it through the new Meta Model API, launched in public preview alongside the model."}}, {"@type": "Question", "name": "Is Muse Spark 1.1 free to use?", "acceptedAnswer": {"@type": "Answer", "text": "Using it inside Meta AI is included, like the rest of the assistant. The Meta Model API for developers is a commercial product in public preview — current rates are on Meta's developer site."}}, {"@type": "Question", "name": "Is Muse Spark open source like Llama?", "acceptedAnswer": {"@type": "Answer", "text": "No. Unlike Meta's Llama family, no open weights were published with Muse Spark 1.1 — you reach it through Meta's apps or the Meta Model API. That's a notable shift in how Meta ships its frontier models."}}]}</script>
 <style>
 :root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --danger:#ff6b8a; --radius-lg:20px; --container:820px; --track:#0064e0; }

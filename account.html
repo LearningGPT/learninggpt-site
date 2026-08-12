@@ -161,6 +161,16 @@ nav { position: relative; z-index: 10; padding: 18px 28px; display: flex; align-
     <div class="toast" id="planToast"></div>
   </div>
 
+  <!-- Delete account (permanent) -->
+  <div class="card">
+    <h2>Delete account</h2>
+    <p class="card-sub">Permanently delete your LearningGPT account and personal data. This cannot be undone. Any active subscription purchased on our site is cancelled as part of deletion. If you subscribed through the App Store, you can also manage that subscription in your Apple settings.</p>
+    <div class="plan-actions">
+      <button class="btn btn-outline" id="deleteAccountBtn" style="border-color:rgba(255,107,138,0.5);color:#ff6b8a;">Delete my account</button>
+    </div>
+    <div class="toast" id="deleteToast"></div>
+  </div>
+
 </div>
 
 <script>
@@ -385,6 +395,39 @@ nav { position: relative; z-index: 10; padding: 18px 28px; display: flex; align-
     localStorage.removeItem('lgpt_token');
     localStorage.removeItem('lgpt_plan');
     location.href = '/';
+  });
+
+  // ---- Delete account (permanent) ----
+  document.getElementById('deleteAccountBtn').addEventListener('click', async () => {
+    const toast = document.getElementById('deleteToast');
+    toast.className = 'toast';
+    if (!confirm('Delete your LearningGPT account? This permanently removes your account and personal data and cannot be undone.')) return;
+    const typed = prompt('To confirm, type DELETE and press OK.');
+    if (!typed || typed.trim().toUpperCase() !== 'DELETE') return;
+    const btn = document.getElementById('deleteAccountBtn');
+    btn.disabled = true; btn.textContent = 'Deleting\u2026';
+    try {
+      const r = await fetch('/api/delete-account', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: token, confirm: 'DELETE' })
+      });
+      const d = await r.json().catch(() => ({}));
+      if (r.ok && d.success) {
+        localStorage.removeItem('lgpt_token');
+        localStorage.removeItem('lgpt_plan');
+        localStorage.removeItem('lgpt_completed');
+        alert('Your account has been deleted.');
+        location.href = '/';
+        return;
+      }
+      toast.textContent = (d && d.error) || 'Could not delete your account right now. Please try again.';
+      toast.className = 'toast visible';
+    } catch (e2) {
+      toast.textContent = 'Could not delete your account right now. Please try again.';
+      toast.className = 'toast visible';
+    }
+    btn.disabled = false; btn.textContent = 'Delete my account';
   });
 
   // ---- Load everything ----

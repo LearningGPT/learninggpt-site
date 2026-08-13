@@ -18,44 +18,7 @@
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "How much does DeepSeek cost?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "The chat app is free. The API is paid per token but far cheaper than frontier models — often a few dollars a month for personal use. Verify current rates on DeepSeek's pricing page."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Does DeepSeek have a free tier?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes — the chat app and website are free, and the API typically includes a free starter grant of tokens."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Why is DeepSeek so cheap?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Efficient training and serving plus open weights let it undercut frontier pricing dramatically, which is what pressured competitors to lower their prices."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What is context caching?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "A discount where repeated prompt prefixes (like a system prompt or a long document) are billed at a fraction of the normal token price — a big saving on repetitive workloads."
-      }
-    }
-  ]
-}
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much does DeepSeek cost?","acceptedAnswer":{"@type":"Answer","text":"The chat app is free. The API is paid per token but far cheaper than frontier models. As of August 13, 2026 the deepseek-v4-pro endpoint lists $0.435 per million input tokens on a cache miss, $0.003625 on a cache hit, and $0.87 per million output tokens. Verify current rates on DeepSeek's pricing page."}},{"@type":"Question","name":"Does DeepSeek have a free tier?","acceptedAnswer":{"@type":"Answer","text":"Yes — the chat app and website are free, and the API typically includes a free starter grant of tokens."}},{"@type":"Question","name":"Why is DeepSeek so cheap?","acceptedAnswer":{"@type":"Answer","text":"Efficient training and serving plus open weights let it undercut frontier pricing dramatically, which is what pressured competitors to lower their prices."}},{"@type":"Question","name":"What is context caching?","acceptedAnswer":{"@type":"Answer","text":"A discount where repeated prompt prefixes (like a system prompt or a long document) are billed at a fraction of the normal token price — a big saving on repetitive workloads."}},{"@type":"Question","name":"Is DeepSeek about to get more expensive?","acceptedAnswer":{"@type":"Answer","text":"Possibly. DeepSeek's own pricing page carries a notice that the company plans a significant increase in overall API pricing, with specifics to be confirmed by official notice. Until that lands the published V4 Pro rates hold, but a long-term budget should not assume they will."}}]}
 </script>
 <style>
 :root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --danger:#ff6b8a; --radius-lg:20px; --container:820px; --track:#4d6bfe; }
@@ -135,7 +98,7 @@ footer{border-top:1px solid var(--line);padding:30px 0;}
       <span class="chip chip-pro">Pro</span>
       <span>~8 min read</span>
       <span class="dot"></span>
-      <span>Updated June 2026</span>
+      <span>Updated August 13, 2026</span>
     </div>
     <h1>What DeepSeek costs: <span class="grad serif">about as close to free as AI gets.</span></h1>
     <p class="deck">DeepSeek's whole pitch is price. Here is the honest breakdown — what is free, what the API actually costs, and the discounts that make a real workload almost free.</p>
@@ -143,15 +106,27 @@ footer{border-top:1px solid var(--line);padding:30px 0;}
 <p>The <strong>chat app and website are free</strong>. The <strong>API</strong> is paid but priced far below the frontier, and new accounts usually get a <strong>free starter grant of tokens</strong> to build with before you spend anything.</p>
 <h2><span class="num">02</span>API pricing, in plain terms</h2>
 <p>You pay per token, split into input and output, with <strong>Flash</strong> dramatically cheaper than <strong>Pro</strong>. The numbers are small enough that for most personal and small-team use, a month of real work costs a few dollars — sometimes cents. Always check DeepSeek's current rate card before relying on a figure.</p>
+<p>As of <strong>August 13, 2026</strong>, the flagship <code>deepseek-v4-pro</code> endpoint — now serving the general-availability <a href="/lessons/deepseek/migrate-to-v4">V4 Pro 0813 build that left preview on August 12</a> — lists these rates per million tokens:</p>
+<div class="workflow">
+<h3>V4 Pro list rates, per million tokens</h3>
+<ul>
+  <li><strong>Input, cache <em>miss</em>:</strong> $0.435</li>
+  <li><strong>Input, cache <em>hit</em>:</strong> $0.003625</li>
+  <li><strong>Output:</strong> $0.87</li>
+</ul>
+</div>
+<p>Read those first two rows again: <strong>a cache hit costs about 1/120th of a cache miss.</strong> That is not a rounding difference, it is the whole game — which is why the section below is the one that actually decides your bill. The endpoint carries a 1M-token context window and a 384K-token maximum output.</p>
 <div class="callout"><span class="lbl">The discount that matters</span><p><strong>Context caching.</strong> When your prompts share a repeated prefix (a system prompt, a long document), cached tokens are billed at a fraction of the normal price. For repetitive workloads this alone can cut the bill by most of it.</p></div>
+<div class="gotcha"><strong>A price rise is on the record.</strong> DeepSeek's own rate card carries a notice that the company plans a <strong>significant increase in overall API pricing</strong>, with specifics to come by official notice. The rates above are what is published today, not a promise for the quarter — if you are building a budget on "DeepSeek is nearly free," build in headroom.</div>
 <div class="gotcha">Prices and free grants change. Use the figures here as ballpark and confirm on DeepSeek's pricing page — and model your own volume in our <a href="/ai-cost-calculator">AI cost calculator</a>.</div>
     <section class="lgpt-faq" aria-labelledby="faqh">
       <div class="faq-eyebrow">Frequently asked</div>
       <h2 id="faqh">DeepSeek — your questions, answered</h2>
-      <details><summary><span>How much does DeepSeek cost?</span><span class="chev"></span></summary><div class="faq-a">The chat app is free. The API is paid per token but far cheaper than frontier models — often a few dollars a month for personal use. Verify current rates on DeepSeek's pricing page.</div></details>
+      <details><summary><span>How much does DeepSeek cost?</span><span class="chev"></span></summary><div class="faq-a">The chat app is free. The API is paid per token but far cheaper than frontier models — often a few dollars a month for personal use. As of August 13, 2026 the deepseek-v4-pro endpoint lists $0.435 per million input tokens on a cache miss, $0.003625 on a cache hit, and $0.87 per million output tokens. Verify current rates on DeepSeek's pricing page.</div></details>
       <details><summary><span>Does DeepSeek have a free tier?</span><span class="chev"></span></summary><div class="faq-a">Yes — the chat app and website are free, and the API typically includes a free starter grant of tokens.</div></details>
       <details><summary><span>Why is DeepSeek so cheap?</span><span class="chev"></span></summary><div class="faq-a">Efficient training and serving plus open weights let it undercut frontier pricing dramatically, which is what pressured competitors to lower their prices.</div></details>
       <details><summary><span>What is context caching?</span><span class="chev"></span></summary><div class="faq-a">A discount where repeated prompt prefixes (like a system prompt or a long document) are billed at a fraction of the normal token price — a big saving on repetitive workloads.</div></details>
+      <details><summary><span>Is DeepSeek about to get more expensive?</span><span class="chev"></span></summary><div class="faq-a">Possibly. DeepSeek's own pricing page carries a notice that the company plans a significant increase in overall API pricing, with specifics to be confirmed by official notice. Until that lands, the published V4 Pro rates hold — but do not build a long-term budget assuming they will.</div></details>
     </section>
     <div class="nextup"><div class="lbl">Keep going</div><a href="/lessons/deepseek/">← Back to all DeepSeek lessons</a></div>
   </div>

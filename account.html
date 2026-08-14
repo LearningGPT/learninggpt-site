@@ -333,6 +333,16 @@ nav { position: relative; z-index: 10; padding: 18px 28px; display: flex; align-
 
     const actions = document.getElementById('planActions');
     actions.innerHTML = '';
+    // iOS app: purchases and billing run through Apple In-App Purchase only —
+    // never show web checkout or the billing portal inside the app (App Store 3.1.1).
+    if (/LearningGPTiOS/i.test(navigator.userAgent)) {
+      const lessons = document.createElement('a');
+      lessons.className = 'btn btn-grad';
+      lessons.href = '/lessons';
+      lessons.textContent = (plan === 'free') ? 'Browse lessons — subscribe on any Pro lesson' : 'Go to lessons';
+      actions.appendChild(lessons);
+      return;
+    }
     if (plan === 'free') {
       const proBtn = document.createElement('button');
       proBtn.className = 'btn btn-grad';

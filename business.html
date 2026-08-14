@@ -605,5 +605,17 @@ nav { position: relative; z-index: 10; padding: 20px 32px; display: flex; align-
 </footer>
 <script defer src="/_vercel/insights/script.js"></script>
   <script src="/site-nav.js" defer></script>
+<script>
+  // iOS app: team plans are not purchasable in-app (App Store 3.1.1) — contact instead.
+  (function () {
+    if (!/LearningGPTiOS/i.test(navigator.userAgent)) return;
+    var els = document.querySelectorAll('[onclick*="plan=business"], a[href*="plan=business"]');
+    els.forEach(function (b) {
+      b.textContent = 'Contact us about team plans';
+      b.removeAttribute('onclick');
+      b.addEventListener('click', function (ev) { ev.preventDefault(); window.location.href = 'mailto:hello@learninggpt.ai'; });
+    });
+  })();
+</script>
 </body>
 </html>

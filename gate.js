@@ -419,6 +419,12 @@ document.addEventListener('DOMContentLoaded', function () {
       store[track][window.location.pathname] = true;
       localStorage.setItem('lgpt_completed', JSON.stringify(store));
     } catch (e) {}
+    // Also record server-side (signed-in users) so team dashboards and the
+    // account page can show real progress across devices. Fire-and-forget.
+    try {
+      var tk = localStorage.getItem('lgpt_token');
+      if (tk) fetch('/api/progress', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'complete', token: tk, track: track, lesson: window.location.pathname }) });
+    } catch (e2) {}
   });
 
   row.insertBefore(a, row.firstChild);

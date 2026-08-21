@@ -178,3 +178,33 @@
     }
   } catch (e) {}
 })();
+
+/* ── Microsoft Advertising UET tag (added 2026-08-20) ──────────────────────
+   Powers conversion tracking for the Microsoft Search campaign so we can see
+   which keywords produce signups/purchases, not just clicks.
+   To activate: replace UET_TAG_ID below with the Tag ID from
+   Microsoft Advertising → Tools → UET tag. Until then this is inert. */
+(function () {
+  var UET_TAG_ID = 'UET_TAG_ID';                 // <-- paste the numeric Tag ID here
+  if (!UET_TAG_ID || UET_TAG_ID === 'UET_TAG_ID') return;   // not configured yet
+  try {
+    window.uetq = window.uetq || [];
+    var o = { ti: UET_TAG_ID, enableAutoSpaTracking: true };
+    o.q = window.uetq;
+    window.uetq = o;
+    var s = document.createElement('script');
+    s.async = 1;
+    s.src = '//bat.bing.com/bat.js';
+    s.onload = function () { window.UET && (window.uetq = new window.UET(o)); };
+    document.head.appendChild(s);
+
+    // Conversion events, fired from the pages that mean something.
+    var p = location.pathname;
+    if (/\/auth\/success/.test(p)) {
+      window.uetq.push('event', 'purchase', { revenue_value: 9, currency: 'USD' });
+    } else if (/\/account/.test(p) && sessionStorage.getItem('lgpt_new_signup') === '1') {
+      sessionStorage.removeItem('lgpt_new_signup');
+      window.uetq.push('event', 'signup', {});
+    }
+  } catch (e) {}
+})();

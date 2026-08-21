@@ -154,7 +154,7 @@ nav { position: relative; z-index: 10; padding: 18px 28px; display: flex; align-
       return '<div class="member">' +
         '<div class="m-left">' +
           '<div class="m-email">' + esc(m.email) + '</div>' +
-          '<div class="m-meta">' + name + '<span class="status ' + statusClass + '">' + statusText + '</span></div>' +
+          '<div class="m-meta">' + name + '<span class="status ' + statusClass + '">' + statusText + '</span><span class="m-eng" data-em="' + esc(m.email).toLowerCase() + '" style="color:var(--text-mute);font-size:12px;margin-left:10px;"></span></div>' +
         '</div>' + removeBtn +
       '</div>';
     }).join('');
@@ -210,6 +210,7 @@ nav { position: relative; z-index: 10; padding: 18px 28px; display: flex; align-
     if (bulkBtn) bulkBtn.addEventListener('click', doBulkInvite);
     const bulkFile = document.getElementById('bulkFile');
     if (bulkFile) bulkFile.addEventListener('change', handleBulkFile);
+    loadEngagement();
   }
 
   function msg(text, kind) {
@@ -235,6 +236,27 @@ nav { position: relative; z-index: 10; padding: 18px 28px; display: flex; align-
       btn.disabled = false; btn.textContent = 'Send invite';
       msg(r.data.error || 'Could not send the invite. Try again.', 'err');
     }
+  }
+
+  // Real per-seat engagement from the server (lesson completions).
+  async function loadEngagement() {
+    try {
+      const r = await fetch('/api/progress', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'team', token: token })
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.engagement) return;
+      document.querySelectorAll('.m-eng').forEach(function (el) {
+        const e = d.engagement[el.dataset.em];
+        if (!e) return;
+        if (!e.count) { el.textContent = 'No lessons yet'; return; }
+        const days = Math.floor((Date.now() - new Date(e.last).getTime()) / 864e5);
+        const when = days <= 0 ? 'today' : days === 1 ? 'yesterday' : days + ' days ago';
+        el.textContent = e.count + ' lesson' + (e.count === 1 ? '' : 's') + ' · last active ' + when;
+      });
+    } catch (err) { /* engagement is decorative — never break the page */ }
   }
 
   async function doRemove(id, email) {

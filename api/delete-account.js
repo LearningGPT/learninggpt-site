@@ -92,7 +92,8 @@ export default async function handler(req, res) {
       del(`drip_log?profile_id=eq.${encodeURIComponent(userId)}`),
       email ? del(`drip_log?email=eq.${e}`) : Promise.resolve(),
       email ? del(`email_captures?email=eq.${e}`) : Promise.resolve(),
-      del(`business_members?user_id=eq.${encodeURIComponent(userId)}`)
+      del(`business_members?user_id=eq.${encodeURIComponent(userId)}`),
+      del(`lesson_completions?user_id=eq.${encodeURIComponent(userId)}`)
     ]);
 
     // 4. Delete the profile row.

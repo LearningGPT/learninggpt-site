@@ -39,7 +39,8 @@ async function businessSyncSeat(email, userId) {
     if (!biz) return null;
     if (biz.subscription_status && biz.subscription_status !== 'active') return null;
 
-    const tier = biz.plan === 'business_pro_plus' ? 'pro_plus' : 'pro';
+    // Single all-access plan ('business') grants pro_plus; legacy business_pro keeps pro.
+    const tier = biz.plan === 'business_pro' ? 'pro' : 'pro_plus';
 
     // Activate the seat (mark active + link their user id).
     if (member.status !== 'active' || !member.user_id) {

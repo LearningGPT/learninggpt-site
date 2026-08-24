@@ -33,8 +33,10 @@ const sbHeaders = {
 };
 
 // A business plan maps to the access tier we grant on the member's profile.
+// The current single all-access plan ('business') grants pro_plus; legacy
+// business_pro rows keep granting pro.
 function accessTierFor(plan) {
-  return plan === 'business_pro_plus' ? 'pro_plus' : 'pro';
+  return plan === 'business_pro' ? 'pro' : 'pro_plus';
 }
 function nowIso() { return new Date().toISOString(); }
 
@@ -206,7 +208,7 @@ async function handleBusinessCheckout(session, stripeKey, isLive) {
   const companyName = m.company_name || 'Your company';
   const adminEmail = m.admin_email || s.customer_email || session.customer_email;
   const adminName = m.admin_name || 'there';
-  const plan = m.plan; // business_pro | business_pro_plus
+  const plan = m.plan; // 'business' (current) | business_pro / business_pro_plus (legacy)
   const seats = parseInt(m.seats, 10) || 0;
   const customerId = s.customer || session.customer;
   const subscriptionId = s.subscription || session.subscription;

@@ -1,24 +1,22 @@
 // Vercel serverless function for LearningGPT BUSINESS onboarding + team management
 // Actions:
-//   create-checkout → business signup → Stripe Checkout (unchanged; add-on parked)
+//   create-checkout → business signup → Stripe Checkout (ONE all-access plan,
+//                     banded by seats: 5–100 $9 · 101–500 $6 · 500+ $4 /user/mo;
+//                     annual = 10× monthly. Price built inline via price_data —
+//                     no Stripe dashboard price IDs needed for new checkouts.)
 //   team            → admin loads their company + member list
 //   invite          → admin assigns a seat to an email (+ sends an invite email)
 //   remove          → admin frees a seat and revokes that person's access
 //   sync            → any logged-in user claims a pending invite → access turns on
 //
-// Price IDs below are the LIVE ones currently in use — DO NOT change them.
-
 import { randomUUID } from 'node:crypto';
 
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
 
-const PRICES = {
-  business_pro:      { monthly: 'price_1TcGwIPtA7wbJTlEgs7udWDF', annual: 'price_1TcGwfPtA7wbJTlEhMJI109i' },
-  business_pro_plus: { monthly: 'price_1TcGx6PtA7wbJTlE3gJtkpBZ', annual: 'price_1TcGxRPtA7wbJTlEQnHV1HRu' },
-  team_engagement_monthly: 'price_1TcGxpPtA7wbJTlEcgiBla5R'
-};
+// Banded all-access pricing (USD cents per user per month).
+function bandUnitCents(seats) { return seats > 500 ? 400 : seats > 100 ? 600 : 900; }
 
-const MIN_SEATS = 3;
+const MIN_SEATS = 5;
 const SITE = 'https://learninggpt.ai';
 
 // ── Supabase / Resend ────────────────────────────────────────────────────────
@@ -35,7 +33,9 @@ const sbHeaders = {
 
 function enc(v) { return encodeURIComponent(v == null ? '' : v); }
 function nowIso() { return new Date().toISOString(); }
-function accessTierFor(plan) { return plan === 'business_pro_plus' ? 'pro_plus' : 'pro'; }
+// One all-access business plan → everyone gets pro_plus-tier access.
+// (Legacy rows may still say business_pro / business_pro_plus.)
+function accessTierFor(plan) { return plan === 'business_pro' ? 'pro' : 'pro_plus'; }
 function normEmail(e) { return String(e || '').trim().toLowerCase(); }
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -179,7 +179,9 @@ export default async function handler(req, res) {
   if (action === 'create-checkout') {
     let { plan, billing, seats, company, name, email } = body;
 
-    if (plan !== 'business_pro' && plan !== 'business_pro_plus') {
+    // Legacy plan values from cached pages fold into the single all-access plan.
+    if (plan === 'business_pro' || plan === 'business_pro_plus') plan = 'business';
+    if (plan !== 'business') {
       return res.status(400).json({ error: 'Invalid plan.' });
     }
     if (billing !== 'monthly' && billing !== 'annual') {
@@ -196,17 +198,18 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'A valid work email is required.' });
     }
 
-    // Add-on is parked (Contact Dan) until those features ship — never charged for now.
-    const addonActive = false;
-
-    const basePrice = PRICES[plan][billing];
-    if (!basePrice) return res.status(500).json({ error: 'Price not configured. Please contact support.' });
     if (!STRIPE_SECRET_KEY) return res.status(500).json({ error: 'Payment system not configured. Please contact support.' });
+
+    // Server-side price: never trust client numbers. Annual = 10× monthly (2 months free).
+    const unitCents = billing === 'annual' ? bandUnitCents(seats) * 10 : bandUnitCents(seats);
 
     const params = {
       'mode': 'subscription',
       'customer_email': email,
-      'line_items[0][price]': basePrice,
+      'line_items[0][price_data][currency]': 'usd',
+      'line_items[0][price_data][product_data][name]': 'LearningGPT for Business — All Access',
+      'line_items[0][price_data][unit_amount]': String(unitCents),
+      'line_items[0][price_data][recurring][interval]': billing === 'annual' ? 'year' : 'month',
       'line_items[0][quantity]': String(seats),
       'success_url': `${SITE}/business-success?session_id={CHECKOUT_SESSION_ID}`,
       'cancel_url': `${SITE}/signup`,
@@ -224,11 +227,6 @@ export default async function handler(req, res) {
       'subscription_data[metadata][plan]': plan,
       'subscription_data[metadata][seats]': String(seats)
     };
-
-    if (addonActive) {
-      params['line_items[1][price]'] = PRICES.team_engagement_monthly;
-      params['line_items[1][quantity]'] = String(seats);
-    }
 
     try {
       const stripeRes = await fetch('https://api.stripe.com/v1/checkout/sessions', {

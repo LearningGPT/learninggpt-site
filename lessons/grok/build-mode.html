@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Build Mode: describe an app, get a working app — LearningGPT</title>
+<meta name="description" content="Grok's Build Mode left early beta on Aug 19, 2026 and is now on every plan including Free, on web, iOS and Android. Describe an app, game, site or dashboard and Grok builds a working version in the chat. How to prompt it, how publishing to grok.me works, and the eyes-open part." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#9da0b0" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link rel="canonical" href="https://learninggpt.ai/lessons/grok/build-mode" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/grok/build-mode" />
+<meta property="og:title" content="Build Mode: describe an app, get a working app — LearningGPT" />
+<meta property="og:description" content="Grok's Build Mode left early beta on Aug 19, 2026 and is now on every plan including Free, on web, iOS and Android. Describe an app, game, site or dashboard and Grok builds a working version in the chat. How to prompt it, how publishing to grok.me works, and the eyes-open part." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg: #0a0a1a; --bg-soft: #14142b; --surface: #1a1a3a; --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.14); --text: #f5f5fa; --text-dim: #a8a8c0; --text-mute: #6b6b85; --brand: #7c5cff; --brand-2: #5b8def; --accent: #44e0a4; --warn: #ffb547; --danger: #ff6b8a; --radius: 14px; --radius-lg: 20px; --container: 820px; --track: #9da0b0; }
+* { box-sizing: border-box; } html, body { margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--brand-2); text-decoration: none; } a:hover { color: var(--text); }
+.bg-orb { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+.bg-orb.one { width: 500px; height: 500px; top: -100px; left: -120px; background: #71717a; }
+.bg-orb.two { width: 600px; height: 600px; top: 50%; right: -200px; background: #7c5cff; opacity: 0.25; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+nav.top { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,26,0.85); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #7c5cff, #5b8def, #44e0a4); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: white; box-shadow: 0 4px 16px rgba(124,92,255,0.5); }
+.nav-back { font-size: 13px; color: var(--text-dim); } .nav-back:hover { color: var(--text); }
+.lesson { padding: 50px 0 100px; }
+.lesson-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--text-mute); margin-bottom: 20px; }
+.lesson-meta .chip { padding: 4px 10px; border: 1px solid rgba(157,160,176,0.4); border-radius: 999px; font-size: 11px; color: var(--track); background: rgba(157,160,176,0.1); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.lesson-meta .chip-pro { border-color: rgba(124,92,255,0.4); color: var(--brand); background: rgba(124,92,255,0.1); }
+.lesson-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-mute); }
+.lesson h1 { font-size: clamp(32px, 4.5vw, 46px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; }
+.lesson h1 .grad { background: linear-gradient(135deg, #c3c6d4 0%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lesson h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; padding-right: 0.15em; }
+.lesson .deck { font-size: 19px; color: var(--text-dim); line-height: 1.55; margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.lesson h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 56px 0 16px; }
+.lesson h2 .num { display: inline-block; color: var(--track); font-weight: 700; margin-right: 12px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; vertical-align: middle; }
+.lesson h3 { font-size: 19px; font-weight: 600; margin: 32px 0 10px; }
+.lesson p { font-size: 16.5px; color: var(--text); margin: 0 0 18px; line-height: 1.7; }
+.lesson strong { font-weight: 700; color: var(--text); } .lesson em { font-style: italic; color: var(--text); }
+.lesson ol, .lesson ul { padding-left: 24px; margin: 0 0 18px; } .lesson li { margin-bottom: 8px; color: var(--text); }
+.callout { margin: 28px 0; padding: 22px 26px; background: linear-gradient(135deg, rgba(157,160,176,0.12), rgba(124,92,255,0.06)); border: 1px solid rgba(157,160,176,0.25); border-radius: var(--radius-lg); position: relative; }
+.callout::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #9da0b0, #7c5cff); border-radius: 2px 0 0 2px; }
+.callout .lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--track); margin-bottom: 8px; }
+.callout p:last-child { margin-bottom: 0; }
+.workflow { margin: 30px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
+.workflow-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.workflow-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(157,160,176,0.1); border: 1px solid rgba(157,160,176,0.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--track); }
+.workflow h3 { font-size: 20px; font-weight: 600; margin: 0; flex: 1; }
+.workflow p { font-size: 15px; margin: 0 0 14px; }
+.workflow h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mute); margin: 18px 0 8px; font-weight: 600; }
+.prompt-example { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 8px 0 14px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13.5px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
+.prompt-example .label { display: block; font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--text-mute); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
+.gotcha { background: rgba(255,181,71,0.06); border: 1px solid rgba(255,181,71,0.2); border-radius: 10px; padding: 14px 16px; margin: 14px 0; font-size: 14.5px; }
+.gotcha::before { content: '⚠ Gotcha: '; color: var(--warn); font-weight: 700; }
+.challenge { margin: 56px 0 40px; background: linear-gradient(135deg, rgba(157,160,176,0.12), rgba(124,92,255,0.1)); border: 1px solid rgba(157,160,176,0.25); border-radius: var(--radius-lg); padding: 36px; }
+.challenge h2 { margin-top: 0; }
+.challenge a.btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #71717a, #7c5cff); color: white; padding: 14px 26px; border-radius: 10px; font-weight: 600; font-size: 15px; box-shadow: 0 6px 24px rgba(124,92,255,0.3); transition: transform .15s; }
+.challenge a.btn:hover { transform: translateY(-1px); color: white; }
+.challenge a.btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line-strong); box-shadow: none; }
+.challenge .btn-row { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.checklist { margin: 40px 0; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.checklist h3 { margin-top: 0; font-size: 18px; } .checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; color: var(--text); border-top: 1px solid var(--line); }
+.checklist li:first-child { border-top: none; padding-top: 0; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 14px; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2344e0a4' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.checklist li:first-child::before { top: 4px; }
+.next-up { margin: 60px 0 0; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-soft); }
+.next-up .lbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; margin-bottom: 10px; }
+.next-up h3 { margin: 0 0 8px; font-size: 20px; } .next-up p { margin: 0 0 14px; color: var(--text-dim); font-size: 14.5px; }
+.next-up .pro-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; background: rgba(124,92,255,0.18); color: var(--brand); padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(124,92,255,0.35); }
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-mute); }
+@media (max-width: 600px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
+.chip-pro-plus { border-color: rgba(255,181,71,0.45); color: var(--warn); background: rgba(255,181,71,0.12); }
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is Grok's Build Mode free?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. On August 19, 2026 SpaceXAI made building in Grok available on every plan, on the web and on iOS and Android. When it was introduced in July 2026 it was an Early Beta limited to SuperGrok Heavy subscribers. Usage limits still follow your plan, so a free account will hit them sooner than a paid one."}}, {"@type": "Question", "name": "What can Build Mode actually build?", "acceptedAnswer": {"@type": "Answer", "text": "Self-contained browser things: apps, games, websites and interactive dashboards. SpaceXAI's own launch examples include a 3D driving game, an isometric city simulation with a live economy, a physics playground with gravity and friction sliders, and a 16-step drum sequencer. It runs the result live inside the chat thread so you can see it working before you publish it."}}, {"@type": "Question", "name": "Where do published Grok apps live?", "acceptedAnswer": {"@type": "Answer", "text": "Every published app gets its own address on grok.me, and you choose who can open it: only you, anyone with the link, or the whole internet. You can point a domain you own at it instead. Grok also generates a link-preview cover image for the app, which you can regenerate or replace."}}, {"@type": "Question", "name": "Can I get the code out of Grok Build?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Export to GitHub pushes the whole project to a repository so you can keep working in a normal editor, or in Grok Build for the terminal. Treat that export as your exit ramp: it is the difference between a prototype you own and a prototype that only exists inside one vendor's chat app."}}, {"@type": "Question", "name": "Is Grok Build the same thing as Grok Build for the terminal?", "acceptedAnswer": {"@type": "Answer", "text": "No, and SpaceXAI uses the name for both. Build Mode inside the Grok chat app is the describe-it-and-it-appears surface aimed at everyone. Grok Build for the terminal is a separate command-line coding agent aimed at developers, with its own model and open-source harness. This lesson covers the first one."}}]}</script>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/grok/" class="nav-back">← Grok Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Grok Mastery</span>
+      <span class="chip chip-pro chip-pro-plus">Pro+</span>
+      <span>~8 min read</span>
+      <span class="dot"></span>
+      <span>New &middot; August 23, 2026</span>
+    </div>
+    <h1>Build Mode: <span class="grad serif">describe an app, get a working app.</span></h1>
+    <p class="deck">On <strong>August 19, 2026</strong> the thing that used to cost $300 a month became free. Grok&rsquo;s in-app building surface left its Early Beta and shipped to <em>every</em> plan &mdash; web, iOS and Android. You type a paragraph; a working app runs in the thread. This lesson is about what that&rsquo;s actually good for, and the three things people get wrong with it.</p>
+
+    <h2><span class="num">01</span> What changed, precisely</h2>
+    <p>Precision matters here because the name is a mess. SpaceXAI calls two different products <strong>Grok Build</strong>:</p>
+    <div class="callout">
+      <span class="lbl">Don&rsquo;t confuse these</span>
+      <p><strong>Build Mode, in the Grok app</strong> (this lesson) &mdash; you describe an app in chat and Grok writes and runs it in front of you. Introduced July 2026 as an Early Beta for SuperGrok Heavy only. <strong>Since August 19, 2026: every plan, web and mobile.</strong></p>
+      <p><strong>Grok Build for the terminal</strong> (<a href="/lessons/grok/api-and-grok-build">Lesson 14</a>) &mdash; a command-line coding agent with its own model, for people who already write code. Different product, different audience, same name.</p>
+    </div>
+    <p>Along with the access change, four things arrived that the Early Beta didn&rsquo;t have: apps can now be <strong>published to a real URL</strong>, they can <strong>call SpaceXAI&rsquo;s own models from inside their own code</strong>, they can be <strong>exported to GitHub</strong>, and they can be <strong>remixed</strong> by other people. That combination is what turns it from a toy into something you can hand to a colleague.</p>
+
+    <h2><span class="num">02</span> Before you scroll: which of these fails?</h2>
+    <p>Four one-paragraph prompts. Three of them are real published apps from SpaceXAI&rsquo;s own launch. Guess which category is the one this tool is <em>bad</em> at &mdash; then read the reveal.</p>
+    <div class="prompt-example">
+      <div class="label">Four candidate prompts</div>
+      <p>A. &ldquo;A peaceful 3D driving game: an endless forest I can drive through, no missions, no timers.&rdquo;<br />
+      B. &ldquo;An isometric city sim: let me zone districts, lay roads, and grow a town with a live economy.&rdquo;<br />
+      C. &ldquo;A 16-step drum sequencer with 808 and lo-fi kits, tempo and swing, and genre presets.&rdquo;<br />
+      D. &ldquo;A client portal where my customers log in, see their invoices, and pay them.&rdquo;</p>
+    </div>
+    <p><strong>The reveal:</strong> A, B and C are real &mdash; SpaceXAI published all three, each live at its own <code>grok.me</code> link, each from roughly the text above. D is the shape that disappoints. Not because Grok can&rsquo;t render a login page &mdash; it will, cheerfully &mdash; but because &ldquo;my customers,&rdquo; &ldquo;their invoices&rdquo; and &ldquo;pay them&rdquo; are three separate systems of record that live outside the app, plus a payments relationship, plus consequences when it&rsquo;s wrong.</p>
+    <div class="gotcha"><p><strong>The dividing line:</strong> Build Mode is excellent at things that are <em>self-contained</em> &mdash; the whole world of the app fits inside the app. It is unreliable at anything whose correctness depends on data and accountability that live somewhere else. Simulations, tools, toys, calculators, visualizations, prototypes: yes. Systems of record: no.</p></div>
+
+    <h2><span class="num">03</span> Your first build, done properly</h2>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">1</div><h3>Describe the experience, not the code</h3></div>
+      <p>The failure mode for experienced people is over-specifying implementation. You are not writing a ticket. Say what it should feel like to use, what the person can do, and what the constraints are &mdash; SpaceXAI&rsquo;s own example prompts read like a design brief, not a spec.</p>
+      <div class="prompt-example">
+        <div class="label">Prompt pattern that works</div>
+        <p>[WHAT IT IS: a one-sentence description of the thing]<br />
+        [WHAT I CAN DO: the two or three actions the user takes]<br />
+        [WHAT IT SHOULD FEEL LIKE: calm / fast / dense / playful]<br />
+        [CONTROLS: the sliders, toggles or presets I want exposed]</p>
+      </div>
+    </div>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">2</div><h3>Iterate in the thread, not in a rewrite</h3></div>
+      <p>It builds a working version live in the chat, so treat the next message as a change request against something running: &ldquo;the camera is too tight, pull it back&rdquo;; &ldquo;add a reset button&rdquo;; &ldquo;make the economy react slower.&rdquo; Starting over with a longer prompt is almost always worse than three small corrections against a thing you can see.</p>
+    </div>
+    <div class="workflow">
+      <div class="workflow-head"><div class="workflow-num">3</div><h3>Decide the audience before you publish</h3></div>
+      <p>Publishing gives the app its own address on <code>grok.me</code> with three access settings: <strong>only you</strong>, <strong>anyone with the link</strong>, or <strong>the whole internet</strong>. Pick deliberately &mdash; &ldquo;anyone with the link&rdquo; is not privacy, it is obscurity. Grok also generates a preview cover image for the link, which you can regenerate or replace, and apps shared on X render inline in the timeline with a play affordance for games.</p>
+    </div>
+
+    <h2><span class="num">04</span> The four upgrades worth knowing</h2>
+    <ul>
+      <li><strong>Built-in model access.</strong> Turn on the SpaceXAI APIs for an app and its own code can call Grok for chat, images and voice &mdash; no keys to create, paste or rotate. Access is per app and revocable. A quiz app can write new questions on demand; a notes app can summarise itself.</li>
+      <li><strong>Secrets.</strong> Keys for <em>third-party</em> services get stored outside the app&rsquo;s code. Use this. The alternative &mdash; a key pasted into something you published at a public URL &mdash; is the single most common way hobby projects leak credentials.</li>
+      <li><strong>Export to GitHub.</strong> Pushes the whole project to a repo. This is your exit ramp, and the reason to bother at all for anything you might keep.</li>
+      <li><strong>Connectors and remix.</strong> Connectors pull business data in to make live, filterable dashboards; remix lets other people fork a published app. Both are useful; both widen the blast radius, which is the next section.</li>
+    </ul>
+
+    <h2><span class="num">05</span> The eyes-open part</h2>
+    <p>Three things that are true of this and of every tool like it, and that the launch post is not going to tell you:</p>
+    <ol>
+      <li><strong>A published app is a website you don&rsquo;t control the hosting of.</strong> It lives on SpaceXAI&rsquo;s domain, under SpaceXAI&rsquo;s uptime and SpaceXAI&rsquo;s product decisions. Fine for a demo, a game, an internal calculator. Not fine as the thing your business runs on &mdash; not until it&rsquo;s exported and hosted somewhere you own.</li>
+      <li><strong>&ldquo;It runs&rdquo; is not &ldquo;it&rsquo;s right.&rdquo;</strong> A generated app that renders convincingly can still compute wrong. If yours does arithmetic that matters &mdash; pricing, dosages, hours, taxes &mdash; check it against numbers you already know the answer to before anyone else touches it. Same discipline as <a href="/lessons/foundations/spotting-hallucinations">spotting hallucinations</a>, applied to code.</li>
+      <li><strong>Don&rsquo;t feed it what you wouldn&rsquo;t publish.</strong> Whatever you paste into the prompt to make the app real &mdash; a customer list, a pricing sheet, a spreadsheet of staff &mdash; is going through the same account and the same terms as the rest of your Grok usage. Read <a href="/lessons/grok/privacy-honest-assessment">Grok and privacy</a> first, and build the prototype on fake data that has the same <em>shape</em> as the real thing.</li>
+    </ol>
+
+    <div class="checklist">
+      <h3>Before you publish anything</h3>
+      <ul>
+        <li>Is this self-contained, or does its correctness depend on data living somewhere else?</li>
+        <li>Have I set access deliberately &mdash; only me, link, or public &mdash; rather than accepting the default?</li>
+        <li>Are any third-party keys in <strong>Secrets</strong> rather than in the code?</li>
+        <li>Did I test the numbers against a case where I already know the answer?</li>
+        <li>If I&rsquo;d be annoyed to lose this, have I exported it to GitHub?</li>
+      </ul>
+    </div>
+
+    <div class="challenge">
+      <h2 style="margin-top: 0;">This week&rsquo;s challenge</h2>
+      <p>Build the smallest tool you personally keep re-doing by hand &mdash; a quoting calculator, a shift roster, a unit converter for your trade, a checklist that scores itself. One paragraph in, three corrections, then publish it as <em>only you</em> and use it for a week. At the end, answer one question honestly: did you keep using it, or did you go back to the spreadsheet? That answer is worth more than any benchmark.</p>
+    </div>
+
+    <div class="next-up">
+      <div class="lbl">Related</div>
+      <h3>The API &amp; Grok Build for the terminal</h3>
+      <p>The other product called Build &mdash; the coding model, its pricing, and the free-credits trade you should read before accepting. <a href="/lessons/grok/api-and-grok-build">Read the lesson &rarr;</a></p>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with xAI.</div>
+    <a href="/lessons/grok/" style="color: var(--text-dim);">← All Grok lessons</a>
+  </div>
+</footer>
+<script src="/gate.js"></script>
+</body>
+</html>

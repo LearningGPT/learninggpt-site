@@ -55,19 +55,6 @@ nav { position: relative; z-index: 10; padding: 20px 32px; display: flex; align-
 .step-num { width: 20px; height: 20px; border-radius: 6px; background: rgba(124,92,255,0.15); border: 1px solid rgba(124,92,255,0.3); color: var(--brand); display: grid; place-items: center; font-size: 11px; font-weight: 800; }
 
 /* PLAN PICKER */
-.plan-options { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-@media (max-width: 480px) { .plan-options { grid-template-columns: 1fr; } }
-.plan-opt { background: rgba(255,255,255,0.02); border: 1.5px solid var(--line-strong); border-radius: 14px; padding: 18px; cursor: pointer; transition: border-color 0.15s, background 0.15s; position: relative; }
-.plan-opt:hover { border-color: rgba(124,92,255,0.35); }
-.plan-opt.selected { border-color: var(--brand); background: rgba(124,92,255,0.08); }
-.plan-opt .tag { display: inline-flex; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; margin-bottom: 12px; }
-.plan-opt .tag.pro { background: rgba(124,92,255,0.15); color: var(--brand); border: 1px solid rgba(124,92,255,0.3); }
-.plan-opt .tag.proplus { background: rgba(255,181,71,0.12); color: var(--warn); border: 1px solid rgba(255,181,71,0.3); }
-.plan-opt-name { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
-.plan-opt-price { font-size: 14px; color: var(--text-dim); }
-.plan-opt-price b { color: var(--text); font-size: 16px; }
-.plan-radio { position: absolute; top: 16px; right: 16px; width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--line-strong); transition: all 0.15s; }
-.plan-opt.selected .plan-radio { border-color: var(--brand); background: var(--brand); box-shadow: inset 0 0 0 3px var(--bg); }
 
 /* BILLING TOGGLE */
 .billing-toggle { display: inline-flex; background: rgba(0,0,0,0.25); border: 1px solid var(--line-strong); border-radius: 10px; padding: 4px; gap: 4px; }
@@ -87,17 +74,6 @@ nav { position: relative; z-index: 10; padding: 20px 32px; display: flex; align-
 .seat-hint { font-size: 13px; color: var(--text-mute); }
 
 /* ADD-ON */
-.addon-toggle { display: flex; align-items: flex-start; gap: 14px; background: rgba(68,224,164,0.04); border: 1px solid rgba(68,224,164,0.2); border-radius: 14px; padding: 18px; cursor: pointer; transition: opacity 0.15s; }
-.addon-toggle.disabled { opacity: 0.5; cursor: not-allowed; }
-.addon-check { width: 22px; height: 22px; border-radius: 6px; border: 2px solid var(--line-strong); flex-shrink: 0; margin-top: 2px; display: grid; place-items: center; transition: all 0.15s; color: transparent; font-size: 13px; font-weight: 800; }
-.addon-toggle.checked .addon-check { background: var(--accent); border-color: var(--accent); color: var(--bg); }
-.addon-body { flex: 1; }
-.addon-title-row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
-.addon-title { font-size: 15px; font-weight: 700; }
-.addon-cost { font-size: 14px; font-weight: 700; color: var(--accent); white-space: nowrap; }
-.addon-sub { font-size: 12.5px; color: var(--text-mute); line-height: 1.5; margin-top: 4px; }
-.addon-lock { font-size: 12px; color: var(--warn); font-weight: 600; margin-top: 6px; display: none; }
-.addon-toggle.disabled .addon-lock { display: block; }
 
 /* FIELDS */
 .field { margin-bottom: 16px; }
@@ -149,7 +125,7 @@ nav { position: relative; z-index: 10; padding: 20px 32px; display: flex; align-
   <a href="/business" class="back-link">← Business plans</a>
   <div class="page-eyebrow">🏢 Set up your team</div>
   <h1>Get your team <em>learning</em> in minutes.</h1>
-  <p>Choose a plan, set your seats, and pay securely. After checkout we'll email you a link to set up your admin dashboard and invite your team.</p>
+  <p>One plan, everything included — just set your seats and pay securely. After checkout we'll email you a link to set up your admin dashboard and invite your team.</p>
 </div>
 
 <div class="wrap">
@@ -157,66 +133,31 @@ nav { position: relative; z-index: 10; padding: 20px 32px; display: flex; align-
   <!-- LEFT: CONFIG -->
   <div class="config">
 
-    <!-- PLAN -->
-    <div class="block">
-      <div class="block-label"><span class="step-num">1</span> Choose your plan</div>
-      <div class="plan-options">
-        <div class="plan-opt selected" data-plan="business_pro">
-          <div class="plan-radio"></div>
-          <span class="tag pro">Business Pro</span>
-          <div class="plan-opt-name">Pro</div>
-          <div class="plan-opt-price"><b data-price-pro>$6</b> / user / mo</div>
-        </div>
-        <div class="plan-opt" data-plan="business_pro_plus">
-          <div class="plan-radio"></div>
-          <span class="tag proplus">Business Pro+</span>
-          <div class="plan-opt-name">Pro+</div>
-          <div class="plan-opt-price"><b data-price-proplus>$14</b> / user / mo</div>
-        </div>
-      </div>
-    </div>
-
     <!-- BILLING -->
     <div class="block">
-      <div class="block-label"><span class="step-num">2</span> Billing cycle</div>
+      <div class="block-label"><span class="step-num">1</span> Billing cycle</div>
       <div class="billing-toggle">
         <button data-billing="monthly" class="active">Monthly</button>
-        <button data-billing="annual">Annual <span class="save-badge">Save up to 41%</span></button>
+        <button data-billing="annual">Annual <span class="save-badge">2 months free</span></button>
       </div>
     </div>
 
     <!-- SEATS -->
     <div class="block">
-      <div class="block-label"><span class="step-num">3</span> How many seats?</div>
+      <div class="block-label"><span class="step-num">2</span> How many seats?</div>
       <div class="seat-row">
         <div class="stepper">
           <button id="seatMinus" type="button">−</button>
-          <input id="seatInput" type="number" value="3" min="3" inputmode="numeric" />
+          <input id="seatInput" type="number" value="10" min="5" inputmode="numeric" />
           <button id="seatPlus" type="button">+</button>
         </div>
-        <span class="seat-hint">Minimum 3 seats. Add or remove anytime.</span>
-      </div>
-    </div>
-
-    <!-- ADD-ON -->
-    <div class="block">
-      <div class="block-label"><span class="step-num">4</span> Add the Team Engagement Suite? <span style="font-weight:600;letter-spacing:0;text-transform:none;color:var(--text-mute);">(optional)</span></div>
-      <div class="addon-toggle" id="addonToggle">
-        <div class="addon-check">✓</div>
-        <div class="addon-body">
-          <div class="addon-title-row">
-            <span class="addon-title">⚡ Team Engagement Suite</span>
-            <span class="addon-cost">+$3 / user / mo</span>
-          </div>
-          <div class="addon-sub">Weekly role-based AI emails, team leaderboard, reporting dashboard, manager summaries, and the new-hire onboarding sequence.</div>
-          <div class="addon-lock" id="addonLock">Requires 25+ seats.</div>
-        </div>
+        <span class="seat-hint" id="seatHint">Minimum 5 seats. Your rate drops at 101 and 501 seats.</span>
       </div>
     </div>
 
     <!-- ACCOUNT -->
     <div class="block">
-      <div class="block-label"><span class="step-num">5</span> Your details</div>
+      <div class="block-label"><span class="step-num">3</span> Your details</div>
       <div class="field">
         <label for="company">Company name</label>
         <input id="company" type="text" placeholder="Acme Inc." autocomplete="organization" />
@@ -239,25 +180,17 @@ nav { position: relative; z-index: 10; padding: 20px 32px; display: flex; align-
 
     <div class="sum-line">
       <div>
-        <div id="sumPlanName">Business Pro</div>
-        <div class="calc" id="sumPlanCalc">$6 × 3 seats / mo</div>
+        <div id="sumPlanName">LearningGPT for Business — All Access</div>
+        <div class="calc" id="sumPlanCalc">$9 × 10 seats / mo</div>
       </div>
-      <div class="val" id="sumPlanTotal">$18</div>
-    </div>
-
-    <div class="sum-line" id="sumAddonRow" style="display:none;">
-      <div>
-        <div>Team Engagement Suite</div>
-        <div class="calc" id="sumAddonCalc">$3 × 3 seats / mo</div>
-      </div>
-      <div class="val" id="sumAddonTotal">$9</div>
+      <div class="val" id="sumPlanTotal">$90</div>
     </div>
 
     <hr class="sum-divider" />
 
     <div class="sum-total">
       <span class="lbl">Total</span>
-      <span><span class="amt" id="sumTotal">$18</span><span class="per" id="sumPer">/mo</span></span>
+      <span><span class="amt" id="sumTotal">$90</span><span class="per" id="sumPer">/mo</span></span>
     </div>
 
     <button class="btn-primary" id="checkoutBtn" type="button">Continue to payment →</button>
@@ -271,101 +204,46 @@ nav { position: relative; z-index: 10; padding: 20px 32px; display: flex; align-
 
 <script>
 /*
-  /business/signup — self-serve business onboarding (Phase 1)
-
-  This page collects the selection and POSTs it to /api/business.
-  The server maps these semantic choices to the correct Stripe Price ID
-  (price IDs are NOT trusted from the client). Reference mapping for the
-  backend handler (Step 4), currently SANDBOX/test IDs:
-
-    business_pro      monthly  -> price_1TcEP4LLT2XwxxQy8l0KIIjo
-    business_pro      annual   -> price_1TcES8LLT2XwxxQy5lEaNNh0
-    business_pro_plus monthly  -> price_1TcEPmLLT2XwxxQypVCmaE4B
-    business_pro_plus annual   -> price_1TcESmLLT2XwxxQy2cJH8WTm
-    team_engagement   monthly  -> price_1TcEQNLLT2XwxxQyFCOGGjMn
+  /business/signup — self-serve business onboarding.
+  ONE all-access plan, banded by team size. The server recomputes the price
+  from the seat count (client numbers are display-only, never trusted).
+  Bands: 5–100 = $9/user/mo · 101–500 = $6 · 500+ = $4. Annual = 10× monthly (2 months free).
 */
 
-const PRICING = {
-  business_pro:      { monthly: 6,  annual: 58, label: 'Business Pro'  },
-  business_pro_plus: { monthly: 14, annual: 99, label: 'Business Pro+' },
-  addon_monthly: 3
-};
-const MIN_SEATS = 3;
-const ADDON_MIN_SEATS = 25;
-
-const state = { plan: 'business_pro', billing: 'monthly', seats: 3, addon: false };
+const MIN_SEATS = 5;
+const state = { billing: 'monthly', seats: 10 };
 
 const $ = (id) => document.getElementById(id);
 const fmt = (n) => '$' + n.toLocaleString('en-US');
 
-function addonAvailable() {
-  return state.billing === 'monthly' && state.seats >= ADDON_MIN_SEATS;
-}
+function bandRate(seats) { return seats > 500 ? 4 : seats > 100 ? 6 : 9; }
 
 function render() {
-  // plan cards
-  document.querySelectorAll('.plan-opt').forEach(el => {
-    el.classList.toggle('selected', el.dataset.plan === state.plan);
-  });
-  // per-seat labels on cards reflect billing cycle
-  const perWord = state.billing === 'monthly' ? '/ user / mo' : '/ user / yr';
-  document.querySelector('[data-price-pro]').textContent = fmt(PRICING.business_pro[state.billing]);
-  document.querySelector('[data-price-proplus]').textContent = fmt(PRICING.business_pro_plus[state.billing]);
-  document.querySelectorAll('.plan-opt-price').forEach((el) => {
-    el.innerHTML = el.innerHTML.replace(/\/ user \/ (mo|yr)/, perWord);
-  });
-
-  // billing toggle
   document.querySelectorAll('.billing-toggle button').forEach(b => {
     b.classList.toggle('active', b.dataset.billing === state.billing);
   });
-
-  // seats
   $('seatInput').value = state.seats;
   $('seatMinus').disabled = state.seats <= MIN_SEATS;
 
-  // add-on availability
-  const toggle = $('addonToggle');
-  const avail = addonAvailable();
-  if (!avail) state.addon = false;
-  toggle.classList.toggle('disabled', !avail);
-  toggle.classList.toggle('checked', state.addon);
-  const lock = $('addonLock');
-  if (state.billing === 'annual') { lock.textContent = 'Available on monthly billing.'; }
-  else { lock.textContent = 'Requires ' + ADDON_MIN_SEATS + '+ seats.'; }
-
-  // summary
-  const per = PRICING[state.plan][state.billing];
-  const base = per * state.seats;
+  const rate = bandRate(state.seats);
+  const perSeat = state.billing === 'monthly' ? rate : rate * 10;
+  const total = perSeat * state.seats;
   const cyc = state.billing === 'monthly' ? '/ mo' : '/ yr';
-  $('sumPlanName').textContent = PRICING[state.plan].label;
-  $('sumPlanCalc').textContent = fmt(per) + ' × ' + state.seats + ' seats ' + cyc;
-  $('sumPlanTotal').textContent = fmt(base);
-
-  let total = base;
-  const addonActive = state.addon && avail;
-  $('sumAddonRow').style.display = addonActive ? 'flex' : 'none';
-  if (addonActive) {
-    const addonTotal = PRICING.addon_monthly * state.seats;
-    $('sumAddonCalc').textContent = fmt(PRICING.addon_monthly) + ' × ' + state.seats + ' seats / mo';
-    $('sumAddonTotal').textContent = fmt(addonTotal);
-    total += addonTotal;
-  }
+  $('sumPlanCalc').textContent = fmt(perSeat) + ' × ' + state.seats + ' seats ' + cyc;
+  $('sumPlanTotal').textContent = fmt(total);
   $('sumTotal').textContent = fmt(total);
   $('sumPer').textContent = state.billing === 'monthly' ? '/mo' : '/yr';
+
+  const hint = $('seatHint');
+  if (state.seats > 500) hint.textContent = 'Volume rate: $4/user. Nice team.';
+  else if (state.seats > 100) hint.textContent = 'Volume rate: $6/user. Drops to $4 above 500 seats.';
+  else hint.textContent = 'Minimum 5 seats. Your rate drops to $6 at 101 seats.';
 }
 
-// plan selection
-document.querySelectorAll('.plan-opt').forEach(el => {
-  el.addEventListener('click', () => { state.plan = el.dataset.plan; render(); });
-});
-
-// billing
 document.querySelectorAll('.billing-toggle button').forEach(b => {
   b.addEventListener('click', () => { state.billing = b.dataset.billing; render(); });
 });
 
-// seats
 function setSeats(n) {
   if (isNaN(n)) n = MIN_SEATS;
   state.seats = Math.max(MIN_SEATS, Math.floor(n));
@@ -373,29 +251,12 @@ function setSeats(n) {
 }
 $('seatMinus').addEventListener('click', () => setSeats(state.seats - 1));
 $('seatPlus').addEventListener('click', () => setSeats(state.seats + 1));
-$('seatInput').addEventListener('input', (e) => { state.seats = parseInt(e.target.value, 10) || 0; renderSeatsLive(); });
+$('seatInput').addEventListener('input', (e) => { state.seats = parseInt(e.target.value, 10) || 0; });
 $('seatInput').addEventListener('blur', (e) => setSeats(parseInt(e.target.value, 10)));
-function renderSeatsLive() { // update summary while typing without snapping the input
-  const s = Math.max(0, state.seats);
-  const per = PRICING[state.plan][state.billing];
-  $('sumPlanCalc').textContent = fmt(per) + ' × ' + s + ' seats ' + (state.billing==='monthly'?'/ mo':'/ yr');
-}
 
-// add-on
-$('addonToggle').addEventListener('click', () => {
-  if (!addonAvailable()) return;
-  state.addon = !state.addon;
-  render();
-});
-
-// checkout
 $('checkoutBtn').addEventListener('click', startCheckout);
 
-function showError(msg) {
-  const e = $('formError');
-  e.textContent = msg;
-  e.classList.add('show');
-}
+function showError(msg) { const e = $('formError'); e.textContent = msg; e.classList.add('show'); }
 function clearError() { $('formError').classList.remove('show'); }
 
 async function startCheckout() {
@@ -421,10 +282,9 @@ async function startCheckout() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         action: 'create-checkout',
-        plan: state.plan,
+        plan: 'business',
         billing: state.billing,
         seats: state.seats,
-        addon: state.addon && addonAvailable(),
         company, name, email
       })
     });

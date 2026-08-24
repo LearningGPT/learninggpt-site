@@ -185,7 +185,7 @@
    To activate: replace UET_TAG_ID below with the Tag ID from
    Microsoft Advertising → Tools → UET tag. Until then this is inert. */
 (function () {
-  var UET_TAG_ID = 'UET_TAG_ID';                 // <-- paste the numeric Tag ID here
+  var UET_TAG_ID = '97264176';                 // <-- paste the numeric Tag ID here
   if (!UET_TAG_ID || UET_TAG_ID === 'UET_TAG_ID') return;   // not configured yet
   try {
     window.uetq = window.uetq || [];

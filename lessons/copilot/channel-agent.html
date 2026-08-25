@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Channel Agent: the Teams agent that only knows one project — LearningGPT</title>
+<meta name="description" content="Channel Agent is a Teams channel agent in public preview that turns a channel’s messages and meeting transcripts into a project expert — status reports, scheduling, tasks and email. What it knows, who can use it, and how to pilot it properly." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#2c7be5" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/copilot/channel-agent" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/copilot/channel-agent" />
+<meta property="og:title" content="Channel Agent: the Teams agent that only knows one project — LearningGPT" />
+<meta property="og:description" content="Channel Agent is a Teams channel agent in public preview that turns a channel’s messages and meeting transcripts into a project expert — status reports, scheduling, tasks and email. What it knows, who can use it, and how to pilot it properly." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Channel Agent: the Teams agent that only knows one project — LearningGPT" />
+<meta name="twitter:description" content="Channel Agent is a Teams channel agent in public preview that turns a channel’s messages and meeting transcripts into a project expert — status reports, scheduling, tasks and email. What it knows, who can use it, and how to pilot it properly." />
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --radius:14px; --radius-lg:20px; --container:820px; --track:#2c7be5; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:var(--track);}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.25;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(44,123,229,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(44,123,229,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#2c7be5 0%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.15em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:52px 0 14px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson h3{font-size:18px;font-weight:600;margin:28px 0 8px;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(44,123,229,0.12),rgba(124,92,255,0.06));border:1px solid rgba(44,123,229,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,#2c7be5,#7c5cff);border-radius:2px 0 0 2px;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.cost-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;}
+.cost-table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--line-strong);color:var(--text-dim);font-size:11.5px;text-transform:uppercase;letter-spacing:0.6px;}
+.cost-table td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.cost-table td:first-child{font-weight:700;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:14px 0;font-size:14.5px;}
+.gotcha::before{content:'⚠ Watch out: ';color:var(--warn);font-weight:700;}
+.tryit{margin:28px 0;padding:22px;background:rgba(68,224,164,0.06);border:1px solid rgba(68,224,164,0.25);border-radius:var(--radius);}
+.tryit .lbl{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.tryit p{margin:0 0 14px;font-size:15.5px;}
+.tryit a.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#44e0a4,#5b8def);color:white;padding:12px 22px;border-radius:9px;font-weight:600;font-size:14px;}
+.tryit a.btn:hover{transform:translateY(-1px);color:white;}
+.challenge{margin:52px 0 40px;background:linear-gradient(135deg,rgba(44,123,229,0.14),rgba(124,92,255,0.1));border:1px solid rgba(44,123,229,0.28);border-radius:var(--radius-lg);padding:34px;}
+.challenge h2{margin-top:0;}
+.challenge a.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#2c7be5,#7c5cff);color:white;padding:13px 24px;border-radius:10px;font-weight:600;font-size:15px;}
+.challenge a.btn:hover{transform:translateY(-1px);color:white;}
+.checklist{margin:40px 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);}
+.checklist h3{margin-top:0;font-size:18px;} .checklist ul{list-style:none;padding:0;margin:0;}
+.checklist li{padding:10px 0 10px 30px;position:relative;font-size:15px;border-top:1px solid var(--line);}
+.checklist li:first-child{border-top:none;padding-top:0;}
+.checklist li::before{content:'✓';position:absolute;left:0;color:var(--accent);font-weight:700;}
+.next-up{margin:50px 0 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.next-up .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:10px;}
+.next-up h3{margin:0 0 8px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:14.5px;}
+footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);}
+.chip-pro { border-color: rgba(124,92,255,0.45); color: #b9a6ff; background: rgba(124,92,255,0.12); }
+.chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
+.steps{counter-reset:st;margin:20px 0;} .steps .step{position:relative;padding:14px 0 14px 54px;border-bottom:1px solid var(--line);} .steps .step::before{counter-increment:st;content:counter(st);position:absolute;left:0;top:12px;width:34px;height:34px;border-radius:50%;background:rgba(44,123,229,0.15);border:1px solid rgba(44,123,229,0.4);color:var(--track);font-weight:700;display:grid;place-items:center;font-size:14px;}
+.checklist{margin:24px 0;padding:22px 26px;background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius-lg);} .checklist h3{margin:0 0 10px;font-size:16px;} .checklist ul{margin:0;padding-left:22px;}
+.next-up{margin-top:56px;padding:24px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);} .next-up .lbl{font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);margin-bottom:8px;} .next-up h3{margin:0 0 6px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:15px;}
+.footer-inner{max-width:1180px;margin:0 auto;padding:26px 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);border-top:1px solid var(--line);}
+.lgpt-faq{margin:48px 0 8px;}
+.lgpt-faq .faq-eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.09em;font-weight:700;color:var(--track);margin-bottom:8px;}
+.lgpt-faq h2{font-size:27px;line-height:1.15;letter-spacing:-.02em;font-weight:800;margin:0 0 18px;}
+.lgpt-faq details{border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#14142b;margin-bottom:10px;overflow:hidden;}
+.lgpt-faq details[open]{border-color:rgba(44,123,229,.45);}
+.lgpt-faq summary{list-style:none;cursor:pointer;padding:15px 18px;font-size:15.5px;font-weight:600;color:#f5f5fa;display:flex;justify-content:space-between;align-items:center;gap:14px;}
+.lgpt-faq summary::-webkit-details-marker{display:none;}
+.lgpt-faq summary .chev{flex-shrink:0;width:18px;height:18px;border-right:2px solid var(--track);border-bottom:2px solid var(--track);transform:rotate(45deg);transition:transform .2s;margin-top:-4px;}
+.lgpt-faq details[open] summary .chev{transform:rotate(-135deg);margin-top:4px;}
+.lgpt-faq .faq-a{padding:0 18px 16px;font-size:14.5px;line-height:1.7;color:#c7c7d6;}
+.lgpt-faq .faq-a strong{color:#f5f5fa;font-weight:600;} .lgpt-faq .faq-a a{color:var(--brand-2);font-weight:600;}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is Channel Agent generally available?","acceptedAnswer":{"@type":"Answer","text":"No. As of August 2026 Microsoft's documentation states that Channel Agent for Teams channels is in public preview and features are likely to change. Pilot it in one or two channels rather than rolling it out broadly."}},{"@type":"Question","name":"What do I need to use Channel Agent?","acceptedAnswer":{"@type":"Answer","text":"Three things: a Microsoft Copilot subscription assigned to you, membership of the channel where the agent was created, and permission from your IT admin to use apps in Teams."}},{"@type":"Question","name":"Can people without a Copilot licence use the Channel Agent?","acceptedAnswer":{"@type":"Answer","text":"They cannot interact with it, but they can still see the agent's responses, its generated content, and other people's interactions with it. So unlicensed channel members are spectators rather than participants."}},{"@type":"Question","name":"What does Channel Agent know?","acceptedAnswer":{"@type":"Answer","text":"It answers using the channel's messages and meeting transcripts, and web search if your organization's IT admin allows it. Meeting transcripts are used as knowledge sources, which is what makes it useful on projects that were never written down."}},{"@type":"Question","name":"Can Channel Agent work with Jira, Asana or GitHub?","acceptedAnswer":{"@type":"Answer","text":"Yes. Microsoft documents using Channel Agent to manage tasks in Jira, Asana and GitHub, alongside its built-in task creation and reminders."}},{"@type":"Question","name":"Can I set up Channel Agent from my phone?","acceptedAnswer":{"@type":"Answer","text":"No. Agent creation, removal and configuration must be done from the desktop or web version of Teams. On mobile you can do things like report approval and feedback submission, provided you are on Teams 7.11.0 or higher on iOS, or 1416/1.0.0.2025100000 or higher on Android."}},{"@type":"Question","name":"Can Channel Agent send email?","acceptedAnswer":{"@type":"Answer","text":"Yes. It can draft and send emails, which saves switching between Teams and Outlook for routine project communication."}}]}</script>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top"><div class="nav-inner">
+  <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+  <a href="/lessons/copilot/" class="nav-back">&larr; Copilot Mastery</a>
+</div></nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Copilot Mastery</span>
+      <span class="chip chip-pro-plus">Pro+</span>
+      <span>~8 min read</span>
+      <span class="dot"></span>
+      <span>Updated &middot; August 2026</span>
+    </div>
+    <h1>One channel. <span class="grad serif">One domain expert.</span></h1>
+    <p class="deck">Every other Copilot agent is a generalist you point at things. Channel Agent is the opposite: it belongs to a single Teams channel, learns that channel's conversations and meetings, and becomes the person on the project who actually remembers what was decided in March. It is still in public preview &mdash; which changes how you should pilot it, not whether you should.</p>
+
+    <div class="gotcha">Channel Agent is in <strong>public preview</strong> and Microsoft says features are likely to change. Treat it as a pilot in one or two real channels, not a rollout. Anything you build a process around today may move.</div>
+
+    <h2><span class="num">01</span> What it actually does</h2>
+    <p>Microsoft frames Channel Agent as a domain expert for a project, drawing on the channel's own conversations and meetings. Five capabilities carry the value:</p>
+    <ul>
+      <li><strong>Status reports.</strong> It drafts and shares them, and the team reviews, edits and customises before anything goes out.</li>
+      <li><strong>Meeting integration.</strong> Meeting transcripts become knowledge sources, and it can schedule meetings with suggested titles, agendas, invite lists and times based on what the project needs.</li>
+      <li><strong>Task management.</strong> It creates tasks and reminds the team about them.</li>
+      <li><strong>Questions and answers.</strong> It answers in the channel, and in group chats and meetings it's invited to, using channel messages, meeting transcripts, and web search if your IT admin allows it.</li>
+      <li><strong>Email.</strong> It drafts and sends email from inside Teams, which removes the Teams-to-Outlook context switch that eats status-update Fridays.</li>
+    </ul>
+    <p>It also connects out: Microsoft documents using Channel Agent to manage tasks in <strong>Jira, Asana and GitHub</strong>, which is where it stops being a note-taker and starts being a project participant.</p>
+
+    <h2><span class="num">02</span> Who can use it &mdash; and who only watches</h2>
+    <p>Three requirements to create, interact with and manage a Channel Agent: a Microsoft Copilot subscription assigned to you, membership of the channel where the agent was created, and permission from your IT admin to use apps in Teams.</p>
+    <p>The interesting part is what happens to everyone else, because it shapes how a channel feels once the agent is in it:</p>
+    <table class="cost-table">
+      <tr><th>Who</th><th>Can ask the agent?</th><th>Can see its output?</th></tr>
+      <tr><td>Channel member with a Copilot subscription</td><td>Yes</td><td>Yes</td></tr>
+      <tr><td>Channel member without a Copilot subscription</td><td>No</td><td>Yes &mdash; responses, generated content, and other people's interactions</td></tr>
+      <tr><td>Non-member, in a group chat or meeting the agent was added to</td><td>No</td><td>Yes &mdash; they see others' interactions</td></tr>
+    </table>
+    <div class="callout"><span class="lbl">Why this matters for a pilot</span><p>Unlicensed teammates aren't locked out of the conversation &mdash; they see everything the agent produces, they just can't drive it. That makes a single channel a genuinely good place to demonstrate Copilot's value to people who don't have a licence yet. It also means anything the agent says is visible to the whole channel, so treat its output as public within that group.</p></div>
+
+    <h2><span class="num">03</span> Running it well</h2>
+    <div class="steps">
+      <div class="step"><strong>Pick a channel with real history.</strong> The agent's knowledge is the channel's messages and meeting transcripts. A channel created last week has nothing to be expert about.</div>
+      <div class="step"><strong>Decide the web-search question first.</strong> Whether the agent can search the web is an IT admin setting. Grounded-only answers behave very differently from web-augmented ones &mdash; know which you're testing.</div>
+      <div class="step"><strong>Use the approval step on summaries.</strong> Channel Agent's summaries can be approved or rejected. Wire that into a named person, or the first wrong status report becomes the reason leadership kills the pilot.</div>
+      <div class="step"><strong>Add it to the project's meetings and group chats,</strong> not just the channel. Its usefulness compounds when the meeting transcripts flow back into the same brain that answers the questions.</div>
+      <div class="step"><strong>Do configuration on desktop.</strong> Agent creation, removal and configuration must be done from desktop or web Teams. Mobile supports report approval and feedback, but not setup.</div>
+    </div>
+    <div class="gotcha">Mobile has version floors: Teams 7.11.0 or higher on iOS, and 1416/1.0.0.2025100000 or higher on Android. If a teammate says the agent &ldquo;isn't there&rdquo; on their phone, check the app version before you check anything else.</div>
+
+    <h2><span class="num">04</span> Where it beats the alternatives</h2>
+    <p>You could ask <a href="/lessons/copilot/copilot-researcher">Researcher</a> to summarise a project, or build something in <a href="/lessons/copilot/copilot-studio">Copilot Studio</a>. Channel Agent wins on a narrow but common case: <strong>the knowledge is the conversation itself.</strong> Nobody wrote the project down. It exists as six months of Teams messages and forty meeting transcripts, and every status update currently costs a human three hours of scrolling. That is the job this agent was built for.</p>
+    <p>It loses when the knowledge lives in documents rather than chat &mdash; that is <a href="/lessons/copilot/sharepoint-agents">SharePoint agents</a> &mdash; or when the work is task execution rather than recall, which is <a href="/lessons/copilot/planner-agent">Planner Agent</a>.</p>
+
+    <div class="tryit"><span class="lbl">Try it this week</span><p>Pick your messiest active project channel. Create the agent, then ask it the question you'd normally ask a person: &ldquo;What did we decide about scope, and when?&rdquo; Compare its answer to what you'd have found by scrolling. That gap is the business case.</p></div>
+
+    <div class="next-up">
+      <div class="lbl">Up next in Copilot Mastery</div>
+      <h3>Planner Agent</h3>
+      <p>Assigning a task to something that isn't a person &mdash; and the review queue that keeps it honest. <a href="/lessons/copilot/planner-agent">Read the lesson &rarr;</a></p>
+    </div>
+
+    <section class="lgpt-faq">
+      <div class="faq-eyebrow">Questions people ask</div>
+      <h2>Straight answers</h2>
+      <details><summary>Is Channel Agent generally available?<span class="chev"></span></summary><div class="faq-a">No. As of August 2026 Microsoft's documentation states that Channel Agent for Teams channels is in public preview and features are likely to change. Pilot it in one or two channels rather than rolling it out broadly.</div></details>
+      <details><summary>What do I need to use Channel Agent?<span class="chev"></span></summary><div class="faq-a">Three things: a Microsoft Copilot subscription assigned to you, membership of the channel where the agent was created, and permission from your IT admin to use apps in Teams.</div></details>
+      <details><summary>Can people without a Copilot licence use the Channel Agent?<span class="chev"></span></summary><div class="faq-a">They cannot interact with it, but they can still see the agent's responses, its generated content, and other people's interactions with it. So unlicensed channel members are spectators rather than participants.</div></details>
+      <details><summary>What does Channel Agent know?<span class="chev"></span></summary><div class="faq-a">It answers using the channel's messages and meeting transcripts, and web search if your organization's IT admin allows it. Meeting transcripts are used as knowledge sources, which is what makes it useful on projects that were never written down.</div></details>
+      <details><summary>Can Channel Agent work with Jira, Asana or GitHub?<span class="chev"></span></summary><div class="faq-a">Yes. Microsoft documents using Channel Agent to manage tasks in Jira, Asana and GitHub, alongside its built-in task creation and reminders.</div></details>
+      <details><summary>Can I set up Channel Agent from my phone?<span class="chev"></span></summary><div class="faq-a">No. Agent creation, removal and configuration must be done from the desktop or web version of Teams. On mobile you can do things like report approval and feedback submission, provided you are on Teams 7.11.0 or higher on iOS, or 1416/1.0.0.2025100000 or higher on Android.</div></details>
+      <details><summary>Can Channel Agent send email?<span class="chev"></span></summary><div class="faq-a">Yes. It can draft and send emails, which saves switching between Teams and Outlook for routine project communication.</div></details>
+    </section>
+  </div>
+</article>
+<footer><div class="footer-inner">
+  <div>&copy; 2026 LearningGPT, Inc. &middot; Product details as of August 2026 &mdash; AI tools change fast; we update when they do.</div>
+  <a href="/lessons/copilot/" style="color:var(--text-dim);">&larr; All Copilot lessons</a>
+</div></footer>
+<script src="/gate.js"></script>
+</body>
+</html>

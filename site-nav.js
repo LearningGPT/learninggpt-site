@@ -36,7 +36,7 @@
 
     // The canonical link set — edit here to change the nav site-wide.
     var LINKS = [
-      { href: '/business',  label: 'For teams', teams: true },
+      { href: '/business',  label: 'For business', teams: true },
       { href: '/advisory',  label: 'Advisory' },
       { href: '/lessons',   label: 'Lessons' },
         { href: '/whats-new', label: "What's new" },

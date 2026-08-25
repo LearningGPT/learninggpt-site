@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Employee Self-Service agent: what it costs and what it takes — LearningGPT</title>
+<meta name="description" content="Microsoft’s HR and IT self-service agent, with the numbers Microsoft publishes but few people read: 15 cents a query for unlicensed users, 3–5% monthly active adoption, free Workday/SuccessFactors/ServiceNow connectors, and a six-role deployment." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#2c7be5" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/copilot/employee-self-service-agent" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/copilot/employee-self-service-agent" />
+<meta property="og:title" content="The Employee Self-Service agent: what it costs and what it takes — LearningGPT" />
+<meta property="og:description" content="Microsoft’s HR and IT self-service agent, with the numbers Microsoft publishes but few people read: 15 cents a query for unlicensed users, 3–5% monthly active adoption, free Workday/SuccessFactors/ServiceNow connectors, and a six-role deployment." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="The Employee Self-Service agent: what it costs and what it takes — LearningGPT" />
+<meta name="twitter:description" content="Microsoft’s HR and IT self-service agent, with the numbers Microsoft publishes but few people read: 15 cents a query for unlicensed users, 3–5% monthly active adoption, free Workday/SuccessFactors/ServiceNow connectors, and a six-role deployment." />
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --radius:14px; --radius-lg:20px; --container:820px; --track:#2c7be5; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:var(--track);}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.25;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(44,123,229,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(44,123,229,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#2c7be5 0%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.15em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:52px 0 14px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson h3{font-size:18px;font-weight:600;margin:28px 0 8px;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(44,123,229,0.12),rgba(124,92,255,0.06));border:1px solid rgba(44,123,229,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,#2c7be5,#7c5cff);border-radius:2px 0 0 2px;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.cost-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;}
+.cost-table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--line-strong);color:var(--text-dim);font-size:11.5px;text-transform:uppercase;letter-spacing:0.6px;}
+.cost-table td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.cost-table td:first-child{font-weight:700;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:14px 0;font-size:14.5px;}
+.gotcha::before{content:'⚠ Watch out: ';color:var(--warn);font-weight:700;}
+.tryit{margin:28px 0;padding:22px;background:rgba(68,224,164,0.06);border:1px solid rgba(68,224,164,0.25);border-radius:var(--radius);}
+.tryit .lbl{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.tryit p{margin:0 0 14px;font-size:15.5px;}
+.tryit a.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#44e0a4,#5b8def);color:white;padding:12px 22px;border-radius:9px;font-weight:600;font-size:14px;}
+.tryit a.btn:hover{transform:translateY(-1px);color:white;}
+.challenge{margin:52px 0 40px;background:linear-gradient(135deg,rgba(44,123,229,0.14),rgba(124,92,255,0.1));border:1px solid rgba(44,123,229,0.28);border-radius:var(--radius-lg);padding:34px;}
+.challenge h2{margin-top:0;}
+.challenge a.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#2c7be5,#7c5cff);color:white;padding:13px 24px;border-radius:10px;font-weight:600;font-size:15px;}
+.challenge a.btn:hover{transform:translateY(-1px);color:white;}
+.checklist{margin:40px 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);}
+.checklist h3{margin-top:0;font-size:18px;} .checklist ul{list-style:none;padding:0;margin:0;}
+.checklist li{padding:10px 0 10px 30px;position:relative;font-size:15px;border-top:1px solid var(--line);}
+.checklist li:first-child{border-top:none;padding-top:0;}
+.checklist li::before{content:'✓';position:absolute;left:0;color:var(--accent);font-weight:700;}
+.next-up{margin:50px 0 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.next-up .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:10px;}
+.next-up h3{margin:0 0 8px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:14.5px;}
+footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);}
+.chip-pro { border-color: rgba(124,92,255,0.45); color: #b9a6ff; background: rgba(124,92,255,0.12); }
+.chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
+.steps{counter-reset:st;margin:20px 0;} .steps .step{position:relative;padding:14px 0 14px 54px;border-bottom:1px solid var(--line);} .steps .step::before{counter-increment:st;content:counter(st);position:absolute;left:0;top:12px;width:34px;height:34px;border-radius:50%;background:rgba(44,123,229,0.15);border:1px solid rgba(44,123,229,0.4);color:var(--track);font-weight:700;display:grid;place-items:center;font-size:14px;}
+.checklist{margin:24px 0;padding:22px 26px;background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius-lg);} .checklist h3{margin:0 0 10px;font-size:16px;} .checklist ul{margin:0;padding-left:22px;}
+.next-up{margin-top:56px;padding:24px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);} .next-up .lbl{font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);margin-bottom:8px;} .next-up h3{margin:0 0 6px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:15px;}
+.footer-inner{max-width:1180px;margin:0 auto;padding:26px 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);border-top:1px solid var(--line);}
+.lgpt-faq{margin:48px 0 8px;}
+.lgpt-faq .faq-eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.09em;font-weight:700;color:var(--track);margin-bottom:8px;}
+.lgpt-faq h2{font-size:27px;line-height:1.15;letter-spacing:-.02em;font-weight:800;margin:0 0 18px;}
+.lgpt-faq details{border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#14142b;margin-bottom:10px;overflow:hidden;}
+.lgpt-faq details[open]{border-color:rgba(44,123,229,.45);}
+.lgpt-faq summary{list-style:none;cursor:pointer;padding:15px 18px;font-size:15.5px;font-weight:600;color:#f5f5fa;display:flex;justify-content:space-between;align-items:center;gap:14px;}
+.lgpt-faq summary::-webkit-details-marker{display:none;}
+.lgpt-faq summary .chev{flex-shrink:0;width:18px;height:18px;border-right:2px solid var(--track);border-bottom:2px solid var(--track);transform:rotate(45deg);transition:transform .2s;margin-top:-4px;}
+.lgpt-faq details[open] summary .chev{transform:rotate(-135deg);margin-top:4px;}
+.lgpt-faq .faq-a{padding:0 18px 16px;font-size:14.5px;line-height:1.7;color:#c7c7d6;}
+.lgpt-faq .faq-a strong{color:#f5f5fa;font-weight:600;} .lgpt-faq .faq-a a{color:var(--brand-2);font-weight:600;}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What does the Employee Self-Service agent do?","acceptedAnswer":{"@type":"Answer","text":"It handles employee queries and requests and provides self-service capabilities on key HR and IT topics, inside Microsoft Copilot and Copilot Chat. It is built on Copilot Studio and uses agent flows, so deploying it is closer to a Power Platform project than flipping a Copilot setting."}},{"@type":"Question","name":"How much does it cost per query?","acceptedAnswer":{"@type":"Answer","text":"Users with a Microsoft Copilot licence are covered. For users without one, Microsoft's published sample puts the average at 15 cents per query. The breakdown: knowledge search without cached user context is 16 cents and makes up about 81% of traffic, knowledge search with cached context is 12 cents, topics are 5 cents, and verbatims are 1 cent."}},{"@type":"Question","name":"Do I get the Workday and ServiceNow connectors included?","acceptedAnswer":{"@type":"Answer","text":"Yes. The agent includes the Workday, SAP SuccessFactors and ServiceNow premium connectors at no additional cost. You still need the appropriate licences for those third-party systems themselves in order to integrate them."}},{"@type":"Question","name":"What adoption should we plan for?","acceptedAnswer":{"@type":"Answer","text":"Microsoft's two published deployment samples both start from 40,000 enabled users and show 1,100 monthly active users (3% of activated) over 28 days, and 2,075 (5%) over two months. Conversations averaged around five per user with roughly 1.3 to 1.5 interactions each. Plan for a useful minority, not universal adoption."}},{"@type":"Question","name":"What do we need to configure before deploying?","acceptedAnswer":{"@type":"Answer","text":"Copilot Studio capacity, because the agent uses agent flows. If unlicensed users will use it, configure pay-as-you-go in the Power Platform admin center: create a billing plan, link an Azure subscription and resource group, select the environment, and choose Copilot Studio as the product — Microsoft warns that last step is critical and is not covered in the admin center itself. Prepaid message capacity is the alternative."}},{"@type":"Question","name":"Which admin roles are involved?","acceptedAnswer":{"@type":"Answer","text":"A Global admin to assign roles, a Power Platform administrator to create environments and install the agent, a Power Platform maker to configure it, external system administrators for third-party integrations, information security to allowlist endpoints and manage SSO, and a change control board to approve architecture, governance and responsible-AI policy. Microsoft recommends least-privileged roles and just-in-time access for elevated ones."}},{"@type":"Question","name":"Is there a way to check readiness before we go live?","acceptedAnswer":{"@type":"Answer","text":"Yes. After confirming licensing, capacity, identity and roles, Microsoft provides FlightCheck, a readiness check that proactively validates that your tenant, environment and external-system configurations meet the agent's requirements."}},{"@type":"Question","name":"Does it work if our identity provider isn't Microsoft?","acceptedAnswer":{"@type":"Answer","text":"It can, but the agent trusts Entra for authentication because it is built on Copilot Studio within the Microsoft 365 stack. Microsoft expects your identity store to be federated with Entra and recommends configuring single sign-on there, with documented authentication preferences for Workday, SAP SuccessFactors and ServiceNow depending on whether Entra is federated with a third-party IdP."}}]}</script>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top"><div class="nav-inner">
+  <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+  <a href="/lessons/copilot/" class="nav-back">&larr; Copilot Mastery</a>
+</div></nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Copilot Mastery</span>
+      <span class="chip chip-pro-plus">Pro+</span>
+      <span>~10 min read</span>
+      <span class="dot"></span>
+      <span>Updated &middot; August 2026</span>
+    </div>
+    <h1>The ticket nobody needed <span class="grad serif">to file.</span></h1>
+    <p class="deck">&ldquo;What's the parental leave policy?&rdquo; &ldquo;What's my cost centre?&rdquo; Questions like these are the background radiation of every HR and IT function &mdash; high volume, low value, endlessly repeated. The Employee Self-Service agent is Microsoft's answer, and unusually, Microsoft publishes the actual per-query economics. This lesson is built around those numbers, because they decide whether the thing is worth deploying.</p>
+
+    <h2><span class="num">01</span> What it is, structurally</h2>
+    <p>The Employee Self-Service agent handles employee queries and requests on key HR and IT topics inside Microsoft Copilot and Copilot Chat. Architecturally it is <strong>built on Copilot Studio</strong> and uses agent flows &mdash; which is why its prerequisites read like a Power Platform project rather than a Copilot toggle. It leans on Microsoft Entra for authentication, and Microsoft recommends configuring single sign-on in Entra because the agent trusts Entra.</p>
+    <div class="callout"><span class="lbl">The connector detail worth knowing</span><p>The agent <strong>includes the Workday, SAP SuccessFactors and ServiceNow premium connectors at no additional cost</strong>. That is a real saving. You still need the appropriate licences for those third-party systems themselves &mdash; the connector is free, the system it connects to is not.</p></div>
+
+    <h2><span class="num">02</span> The economics nobody reads</h2>
+    <p>Here is the part that makes this lesson worth its tier. Users <em>with</em> a Microsoft Copilot licence are covered. Users <em>without</em> one are billed pay-as-you-go, and Microsoft publishes a worked cost breakdown for roughly a thousand users:</p>
+    <table class="cost-table">
+      <tr><th>Query type</th><th>Example</th><th>Share of traffic</th><th>Cost per query, unlicensed user</th></tr>
+      <tr><td>Knowledge search, no cached user context</td><td>&ldquo;What is the parental leave policy?&rdquo;</td><td>81%</td><td>16 cents</td></tr>
+      <tr><td>Knowledge search, cached user context</td><td>Same question, context cached</td><td>2%</td><td>12 cents</td></tr>
+      <tr><td>Topics</td><td>&ldquo;What is my cost center #?&rdquo;</td><td>14%</td><td>5 cents</td></tr>
+      <tr><td>Verbatims</td><td>Sensitive statements routed to a fixed response</td><td>3%</td><td>1 cent</td></tr>
+    </table>
+    <p>Microsoft's own summary: <strong>the average price per user without a Microsoft Copilot licence is 15 cents per query.</strong> The reason knowledge search dominates the cost is visible in the step breakdown &mdash; the tenant call for content is 10 cents and the orchestrator summarising that content is 2 more, while determining intent is free. Non-LLM answers cost a cent.</p>
+    <div class="gotcha">Anything that triggers LLM compute costs more. Microsoft flags two specific additions: enabling <strong>Microsoft 365 Self-Help</strong> incurs LLM compute to classify the query type, and the <strong>live agent hand-off</strong> package invokes LLM compute to summarise chat history before handing to a human. Budget for both if you turn them on.</div>
+
+    <h2><span class="num">03</span> How much volume should you actually expect?</h2>
+    <p>Microsoft publishes two real deployment samples, both at 40,000 enabled users, and they are a useful reality check against the business case someone is about to write:</p>
+    <table class="cost-table">
+      <tr><th>Metric</th><th>Sample 1 (28 days)</th><th>Sample 2 (two months)</th></tr>
+      <tr><td>Enabled users</td><td>40,000</td><td>40,000</td></tr>
+      <tr><td>Monthly active users</td><td>1,100 &mdash; 3% of activated</td><td>2,075 &mdash; 5% of activated</td></tr>
+      <tr><td>Total conversations</td><td>5,129</td><td>11,000</td></tr>
+      <tr><td>Total interactions</td><td>6,917</td><td>16,000</td></tr>
+      <tr><td>Interactions per conversation</td><td>1.34</td><td>1.45</td></tr>
+      <tr><td>Conversations per user</td><td>~5</td><td>~5</td></tr>
+    </table>
+    <p>Read that honestly. <strong>Three to five percent monthly active</strong> of an enabled population, and conversations that are barely more than a single exchange. This is a genuinely useful tool with modest adoption &mdash; which is fine, as long as nobody promised the board that 40,000 people would stop emailing HR.</p>
+
+    <h2><span class="num">04</span> The deployment is a programme, not a switch</h2>
+    <p>Microsoft's own role table is the clearest signal of scale. Deploying this properly needs a Global admin to assign roles, a <strong>Power Platform administrator</strong> to create environments and install the agent, a <strong>Power Platform maker</strong> to configure it (Microsoft recommends the agent owner does this), external system administrators for the third-party integrations, an information security team to allowlist inbound requests and manage SSO, and a change control board to approve the architecture, the data governance and the responsible-AI policy.</p>
+    <p>Three more roles do no configuration but decide whether it works at all: HR, IT and legal/privacy representatives. Their job is to identify knowledge sources, supply the frequent queries, and flag sensitive topics. That last one is why the &ldquo;verbatims&rdquo; category exists in the cost table &mdash; some questions must never get a generated answer.</p>
+    <div class="callout"><span class="lbl">Least privilege, again</span><p>Microsoft's guidance is to use the least privileged role for each activity and use just-in-time access for elevated ones. Standing Global Admin for an HR chatbot project is the kind of thing that shows up in an audit two years later.</p></div>
+
+    <h2><span class="num">05</span> Before you start</h2>
+    <div class="checklist">
+      <h3>Readiness checklist</h3>
+      <ul>
+        <li><strong>Count your unlicensed users.</strong> At roughly 15 cents a query, they are the entire variable cost. Multiply by 5 conversations a year per active user, at 3&ndash;5% monthly active.</li>
+        <li><strong>Set up Copilot Studio capacity</strong> &mdash; the agent uses agent flows, so this is not optional. Prepaid message capacity is the alternative to pay-as-you-go.</li>
+        <li><strong>Configure pay-as-you-go in the Power Platform admin center:</strong> create a billing plan, link an Azure subscription and resource group, select the environment, and choose <strong>Copilot Studio</strong> as the product. Microsoft explicitly warns this last step is critical and isn't covered in the admin center itself.</li>
+        <li><strong>Federate identity to Entra</strong> and configure SSO before you integrate Workday, SuccessFactors or ServiceNow.</li>
+        <li><strong>Get HR, IT and legal to write the sensitive-topics list</strong> before go-live, not after the first incident.</li>
+        <li><strong>Run FlightCheck</strong> &mdash; Microsoft's readiness check that validates your tenant, environment and external-system configuration against the agent's requirements.</li>
+      </ul>
+    </div>
+    <p>If that list looks heavier than you expected, that's the honest answer: this is the most enterprise of Microsoft's built-in agents. For a lighter grounded-answers approach over policy documents, <a href="/lessons/copilot/sharepoint-agents">SharePoint agents</a> get you most of the way for a fraction of the effort. And whichever you choose, it still has to clear <a href="/lessons/copilot/agent-store">the Agent Registry approval gate</a>.</p>
+
+    <div class="next-up">
+      <div class="lbl">Up next in Copilot Mastery</div>
+      <h3>Enterprise rollout</h3>
+      <p>The sequencing, change management and measurement that decides whether any of this sticks. <a href="/lessons/copilot/enterprise-rollout">Read the lesson &rarr;</a></p>
+    </div>
+
+    <section class="lgpt-faq">
+      <div class="faq-eyebrow">Questions people ask</div>
+      <h2>Straight answers</h2>
+      <details><summary>What does the Employee Self-Service agent do?<span class="chev"></span></summary><div class="faq-a">It handles employee queries and requests and provides self-service capabilities on key HR and IT topics, inside Microsoft Copilot and Copilot Chat. It is built on Copilot Studio and uses agent flows, so deploying it is closer to a Power Platform project than flipping a Copilot setting.</div></details>
+      <details><summary>How much does it cost per query?<span class="chev"></span></summary><div class="faq-a">Users with a Microsoft Copilot licence are covered. For users without one, Microsoft's published sample puts the average at 15 cents per query. The breakdown: knowledge search without cached user context is 16 cents and makes up about 81% of traffic, knowledge search with cached context is 12 cents, topics are 5 cents, and verbatims are 1 cent.</div></details>
+      <details><summary>Do I get the Workday and ServiceNow connectors included?<span class="chev"></span></summary><div class="faq-a">Yes. The agent includes the Workday, SAP SuccessFactors and ServiceNow premium connectors at no additional cost. You still need the appropriate licences for those third-party systems themselves in order to integrate them.</div></details>
+      <details><summary>What adoption should we plan for?<span class="chev"></span></summary><div class="faq-a">Microsoft's two published deployment samples both start from 40,000 enabled users and show 1,100 monthly active users (3% of activated) over 28 days, and 2,075 (5%) over two months. Conversations averaged around five per user with roughly 1.3 to 1.5 interactions each. Plan for a useful minority, not universal adoption.</div></details>
+      <details><summary>What do we need to configure before deploying?<span class="chev"></span></summary><div class="faq-a">Copilot Studio capacity, because the agent uses agent flows. If unlicensed users will use it, configure pay-as-you-go in the Power Platform admin center: create a billing plan, link an Azure subscription and resource group, select the environment, and choose Copilot Studio as the product — Microsoft warns that last step is critical and is not covered in the admin center itself. Prepaid message capacity is the alternative.</div></details>
+      <details><summary>Which admin roles are involved?<span class="chev"></span></summary><div class="faq-a">A Global admin to assign roles, a Power Platform administrator to create environments and install the agent, a Power Platform maker to configure it, external system administrators for third-party integrations, information security to allowlist endpoints and manage SSO, and a change control board to approve architecture, governance and responsible-AI policy. Microsoft recommends least-privileged roles and just-in-time access for elevated ones.</div></details>
+      <details><summary>Is there a way to check readiness before we go live?<span class="chev"></span></summary><div class="faq-a">Yes. After confirming licensing, capacity, identity and roles, Microsoft provides FlightCheck, a readiness check that proactively validates that your tenant, environment and external-system configurations meet the agent's requirements.</div></details>
+      <details><summary>Does it work if our identity provider isn't Microsoft?<span class="chev"></span></summary><div class="faq-a">It can, but the agent trusts Entra for authentication because it is built on Copilot Studio within the Microsoft 365 stack. Microsoft expects your identity store to be federated with Entra and recommends configuring single sign-on there, with documented authentication preferences for Workday, SAP SuccessFactors and ServiceNow depending on whether Entra is federated with a third-party IdP.</div></details>
+    </section>
+  </div>
+</article>
+<footer><div class="footer-inner">
+  <div>&copy; 2026 LearningGPT, Inc. &middot; Product details as of August 2026 &mdash; AI tools change fast; we update when they do.</div>
+  <a href="/lessons/copilot/" style="color:var(--text-dim);">&larr; All Copilot lessons</a>
+</div></footer>
+<script src="/gate.js"></script>
+</body>
+</html>

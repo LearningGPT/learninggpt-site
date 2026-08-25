@@ -36,14 +36,14 @@
 
     // The canonical link set — edit here to change the nav site-wide.
     var LINKS = [
+      { href: '/business',  label: 'For teams', teams: true },
+      { href: '/advisory',  label: 'Advisory' },
       { href: '/lessons',   label: 'Lessons' },
         { href: '/whats-new', label: "What's new" },
       { href: '/playground', label: 'Playground' },
       { href: '/pricing',   label: 'Pricing' },
       { href: '/testimonials', label: 'Testimonials' },
-      { href: '/business',  label: 'For business' },
-      { href: '/advisory',  label: 'Advisory' },
-      { href: '/seniors',   label: 'AI for Seniors', senior: true }
+      { href: '/seniors',   label: 'AI for Seniors' }
     ];
 
     // Current path (no trailing slash, no .html) for active-state highlighting.
@@ -63,7 +63,7 @@
     var linksHTML = LINKS.map(function (l) {
       var base = l.href.replace(/\/+$/, '');
       var active = (here === base) || (base !== '/' && here.indexOf(base) === 0);
-      var cls = 'lgpt-nl' + (l.senior ? ' lgpt-senior' : '') + (active ? ' is-active' : '');
+      var cls = 'lgpt-nl' + (l.senior ? ' lgpt-senior' : '') + (l.teams ? ' lgpt-teams' : '') + (active ? ' is-active' : '');
       return '<a href="' + l.href + '" class="' + cls + '">' + l.label + '</a>';
     }).join('');
 
@@ -92,6 +92,9 @@
       '.lgpt-nl{font-size:14px;color:#a8a8c0;text-decoration:none;white-space:nowrap;transition:color .15s;}',
       '.lgpt-nl:hover{color:#f5f5fa;}',
       '.lgpt-nl.is-active{color:#f5f5fa;}',
+      '.lgpt-teams{color:#b6a4ff;border:1px solid rgba(124,92,255,0.5);background:rgba(124,92,255,0.12);padding:6px 13px;border-radius:999px;font-weight:600;}',
+      '.lgpt-teams:hover{color:#d3c8ff;border-color:rgba(124,92,255,0.75);}',
+      '.lgpt-teams.is-active{color:#fff;background:linear-gradient(135deg,#7c5cff,#5b8def);}',
       '.lgpt-senior{color:#2dd4a7;border:1px solid rgba(45,212,167,0.4);background:rgba(45,212,167,0.10);padding:6px 13px;border-radius:999px;font-weight:600;}',
       '.lgpt-senior:hover{color:#7fe3c8;border-color:rgba(45,212,167,0.6);}',
       '.lgpt-senior.is-active{color:#0a0a1a;background:#2dd4a7;}',
@@ -206,5 +209,17 @@
       sessionStorage.removeItem('lgpt_new_signup');
       window.uetq.push('event', 'signup', {});
     }
+    // B2B lead signal: any click on a dan@ talk-first CTA counts as a business lead.
+    document.addEventListener('click', function (ev) {
+      var tEl = ev.target;
+      var hit = null;
+      if (tEl && tEl.closest) {
+        hit = tEl.closest('a[href^="mailto:dan@learninggpt.ai"]') ||
+              tEl.closest('button[onclick*="mailto:dan@learninggpt.ai"]');
+      }
+      if (hit && window.uetq && window.uetq.push) {
+        try { window.uetq.push('event', 'business_lead', {}); } catch (e2) {}
+      }
+    }, true);
   } catch (e) {}
 })();

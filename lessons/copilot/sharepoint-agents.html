@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SharePoint agents: the knowledge bot you already have — LearningGPT</title>
+<meta name="description" content="Every SharePoint site ships with a ready-made agent scoped to its own content, answering only within the asker’s permissions. Ready-made versus custom-built, the licensing and pay-as-you-go paths, and why the permission model is the whole product." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#2c7be5" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/copilot/sharepoint-agents" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/copilot/sharepoint-agents" />
+<meta property="og:title" content="SharePoint agents: the knowledge bot you already have — LearningGPT" />
+<meta property="og:description" content="Every SharePoint site ships with a ready-made agent scoped to its own content, answering only within the asker’s permissions. Ready-made versus custom-built, the licensing and pay-as-you-go paths, and why the permission model is the whole product." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="SharePoint agents: the knowledge bot you already have — LearningGPT" />
+<meta name="twitter:description" content="Every SharePoint site ships with a ready-made agent scoped to its own content, answering only within the asker’s permissions. Ready-made versus custom-built, the licensing and pay-as-you-go paths, and why the permission model is the whole product." />
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --radius:14px; --radius-lg:20px; --container:820px; --track:#2c7be5; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:var(--track);}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.25;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(44,123,229,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(44,123,229,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#2c7be5 0%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.15em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:52px 0 14px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson h3{font-size:18px;font-weight:600;margin:28px 0 8px;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(44,123,229,0.12),rgba(124,92,255,0.06));border:1px solid rgba(44,123,229,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,#2c7be5,#7c5cff);border-radius:2px 0 0 2px;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.cost-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;}
+.cost-table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--line-strong);color:var(--text-dim);font-size:11.5px;text-transform:uppercase;letter-spacing:0.6px;}
+.cost-table td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.cost-table td:first-child{font-weight:700;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:14px 0;font-size:14.5px;}
+.gotcha::before{content:'⚠ Watch out: ';color:var(--warn);font-weight:700;}
+.tryit{margin:28px 0;padding:22px;background:rgba(68,224,164,0.06);border:1px solid rgba(68,224,164,0.25);border-radius:var(--radius);}
+.tryit .lbl{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.tryit p{margin:0 0 14px;font-size:15.5px;}
+.tryit a.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#44e0a4,#5b8def);color:white;padding:12px 22px;border-radius:9px;font-weight:600;font-size:14px;}
+.tryit a.btn:hover{transform:translateY(-1px);color:white;}
+.challenge{margin:52px 0 40px;background:linear-gradient(135deg,rgba(44,123,229,0.14),rgba(124,92,255,0.1));border:1px solid rgba(44,123,229,0.28);border-radius:var(--radius-lg);padding:34px;}
+.challenge h2{margin-top:0;}
+.challenge a.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#2c7be5,#7c5cff);color:white;padding:13px 24px;border-radius:10px;font-weight:600;font-size:15px;}
+.challenge a.btn:hover{transform:translateY(-1px);color:white;}
+.checklist{margin:40px 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);}
+.checklist h3{margin-top:0;font-size:18px;} .checklist ul{list-style:none;padding:0;margin:0;}
+.checklist li{padding:10px 0 10px 30px;position:relative;font-size:15px;border-top:1px solid var(--line);}
+.checklist li:first-child{border-top:none;padding-top:0;}
+.checklist li::before{content:'✓';position:absolute;left:0;color:var(--accent);font-weight:700;}
+.next-up{margin:50px 0 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.next-up .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:10px;}
+.next-up h3{margin:0 0 8px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:14.5px;}
+footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);}
+.chip-pro { border-color: rgba(124,92,255,0.45); color: #b9a6ff; background: rgba(124,92,255,0.12); }
+.chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
+.steps{counter-reset:st;margin:20px 0;} .steps .step{position:relative;padding:14px 0 14px 54px;border-bottom:1px solid var(--line);} .steps .step::before{counter-increment:st;content:counter(st);position:absolute;left:0;top:12px;width:34px;height:34px;border-radius:50%;background:rgba(44,123,229,0.15);border:1px solid rgba(44,123,229,0.4);color:var(--track);font-weight:700;display:grid;place-items:center;font-size:14px;}
+.checklist{margin:24px 0;padding:22px 26px;background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius-lg);} .checklist h3{margin:0 0 10px;font-size:16px;} .checklist ul{margin:0;padding-left:22px;}
+.next-up{margin-top:56px;padding:24px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);} .next-up .lbl{font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);margin-bottom:8px;} .next-up h3{margin:0 0 6px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:15px;}
+.footer-inner{max-width:1180px;margin:0 auto;padding:26px 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);border-top:1px solid var(--line);}
+.lgpt-faq{margin:48px 0 8px;}
+.lgpt-faq .faq-eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.09em;font-weight:700;color:var(--track);margin-bottom:8px;}
+.lgpt-faq h2{font-size:27px;line-height:1.15;letter-spacing:-.02em;font-weight:800;margin:0 0 18px;}
+.lgpt-faq details{border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#14142b;margin-bottom:10px;overflow:hidden;}
+.lgpt-faq details[open]{border-color:rgba(44,123,229,.45);}
+.lgpt-faq summary{list-style:none;cursor:pointer;padding:15px 18px;font-size:15.5px;font-weight:600;color:#f5f5fa;display:flex;justify-content:space-between;align-items:center;gap:14px;}
+.lgpt-faq summary::-webkit-details-marker{display:none;}
+.lgpt-faq summary .chev{flex-shrink:0;width:18px;height:18px;border-right:2px solid var(--track);border-bottom:2px solid var(--track);transform:rotate(45deg);transition:transform .2s;margin-top:-4px;}
+.lgpt-faq details[open] summary .chev{transform:rotate(-135deg);margin-top:4px;}
+.lgpt-faq .faq-a{padding:0 18px 16px;font-size:14.5px;line-height:1.7;color:#c7c7d6;}
+.lgpt-faq .faq-a strong{color:#f5f5fa;font-weight:600;} .lgpt-faq .faq-a a{color:var(--brand-2);font-weight:600;}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do I have to create a SharePoint agent?","acceptedAnswer":{"@type":"Answer","text":"No. Every SharePoint site comes with a ready-made agent, automatically scoped to that site's content, with no building required by site admins or owners. It appears as the main agent for the site and is named after the site — or named Copilot if the site is part of the Copilot in SharePoint public preview."}},{"@type":"Question","name":"Can a SharePoint agent show someone documents they shouldn't see?","acceptedAnswer":{"@type":"Answer","text":"No. Agents in SharePoint answer questions about content the person asking already has permissions to. The risk is not the agent granting new access — it is that existing oversharing, like an over-broad library, becomes far easier to stumble across because the agent answers fluently and instantly."}},{"@type":"Question","name":"What licence do I need?","acceptedAnswer":{"@type":"Answer","text":"To interact with agents in SharePoint you need a Microsoft Copilot licence, or your organization needs to have enabled the pay-as-you-go service for SharePoint agents. To edit an agent you need one of those plus edit permissions on the site where the agent lives."}},{"@type":"Question","name":"Can I edit the ready-made agent?","acceptedAnswer":{"@type":"Answer","text":"No. The ready-made agent that ships with a site cannot be edited and cannot be shared. If you need different scope, branding or behaviour, create a custom-built agent instead."}},{"@type":"Question","name":"How do I share a custom SharePoint agent?","acceptedAnswer":{"@type":"Answer","text":"Find the agent in the agent list, select the ellipsis, then Share, then use Copy Link to get a link you can send like any other file. Whoever receives it can select the link to open the agent. This only works for agents that were created — not the ready-made one."}},{"@type":"Question","name":"Can one agent cover more than one SharePoint site?","acceptedAnswer":{"@type":"Answer","text":"Yes, that is one of the main reasons to build a custom agent. With site editing permissions you can specify the sites, pages and files the agent should draw information from, so a single agent can span a team site, an R&D site and a product site."}},{"@type":"Question","name":"How do we turn SharePoint agents off?","acceptedAnswer":{"@type":"Answer","text":"SharePoint admins can remove the ready-made agent through the restricted content discovery policy, which lets you switch off agents on sites holding restricted content."}}]}</script>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top"><div class="nav-inner">
+  <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+  <a href="/lessons/copilot/" class="nav-back">&larr; Copilot Mastery</a>
+</div></nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Copilot Mastery</span>
+      <span class="chip chip-pro">Pro</span>
+      <span>~8 min read</span>
+      <span class="dot"></span>
+      <span>Updated &middot; August 2026</span>
+    </div>
+    <h1>You already have one. <span class="grad serif">On every site.</span></h1>
+    <p class="deck">Most organisations spend months debating whether to build an internal knowledge bot. Meanwhile every SharePoint site in their tenant already has one, switched on, scoped to that site's content, answering strictly within whatever permissions the asker already has. Knowing the difference between that ready-made agent and a custom-built one is most of the skill here.</p>
+
+    <h2><span class="num">01</span> Two agents, one site</h2>
+    <table class="cost-table">
+      <tr><th></th><th>Ready-made agent</th><th>Custom-built agent</th></tr>
+      <tr><td>Where it comes from</td><td>Every SharePoint site ships with one</td><td>You create it, with site edit permissions</td></tr>
+      <tr><td>Scope</td><td>Automatically the content on that site</td><td>Sites, pages and files you choose &mdash; including other sites</td></tr>
+      <tr><td>Name</td><td>Named after the site, or &ldquo;Copilot&rdquo; if the site is in the Copilot in SharePoint public preview</td><td>Whatever you brand it</td></tr>
+      <tr><td>Editable</td><td>No</td><td>Yes &mdash; scope, identity, behaviour, custom prompts</td></tr>
+      <tr><td>Shareable</td><td>No</td><td>Yes &mdash; via the ellipsis, then Share, then Copy Link</td></tr>
+      <tr><td>Has an .agent file</td><td>No</td><td>Yes</td></tr>
+    </table>
+    <div class="gotcha">You cannot edit or share the ready-made agent. If someone asks you to &ldquo;tweak the site's Copilot,&rdquo; the answer is always to create a custom agent instead &mdash; there is no version of that request that works on the built-in one.</div>
+
+    <h2><span class="num">02</span> The permission model is the whole product</h2>
+    <p>Microsoft's phrasing is precise and worth repeating: agents in SharePoint answer questions about content on any site or document library <strong>that the asker has permissions with</strong>. The agent doesn't widen access. It reads what the person asking could already have opened themselves &mdash; it just reads all of it, instantly.</p>
+    <p>That's genuinely reassuring and genuinely dangerous at the same time. It means a SharePoint agent will never leak a document someone couldn't already open. It also means that if your permissions are sloppy &mdash; the &ldquo;everyone in the company&rdquo; library that was supposed to be temporary in 2021 &mdash; the agent will find that content and surface it fluently, in seconds, to anyone who asks the right question. Oversharing that used to be theoretical becomes practical.</p>
+    <div class="callout"><span class="lbl">Do this first</span><p>Before you promote SharePoint agents internally, run the permissions audit you have been postponing. See <a href="/lessons/copilot/copilot-security-hygiene">Copilot security hygiene</a> &mdash; the failure mode isn't the agent, it's what the agent can reach.</p></div>
+
+    <h2><span class="num">03</span> What you need</h2>
+    <div class="steps">
+      <div class="step"><strong>To interact with an agent:</strong> a Microsoft Copilot licence, <em>or</em> pay-as-you-go for SharePoint agents enabled by your organization. That second path matters &mdash; it means agents can reach people who don't have a full Copilot seat.</div>
+      <div class="step"><strong>To edit an agent:</strong> one of the above, plus edit permissions on the SharePoint site where the agent lives.</div>
+      <div class="step"><strong>To turn agents off:</strong> SharePoint admins can remove the ready-made agent through the restricted content discovery policy.</div>
+    </div>
+
+    <h2><span class="num">04</span> Building one that earns its keep</h2>
+    <p>A custom agent is worth building when the ready-made one has the wrong scope or the wrong manners. Three levers:</p>
+    <ul>
+      <li><strong>Scope.</strong> Point it at multiple sites. Microsoft's own example is a sales manager combining their team site with the R&amp;D site and a product site, so one agent can compare two product generations.</li>
+      <li><strong>Purpose and branding.</strong> Give it a name and a job so people know what it's for &mdash; &ldquo;HR Policy Answers&rdquo; gets used, &ldquo;Site Assistant&rdquo; doesn't.</li>
+      <li><strong>Customised prompts</strong> tailored to that scope, so the first thing a new user sees is a question worth asking.</li>
+    </ul>
+    <p>The output goes well beyond retrieval. Microsoft's worked example asks a custom agent to write a competitive pitch script comparing two products, drawing on the R&amp;D evidence for one of them &mdash; that's synthesis across sites, not a search box.</p>
+
+    <div class="tryit"><span class="lbl">Try it now</span><p>Open the SharePoint site your team complains about most. Ask its ready-made agent the question new starters always ask &mdash; the one that currently gets answered by someone senior in a DM. If the answer is good, you just found a custom agent worth building. If it's bad, you found a documentation problem the agent has helpfully surfaced.</p></div>
+
+    <h2><span class="num">05</span> Where this sits against the others</h2>
+    <p>SharePoint agents are the right answer when <strong>the knowledge is in documents</strong>. When the knowledge is in conversation, that's <a href="/lessons/copilot/channel-agent">Channel Agent</a>. When the work is execution rather than recall, that's <a href="/lessons/copilot/planner-agent">Planner Agent</a>. And when you need process logic, connectors and approvals rather than grounded answers, you've crossed into <a href="/lessons/copilot/copilot-studio">Copilot Studio</a>.</p>
+
+    <div class="next-up">
+      <div class="lbl">Up next in Copilot Mastery</div>
+      <h3>The Employee Self-Service agent</h3>
+      <p>HR and IT questions answered without a ticket &mdash; and the per-query costs Microsoft publishes but nobody reads. <a href="/lessons/copilot/employee-self-service-agent">Read the lesson &rarr;</a></p>
+    </div>
+
+    <section class="lgpt-faq">
+      <div class="faq-eyebrow">Questions people ask</div>
+      <h2>Straight answers</h2>
+      <details><summary>Do I have to create a SharePoint agent?<span class="chev"></span></summary><div class="faq-a">No. Every SharePoint site comes with a ready-made agent, automatically scoped to that site's content, with no building required by site admins or owners. It appears as the main agent for the site and is named after the site — or named Copilot if the site is part of the Copilot in SharePoint public preview.</div></details>
+      <details><summary>Can a SharePoint agent show someone documents they shouldn't see?<span class="chev"></span></summary><div class="faq-a">No. Agents in SharePoint answer questions about content the person asking already has permissions to. The risk is not the agent granting new access — it is that existing oversharing, like an over-broad library, becomes far easier to stumble across because the agent answers fluently and instantly.</div></details>
+      <details><summary>What licence do I need?<span class="chev"></span></summary><div class="faq-a">To interact with agents in SharePoint you need a Microsoft Copilot licence, or your organization needs to have enabled the pay-as-you-go service for SharePoint agents. To edit an agent you need one of those plus edit permissions on the site where the agent lives.</div></details>
+      <details><summary>Can I edit the ready-made agent?<span class="chev"></span></summary><div class="faq-a">No. The ready-made agent that ships with a site cannot be edited and cannot be shared. If you need different scope, branding or behaviour, create a custom-built agent instead.</div></details>
+      <details><summary>How do I share a custom SharePoint agent?<span class="chev"></span></summary><div class="faq-a">Find the agent in the agent list, select the ellipsis, then Share, then use Copy Link to get a link you can send like any other file. Whoever receives it can select the link to open the agent. This only works for agents that were created — not the ready-made one.</div></details>
+      <details><summary>Can one agent cover more than one SharePoint site?<span class="chev"></span></summary><div class="faq-a">Yes, that is one of the main reasons to build a custom agent. With site editing permissions you can specify the sites, pages and files the agent should draw information from, so a single agent can span a team site, an R&amp;D site and a product site.</div></details>
+      <details><summary>How do we turn SharePoint agents off?<span class="chev"></span></summary><div class="faq-a">SharePoint admins can remove the ready-made agent through the restricted content discovery policy, which lets you switch off agents on sites holding restricted content.</div></details>
+    </section>
+  </div>
+</article>
+<footer><div class="footer-inner">
+  <div>&copy; 2026 LearningGPT, Inc. &middot; Product details as of August 2026 &mdash; AI tools change fast; we update when they do.</div>
+  <a href="/lessons/copilot/" style="color:var(--text-dim);">&larr; All Copilot lessons</a>
+</div></footer>
+<script src="/gate.js"></script>
+</body>
+</html>

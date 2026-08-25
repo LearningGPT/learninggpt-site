@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Agent Store and the Agent Registry: how a Copilot agent actually reaches your people — LearningGPT</title>
+<meta name="description" content="The Agent Store is the front door; the Agent Registry in the Microsoft 365 admin center is the approval gate. The five agent types, the Frontier category nobody knows about, and why Researcher and Analyst are not governed as agents." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#2c7be5" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/copilot/agent-store" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/copilot/agent-store" />
+<meta property="og:title" content="The Agent Store and the Agent Registry: how a Copilot agent actually reaches your people — LearningGPT" />
+<meta property="og:description" content="The Agent Store is the front door; the Agent Registry in the Microsoft 365 admin center is the approval gate. The five agent types, the Frontier category nobody knows about, and why Researcher and Analyst are not governed as agents." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="The Agent Store and the Agent Registry: how a Copilot agent actually reaches your people — LearningGPT" />
+<meta name="twitter:description" content="The Agent Store is the front door; the Agent Registry in the Microsoft 365 admin center is the approval gate. The five agent types, the Frontier category nobody knows about, and why Researcher and Analyst are not governed as agents." />
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --radius:14px; --radius-lg:20px; --container:820px; --track:#2c7be5; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:var(--track);}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.25;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(44,123,229,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(44,123,229,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#2c7be5 0%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.15em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:52px 0 14px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson h3{font-size:18px;font-weight:600;margin:28px 0 8px;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(44,123,229,0.12),rgba(124,92,255,0.06));border:1px solid rgba(44,123,229,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,#2c7be5,#7c5cff);border-radius:2px 0 0 2px;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.cost-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;}
+.cost-table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--line-strong);color:var(--text-dim);font-size:11.5px;text-transform:uppercase;letter-spacing:0.6px;}
+.cost-table td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.cost-table td:first-child{font-weight:700;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:14px 0;font-size:14.5px;}
+.gotcha::before{content:'⚠ Watch out: ';color:var(--warn);font-weight:700;}
+.tryit{margin:28px 0;padding:22px;background:rgba(68,224,164,0.06);border:1px solid rgba(68,224,164,0.25);border-radius:var(--radius);}
+.tryit .lbl{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.tryit p{margin:0 0 14px;font-size:15.5px;}
+.tryit a.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#44e0a4,#5b8def);color:white;padding:12px 22px;border-radius:9px;font-weight:600;font-size:14px;}
+.tryit a.btn:hover{transform:translateY(-1px);color:white;}
+.challenge{margin:52px 0 40px;background:linear-gradient(135deg,rgba(44,123,229,0.14),rgba(124,92,255,0.1));border:1px solid rgba(44,123,229,0.28);border-radius:var(--radius-lg);padding:34px;}
+.challenge h2{margin-top:0;}
+.challenge a.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#2c7be5,#7c5cff);color:white;padding:13px 24px;border-radius:10px;font-weight:600;font-size:15px;}
+.challenge a.btn:hover{transform:translateY(-1px);color:white;}
+.checklist{margin:40px 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);}
+.checklist h3{margin-top:0;font-size:18px;} .checklist ul{list-style:none;padding:0;margin:0;}
+.checklist li{padding:10px 0 10px 30px;position:relative;font-size:15px;border-top:1px solid var(--line);}
+.checklist li:first-child{border-top:none;padding-top:0;}
+.checklist li::before{content:'✓';position:absolute;left:0;color:var(--accent);font-weight:700;}
+.next-up{margin:50px 0 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.next-up .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:10px;}
+.next-up h3{margin:0 0 8px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:14.5px;}
+footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);}
+.chip-pro { border-color: rgba(124,92,255,0.45); color: #b9a6ff; background: rgba(124,92,255,0.12); }
+.chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
+.steps{counter-reset:st;margin:20px 0;} .steps .step{position:relative;padding:14px 0 14px 54px;border-bottom:1px solid var(--line);} .steps .step::before{counter-increment:st;content:counter(st);position:absolute;left:0;top:12px;width:34px;height:34px;border-radius:50%;background:rgba(44,123,229,0.15);border:1px solid rgba(44,123,229,0.4);color:var(--track);font-weight:700;display:grid;place-items:center;font-size:14px;}
+.checklist{margin:24px 0;padding:22px 26px;background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius-lg);} .checklist h3{margin:0 0 10px;font-size:16px;} .checklist ul{margin:0;padding-left:22px;}
+.next-up{margin-top:56px;padding:24px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);} .next-up .lbl{font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);margin-bottom:8px;} .next-up h3{margin:0 0 6px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:15px;}
+.footer-inner{max-width:1180px;margin:0 auto;padding:26px 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);border-top:1px solid var(--line);}
+.lgpt-faq{margin:48px 0 8px;}
+.lgpt-faq .faq-eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.09em;font-weight:700;color:var(--track);margin-bottom:8px;}
+.lgpt-faq h2{font-size:27px;line-height:1.15;letter-spacing:-.02em;font-weight:800;margin:0 0 18px;}
+.lgpt-faq details{border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#14142b;margin-bottom:10px;overflow:hidden;}
+.lgpt-faq details[open]{border-color:rgba(44,123,229,.45);}
+.lgpt-faq summary{list-style:none;cursor:pointer;padding:15px 18px;font-size:15.5px;font-weight:600;color:#f5f5fa;display:flex;justify-content:space-between;align-items:center;gap:14px;}
+.lgpt-faq summary::-webkit-details-marker{display:none;}
+.lgpt-faq summary .chev{flex-shrink:0;width:18px;height:18px;border-right:2px solid var(--track);border-bottom:2px solid var(--track);transform:rotate(45deg);transition:transform .2s;margin-top:-4px;}
+.lgpt-faq details[open] summary .chev{transform:rotate(-135deg);margin-top:4px;}
+.lgpt-faq .faq-a{padding:0 18px 16px;font-size:14.5px;line-height:1.7;color:#c7c7d6;}
+.lgpt-faq .faq-a strong{color:#f5f5fa;font-weight:600;} .lgpt-faq .faq-a a{color:var(--brand-2);font-weight:600;}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Where is the Agent Store in Microsoft 365 Copilot?","acceptedAnswer":{"@type":"Answer","text":"Inside the Microsoft Copilot app. Users browse it to find and add agents. What they can actually add is limited to what an administrator has allowed, because every agent goes through a submission and approval process before it becomes available to the organization."}},{"@type":"Question","name":"What is the Agent Registry?","acceptedAnswer":{"@type":"Answer","text":"The Agent Registry is the agent inventory in the Microsoft 365 admin center. It lists agents with details such as name, creator, creation date, host products and availability status, and it is where an admin reviews agent requests, publishes an agent to the store, rejects a submission, or blocks an agent judged unsafe or noncompliant."}},{"@type":"Question","name":"Are Researcher and Analyst agents?","acceptedAnswer":{"@type":"Answer","text":"No, and this trips up a lot of rollout plans. Microsoft describes Researcher and Analyst as first-party experiences that are part of the core Copilot Chat experience, available under Tools, running inside the Microsoft 365 commercial data processing boundary. They coexist with agents and abide by agent-related governance capabilities, but they do not fall under agent-related settings."}},{"@type":"Question","name":"What are Frontier agents?","acceptedAnswer":{"@type":"Answer","text":"Frontier agents are experimental or advanced agents using new capabilities or integrations. Microsoft says they might be in early stages of development or testing and could require more oversight or a limited rollout. The App Builder agent and the Workflows agent are both Frontier agents built by Microsoft, and both can also be managed from the Power Platform admin center."}},{"@type":"Question","name":"Do I need to turn agent management on?","acceptedAnswer":{"@type":"Answer","text":"No. Microsoft states the capability is enabled by default in all Microsoft Copilot licensed tenants. The pipeline is already running in your tenant; the only question is whether anyone is watching it."}},{"@type":"Question","name":"What is Microsoft Agent 365 and how is it different?","acceptedAnswer":{"@type":"Answer","text":"Agent 365 is positioned as the control plane for AI agents across the organization, letting you deploy, govern and manage agents at scale regardless of where they were built or acquired. The Microsoft 365 admin center governs agents inside Microsoft 365; Agent 365 is the broader layer intended to cover agents from anywhere."}},{"@type":"Question","name":"Can we publish our own agents in a government cloud?","acceptedAnswer":{"@type":"Answer","text":"Microsoft notes that publishing agents to the organization is supported in Microsoft 365 Government Community Cloud High (GCCH) and Government Community Cloud Moderate (GCCM) environments."}}]}</script>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top"><div class="nav-inner">
+  <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+  <a href="/lessons/copilot/" class="nav-back">&larr; Copilot Mastery</a>
+</div></nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Copilot Mastery</span>
+      <span class="chip chip-pro-plus">Pro+</span>
+      <span>~9 min read</span>
+      <span class="dot"></span>
+      <span>Updated &middot; August 2026</span>
+    </div>
+    <h1>Nobody can just install an agent. <span class="grad serif">And that's the point.</span></h1>
+    <p class="deck">Microsoft now ships agents faster than most tenants can evaluate them. The Agent Store is where your people find them; the Agent Registry in the admin center is where somebody decides whether they get them. If you only learn one piece of Copilot governance this year, learn this pipeline &mdash; because the alternative is a tenant full of agents nobody approved.</p>
+
+    <h2><span class="num">01</span> The two halves of the system</h2>
+    <p>There is a <strong>front door</strong> and a <strong>back office</strong>, and people confuse them constantly.</p>
+    <ul>
+      <li><strong>The Agent Store</strong> lives inside the Microsoft Copilot app. Your people browse it, find an agent, and add it. It looks exactly like an app store, which is why everyone assumes it behaves like one.</li>
+      <li><strong>The Agent Registry</strong> lives in the Microsoft 365 admin center. It is the inventory: every agent, who created it, when, which products host it, and whether it is currently available.</li>
+    </ul>
+    <p>The link between them is an approval gate. Microsoft's documentation is blunt about it: before users can access agents, each agent goes through a submission and approval process, and members of your organization can only access the agents you have allowed. Agent management is on by default in every Microsoft Copilot licensed tenant &mdash; so this pipeline is already running whether or not anyone in your company has looked at it.</p>
+    <div class="callout"><span class="lbl">The question to ask your admin</span><p>&ldquo;Who reviews agent requests, and how long is the queue?&rdquo; If nobody knows the answer, you have found the bottleneck that will make every agent pilot look like a Copilot failure.</p></div>
+
+    <h2><span class="num">02</span> Five kinds of agent, five different risks</h2>
+    <p>The admin center groups agents into types, and the type tells you how much scrutiny it deserves.</p>
+    <table class="cost-table">
+      <tr><th>Type</th><th>Where it comes from</th><th>What to watch</th></tr>
+      <tr><td>Published by your organization</td><td>Built in-house, then approved by an admin before anyone else sees it</td><td>The approval queue itself &mdash; this is the type that stalls</td></tr>
+      <tr><td>Shared by creator</td><td>Made in Copilot Studio or Agent Builder and shared directly</td><td>Sprawl. These appear in the registry, and blocking is your lever</td></tr>
+      <tr><td>Microsoft agents</td><td>Built by Microsoft, wired into M365 services</td><td>Licensing and quota, more than trust</td></tr>
+      <tr><td>External partner agents</td><td>Third-party developers and vendors</td><td>What data they touch; availability and permissions are yours to control</td></tr>
+      <tr><td>Frontier agents</td><td>Experimental Microsoft capabilities &mdash; App Builder and Workflows are both Frontier</td><td>Early-stage behaviour. Microsoft itself says these may need extra oversight or a limited rollout</td></tr>
+    </table>
+    <p>Frontier is the category most people have never heard of and the one most likely to surprise them. The Workflows agent, for example, saves the flows it creates into your default Power Platform environment unless environment routing is turned on for Copilot Studio &mdash; a detail that decides whether your automation estate stays tidy or turns into a landfill.</p>
+
+    <h2><span class="num">03</span> The exception that catches everyone out</h2>
+    <div class="gotcha">Researcher and Analyst are <strong>not</strong> governed as agents. Microsoft classifies them as part of the core Copilot Chat experience, available under <strong>Tools</strong>, operating inside the Microsoft 365 commercial data processing boundary. They coexist with agents and obey the agent-related governance capabilities, but they do not fall under agent-related settings. If your rollout plan says &ldquo;we'll control Researcher through agent policy,&rdquo; that plan does not work.</div>
+    <p>This matters practically. Blocking agents wholesale does not switch off Researcher and Analyst, and approving an agent does not tell you anything about how those two are being used. They are separate controls, and you need both.</p>
+
+    <h2><span class="num">04</span> Where Agent 365 fits</h2>
+    <p>Above all of this sits <strong>Microsoft Agent 365</strong>, which Microsoft positions as the control plane for AI agents &mdash; deploy, govern and manage every agent at scale, regardless of where it was built or bought. The M365 admin center handles agents inside Microsoft 365; Agent 365 is the layer that is supposed to cover the ones that aren't. If you are running more than a handful of agents, that distinction is the difference between an inventory and a guess.</p>
+
+    <h2><span class="num">05</span> Set this up before you pilot anything</h2>
+    <div class="checklist">
+      <h3>The pre-pilot governance checklist</h3>
+      <ul>
+        <li><strong>Name the approver.</strong> One person, with a stated turnaround. Agent requests that sit for three weeks kill pilots.</li>
+        <li><strong>Open the Agent Registry and read it.</strong> Most tenants already have shared agents in there that leadership has never seen.</li>
+        <li><strong>Decide your Frontier stance</strong> before someone builds a production workflow on an experimental agent.</li>
+        <li><strong>Check environment routing</strong> for Copilot Studio, so Workflows agent flows don't all land in the default environment.</li>
+        <li><strong>Use least-privileged roles.</strong> Microsoft is explicit that Global Administrator is highly privileged and should be reserved for emergencies &mdash; agent management does not need it.</li>
+        <li><strong>Write down the Researcher and Analyst exception</strong> so nobody plans around a control that doesn't exist.</li>
+      </ul>
+    </div>
+    <p>Governance sounds like the boring half of an AI programme. It is actually the half that decides whether anything ships. Once this pipeline is named and staffed, the rest of the agent lineup &mdash; <a href="/lessons/copilot/channel-agent">Channel Agent</a>, <a href="/lessons/copilot/planner-agent">Planner Agent</a>, <a href="/lessons/copilot/sharepoint-agents">SharePoint agents</a>, the <a href="/lessons/copilot/employee-self-service-agent">Employee Self-Service agent</a> &mdash; stops being a series of one-off arguments.</p>
+
+    <div class="next-up">
+      <div class="lbl">Up next in Copilot Mastery</div>
+      <h3>Channel Agent</h3>
+      <p>The agent that lives in a single Teams channel and knows that project better than anyone. <a href="/lessons/copilot/channel-agent">Read the lesson &rarr;</a></p>
+    </div>
+
+    <section class="lgpt-faq">
+      <div class="faq-eyebrow">Questions people ask</div>
+      <h2>Straight answers</h2>
+      <details><summary>Where is the Agent Store in Microsoft 365 Copilot?<span class="chev"></span></summary><div class="faq-a">Inside the Microsoft Copilot app. Users browse it to find and add agents. What they can actually add is limited to what an administrator has allowed, because every agent goes through a submission and approval process before it becomes available to the organization.</div></details>
+      <details><summary>What is the Agent Registry?<span class="chev"></span></summary><div class="faq-a">The Agent Registry is the agent inventory in the Microsoft 365 admin center. It lists agents with details such as name, creator, creation date, host products and availability status, and it is where an admin reviews agent requests, publishes an agent to the store, rejects a submission, or blocks an agent judged unsafe or noncompliant.</div></details>
+      <details><summary>Are Researcher and Analyst agents?<span class="chev"></span></summary><div class="faq-a">No, and this trips up a lot of rollout plans. Microsoft describes Researcher and Analyst as first-party experiences that are part of the core Copilot Chat experience, available under Tools, running inside the Microsoft 365 commercial data processing boundary. They coexist with agents and abide by agent-related governance capabilities, but they do not fall under agent-related settings.</div></details>
+      <details><summary>What are Frontier agents?<span class="chev"></span></summary><div class="faq-a">Frontier agents are experimental or advanced agents using new capabilities or integrations. Microsoft says they might be in early stages of development or testing and could require more oversight or a limited rollout. The App Builder agent and the Workflows agent are both Frontier agents built by Microsoft, and both can also be managed from the Power Platform admin center.</div></details>
+      <details><summary>Do I need to turn agent management on?<span class="chev"></span></summary><div class="faq-a">No. Microsoft states the capability is enabled by default in all Microsoft Copilot licensed tenants. The pipeline is already running in your tenant; the only question is whether anyone is watching it.</div></details>
+      <details><summary>What is Microsoft Agent 365 and how is it different?<span class="chev"></span></summary><div class="faq-a">Agent 365 is positioned as the control plane for AI agents across the organization, letting you deploy, govern and manage agents at scale regardless of where they were built or acquired. The Microsoft 365 admin center governs agents inside Microsoft 365; Agent 365 is the broader layer intended to cover agents from anywhere.</div></details>
+      <details><summary>Can we publish our own agents in a government cloud?<span class="chev"></span></summary><div class="faq-a">Microsoft notes that publishing agents to the organization is supported in Microsoft 365 Government Community Cloud High (GCCH) and Government Community Cloud Moderate (GCCM) environments.</div></details>
+    </section>
+  </div>
+</article>
+<footer><div class="footer-inner">
+  <div>&copy; 2026 LearningGPT, Inc. &middot; Product details as of August 2026 &mdash; AI tools change fast; we update when they do.</div>
+  <a href="/lessons/copilot/" style="color:var(--text-dim);">&larr; All Copilot lessons</a>
+</div></footer>
+<script src="/gate.js"></script>
+</body>
+</html>

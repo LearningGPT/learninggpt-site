@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Planner Agent: assigning real work to something that is not a person — LearningGPT</title>
+<meta name="description" content="Planner Agent takes task assignments inside a Planner plan, works, and returns to a Ready for review queue. Licensing, the four Board view buckets, the 10-task rule for status reports, and where its Loop files actually land." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#2c7be5" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/copilot/planner-agent" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/copilot/planner-agent" />
+<meta property="og:title" content="Planner Agent: assigning real work to something that is not a person — LearningGPT" />
+<meta property="og:description" content="Planner Agent takes task assignments inside a Planner plan, works, and returns to a Ready for review queue. Licensing, the four Board view buckets, the 10-task rule for status reports, and where its Loop files actually land." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Planner Agent: assigning real work to something that is not a person — LearningGPT" />
+<meta name="twitter:description" content="Planner Agent takes task assignments inside a Planner plan, works, and returns to a Ready for review queue. Licensing, the four Board view buckets, the 10-task rule for status reports, and where its Loop files actually land." />
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --radius:14px; --radius-lg:20px; --container:820px; --track:#2c7be5; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:var(--track);}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.25;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(44,123,229,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(44,123,229,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#2c7be5 0%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.15em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:52px 0 14px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson h3{font-size:18px;font-weight:600;margin:28px 0 8px;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(44,123,229,0.12),rgba(124,92,255,0.06));border:1px solid rgba(44,123,229,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,#2c7be5,#7c5cff);border-radius:2px 0 0 2px;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.cost-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;}
+.cost-table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--line-strong);color:var(--text-dim);font-size:11.5px;text-transform:uppercase;letter-spacing:0.6px;}
+.cost-table td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.cost-table td:first-child{font-weight:700;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:14px 0;font-size:14.5px;}
+.gotcha::before{content:'⚠ Watch out: ';color:var(--warn);font-weight:700;}
+.tryit{margin:28px 0;padding:22px;background:rgba(68,224,164,0.06);border:1px solid rgba(68,224,164,0.25);border-radius:var(--radius);}
+.tryit .lbl{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.tryit p{margin:0 0 14px;font-size:15.5px;}
+.tryit a.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#44e0a4,#5b8def);color:white;padding:12px 22px;border-radius:9px;font-weight:600;font-size:14px;}
+.tryit a.btn:hover{transform:translateY(-1px);color:white;}
+.challenge{margin:52px 0 40px;background:linear-gradient(135deg,rgba(44,123,229,0.14),rgba(124,92,255,0.1));border:1px solid rgba(44,123,229,0.28);border-radius:var(--radius-lg);padding:34px;}
+.challenge h2{margin-top:0;}
+.challenge a.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#2c7be5,#7c5cff);color:white;padding:13px 24px;border-radius:10px;font-weight:600;font-size:15px;}
+.challenge a.btn:hover{transform:translateY(-1px);color:white;}
+.checklist{margin:40px 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);}
+.checklist h3{margin-top:0;font-size:18px;} .checklist ul{list-style:none;padding:0;margin:0;}
+.checklist li{padding:10px 0 10px 30px;position:relative;font-size:15px;border-top:1px solid var(--line);}
+.checklist li:first-child{border-top:none;padding-top:0;}
+.checklist li::before{content:'✓';position:absolute;left:0;color:var(--accent);font-weight:700;}
+.next-up{margin:50px 0 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.next-up .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:10px;}
+.next-up h3{margin:0 0 8px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:14.5px;}
+footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);}
+.chip-pro { border-color: rgba(124,92,255,0.45); color: #b9a6ff; background: rgba(124,92,255,0.12); }
+.chip-pro-plus { border-color: rgba(255,181,71,0.4); color: var(--warn); background: rgba(255,181,71,0.1); }
+.steps{counter-reset:st;margin:20px 0;} .steps .step{position:relative;padding:14px 0 14px 54px;border-bottom:1px solid var(--line);} .steps .step::before{counter-increment:st;content:counter(st);position:absolute;left:0;top:12px;width:34px;height:34px;border-radius:50%;background:rgba(44,123,229,0.15);border:1px solid rgba(44,123,229,0.4);color:var(--track);font-weight:700;display:grid;place-items:center;font-size:14px;}
+.checklist{margin:24px 0;padding:22px 26px;background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius-lg);} .checklist h3{margin:0 0 10px;font-size:16px;} .checklist ul{margin:0;padding-left:22px;}
+.next-up{margin-top:56px;padding:24px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);} .next-up .lbl{font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);margin-bottom:8px;} .next-up h3{margin:0 0 6px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:15px;}
+.footer-inner{max-width:1180px;margin:0 auto;padding:26px 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);border-top:1px solid var(--line);}
+.lgpt-faq{margin:48px 0 8px;}
+.lgpt-faq .faq-eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.09em;font-weight:700;color:var(--track);margin-bottom:8px;}
+.lgpt-faq h2{font-size:27px;line-height:1.15;letter-spacing:-.02em;font-weight:800;margin:0 0 18px;}
+.lgpt-faq details{border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#14142b;margin-bottom:10px;overflow:hidden;}
+.lgpt-faq details[open]{border-color:rgba(44,123,229,.45);}
+.lgpt-faq summary{list-style:none;cursor:pointer;padding:15px 18px;font-size:15.5px;font-weight:600;color:#f5f5fa;display:flex;justify-content:space-between;align-items:center;gap:14px;}
+.lgpt-faq summary::-webkit-details-marker{display:none;}
+.lgpt-faq summary .chev{flex-shrink:0;width:18px;height:18px;border-right:2px solid var(--track);border-bottom:2px solid var(--track);transform:rotate(45deg);transition:transform .2s;margin-top:-4px;}
+.lgpt-faq details[open] summary .chev{transform:rotate(-135deg);margin-top:4px;}
+.lgpt-faq .faq-a{padding:0 18px 16px;font-size:14.5px;line-height:1.7;color:#c7c7d6;}
+.lgpt-faq .faq-a strong{color:#f5f5fa;font-weight:600;} .lgpt-faq .faq-a a{color:var(--brand-2);font-weight:600;}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What licence do I need for Planner Agent?","acceptedAnswer":{"@type":"Answer","text":"A Microsoft Copilot licence gets you access. Adding a Planner Plan 1, Planner and Project Plan 3, or Planner and Project Plan 5 licence unlocks premium functionality. Users without a Copilot licence can still collaborate on plans but cannot interact with the agent or assign tasks to it."}},{"@type":"Question","name":"Is Planner Agent the same as the Project Manager agent?","acceptedAnswer":{"@type":"Answer","text":"Planner Agent is the current name for the in-plan agent that assigns tasks, generates tasks from goals and writes status reports. Microsoft also documents a separate Planner Agent chat experience inside Microsoft Copilot, which you add from the Agent Store — the two are related but not the same surface."}},{"@type":"Question","name":"What happens when I assign a task to Planner Agent?","acceptedAnswer":{"@type":"Answer","text":"The agent takes the task, and you are assigned to it as well so you can track progress. In Board view you can set Group by to AI agent tasks, which sorts work into All pending tasks, Assigned to Planner Agent, Couldn't complete, and Ready for review."}},{"@type":"Question","name":"Why can't I generate a status report?","acceptedAnswer":{"@type":"Answer","text":"The most common reason is task count. Your plan needs at least 10 tasks before the Reports tab will generate a report. You can then set a reporting period of last week, last two weeks, last month or last quarter, choose report sections, and pick Concise, Standard or Detailed length."}},{"@type":"Question","name":"Where do Planner Agent's reports get stored?","acceptedAnswer":{"@type":"Answer","text":"All Loop files the agent creates, including reports, are stored in the SharePoint site of the plan's associated Microsoft 365 Group. That means they inherit that site's permissions and governance, which is worth checking before executive reports start landing there."}},{"@type":"Question","name":"Can I use Planner Agent in a basic plan?","acceptedAnswer":{"@type":"Answer","text":"Yes. Planner Agent is enabled by default in all shared basic plans for Microsoft Copilot-licensed users, reached via the floating action button in the bottom-right of the plan, where you can also upload files as knowledge sources. Task generation from goals, however, is premium-only."}},{"@type":"Question","name":"Can I give Planner Agent my own documents as context?","acceptedAnswer":{"@type":"Answer","text":"Yes. In basic plans you upload files as Knowledge sources from the agent panel. In premium plans the Goals tab has a built-in file picker for adding resources as context, which Microsoft says produces more accurate and contextually relevant responses."}}]}</script>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top"><div class="nav-inner">
+  <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+  <a href="/lessons/copilot/" class="nav-back">&larr; Copilot Mastery</a>
+</div></nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Copilot Mastery</span>
+      <span class="chip chip-pro-plus">Pro+</span>
+      <span>~9 min read</span>
+      <span class="dot"></span>
+      <span>Updated &middot; August 2026</span>
+    </div>
+    <h1>Assign the task. <span class="grad serif">To nobody.</span></h1>
+    <p class="deck">Planner Agent is the first Microsoft agent that shows up in your project plan as an assignee. You give it a task the same way you'd give one to a colleague, it works, and the task lands in a review queue. That single design decision &mdash; work goes to <em>Ready for review</em>, not to <em>Done</em> &mdash; is what makes it usable on real projects.</p>
+
+    <h2><span class="num">01</span> Where it lives now</h2>
+    <p>Planner Agent runs in two places, and people routinely confuse them. There is the agent <strong>built into the plan</strong> &mdash; task assignment, status reporting, task generation from goals &mdash; and there is the Planner Agent <strong>chat experience inside Microsoft Copilot</strong>, which you add from the Agent Store. This lesson is about the first one, because that's where the work happens.</p>
+    <p>It is available in all premium plans and all basic plans, in both cases shared with a Microsoft 365 Group. In shared basic plans it is enabled by default for Microsoft Copilot-licensed users; in shared premium plans it is enabled by default too.</p>
+    <div class="callout"><span class="lbl">Licensing, plainly</span><p>You need a <strong>Microsoft Copilot licence</strong> to access Planner Agent at all. Add a <strong>Planner Plan 1</strong>, <strong>Planner and Project Plan 3</strong> or <strong>Planner and Project Plan 5</strong> licence and you get premium functionality on top. People without a Copilot licence can still collaborate on the plan &mdash; they just can't interact with the agent or assign it anything.</p></div>
+
+    <h2><span class="num">02</span> Assigning work to it</h2>
+    <div class="steps">
+      <div class="step"><strong>Open a plan shared with a Microsoft 365 Group.</strong> A private plan isn't in scope &mdash; the group share is the requirement.</div>
+      <div class="step"><strong>In a basic plan, use the floating action button</strong> in the bottom-right of the plan to reach the agent. That panel is also where you upload files as <strong>Knowledge sources</strong>, which is how you stop it guessing.</div>
+      <div class="step"><strong>Assign a task to Planner Agent.</strong> Note what happens next: <em>you get assigned to that task as well</em>, so its progress stays on your radar rather than disappearing into a robot's queue.</div>
+      <div class="step"><strong>Watch Board view.</strong> Set <strong>Group by</strong> to <strong>AI agent tasks</strong> and the board reorganises around the agent's progress.</div>
+    </div>
+    <p>Those Board view buckets are the whole operating model in four labels:</p>
+    <table class="cost-table">
+      <tr><th>Bucket</th><th>What it means</th><th>Your move</th></tr>
+      <tr><td>All pending tasks</td><td>Not assigned to the agent</td><td>Decide what's delegable</td></tr>
+      <tr><td>Assigned to Planner Agent</td><td>Handed over, not started</td><td>Nothing &mdash; wait</td></tr>
+      <tr><td>Couldn't complete</td><td>The agent needs more information</td><td>This is your real queue. Answer it or reassign</td></tr>
+      <tr><td>Ready for review</td><td>Execution finished</td><td>Review before it counts as done</td></tr>
+    </table>
+    <div class="gotcha">&ldquo;Couldn't complete&rdquo; is the bucket that decides whether this tool works for you. An agent that stalls silently is worse than no agent; one that tells you exactly what it's missing is a colleague. Check that column on a cadence, the same way you'd check a blocked ticket.</div>
+
+    <h2><span class="num">03</span> Status reports that write themselves</h2>
+    <p>The Reports tab is the feature most likely to pay for the licence, and it has a hard gate: <strong>your plan needs at least 10 tasks</strong> before you can generate one.</p>
+    <div class="steps">
+      <div class="step"><strong>Set the reporting period</strong> &mdash; last week, last two weeks, last month, or last quarter.</div>
+      <div class="step"><strong>Choose your sections</strong> from the Report sections menu, and use <strong>Show more options</strong> to steer it: &ldquo;Create a comprehensive update on high-priority items for the leadership team.&rdquo;</div>
+      <div class="step"><strong>Pick a length</strong> &mdash; Concise, Standard or Detailed &mdash; then Generate report.</div>
+      <div class="step"><strong>Keep it or discard it.</strong> The report appears in a Loop canvas with an in-app notification, and you explicitly choose to save or delete. Nothing is published behind your back.</div>
+      <div class="step"><strong>Share as newsletter</strong> if it's going to a wider audience &mdash; it publishes as a SharePoint newsletter.</div>
+    </div>
+    <div class="gotcha">Every Loop file the agent creates, reports included, is stored in the SharePoint site of the plan's associated group. That is a governance fact, not a trivia fact: your AI-generated status reports inherit that site's permissions, retention and eDiscovery. Check who can read that site before the first executive report lands in it.</div>
+
+    <h2><span class="num">04</span> Goals, and the premium line</h2>
+    <p>The Goals tab is <strong>premium plans only</strong>. There you generate a task list for each goal, and use the built-in file picker to add resources as context so the agent's output is grounded in your material rather than its assumptions. Task generation from goals does not exist in basic plans &mdash; if a demo you saw featured it and your plan can't do it, that's why.</p>
+
+    <div class="checklist">
+      <h3>A two-week Planner Agent trial that proves something</h3>
+      <ul>
+        <li><strong>Week 1:</strong> pick one shared plan with at least 10 tasks. Upload the two documents that explain the project as Knowledge sources.</li>
+        <li>Assign the agent three genuinely delegable tasks &mdash; research, drafting, summarising. Not decisions.</li>
+        <li>Check <strong>Couldn't complete</strong> daily. Log what it asked for; that list tells you how good your project documentation really is.</li>
+        <li><strong>Week 2:</strong> generate a status report for the last two weeks at Standard length. Compare it to the one a human wrote.</li>
+        <li>Confirm where the Loop files landed and who can see them.</li>
+        <li>Decide the only question that matters: did it save more time than it cost to review?</li>
+      </ul>
+    </div>
+    <p>Planner Agent pairs naturally with <a href="/lessons/copilot/channel-agent">Channel Agent</a> &mdash; one holds the plan, the other holds the conversation. And both sit under the approval pipeline described in <a href="/lessons/copilot/agent-store">the Agent Store and Agent Registry</a>.</p>
+
+    <div class="next-up">
+      <div class="lbl">Up next in Copilot Mastery</div>
+      <h3>SharePoint agents</h3>
+      <p>The agent that only knows your documents &mdash; and answers strictly within the asker's permissions. <a href="/lessons/copilot/sharepoint-agents">Read the lesson &rarr;</a></p>
+    </div>
+
+    <section class="lgpt-faq">
+      <div class="faq-eyebrow">Questions people ask</div>
+      <h2>Straight answers</h2>
+      <details><summary>What licence do I need for Planner Agent?<span class="chev"></span></summary><div class="faq-a">A Microsoft Copilot licence gets you access. Adding a Planner Plan 1, Planner and Project Plan 3, or Planner and Project Plan 5 licence unlocks premium functionality. Users without a Copilot licence can still collaborate on plans but cannot interact with the agent or assign tasks to it.</div></details>
+      <details><summary>Is Planner Agent the same as the Project Manager agent?<span class="chev"></span></summary><div class="faq-a">Planner Agent is the current name for the in-plan agent that assigns tasks, generates tasks from goals and writes status reports. Microsoft also documents a separate Planner Agent chat experience inside Microsoft Copilot, which you add from the Agent Store — the two are related but not the same surface.</div></details>
+      <details><summary>What happens when I assign a task to Planner Agent?<span class="chev"></span></summary><div class="faq-a">The agent takes the task, and you are assigned to it as well so you can track progress. In Board view you can set Group by to AI agent tasks, which sorts work into All pending tasks, Assigned to Planner Agent, Couldn't complete, and Ready for review.</div></details>
+      <details><summary>Why can't I generate a status report?<span class="chev"></span></summary><div class="faq-a">The most common reason is task count. Your plan needs at least 10 tasks before the Reports tab will generate a report. You can then set a reporting period of last week, last two weeks, last month or last quarter, choose report sections, and pick Concise, Standard or Detailed length.</div></details>
+      <details><summary>Where do Planner Agent's reports get stored?<span class="chev"></span></summary><div class="faq-a">All Loop files the agent creates, including reports, are stored in the SharePoint site of the plan's associated Microsoft 365 Group. That means they inherit that site's permissions and governance, which is worth checking before executive reports start landing there.</div></details>
+      <details><summary>Can I use Planner Agent in a basic plan?<span class="chev"></span></summary><div class="faq-a">Yes. Planner Agent is enabled by default in all shared basic plans for Microsoft Copilot-licensed users, reached via the floating action button in the bottom-right of the plan, where you can also upload files as knowledge sources. Task generation from goals, however, is premium-only.</div></details>
+      <details><summary>Can I give Planner Agent my own documents as context?<span class="chev"></span></summary><div class="faq-a">Yes. In basic plans you upload files as Knowledge sources from the agent panel. In premium plans the Goals tab has a built-in file picker for adding resources as context, which Microsoft says produces more accurate and contextually relevant responses.</div></details>
+    </section>
+  </div>
+</article>
+<footer><div class="footer-inner">
+  <div>&copy; 2026 LearningGPT, Inc. &middot; Product details as of August 2026 &mdash; AI tools change fast; we update when they do.</div>
+  <a href="/lessons/copilot/" style="color:var(--text-dim);">&larr; All Copilot lessons</a>
+</div></footer>
+<script src="/gate.js"></script>
+</body>
+</html>

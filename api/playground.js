@@ -11,6 +11,7 @@
 //     Your OpenRouter spend cap is the hard backstop, so a counter glitch never takes
 //     the playground down for real visitors.
 const DAILY_LIMIT = 30; // requests per IP per day, shared across all three modes
+const PAID_DAILY_LIMIT = 150; // per paid USER per day — fair-use ceiling that bounds worst-case OpenRouter spend on large seat deals
 const ALLOWED_ORIGINS = ['https://learninggpt.ai', 'https://www.learninggpt.ai'];
 function getClientIp(req) {
   const xff = req.headers['x-forwarded-for'];
@@ -40,11 +41,11 @@ async function bumpUsage(ip) {
     return null; // network error → fail open
   }
 }
-// Returns true if the request carries a valid login token for a paying
-// (Pro / Pro+) account. Paid members get unlimited playground use — their plan
-// promises it — so they skip the per-IP daily cap. Verification failures return
-// false (treated as non-paid, still capped), so a hiccup never removes the cost
-// protection for free/anonymous traffic.
+// Returns the user id if the request carries a valid login token for a paying
+// (Pro / Pro+ / Business seat) account, else null. Paid members skip the per-IP
+// cap and instead get a generous per-USER fair-use cap. Verification failures
+// return null (treated as non-paid, still IP-capped), so a hiccup never removes
+// the cost protection for free/anonymous traffic.
 async function isPaidUser(token) {
   if (!token) return false;
   const url = process.env.SUPABASE_URL;
@@ -67,10 +68,11 @@ async function isPaidUser(token) {
     if (!pr.ok) return false;
     const rows = await pr.json();
     const plan = Array.isArray(rows) && rows[0] ? rows[0].plan : null;
-    // Any "pro" tier (pro, pro_plus, and their annual variants) counts as paid.
-    return !!plan && String(plan).toLowerCase().startsWith('pro');
+    // Any "pro" tier (pro, pro_plus, annual variants) or a business seat counts as paid.
+    const pl = String(plan || '').toLowerCase();
+    return (pl.startsWith('pro') || pl.startsWith('business')) ? user.id : null;
   } catch {
-    return false;
+    return null;
   }
 }
 export default async function handler(req, res) {
@@ -87,16 +89,25 @@ export default async function handler(req, res) {
   if (typeof body === 'string') { try { body = JSON.parse(body); } catch { body = {}; } }
   const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) return res.status(500).json({ error: 'OPENROUTER_API_KEY not configured in Vercel.' });
-  // ── RATE LIMIT: per IP per day, covers every mode below ──
-  // Paid (Pro/Pro+) members get unlimited playground use, so a valid Pro token
-  // skips the cap entirely. Everyone else (free + anonymous) stays capped per IP.
-  const paid = await isPaidUser(body.token);
-  if (!paid) {
+  // ── RATE LIMIT: covers every mode below ──
+  // Free + anonymous: capped per IP per day. Paid (Pro/Pro+/Business seats):
+  // per-USER fair-use cap instead — keyed to the account, not the IP, so an
+  // office sharing one network never collides. Both checks fail OPEN.
+  const paidUserId = await isPaidUser(body.token);
+  if (!paidUserId) {
     const ip = getClientIp(req);
     const count = await bumpUsage(ip);
     if (count !== null && count > DAILY_LIMIT) {
       return res.status(429).json({
-        error: "You've reached today's free playground limit. Upgrade to Pro for unlimited runs, or come back tomorrow.",
+        error: "You've reached today's free playground limit. Upgrade for a much higher daily limit, or come back tomorrow.",
+        rateLimited: true
+      });
+    }
+  } else {
+    const count = await bumpUsage('u:' + paidUserId);
+    if (count !== null && count > PAID_DAILY_LIMIT) {
+      return res.status(429).json({
+        error: "You've hit today's fair-use playground limit. It resets at midnight UTC — see you tomorrow.",
         rateLimited: true
       });
     }

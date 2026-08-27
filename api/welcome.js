@@ -24,7 +24,7 @@ You just joined the founding cohort of a platform built to teach you every major
 
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 26px;">
 <tr><td style="padding:8px 0;font-size:14.5px;color:#1a1a2e;">🎓 &nbsp;<strong>AI Foundations</strong> — your free, full course to build the fundamentals.</td></tr>
-<tr><td style="padding:8px 0;font-size:14.5px;color:#1a1a2e;">🛠️ &nbsp;<strong>12 tool tracks, 340+ lessons</strong> — Copilot, ChatGPT, Claude, Gemini, Grok, Perplexity &amp; more, updated daily as the tools change.</td></tr>
+<tr><td style="padding:8px 0;font-size:14.5px;color:#1a1a2e;">🛠️ &nbsp;<strong>12 tool tracks, 380+ lessons</strong> — Copilot, ChatGPT, Claude, Gemini, Grok, Perplexity &amp; more, updated daily as the tools change.</td></tr>
 <tr><td style="padding:8px 0;font-size:14.5px;color:#1a1a2e;">⚡ &nbsp;<strong>The Playground</strong> — run one prompt across six AIs side by side and see who wins.</td></tr>
 <tr><td style="padding:8px 0;font-size:14.5px;color:#1a1a2e;">🏅 &nbsp;<strong>Progress & badges</strong> — track what you finish and earn shareable proof for LinkedIn.</td></tr>
 </table>

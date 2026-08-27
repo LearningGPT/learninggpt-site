@@ -80,7 +80,7 @@ LearningGPT is in its founding period through <strong>September 30</strong>. Fou
 </p>
 <p style="font-size:15px;line-height:1.65;color:#444;margin:0 0 16px;">What Pro opens up today:</p>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 22px;">
-<tr><td style="padding:6px 0;font-size:14.5px;">📚 &nbsp;<strong>280+ lessons</strong> across every major AI — and we ship new ones <em>daily</em> as the tools change</td></tr>
+<tr><td style="padding:6px 0;font-size:14.5px;">📚 &nbsp;<strong>380+ lessons</strong> across every major AI — and we ship new ones <em>daily</em> as the tools change</td></tr>
 <tr><td style="padding:6px 0;font-size:14.5px;">🧭 &nbsp;Every tool track: Copilot, ChatGPT, Claude, Gemini, Grok, Perplexity, and more</td></tr>
 <tr><td style="padding:6px 0;font-size:14.5px;">🤖 &nbsp;The AI Coach on every lesson, unlimited</td></tr>
 <tr><td style="padding:6px 0;font-size:14.5px;">🔄 &nbsp;Lessons updated when the products change — never study stale material</td></tr>

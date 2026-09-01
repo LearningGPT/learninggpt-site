@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Who actually owns a legal AI rollout &mdash; LearningGPT</title>
+<meta name="description" content="Legal AI deployments stall on ownership, not technology. Who should own adoption at a law firm, what the innovation team can and cannot do, and the three failure patterns that show up in month four." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#d4a94a" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/legal-ai/who-owns-the-rollout" />
+<meta property="og:title" content="Who actually owns a legal AI rollout &mdash; LearningGPT" />
+<meta property="og:description" content="Legal AI deployments stall on ownership, not technology. Who should own adoption at a law firm, what the innovation team can and cannot do, and the three failure patterns that show up in month four." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/legal-ai/who-owns-the-rollout" />
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --radius:14px; --radius-lg:20px; --container:820px; --track:#d4a94a; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:var(--track);}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.25;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(212,169,74,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(212,169,74,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .chip-pro{border-color:rgba(124,92,255,0.45);color:#b9a6ff;background:rgba(124,92,255,0.12);}
+.lesson-meta .chip-pro-plus{border-color:rgba(255,181,71,0.45);color:#ffcd7a;background:rgba(255,181,71,0.12);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,var(--track) 0%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.15em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:52px 0 14px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson h3{font-size:18px;font-weight:600;margin:28px 0 8px;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul,.lesson ol{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(212,169,74,0.12),rgba(124,92,255,0.06));border:1px solid rgba(212,169,74,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--track),#7c5cff);border-radius:2px 0 0 2px;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.cost-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;}
+.cost-table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--line-strong);color:var(--text-dim);font-size:11.5px;text-transform:uppercase;letter-spacing:0.6px;}
+.cost-table td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.cost-table td:first-child{font-weight:700;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:14px 0;font-size:14.5px;}
+.gotcha::before{content:'\26A0 Watch out: ';color:var(--warn);font-weight:700;}
+.tryit{margin:28px 0;padding:22px;background:rgba(68,224,164,0.06);border:1px solid rgba(68,224,164,0.25);border-radius:var(--radius);}
+.tryit .lbl{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.tryit p{margin:0 0 14px;font-size:15.5px;}
+.tryit p:last-child{margin-bottom:0;}
+.predict{margin:28px 0;padding:22px 24px;background:rgba(124,92,255,0.07);border:1px solid rgba(124,92,255,0.28);border-radius:var(--radius);}
+.predict .lbl{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#b9a6ff;margin-bottom:8px;}
+.predict p:last-child{margin-bottom:0;}
+.predict details{margin-top:12px;border-top:1px solid rgba(124,92,255,0.2);padding-top:12px;}
+.predict summary{cursor:pointer;font-weight:600;font-size:15px;color:#b9a6ff;}
+.predict details p{margin-top:12px;}
+.challenge{margin:52px 0 40px;background:linear-gradient(135deg,rgba(212,169,74,0.14),rgba(124,92,255,0.1));border:1px solid rgba(212,169,74,0.28);border-radius:var(--radius-lg);padding:34px;}
+.challenge h2{margin-top:0;}
+.checklist{margin:40px 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);}
+.checklist h3{margin-top:0;font-size:18px;} .checklist ul{list-style:none;padding:0;margin:0;}
+.checklist li{padding:10px 0 10px 30px;position:relative;font-size:15px;border-top:1px solid var(--line);}
+.checklist li:first-child{border-top:none;padding-top:0;}
+.checklist li::before{content:'\2713';position:absolute;left:0;color:var(--accent);font-weight:700;}
+.next-up{margin:50px 0 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.next-up .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:10px;}
+.next-up h3{margin:0 0 8px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:14.5px;}
+footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Who should own AI adoption at a law firm?", "acceptedAnswer": {"@type": "Answer", "text": "In practice the deployments that work have a named owner with authority over training and process, not just technology. That is often a knowledge management or innovation leader, but it only works when paired with visible sponsorship from practice-group leadership \u2014 partners follow partners, not IT."}}, {"@type": "Question", "name": "Why do legal AI rollouts stall?", "acceptedAnswer": {"@type": "Answer", "text": "The most common causes are unclear permission (people are not sure what they are allowed to put in), no worked examples on real matters, no visible senior usage, and no owner whose job depends on adoption rather than deployment."}}, {"@type": "Question", "name": "Should training be mandatory?", "acceptedAnswer": {"@type": "Answer", "text": "Mandatory attendance reliably produces attendance and unreliably produces skill. What moves usage is training tied to a person's actual live work, delivered close to the moment they need it, with a follow-up. Compulsion helps only for policy and confidentiality content, where coverage genuinely matters."}}]}</script>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top"><div class="nav-inner">
+  <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+  <a href="/lessons/legal-ai/" class="nav-back">&larr; Legal AI</a>
+</div></nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Legal AI</span>
+      <span class="chip chip-pro">Pro</span>
+      <span>~9 min read</span>
+      <span class="dot"></span>
+      <span>September 2026</span>
+    </div>
+    <h1>Who actually <span class="grad serif">owns</span> the rollout?</h1>
+    <p class="deck">A platform gets bought by one group, deployed by a second, and used by a third — which is why so many legal AI programmes look excellent on paper and thin in practice. This is for whoever has to make it real.</p>
+
+    <h2><span class="num">01</span> The handoff problem</h2>
+    <p>Watch how a legal AI platform usually enters a firm. A committee evaluates vendors. IT and security run diligence. Innovation or knowledge management configures it. Then it is announced, and ownership quietly evaporates &mdash; because the people who bought it have finished their job, and the people who need to change their working habits never had one.</p>
+    <p>The result is a deployment with no owner. Everyone can point to the platform. Nobody is accountable for whether a mid-level associate in a regional office is any good at it.</p>
+    <div class="callout"><span class="lbl">The distinction that matters</span><p><strong>Deployment is a project. Adoption is a programme.</strong> Projects end. Programmes have an owner, a budget line, and a number they are judged on. Most firms fund the first and hope for the second.</p></div>
+
+    <h2><span class="num">02</span> Three failure patterns</h2>
+    <h3>The enthusiast ceiling</h3>
+    <p>Usage climbs fast for six weeks, then flattens. What happened is that everyone predisposed to try new tools has tried it, and the curve has hit the edge of that population. Further growth requires reaching people who are not curious about AI &mdash; a completely different exercise, and one that a launch email cannot do.</p>
+    <h3>The permission fog</h3>
+    <p>Ask five people what they are allowed to put into the firm's AI platform and you get five answers, most of them more conservative than the actual policy. Uncertainty reads as risk, and sensible professionals respond to risk by not doing the thing. This is usually a communication failure rather than a policy failure, and it is cheap to fix.</p>
+    <h3>The demo-matter gap</h3>
+    <p>Training is delivered on a clean, invented matter where the tool performs beautifully. People return to their own work, which is messier, and the transfer does not happen. The fix is unglamorous: teach on live work, accept that the demo will be less impressive, and let people watch the tool struggle a bit. Watching a recovery is more instructive than watching a success.</p>
+
+    <h2><span class="num">03</span> Who should own it</h2>
+    <p>There is no single right answer, but there is a reliable test: <strong>the owner should be someone whose performance is judged on whether people use it well, not on whether it was delivered.</strong></p>
+    <table class="cost-table">
+      <tr><th>Candidate owner</th><th>Honest assessment</th></tr>
+      <tr><td>IT / CIO</td><td>Right for security, identity, integration. Wrong as the adoption owner &mdash; lawyers do not change professional habits because IT asked.</td></tr>
+      <tr><td>Innovation / KM</td><td>Usually the best home. Has the process knowledge and the credibility. Often lacks authority over practice groups, which has to be granted explicitly.</td></tr>
+      <tr><td>Practice-group leaders</td><td>Where the actual influence is. Cannot run the programme, but nothing works without at least a few of them visibly using it.</td></tr>
+      <tr><td>L&amp;D / professional development</td><td>Owns the delivery muscle and the calendar. Frequently left out of AI entirely, which is odd given the problem is a training problem.</td></tr>
+      <tr><td>The vendor</td><td>Will train on their product, capably. Will not tell you when the answer is to not use their product.</td></tr>
+    </table>
+
+    <div class="predict"><span class="lbl">Predict, then reveal</span>
+      <p>A firm wants to lift usage among mid-level associates. It can fund exactly one of: more licences, a better platform configuration, or eight hours of practice-specific training per associate. Which moves the number most?</p>
+      <details><summary>Commit to an answer first.</summary>
+      <p>Training, and it is usually not close &mdash; provided the associates already have licences. Unused licences are not a capacity constraint, and configuration mostly improves the experience of people already using the thing. The binding constraint at that stage is almost always skill and confidence, not access.</p>
+      <p>The exception worth naming: if licences are genuinely rationed and your target population does not have one, nothing else matters until they do.</p>
+      </details>
+    </div>
+
+    <h2><span class="num">04</span> The group nobody plans for</h2>
+    <p>Firmwide AI programmes are, in practice, attorney programmes. The licences, the training, the policy examples and the success metrics are all built around fee earners, because that is where the billable-hour arithmetic is legible.</p>
+    <p>Meanwhile a large fraction of any firm &mdash; paralegals, marketing and business development, finance, HR, records, secretarial and administrative staff &mdash; does work that these tools handle extremely well, and receives no training at all. Nobody decides this. It falls between budgets.</p>
+    <p>We give that group its own lesson later in this track, because it is the most reliably overlooked source of return in a legal AI deployment.</p>
+
+    <div class="checklist">
+      <h3>A rollout health check</h3>
+      <ul>
+        <li>There is one named person accountable for adoption, distinct from deployment</li>
+        <li>Every user can state, without checking, what they may and may not put into the tool</li>
+        <li>Training has been delivered on live matters, not demo matters</li>
+        <li>At least a few visible senior practitioners use it in front of others</li>
+        <li>Someone looks at the usage data monthly and acts on it</li>
+        <li>Non-fee-earning staff appear somewhere in the plan</li>
+      </ul>
+    </div>
+
+    <div class="challenge">
+      <h2 style="margin-top:0;">This week</h2>
+      <p>Ask three people in different roles &mdash; one fee earner, one paralegal, one business-services colleague &mdash; the same question: <em>what are you allowed to put into the firm's AI tool?</em> If the three answers differ, you have found the cheapest available improvement to your programme.</p>
+    </div>
+  
+    <div class="next-up">
+      <div class="lbl">Up next in Legal AI</div>
+      <h3>Assistant, Vault, Knowledge, Agents — which one for which job</h3>
+      <p>The practical map. Most wasted effort in legal AI is someone using the chat box for a job that belongs somewhere else. <a href="/lessons/legal-ai/four-surfaces">Read the lesson &rarr;</a></p>
+    </div>
+  </div>
+</article>
+<footer><div class="footer-inner">
+  <div>&copy; 2026 LearningGPT, Inc. &middot; Product details as of September 2026 &mdash; verify current features with the vendor.</div>
+  <a href="/lessons/legal-ai/" style="color:var(--text-dim);">&larr; All Legal AI lessons</a>
+</div></footer>
+<script src="/gate.js"></script>
+</body>
+</html>

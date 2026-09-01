@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Verification discipline: how to check legal AI output &mdash; LearningGPT</title>
+<meta name="description" content="Courts have sanctioned lawyers for AI-generated citations that did not exist. A repeatable verification method for legal AI work — what to check, in what order, and why citation links are necessary but not sufficient." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#d4a94a" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/legal-ai/verification-discipline" />
+<meta property="og:title" content="Verification discipline for legal AI &mdash; LearningGPT" />
+<meta property="og:description" content="Courts have sanctioned lawyers for AI-generated citations that did not exist. A repeatable verification method for legal AI work — what to check, in what order, and why citation links are necessary but not sufficient." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/legal-ai/verification-discipline" />
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --radius:14px; --radius-lg:20px; --container:820px; --track:#d4a94a; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:var(--track);}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.25;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(212,169,74,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(212,169,74,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .chip-pro{border-color:rgba(124,92,255,0.45);color:#b9a6ff;background:rgba(124,92,255,0.12);}
+.lesson-meta .chip-pro-plus{border-color:rgba(255,181,71,0.45);color:#ffcd7a;background:rgba(255,181,71,0.12);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,var(--track) 0%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.15em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:52px 0 14px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson h3{font-size:18px;font-weight:600;margin:28px 0 8px;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul,.lesson ol{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(212,169,74,0.12),rgba(124,92,255,0.06));border:1px solid rgba(212,169,74,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--track),#7c5cff);border-radius:2px 0 0 2px;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.cost-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;}
+.cost-table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--line-strong);color:var(--text-dim);font-size:11.5px;text-transform:uppercase;letter-spacing:0.6px;}
+.cost-table td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.cost-table td:first-child{font-weight:700;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:14px 0;font-size:14.5px;}
+.gotcha::before{content:'\26A0 Watch out: ';color:var(--warn);font-weight:700;}
+.tryit{margin:28px 0;padding:22px;background:rgba(68,224,164,0.06);border:1px solid rgba(68,224,164,0.25);border-radius:var(--radius);}
+.tryit .lbl{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.tryit p{margin:0 0 14px;font-size:15.5px;}
+.tryit p:last-child{margin-bottom:0;}
+.predict{margin:28px 0;padding:22px 24px;background:rgba(124,92,255,0.07);border:1px solid rgba(124,92,255,0.28);border-radius:var(--radius);}
+.predict .lbl{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#b9a6ff;margin-bottom:8px;}
+.predict p:last-child{margin-bottom:0;}
+.predict details{margin-top:12px;border-top:1px solid rgba(124,92,255,0.2);padding-top:12px;}
+.predict summary{cursor:pointer;font-weight:600;font-size:15px;color:#b9a6ff;}
+.predict details p{margin-top:12px;}
+.challenge{margin:52px 0 40px;background:linear-gradient(135deg,rgba(212,169,74,0.14),rgba(124,92,255,0.1));border:1px solid rgba(212,169,74,0.28);border-radius:var(--radius-lg);padding:34px;}
+.challenge h2{margin-top:0;}
+.checklist{margin:40px 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);}
+.checklist h3{margin-top:0;font-size:18px;} .checklist ul{list-style:none;padding:0;margin:0;}
+.checklist li{padding:10px 0 10px 30px;position:relative;font-size:15px;border-top:1px solid var(--line);}
+.checklist li:first-child{border-top:none;padding-top:0;}
+.checklist li::before{content:'\2713';position:absolute;left:0;color:var(--accent);font-weight:700;}
+.next-up{margin:50px 0 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.next-up .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:10px;}
+.next-up h3{margin:0 0 8px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:14.5px;}
+footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Do citation links solve AI hallucination in legal work?", "acceptedAnswer": {"@type": "Answer", "text": "They help substantially and they do not solve it. A link proves a source exists and was retrieved; it does not prove the source says what the summary claims, that it is still good law, or that it is the most relevant authority. The failure has moved from invented cases to mischaracterised real ones, which is harder to spot."}}, {"@type": "Question", "name": "What should I check first in an AI-drafted legal document?", "acceptedAnswer": {"@type": "Answer", "text": "Check the claims that would be most damaging if wrong, not the ones easiest to verify. In practice that means: every citation actually opened, every number traced to a source, every negation and date, and any statement that sounds unusually convenient for your client's position."}}, {"@type": "Question", "name": "Is it acceptable to use AI for legal drafting?", "acceptedAnswer": {"@type": "Answer", "text": "Using AI for drafting is widely accepted; filing unverified AI output is what draws sanctions. The professional obligation is unchanged \u2014 competence and candour to the tribunal attach to the lawyer, regardless of what produced the first draft."}}]}</script>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top"><div class="nav-inner">
+  <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+  <a href="/lessons/legal-ai/" class="nav-back">&larr; Legal AI</a>
+</div></nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Legal AI</span>
+      <span class="chip chip-pro-plus">Pro+</span>
+      <span>~11 min read</span>
+      <span class="dot"></span>
+      <span>September 2026</span>
+    </div>
+    <h1>The lesson that keeps you <span class="grad serif">out of the news.</span></h1>
+    <p class="deck">Every sanctioned lawyer in every AI citation case had one thing in common: the output looked right. This is a repeatable method for checking legal AI work, built around the specific ways it fails.</p>
+
+    <h2><span class="num">01</span> How this actually goes wrong</h2>
+    <p>The famous failure mode &mdash; a chatbot inventing a case that never existed &mdash; is the easy one. It is embarrassing, it is well publicised, and modern legal platforms with grounded citations have made it much rarer.</p>
+    <p>The failure that survives is subtler and more dangerous: <strong>a real case, correctly cited, that does not say what the summary says it says.</strong> Or says it in a different jurisdiction. Or said it before it was overturned. The link works. The case exists. You click it, see a real opinion, and your brain records the citation as verified without reading the holding.</p>
+    <div class="callout"><span class="lbl">The uncomfortable part</span><p>Grounded citation makes output <em>more</em> trustworthy and <em>harder</em> to check, at the same time. A visible source link satisfies the part of your brain that was doing the doubting. That is precisely when a verification habit has to be procedural rather than instinctive.</p></div>
+
+    <h2><span class="num">02</span> Where models fail predictably</h2>
+    <p>These are not random errors. They cluster, and knowing the clusters tells you where to look.</p>
+    <table class="cost-table">
+      <tr><th>Failure</th><th>What it looks like</th></tr>
+      <tr><td><strong>Confident interpolation</strong></td><td>A gap in the source material gets filled with the most plausible-sounding content. Reads seamlessly. This is the big one.</td></tr>
+      <tr><td><strong>Negation drift</strong></td><td>"The court declined to extend" becomes "the court extended". Single words that invert meaning are disproportionately likely to flip.</td></tr>
+      <tr><td><strong>Jurisdictional blending</strong></td><td>Authority from an adjacent jurisdiction presented as though local, because the reasoning is similar and the model is optimising for a good answer, not a correct forum.</td></tr>
+      <tr><td><strong>Currency failure</strong></td><td>Correct as of some point in the past. Superseded statutes and overruled decisions read exactly like current ones.</td></tr>
+      <tr><td><strong>Convenient framing</strong></td><td>You asked a question that implied a desired answer, and you got it. Models are agreeable. This is the failure your own bias hides best.</td></tr>
+      <tr><td><strong>Quantitative slippage</strong></td><td>Numbers, dates and defined terms drift between a source document and a summary of it, especially across long documents.</td></tr>
+    </table>
+
+    <div class="predict"><span class="lbl">Predict, then reveal</span>
+      <p>Two AI-drafted memos land on your desk. Memo A cites eleven authorities, all with working links. Memo B cites three and hedges twice about uncertainty. Which needs more of your verification time?</p>
+      <details><summary>Answer before opening.</summary>
+      <p><strong>Memo A</strong> &mdash; and it is not a close call. Eleven working links create eleven opportunities for a real case to be mischaracterised, and the volume itself suppresses scrutiny; nobody opens all eleven. Density of citation reads as rigour and functions as camouflage.</p>
+      <p>Memo B has told you where it is unsure, which is the single most useful thing a draft can do. Hedged output is easier to supervise than confident output, which is an argument for prompting in ways that permit uncertainty rather than demanding a clean answer.</p>
+      </details>
+    </div>
+
+    <h2><span class="num">03</span> A verification order that works</h2>
+    <p>Verification fails when it is a vague intention to "check things". Make it a sequence, run in this order, because the order is doing work &mdash; it front-loads the checks most likely to catch a career-relevant error.</p>
+    <div class="checklist">
+      <h3>The pass, in order</h3>
+      <ul>
+        <li><strong>Open every authority.</strong> Not the link preview — the document. Read enough of the holding to confirm it supports the proposition, not merely that it exists.</li>
+        <li><strong>Check currency.</strong> Still good law? Still the operative version of the statute? This is a mechanical step and it is skipped constantly.</li>
+        <li><strong>Confirm jurisdiction and posture</strong> for each authority. Right forum, and the procedural posture actually comparable.</li>
+        <li><strong>Trace every number and date</strong> back to a source document. Do not accept a figure that appears only in the summary.</li>
+        <li><strong>Hunt negations.</strong> Search the draft for not, except, unless, declined, failed to. Verify each against the source individually.</li>
+        <li><strong>Read for convenience.</strong> Ask where the draft is suspiciously helpful to your position, and check those passages hardest.</li>
+        <li><strong>Name the gap.</strong> What did it not address? Absence is invisible on a read-through and is where interpolation hides.</li>
+      </ul>
+    </div>
+    <div class="gotcha">Do the verification pass in a separate sitting from the drafting, ideally on a different day. Reviewing text you just watched being generated is one of the weakest forms of review there is &mdash; you remember what it was supposed to say and read that instead.</div>
+
+    <h2><span class="num">04</span> Prompting so the checking is easier</h2>
+    <p>Verification burden is set at the prompt, before a word is drafted. Three habits cut it substantially.</p>
+    <p><strong>Ask for uncertainty explicitly.</strong> Tell it to flag anything it is not confident about and to state where the source material is silent. You are trading a small amount of polish for a map of where to look.</p>
+    <p><strong>Ask for the counter-argument.</strong> Requesting the strongest case against your position surfaces authority that a one-sided draft omits, and omission is the failure mode that a read-through cannot catch.</p>
+    <p><strong>Separate retrieval from argument.</strong> First ask what the sources say. Check that. Then ask for the argument built on it. Combining both in one request is what allows a plausible-sounding claim to arrive pre-wrapped in supporting citations.</p>
+
+    <h2><span class="num">05</span> Who is responsible</h2>
+    <p>Worth stating plainly, because it is the whole point. The professional duties &mdash; competence, confidentiality, supervision, candour to the tribunal &mdash; attach to the lawyer. They do not transfer to a vendor, a model, or a colleague who ran the prompt. No terms of service move them.</p>
+    <p>Which means verification is not a productivity tax on AI use. It <em>is</em> the professional work. The machine took the drafting; what remains is judgement, and judgement is the part that was always billable.</p>
+
+    <div class="challenge">
+      <h2 style="margin-top:0;">This week's challenge</h2>
+      <p>Take one AI-assisted document you have already reviewed and considered finished. Run the seven-step pass on it properly. Most people find at least one thing &mdash; usually a date, a number, or a citation that supports a narrower proposition than claimed. Finding it on your own desk is considerably better than the alternative.</p>
+    </div>
+  
+    <div class="next-up">
+      <div class="lbl">Up next in Legal AI</div>
+      <h3>Document review at volume</h3>
+      <p>Due diligence and discovery with review tables — designing columns, sampling for accuracy, and knowing when the machine is out of its depth. <a href="/lessons/legal-ai/review-at-volume">Read the lesson &rarr;</a></p>
+    </div>
+  </div>
+</article>
+<footer><div class="footer-inner">
+  <div>&copy; 2026 LearningGPT, Inc. &middot; Product details as of September 2026 &mdash; verify current features with the vendor.</div>
+  <a href="/lessons/legal-ai/" style="color:var(--text-dim);">&larr; All Legal AI lessons</a>
+</div></footer>
+<script src="/gate.js"></script>
+</body>
+</html>

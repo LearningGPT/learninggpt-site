@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dragon Copilot and Microsoft 365 Copilot: the integration explained &mdash; LearningGPT</title>
+<meta name="description" content="Dragon Copilot now pulls Microsoft 365 context — schedule, email, documents — into the clinical workflow. What that enables, why it changes the governance conversation, and how it connects to the Copilot your organisation already has." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#2bb8a8" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/healthcare-ai/dragon-and-copilot" />
+<meta property="og:title" content="Where Dragon meets Microsoft 365 Copilot &mdash; LearningGPT" />
+<meta property="og:description" content="Dragon Copilot now pulls Microsoft 365 context — schedule, email, documents — into the clinical workflow. What that enables, why it changes the governance conversation, and how it connects to the Copilot your organisation already has." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/healthcare-ai/dragon-and-copilot" />
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --radius:14px; --radius-lg:20px; --container:820px; --track:#2bb8a8; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:var(--track);}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.25;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(212,169,74,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(212,169,74,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .chip-pro{border-color:rgba(124,92,255,0.45);color:#b9a6ff;background:rgba(124,92,255,0.12);}
+.lesson-meta .chip-pro-plus{border-color:rgba(255,181,71,0.45);color:#ffcd7a;background:rgba(255,181,71,0.12);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,var(--track) 0%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.15em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:52px 0 14px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson h3{font-size:18px;font-weight:600;margin:28px 0 8px;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul,.lesson ol{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(212,169,74,0.12),rgba(124,92,255,0.06));border:1px solid rgba(212,169,74,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--track),#7c5cff);border-radius:2px 0 0 2px;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.cost-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;}
+.cost-table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--line-strong);color:var(--text-dim);font-size:11.5px;text-transform:uppercase;letter-spacing:0.6px;}
+.cost-table td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.cost-table td:first-child{font-weight:700;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:14px 0;font-size:14.5px;}
+.gotcha::before{content:'\26A0 Watch out: ';color:var(--warn);font-weight:700;}
+.tryit{margin:28px 0;padding:22px;background:rgba(68,224,164,0.06);border:1px solid rgba(68,224,164,0.25);border-radius:var(--radius);}
+.tryit .lbl{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.tryit p{margin:0 0 14px;font-size:15.5px;}
+.tryit p:last-child{margin-bottom:0;}
+.predict{margin:28px 0;padding:22px 24px;background:rgba(124,92,255,0.07);border:1px solid rgba(124,92,255,0.28);border-radius:var(--radius);}
+.predict .lbl{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#b9a6ff;margin-bottom:8px;}
+.predict p:last-child{margin-bottom:0;}
+.predict details{margin-top:12px;border-top:1px solid rgba(124,92,255,0.2);padding-top:12px;}
+.predict summary{cursor:pointer;font-weight:600;font-size:15px;color:#b9a6ff;}
+.predict details p{margin-top:12px;}
+.challenge{margin:52px 0 40px;background:linear-gradient(135deg,rgba(212,169,74,0.14),rgba(124,92,255,0.1));border:1px solid rgba(212,169,74,0.28);border-radius:var(--radius-lg);padding:34px;}
+.challenge h2{margin-top:0;}
+.checklist{margin:40px 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);}
+.checklist h3{margin-top:0;font-size:18px;} .checklist ul{list-style:none;padding:0;margin:0;}
+.checklist li{padding:10px 0 10px 30px;position:relative;font-size:15px;border-top:1px solid var(--line);}
+.checklist li:first-child{border-top:none;padding-top:0;}
+.checklist li::before{content:'\2713';position:absolute;left:0;color:var(--accent);font-weight:700;}
+.next-up{margin:50px 0 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.next-up .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:10px;}
+.next-up h3{margin:0 0 8px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:14.5px;}
+footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What does the Microsoft 365 Copilot integration add to Dragon Copilot?", "acceptedAnswer": {"@type": "Answer", "text": "It lets clinicians pull work context \u2014 schedule, email, chats, documents \u2014 into the clinical workflow, so a query can span clinical and organisational information without switching applications. Microsoft has also connected it to Work IQ, its work-context layer."}}, {"@type": "Question", "name": "Does this mean patient data goes into Microsoft 365?", "acceptedAnswer": {"@type": "Answer", "text": "Not by default, and the boundary is configured by your organisation rather than by you. This is precisely the question to ask your informatics or governance team rather than assume \u2014 the answer depends on how your health system has set it up."}}, {"@type": "Question", "name": "Should clinicians learn Microsoft 365 Copilot as well?", "acceptedAnswer": {"@type": "Answer", "text": "If your organisation runs Microsoft 365, yes. The two increasingly share concepts and surfaces, and skill with one transfers directly to the other \u2014 particularly the prompting habits and the verification discipline."}}]}</script>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top"><div class="nav-inner">
+  <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+  <a href="/lessons/healthcare-ai/" class="nav-back">&larr; Healthcare AI</a>
+</div></nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Healthcare AI</span>
+      <span class="chip chip-pro">Pro</span>
+      <span>~8 min read</span>
+      <span class="dot"></span>
+      <span>September 2026</span>
+    </div>
+    <h1>Where Dragon meets <span class="grad serif">your inbox.</span></h1>
+    <p class="deck">The 2026 integration with Microsoft 365 Copilot turns a documentation tool into something broader — and quietly changes what your clinical assistant can see. Worth understanding before you rely on it.</p>
+
+    <h2><span class="num">01</span> What changed</h2>
+    <p>For most of its life, ambient clinical documentation lived in a sealed box: it heard the encounter, wrote a note, and knew nothing else about your working life. Useful, and narrow.</p>
+    <p>The 2026 integration opens that box onto the rest of Microsoft's stack. Dragon Copilot connects with Microsoft 365 Copilot and Work IQ, which means a clinician can bring organisational context &mdash; a schedule, a policy document, a message thread &mdash; into the same place they do clinical documentation.</p>
+    <p>Microsoft's own illustration is a clinician asking for a patient's results, cross-referencing them against a new hospital policy document, and checking their own schedule, without moving between applications. That specific example tells you the shape of the ambition: <strong>one assistant across the clinical and the administrative halves of a clinician's day.</strong></p>
+
+    <h2><span class="num">02</span> Why the administrative half matters</h2>
+    <p>Clinical AI conversations focus almost entirely on the clinical half. But a substantial part of any clinician's working week is not clinical at all &mdash; it is email, rotas, referral letters, committee papers, appraisal documentation, policy reading, teaching preparation.</p>
+    <p>That work is unglamorous, largely invisible in productivity statistics, and extremely amenable to general-purpose AI assistance. It is also the part where no patient-safety review step is required, which makes it the low-risk place to build fluency.</p>
+    <div class="callout"><span class="lbl">A practical suggestion</span><p>If you are nervous about AI in clinical work &mdash; a reasonable instinct &mdash; <strong>build your skills on the administrative half first.</strong> Draft the referral letter, summarise the policy, prepare the teaching outline. You learn how these systems fail in a setting where failure costs you a rewrite rather than a patient-safety incident.</p></div>
+
+    <div class="predict"><span class="lbl">Predict, then reveal</span>
+      <p>A health system deploys both Dragon Copilot and Microsoft 365 Copilot. Six months on, which sees higher sustained use among clinicians?</p>
+      <details><summary>Predict, then open.</summary>
+      <p>Dragon usually, and for an instructive reason: it solves a pain clinicians feel acutely and daily, it is embedded in an existing workflow, and using it requires no decision &mdash; the note has to be written either way.</p>
+      <p>Microsoft 365 Copilot typically underperforms in clinical populations despite being the more broadly capable tool, because using it requires someone to <em>stop and think of it</em> during administrative work they are already rushing. Tools embedded in an unavoidable workflow beat tools that require initiative. That is a training and habit problem, and it is the one most health systems have not addressed.</p>
+      </details>
+    </div>
+
+    <h2><span class="num">03</span> The governance question</h2>
+    <p>Connecting a clinical assistant to organisational data raises a legitimate question about boundaries, and it deserves a straight answer rather than reassurance.</p>
+    <p>What can the assistant see? Where does clinical information stop and organisational information begin? Who configured that, and can you find out? These are answered by <em>your organisation's</em> configuration, not by the product documentation, and the answer will differ between health systems running identical software.</p>
+    <div class="gotcha">Do not infer your local data boundaries from a vendor announcement or a colleague at another organisation. Ask your informatics or clinical governance team directly. "I assumed it worked like the demo" is not a defence anyone wants to make.</div>
+
+    <h2><span class="num">04</span> The skills transfer</h2>
+    <p>The useful consequence of convergence is that you are no longer learning two unrelated tools. The habits that make you good at one make you good at the other:</p>
+    <table class="cost-table">
+      <tr><th>Habit</th><th>Clinical use</th><th>Administrative use</th></tr>
+      <tr><td>Recall before reading</td><td>Catch omissions in the note</td><td>Catch what a summary dropped</td></tr>
+      <tr><td>Check every number</td><td>Doses, timings, laterality</td><td>Figures in reports and papers</td></tr>
+      <tr><td>Watch for certainty inflation</td><td>Hedged assessments rendered definite</td><td>Tentative conclusions stated as fact</td></tr>
+      <tr><td>Say more, get more</td><td>Verbalise examination findings</td><td>Give context and constraints in the prompt</td></tr>
+    </table>
+    <p>If your organisation runs Microsoft 365, our <a href="/lessons/copilot/">Copilot Mastery</a> track covers the general-purpose side in depth &mdash; and everything in it applies to the administrative half of a clinical week.</p>
+
+    <div class="challenge">
+      <h2 style="margin-top:0;">This week's challenge</h2>
+      <p>Take one piece of genuinely non-clinical work you do every week &mdash; a recurring email, a rota note, a teaching handout &mdash; and do it with an assistant. Verify it as carefully as you would a clinical note. The point is to practise the checking habit somewhere the stakes are low, so it is automatic where they are not.</p>
+    </div>
+  
+    <div class="next-up">
+      <div class="lbl">Up next in Healthcare AI</div>
+      <h3>Rolling it out without losing the clinicians</h3>
+      <p>For whoever owns the deployment: what to measure, the first-fortnight problem, and why the pilot that succeeds often fails to scale. <a href="/lessons/healthcare-ai/rolling-it-out">Read the lesson &rarr;</a></p>
+    </div>
+  </div>
+</article>
+<footer><div class="footer-inner">
+  <div>&copy; 2026 LearningGPT, Inc. &middot; Product details as of September 2026 &mdash; verify current features and your own policies with your organisation.</div>
+  <a href="/lessons/healthcare-ai/" style="color:var(--text-dim);">&larr; All Healthcare AI lessons</a>
+</div></footer>
+<script src="/gate.js"></script>
+</body>
+</html>

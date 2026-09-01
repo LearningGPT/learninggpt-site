@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Reviewing an AI-generated clinical note before you sign it &mdash; LearningGPT</title>
+<meta name="description" content="A repeatable review method for ambient AI clinical notes: the errors that survive a read-through, why fluent notes are harder to check than bad ones, and what to verify in what order before signing." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#2bb8a8" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/healthcare-ai/reviewing-the-note" />
+<meta property="og:title" content="Reviewing the AI note before you sign &mdash; LearningGPT" />
+<meta property="og:description" content="A repeatable review method for ambient AI clinical notes: the errors that survive a read-through, why fluent notes are harder to check than bad ones, and what to verify in what order before signing." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/healthcare-ai/reviewing-the-note" />
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --radius:14px; --radius-lg:20px; --container:820px; --track:#2bb8a8; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:var(--track);}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.25;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(212,169,74,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(212,169,74,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .chip-pro{border-color:rgba(124,92,255,0.45);color:#b9a6ff;background:rgba(124,92,255,0.12);}
+.lesson-meta .chip-pro-plus{border-color:rgba(255,181,71,0.45);color:#ffcd7a;background:rgba(255,181,71,0.12);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,var(--track) 0%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.15em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:52px 0 14px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson h3{font-size:18px;font-weight:600;margin:28px 0 8px;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul,.lesson ol{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(212,169,74,0.12),rgba(124,92,255,0.06));border:1px solid rgba(212,169,74,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--track),#7c5cff);border-radius:2px 0 0 2px;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.cost-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;}
+.cost-table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--line-strong);color:var(--text-dim);font-size:11.5px;text-transform:uppercase;letter-spacing:0.6px;}
+.cost-table td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.cost-table td:first-child{font-weight:700;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:14px 0;font-size:14.5px;}
+.gotcha::before{content:'\26A0 Watch out: ';color:var(--warn);font-weight:700;}
+.tryit{margin:28px 0;padding:22px;background:rgba(68,224,164,0.06);border:1px solid rgba(68,224,164,0.25);border-radius:var(--radius);}
+.tryit .lbl{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.tryit p{margin:0 0 14px;font-size:15.5px;}
+.tryit p:last-child{margin-bottom:0;}
+.predict{margin:28px 0;padding:22px 24px;background:rgba(124,92,255,0.07);border:1px solid rgba(124,92,255,0.28);border-radius:var(--radius);}
+.predict .lbl{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#b9a6ff;margin-bottom:8px;}
+.predict p:last-child{margin-bottom:0;}
+.predict details{margin-top:12px;border-top:1px solid rgba(124,92,255,0.2);padding-top:12px;}
+.predict summary{cursor:pointer;font-weight:600;font-size:15px;color:#b9a6ff;}
+.predict details p{margin-top:12px;}
+.challenge{margin:52px 0 40px;background:linear-gradient(135deg,rgba(212,169,74,0.14),rgba(124,92,255,0.1));border:1px solid rgba(212,169,74,0.28);border-radius:var(--radius-lg);padding:34px;}
+.challenge h2{margin-top:0;}
+.checklist{margin:40px 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);}
+.checklist h3{margin-top:0;font-size:18px;} .checklist ul{list-style:none;padding:0;margin:0;}
+.checklist li{padding:10px 0 10px 30px;position:relative;font-size:15px;border-top:1px solid var(--line);}
+.checklist li:first-child{border-top:none;padding-top:0;}
+.checklist li::before{content:'\2713';position:absolute;left:0;color:var(--accent);font-weight:700;}
+.next-up{margin:50px 0 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.next-up .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:10px;}
+.next-up h3{margin:0 0 8px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:14.5px;}
+footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What errors do AI clinical notes typically contain?", "acceptedAnswer": {"@type": "Answer", "text": "The characteristic failures are omission rather than invention: a negative finding dropped, a qualifier lost, an uncertain assessment rendered as definite. Also common are attribution errors in multi-speaker encounters, and details that were discussed but not clinically confirmed appearing as though confirmed."}}, {"@type": "Question", "name": "How long should reviewing an AI note take?", "acceptedAnswer": {"@type": "Answer", "text": "Less time than writing the note, or the tool is not helping. But 'less time' is not 'no time', and the review is not optional \u2014 the signed note is the legal record and the clinician is responsible for it. Clinicians who build a consistent review order get faster without getting less safe."}}, {"@type": "Question", "name": "Is it safe to sign an AI note without reading it?", "acceptedAnswer": {"@type": "Answer", "text": "No. Signing an unread note is a professional and patient-safety risk regardless of how the draft was produced, and the fluency of AI output makes unread signing more tempting rather than less dangerous."}}]}</script>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top"><div class="nav-inner">
+  <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+  <a href="/lessons/healthcare-ai/" class="nav-back">&larr; Healthcare AI</a>
+</div></nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Healthcare AI</span>
+      <span class="chip chip-pro-plus">Pro+</span>
+      <span>~11 min read</span>
+      <span class="dot"></span>
+      <span>September 2026</span>
+    </div>
+    <h1>Before you <span class="grad serif">sign it.</span></h1>
+    <p class="deck">A well-written wrong note is more dangerous than an obviously bad one, because it does not trigger the doubt that makes you read carefully. This is the review discipline, in order, built around how ambient documentation actually fails.</p>
+
+    <h2><span class="num">01</span> Why fluency is the problem</h2>
+    <p>A note written by an exhausted resident at the end of a shift reads like one. The prose is clipped, the structure wobbles, and your brain flags it for attention automatically. You read it properly because it looks like it needs reading.</p>
+    <p>An ambient AI note reads like a careful clinician wrote it with time to spare. Clean structure, complete sentences, correct terminology, appropriate register. <strong>And that fluency suppresses exactly the scrutiny reflex you need.</strong></p>
+    <div class="callout"><span class="lbl">The core idea</span><p>You cannot rely on a note <em>feeling</em> wrong, because it will not. Ambient documentation moves review from an instinct to a procedure. If your check is "read it through and see if anything jumps out", you will miss the errors that matter, because none of them jump out.</p></div>
+
+    <h2><span class="num">02</span> The errors that survive a read-through</h2>
+    <p>These are not random. They cluster in predictable places, which is what makes a checklist possible.</p>
+    <table class="cost-table">
+      <tr><th>Error type</th><th>What it looks like in the note</th></tr>
+      <tr><td><strong>Dropped negative</strong></td><td>You asked about chest pain and the patient denied it. The note simply does not mention chest pain. Absence is invisible on a read-through.</td></tr>
+      <tr><td><strong>Certainty inflation</strong></td><td>"Probably viral, review if worsening" becomes "viral illness". The hedge was the clinical content.</td></tr>
+      <tr><td><strong>Speaker attribution</strong></td><td>In a consultation with a family member present, something the relative said is recorded as the patient's report.</td></tr>
+      <tr><td><strong>Discussed-as-confirmed</strong></td><td>A differential you raised out loud and dismissed appears in the assessment as though it stands.</td></tr>
+      <tr><td><strong>Temporal collapse</strong></td><td>"Three days" and "three weeks" are one syllable apart in speech. Onset timing is a high-frequency error.</td></tr>
+      <tr><td><strong>Laterality and dose</strong></td><td>Left/right, and any number attached to a medication. Small tokens, large consequences.</td></tr>
+      <tr><td><strong>Plausible completion</strong></td><td>A gap in what was heard, filled with the clinically typical thing. The most dangerous category, because it is indistinguishable from correct content by style.</td></tr>
+    </table>
+
+    <div class="predict"><span class="lbl">Predict, then reveal</span>
+      <p>Which is more likely in an ambient note: a symptom the patient never mentioned appearing in the history, or a symptom the patient did mention being absent from it?</p>
+      <details><summary>Choose, then open.</summary>
+      <p><strong>Omission is considerably more common</strong> &mdash; and considerably harder to catch. Reviewing a note, you are reading what is on the page. Nothing on the page prompts you to notice that the patient's report of intermittent dizziness is not represented anywhere.</p>
+      <p>This is why the review order below starts with recalling the encounter <em>before</em> reading the note. Once you have read a fluent, complete-looking document, your memory of the consultation quietly reshapes itself to match it. Reading first contaminates the only check you have for omission.</p>
+      </details>
+    </div>
+
+    <h2><span class="num">03</span> The review order</h2>
+    <div class="checklist">
+      <h3>Run these in sequence</h3>
+      <ul>
+        <li><strong>Before reading:</strong> recall the encounter for five seconds. What were the two or three clinically important things? Now read and confirm each appears.</li>
+        <li><strong>Check the negatives.</strong> What did you rule out by asking? Confirm each pertinent negative is present.</li>
+        <li><strong>Check every number and side.</strong> Doses, durations, onset timing, laterality, vital signs. Verify against your own recollection or the source.</li>
+        <li><strong>Check the hedges.</strong> Anywhere you were uncertain, confirm the note is uncertain too. Certainty inflation is the most consequential silent error.</li>
+        <li><strong>Check attribution</strong> if anyone else was in the room.</li>
+        <li><strong>Read the assessment and plan last, and slowly.</strong> This is the part that drives care and the part read by everyone downstream.</li>
+        <li><strong>Ask what is missing</strong> — one deliberate beat before signing.</li>
+      </ul>
+    </div>
+    <div class="gotcha">If you find yourself signing notes in a rapid batch at the end of a session, the review has effectively stopped happening. Batch signing is where the discipline dies. Review immediately after the encounter while you still remember the consultation independently of the document.</div>
+
+    <h2><span class="num">04</span> Report the errors</h2>
+    <p>When the system gets something wrong, tell whoever owns it. This is the step almost everybody skips, and it matters more than it looks.</p>
+    <p>Ambient systems are tuned. Patterns of error &mdash; a specialty term consistently misheard, a note structure that keeps dropping a section &mdash; get fixed when they are reported and persist indefinitely when they are not. A clinician who silently corrects the same error two hundred times has done two hundred units of work and produced no improvement for anyone, including themselves.</p>
+    <p>Find out who receives that feedback where you work. Most clinicians cannot name them, which tells you how rarely the loop is closed.</p>
+
+    <h2><span class="num">05</span> The honest trade</h2>
+    <p>Ambient documentation converts <strong>composition work into verification work</strong>. That is a good trade &mdash; verification is faster and less draining than drafting from a blank page.</p>
+    <p>It is only a good trade if you actually do the verification. A clinician who signs unread has not saved time; they have transferred risk onto a patient and onto their own signature. The tool's entire safety case rests on a review step that only exists if you perform it.</p>
+
+    <div class="challenge">
+      <h2 style="margin-top:0;">This week's challenge</h2>
+      <p>For five consecutive notes, write down &mdash; before opening the draft &mdash; the three most clinically important things from the encounter. Then read the note and check all three appear correctly. Most clinicians find at least one omission in five, which is both reassuring about the tool and clarifying about why the review exists.</p>
+    </div>
+  
+    <div class="next-up">
+      <div class="lbl">Up next in Healthcare AI</div>
+      <h3>Beyond the physician note — nursing and radiology</h3>
+      <p>Role-specific workflows: flowsheet documentation from ambient capture, end-of-shift charting, and reporting workflows. <a href="/lessons/healthcare-ai/nurses-and-radiology">Read the lesson &rarr;</a></p>
+    </div>
+  </div>
+</article>
+<footer><div class="footer-inner">
+  <div>&copy; 2026 LearningGPT, Inc. &middot; Product details as of September 2026 &mdash; verify current features and your own policies with your organisation.</div>
+  <a href="/lessons/healthcare-ai/" style="color:var(--text-dim);">&larr; All Healthcare AI lessons</a>
+</div></footer>
+<script src="/gate.js"></script>
+</body>
+</html>

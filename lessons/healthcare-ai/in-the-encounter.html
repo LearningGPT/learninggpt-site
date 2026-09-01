@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Working with ambient AI in the patient encounter &mdash; LearningGPT</title>
+<meta name="description" content="Consent, speaking habits that produce better clinical notes, handling sensitive moments, and what changes about the room when a microphone is running. Practical guidance for clinicians using ambient documentation." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#2bb8a8" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/healthcare-ai/in-the-encounter" />
+<meta property="og:title" content="In the room with ambient AI &mdash; LearningGPT" />
+<meta property="og:description" content="Consent, speaking habits that produce better clinical notes, handling sensitive moments, and what changes about the room when a microphone is running. Practical guidance for clinicians using ambient documentation." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/healthcare-ai/in-the-encounter" />
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --radius:14px; --radius-lg:20px; --container:820px; --track:#2bb8a8; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:var(--track);}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.25;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(212,169,74,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(212,169,74,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .chip-pro{border-color:rgba(124,92,255,0.45);color:#b9a6ff;background:rgba(124,92,255,0.12);}
+.lesson-meta .chip-pro-plus{border-color:rgba(255,181,71,0.45);color:#ffcd7a;background:rgba(255,181,71,0.12);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,var(--track) 0%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.15em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:52px 0 14px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson h3{font-size:18px;font-weight:600;margin:28px 0 8px;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul,.lesson ol{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(212,169,74,0.12),rgba(124,92,255,0.06));border:1px solid rgba(212,169,74,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--track),#7c5cff);border-radius:2px 0 0 2px;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.cost-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;}
+.cost-table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--line-strong);color:var(--text-dim);font-size:11.5px;text-transform:uppercase;letter-spacing:0.6px;}
+.cost-table td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.cost-table td:first-child{font-weight:700;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:14px 0;font-size:14.5px;}
+.gotcha::before{content:'\26A0 Watch out: ';color:var(--warn);font-weight:700;}
+.tryit{margin:28px 0;padding:22px;background:rgba(68,224,164,0.06);border:1px solid rgba(68,224,164,0.25);border-radius:var(--radius);}
+.tryit .lbl{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.tryit p{margin:0 0 14px;font-size:15.5px;}
+.tryit p:last-child{margin-bottom:0;}
+.predict{margin:28px 0;padding:22px 24px;background:rgba(124,92,255,0.07);border:1px solid rgba(124,92,255,0.28);border-radius:var(--radius);}
+.predict .lbl{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#b9a6ff;margin-bottom:8px;}
+.predict p:last-child{margin-bottom:0;}
+.predict details{margin-top:12px;border-top:1px solid rgba(124,92,255,0.2);padding-top:12px;}
+.predict summary{cursor:pointer;font-weight:600;font-size:15px;color:#b9a6ff;}
+.predict details p{margin-top:12px;}
+.challenge{margin:52px 0 40px;background:linear-gradient(135deg,rgba(212,169,74,0.14),rgba(124,92,255,0.1));border:1px solid rgba(212,169,74,0.28);border-radius:var(--radius-lg);padding:34px;}
+.challenge h2{margin-top:0;}
+.checklist{margin:40px 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);}
+.checklist h3{margin-top:0;font-size:18px;} .checklist ul{list-style:none;padding:0;margin:0;}
+.checklist li{padding:10px 0 10px 30px;position:relative;font-size:15px;border-top:1px solid var(--line);}
+.checklist li:first-child{border-top:none;padding-top:0;}
+.checklist li::before{content:'\2713';position:absolute;left:0;color:var(--accent);font-weight:700;}
+.next-up{margin:50px 0 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.next-up .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:10px;}
+.next-up h3{margin:0 0 8px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:14.5px;}
+footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I get patient consent for ambient AI recording?", "acceptedAnswer": {"@type": "Answer", "text": "Follow your organisation's defined process \u2014 it exists precisely because requirements vary by jurisdiction. In practice most processes involve a brief plain-language explanation and an explicit opportunity to decline, documented according to local policy. Never improvise your own wording for a legal consent process."}}, {"@type": "Question", "name": "What if a patient refuses to be recorded?", "acceptedAnswer": {"@type": "Answer", "text": "Refusal must be straightforward and consequence-free \u2014 you document the visit the way you did before. Patients notice whether declining feels genuinely acceptable, and a process that makes refusal awkward is not consent."}}, {"@type": "Question", "name": "Does speaking differently improve the AI note?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, noticeably. Verbalising your examination findings and stating your reasoning aloud gives the system material to work from. Nothing that was never said can appear in the note \u2014 the most common cause of a thin note is a silent examination."}}]}</script>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top"><div class="nav-inner">
+  <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+  <a href="/lessons/healthcare-ai/" class="nav-back">&larr; Healthcare AI</a>
+</div></nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Healthcare AI</span>
+      <span class="chip chip-pro">Pro</span>
+      <span>~9 min read</span>
+      <span class="dot"></span>
+      <span>September 2026</span>
+    </div>
+    <h1>In the room, <span class="grad serif">microphone running.</span></h1>
+    <p class="deck">The clinical skill of ambient documentation is not operating the software — it is how you talk while it listens. Small habits produce dramatically better notes, and one of them is knowing when to stop recording.</p>
+
+    <h2><span class="num">01</span> Consent, done properly</h2>
+    <p>This section is short because there is only one correct answer: <strong>use your organisation's process, exactly as written.</strong> Recording requirements differ by jurisdiction, and the process you have been given was built with legal input you do not have.</p>
+    <p>What is worth saying is a point about tone. Consent obtained in a way that makes declining feel rude is not meaningfully consent. Patients read the room. If the explanation arrives as a fast, apologetic mumble on the way to something else, some patients will agree who did not want to.</p>
+    <div class="callout"><span class="lbl">A phrasing that works</span><p>Brief, unhurried, and with the refusal made explicitly easy: <em>"I use a tool that listens and drafts my notes so I can pay attention to you rather than the screen. I review everything before it goes in your record. Would you rather I didn't?"</em> &mdash; adapted to whatever your policy requires. The last sentence is doing the work.</p></div>
+
+    <h2><span class="num">02</span> Speaking so the note is good</h2>
+    <p>Here is the thing that surprises people: your note quality is largely determined during the encounter, not during the edit. The system can only work with what it heard.</p>
+    <h3>Verbalise the examination</h3>
+    <p>The most common complaint about ambient notes is that the examination section is thin. The cause is almost always that the examination happened in silence. Saying what you are finding as you find it &mdash; which many clinicians were taught to do anyway &mdash; fixes it entirely.</p>
+    <h3>State reasoning out loud</h3>
+    <p>"I'm not concerned about X because of Y" is a sentence that serves three purposes at once: the patient understands your thinking, the note captures your clinical reasoning, and your future self has a record of why. Ambient documentation rewards clinicians who explain themselves to patients, which is a pleasant alignment of incentives.</p>
+    <h3>Close the loop explicitly</h3>
+    <p>Say the plan aloud, in order, at the end. This is good practice regardless, and it gives the system a clean, well-structured plan section rather than one assembled from fragments scattered through the conversation.</p>
+    <div class="gotcha">Do not narrate <em>for the microphone</em>. Patients notice immediately when they have stopped being the audience, and it damages the encounter far more than a thin note damages the record. The habit only works if it sounds like you are talking to the person in front of you &mdash; because you should be.</div>
+
+    <div class="predict"><span class="lbl">Predict, then reveal</span>
+      <p>Two clinicians in the same specialty use the same system. One consistently gets notes needing minimal edits; the other rewrites substantially every time. Same software, same training. What is the likeliest difference?</p>
+      <details><summary>Commit, then open.</summary>
+      <p>Usually <strong>how much of their thinking is spoken aloud</strong>. The clinician with clean notes tends to talk through findings and reasoning as part of their normal consultation style. The one rewriting is often an efficient, quiet examiner who then expects the note to contain conclusions that were never verbalised.</p>
+      <p>Note what this implies: the fix is not more software training. It is a change in consultation habit, which takes a few weeks and feels awkward first. That is why a two-hour tool demo does not produce the result, and why departments that only do the demo conclude the tool underperforms.</p>
+      </details>
+    </div>
+
+    <h2><span class="num">03</span> When to stop recording</h2>
+    <p>Some parts of some encounters should not be in an ambient recording pipeline, and knowing where your own line is &mdash; before you are in the moment &mdash; matters.</p>
+    <ul>
+      <li>A patient discloses something they have explicitly asked to keep out of the record</li>
+      <li>Conversation turns to a third party in a way that is not clinically relevant</li>
+      <li>Disclosures involving safeguarding, intimate partner violence, or immigration status where documentation carries risk to the patient</li>
+      <li>Any moment when the patient's demeanour suggests the microphone is changing what they will say</li>
+    </ul>
+    <p>That last one is the clinically important one. If a patient is not telling you something because a device is listening, the tool has cost you more than it saved. Know how to pause it without fumbling, and be willing to.</p>
+
+    <h2><span class="num">04</span> The screen-time dividend</h2>
+    <p>The strongest argument for this technology is not minutes saved. It is that you can look at the patient.</p>
+    <p>Clinicians have spent two decades typing during consultations, and the cost to the therapeutic relationship has been documented extensively and complained about universally. Ambient documentation returns eye contact to the encounter. Getting that benefit requires actually putting the keyboard down &mdash; and a surprising number of people keep typing anyway, out of habit and distrust of the tool.</p>
+
+    <div class="challenge">
+      <h2 style="margin-top:0;">This week's challenge</h2>
+      <p>Pick one session. Verbalise every examination finding as you make it &mdash; nothing else different. Compare those notes with your usual ones. Most clinicians find the examination section improves immediately and permanently, because the habit sticks once you have seen the difference.</p>
+    </div>
+  
+    <div class="next-up">
+      <div class="lbl">Up next in Healthcare AI</div>
+      <h3>Reviewing the note before you sign</h3>
+      <p>The discipline that matters most. What to check, why fluent notes are harder to review than bad ones, and the errors that survive a read-through. <a href="/lessons/healthcare-ai/reviewing-the-note">Read the lesson &rarr;</a></p>
+    </div>
+  </div>
+</article>
+<footer><div class="footer-inner">
+  <div>&copy; 2026 LearningGPT, Inc. &middot; Product details as of September 2026 &mdash; verify current features and your own policies with your organisation.</div>
+  <a href="/lessons/healthcare-ai/" style="color:var(--text-dim);">&larr; All Healthcare AI lessons</a>
+</div></footer>
+<script src="/gate.js"></script>
+</body>
+</html>

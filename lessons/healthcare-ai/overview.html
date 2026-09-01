@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ambient clinical documentation in 2026: what Dragon Copilot actually does &mdash; LearningGPT</title>
+<meta name="description" content="A plain-English orientation to ambient AI documentation. What Dragon Copilot does during a patient encounter, what it does not do, and the professional questions that survive the automation. Free lesson." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#2bb8a8" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/healthcare-ai/overview" />
+<meta property="og:title" content="Ambient clinical documentation, honestly &mdash; LearningGPT" />
+<meta property="og:description" content="A plain-English orientation to ambient AI documentation. What Dragon Copilot does during a patient encounter, what it does not do, and the professional questions that survive the automation. Free lesson." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/healthcare-ai/overview" />
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --radius:14px; --radius-lg:20px; --container:820px; --track:#2bb8a8; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:var(--track);}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.25;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(212,169,74,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(212,169,74,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .chip-pro{border-color:rgba(124,92,255,0.45);color:#b9a6ff;background:rgba(124,92,255,0.12);}
+.lesson-meta .chip-pro-plus{border-color:rgba(255,181,71,0.45);color:#ffcd7a;background:rgba(255,181,71,0.12);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,var(--track) 0%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.15em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:52px 0 14px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson h3{font-size:18px;font-weight:600;margin:28px 0 8px;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul,.lesson ol{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(212,169,74,0.12),rgba(124,92,255,0.06));border:1px solid rgba(212,169,74,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--track),#7c5cff);border-radius:2px 0 0 2px;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.cost-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;}
+.cost-table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--line-strong);color:var(--text-dim);font-size:11.5px;text-transform:uppercase;letter-spacing:0.6px;}
+.cost-table td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.cost-table td:first-child{font-weight:700;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:14px 0;font-size:14.5px;}
+.gotcha::before{content:'\26A0 Watch out: ';color:var(--warn);font-weight:700;}
+.tryit{margin:28px 0;padding:22px;background:rgba(68,224,164,0.06);border:1px solid rgba(68,224,164,0.25);border-radius:var(--radius);}
+.tryit .lbl{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.tryit p{margin:0 0 14px;font-size:15.5px;}
+.tryit p:last-child{margin-bottom:0;}
+.predict{margin:28px 0;padding:22px 24px;background:rgba(124,92,255,0.07);border:1px solid rgba(124,92,255,0.28);border-radius:var(--radius);}
+.predict .lbl{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#b9a6ff;margin-bottom:8px;}
+.predict p:last-child{margin-bottom:0;}
+.predict details{margin-top:12px;border-top:1px solid rgba(124,92,255,0.2);padding-top:12px;}
+.predict summary{cursor:pointer;font-weight:600;font-size:15px;color:#b9a6ff;}
+.predict details p{margin-top:12px;}
+.challenge{margin:52px 0 40px;background:linear-gradient(135deg,rgba(212,169,74,0.14),rgba(124,92,255,0.1));border:1px solid rgba(212,169,74,0.28);border-radius:var(--radius-lg);padding:34px;}
+.challenge h2{margin-top:0;}
+.checklist{margin:40px 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);}
+.checklist h3{margin-top:0;font-size:18px;} .checklist ul{list-style:none;padding:0;margin:0;}
+.checklist li{padding:10px 0 10px 30px;position:relative;font-size:15px;border-top:1px solid var(--line);}
+.checklist li:first-child{border-top:none;padding-top:0;}
+.checklist li::before{content:'\2713';position:absolute;left:0;color:var(--accent);font-weight:700;}
+.next-up{margin:50px 0 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.next-up .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:10px;}
+.next-up h3{margin:0 0 8px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:14.5px;}
+footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is Microsoft Dragon Copilot?", "acceptedAnswer": {"@type": "Answer", "text": "Dragon Copilot is Microsoft's AI assistant for clinical work. It listens to a patient encounter and produces a structured, specialty-specific clinical note, and also supports direct dictation outside a recorded visit. Announced at HIMSS 2026, it has expanded from ambient documentation into a broader clinical assistant with role-specific features for physicians, nurses and radiologists, plus integration with Microsoft 365 Copilot."}}, {"@type": "Question", "name": "Does the AI note go straight into the chart?", "acceptedAnswer": {"@type": "Answer", "text": "No. The output is a draft that the clinician reviews, edits and signs. The signed note is the legal record and the clinician remains responsible for its accuracy, regardless of what produced the first version."}}, {"@type": "Question", "name": "Do patients need to consent to being recorded?", "acceptedAnswer": {"@type": "Answer", "text": "Recording consent requirements vary by jurisdiction and by organisational policy, and this is not a question to improvise. Your organisation will have a defined consent process \u2014 find out what it is before your first recorded encounter, and follow it exactly."}}, {"@type": "Question", "name": "Can I try Dragon Copilot on my own?", "acceptedAnswer": {"@type": "Answer", "text": "No. It is sold to health systems and provisioned through your organisation, integrated with your EHR. Individual clinicians cannot sign up independently."}}]}</script>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top"><div class="nav-inner">
+  <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+  <a href="/lessons/healthcare-ai/" class="nav-back">&larr; Healthcare AI</a>
+</div></nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Healthcare AI</span>
+      <span class="chip chip-free">Free</span>
+      <span>~8 min read</span>
+      <span class="dot"></span>
+      <span>New &middot; September 2026</span>
+    </div>
+    <h1>The note writes <span class="grad serif">itself.</span> Now what?</h1>
+    <p class="deck">Ambient documentation is the first AI most clinicians will meet at work, and it arrives already switched on. This is the orientation: what it genuinely does, where it fails, and what stays your responsibility.</p>
+
+    <h2><span class="num">01</span> What actually happens</h2>
+    <p>The mechanics are simpler than the marketing. With consent obtained and the microphone on, the system listens to the conversation between clinician and patient. It handles multiple speakers, and it handles more than one language. When the encounter ends, it produces a structured clinical note in the format your specialty expects, and it can capture orders discussed during the visit.</p>
+    <p>You then read it, fix what is wrong, and sign it. That last sentence is the entire lesson, and we will spend a whole lesson on it later.</p>
+    <div class="callout"><span class="lbl">The honest summary</span><p>Ambient documentation does not make clinical decisions. It converts <strong>a conversation you were already having into a document you were going to write anyway</strong>. The value is real and it is narrow: it gives you back the part of the day spent typing rather than the part spent thinking.</p></div>
+
+    <h2><span class="num">02</span> Why this one landed when other health AI didn't</h2>
+    <p>Plenty of clinical AI has been announced with fanfare and quietly withdrawn. Ambient documentation stuck, and it is worth understanding why, because the reason tells you where it is trustworthy.</p>
+    <p>It solves a problem clinicians actually complain about, unprompted, in every survey: documentation burden. It does not require changing clinical judgement, only clerical work. It fails visibly rather than silently &mdash; a wrong note is a wrong note you can see, unlike a subtly wrong risk score. And the human review step was designed in from the start rather than bolted on after a regulator asked.</p>
+    <p>Microsoft says more than 100,000 clinicians use it as part of daily practice, and organisations including Mount Sinai Health System and Tampa General Hospital have deployed it. Those are the vendor's own figures and named references &mdash; useful as evidence that this is past the pilot stage, and not a substitute for measuring what happens in your own department.</p>
+
+    <h2><span class="num">03</span> What it grew into</h2>
+    <p>The 2026 version is no longer only a scribe. At HIMSS in March 2026 Microsoft positioned it as a unified clinical assistant, which means a few concrete additions:</p>
+    <table class="cost-table">
+      <tr><th>Capability</th><th>What it means day to day</th></tr>
+      <tr><td>Ambient note generation</td><td>The original function &mdash; conversation to structured, specialty-specific note</td></tr>
+      <tr><td>Direct dictation</td><td>For documentation outside a recorded encounter, the Dragon dictation people already knew</td></tr>
+      <tr><td>Order capture</td><td>Orders discussed at the point of care are captured rather than re-entered from memory</td></tr>
+      <tr><td>Role-specific workflows</td><td>Purpose-built flows for nurses and radiologists, not physician templates with the labels changed</td></tr>
+      <tr><td>Microsoft 365 Copilot integration</td><td>Pulls work context &mdash; schedule, email, documents &mdash; into the clinical workflow</td></tr>
+      <tr><td>Agents and marketplace</td><td>Extensions from partners for specific clinical and administrative tasks</td></tr>
+    </table>
+    <div class="gotcha">Feature availability varies by organisation, licence and EHR integration. Something described in a Microsoft announcement may simply not be switched on where you work. Assume nothing about your own configuration &mdash; ask.</div>
+
+    <div class="predict"><span class="lbl">Predict, then reveal</span>
+      <p>Departments that adopt ambient documentation successfully and departments that abandon it after a few months use the same software. What most reliably separates them?</p>
+      <details><summary>Have an answer? Open this.</summary>
+      <p>The most common difference is <strong>what happened in the first two weeks</strong>. Early notes need real editing &mdash; the system has not learned a clinician's patterns and the clinician has not learned how to speak in a room with a microphone in it. Clinicians who were told to expect that, and given a review method, push through. Clinicians who were told it would save them time and instead found themselves rewriting notes conclude it does not work and stop.</p>
+      <p>The technology is identical. The expectation-setting is not. Which is a training problem, and it is why this track exists.</p>
+      </details>
+    </div>
+
+    <h2><span class="num">04</span> What does not change</h2>
+    <p>Three things survive entirely, and every serious clinical governance conversation comes back to them.</p>
+    <p><strong>The note is yours.</strong> You sign it. It is the legal record. If it says something that did not happen, that is your signature under it. No documentation tool has ever shifted that, and this one does not either.</p>
+    <p><strong>Consent is not optional or improvised.</strong> Recording a patient encounter has legal and ethical requirements that vary by jurisdiction. Your organisation has a process. Use it.</p>
+    <p><strong>Clinical judgement is untouched.</strong> The tool documents what was said. It does not decide what should happen, and treating a fluent note as clinical validation is a category error.</p>
+
+    <div class="challenge">
+      <h2 style="margin-top:0;">Before the next lesson</h2>
+      <p>Find out three things about your own setup: <strong>your organisation's patient consent process for recorded encounters</strong>, <strong>whether your notes are reviewed by anyone other than you before signing</strong>, and <strong>who to tell when the system gets something wrong</strong>. The third one is the one nobody knows, and it is how the system gets better.</p>
+    </div>
+  
+    <div class="next-up">
+      <div class="lbl">Up next in Healthcare AI</div>
+      <h3>In the room — working with a microphone running</h3>
+      <p>Consent, speaking habits that produce better notes, and what to do when the conversation goes somewhere it should not be recorded. <a href="/lessons/healthcare-ai/in-the-encounter">Read the lesson &rarr;</a></p>
+    </div>
+  </div>
+</article>
+<footer><div class="footer-inner">
+  <div>&copy; 2026 LearningGPT, Inc. &middot; Product details as of September 2026 &mdash; verify current features and your own policies with your organisation.</div>
+  <a href="/lessons/healthcare-ai/" style="color:var(--text-dim);">&larr; All Healthcare AI lessons</a>
+</div></footer>
+<script src="/gate.js"></script>
+</body>
+</html>

@@ -588,6 +588,58 @@ nav { position: relative; z-index: 10; padding: 20px 32px; display: flex; align-
   <div class="cta-box">
     <h2>Ready to get your team started?</h2>
     <p>Every engagement starts with a 15-minute conversation with Dan — no sales team, no discovery gauntlet. Most teams are up within 24 hours of saying yes.</p>
+    <div id="bizlead" style="margin:28px auto 22px;max-width:620px;text-align:left;">
+        <style>
+          #bizlead label{display:block;font-size:13px;font-weight:600;color:#b9b9d4;margin:0 0 6px;}
+          #bizlead input,#bizlead select,#bizlead textarea{width:100%;box-sizing:border-box;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:12px 14px;color:#f5f5fa;font:inherit;font-size:15px;}
+          #bizlead input:focus,#bizlead select:focus,#bizlead textarea:focus{outline:none;border-color:#7c5cff;background:rgba(124,92,255,.10);}
+          #bizlead select option{background:#14142b;color:#f5f5fa;}
+          #bizlead .bl-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+          #bizlead .bl-full{grid-column:1/-1;}
+          #bizlead button{width:100%;background:linear-gradient(135deg,#7c5cff,#5b8def);color:#fff;border:0;border-radius:10px;padding:16px 36px;font:inherit;font-size:16px;font-weight:700;cursor:pointer;}
+          #bizlead button:disabled{opacity:.6;cursor:default;}
+          @media(max-width:560px){#bizlead .bl-grid{grid-template-columns:1fr;}}
+        </style>
+        <form id="bizlead-form" novalidate>
+          <div class="bl-grid">
+            <div><label for="bl-name">Your name</label><input id="bl-name" name="name" autocomplete="name"></div>
+            <div><label for="bl-email">Work email *</label><input id="bl-email" name="email" type="email" required autocomplete="email"></div>
+            <div><label for="bl-company">Company</label><input id="bl-company" name="company" autocomplete="organization"></div>
+            <div><label for="bl-team">Team size</label><select id="bl-team" name="teamSize"><option value="">Choose&hellip;</option><option>1&ndash;10</option><option>11&ndash;50</option><option>51&ndash;200</option><option>201&ndash;500</option><option>500+</option></select></div>
+            <div class="bl-full"><label for="bl-interest">What are you interested in?</label><select id="bl-interest" name="interest"><option value="">Not sure yet &mdash; help me choose</option><option>30-Day AI Jumpstart</option><option>Jumpstart Plus</option><option>90-Day Immersion</option><option>Growth Partner</option><option>Team seats only</option><option>Advisory / AI Audit</option></select></div>
+            <div class="bl-full"><label for="bl-message">Anything we should know? (optional)</label><textarea id="bl-message" name="message" rows="3"></textarea></div>
+            <div class="bl-full" style="position:absolute;left:-9999px;" aria-hidden="true"><label for="bl-website">Leave this empty</label><input id="bl-website" name="website" tabindex="-1" autocomplete="off"></div>
+            <div class="bl-full"><button type="submit" id="bl-submit">Request a 15-minute walkthrough</button></div>
+          </div>
+          <p id="bl-out" style="margin:14px 0 0;font-size:14px;min-height:20px;" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+      <script>
+      (function(){
+        var f=document.getElementById('bizlead-form'); if(!f) return;
+        var out=document.getElementById('bl-out'), btn=document.getElementById('bl-submit');
+        var val=function(id){ var e=document.getElementById(id); return e?e.value:''; };
+        f.addEventListener('submit', function(e){
+          e.preventDefault();
+          var email=(val('bl-email')||'').trim();
+          if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ out.style.color='#ff9d9d'; out.textContent='Please enter a valid work email.'; return; }
+          var old=btn.textContent; btn.disabled=true; btn.textContent='Sending…'; out.textContent='';
+          fetch('/api/business-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+            name:val('bl-name'), email:email, company:val('bl-company'), teamSize:val('bl-team'),
+            interest:val('bl-interest'), message:val('bl-message'), website:val('bl-website'),
+            page:location.pathname+location.search
+          })})
+          .then(function(r){ return r.json().catch(function(){return {};}).then(function(d){ return {ok:r.ok, d:d}; }); })
+          .then(function(res){
+            if(!res.ok) throw new Error((res.d&&res.d.error)||'Something went wrong.');
+            try{ window.uetq=window.uetq||[]; window.uetq.push('event','business_lead',{}); }catch(err){}
+            try{ if(window.gtag) gtag('event','generate_lead',{method:'business_form'}); }catch(err){}
+            f.innerHTML='<div style="text-align:center;padding:26px 18px;background:rgba(45,212,167,.10);border:1px solid rgba(45,212,167,.35);border-radius:16px;"><div style="font-size:19px;font-weight:700;margin-bottom:8px;">Got it &mdash; thank you.</div><div style="color:#b9b9d4;font-size:15px;line-height:1.6;">Dan reads these himself and usually replies within a few hours. If it&rsquo;s urgent, email <a href="mailto:dan@learninggpt.ai" style="color:#8ab4ff;">dan@learninggpt.ai</a>.</div></div>';
+          })
+          .catch(function(err){ btn.disabled=false; btn.textContent=old; out.style.color='#ff9d9d'; out.textContent=(err&&err.message)||'Could not send — please email dan@learninggpt.ai.'; });
+        });
+      })();
+      </script>
     <div class="cta-row">
       <a href="#programs" class="btn-primary" style="font-size:16px;padding:16px 36px;">See the programs →</a>
       <a href="mailto:dan@learninggpt.ai?subject=Business%20demo%20%2F%20pilot" class="btn-secondary" style="font-size:16px;padding:16px 36px;">Book a walkthrough</a>

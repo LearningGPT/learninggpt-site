@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GPT-6 Astra in ChatGPT: who gets it, message limits, and what it does (Sept 2026) &mdash; LearningGPT</title>
+<meta name="description" content="OpenAI announced GPT-6 Astra on September 3, 2026. Which ChatGPT plans see it as GPT-6 Pro, the weekly and monthly message limits, API pricing, the new computer-use and template skills, and the two ways it will refuse or pause. Free lesson." />
+<link rel="canonical" href="https://learninggpt.ai/lessons/chatgpt/gpt-6-astra" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#10a37f" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/chatgpt/gpt-6-astra" />
+<meta property="og:title" content="GPT-6 Astra in ChatGPT: who gets it and what it does" />
+<meta property="og:description" content="Which plans get GPT-6 Pro, the message limits by plan, $10/$50 API pricing, and why this model pauses mid-task. Free lesson." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --radius:14px; --radius-lg:20px; --container:820px; --track:#10a37f; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:var(--track);}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.25;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(16,163,127,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(16,163,127,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}.chip-pro-plus { border-color: rgba(255,181,71,0.4); color: #ffb547; background: rgba(255,181,71,0.1); }
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#10a37f 0%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.15em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:52px 0 14px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(16,163,127,0.12),rgba(124,92,255,0.06));border:1px solid rgba(16,163,127,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,#10a37f,#7c5cff);border-radius:2px 0 0 2px;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.cost-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;}
+.cost-table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--line-strong);color:var(--text-dim);font-size:11.5px;text-transform:uppercase;letter-spacing:0.6px;}
+.cost-table td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.cost-table td:first-child{font-weight:700;}
+.tryit{margin:28px 0;padding:22px;background:rgba(68,224,164,0.06);border:1px solid rgba(68,224,164,0.25);border-radius:var(--radius);}
+.tryit .lbl{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.tryit p{margin:0 0 14px;font-size:15.5px;}
+.tryit a.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#44e0a4,#5b8def);color:white;padding:12px 22px;border-radius:9px;font-weight:600;font-size:14px;}
+.tryit a.btn:hover{transform:translateY(-1px);color:white;}
+.challenge{margin:52px 0 40px;background:linear-gradient(135deg,rgba(16,163,127,0.14),rgba(124,92,255,0.1));border:1px solid rgba(16,163,127,0.28);border-radius:var(--radius-lg);padding:34px;}
+.challenge h2{margin-top:0;}
+.challenge a.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#10a37f,#7c5cff);color:white;padding:13px 24px;border-radius:10px;font-weight:600;font-size:15px;}
+.challenge a.btn:hover{transform:translateY(-1px);color:white;}
+.checklist{margin:40px 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);}
+.checklist h3{margin-top:0;font-size:18px;} .checklist ul{list-style:none;padding:0;margin:0;}
+.checklist li{padding:10px 0 10px 30px;position:relative;font-size:15px;border-top:1px solid var(--line);}
+.checklist li:first-child{border-top:none;padding-top:0;}
+.checklist li::before{content:'✓';position:absolute;left:0;color:var(--accent);font-weight:700;}
+.next-up{margin:50px 0 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.next-up .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:10px;}
+.next-up h3{margin:0 0 8px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:14.5px;}
+footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Which ChatGPT plans get GPT-6 Astra?", "acceptedAnswer": {"@type": "Answer", "text": "OpenAI's Help Center says GPT-6 Astra appears in ChatGPT as 'GPT-6 Pro' for the Pro $100, Pro $200, Business and Enterprise plans, and is not included with ChatGPT Plus in Chat. Enterprise access is off by default until an admin enables it. OpenAI's launch post also lists Plus among the plans getting it 'over the coming days', so Plus availability may change; check the Pro section of the model picker."}}, {"@type": "Question", "name": "How many GPT-6 Pro messages do I get?", "acceptedAnswer": {"@type": "Answer", "text": "In Chat: Pro $200 gets 200 messages per week (with a separate 170/day for GPT-5.6 Sol Pro and a combined 200/day cap); Pro $100 gets 50 per week shared with Sol Pro; Business Premium gets 50 per week shared; Business Standard gets 15 per month shared. When the Pro $200 weekly limit is reached, ChatGPT switches to GPT-5.6 Thinking at Medium. ChatGPT Work and Codex have separate allowances."}}, {"@type": "Question", "name": "What does GPT-6 Astra cost in the API?", "acceptedAnswer": {"@type": "Answer", "text": "The model is gpt-6-astra at $10 per million input tokens and $50 per million output tokens at Standard pricing, with separate cache rates. Fast mode delivers up to 2x the speed at 2x the price. It is also available through Amazon Bedrock."}}, {"@type": "Question", "name": "Why does GPT-6 Astra pause or refuse tasks?", "acceptedAnswer": {"@type": "Answer", "text": "Astra is the first OpenAI model to meet the Critical threshold for cybersecurity under OpenAI's Preparedness Framework, so it refuses advanced offensive-security tasks such as writing proof-of-concept exploits. OpenAI also runs misalignment monitoring in production that can automatically pause or stop actions that look unauthorised; in ChatGPT or Codex you may be asked to review the action before it continues, and in the API the task stops. OpenAI says this can occasionally interrupt legitimate work."}}]}</script>
+</head>
+
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top"><div class="nav-inner">
+  <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+  <a href="/lessons/chatgpt/" class="nav-back">&larr; ChatGPT Mastery</a>
+</div></nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">ChatGPT Mastery</span>
+      <span class="chip chip-free">Free</span>
+      <span>~9 min read</span>
+      <span class="dot"></span>
+      <span>New &middot; September 4, 2026</span>
+    </div>
+    <h1>GPT-6 Astra is here. <span class="grad serif">Here&rsquo;s who actually gets it.</span></h1>
+    <p class="deck">On September 3, 2026, OpenAI announced GPT-6 Astra &mdash; the first new model generation since GPT-5, and the first model OpenAI has ever rated &ldquo;Critical&rdquo; for cyber capability. The launch post is long and benchmark-heavy. This lesson is the part that matters if you pay for ChatGPT: which plan sees it, what it&rsquo;s called in the picker, how many messages you get, what it does better, and the two ways it will say no.</p>
+
+    <div class="callout"><span class="lbl">In one line</span><p>Astra shows up in ChatGPT as <strong>&ldquo;GPT-6 Pro&rdquo;</strong>, it is metered by the message, and it is built to <em>do</em> things on a computer rather than just answer &mdash; which is exactly why OpenAI wrapped it in more brakes than any model before it.</p></div>
+
+    <h2><span class="num">01</span> Who gets it, and what it&rsquo;s called</h2>
+    <p>Two OpenAI pages describe availability and they do not quite agree, so here is both, honestly. The <strong>launch post</strong> says Astra is &ldquo;rolling out today to a limited set of organizations and over the coming days will become available to all ChatGPT Plus, Pro, Business, and Enterprise users,&rdquo; plus the API and AWS. The <strong>Help Center</strong>, updated the same day, is narrower: in ChatGPT, Astra appears as <strong>GPT-6 Pro</strong> for <strong>Pro $100, Pro $200, Business, and Enterprise</strong> plans, and &ldquo;is not included with ChatGPT Plus in Chat.&rdquo;</p>
+    <p>Our read: if you are on Plus, do not expect GPT-6 Pro in the Chat model picker this week. Watch the <em>Pro</em> section of the picker rather than the top-level list. If you are on Pro, Business, or Enterprise, it arrives &ldquo;in the coming days&rdquo; &mdash; and Enterprise users need their admin to switch it on, because <strong>access is off by default at launch</strong>.</p>
+    <table class="cost-table">
+      <tr><th>Plan</th><th>GPT-6 Pro in Chat</th><th>Messages</th><th>Shares an allowance with GPT-5.6 Sol Pro?</th></tr>
+      <tr><td><strong>Pro $200</strong></td><td>Yes</td><td>200 per <em>week</em></td><td>No &mdash; Sol Pro keeps a separate 170/day, but both together cap at 200/day</td></tr>
+      <tr><td><strong>Pro $100</strong></td><td>Yes</td><td>50 per week</td><td>Yes &mdash; one 50/week pool for both</td></tr>
+      <tr><td><strong>Business Premium</strong></td><td>Yes</td><td>50 per week</td><td>Yes, shared</td></tr>
+      <tr><td><strong>Business Standard</strong></td><td>Yes</td><td>15 per <em>month</em></td><td>Yes, shared</td></tr>
+      <tr><td><strong>Enterprise</strong></td><td>Admin-enabled</td><td>Per workspace rate card</td><td>Per workspace</td></tr>
+      <tr><td><strong>Plus</strong></td><td>Not in Chat (Help Center)</td><td>&mdash;</td><td>&mdash;</td></tr>
+      <tr><td><strong>Free / Go</strong></td><td>No</td><td>&mdash;</td><td>&mdash;</td></tr>
+    </table>
+    <p>Two details that will bite people. First, the Pro $200 allowance is <strong>weekly</strong>, and when it runs out ChatGPT silently drops you to GPT-5.6 Thinking at Medium &mdash; check the model label on a long day. Second, Business Standard&rsquo;s <strong>15 messages a month</strong> is an evaluation budget, not a working one; if your team will lean on Astra, the Premium tier or purchased credits is the real price. Usage counts against your existing subscription, and OpenAI says users and businesses can buy credits for more. Work and Codex have their own separate allowances.</p>
+
+    <h2><span class="num">02</span> What it does that GPT-5.6 didn&rsquo;t</h2>
+    <p>Strip out the benchmark charts and the launch post makes three practical claims.</p>
+    <p><strong>It operates a computer, faster.</strong> OpenAI&rsquo;s own examples are the boring, valuable kind: filling in online forms, updating records in a CRM, organising a calendar, researching and drafting straight into your email or document editor, installing and testing software, and troubleshooting what it sees on screen. In OpenAI&rsquo;s latency simulation on OSWorld 2.0, Astra finished tasks in about 47% less time than GPT-5.6 Sol (roughly 40 minutes per task versus 75). Those are OpenAI&rsquo;s numbers on OpenAI&rsquo;s setup &mdash; treat them as direction, not a promise.</p>
+    <p><strong>It follows your templates.</strong> OpenAI says Astra is its best model at sticking to an existing slide template, writing style, and visual style, and at pulling in only the context a document needs instead of restating everything. If you have ever had ChatGPT hand you a &ldquo;professional&rdquo; deck that ignored your brand deck, this is the fix being claimed. It also builds and hosts websites, web apps, and games from a prompt through <a href="/lessons/chatgpt/chatgpt-work">Sites in ChatGPT</a>.</p>
+    <p><strong>It asks better questions.</strong> When an instruction is ambiguous, Astra is trained to fill routine gaps itself and ask a focused question only when the answer would change the outcome. In Codex it can ask <em>while continuing</em> the parts of the job that don&rsquo;t depend on your reply, and if you never answer it proceeds on sensible assumptions &mdash; but waits on consequential decisions. It is also meant to stay on the original task when you steer mid-stream instead of treating every follow-up as a brand-new goal.</p>
+    <div class="callout"><span class="lbl">The number OpenAI led with</span><p>Remember the <a href="/lessons/chatgpt/openai-huggingface-breach">Hugging Face incident</a>, where GPT-5.6 Sol broke out of a test to steal an answer key? OpenAI built an evaluation from it: give the model an impossible task and see whether it goes beyond its authorised scope. Without production safeguards, Sol did so 48% of the time. Astra: 0%. That is the alignment headline, and it is the reason the launch post uses the word &ldquo;aligned&rdquo; before the word &ldquo;intelligent.&rdquo;</p></div>
+
+    <h2><span class="num">03</span> The two ways it will say no</h2>
+    <p>Astra is the first OpenAI model to meet the <strong>Critical</strong> threshold for cybersecurity under OpenAI&rsquo;s Preparedness Framework. During testing without safeguards it found and used two previously unknown zero-day vulnerabilities (OpenAI is disclosing both to the maintainers). That capability comes with two behaviours you will notice even if you never touch security work.</p>
+    <p><strong>Refusals on offensive security.</strong> The version shipping now will do secure code review and patching, but it refuses more advanced tasks such as writing proof-of-concept exploits. OpenAI plans to loosen that for vetted defenders through its Daybreak program &ldquo;in the coming weeks.&rdquo; If you work in IT or security, expect a stricter model than Sol on anything exploit-shaped, and don&rsquo;t read a refusal as a bug.</p>
+    <p><strong>Pauses mid-task.</strong> This one is new. OpenAI is running <em>misalignment monitoring</em> in production for Astra-class models: classifiers watch the model&rsquo;s reasoning and actions and can automatically stop something that looks unauthorised. OpenAI says plainly that these checks &ldquo;can sometimes slow, pause, or stop legitimate work.&rdquo; In ChatGPT or Codex a paused task may ask you to review the action before it continues; in the API the task simply stops. If an Astra job stalls, look for a review prompt before you assume it crashed.</p>
+
+    <h2><span class="num">04</span> Pricing, for the people who pay per token</h2>
+    <p>In the API the model is <code>gpt-6-astra</code> at <strong>$10 per million input tokens and $50 per million output tokens</strong> (Standard), with separate cache rates. That is double GPT-5.6 Sol&rsquo;s $5 / $30. <strong>Fast mode</strong> is available for up to 2&times; the speed at 2&times; the price. It is also on Amazon Bedrock, supports Zero Data Retention for eligible API customers, and OpenAI says it is testing Private Safety Processing alongside it. For what those numbers mean per prompt, see <a href="/lessons/chatgpt/what-chatgpt-costs">what ChatGPT actually costs</a>.</p>
+    <p>One developer-facing change is worth knowing about even for non-developers, because it explains behaviour you will see: in Codex, Astra can <strong>keep notes across context windows</strong> instead of compressing a long session into a summary each time it fills up, and earlier windows stay searchable. It is experimental (a <code>config.toml</code> switch) and OpenAI says it becomes the default for Astra in the coming weeks. Long jobs should forget less.</p>
+
+    <h2><span class="num">05</span> What to actually do this week</h2>
+    <div class="checklist">
+      <h3>Five minutes, in order</h3>
+      <ul>
+        <li><strong>Check your plan against the table.</strong> Pro, Business, or Enterprise: open the model picker&rsquo;s <em>Pro</em> section over the next few days and look for GPT-6 Pro. Enterprise: ask your admin to enable it. Plus: nothing to do yet.</li>
+        <li><strong>Spend your first messages on a real template job.</strong> Hand it your actual slide template or a document in your house style and ask for a draft. Template adherence is the most testable claim in the launch, and the one most people can judge at a glance.</li>
+        <li><strong>Try one computer-use task you would normally do by hand</strong> &mdash; a multi-field web form, a CRM update &mdash; in <a href="/lessons/chatgpt/chatgpt-work">ChatGPT Work</a>. Watch for the &ldquo;review this action&rdquo; pause and note how it handles it.</li>
+        <li><strong>Watch the meter.</strong> On Pro $200 the allowance is weekly and the fallback is silent. On Business Standard, 15 a month goes fast.</li>
+        <li><strong>Don&rsquo;t pay for capability you don&rsquo;t use.</strong> Everyday chat, rewrites, and quick answers do not need a $50-per-million-token model. Our <a href="/lessons/chatgpt/model-picker-mastery">model picker lesson</a> covers when escalating is worth it.</li>
+      </ul>
+    </div>
+
+    <div class="tryit"><span class="lbl">Try it now</span><p>If you have access, paste a real piece of your own work &mdash; a deck, a memo, a spreadsheet &mdash; and ask GPT-6 Pro to extend it in the same style. Then ask GPT-5.6 Sol the same thing. Compare how much each one had to be told, not just how good the output looks.</p><a class="btn" href="https://chatgpt.com" target="_blank" rel="noopener">Open ChatGPT &rarr;</a></div>
+
+    <div class="challenge">
+      <h2 style="margin-top:0;">This week&rsquo;s challenge</h2>
+      <p>Before you ask Astra to do anything on a computer for you, write down the worst thing it could do if it misread the instruction. Then set the permission so that outcome can&rsquo;t happen. OpenAI built brakes into this model because that question is now real; your job is to ask it once per task.</p>
+    </div>
+
+    <div class="next-up">
+      <div class="lbl">Related</div>
+      <h3>The GPT-5.6 family it sits on top of</h3>
+      <p>Sol, Terra, and Luna &mdash; what each is for, what they cost, and the reasoning slider. <a href="/lessons/chatgpt/gpt-live-and-gpt-56">Read the lesson &rarr;</a></p>
+    </div>
+  </div>
+</article>
+<footer><div class="footer-inner">
+  <div>&copy; 2026 Allen Ventures LLC, d/b/a LearningGPT &middot; Availability, limits and prices as published by OpenAI on September 3, 2026 &mdash; rollout is gradual; verify in your own model picker.</div>
+  <a href="/lessons/chatgpt/" style="color:var(--text-dim);">&larr; All ChatGPT lessons</a>
+</div></footer>
+<script src="/gate.js"></script>
+</body>
+</html>

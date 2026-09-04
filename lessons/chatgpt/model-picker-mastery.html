@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>The model picker, mastered: Sol, Terra, Luna, and when thinking modes matter — LearningGPT</title>
-<meta name="description" content="ChatGPT&#x27;s GPT-5.6 family — Sol, Terra, and Luna — plus thinking modes, explained as a decision system: which model for which job, what auto-routing does, and when overriding it pays." />
+<title>The model picker, mastered: Sol, Terra, Luna, GPT-6 Pro, and when the reasoning slider matters — LearningGPT</title>
+<meta name="description" content="ChatGPT&#x27;s GPT-5.6 family — Sol, Terra, and Luna — plus the reasoning slider and the new GPT-6 Pro, explained as a decision system: which model for which job, what auto-routing does, and when overriding it pays." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#10a37f" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,14 +17,7 @@
 <meta property="og:image" content="https://learninggpt.ai/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="canonical" href="https://learninggpt.ai/lessons/chatgpt/model-picker-mastery" />
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"When is OpenAI o3 retired from ChatGPT?","acceptedAnswer":{"@type":"Answer","text":"OpenAI o3 was retired from ChatGPT on August 26, 2026, at the end of a 90-day sunset announced on May 28, 2026. It was reachable only by paid users through model settings. The change applies to ChatGPT only; the API is unaffected."}},
-{"@type":"Question","name":"How long does OpenAI keep an older model in ChatGPT?","acceptedAnswer":{"@type":"Answer","text":"Models generally remain available in ChatGPT for about 90 days after a successor ships, then they are removed. Existing conversations continue on the corresponding newer model."}},
-{"@type":"Question","name":"Which ChatGPT model should I pick?","acceptedAnswer":{"@type":"Answer","text":"Use the fast default for everyday chat, step up to the balanced model when the output will be kept, such as documents and analysis, and use the deep reasoning model plus thinking mode when the output will be relied on for decisions."}},
-{"@type":"Question","name":"When is auto-routing not enough?","acceptedAnswer":{"@type":"Answer","text":"Auto-routing judges how hard the question looks, not how costly a shallow answer would be. When the stakes are high, escalate manually or ask the model to reason carefully before answering."}}
-]}
-</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "When is OpenAI o3 retired from ChatGPT?", "acceptedAnswer": {"@type": "Answer", "text": "OpenAI o3 was retired from ChatGPT on August 26, 2026, at the end of a 90-day sunset announced on May 28, 2026. It was reachable only by paid users through model settings. The change applies to ChatGPT only; the API is unaffected."}}, {"@type": "Question", "name": "How long does OpenAI keep an older model in ChatGPT?", "acceptedAnswer": {"@type": "Answer", "text": "Models generally remain available in ChatGPT for about 90 days after a successor ships, then they are removed. Existing conversations continue on the corresponding newer model."}}, {"@type": "Question", "name": "Which ChatGPT model should I pick?", "acceptedAnswer": {"@type": "Answer", "text": "On a paid plan a normal chat always uses GPT-5.6 Sol; the picker sets how much it reasons. Use Instant for everyday chat, Medium or High when the output will be kept, such as documents and analysis, and Extra High, Sol Pro, or GPT-6 Pro when the output will be relied on for decisions. Terra and Luna are only selectable in ChatGPT Work, Codex, and the API."}}, {"@type": "Question", "name": "When is auto-routing not enough?", "acceptedAnswer": {"@type": "Answer", "text": "Auto-routing judges how hard the question looks, not how costly a shallow answer would be. When the stakes are high, escalate manually or ask the model to reason carefully before answering."}}, {"@type": "Question", "name": "Where is GPT-6 Pro in the ChatGPT model picker?", "acceptedAnswer": {"@type": "Answer", "text": "GPT-6 Astra appears as GPT-6 Pro in the Pro section of the model picker on Pro $100, Pro $200, Business and Enterprise plans as it rolls out from September 3, 2026. It is metered per message (for example 200 per week on Pro $200 and 15 per month on Business Standard), Enterprise admins must enable it, and OpenAI's Help Center says it is not included with Plus in Chat."}}]}</script>
 <style>
 :root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --radius:14px; --radius-lg:20px; --container:820px; --track:#10a37f; }
 *{box-sizing:border-box;} html,body{margin:0;padding:0;}
@@ -102,34 +95,37 @@ footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
       <span class="chip chip-pro-plus">Pro+</span>
       <span>~8 min read</span>
       <span class="dot"></span>
-      <span>Updated &middot; August 2026</span>
+      <span>Updated &middot; September 4, 2026</span>
     </div>
     <h1>The model picker, <span class="grad serif">finally demystified.</span></h1>
     <p class="deck">Most people never touch the model picker, and mostly that's fine — ChatGPT routes for you. But 'mostly fine' leaves real quality on the table. Pro+ users learn the five minutes of theory that make the picker a tool instead of a mystery.</p>
 
     <h2><span class="num">01</span> The family, in one table</h2>
+    <div class="callout"><span class="lbl">Correction &middot; September 4, 2026</span><p>An earlier version of this table had Sol and Luna the wrong way round. Per OpenAI&rsquo;s Help Center: <strong>Sol is the heavyweight</strong> that powers every reasoning level on paid plans; <strong>Luna is the fast, low-cost model</strong> that Free and Go users get. Terra sits between them. We&rsquo;ve rewritten the section to match what the picker actually shows you.</p></div>
     <table class="cost-table">
-      <tr><th>Model</th><th>Built for</th><th>Reach for it when</th></tr>
-      <tr><td><strong>Sol</strong></td><td>Speed &amp; everyday chat</td><td>Quick answers, rewrites, casual use — the daily default</td></tr>
-      <tr><td><strong>Terra</strong></td><td>Balanced capability</td><td>Substantial work: documents, analysis, multi-step tasks</td></tr>
-      <tr><td><strong>Luna</strong></td><td>Deep reasoning</td><td>The hard stuff: complex tradeoffs, tricky code, subtle documents, anything you'd give your smartest colleague</td></tr>
+      <tr><th>Model</th><th>Built for</th><th>Where you actually meet it</th></tr>
+      <tr><td><strong>Sol</strong></td><td>Complex work: coding, research, analysis, agents</td><td>Every reasoning level on Plus, Pro, Business, Enterprise &mdash; Instant through Extra High. <em>Sol Pro</em> is its top-end option.</td></tr>
+      <tr><td><strong>Terra</strong></td><td>Balanced capability, speed, and cost</td><td>ChatGPT Work, Codex, and the API &mdash; not selectable in a standard chat</td></tr>
+      <tr><td><strong>Luna</strong></td><td>Fastest and cheapest</td><td>The default for Free and Go (it also powers their &ldquo;Think&rdquo; button); Work, Codex, and the API</td></tr>
+      <tr><td><strong>GPT-6 Pro</strong> (Astra)</td><td>Long, consequential, computer-driving jobs</td><td>The <em>Pro</em> section of the picker on Pro $100/$200, Business, and Enterprise &mdash; metered per message</td></tr>
     </table>
-    <p>All three are GPT-5.6 family (they went GA alongside <a href="/lessons/chatgpt/chatgpt-work">ChatGPT Work</a>). The differences are depth-versus-speed tradeoffs, not different personalities.</p>
+    <p>Here is the thing most explainers miss: on a paid plan, <strong>the picker in a normal chat isn&rsquo;t choosing between Sol, Terra, and Luna at all.</strong> Those three are the GPT-5.6 family (they went GA alongside <a href="/lessons/chatgpt/chatgpt-work">ChatGPT Work</a>), but in Chat you get Sol every time; what you&rsquo;re choosing is <em>how hard Sol thinks</em> &mdash; Instant, Medium, High, or Extra High (Extra High is Pro, Business, and Enterprise only). Terra and Luna only become a choice in Work, Codex, and the API. The separate <em>Pro</em> section holds the two big-ticket models, GPT-5.6 Sol Pro and, as of September 2026, GPT-6 Pro.</p>
+    <div class="callout"><span class="lbl">Update &middot; September 4, 2026</span><p><strong>GPT-6 Astra landed in the picker as &ldquo;GPT-6 Pro.&rdquo;</strong> It is the first new generation since GPT-5, it is built for computer use and template-faithful documents, and it is rationed: 200 messages a week on Pro $200, 50 a week on Pro $100 and Business Premium, 15 a month on Business Standard, off by default for Enterprise until an admin enables it, and (per the Help Center) not in Chat for Plus. It also pauses itself when a monitor flags an action &mdash; expect a &ldquo;review this&rdquo; prompt on long jobs. Who gets it, the limits, and what it does differently are in <a href="/lessons/chatgpt/gpt-6-astra">GPT-6 Astra: who actually gets it</a>. Picker rule: it belongs on the <em>relied on</em> rung of section 04, not the everyday one.</p></div>
     <div class="callout"><span class="lbl">Update &middot; August 26, 2026</span><p><strong>OpenAI o3 is gone from ChatGPT as of today, August 26, 2026.</strong> It was the last of the older reasoning models still reachable, and only by paid users digging into model settings. The useful part is the pattern behind the date: OpenAI announced this retirement on May 28 and ran a 90-day sunset, which is roughly how it handles every model it removes &mdash; successor ships, predecessor stays about 90 days, then goes. Two implications for you. First, a pinned old model is always a temporary arrangement, so learn the current family rather than a favourite. Second, this is a <em>ChatGPT</em> change; the API is untouched, which is why a developer you work with may still be using a model you can no longer select.</p></div>
 
     <h2><span class="num">02</span> Thinking modes: paying with seconds</h2>
     <p>Separately from <em>which</em> model, you can ask for more <em>thinking</em> — extended reasoning before the answer. The mental model: <strong>you're buying answer quality with waiting time.</strong> A thinking response might take noticeably longer and be dramatically more careful. When to spend: math you'll rely on, gnarly logic, "find the flaw in this plan," legal-ish reading. When not to: brainstorms, drafts, anything where volume beats precision — thinking mode on a brainstorm just gets you fewer, stiffer ideas, slower.</p>
     <h2><span class="num">03</span> When auto-routing isn't enough</h2>
-    <p>ChatGPT increasingly routes hard prompts to deeper processing on its own. The auto-router's weakness: <strong>it judges the question's difficulty, not the answer's stakes.</strong> "Should I take this job offer?" reads like simple chat. It is not. Your rule as a power user: <em>when the cost of a shallow answer is high, escalate manually</em> — pick Luna, ask for thinking, or simply add "take your time and reason carefully through the tradeoffs before answering."</p>
-    <div class="callout"><span class="lbl">The two-pass pattern</span><p>Best of both: draft fast with Sol/Terra, then hand the result to Luna with "critique this hard — what's wrong, missing, or wishful?" Fast generation, deep review. It's how good teams work, staffed by one person and a picker.</p></div>
+    <p>ChatGPT increasingly routes hard prompts to deeper processing on its own. The auto-router's weakness: <strong>it judges the question's difficulty, not the answer's stakes.</strong> "Should I take this job offer?" reads like simple chat. It is not. Your rule as a power user: <em>when the cost of a shallow answer is high, escalate manually</em> — push the slider to High or Extra High, or simply add "take your time and reason carefully through the tradeoffs before answering."</p>
+    <div class="callout"><span class="lbl">The two-pass pattern</span><p>Best of both: draft at Instant, then hand the result to High (or GPT-6 Pro, if you have it) with "critique this hard — what's wrong, missing, or wishful?" Fast generation, deep review. It's how good teams work, staffed by one person and a picker.</p></div>
     <h2><span class="num">04</span> A working default</h2>
     <div class="steps">
-      <div class="step">Leave auto/Sol as your default. Speed compounds across a day.</div>
+      <div class="step">Leave Instant as your default (with automatic reasoning on in Settings &rarr; General &rarr; Higher intelligence). Speed compounds across a day.</div>
       <div class="step">Escalate to Terra when the output will be <em>kept</em> — documents, plans, analysis.</div>
       <div class="step">Escalate to Luna + thinking when the output will be <em>relied on</em> — decisions, money, anything irreversible.</div>
       <div class="step">Never make an important decision on a fast answer just because it arrived confidently. Confidence is free; reasoning costs seconds. Spend them.</div>
     </div>
-    <div class="tryit"><span class="lbl">Try it now</span><p>Take a real decision you're facing. Ask it three ways: Sol quick, Luna with thinking, then the two-pass critique. Compare what each caught. You'll never see the picker as decoration again.</p><a class="btn" href="https://chatgpt.com" target="_blank" rel="noopener">Open ChatGPT &rarr;</a></div>
+    <div class="tryit"><span class="lbl">Try it now</span><p>Take a real decision you're facing. Ask it three ways: Instant, High, then the two-pass critique. Compare what each caught. You'll never see the picker as decoration again.</p><a class="btn" href="https://chatgpt.com" target="_blank" rel="noopener">Open ChatGPT &rarr;</a></div>
 
     <div class="challenge">
       <h2 style="margin-top:0;">This week's challenge</h2>

@@ -96,7 +96,7 @@ footer{border-top:1px solid var(--line);padding:30px 0;}
       <span class="chip chip-pro">Pro</span>
       <span>~8 min read</span>
       <span class="dot"></span>
-      <span>Updated August 15, 2026</span>
+      <span>Updated September 11, 2026</span>
     </div>
     <h1>What DeepSeek costs: <span class="grad serif">about as close to free as AI gets.</span></h1>
     <p class="deck">DeepSeek's whole pitch is price. Here is the honest breakdown — what is free, what the API actually costs, and the discounts that make a real workload almost free.</p>
@@ -137,7 +137,19 @@ footer{border-top:1px solid var(--line);padding:30px 0;}
 <div class="callout"><span class="lbl">The part that softens it</span><p>Peak is only <strong>seven hours out of twenty-four</strong>, and those hours sit in the small hours of the US morning. If your workload is batch — nightly summarisation, backfills, evals, anything with no human waiting — moving it outside 01:00&ndash;04:00 and 06:00&ndash;10:00 UTC halves the token bill for the price of editing one cron line. Interactive traffic from US or European users mostly lands off-peak already.</p></div>
 <div class="gotcha">This is still cheap in absolute terms — $1.98 per million output tokens off-peak is far under frontier pricing — but "DeepSeek is nearly free" stopped being a safe planning assumption on August 16. If you sized a budget against the old flat card, re-run it against the <em>peak</em> column, because that is your worst case.</div>
 <div class="gotcha">Prices and free grants change. Use the figures here as ballpark and confirm on DeepSeek's pricing page — and model your own volume in our <a href="/ai-cost-calculator">AI cost calculator</a>.</div>
-    <section class="lgpt-faq" aria-labelledby="faqh">
+    <h2 id="v41"><span class="num">04</span>September 10, 2026: Flash gets cheaper again &mdash; and a new name</h2>
+<p>Three weeks after the peak/off-peak card landed, DeepSeek released <strong>DeepSeek-V4.1-Flash</strong> and cut the Flash rates with it. The API model name is now simply <code>deepseek-flash</code>; the old <code>deepseek-v4-flash</code> and <code>deepseek-v4-flash-vision-exp</code> names still resolve, but they are served by V4.1 Flash and billed at the Flash price. The rate card as published on the day:</p>
+<div class="workflow">
+<h3>V4.1 Flash from September 10 — per million tokens (off-peak / peak)</h3>
+<ul>
+  <li><strong>Input, cache <em>miss</em>:</strong> $0.15 / $0.30 &nbsp;<em>(was $0.22 / $0.44)</em></li>
+  <li><strong>Input, cache <em>hit</em>:</strong> $0.003 / $0.006 &nbsp;<em>(was $0.007 / $0.014)</em></li>
+  <li><strong>Output:</strong> $0.60 / $1.20 &nbsp;<em>(was $0.66 / $1.32)</em></li>
+</ul>
+</div>
+<p>That is roughly a third off input on a miss, more than half off a cache hit, and 10% off output &mdash; and the new Flash reads images natively, which V4 Pro does not. The cache-hit ratio is back to about 1/50th of a miss, so the &ldquo;caching is the whole game&rdquo; advice in section 02 gets stronger, not weaker. Peak hours are unchanged.</p>
+<div class="callout"><span class="lbl">V4 Pro is staying</span><p>DeepSeek had signalled that V4 Pro API service would end after <strong>September 14, 2026</strong>. On September 10 it reversed that: <code>deepseek-v4-pro</code> continues &ldquo;in response to user demand,&rdquo; at the same $0.66 / $1.32 input, $0.022 / $0.044 cache-hit and $1.98 / $3.96 output rates listed above. If you had a migration deadline in your calendar for the 14th, delete it &mdash; but read <a href="/lessons/deepseek/flash-vs-pro">Flash vs Pro</a> before you decide Pro is still worth 4&times; the price, because on DeepSeek&rsquo;s own benchmarks the new Flash now beats it on most agent and coding work.</p></div>
+<section class="lgpt-faq" aria-labelledby="faqh">
       <div class="faq-eyebrow">Frequently asked</div>
       <h2 id="faqh">DeepSeek — your questions, answered</h2>
       <details><summary><span>How much does DeepSeek cost?</span><span class="chev"></span></summary><div class="faq-a">The chat app is free. The API is paid per token but far cheaper than frontier models. Until 16:00 UTC on August 16, 2026 the deepseek-v4-pro endpoint lists $0.435 per million input tokens on a cache miss, $0.003625 on a cache hit, and $0.87 per million output tokens. From that moment DeepSeek switches to peak/off-peak billing: V4 Pro becomes $0.66/$1.32 input on a cache miss, $0.022/$0.044 on a cache hit, and $1.98/$3.96 output — off-peak and peak respectively. Verify current rates on DeepSeek's pricing page.</div></details>

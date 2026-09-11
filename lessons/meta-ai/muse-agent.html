@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Meta Muse: the personal AI agent that works after you close the app (September 2026) — LearningGPT</title>
+<meta name="description" content="Meta launched Muse on September 10, 2026: a personal AI agent that runs on its own secure cloud computer, keeps working after you close the app, and pays with a one-time card. What it does, how the Sentinel approval layer works, and who can get it — in plain English." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#0064e0" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/meta-ai/muse-agent" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/meta-ai/muse-agent" />
+<meta property="og:title" content="Meta Muse: the personal AI agent, explained — LearningGPT" />
+<meta property="og:description" content="Meta launched Muse on September 10, 2026: a personal AI agent that runs on its own secure cloud computer, keeps working after you close the app, and pays with a one-time card. What it does, how the Sentinel approval layer works, and who can get it — in plain English." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "What is Meta Muse?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "A personal AI agent Meta launched on September 10, 2026. You message it in the Muse app or directly in WhatsApp, and it plans, browses, fills in forms, books and buys on your behalf — running on a dedicated cloud computer Meta calls the Muse Secure VM. It is powered by Muse Spark, Meta's most capable model."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Is Muse free?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Meta says Muse is free for most of what people need, with subscription plans for people who want to do more. As of launch day Meta has not published plan names or prices."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Where can I get it?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Rolling out in the US on iOS, Android and muse.ai, with AI glasses support \"coming soon.\" No date for other countries yet."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Can Muse spend my money?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Only after you approve. It checks with you before purchases and before sending email, and it pays through Link by Stripe using a one-time-use card so your real card number is never exposed to the merchant or to Muse. Shop Pay is listed as coming soon."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does Muse see my passwords?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Meta says no — credentials go into secure storage on your VM and Muse uses them without viewing them, including passwords you type into the browser yourself. A separate Sentinel agent has to approve anything Muse sends to the internet."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How is Muse different from Meta AI?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Meta AI is the chat assistant inside WhatsApp, Instagram and Messenger — it answers. Muse is an agent that takes on goals, keeps working after you close the app, and comes back when it needs a decision. Both run on the Muse Spark model family."
+   }
+  }
+ ]
+}
+</script>
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --danger:#ff6b8a; --radius-lg:20px; --container:820px; --track:#0064e0; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:#0064e0;}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.22;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;box-shadow:0 4px 16px rgba(124,92,255,0.5);}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(0,100,224,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(0,100,224,0.12);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}.chip-pro { border-color: rgba(124,92,255,0.45); color: #b9a6ff; background: rgba(124,92,255,0.12); }
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(31px,4.5vw,44px);font-weight:800;line-height:1.14;letter-spacing:-0.02em;margin:0 0 18px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#0064e0 0%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.12em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 32px;padding-bottom:26px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:26px;font-weight:700;letter-spacing:-0.01em;margin:46px 0 14px;}
+.lesson h3{font-size:18px;font-weight:600;margin:24px 0 8px;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 16px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul,.lesson ol{padding-left:24px;margin:0 0 16px;} .lesson li{margin-bottom:8px;}
+.callout{margin:26px 0;padding:20px 24px;background:linear-gradient(135deg,rgba(0,100,224,0.12),rgba(124,92,255,0.06));border:1px solid rgba(0,100,224,0.25);border-radius:var(--radius-lg);}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.decoder{margin:22px 0;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;}
+.decoder .row{display:grid;grid-template-columns:1fr 1.6fr;border-bottom:1px solid var(--line);}
+.decoder .row:last-child{border-bottom:none;}
+.decoder .row.head{background:rgba(0,100,224,0.14);font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);}
+.decoder .cell{padding:13px 18px;font-size:14.5px;line-height:1.55;}
+.decoder .row:not(.head) .cell:first-child{color:var(--text-dim);font-weight:600;background:rgba(255,255,255,0.02);}
+.decoder .row:nth-child(odd):not(.head){background:rgba(255,255,255,0.015);}
+@media (max-width:600px){.decoder .row{grid-template-columns:1fr;}.decoder .row:not(.head) .cell:first-child{padding-bottom:2px;}.decoder .row:not(.head) .cell:last-child{padding-top:4px;}}
+.demo-spot{margin:26px 0;padding:20px 24px;background:linear-gradient(180deg,var(--surface),var(--bg-soft));border:1px solid var(--line);border-radius:var(--radius-lg);}
+.demo-spot .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.demo-spot p:last-child{margin-bottom:0;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:16px 0;font-size:14.5px;}
+.gotcha::before{content:'\26A0  ';color:var(--warn);font-weight:700;}
+.lgpt-faq{margin:46px 0 8px;}
+.lgpt-faq h2{font-size:26px;line-height:1.15;letter-spacing:-.02em;font-weight:800;margin:0 0 18px;}
+.lgpt-faq details{border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#14142b;margin-bottom:10px;overflow:hidden;}
+.lgpt-faq details[open]{border-color:rgba(0,100,224,.45);}
+.lgpt-faq summary{list-style:none;cursor:pointer;padding:15px 18px;font-size:15.5px;font-weight:600;color:#f5f5fa;display:flex;justify-content:space-between;align-items:center;gap:14px;}
+.lgpt-faq summary::-webkit-details-marker{display:none;}
+.lgpt-faq summary .chev{flex-shrink:0;width:18px;height:18px;border-right:2px solid #0064e0;border-bottom:2px solid #0064e0;transform:rotate(45deg);transition:transform .2s;margin-top:-4px;}
+.lgpt-faq details[open] summary .chev{transform:rotate(-135deg);margin-top:4px;}
+.lgpt-faq .faq-a{padding:0 18px 16px;font-size:14.5px;line-height:1.7;color:#c7c7d6;}
+.lgpt-faq .faq-a strong{color:#f5f5fa;font-weight:600;} .lgpt-faq .faq-a a{color:var(--brand-2);font-weight:600;}
+.nextup{margin:46px 0 0;padding:22px 24px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.nextup .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:8px;}
+.nextup a{font-weight:600;}
+footer{border-top:1px solid var(--line);padding:30px 0;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--text-mute);}
+@media (max-width:600px){.footer-inner{flex-direction:column;gap:12px;text-align:center;}}
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/meta-ai/" class="nav-back">← Meta AI Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Meta AI</span>
+      <span class="chip chip-free">Free</span>
+      <span>~8 min read</span>
+      <span class="dot"></span>
+      <span>New · September 11, 2026</span>
+    </div>
+    <h1>Meta Muse: the agent that keeps working <span class="grad serif">after you close the app.</span></h1>
+    <p class="deck">On September 10, 2026 Meta introduced <strong>Muse</strong> — not a new model, but a <em>personal agent</em> you talk to like a person, in a new Muse app or straight inside WhatsApp. Give it a goal and it plans, opens a browser, fills in forms, negotiates, and comes back only when it needs your yes. Under the hood it runs on <a href="/lessons/meta-ai/muse-spark">Muse Spark</a>, Meta&#39;s most capable model. Here is what it actually does, what it is allowed to touch, and what Meta hasn&#39;t said yet.</p>
+
+    <div class="callout"><strong>Availability, as of launch day:</strong> rolling out in the <strong>US</strong> on iOS, Android and <strong>muse.ai</strong>; AI glasses &quot;coming soon.&quot; Meta says it is <strong>free for most of what people need</strong>, with subscription plans for people who want more — but no plan names or prices were published. We will update this page when they are.</div>
+
+    <h2>Assistant vs. agent — the one distinction that matters</h2>
+    <p>Meta AI, the thing already in your WhatsApp and Instagram, <em>answers</em>. You ask, it replies, the turn ends. Muse is built for the other shape of work: you hand over a goal and walk away. Meta&#39;s own examples are deliberately mundane — sell a car for more than the first offer, get a bill lowered, keep a training plan updated as the rest of your week shifts, turn a recipe reel you saved on Instagram into a grocery list, plan a dinner party and remember which friend can&#39;t eat shellfish before the invites go out.</p>
+    <p>Two behaviours make that possible. First, <strong>it keeps going after you close the app</strong>: long tasks continue in the background and Muse messages you when something changed or when it needs approval. Second, <strong>it remembers</strong> — details you mentioned once, preferences, people — and uses them to suggest things unprompted. You can tell it to &quot;forget&quot; specific things at any time.</p>
+
+    <h2>The announcement, decoded</h2>
+    <div class="decoder">
+      <div class="row head"><div class="cell">Meta says</div><div class="cell">What it means for you</div></div>
+      <div class="row"><div class="cell">&quot;Runs on Muse Secure VM&quot;</div><div class="cell">Your agent gets its own dedicated computer in Meta&#39;s cloud. Your connected accounts, files and credentials live there — not in a shared model, and not on your phone.</div></div>
+      <div class="row"><div class="cell">&quot;A separate Sentinel agent&quot;</div><div class="cell">A second program on that same machine, walled off from Muse, that has to approve anything Muse sends to the internet — and asks you when it isn&#39;t sure. Think of it as a bouncer between the agent and the outside world.</div></div>
+      <div class="row"><div class="cell">&quot;No visibility into passwords or payment methods&quot;</div><div class="cell">Logins you connect go into secure storage; Muse can <em>use</em> them without <em>reading</em> them. That includes passwords you type into the browser yourself while it watches.</div></div>
+      <div class="row"><div class="cell">&quot;Checkout with Link built by Stripe&quot;</div><div class="cell">Purchases go through Stripe&#39;s Link wallet, which issues a <strong>one-time-use card</strong> per purchase. Muse is the first agent covered by Link&#39;s purchase protection (lost or damaged items, price drops, no-fee returns). Shop Pay and 1Password support are &quot;coming soon.&quot;</div></div>
+      <div class="row"><div class="cell">&quot;A complete audit trail&quot;</div><div class="cell">You can see everything Muse has done and everything it plans to do. Sensitive actions — sending an email, spending money — stop and wait for you first.</div></div>
+      <div class="row"><div class="cell">&quot;Muse Confidential VM, later this year&quot;</div><div class="cell">A promised upgrade where the whole VM is encrypted with a key only you hold, so Meta itself can&#39;t read your data or conversations. Not shipped yet — treat it as a roadmap item.</div></div>
+    </div>
+
+    <div class="demo-spot">
+      <span class="lbl">What you control, per app</span>
+      <p>Connecting a service is not all-or-nothing. For email, for example, you choose whether Muse can only <em>read</em> your mail or can also <em>send</em> on your behalf, and you can dial that back or disconnect the service entirely whenever you like. Meta also states that Muse conversations and VM data are <strong>not shared with its ad systems</strong>, and that you can opt out of your interactions being used to train Meta&#39;s models. Our advice on day one: connect one low-stakes service, watch the audit trail for a week, then decide what else it earns.</p>
+    </div>
+
+    <h2>Try it today — a 15-minute first run</h2>
+    <p>If you are in the US, this is the sequence that teaches you the most while risking the least:</p>
+    <p><strong>1.</strong> Install the Muse app (or open <strong>muse.ai</strong>) and set up nothing except the basics. <strong>2.</strong> Give it a goal that needs no account access: &quot;Find me three used-car listings under $12,000 within 30 miles that were posted this week, and tell me which one you&#39;d negotiate on and why.&quot; Watch how it plans, browses and reports back. <strong>3.</strong> Close the app deliberately. See whether it messages you when it is done. <strong>4.</strong> Only then connect a single service — a calendar is a good first candidate — and set it to read-only. <strong>5.</strong> Open the audit trail and read every step it took. That trail is the product; the chat is just the front door.</p>
+
+    <h2>The honest part</h2>
+    <div class="gotcha"><strong>&quot;World&#39;s first personal AI agent&quot; is marketing.</strong> OpenAI&#39;s <a href="/lessons/chatgpt/chatgpt-work">ChatGPT Work</a>, Google&#39;s <a href="/lessons/gemini/gemini-spark">Gemini Spark</a> and the open-source <a href="/lessons/openclaw/openclaw-explained">OpenClaw</a> all already run goals in the background and act in a browser. What is new here is the <em>packaging</em>: a consumer agent inside WhatsApp, with a dedicated VM, a separate approval agent, and purchase protection at checkout. Whether the Sentinel layer holds up against real prompt-injection attacks is exactly the kind of claim independent researchers will take weeks to test — nobody outside Meta has had time yet, including us. Pricing for the &quot;do more&quot; tiers is unpublished, availability is US-only, and Meta&#39;s AI features have a track record of changing fast. Treat every capability on this page as Meta&#39;s description, verified against its September 10 announcement, not as tested behaviour.</div>
+
+    <section class="lgpt-faq" aria-labelledby="faqh">
+      <h2 id="faqh">Meta Muse — quick answers</h2>
+      <details><summary><span>What is Meta Muse?</span><span class="chev"></span></summary><div class="faq-a">A personal AI agent Meta launched on September 10, 2026. You message it in the Muse app or directly in WhatsApp, and it plans, browses, fills in forms, books and buys on your behalf — running on a dedicated cloud computer Meta calls the Muse Secure VM. It is powered by Muse Spark, Meta&#39;s most capable model.</div></details>
+      <details><summary><span>Is Muse free?</span><span class="chev"></span></summary><div class="faq-a">Meta says Muse is free for most of what people need, with subscription plans for people who want to do more. As of launch day Meta has not published plan names or prices.</div></details>
+      <details><summary><span>Where can I get it?</span><span class="chev"></span></summary><div class="faq-a">Rolling out in the US on iOS, Android and muse.ai, with AI glasses support &quot;coming soon.&quot; No date for other countries yet.</div></details>
+      <details><summary><span>Can Muse spend my money?</span><span class="chev"></span></summary><div class="faq-a">Only after you approve. It checks with you before purchases and before sending email, and it pays through Link by Stripe using a one-time-use card so your real card number is never exposed to the merchant or to Muse. Shop Pay is listed as coming soon.</div></details>
+      <details><summary><span>Does Muse see my passwords?</span><span class="chev"></span></summary><div class="faq-a">Meta says no — credentials go into secure storage on your VM and Muse uses them without viewing them, including passwords you type into the browser yourself. A separate Sentinel agent has to approve anything Muse sends to the internet.</div></details>
+      <details><summary><span>How is Muse different from Meta AI?</span><span class="chev"></span></summary><div class="faq-a">Meta AI is the chat assistant inside WhatsApp, Instagram and Messenger — it answers. Muse is an agent that takes on goals, keeps working after you close the app, and comes back when it needs a decision. Both run on the Muse Spark model family.</div></details>
+    </section>
+
+    <div class="nextup">
+      <div class="lbl">Up next in Meta AI</div>
+      <p>The model underneath it: <a href="/lessons/meta-ai/muse-spark">Muse Spark — Meta&#39;s agent model, explained</a>. And if you want the safety side of agents before you connect anything, read <a href="/lessons/meta-ai/privacy">what Meta AI sees, and how to limit it</a>.</p>
+    </div>
+  </div>
+</article>
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 LearningGPT, Inc. · Independent. Not affiliated with Meta.</div>
+    <a href="/lessons/meta-ai/" style="color: var(--text-dim);">← All Meta AI Mastery lessons</a>
+  </div>
+</footer>
+<script src="/gate.js"></script>
+</body>
+</html>

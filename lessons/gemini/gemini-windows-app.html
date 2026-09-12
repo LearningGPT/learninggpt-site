@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Gemini app for Windows: Alt + Space, your Google apps, Nano Banana — LearningGPT</title>
+<meta name="description" content="Google launched the Gemini desktop app for Windows 10 and 11 on September 10, 2026. What the Alt + Space overlay does, how it pulls from Gmail and Drive, what's plan-gated (Spark, Omni), the admin switch, and the shortcut collision to fix first. Free lesson." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#7aa2ff" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/gemini/gemini-windows-app" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/gemini/gemini-windows-app" />
+<meta property="og:title" content="The Gemini app for Windows: Alt + Space, your Google apps, Nano Banana" />
+<meta property="og:description" content="Gemini now runs as a native Windows 10/11 app. The Alt + Space overlay, Gmail and Drive context, image and video generation, the admin switch, and the honest fine print — from Google's September 10, 2026 launch." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "When did the Gemini app for Windows launch?", "acceptedAnswer": {"@type": "Answer", "text": "Google announced the Gemini desktop app for Windows on September 10, 2026, and the Workspace Updates blog confirmed it on September 11. It runs on Windows 10 and 11, is available globally, and downloads from gemini.google/desktop."}}, {"@type": "Question", "name": "What does Alt + Space do?", "acceptedAnswer": {"@type": "Answer", "text": "Alt + Space opens Gemini as an overlay on top of whatever you are working on, for quick asks like fact-checking a paragraph or brainstorming titles. Close it and you are back where you were. If you already use Alt + Space for another launcher or assistant, one of them will need a different shortcut."}}, {"@type": "Question", "name": "Is the Windows app free?", "acceptedAnswer": {"@type": "Answer", "text": "The app itself is free and works with personal Google accounts, Workspace Individual, and all Google Workspace customers. Some features inside it — Gemini Spark and Gemini Omni video — are footnoted by Google as plan-dependent, so expect those to follow your AI Pro or Ultra status rather than the app."}}, {"@type": "Question", "name": "Can it read my Gmail and Google Drive?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Google's example is asking Gemini to draft a project summary using information pulled directly from Gmail and Drive. That is the same Google-app connection the Gemini app already offers on the web; the Windows app puts it a keystroke away."}}, {"@type": "Question", "name": "I have a work account — do I need to ask IT?", "acceptedAnswer": {"@type": "Answer", "text": "Google says the app is on by default for organizations that already have the Gemini app enabled, and it follows the Generative AI settings in the Workspace Admin console. There is no end-user setting. If Gemini is turned off for your organization, the Windows app will not change that."}}, {"@type": "Question", "name": "How is this different from the Copilot app on Windows?", "acceptedAnswer": {"@type": "Answer", "text": "Copilot is built into Windows and connects to Microsoft 365; the Gemini app is a download that connects to Google apps. If your work lives in Gmail, Drive, Docs, and Sheets, the Gemini app is the one that can see it. If it lives in Outlook, Teams, and SharePoint, Copilot is. Many people will end up with both."}}]}</script>
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --danger:#ff6b8a; --radius:14px; --radius-lg:20px; --container:820px; --track:#7aa2ff; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:var(--track);}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.22;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(122,162,255,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(122,162,255,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#7aa2ff 0%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.15em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:52px 0 14px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.lesson kbd{font-family:'Inter',system-ui,sans-serif;font-size:13px;font-weight:700;padding:2px 8px;border:1px solid var(--line-strong);border-bottom-width:3px;border-radius:6px;background:var(--surface);color:var(--text);}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(122,162,255,0.12),rgba(124,92,255,0.06));border:1px solid rgba(122,162,255,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,#7aa2ff,#7c5cff);border-radius:2px 0 0 2px;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.cost-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;}
+.cost-table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--line-strong);color:var(--text-dim);font-size:11.5px;text-transform:uppercase;letter-spacing:0.6px;}
+.cost-table td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.cost-table td:first-child{font-weight:700;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:14px 0;font-size:14.5px;}
+.gotcha::before{content:'⚠ The honest note: ';color:var(--warn);font-weight:700;}
+.checklist{margin:40px 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);}
+.checklist h3{margin-top:0;font-size:18px;} .checklist ul{list-style:none;padding:0;margin:0;}
+.checklist li{padding:10px 0 10px 30px;position:relative;font-size:15px;border-top:1px solid var(--line);}
+.checklist li:first-child{border-top:none;padding-top:0;}
+.checklist li::before{content:'✓';position:absolute;left:0;color:var(--accent);font-weight:700;}
+.lgpt-faq{margin:48px 0 8px;}
+.lgpt-faq .faq-eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.09em;font-weight:700;color:var(--track);margin-bottom:8px;}
+.lgpt-faq h2{font-size:27px;line-height:1.15;letter-spacing:-.02em;font-weight:800;margin:0 0 18px;}
+.lgpt-faq details{border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#14142b;margin-bottom:10px;overflow:hidden;}
+.lgpt-faq details[open]{border-color:rgba(122,162,255,.4);}
+.lgpt-faq summary{list-style:none;cursor:pointer;padding:15px 18px;font-size:15.5px;font-weight:600;color:#f5f5fa;display:flex;justify-content:space-between;align-items:center;gap:14px;}
+.lgpt-faq summary::-webkit-details-marker{display:none;}
+.lgpt-faq summary .chev{flex-shrink:0;width:18px;height:18px;border-right:2px solid #7aa2ff;border-bottom:2px solid #7aa2ff;transform:rotate(45deg);transition:transform .2s;margin-top:-4px;}
+.lgpt-faq details[open] summary .chev{transform:rotate(-135deg);margin-top:4px;}
+.lgpt-faq .faq-a{padding:0 18px 16px;font-size:14.5px;line-height:1.7;color:#c7c7d6;}
+.lgpt-faq .faq-a strong{color:#f5f5fa;font-weight:600;} .lgpt-faq .faq-a a{color:#7aa2ff;font-weight:600;}
+.next-up{margin:50px 0 0;padding:28px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--bg-soft);}
+.next-up .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:10px;}
+.next-up h3{margin:0 0 8px;font-size:19px;} .next-up p{margin:0;color:var(--text-dim);font-size:14.5px;}
+footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--text-mute);}
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top"><div class="nav-inner">
+<a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+<a href="/lessons/gemini/" class="nav-back">← Gemini Mastery</a>
+</div></nav>
+<article class="lesson"><div class="container">
+<div class="lesson-meta">
+<span class="chip">Gemini Mastery</span>
+<span class="chip chip-free">Free</span>
+<span>~7 min read</span>
+<span class="dot"></span>
+<span>What&#39;s new · September 10, 2026</span>
+</div>
+<h1>Gemini moves onto the Windows desktop — <span class="grad serif">one keystroke from anything.</span></h1>
+<p class="deck">On September 10, 2026, Google shipped a native <strong>Gemini app for Windows 10 and 11</strong>. It&#39;s a download, not a website: press <kbd>Alt</kbd> + <kbd>Space</kbd> and Gemini floats over whatever you were doing, reads from your Gmail and Drive when you ask it to, and makes images with Nano Banana without a browser tab in sight. Here&#39;s the five-minute setup, the three jobs it&#39;s actually good for on day one, the plan fine print Google buried in footnotes, and the one shortcut collision to fix before it annoys you.</p>
+
+<h2><span class="num">01</span> Five-minute setup</h2>
+<p>Download it from <strong>gemini.google/desktop</strong>, sign in with the Google account you already use for Gemini, and that&#39;s it. Google describes the app as lightweight and quiet — it sits in the background waiting for the shortcut rather than sitting on your CPU. It&#39;s available <strong>globally, today</strong>, on Windows 10 and Windows 11.</p>
+<div class="gotcha"><kbd>Alt</kbd> + <kbd>Space</kbd> is a crowded shortcut on Windows. The Copilot app uses it for its own quick view, PowerToys Run defaults to it, and some window managers have claimed it for years. If a different panel pops up when you press it, that&#39;s why — rebind one of them before you conclude the Gemini app &ldquo;doesn&#39;t work.&rdquo;</div>
+
+<h2><span class="num">02</span> Three jobs it does on day one</h2>
+<div style="overflow-x:auto;"><table class="cost-table">
+<tr><th>Job</th><th>How it works</th><th>The tell that it&#39;s useful</th></tr>
+<tr><td>Quick ask over your work</td><td><kbd>Alt</kbd> + <kbd>Space</kbd> opens an overlay on top of the document, spreadsheet, or email you&#39;re in — fact-check a sentence, get five title options, rephrase a paragraph, close it</td><td>You stop opening a browser tab to ask a 10-second question</td></tr>
+<tr><td>Draft from your Google apps</td><td>Ask for a project summary and Gemini pulls the facts directly from Gmail and Drive — same Google-app connection as on the web, now a keystroke away</td><td>The summary quotes things you forgot were in a thread</td></tr>
+<tr><td>Make the visual</td><td>Generate a custom image with Nano Banana for the slide you&#39;re building, or direct a video with Gemini Omni, from the same window</td><td>Slide art stops being a separate errand</td></tr>
+</table></div>
+<p>Inside the full app window you get everything the Gemini app already does — Deep Research, Gems, Notebook, the model picker — plus the option to hand a multi-step job to <a href="/lessons/gemini/gemini-spark">Gemini Spark</a>, Google&#39;s scheduled agent. That last one is the reason a &ldquo;chat app on the desktop&rdquo; matters more than it sounds: Spark runs on a schedule whether the window is open or not, and a native app is where Google wants you managing it.</p>
+
+<h2><span class="num">03</span> The fine print Google put in footnotes</h2>
+<div class="callout">
+<span class="lbl">Read this before you demo it to your boss</span>
+<p><strong>The app is free.</strong> Google says it works with personal Google accounts, Workspace Individual, and every Google Workspace customer. But two headline features — <strong>Gemini Spark</strong> and <strong>Gemini Omni</strong> video — carry a footnote in Google&#39;s own announcement, which in practice means they follow your plan, not the app. If you&#39;re on a free account, expect the overlay, the Google-app drafting, and Nano Banana; expect Spark and Omni to be gated the way they are on the web. For the plan-by-plan breakdown, see <a href="/lessons/gemini/what-gemini-costs">what Gemini costs</a>.</p>
+</div>
+<p><strong>Work accounts:</strong> the app is <strong>on by default</strong> for organizations that already have the Gemini app enabled, controlled by the same Generative AI settings in the Workspace Admin console. There&#39;s no per-user toggle. If your admin has Gemini switched off, installing the Windows app won&#39;t switch it on — and if your admin has it on, they should know it just became a desktop install. Both sides of that are covered in <a href="/lessons/gemini/gemini-workspace-governance">Workspace governance</a>.</p>
+<p><strong>What it isn&#39;t yet:</strong> Google calls this &ldquo;just the beginning&rdquo; and promises more native desktop capabilities over time. Today it&#39;s the Gemini app in a native shell with a system-wide shortcut. It doesn&#39;t control your PC, click through Windows apps, or read what&#39;s on screen unless you paste it in. Treat claims beyond that as rumor until Google ships them.</p>
+
+<h2><span class="num">04</span> Gemini on Windows vs. Copilot on Windows</h2>
+<p>If you&#39;re a Windows user, you now have two AI assistants a keystroke away, and the useful way to think about them is <strong>whose apps they can see</strong>, not which model is smarter this month. Copilot is built into Windows and reads Outlook, Teams, SharePoint, and OneDrive. The Gemini app is a download and reads Gmail, Drive, Docs, and Sheets. Most people&#39;s work lives mostly in one camp — pick the assistant that matches the camp, and use the other one for general questions. Shops that run Microsoft 365 with a Google side-door (or vice versa) will end up with both installed, which is fine; just settle the shortcut question from section 01 first. Our <a href="/lessons/copilot/">Copilot track</a> covers the Microsoft side.</p>
+
+<div class="checklist">
+<h3>Your first 15 minutes with the app</h3>
+<ul>
+<li>Install from gemini.google/desktop and sign in with the account that has your Gmail and Drive</li>
+<li>Press <kbd>Alt</kbd> + <kbd>Space</kbd> once with nothing open — confirm it&#39;s Gemini that appears, not something else</li>
+<li>Open a real document, press the shortcut, and ask &ldquo;fact-check the second paragraph&rdquo; — the overlay use case</li>
+<li>Ask &ldquo;draft a status summary of [project name] from my email and Drive&rdquo; — the Google-apps use case</li>
+<li>Ask for &ldquo;a clean 16:9 illustration for a slide about [topic]&rdquo; — the Nano Banana use case</li>
+<li>If Spark or Omni show a plan wall, that&#39;s expected — decide whether you want them before you upgrade</li>
+</ul>
+</div>
+
+<section class="lgpt-faq" aria-labelledby="faqh">
+<div class="faq-eyebrow">Frequently asked</div>
+<h2 id="faqh">The Gemini app for Windows — your questions, answered</h2>
+<details>
+<summary><span>When did the Gemini app for Windows launch?</span><span class="chev"></span></summary>
+<div class="faq-a">Google announced the Gemini desktop app for Windows on September 10, 2026, and the Workspace Updates blog confirmed it on September 11. It runs on Windows 10 and 11, is available globally, and downloads from gemini.google/desktop.</div>
+</details>
+<details>
+<summary><span>What does Alt + Space do?</span><span class="chev"></span></summary>
+<div class="faq-a">Alt + Space opens Gemini as an overlay on top of whatever you are working on, for quick asks like fact-checking a paragraph or brainstorming titles. Close it and you are back where you were. If you already use Alt + Space for another launcher or assistant, one of them will need a different shortcut.</div>
+</details>
+<details>
+<summary><span>Is the Windows app free?</span><span class="chev"></span></summary>
+<div class="faq-a">The app itself is free and works with personal Google accounts, Workspace Individual, and all Google Workspace customers. Some features inside it — Gemini Spark and Gemini Omni video — are footnoted by Google as plan-dependent, so expect those to follow your AI Pro or Ultra status rather than the app.</div>
+</details>
+<details>
+<summary><span>Can it read my Gmail and Google Drive?</span><span class="chev"></span></summary>
+<div class="faq-a">Yes. Google's example is asking Gemini to draft a project summary using information pulled directly from Gmail and Drive. That is the same Google-app connection the Gemini app already offers on the web; the Windows app puts it a keystroke away.</div>
+</details>
+<details>
+<summary><span>I have a work account — do I need to ask IT?</span><span class="chev"></span></summary>
+<div class="faq-a">Google says the app is on by default for organizations that already have the Gemini app enabled, and it follows the Generative AI settings in the Workspace Admin console. There is no end-user setting. If Gemini is turned off for your organization, the Windows app will not change that.</div>
+</details>
+<details>
+<summary><span>How is this different from the Copilot app on Windows?</span><span class="chev"></span></summary>
+<div class="faq-a">Copilot is built into Windows and connects to Microsoft 365; the Gemini app is a download that connects to Google apps. If your work lives in Gmail, Drive, Docs, and Sheets, the Gemini app is the one that can see it. If it lives in Outlook, Teams, and SharePoint, Copilot is. Many people will end up with both.</div>
+</details>
+</section>
+
+<div class="next-up">
+<div class="lbl">More in Gemini Mastery</div>
+<h3>Put the agent behind the shortcut to work</h3>
+<p>The Windows app is the front door; Spark is what runs behind it on a schedule. Tasks, Skills, Schedules, and the workflows that pay off. <a href="/lessons/gemini/gemini-spark">Gemini Spark, used properly →</a></p>
+</div>
+</div></article>
+<footer><div class="footer-inner">
+<div>© 2026 LearningGPT, Inc. · Independent and vendor-neutral. Reflects Google's September 10–11, 2026 announcements; features and plan gating can change.</div>
+<a href="/lessons/gemini/" style="color:var(--text-dim);">← All Gemini lessons</a>
+</div></footer>
+<script src="/gate.js"></script>
+</body>
+</html>

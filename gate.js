@@ -240,7 +240,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Only force a reload if the user is actively on the paywall.
         if (s) { s.textContent = 'Unlocked! Reloading…'; setTimeout(function () { location.reload(); }, 600); }
       } else if (s) {
-        s.textContent = 'Purchase recorded but access could not be confirmed. Email hello@learninggpt.ai and we will sort it out.';
+        s.textContent = 'Purchase recorded but access could not be confirmed. Email dan@learninggpt.ai and we will sort it out.';
       }
     })
     .catch(function () { if (s) s.textContent = 'Network hiccup confirming your purchase — it will sync automatically in a moment.'; });

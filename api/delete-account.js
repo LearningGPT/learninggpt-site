@@ -107,7 +107,7 @@ export default async function handler(req, res) {
     if (!authDel.ok) {
       const detail = await authDel.text().catch(() => '');
       console.error('delete-account: auth user delete failed:', authDel.status, detail);
-      return res.status(500).json({ error: 'Could not fully delete the account. Please contact hello@learninggpt.ai and we will complete it for you.' });
+      return res.status(500).json({ error: 'Could not fully delete the account. Please contact dan@learninggpt.ai and we will complete it for you.' });
     }
 
     return res.status(200).json({ success: true });

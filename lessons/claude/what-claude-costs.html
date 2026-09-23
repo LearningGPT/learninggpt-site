@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>What Claude actually costs: plans, tokens & per-prompt price (2026) — LearningGPT</title>
-<meta name="description" content="Claude pricing explained — Free vs Pro ($20) vs Max ($100/$200), the API per-token rates for Sonnet, Opus and Haiku, and what a single prompt really costs. Free, vendor-neutral. Updated July 21: since July 20, Fable 5 is included on Max and premium Team seats; on Pro it draws usage credits." />
+<meta name="description" content="Claude pricing explained — Free vs Pro ($20) vs Max ($100/$200), the API per-token rates for Sonnet, Opus and Haiku, and what a single prompt really costs. Free, vendor-neutral. Updated Sept 23, 2026: new Opus 5.5 costs $4/$20 per million tokens, less than Opus 5. Fable is included on Max and premium Team seats; on Pro it draws usage credits." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#d97757" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -109,17 +109,19 @@ footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
     <tr><th>Model</th><th>Input / Output (per 1M)</th><th>Use it for</th></tr>
     <tr><td>Claude Haiku</td><td>$1 / $5</td><td>Fast, cheap, high-volume tasks</td></tr>
     <tr><td>Claude Sonnet 5</td><td>$2 / $10 — permanent as of Aug 10, 2026</td><td>The everyday workhorse</td></tr>
-    <tr><td>Claude Opus 5</td><td>$5 / $25</td><td>Near-flagship reasoning &amp; agents (released July 24, 2026)</td></tr>
+    <tr><td>Claude Opus 5.5</td><td>$4 / $20 &mdash; cache reads $0.20</td><td>Fable 5.1-level on most work, per Anthropic (released Sept 22, 2026)</td></tr>
+    <tr><td>Claude Opus 5</td><td>$5 / $25</td><td>The previous Opus (released July 24, 2026)</td></tr>
     <tr><td>Claude Fable 5.1</td><td>$10 / $50</td><td>The top tier &mdash; long, complex, agentic jobs (released Sept 1, 2026)</td></tr>
   </table></div>
-  <p><strong>Fable 5.1 update &middot; September 1, 2026:</strong> the per-token rates above did not move, but Fable 5.1 cut its <em>cache read</em> price from $1 to <strong>$0.25 per million tokens</strong> &mdash; 2.5% of the input rate, where every other Claude model charges 10%. Cache reads are what you pay when a request re-uses context the model already processed, so this only helps if you send the same long context repeatedly. Anthropic puts the saving at roughly 25% on typical workloads and up to 45% on heavily agentic ones. Nothing changes if you use Claude in the app &mdash; this is an API-side price. Full explainer: <a href="/lessons/claude/fable-5-explained">Claude Fable 5, explained</a>.</p>
-  <p>Picking the right size is the whole cost game: Fable is 10× Haiku on input and Opus is 5×. Use the small model for routine work and save Opus for jobs that truly need it.</p>
+  <p><strong>Fable 5.1 update &middot; September 1, 2026:</strong> the per-token rates above did not move, but Fable 5.1 cut its <em>cache read</em> price from $1 to <strong>$0.25 per million tokens</strong> &mdash; 2.5% of the input rate, where most other Claude models charge 10% (Opus 5.5, below, charges 5%). Cache reads are what you pay when a request re-uses context the model already processed, so this only helps if you send the same long context repeatedly. Anthropic puts the saving at roughly 25% on typical workloads and up to 45% on heavily agentic ones. Nothing changes if you use Claude in the app &mdash; this is an API-side price. Full explainer: <a href="/lessons/claude/fable-5-explained">Claude Fable 5, explained</a>.</p>
+  <p><strong>Opus 5.5 update &middot; September 22, 2026:</strong> the new Opus is <em>cheaper</em> than the one it follows &mdash; <strong>$4 / $20</strong> per million tokens against Opus 5&rsquo;s $5 / $25, with cache reads at <strong>$0.20</strong>, now the lowest cache-read price of any Claude model. Anthropic says it performs at Fable 5.1&rsquo;s level on most work and costs about 40% less per task than Opus 5, because it also uses fewer tokens. On subscriptions, Anthropic is raising five-hour usage limits on Pro, Max, Team and seat-based Enterprise plans and giving subscribers a one-off limit reset (Settings &rarr; Usage, on web or desktop). What it means for your model choice: <a href="/lessons/claude/claude-opus-5#opus55">Claude Opus 5.5, explained</a>.</p>
+  <p>Picking the right size is the whole cost game: Fable is 10× Haiku on input and Opus 5.5 is 4×. Use the small model for routine work and save Opus for jobs that truly need it.</p>
 
   <h2><span class="num">03</span> What a prompt actually costs</h2>
   <ul>
     <li><strong>Quick question</strong> (~250 in / 350 out): a fraction of a cent on any model.</li>
     <li><strong>Summarize a 2-page doc</strong> (~800 in / 1,200 out): about <strong>$0.014</strong> on Sonnet 5 — and that rate is permanent as of August 10, 2026; ~$0.007 on Haiku.</li>
-    <li><strong>Deep analysis on Opus</strong> (~2,500 in / 3,500 out): roughly <strong>$0.10</strong> — the premium model on a long job is where cost shows up.</li>
+    <li><strong>Deep analysis on Opus 5.5</strong> (~2,500 in / 3,500 out): roughly <strong>$0.08</strong> (it was ~$0.10 on Opus 5) — the premium model on a long job is where cost shows up.</li>
   </ul>
   <div class="callout">
     <span class="lbl">The honest takeaway</span>
@@ -142,7 +144,7 @@ footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
 
   <div class="challenge">
     <h2 style="margin-top:0;">Quick gut-check</h2>
-    <p>If you're on the API, look at how often you reach for Opus. Most jobs run fine on Sonnet at a fifth the price. Reserving Opus for the genuinely hard ones can cut your bill dramatically without hurting output.</p>
+    <p>If you're on the API, look at how often you reach for Opus. Most jobs run fine on Sonnet at half the price of Opus 5.5 (and a fifth of Fable). Reserving Opus for the genuinely hard ones can cut your bill dramatically without hurting output.</p>
     <a href="/ai-cost-calculator" class="btn">Run the numbers →</a>
   </div>
 
@@ -150,8 +152,8 @@ footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;}
     <h3>What you can do now</h3>
     <ul>
       <li>Know the plans: Free, Pro ($20), Max ($100 / $200)</li>
-      <li>Read the API rates by model: Haiku $1/$5, Sonnet 5 $2/$10 (now permanent), Opus 5 $5/$25, Fable 5.1 $10/$50</li>
-      <li>If you send the same long context over and over on the API, Fable 5.1&rsquo;s $0.25 cache-read rate is the cheapest of any Claude model</li>
+      <li>Read the API rates by model: Haiku $1/$5, Sonnet 5 $2/$10 (now permanent), Opus 5.5 $4/$20, Fable 5.1 $10/$50</li>
+      <li>If you send the same long context over and over on the API, Opus 5.5&rsquo;s $0.20 cache-read rate is now the cheapest of any Claude model (Fable 5.1: $0.25)</li>
       <li>Control cost with model choice — Sonnet by default, Opus sparingly</li>
       <li>Pick the plan that matches your real usage</li>
     </ul>

@@ -2,7 +2,12 @@
 // The signup page calls this with { email, name } once an account is created.
 // Dependency-free. Fire-and-forget — never blocks the signup itself.
 
-const WELCOME_HTML = (name) => `
+// Escape user-supplied values before they go into the email HTML.
+const esc = (s) => String(s || '').replace(/[&<>"']/g, (c) => (
+  { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+));
+
+const WELCOME_HTML = (name, email) => `
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
@@ -17,7 +22,7 @@ const WELCOME_HTML = (name) => `
 
 <!-- Body -->
 <div style="background:#ffffff;border-radius:0 0 16px 16px;padding:36px 32px;">
-<p style="font-size:17px;font-weight:700;margin:0 0 14px;">Hi ${name ? name : 'there'}, welcome to LearningGPT!</p>
+<p style="font-size:17px;font-weight:700;margin:0 0 14px;">Hi ${name ? esc(name) : 'there'}, welcome to LearningGPT!</p>
 <p style="font-size:15px;line-height:1.6;color:#444;margin:0 0 22px;">
 You just joined the founding cohort of a platform built to teach you every major AI tool — honestly, with no vendor agenda. Here's what you can dive into right now:
 </p>
@@ -30,12 +35,17 @@ You just joined the founding cohort of a platform built to teach you every major
 </table>
 
 <!-- CTA -->
-<div style="text-align:center;margin:0 0 28px;">
-<a href="https://learninggpt.ai/lessons" style="display:inline-block;background:linear-gradient(135deg,#7c5cff,#5b8def);color:#ffffff;text-decoration:none;font-size:15px;font-weight:600;padding:14px 30px;border-radius:10px;">Start learning →</a>
+<div style="text-align:center;margin:0 0 14px;">
+<a href="https://learninggpt.ai/dashboard.html" style="display:inline-block;background:linear-gradient(135deg,#7c5cff,#5b8def);color:#ffffff;text-decoration:none;font-size:15px;font-weight:600;padding:14px 30px;border-radius:10px;">Start learning →</a>
 </div>
 
+<p style="font-size:13.5px;line-height:1.6;color:#666;text-align:center;margin:0 0 26px;">
+Your account is ready. Sign in with <strong style="color:#1a1a2e;">${esc(email)}</strong> &mdash;
+or <a href="https://learninggpt.ai/auth/login" style="color:#5b8def;">sign in here</a> if that button doesn't take you straight in.
+</p>
+
 <p style="font-size:13.5px;line-height:1.6;color:#666;margin:0 0 18px;background:#f4f1ff;border:1px solid #e4dcff;border-radius:10px;padding:14px 16px;">
-💜 <strong>Founding member pricing</strong> is open through Sep 30. Lock in today's Pro rate and it never goes up — even after we raise prices.
+💜 <strong>Founding member pricing</strong> — lock in today's Pro rate and it never goes up, even after we raise prices.
 </p>
 
 <p style="font-size:14.5px;line-height:1.6;color:#444;margin:0 0 6px;">
@@ -89,7 +99,7 @@ export default async function handler(req, res) {
         to: [email],
         reply_to: 'dan@learninggpt.ai',
         subject: 'Welcome to LearningGPT 👋',
-        html: WELCOME_HTML(name)
+        html: WELCOME_HTML(name, email)
       })
     });
     const d = await r.json();

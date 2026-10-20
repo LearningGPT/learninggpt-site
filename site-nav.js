@@ -36,14 +36,10 @@
 
     // The canonical link set — edit here to change the nav site-wide.
     var LINKS = [
-      { href: '/business',  label: 'For business', teams: true },
+      { href: '/business#onsite',  label: 'Onsite training', teams: true },
+      { href: '/business#programs', label: 'Programs' },
       { href: '/advisory',  label: 'Advisory' },
-      { href: '/lessons',   label: 'Lessons' },
-        { href: '/whats-new', label: "What's new" },
-      { href: '/playground', label: 'Playground' },
-      { href: '/pricing',   label: 'Pricing' },
-      { href: '/testimonials', label: 'Testimonials' },
-      { href: '/seniors',   label: 'AI for Seniors' }
+      { href: '/about',     label: 'About' }
     ];
 
     // Current path (no trailing slash, no .html) for active-state highlighting.
@@ -76,7 +72,7 @@
         '<div class="lgpt-nav-links">' +
           linksHTML +
           '<a href="/auth/login" class="lgpt-nl lgpt-signin">Sign in</a>' +
-          '<a href="/auth/signup" class="lgpt-nl lgpt-cta">Start free →</a>' +
+          '<a href="/business#bizlead" class="lgpt-nl lgpt-cta">Book a 15-min call →</a>' +
         '</div>' +
       '</div>';
 
@@ -137,10 +133,68 @@
     } catch (e) {}
   }
 
+  // ───────────────────────────────────────────────────────────────────────────
+  // Site-wide footer bar. The links demoted out of the top nav live here, so
+  // they stay reachable and crawlable from every page without competing with
+  // the business message above the fold.
+  // ───────────────────────────────────────────────────────────────────────────
+  function buildFooterBar() {
+    if (document.getElementById('lgpt-footbar')) return;
+
+    var GROUPS = [
+      { title: 'For individuals', links: [
+        { href: '/lessons',      label: 'All lessons' },
+        { href: '/playground',   label: 'Playground' },
+        { href: '/pricing',      label: 'Pricing' },
+        { href: '/auth/signup',  label: 'Start free' }
+      ]},
+      { title: 'Role tracks', links: [
+        { href: '/copilot-for-work', label: 'Copilot at work' },
+        { href: '/trades',           label: 'AI for the trades' },
+        { href: '/seniors',          label: 'AI for Seniors' }
+      ]},
+      { title: 'Company', links: [
+        { href: '/about',        label: 'About' },
+        { href: '/testimonials', label: 'Testimonials' },
+        { href: '/whats-new',    label: "What's new" },
+        { href: '/contact',      label: 'Contact' }
+      ]}
+    ];
+
+    var bar = document.createElement('div');
+    bar.id = 'lgpt-footbar';
+    bar.innerHTML =
+      '<div class="lgpt-fb-inner">' +
+        GROUPS.map(function (g) {
+          return '<div class="lgpt-fb-col"><div class="lgpt-fb-h">' + g.title + '</div>' +
+            g.links.map(function (l) {
+              return '<a href="' + l.href + '">' + l.label + '</a>';
+            }).join('') + '</div>';
+        }).join('') +
+      '</div>';
+
+    var css = document.createElement('style');
+    css.id = 'lgpt-footbar-style';
+    css.textContent = [
+      '#lgpt-footbar{background:#0a0a1a;border-top:1px solid rgba(255,255,255,0.08);font-family:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;}',
+      '.lgpt-fb-inner{max-width:1180px;margin:0 auto;padding:34px 24px 38px;display:flex;flex-wrap:wrap;gap:44px;}',
+      '.lgpt-fb-col{display:flex;flex-direction:column;gap:9px;min-width:150px;}',
+      '.lgpt-fb-h{font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#6f6f8c;margin-bottom:2px;}',
+      '.lgpt-fb-col a{font-size:13.5px;color:#a8a8c0;text-decoration:none;transition:color .15s;}',
+      '.lgpt-fb-col a:hover{color:#f5f5fa;}',
+      '@media(max-width:560px){.lgpt-fb-inner{gap:28px;padding:28px 20px 32px;}.lgpt-fb-col{min-width:44%;}}'
+    ].join('');
+
+    document.head.appendChild(css);
+    document.body.appendChild(bar);
+  }
+
+  function boot() { build(); buildFooterBar(); }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', build);
+    document.addEventListener('DOMContentLoaded', boot);
   } else {
-    build();
+    boot();
   }
 })();
 // ─────────────────────────────────────────────────────────────────────────────

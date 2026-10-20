@@ -38,7 +38,7 @@ function shell(inner) {
 </div>
 <div style="background:#ffffff;border-radius:0 0 16px 16px;padding:34px 32px;">${inner}</div>
 <div style="text-align:center;padding:20px 12px;font-size:11.5px;color:#9a9ab0;">
-© 2026 LearningGPT, Inc. · Independent. Not affiliated with any AI vendor.<br>
+© 2026 Allen Ventures LLC · Independent. Not affiliated with any AI vendor.<br>
 You're receiving this because you created a LearningGPT account. Reply "stop" and Dan will remove you personally.
 </div>
 </div></body></html>`;

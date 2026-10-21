@@ -2,7 +2,7 @@
    Freshness first: the site ships new lessons daily, so HTML is ALWAYS network-first
    (cache only as an offline fallback). Static assets use stale-while-revalidate.
    /api/ is never cached. Bump VERSION to force-refresh old caches. */
-const VERSION = 'lgpt-v1';
+const VERSION = 'lgpt-v2';
 const OFFLINE_URL = '/';
 
 self.addEventListener('install', (e) => {
@@ -22,6 +22,21 @@ self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET') return;
   if (url.origin !== location.origin) return;            // never touch third parties
   if (url.pathname.startsWith('/api/')) return;          // never cache the API
+
+  // site-nav.js builds the header and footer on every page, so a stale copy
+  // means a returning visitor sees the previous nav for a whole visit after a
+  // deploy. Network-first, cache only as an offline fallback.
+  if (url.pathname === '/site-nav.js') {
+    e.respondWith(
+      fetch(e.request)
+        .then((res) => {
+          if (res && res.ok) { const copy = res.clone(); caches.open(VERSION).then((c) => c.put(e.request, copy)); }
+          return res;
+        })
+        .catch(() => caches.match(e.request))
+    );
+    return;
+  }
 
   if (e.request.mode === 'navigate') {
     // Pages: network first (fresh lessons), cached copy if offline.

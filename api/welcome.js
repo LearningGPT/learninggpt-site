@@ -56,7 +56,7 @@ I read every reply to this email — so if you have a question, or want to tell 
 
 <!-- Footer -->
 <div style="text-align:center;padding:20px 12px;font-size:11.5px;color:#9a9ab0;">
-© 2026 LearningGPT, Inc. · Independent. Not affiliated with OpenAI, Anthropic, Microsoft, Google, or Perplexity.
+© 2026 Allen Ventures LLC · Independent. Not affiliated with OpenAI, Anthropic, Microsoft, Google, or Perplexity.
 </div>
 
 </div>

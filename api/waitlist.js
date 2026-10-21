@@ -54,7 +54,7 @@ If you ever get stuck or have a question — even one that feels "too basic" —
 <p style="font-size:14.5px;line-height:1.6;color:#444;margin:0;">— Dan, founder of LearningGPT</p>
 </div>
 <div style="text-align:center;padding:20px 12px;font-size:11.5px;color:#9a9ab0;">
-© 2026 LearningGPT, Inc. · Independent — no vendor agenda.<br>
+© 2026 Allen Ventures LLC · Independent — no vendor agenda.<br>
 You asked for these lessons at learninggpt.ai/seniors. Reply "stop" any time and we'll remove you.
 </div>
 </div></body></html>`;

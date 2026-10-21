@@ -39,10 +39,9 @@
 
     // The canonical link set — edit here to change the nav site-wide.
     var LINKS = [
-      { href: '/business#onsite',  label: 'Onsite training', teams: true },
-      { href: '/business#programs', label: 'Programs' },
-      { href: '/advisory',  label: 'Advisory' },
-      { href: '/about',     label: 'About' }
+      { href: '/onsite',   label: 'Onsite & remote training', teams: true },
+      { href: '/advisory', label: 'Advisory' },
+      { href: '/about',    label: 'About' }
     ];
 
     // Current path (no trailing slash, no .html) for active-state highlighting.
@@ -74,7 +73,7 @@
         '</button>' +
         '<div class="lgpt-nav-links">' +
           linksHTML +
-          '<a href="/auth/login" class="lgpt-nl lgpt-signin">Sign in</a>' +
+          '<a href="/auth/login" class="lgpt-nl lgpt-signin" style="display:none">Sign in</a>' +
           '<a href="' + LGPT_BOOKING + '" class="lgpt-nl lgpt-cta">Book a 15-min call →</a>' +
         '</div>' +
       '</div>';
@@ -131,7 +130,11 @@
     try {
       if (localStorage.getItem('lgpt_token')) {
         var si = nav.querySelector('.lgpt-signin');
-        if (si) { si.textContent = 'Account'; si.setAttribute('href', '/account'); }
+        if (si) {
+          si.textContent = 'Account';
+          si.setAttribute('href', '/account');
+          si.style.display = '';          // signed-in subscribers get it back
+        }
       }
     } catch (e) {}
   }
@@ -145,18 +148,18 @@
     if (document.getElementById('lgpt-footbar')) return;
 
     var GROUPS = [
-      { title: 'For individuals', links: [
+      { title: 'For individuals', accent: '#44e0a4', tint: '#8fdcc4', links: [
         { href: '/lessons',      label: 'All lessons' },
         { href: '/playground',   label: 'Playground' },
         { href: '/pricing',      label: 'Pricing' },
         { href: '/auth/signup',  label: 'Start free' }
       ]},
-      { title: 'Role tracks', links: [
+      { title: 'Role tracks', accent: '#b6a4ff', tint: '#bdb0f0', links: [
         { href: '/copilot-for-work', label: 'Copilot at work' },
         { href: '/trades',           label: 'AI for the trades' },
         { href: '/seniors',          label: 'AI for Seniors' }
       ]},
-      { title: 'Company', links: [
+      { title: 'Company', accent: '#8fb3f7', tint: '#a8c2f2', links: [
         { href: '/about',        label: 'About' },
         { href: '/testimonials', label: 'Testimonials' },
         { href: '/whats-new',    label: "What's new" },
@@ -169,11 +172,13 @@
     bar.innerHTML =
       '<div class="lgpt-fb-inner">' +
         GROUPS.map(function (g) {
-          return '<div class="lgpt-fb-col"><div class="lgpt-fb-h">' + g.title + '</div>' +
+          return '<div class="lgpt-fb-col"><div class="lgpt-fb-h" style="color:' + g.accent + '">' + g.title + '</div>' +
             g.links.map(function (l) {
-              return '<a href="' + l.href + '">' + l.label + '</a>';
+              return '<a href="' + l.href + '" style="color:' + g.tint + '">' + l.label + '</a>';
             }).join('') + '</div>';
         }).join('') +
+        '<div class="lgpt-fb-legal">&copy; 2026 Allen Ventures LLC &middot; Independent. ' +
+        'Not affiliated with OpenAI, Anthropic, Microsoft, Google, Perplexity, Meta, or xAI.</div>' +
       '</div>';
 
     var css = document.createElement('style');
@@ -183,8 +188,9 @@
       '.lgpt-fb-inner{max-width:1180px;margin:0 auto;padding:34px 24px 38px;display:flex;flex-wrap:wrap;gap:44px;}',
       '.lgpt-fb-col{display:flex;flex-direction:column;gap:9px;min-width:150px;}',
       '.lgpt-fb-h{font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#6f6f8c;margin-bottom:2px;}',
-      '.lgpt-fb-col a{font-size:13.5px;color:#a8a8c0;text-decoration:none;transition:color .15s;}',
-      '.lgpt-fb-col a:hover{color:#f5f5fa;}',
+      '.lgpt-fb-col a{font-size:13.5px;text-decoration:none;transition:opacity .15s;}',
+      '.lgpt-fb-col a:hover{opacity:.72;}',
+      '.lgpt-fb-legal{flex:999 1 280px;min-width:0;align-self:flex-end;font-size:13px;line-height:1.6;color:#8a8aa8;}',
       '@media(max-width:560px){.lgpt-fb-inner{gap:28px;padding:28px 20px 32px;}.lgpt-fb-col{min-width:44%;}}'
     ].join('');
 

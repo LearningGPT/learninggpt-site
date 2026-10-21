@@ -34,6 +34,9 @@
   function build() {
     if (document.getElementById('lgpt-topnav')) return; // already injected
 
+    // The live Bookings page — one place to change it site-wide.
+    var LGPT_BOOKING = 'https://outlook.office.com/bookwithme/user/80f644fba7b04a1cbdfb8d665cc462d4@learninggpt.ai?anonymous';
+
     // The canonical link set — edit here to change the nav site-wide.
     var LINKS = [
       { href: '/business#onsite',  label: 'Onsite training', teams: true },
@@ -72,7 +75,7 @@
         '<div class="lgpt-nav-links">' +
           linksHTML +
           '<a href="/auth/login" class="lgpt-nl lgpt-signin">Sign in</a>' +
-          '<a href="/business#bizlead" class="lgpt-nl lgpt-cta">Book a 15-min call →</a>' +
+          '<a href="' + LGPT_BOOKING + '" class="lgpt-nl lgpt-cta">Book a 15-min call →</a>' +
         '</div>' +
       '</div>';
 

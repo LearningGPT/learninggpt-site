@@ -85,7 +85,12 @@ function hexEqual(a, b) {
 // Returns 'ok' | 'bad' | 'unverifiable' (no secret configured yet).
 export function verifyStripeSignature(rawBody, header) {
   if (!STRIPE_SIGNING_SECRETS.length) return 'unverifiable';
-  if (!rawBody || !header) return 'bad';
+  // No raw bytes means the runtime parsed the body despite the config above, so
+  // there is nothing to hash. That is our problem, not a bad request: say so and
+  // let layer 2 carry it, rather than rejecting genuine Stripe traffic.
+  if (!rawBody || !rawBody.length) return 'unverifiable';
+  // We have the bytes, so a missing or wrong signature is a real failure.
+  if (!header) return 'bad';
 
   let timestamp = null;
   const provided = [];

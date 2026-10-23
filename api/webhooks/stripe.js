@@ -3,9 +3,27 @@
 // (The old version required the 'stripe' and '@supabase/supabase-js' toolkits, which
 // aren't installed in this project — that's what was crashing the function.)
 //
-// Authenticity: instead of verifying a signing secret (which fights Vercel's body
-// handling), we re-fetch each object from Stripe with the secret key. A spoofed event
-// can't survive that check, and we get trustworthy data to act on.
+// Authenticity, two independent layers:
+//
+//  1. Signature. Every request must carry a valid Stripe-Signature over the RAW
+//     body. The old note here said a signing secret "fights Vercel's body handling"
+//     — it only does if you read req.body, because Vercel parses it and the bytes
+//     no longer match what Stripe signed. Turning the body parser off and hashing
+//     the raw stream solves it, with no npm package: node:crypto is enough.
+//
+//  2. Re-fetch, failing CLOSED. Nothing is granted, changed or revoked on the
+//     strength of the posted payload. Every handler re-reads the object from
+//     Stripe with the secret key and acts only on what comes back. If the re-fetch
+//     fails, we do nothing and log — we never fall back to the caller's data.
+//
+// Layer 2 is what actually protects the database, so a runtime that won't give us
+// the raw body degrades to "unverified but still safe" rather than to "open".
+//
+// (Before 2026-10-22 only the individual-checkout path re-fetched. The subscription
+// created/updated handler read the plan straight off the posted price id, the
+// deleted handler revoked on an unverified event, and the business checkout fell
+// through to the caller's object whenever the re-fetch errored — and skipped the
+// paid check entirely if payment_status was simply absent. All four are closed.)
 //
 // 2026-07-18 fix (first-customer incident): Stripe does NOT guarantee event order.
 // customer.subscription.created/updated could arrive before checkout.session.completed
@@ -13,6 +31,11 @@
 // the customer stayed on Free after paying. Every handler is now self-sufficient:
 // each one can find the profile on its own (customer id first, then the customer's
 // email looked up at Stripe) and the checkout handler also sets the plan directly.
+
+import { createHmac, timingSafeEqual } from 'node:crypto';
+
+// Stripe signs the raw bytes, so Vercel must not parse the body for us.
+export const config = { api: { bodyParser: false } };
 
 const SITE = 'https://learninggpt.ai';
 const SUPABASE_URL = process.env.SUPABASE_URL;
@@ -25,6 +48,73 @@ const STRIPE_KEYS = {
   live: process.env.STRIPE_SECRET_KEY,
   test: process.env.STRIPE_SECRET_KEY_TEST,
 };
+
+// Signing secrets (whsec_…). Both are tried rather than picked by livemode: that
+// field comes from the payload, so it means nothing until the signature is checked.
+const STRIPE_SIGNING_SECRETS = [
+  process.env.STRIPE_WEBHOOK_SECRET,
+  process.env.STRIPE_WEBHOOK_SECRET_TEST,
+].filter(Boolean);
+
+const SIG_TOLERANCE_SECONDS = 300;
+
+// What a genuinely completed checkout reports. 'no_payment_required' covers trials
+// and fully discounted sessions; anything else is not provisioned.
+const PAID_STATUSES = new Set(['paid', 'no_payment_required']);
+
+// The untouched request bytes. With bodyParser off this is the live stream; the
+// earlier branches cover a runtime that buffered it for us regardless.
+async function readRawBody(req) {
+  if (Buffer.isBuffer(req.body)) return req.body;
+  if (typeof req.body === 'string') return Buffer.from(req.body, 'utf8');
+  if (!req.readable) return null;
+  const chunks = [];
+  for await (const chunk of req) {
+    chunks.push(typeof chunk === 'string' ? Buffer.from(chunk, 'utf8') : chunk);
+  }
+  return Buffer.concat(chunks);
+}
+
+function hexEqual(a, b) {
+  if (typeof a !== 'string' || typeof b !== 'string' || a.length !== b.length) return false;
+  try { return timingSafeEqual(Buffer.from(a, 'hex'), Buffer.from(b, 'hex')); }
+  catch { return false; }
+}
+
+// Header shape: t=<unix>,v1=<hex>[,v1=<hex>…]; signed payload is `${t}.${rawBody}`.
+// Returns 'ok' | 'bad' | 'unverifiable' (no secret configured yet).
+export function verifyStripeSignature(rawBody, header) {
+  if (!STRIPE_SIGNING_SECRETS.length) return 'unverifiable';
+  // No raw bytes means the runtime parsed the body despite the config above, so
+  // there is nothing to hash. That is our problem, not a bad request: say so and
+  // let layer 2 carry it, rather than rejecting genuine Stripe traffic.
+  if (!rawBody || !rawBody.length) return 'unverifiable';
+  // We have the bytes, so a missing or wrong signature is a real failure.
+  if (!header) return 'bad';
+
+  let timestamp = null;
+  const provided = [];
+  for (const part of String(header).split(',')) {
+    const i = part.indexOf('=');
+    if (i === -1) continue;
+    const k = part.slice(0, i).trim();
+    const v = part.slice(i + 1).trim();
+    if (k === 't') timestamp = v;
+    else if (k === 'v1') provided.push(v);
+  }
+  if (!timestamp || !provided.length) return 'bad';
+
+  // Reject replays of a signature captured earlier.
+  const age = Math.abs(Math.floor(Date.now() / 1000) - Number(timestamp));
+  if (!Number.isFinite(age) || age > SIG_TOLERANCE_SECONDS) return 'bad';
+
+  const signedPayload = Buffer.concat([Buffer.from(`${timestamp}.`, 'utf8'), rawBody]);
+  for (const secret of STRIPE_SIGNING_SECRETS) {
+    const expected = createHmac('sha256', secret).update(signedPayload).digest('hex');
+    if (provided.some((p) => hexEqual(p, expected))) return 'ok';
+  }
+  return 'bad';
+}
 
 const sbHeaders = {
   'apikey': SUPABASE_SECRET_KEY,
@@ -57,13 +147,34 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  let event = req.body;
-  if (typeof event === 'string') {
-    try { event = JSON.parse(event); } catch { event = {}; }
+  let raw = null;
+  try { raw = await readRawBody(req); }
+  catch (err) { console.error('Webhook: could not read raw body:', err && err.message); }
+
+  const verdict = verifyStripeSignature(raw, req.headers['stripe-signature']);
+  if (verdict === 'bad') {
+    console.error('Webhook: REJECTED — bad or missing Stripe signature');
+    return res.status(400).json({ error: 'Invalid signature' });
+  }
+  if (verdict === 'unverifiable') {
+    // No signing secret set yet. Every handler below re-fetches from Stripe and
+    // fails closed, so nothing can be forged into the database — but set
+    // STRIPE_WEBHOOK_SECRET in Vercel to restore the first layer.
+    console.warn('Webhook: signature NOT checked — STRIPE_WEBHOOK_SECRET is unset');
+  }
+
+  let event = {};
+  if (raw && raw.length) {
+    try { event = JSON.parse(raw.toString('utf8')); } catch { event = {}; }
+  } else if (req.body && typeof req.body === 'object') {
+    event = req.body;
   }
 
   const type = event && event.type;
   const obj = (event && event.data && event.data.object) || {};
+  // The only value still read from the posted payload, and it only picks which
+  // checkout handler runs. Both re-fetch the session from Stripe and bail if its
+  // own metadata doesn't back them up, so a wrong hint here costs nothing.
   const isBusiness = obj.metadata && obj.metadata.type === 'business';
   const stripeKey = event && event.livemode ? STRIPE_KEYS.live : STRIPE_KEYS.test;
 
@@ -77,37 +188,61 @@ export default async function handler(req, res) {
       }
       case 'customer.subscription.created':
       case 'customer.subscription.updated': {
-        if (isBusiness) {
-          await patchByFilter('businesses', `stripe_customer_id=eq.${enc(obj.customer)}`, { subscription_status: obj.status });
+        // The posted object decides nothing. Re-read the subscription from Stripe
+        // and grant on that alone; if we can't read it, we change nothing.
+        const sub = obj.id ? await stripeGet(`subscriptions/${enc(obj.id)}`, stripeKey) : null;
+        if (!sub || sub.error) {
+          console.error('Subscription event: could not verify', obj.id, '— ignored');
+          break;
+        }
+        const customerId = typeof sub.customer === 'string' ? sub.customer : (sub.customer && sub.customer.id);
+        // Routing is taken from Stripe's copy too, not the caller's metadata.
+        const businessScoped = !!(sub.metadata && sub.metadata.type === 'business');
+
+        if (businessScoped) {
+          await patchByFilter('businesses', `stripe_customer_id=eq.${enc(customerId)}`, { subscription_status: sub.status });
         } else {
-          const plan = planFromPrice(obj.items?.data?.[0]?.price?.id);
-          const patch = { subscription_status: obj.status, stripe_subscription_id: obj.id };
+          const plan = planFromPrice(sub.items?.data?.[0]?.price?.id);
+          const patch = { subscription_status: sub.status, stripe_subscription_id: sub.id };
           if (plan) patch.plan = plan;
-          else console.error('Subscription event: unrecognized price id', obj.items?.data?.[0]?.price?.id);
-          let matched = await patchCount('profiles', `stripe_customer_id=eq.${enc(obj.customer)}`, patch);
+          else console.error('Subscription event: unrecognized price id', sub.items?.data?.[0]?.price?.id);
+          let matched = await patchCount('profiles', `stripe_customer_id=eq.${enc(customerId)}`, patch);
           if (!matched) {
             // The checkout event may not have stored the customer id yet (Stripe
             // events can arrive in any order) — find the profile by the
             // customer's email instead, and store the id while we're at it.
-            const email = await stripeCustomerEmail(obj.customer, stripeKey);
+            const email = await stripeCustomerEmail(customerId, stripeKey);
             if (email) {
-              matched = await patchCount('profiles', `email=eq.${enc(email)}`, { ...patch, stripe_customer_id: obj.customer });
+              matched = await patchCount('profiles', `email=eq.${enc(email)}`, { ...patch, stripe_customer_id: customerId });
             }
-            if (!matched) console.error('Subscription event: no profile matched', obj.customer, email || '(no email)');
+            if (!matched) console.error('Subscription event: no profile matched', customerId, email || '(no email)');
           }
         }
         break;
       }
       case 'customer.subscription.deleted': {
-        if (isBusiness) {
-          await revokeBusinessAccess(obj.customer);
+        // Revoke only when Stripe itself says the subscription has ended. A
+        // canceled subscription is still readable from the API, so a lookup that
+        // 404s means the id was invented, not that access should be pulled.
+        const sub = obj.id ? await stripeGet(`subscriptions/${enc(obj.id)}`, stripeKey) : null;
+        const ended = !!sub && !sub.error &&
+          (sub.status === 'canceled' || sub.status === 'incomplete_expired');
+        if (!ended) {
+          console.error('Subscription deleted: Stripe did not confirm for', obj.id, '— ignored');
+          break;
+        }
+        const customerId = typeof sub.customer === 'string' ? sub.customer : (sub.customer && sub.customer.id);
+        const businessScoped = !!(sub.metadata && sub.metadata.type === 'business');
+
+        if (businessScoped) {
+          await revokeBusinessAccess(customerId);
         } else {
           const patch = { plan: 'free', subscription_status: 'canceled' };
-          let matched = await patchCount('profiles', `stripe_customer_id=eq.${enc(obj.customer)}`, patch);
+          let matched = await patchCount('profiles', `stripe_customer_id=eq.${enc(customerId)}`, patch);
           if (!matched) {
-            const email = await stripeCustomerEmail(obj.customer, stripeKey);
+            const email = await stripeCustomerEmail(customerId, stripeKey);
             if (email) matched = await patchCount('profiles', `email=eq.${enc(email)}`, patch);
-            if (!matched) console.error('Subscription deleted: no profile matched', obj.customer);
+            if (!matched) console.error('Subscription deleted: no profile matched', customerId);
           }
         }
         break;
@@ -126,22 +261,28 @@ export default async function handler(req, res) {
 // subscription's price directly, so access is granted even if this is the only
 // event that ever matches the profile.
 async function handleIndividualCheckout(session, stripeKey, isLive) {
-  // Re-fetch from Stripe to confirm it's real (and to fill fields the event
-  // payload may omit, like customer_details).
-  let s = session;
-  if (stripeKey && session.id) {
-    const fetched = await stripeGet(`checkout/sessions/${session.id}`, stripeKey);
-    if (fetched && !fetched.error) s = fetched;
+  // Confirm with Stripe before touching anything. Fails closed: if we can't read
+  // the session back, we do nothing rather than trust the caller's copy.
+  if (!stripeKey || !session.id) {
+    console.error('Individual checkout: missing Stripe key or session id — ignored');
+    return;
+  }
+  const s = await stripeGet(`checkout/sessions/${enc(session.id)}`, stripeKey);
+  if (!s || s.error) {
+    console.error('Individual checkout: could not verify session', session.id, '— ignored');
+    return;
+  }
+  if (!PAID_STATUSES.has(s.payment_status)) {
+    console.error('Individual session not paid:', session.id, s.payment_status || '(no payment_status)');
+    return;
   }
 
   const email =
     s.customer_email ||
     (s.customer_details && s.customer_details.email) ||
-    session.customer_email ||
-    (session.customer_details && session.customer_details.email) ||
     null;
-  const customerId = s.customer || session.customer;
-  const subscriptionId = s.subscription || session.subscription;
+  const customerId = s.customer;
+  const subscriptionId = s.subscription;
 
   const patch = {
     stripe_customer_id: customerId,
@@ -193,25 +334,31 @@ async function stripeCustomerEmail(customerId, stripeKey) {
 
 // ── Business onboarding ────────────────────────────────────────────────────────
 async function handleBusinessCheckout(session, stripeKey, isLive) {
-  // Re-fetch from Stripe to confirm it's real and paid.
-  let s = session;
-  if (stripeKey) {
-    const fetched = await stripeGet(`checkout/sessions/${session.id}`, stripeKey);
-    if (fetched && !fetched.error) s = fetched;
+  // Confirm with Stripe before provisioning anything. Fails closed on every path:
+  // no key, no session id, an unreadable session, or anything short of 'paid'.
+  if (!stripeKey || !session.id) {
+    console.error('Business checkout: missing Stripe key or session id — ignored');
+    return;
   }
-  if (s.payment_status && s.payment_status !== 'paid') {
-    console.error('Business session not paid:', session.id, s.payment_status);
+  const s = await stripeGet(`checkout/sessions/${enc(session.id)}`, stripeKey);
+  if (!s || s.error) {
+    console.error('Business checkout: could not verify session', session.id, '— ignored');
+    return;
+  }
+  // 'no_payment_required' is what a legitimate trial or 100%-off session reports.
+  if (!PAID_STATUSES.has(s.payment_status)) {
+    console.error('Business session not paid:', session.id, s.payment_status || '(no payment_status)');
     return;
   }
 
-  const m = s.metadata || session.metadata || {};
+  const m = s.metadata || {};
   const companyName = m.company_name || 'Your company';
-  const adminEmail = m.admin_email || s.customer_email || session.customer_email;
+  const adminEmail = m.admin_email || s.customer_email;
   const adminName = m.admin_name || 'there';
   const plan = m.plan; // 'business' (current) | business_pro / business_pro_plus (legacy)
   const seats = parseInt(m.seats, 10) || 0;
-  const customerId = s.customer || session.customer;
-  const subscriptionId = s.subscription || session.subscription;
+  const customerId = s.customer;
+  const subscriptionId = s.subscription;
 
   if (!adminEmail || !plan) {
     console.error('Business checkout missing metadata:', m);

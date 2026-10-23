@@ -34,8 +34,15 @@
 
 import { createHmac, timingSafeEqual } from 'node:crypto';
 
-// Stripe signs the raw bytes, so Vercel must not parse the body for us.
-export const config = { api: { bodyParser: false } };
+// Stripe signs the raw bytes, so we must read the stream before anything parses
+// it. On Vercel, req.body is a LAZY GETTER: touching it is what triggers parsing
+// and drains the stream. So readRawBody() below reads the stream first and only
+// falls back to req.body if the stream is already gone.
+//
+// Vercel's documented opt-out is the NODEJS_HELPERS=0 environment variable, not
+// a config export — and it is project-wide, so it would strip req.body/req.query
+// from auth.js, business.js and the rest. Not worth it: not touching the getter
+// achieves the same thing for this one function.
 
 const SITE = 'https://learninggpt.ai';
 const SUPABASE_URL = process.env.SUPABASE_URL;
@@ -64,15 +71,22 @@ const PAID_STATUSES = new Set(['paid', 'no_payment_required']);
 
 // The untouched request bytes. With bodyParser off this is the live stream; the
 // earlier branches cover a runtime that buffered it for us regardless.
-async function readRawBody(req) {
-  if (Buffer.isBuffer(req.body)) return req.body;
-  if (typeof req.body === 'string') return Buffer.from(req.body, 'utf8');
-  if (!req.readable) return null;
-  const chunks = [];
-  for await (const chunk of req) {
-    chunks.push(typeof chunk === 'string' ? Buffer.from(chunk, 'utf8') : chunk);
+export async function readRawBody(req) {
+  // Stream FIRST. Reading req.body here instead would invoke Vercel's getter,
+  // parse the body, drain the stream and leave us with nothing to verify.
+  if (req.readable) {
+    const chunks = [];
+    for await (const chunk of req) {
+      chunks.push(typeof chunk === 'string' ? Buffer.from(chunk, 'utf8') : chunk);
+    }
+    if (chunks.length) return Buffer.concat(chunks);
   }
-  return Buffer.concat(chunks);
+  // Only reached if something upstream already consumed the stream.
+  try {
+    if (Buffer.isBuffer(req.body)) return req.body;
+    if (typeof req.body === 'string') return Buffer.from(req.body, 'utf8');
+  } catch { /* the getter throws on malformed bodies — treat as unavailable */ }
+  return null;
 }
 
 function hexEqual(a, b) {
@@ -166,8 +180,10 @@ export default async function handler(req, res) {
   let event = {};
   if (raw && raw.length) {
     try { event = JSON.parse(raw.toString('utf8')); } catch { event = {}; }
-  } else if (req.body && typeof req.body === 'object') {
-    event = req.body;
+  } else {
+    try {
+      if (req.body && typeof req.body === 'object') event = req.body;
+    } catch { /* getter threw on a malformed body — leave event empty */ }
   }
 
   const type = event && event.type;

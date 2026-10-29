@@ -198,7 +198,90 @@
     document.body.appendChild(bar);
   }
 
-  function boot() { build(); buildFooterBar(); }
+  // ───────────────────────────────────────────────────────────────────────────
+  // Webinar banner. Shows the NEXT upcoming session and nothing else, so this
+  // never needs editing between sessions — it rolls forward on its own and
+  // disappears once the last one has run. Sits above the sticky nav, so it
+  // scrolls away while the nav stays put.
+  //
+  // To add a session: append to SESSIONS, keeping it sorted by `ends`.
+  // `ends` is UTC — 10:00 AM Central in Nov/Dec/Jan (CST, UTC-6) is 16:00Z,
+  // plus an hour so the banner outlives the session that is in progress.
+  // ───────────────────────────────────────────────────────────────────────────
+  function buildWebinarBanner() {
+    if (document.getElementById('lgpt-webinar')) return;
+
+    var SESSIONS = [
+      { id: 'w1', title: 'AI Fundamentals: Where To Start, Safely',
+        when: 'Tue 17 Nov · 10:00 AM CT', ends: '2026-11-17T17:00:00Z',
+        url: 'https://events.teams.microsoft.com/event/ced60f77-aaa6-466b-ba19-5063fce84a27@4b745526-3c99-40c0-a5b0-e61524052dfe' },
+      { id: 'w2', title: 'Are You Getting The Most Out Of Copilot?',
+        when: 'Tue 1 Dec · 10:00 AM CT', ends: '2026-12-01T17:00:00Z',
+        url: 'https://events.teams.microsoft.com/event/12530e81-79a1-42a4-8ca9-56d9b4477114@4b745526-3c99-40c0-a5b0-e61524052dfe' },
+      { id: 'w3', title: 'How Can ChatGPT Increase Your Productivity?',
+        when: 'Thu 3 Dec · 10:00 AM CT', ends: '2026-12-03T17:00:00Z',
+        url: 'https://events.teams.microsoft.com/event/338b4608-0c79-4999-bd28-760f29e0469c@4b745526-3c99-40c0-a5b0-e61524052dfe' },
+      { id: 'w4', title: 'Make Claude Your Coworker',
+        when: 'Tue 26 Jan · 10:00 AM CT', ends: '2027-01-26T17:00:00Z',
+        url: 'https://events.teams.microsoft.com/event/b0b8b8c5-bc4a-4b6b-a693-c08cd0070f88@4b745526-3c99-40c0-a5b0-e61524052dfe' },
+      { id: 'w5', title: 'Gemini Is More Than Just Another Google Search',
+        when: 'Thu 28 Jan · 10:00 AM CT', ends: '2027-01-28T17:00:00Z',
+        url: 'https://events.teams.microsoft.com/event/0644dadd-c49c-4c1c-be5f-9f81ba5a5374@4b745526-3c99-40c0-a5b0-e61524052dfe' }
+    ];
+
+    // Next session that has not finished yet.
+    var now = Date.now(), next = null;
+    for (var i = 0; i < SESSIONS.length; i++) {
+      if (Date.parse(SESSIONS[i].ends) > now) { next = SESSIONS[i]; break; }
+    }
+    if (!next) return; // series over — banner retires itself
+
+    // Dismissal is per-session, so closing one does not hide the next.
+    try {
+      if (localStorage.getItem('lgpt_webinar_off') === next.id) return;
+    } catch (e) {}
+
+    var bar = document.createElement('div');
+    bar.id = 'lgpt-webinar';
+    bar.innerHTML =
+      '<a class="lgpt-wb-a" href="' + next.url + '" target="_blank" rel="noopener">' +
+        '<span class="lgpt-wb-tag">Free webinar</span>' +
+        '<span class="lgpt-wb-t">' + next.title + '</span>' +
+        '<span class="lgpt-wb-w">' + next.when + '</span>' +
+        '<span class="lgpt-wb-cta">Register &rarr;</span>' +
+      '</a>' +
+      '<button class="lgpt-wb-x" type="button" aria-label="Dismiss">&times;</button>';
+
+    var css = document.createElement('style');
+    css.id = 'lgpt-webinar-style';
+    css.textContent = [
+      '#lgpt-webinar{position:relative;background:linear-gradient(135deg,#7c5cff,#5b8def);font-family:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;}',
+      '.lgpt-wb-a{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px 14px;max-width:1180px;margin:0 auto;padding:11px 46px;text-decoration:none;color:#fff;}',
+      '.lgpt-wb-tag{font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;background:rgba(255,255,255,0.19);padding:4px 9px;border-radius:999px;white-space:nowrap;}',
+      '.lgpt-wb-t{font-size:14px;font-weight:700;}',
+      '.lgpt-wb-w{font-size:13.5px;color:rgba(255,255,255,0.86);white-space:nowrap;}',
+      '.lgpt-wb-cta{font-size:13.5px;font-weight:700;text-decoration:underline;text-underline-offset:3px;white-space:nowrap;}',
+      '.lgpt-wb-a:hover .lgpt-wb-cta{opacity:.82;}',
+      '.lgpt-wb-x{position:absolute;top:50%;right:10px;transform:translateY(-50%);background:none;border:0;color:rgba(255,255,255,0.72);font-size:21px;line-height:1;cursor:pointer;padding:4px 9px;border-radius:6px;}',
+      '.lgpt-wb-x:hover{color:#fff;background:rgba(255,255,255,0.14);}',
+      '@media(max-width:720px){',
+        '.lgpt-wb-a{padding:10px 42px 10px 16px;justify-content:flex-start;gap:5px 10px;}',
+        '.lgpt-wb-t{font-size:13px;width:100%;}',
+        '.lgpt-wb-w{font-size:12.5px;}',
+        '.lgpt-wb-cta{font-size:12.5px;}',
+      '}'
+    ].join('');
+
+    document.head.appendChild(css);
+    document.body.insertBefore(bar, document.body.firstChild); // above the sticky nav
+
+    bar.querySelector('.lgpt-wb-x').addEventListener('click', function () {
+      try { localStorage.setItem('lgpt_webinar_off', next.id); } catch (e) {}
+      bar.parentNode.removeChild(bar);
+    });
+  }
+
+  function boot() { build(); buildWebinarBanner(); buildFooterBar(); }
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);

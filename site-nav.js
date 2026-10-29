@@ -40,6 +40,7 @@
     // The canonical link set — edit here to change the nav site-wide.
     var LINKS = [
       { href: '/onsite',   label: 'Onsite & remote training', teams: true },
+      { href: '/webinars', label: 'Free webinars' },
       { href: '/advisory', label: 'Advisory' },
       { href: '/about',    label: 'About' }
     ];

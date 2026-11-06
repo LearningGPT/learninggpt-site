@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Personal Finance in Claude: Connect Your Bank, Ask Questions — LearningGPT</title>
+<meta name="description" content="Anthropic launched Personal Finance in Claude on November 5, 2026: read-only bank and card connections through Plaid, plain-English answers about spending and bills, in beta for US Pro, Max, and Ultra plans. What it sees, what it can’t do, and how to use it safely." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#d97757" />
+<link rel="canonical" href="https://learninggpt.ai/lessons/claude/personal-finance" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://learninggpt.ai/lessons/claude/personal-finance" />
+<meta property="og:title" content="Personal Finance in Claude: what it sees, what it can't do, and how to start" />
+<meta property="og:description" content="Read-only bank connections, plain-English money answers, US beta on Pro, Max, and Ultra. The honest guide." />
+<meta property="og:image" content="https://learninggpt.ai/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is Personal Finance in Claude?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A feature Anthropic announced on November 5, 2026 that lets you connect your bank and card accounts to Claude and ask questions about your money in plain English, such as where your money went this month, what bills are due before payday, or whether anything looks off. Claude answers from your balances and transactions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who can use Personal Finance in Claude?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It started rolling out in beta the week of November 5, 2026 on the Pro, Max, and Ultra plans in the US. It is not on the Free plan, and it is not available outside the US yet. If you don't see Personal Finance in Claude's sidebar, it hasn't reached your account."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can Claude move or spend my money?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Anthropic says access is read-only: Personal Finance cannot move, manage, or invest your money. It reads balances and transactions to answer questions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Claude see my bank password?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. You sign in to your bank yourself through Plaid, a service that connects apps to banks, and approve Claude's read-only access there. Claude doesn't ask for or see your bank password."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What data can Claude see from my accounts?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Only for the accounts you choose to connect: the bank's name, each account's name, type, and last four digits, balances and credit limits, and up to two years of transactions. You can unlink an account anytime, after which Claude can no longer see its data."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are my Personal Finance chats used to train Claude?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Anthropic says conversations in the Personal Finance hub are not used to train its models. Anything you share with Claude outside the hub follows your normal privacy settings."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Personal Finance in Claude financial advice?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Anthropic says it is not designed to give investment advice, and that Claude can make mistakes, so ask which transactions are behind a number and check important figures with your bank."
+      }
+    }
+  ]
+}
+</script>
+<style>
+:root { --bg:#0a0a1a; --bg-soft:#14142b; --surface:#1a1a3a; --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.14); --text:#f5f5fa; --text-dim:#a8a8c0; --text-mute:#6b6b85; --brand:#7c5cff; --brand-2:#5b8def; --accent:#44e0a4; --warn:#ffb547; --danger:#ff6b8a; --radius-lg:20px; --container:820px; --track:#d97757; }
+*{box-sizing:border-box;} html,body{margin:0;padding:0;}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:var(--brand-2);text-decoration:none;} a:hover{color:var(--text);}
+.bg-orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:0.3;}
+.bg-orb.one{width:500px;height:500px;top:-100px;left:-120px;background:#d97757;}
+.bg-orb.two{width:600px;height:600px;top:50%;right:-200px;background:#7c5cff;opacity:0.25;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+nav.top{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,26,0.85);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#5b8def,#44e0a4);display:grid;place-items:center;font-weight:800;font-size:15px;color:white;box-shadow:0 4px 16px rgba(124,92,255,0.5);}
+.nav-back{font-size:13px;color:var(--text-dim);} .nav-back:hover{color:var(--text);}
+.lesson{padding:50px 0 100px;}
+.lesson-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-mute);margin-bottom:20px;}
+.lesson-meta .chip{padding:4px 10px;border:1px solid rgba(217,119,87,0.4);border-radius:999px;font-size:11px;color:var(--track);background:rgba(217,119,87,0.1);font-weight:600;text-transform:uppercase;letter-spacing:0.6px;}
+.lesson-meta .chip-free{border-color:rgba(68,224,164,0.4);color:var(--accent);background:rgba(68,224,164,0.1);}
+.lesson-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-mute);}
+.lesson h1{font-size:clamp(32px,4.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin:0 0 20px;}
+.lesson h1 .grad{background:linear-gradient(135deg,#d97757 0%,#c46343 50%,#7c5cff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lesson h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;padding-right:0.12em;}
+.lesson .deck{font-size:19px;color:var(--text-dim);line-height:1.55;margin:0 0 36px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.lesson h2{font-size:27px;font-weight:700;letter-spacing:-0.01em;margin:50px 0 16px;}
+.lesson h2 .num{display:inline-block;color:var(--track);font-weight:700;margin-right:12px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;vertical-align:middle;}
+.lesson p{font-size:16.5px;color:var(--text);margin:0 0 18px;line-height:1.7;}
+.lesson strong{font-weight:700;color:var(--text);} .lesson em{font-style:italic;}
+.lesson ul,.lesson ol{padding-left:24px;margin:0 0 18px;} .lesson li{margin-bottom:8px;}
+.callout{margin:28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(217,119,87,0.12),rgba(124,92,255,0.06));border:1px solid rgba(217,119,87,0.25);border-radius:var(--radius-lg);position:relative;}
+.callout .lbl{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--track);margin-bottom:8px;}
+.callout p:last-child{margin-bottom:0;}
+.timeline{margin:24px 0;border-left:2px solid rgba(217,119,87,0.4);padding-left:22px;}
+.timeline .ti{margin-bottom:18px;} .timeline .ti:last-child{margin-bottom:0;}
+.timeline .td{font-size:12px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:var(--track);margin-bottom:4px;}
+.timeline .tt{font-size:15.5px;color:var(--text);line-height:1.6;}
+.gotcha{background:rgba(255,181,71,0.06);border:1px solid rgba(255,181,71,0.2);border-radius:10px;padding:14px 16px;margin:18px 0;font-size:14.5px;}
+.gotcha::before{content:'\26A0  Note: ';color:var(--warn);font-weight:700;}
+.lgpt-faq{margin:48px 0 8px;}
+.lgpt-faq .faq-eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.09em;font-weight:700;color:var(--track);margin-bottom:8px;}
+.lgpt-faq h2{font-size:27px;line-height:1.15;letter-spacing:-.02em;font-weight:800;margin:0 0 18px;}
+.lgpt-faq details{border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#14142b;margin-bottom:10px;overflow:hidden;}
+.lgpt-faq details[open]{border-color:rgba(217,119,87,.4);}
+.lgpt-faq summary{list-style:none;cursor:pointer;padding:15px 18px;font-size:15.5px;font-weight:600;color:#f5f5fa;display:flex;justify-content:space-between;align-items:center;gap:14px;}
+.lgpt-faq summary::-webkit-details-marker{display:none;}
+.lgpt-faq summary .chev{flex-shrink:0;width:18px;height:18px;border-right:2px solid #d97757;border-bottom:2px solid #d97757;transform:rotate(45deg);transition:transform .2s;margin-top:-4px;}
+.lgpt-faq details[open] summary .chev{transform:rotate(-135deg);margin-top:4px;}
+.lgpt-faq .faq-a{padding:0 18px 16px;font-size:14.5px;line-height:1.7;color:#c7c7d6;}
+.lgpt-faq .faq-a strong{color:#f5f5fa;font-weight:600;} .lgpt-faq .faq-a a{color:#d97757;font-weight:600;}
+footer{border-top:1px solid var(--line);padding:30px 0;}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--text-mute);}
+@media (max-width:600px){.footer-inner{flex-direction:column;gap:12px;text-align:center;}}
+</style>
+</head>
+<body>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<nav class="top">
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark">L</div> LearningGPT</a>
+    <a href="/lessons/claude/" class="nav-back">← Claude Mastery</a>
+  </div>
+</nav>
+<article class="lesson">
+  <div class="container">
+    <div class="lesson-meta">
+      <span class="chip">Claude Mastery</span>
+      <span class="chip chip-free">Free</span>
+      <span>~7 min read</span>
+      <span class="dot"></span>
+      <span>New &middot; November 6, 2026</span>
+    </div>
+    <h1>Claude can now read your bank accounts. <span class="grad serif">Here's how to use it well.</span></h1>
+    <p class="deck">On November 5, 2026, Anthropic launched <strong>Personal Finance in Claude</strong>: connect your bank and card accounts, then ask about your money in your own words &mdash; &ldquo;where did it all go this month?&rdquo;, &ldquo;what's due before payday?&rdquo;, &ldquo;anything look off?&rdquo; It's genuinely useful, and it's also the most sensitive data most people will ever hand an AI. This lesson covers what it does, exactly what it can see, what it can't do, and a safe first ten minutes.</p>
+
+    <div class="callout">
+      <span class="lbl">Who has it right now</span>
+      <p>Beta, rolling out starting the week of <strong>November 5, 2026</strong>, on the <strong>Pro, Max, and Ultra plans, US only</strong>. Not on Free, not outside the US yet. You'll know it's reached you when <strong>Personal Finance</strong> appears in Claude's sidebar. If it isn't there, there's nothing to switch on &mdash; it just hasn't arrived.</p>
+    </div>
+
+    <h2><span class="num">01</span> What it actually does</h2>
+    <p>Instead of opening four banking apps and doing the math yourself, you ask Claude. It reads the balances and transactions from the accounts you connected and answers in everyday language, explaining any term you don't know. Anthropic's own walkthrough shows the kind of conversation it's built for:</p>
+    <ul>
+      <li><strong>&ldquo;Where did my money go this month?&rdquo;</strong> &mdash; it totals your spending across accounts and sorts it by category.</li>
+      <li><strong>&ldquo;Is that more than usual?&rdquo;</strong> &mdash; it compares with previous months and points out what changed (in Anthropic's example, a membership renewal).</li>
+      <li><strong>&ldquo;What's left before payday?&rdquo;</strong> &mdash; it lists payments still coming out of checking and what you'll have left.</li>
+      <li><strong>&ldquo;Does anything look off?&rdquo;</strong> &mdash; it scans for the easy-to-miss stuff: a charge that hit twice, an unexpected fee, a bill that's crept up all year.</li>
+      <li><strong>&ldquo;What's an APR, and what has mine cost me this year?&rdquo;</strong> &mdash; it explains the term, then adds up the interest you've actually been charged.</li>
+    </ul>
+    <p>It can also build things you keep adjusting &mdash; a weekly spending chart, a calendar of what's due, or a small dashboard of the numbers you care about.</p>
+
+    <h2><span class="num">02</span> What it can see &mdash; and what it can't do</h2>
+    <p>This is the section to read twice. Per Anthropic's announcement:</p>
+    <ul>
+      <li><strong>Read-only.</strong> Personal Finance can't move, manage, or invest your money. No transfers, no payments.</li>
+      <li><strong>Your bank password stays with your bank.</strong> You connect by signing in to your bank yourself through <strong>Plaid</strong>, a service that links apps to banks; that's where you approve Claude's read-only access. Claude doesn't ask for or see the password.</li>
+      <li><strong>Only the accounts you pick.</strong> For each one: the bank's name; the account's name, type, and last four digits; balances and credit limits; and <strong>up to two years of transactions</strong>.</li>
+      <li><strong>Hub chats aren't used for training.</strong> Conversations inside the Personal Finance hub aren't used to train Anthropic's models. Money talk you have <em>outside</em> the hub follows your normal Claude privacy settings &mdash; so keep finance questions in the hub.</li>
+      <li><strong>You can unlink anytime,</strong> and Claude then can no longer see that account's data.</li>
+      <li><strong>No ads, no products to sell you.</strong> Anthropic says it has no sponsored recommendations and doesn't offer its own credit cards, loans, or savings accounts.</li>
+    </ul>
+    <div class="gotcha">It's not an advisor, and it can be wrong. Anthropic says plainly that Personal Finance isn't designed to give investment advice and that Claude can make mistakes. The habit that protects you: whenever a number matters, ask <em>&ldquo;which transactions make up that number?&rdquo;</em> and check anything important against your bank. A confident total is still a total you should verify &mdash; the same discipline as <a href="/lessons/foundations/spotting-hallucinations">spotting hallucinations</a>.</div>
+
+    <h2><span class="num">03</span> A safe first ten minutes</h2>
+    <div class="timeline">
+      <div class="ti"><div class="td">Minute 1 &mdash; Open the hub</div><div class="tt">Click <strong>Personal Finance</strong> in Claude's sidebar. Do your money questions here, not in a regular chat, so the no-training rule for hub conversations applies.</div></div>
+      <div class="ti"><div class="td">Minutes 2&ndash;4 &mdash; Connect ONE account</div><div class="tt">Start with your main checking account, not everything. You'll sign in on your bank's page via Plaid. If anything asks you to type your bank password into a chat box, stop &mdash; that isn't how this works.</div></div>
+      <div class="ti"><div class="td">Minutes 5&ndash;7 &mdash; Ask one real question</div><div class="tt">&ldquo;Where did my money go last month, by category?&rdquo; Then follow up: &ldquo;Which transactions are in the food category?&rdquo; Spot-check two or three against your bank app.</div></div>
+      <div class="ti"><div class="td">Minutes 8&ndash;10 &mdash; Hunt for leaks</div><div class="tt">&ldquo;Show me recurring charges and anything that charged twice or went up this year.&rdquo; Forgotten subscriptions and creeping bills are where this pays for itself fastest.</div></div>
+    </div>
+    <p>Only after it's earned your trust on one account should you add cards or savings. More connected accounts means better answers &mdash; and more of your financial life in one place.</p>
+
+    <h2><span class="num">04</span> The scam angle: tell your family how this really works</h2>
+    <p>Whenever a big-name AI feature touches bank accounts, scammers follow within weeks with fake &ldquo;connect your bank to Claude&rdquo; messages. Knowing the real flow makes the fakes easy to spot:</p>
+    <ul>
+      <li>The real feature lives <strong>inside the Claude app or claude.ai</strong>, in the sidebar. It doesn't arrive as a text message, email link, or phone call.</li>
+      <li>You sign in on <strong>your bank's own login through Plaid</strong>. Nobody from &ldquo;Claude support&rdquo; will ever need your password, a one-time code, or remote access to your computer.</li>
+      <li>It's <strong>read-only</strong>. Anything claiming Claude needs to &ldquo;move funds to verify your account&rdquo; is a scam, full stop.</li>
+    </ul>
+    <p>If you help an older parent with technology, this is worth a two-minute conversation. Our <a href="/lessons/seniors/online-banking-safety">online banking, done safely</a> lesson in the AI for Seniors track covers the broader playbook.</p>
+
+    <h2><span class="num">05</span> Should you turn it on?</h2>
+    <p>If you already pay for Claude in the US and you don't have a budgeting app you actually open, it's worth trying on one account &mdash; the &ldquo;what's due before payday&rdquo; and &ldquo;anything look off&rdquo; questions are the strongest use. If you're uneasy about any AI seeing two years of transactions, that's a reasonable call too: the feature is optional, and nothing else in Claude changes if you skip it. Either way, it doesn't replace a licensed professional for the big decisions &mdash; Anthropic itself says those are best handled with the professionals and regulated firms you trust. For what the plans cost, see <a href="/lessons/claude/what-claude-costs">what Claude actually costs</a>.</p>
+    <p style="font-size:13px;color:var(--text-dim);">Source: <a href="https://claude.com/resources/articles/introducing-personal-finance-in-claude" rel="noopener">Anthropic &mdash; Introducing Personal Finance in Claude</a> (November 5, 2026). LearningGPT is independent and not affiliated with Anthropic; nothing here is financial advice.</p>
+
+    <section class="lgpt-faq" aria-labelledby="faqh">
+      <div class="faq-eyebrow">Frequently asked</div>
+      <h2 id="faqh">Personal Finance in Claude &mdash; your questions, answered</h2>
+      <details><summary><span>Who can use Personal Finance in Claude?</span><span class="chev"></span></summary><div class="faq-a">It began rolling out in <strong>beta</strong> the week of November 5, 2026 on the <strong>Pro, Max, and Ultra</strong> plans in the <strong>US</strong>. Not on Free, not outside the US yet. Look for Personal Finance in Claude's sidebar.</div></details>
+      <details><summary><span>Can Claude move or spend my money?</span><span class="chev"></span></summary><div class="faq-a">No. Access is <strong>read-only</strong> &mdash; it can't move, manage, or invest money.</div></details>
+      <details><summary><span>Does Claude see my bank password?</span><span class="chev"></span></summary><div class="faq-a">No. You sign in to your bank yourself through <strong>Plaid</strong> and approve read-only access there.</div></details>
+      <details><summary><span>What data can it see?</span><span class="chev"></span></summary><div class="faq-a">For the accounts you choose only: bank name, account name, type, and last four digits, balances and credit limits, and up to <strong>two years of transactions</strong>. Unlink anytime.</div></details>
+      <details><summary><span>Are my finance chats used for training?</span><span class="chev"></span></summary><div class="faq-a">Not conversations in the <strong>Personal Finance hub</strong>, per Anthropic. Chats outside the hub follow your normal privacy settings.</div></details>
+      <details><summary><span>Is it financial advice?</span><span class="chev"></span></summary><div class="faq-a">No. It isn't designed to give investment advice and can make mistakes &mdash; ask which transactions are behind a number and check important figures with your bank.</div></details>
+    </section>
+  </div>
+</article>
+
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 Allen Ventures LLC · Independent. Not affiliated with Anthropic.</div>
+    <a href="/lessons/claude/" style="color: var(--text-dim);">← All Claude Mastery lessons</a>
+  </div>
+</footer>
+<script src="/gate.js"></script>
+</body>
+</html>

@@ -27,7 +27,7 @@
       "name": "How do I use the DeepSeek API?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Create an account, generate an API key, then point your existing OpenAI or Anthropic client at DeepSeek's base URL with a current V4 model name. No new SDK needed."
+        "text": "Create an account, generate an API key, then point your existing OpenAI or Anthropic client at DeepSeek's base URL with a current model name (deepseek-flash as of November 2026). No new SDK needed."
       }
     },
     {
@@ -51,7 +51,15 @@
       "name": "What base URL and model names do I use?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Use the base URL and current V4 model identifiers from DeepSeek's official docs — they change over time, so confirm there."
+        "text": "The base URL is https://api.deepseek.com. As of November 2026, use deepseek-flash for the latest Flash model (V4.1 Flash) or deepseek-v4-pro for Pro; older names like deepseek-v4-flash are temporarily routed to V4.1 Flash. Names change, so confirm in DeepSeek's docs."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are DeepSeek's application APIs?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Since November 13, 2026, DeepSeek lets developers switch on the same tools its app uses: web search (the deepseek_web_search tool), URL reading (deepseek_read_url), file input for PDFs, Office files and images, and an optional safety check that reviews inputs and outputs. Search and Fetch, OCR, speech-to-text and text-to-speech are also offered as standalone APIs. They work with the deepseek-flash model in the Messages, Responses and Chat Completions APIs; check DeepSeek's pricing page for tool costs."
       }
     }
   ]
@@ -135,27 +143,34 @@ footer{border-top:1px solid var(--line);padding:30px 0;}
       <span class="chip chip-pro chip-pro-plus">Pro+</span>
       <span>~12 min read</span>
       <span class="dot"></span>
-      <span>Updated June 2026</span>
+      <span>Updated November 2026</span>
     </div>
     <h1>DeepSeek API: <span class="grad serif">your first call in ten minutes.</span></h1>
     <p class="deck">Because DeepSeek mirrors the OpenAI and Anthropic APIs, you can point your existing code at it by changing two lines. Here is the clean path from zero to a working call.</p>
 <h2><span class="num">01</span>From zero to first response</h2>
-<ol class="steps"><li>Create a DeepSeek platform account and open the API keys page.</li><li>Generate a key and store it as an environment variable — never hard-code it.</li><li>Point your existing OpenAI (or Anthropic) client at DeepSeek's <strong>base URL</strong> and set the model to a current V4 name.</li><li>Send a test message, confirm you get a response, and check the token usage in the dashboard.</li></ol>
+<ol class="steps"><li>Create a DeepSeek platform account and open the API keys page.</li><li>Generate a key and store it as an environment variable — never hard-code it.</li><li>Point your existing OpenAI (or Anthropic) client at DeepSeek's <strong>base URL</strong> and set the model to a current name &mdash; <code>deepseek-flash</code> for the latest Flash model (V4.1 Flash as of November 2026), or <code>deepseek-v4-pro</code> for Pro.</li><li>Send a test message, confirm you get a response, and check the token usage in the dashboard.</li></ol>
 <div class="prompt-example"><span class="label">OpenAI-compatible call (pseudocode)</span>client = OpenAI(base_url=&quot;https://api.deepseek.com&quot;, api_key=ENV[&quot;DEEPSEEK_API_KEY&quot;])
 resp = client.chat.completions.create(
-  model=&quot;deepseek-v4-flash&quot;,
+  model=&quot;deepseek-flash&quot;,
   messages=[{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:&quot;Say hello in one sentence.&quot;}]
 )
 print(resp.choices[0].message.content)</div>
 <div class="callout"><span class="lbl">Two lines, not a rewrite</span><p>The whole point: keep your SDK, your message format, and your tooling. You change the <strong>base URL</strong> and the <strong>model name</strong> — everything else stays. That is what makes migrating a prototype trivial.</p></div>
 <div class="gotcha">Set a spending limit and rotate keys you have exposed. Confirm the exact base URL and current model identifiers in DeepSeek's docs, since names and endpoints evolve.</div>
+<h2 id="app-apis-nov2026"><span class="num">02</span>New: the app's tools, as API switches</h2>
+<p>On <strong>November 13, 2026</strong>, DeepSeek opened up the pieces that make its own chat app work &mdash; so you no longer have to wire up search, scraping and file parsing yourself. Per DeepSeek's API changelog, the <code>deepseek-flash</code> model supports these in the Messages, Responses and Chat Completions APIs, with the tool calls and context assembly handled on DeepSeek's side:</p>
+<ol class="steps"><li><strong>Web search</strong> &mdash; enable the <code>deepseek_web_search</code> tool and the model searches when the question needs it and answers with citations. With thinking turned on, it becomes a multi-step &ldquo;deep thinking search&rdquo; that reads links on its own.</li><li><strong>URL reading</strong> &mdash; enable <code>deepseek_read_url</code> and links in the user's message are fetched and read into context.</li><li><strong>File input</strong> &mdash; upload PDFs, Office files or images; DeepSeek extracts the text (or parses rich layouts) and adds it to the conversation.</li><li><strong>Safety check</strong> &mdash; an optional parameter that reviews inputs and outputs and returns a refusal marker on risky content.</li></ol>
+<p>Search and Fetch, OCR, speech recognition (ASR) and text-to-speech (TTS) are also available as standalone APIs, and DeepSeek open-sourced a demo chat client built on them that can import your DeepSeek chat history.</p>
+<div class="callout"><span class="lbl">What this changes for you</span><p>A &ldquo;chat with web search and file upload&rdquo; prototype used to mean a search API, a scraper and a document parser glued together. Now it is one model call with tool switches. The trade-off: you're relying on DeepSeek's search index and parsing quality, and tool calls add cost &mdash; check the current rates on DeepSeek's Models &amp; Pricing page before you scale.</p></div>
+<div class="gotcha">If you put this in front of the public, DeepSeek's own docs say to turn on the safety check parameter &mdash; and the same docs note public services may carry legal obligations (content review, model registration, AI labeling) depending on where you operate. Get that answered before launch, not after.</div>
     <section class="lgpt-faq" aria-labelledby="faqh">
       <div class="faq-eyebrow">Frequently asked</div>
       <h2 id="faqh">DeepSeek — your questions, answered</h2>
-      <details><summary><span>How do I use the DeepSeek API?</span><span class="chev"></span></summary><div class="faq-a">Create an account, generate an API key, then point your existing OpenAI or Anthropic client at DeepSeek's base URL with a current V4 model name. No new SDK needed.</div></details>
+      <details><summary><span>How do I use the DeepSeek API?</span><span class="chev"></span></summary><div class="faq-a">Create an account, generate an API key, then point your existing OpenAI or Anthropic client at DeepSeek's base URL with a current model name (deepseek-flash as of November 2026). No new SDK needed.</div></details>
       <details><summary><span>Is the DeepSeek API compatible with OpenAI?</span><span class="chev"></span></summary><div class="faq-a">Yes — it mirrors the OpenAI (and Anthropic) request format, so most code works by changing the base URL and model name.</div></details>
       <details><summary><span>How do I keep my DeepSeek API key safe?</span><span class="chev"></span></summary><div class="faq-a">Store it in an environment variable, never commit it to code, set a spending limit, and rotate any key that may have leaked.</div></details>
-      <details><summary><span>What base URL and model names do I use?</span><span class="chev"></span></summary><div class="faq-a">Use the base URL and current V4 model identifiers from DeepSeek's official docs — they change over time, so confirm there.</div></details>
+      <details><summary><span>What base URL and model names do I use?</span><span class="chev"></span></summary><div class="faq-a">The base URL is https://api.deepseek.com. As of November 2026, use deepseek-flash for the latest Flash model (V4.1 Flash) or deepseek-v4-pro for Pro; older names like deepseek-v4-flash are temporarily routed to V4.1 Flash. Names change, so confirm in DeepSeek's docs.</div></details>
+      <details><summary><span>What are DeepSeek's application APIs?</span><span class="chev"></span></summary><div class="faq-a">Since November 13, 2026, DeepSeek lets developers switch on the same tools its app uses: web search (the deepseek_web_search tool), URL reading (deepseek_read_url), file input for PDFs, Office files and images, and an optional safety check that reviews inputs and outputs. Search and Fetch, OCR, speech-to-text and text-to-speech are also offered as standalone APIs. They work with the deepseek-flash model in the Messages, Responses and Chat Completions APIs; check DeepSeek's pricing page for tool costs.</div></details>
     </section>
     <div class="nextup"><div class="lbl">Keep going</div><a href="/lessons/deepseek/">← Back to all DeepSeek lessons</a></div>
   </div>
